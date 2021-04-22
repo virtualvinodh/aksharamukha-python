@@ -21,6 +21,19 @@ def default(Strng):
 
     return Strng
 
+def kawitan(Strng):
+
+    return Strng
+
+def sundapura(Strng):
+
+    return Strng
+
+def NasalTilde(Strng):
+    Strng = re.sub('(m̐|ṃ|ṁ)', '\u0303', Strng)
+
+    return Strng
+
 def verticalKana(Strng):
 
     return Strng
@@ -56,6 +69,8 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
 
     txt = PostOptions.ApplyScriptDefaults(Convert.convertScript(txt, src, "Telugu"), src, "Telugu")
 
+    txt = txt.replace('ˆ', '')
+
     txt = Convert.convertScript(txt.lower(), "ISO", "Inter")
 
     # replace virama with o except for kyo, cyo myo
@@ -90,6 +105,11 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
         txt = kana2roman.to_hiragana(txt)
 
         txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|w|sh|s|h)' + '(' + r'\1' + ')', r'\1' + 'u', txt)
+
+        if not nativize:
+            txt = tokushuon(txt)
+
+        txt = kana2roman.to_hiragana(txt)
         txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|w|sh|s|h)', r'\1' + 'u', txt)
         txt = re.sub('([w])', r'\1' + 'i', txt)
 
@@ -106,7 +126,13 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
 
         txt = kana2roman.to_katakana(txt)
 
+
         txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|v|sh|s|h)' + '(' + r'\1' + ')', r'\1' + 'u', txt)
+
+        if not nativize:
+            txt = tokushuon(txt)
+
+        txt = kana2roman.to_katakana(txt)
         txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|v|sh|s|h)', r'\1' + 'u', txt)
         txt = re.sub('([w])', r'\1' + 'i', txt)
 
@@ -664,7 +690,6 @@ def TeluguTamilZha(Strng):
 
 def TeluguTamilRra(Strng):
     Strng = Strng.replace('ఱ్ఱ', 'ౘ్ౘ')
-    Strng = Strng.replace('ఱ', 'ౘ')
 
     return Strng
 
@@ -1020,10 +1045,13 @@ def ThaiSajjhayawithA(Strng):
 def LaoSajjhaya(Strng):
     Strng = ThaiSajjhayaOrthography(Strng, Script = "LaoPali")
 
+    Strng = re.sub('([ເໂໄ])(.)(\u0E4E)', r'\2\3\1', Strng)
+
     return Strng
 
 def LaoSajjhayawithA(Strng):
-    Strng = ThaiSajjhayaOrthography(Strng, Script = "LaoPali")
+    Strng = LaoSajjhaya(Strng)
+
     Strng = Strng.replace('ັງ', 'ັງ຺')
     Strng = CF.LaoPaliTranscribe(Strng, anusvaraChange = True)
 
@@ -1996,6 +2024,15 @@ def ThamTallAOthers(Strng):
     return Strng
 
 def LaoPhonetic(Strng):
+    Strng = re.sub('(\u0EBA)([ໂເໄ]?)([ຍຣລວຫ])', '\u035C'+ r'\2\3', Strng)
+    Strng = Strng.replace('ຫ\u0EBA', 'ຫ\u035C')
+
+    Strng = re.sub('([ຍຣລວຫ])' + '\u035C' + r'\1', r'\1' + '\u0EBA' + r'\1', Strng)
+
+    Strng = LaoTranscription(Strng)
+
+    Strng = Strng.replace('\u0EB0\u035C', '\u035C')
+
     Strng = Strng.replace('ຄ', 'ກ')
     Strng = Strng.replace('ຊ', 'ຈ')
     Strng = Strng.replace('ທ', 'ດ')
@@ -2012,6 +2049,8 @@ def ThamShiftMaiKangLai(Strng):
     Strng = re.sub('(\u1A58)(\u1A60.)', r'\2\1', Strng)
     Strng = re.sub('(\u1A58)' + ListV, r'\2\1', Strng)
     Strng = re.sub('(\u1A58)' + ListV, r'\2\1', Strng)
+
+    #Strng = Strng.replace('\u1A63\u1A58', '\u1A58\u1A63')
 
     return Strng
 

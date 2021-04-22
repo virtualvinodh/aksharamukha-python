@@ -13,8 +13,11 @@ def ShowChillus(Strng):
 
     return PostProcess.MalayalamChillu(Strng, True, True)
 
-
 def eiaudipthongs(Strng):
+
+    return Strng
+
+def wasvnukta(Strng):
 
     return Strng
 
@@ -27,7 +30,7 @@ def JapanesePreProcess(src, txt, preoptions):
         kks = pykakasi.kakasi()
 
         txt = Convert.convertScript(txt.lower(), "ISO", "Devanagari")
-        print(txt)
+        #print(txt)
 
         cv = kks.convert(txt)
         txt = ''
@@ -37,6 +40,12 @@ def JapanesePreProcess(src, txt, preoptions):
 
         if 'eiaudipthongs' in preoptions:
             txt = txt.replace('ou', 'o\u02BDu').replace('ei', 'e\u02BDi')
+
+        txt = re.sub('(r)([aiueo])(\u309A\u309A)', 'l' + r'\2\2', txt)
+        txt = re.sub('(r)([aāiīuūeēoō])(\u309A)', 'l' + r'\2', txt)
+
+        txt = re.sub('(k)([aiueo])(\u309A\u309A)', 'ṅ' + r'\2\2', txt)
+        txt = re.sub('(k)([aāiīuūeēoō])(\u309A)', 'ṅ' + r'\2', txt)
 
         txt = txt.replace('aa', 'ā').replace('ii', 'ī').replace('ee', 'ē').replace('oo', 'ō').replace('uu','ū')
         txt = txt.replace('a-', 'ā').replace('i-', 'ī').replace('e-', 'ē').replace('o-', 'ō').replace('u-','ū')
@@ -49,7 +58,10 @@ def JapanesePreProcess(src, txt, preoptions):
 
         txt= txt.replace('ng', 'ṅg').replace('nk', 'ṅk').replace('nk', 'ṅk').replace('np', 'mp').replace('nb', 'mb').replace('nm', 'mm')
 
-        print(txt)
+        if 'wasvnukta' in preoptions:
+            txt = txt.replace('v', 'v̈')
+
+        #print(txt)
 
     return txt
 
@@ -495,10 +507,12 @@ def PreProcess(Strng,Source,Target):
     if Source == 'IAST':
         Strng = Strng.replace("aï", "a_i")
         Strng = Strng.replace("aü", "a_u")
+        Strng = Strng.replace('\u0303', 'ṃ')
 
     if Source == "ISO":
         Strng = Strng.replace('a:i', 'a_i')
         Strng = Strng.replace('a:u', 'a_u')
+        Strng = Strng.replace('\u0303', 'ṁ')
 
     if Source == "Titus":
         Strng = Strng

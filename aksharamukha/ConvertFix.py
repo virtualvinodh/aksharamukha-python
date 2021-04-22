@@ -258,11 +258,14 @@ def PostFixRomanOutput(Strng,Source,Target):
 
     Strng = FixVedic(Strng, Target)
 
+    # For Kashmiri
+    Strng = Strng.replace("uʼ", "u'")
+    Strng = Strng.replace("ūʼ", "ū'")
+
     if Source == 'Sinhala' and Target == 'IPA':
         Strng = SinhalaIPAFix(Strng)
 
     if Target == "IPA":
-
         Strng = FixIPA(Strng)
 
     if Target == 'Santali':
@@ -294,7 +297,6 @@ def PostFixRomanOutput(Strng,Source,Target):
         Strng = Strng.replace("\\’", "\\\'")
         Strng = Strng.replace("a_i", "a:i")
         Strng = Strng.replace("a_u", "a:u")
-
 
     if Target == "Velthuis" or Target == "Itrans":
         Strng = Strng.replace("\\.a", "\\\'")
@@ -2087,12 +2089,12 @@ def FixLimbu(Strng,reverse=False):
 
     ### ZWNJ with finalcons + ya/ra/la/va (perhaps do this for other scripts)ˍ
     if reverse:
-        Strng = Strng.replace("\u193A\u1922", "\u1922\u193A")
+        #Strng = Strng.replace("\u193A\u1922", "\u1922\u193A")
         Strng = re.sub('(' + '|'.join(FinalCons) + ')' + '(?=[ᤕᤖᤘ])', r'\1' + '\u200C', Strng)
         Strng = re.sub('([ᤀᤁᤂᤃᤄᤅᤆᤇᤈᤉᤊᤋᤌᤍᤎᤏᤐᤑᤒᤓᤔᤕᤖᤗᤘᤚᤛᤜᤠᤣᤥᤧᤨᤩᤪᤫ])᤺', r'\1' + '꞉', Strng)
         ## Modifying letter colon ## Fix this only with aH ᤆᤠ᤺ᤣ
     else:
-        Strng = Strng.replace("\u1922\u193A", "\u193A\u1922")
+        #Strng = Strng.replace("\u1922\u193A", "\u193A\u1922")
         Strng = Strng.replace('꞉', '᤺')
 
     for x,y in zip(FCons,FinalCons):
@@ -2137,6 +2139,9 @@ def FixDevanagari(Strng, reverse=False):
         Strng = Strng.replace('ऱ्‌य', 'ऱ्य')
         Strng = Strng.replace('ऱ्‌ह', 'ऱ्ह')
 
+        # Kashmiri ux, uux
+
+        Strng = Strng.replace('उʼ', 'ॶ').replace('ऊʼ', 'ॷ').replace('ुʼ', 'ॖ').replace('ूʼ','ॗ')
 
     else:
         Strng = PostProcess.DevanagariPrishtamatra(Strng, reverse=True)
@@ -2145,6 +2150,10 @@ def FixDevanagari(Strng, reverse=False):
 
         for x, y in zip(Sindhi, SindhiApprox):
             Strng = Strng.replace(x, y)
+
+        # Kashmiri ux, uux
+
+        Strng = Strng.replace('ॶ', 'उʼ\u200C').replace('ॷ', 'ऊʼ\u200C').replace('ॖ', 'ुʼ\u200C').replace('ॗ', 'ूʼ\u200C')
 
     return Strng
 
@@ -2775,6 +2784,27 @@ def FixAssamese(Strng,reverse=False):
         Strng = Strng.replace(Ra,AssRa)
     else:
         Strng = Strng.replace(AssRa,Ra)
+
+    return Strng
+
+def FixSharada(Strng,reverse=False):
+    Strng = PostProcess.KhandaTa(Strng, 'Assamese', reverse)
+
+    if not reverse:
+        ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Sharada'))
+        Nukta = '|'.join(GM.CrunchSymbols(GM.CombiningSigns,'Sharada')[-1])
+        Virama = ''.join(GM.CrunchSymbols(['ViramaMap'], 'Sharada'))
+
+        Strng = Strng.replace( Nukta + Virama, Nukta + Virama + '\u200C')
+        Strng = re.sub('(' + Virama + ')' + '(' + ListC + ')' + '(' + Nukta + ')', r'\1' + '\u200C' + r'\2\3', Strng)
+
+        Strng = Strng.replace('𑆇ʼ','𑆃᳘').replace('𑆈ʼ','𑆃᳕').replace('𑆶ʼ','᳘').replace('𑆷ʼ','᳕')
+
+    else:
+        # u^ u^^ to vriaama
+        # Fix Devanagari as well u^ u^^ to devanagri vowels
+
+        Strng = Strng.replace('𑆃᳘', '𑆇ʼ').replace('𑆃᳕', '𑆈ʼ').replace('᳘', '𑆶ʼ').replace('᳕', '𑆷ʼ')
 
     return Strng
 

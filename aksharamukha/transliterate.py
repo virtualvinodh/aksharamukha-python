@@ -251,7 +251,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     else:
         transliteration = Convert.convertScript(txt, src, tgt)
 
-    if srcOld == 'Japanese' and tgt != 'Devanagari':
+    if srcOld == 'Japanese' and tgt != 'Devanagari' and 'siddhammukta' not in postoptions:
         transliteration = Convert.convertScript(transliteration, "Devanagari", "ISO")
 
     if src == tgtOld:
