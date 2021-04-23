@@ -11,8 +11,8 @@ VowelMap =  [
             'uu',
             'ri',
             'rii',
-            'li',
-            'lii',
+            'r\u309Ai',
+            'r\u309Aii',
             'ee',
             'ai',
             'oo',
@@ -94,8 +94,8 @@ ConsonantMap =  [
                 ]
 
 SouthConsonantMap = [
-                    'l',
-                    'l',
+                'r\u309A',
+                'r\u309A',
                     'r',
                     'n'
                     ]

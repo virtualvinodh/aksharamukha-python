@@ -21,6 +21,10 @@ def wasvnukta(Strng):
 
     return Strng
 
+def default(Strng):
+
+    return Strng
+
 def JapanesePreProcess(src, txt, preoptions):
     import pykakasi
     from . import Convert
@@ -62,6 +66,8 @@ def JapanesePreProcess(src, txt, preoptions):
             txt = txt.replace('v', 'v̈')
 
         #print(txt)
+
+        txt = txt.replace('、', ',').replace('。', '.')
 
     return txt
 
@@ -105,6 +111,17 @@ def ThaiPhonetic(Strng):
     Strng = Strng.replace('\u035C', '')
 
     Strng = Strng.replace('\u0E47', '')
+
+    Strng += "\u02BB\u02BB"
+
+    return Strng
+
+def LaoPhonetic(Strng):
+    Strng = Strng.replace('ດ', 'ທ')
+    Strng = Strng.replace('ບ', 'ພ')
+    Strng = Strng.replace('ງໍ', 'ງ')
+
+    Strng = Strng.replace('\u035C', '')
 
     Strng += "\u02BB\u02BB"
 

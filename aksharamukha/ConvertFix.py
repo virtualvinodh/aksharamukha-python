@@ -505,6 +505,8 @@ def FixHebrew(Strng, reverse = False):
         ## remove patesh
         Strng = re.sub('(?<![אע])\u05B7', '', Strng)
 
+    Strng = Strng.replace('௞', '')
+
     return Strng
 
 
@@ -1991,6 +1993,7 @@ def FixSoraSompeng(Strng, reverse = False):
 
 def FixRomanReadable(Strng, reverse = False):
     if not reverse:
+        Strng = Strng.replace('\\n', '\uE001')
         Strng = re.sub('([aiueo])nj([aeiou])', r'\1' + 'ny' + r'\2', Strng)
         Strng = re.sub('(\W)nj([aeiou])', r'\1' + 'ny' + r'\2', Strng)
         Strng = re.sub('^nj([aeiou])', 'ny' + r'\1', Strng)
@@ -2011,6 +2014,8 @@ def FixRomanReadable(Strng, reverse = False):
         Strng = Strng.replace("njj", "nj")
 
         Strng = Strng.replace("jnj", "jny")
+
+        Strng = Strng.replace('\uE001', '\\n')
     else:
         pass
 
