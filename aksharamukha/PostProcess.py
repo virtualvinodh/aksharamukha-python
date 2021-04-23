@@ -43,7 +43,7 @@ def verticalSiddham(Strng):
     return Strng
 
 def tokushuon(txt):
-   txt = txt.replace('si', 'suxi').replace('zi', 'zuxi')
+   txt = txt.replace('si', 'suxi').replace('zi', 'zuxi').replace('she', 'shixe')
    txt = txt.replace('vye', 'vuxixe').replace('vy', 'vuxy')
    txt = txt.replace('yi','ixi').replace('ye', 'ixe')
    txt = txt.replace('mye', 'mixe').replace('pye', 'pixe').replace('bye', 'bixe')
@@ -53,8 +53,8 @@ def tokushuon(txt):
    txt = txt.replace('ti', 'texi').replace('tu', 'toxu').replace('kwa', 'kuxwa')
    txt = txt.replace('kwi', 'kuxi').replace('kwe', 'kuxwe').replace('kwo', 'kuxwo')
 
-   txt = re.sub('(?<!s)hu', 'hoxu', txt)
-   txt = re.sub('(?<!s)hye', 'hixe', txt)
+   txt = re.sub('(?<![sc])hu', 'hoxu', txt)
+   txt = re.sub('(?<![sc])hye', 'hixe', txt)
 
    return txt
 
@@ -77,7 +77,8 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
     txt = Convert.convertScript(txt, "Telugu", "RomanKana")
 
     txt = txt.replace("nn", 'nnn').replace('c', 'ch').replace('chch', 'cch').replace('shsh', 'ssh').replace("mm", "nm")
-    txt = txt.replace(',', ',').replace('.', '。')
+
+    txt = txt.replace(',', '、').replace('\uEA01', '。')
 
     txt = txt.replace('JJ', 'nny')
     txt = txt.replace('J', 'ny')
@@ -87,11 +88,12 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
 
     txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|w|sh|s|h)([yrl])', r'\1' + 'i' + r'\2', txt)
 
+    #print(txt)
     if not nativize:
         txt = re.sub('(r)(r\u309A)', 'rur\u309A', txt)
         txt = re.sub('(r\u309A)(r\u309A)', 'rr' + '\u309A', txt)
         txt = re.sub('(k\u309A)(k\u309A)', 'kk' + '\u309A', txt)
-        txt = re.sub('([rk])(\u309A)([aieo])', r'\1\3\2', txt)
+        txt = re.sub('([rk])(\u309A)([aieou])', r'\1\3\2', txt)
 
         txt = tokushuon(txt)
     else:
@@ -99,19 +101,22 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
         txt = txt.replace('yi', 'i').replace('ye', 'e').replace('wu', 'u')
         txt = txt.replace('wo', 'uxo')
 
-    print(txt)
+        # she
+        txt = txt.replace('she', 'shie')
+
+    #print(txt)
 
     if tgt == 'Hiragana':
         txt = kana2roman.to_hiragana(txt)
 
-        txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|w|sh|s|h)' + '(' + r'\1' + ')', r'\1' + 'u', txt)
+        txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|w|sh|s|h|z|f)' + '(' + r'\1' + ')', r'\1' + 'u', txt)
 
         if not nativize:
             txt = tokushuon(txt)
 
         txt = kana2roman.to_hiragana(txt)
-        txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|w|sh|s|h)', r'\1' + 'u', txt)
-        txt = re.sub('([w])', r'\1' + 'i', txt)
+        txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|sh|s|h|z|f)', r'\1' + 'u', txt)
+        txt = re.sub('([wv])', r'\1' + 'i', txt)
 
         if not nativize:
             txt = tokushuon(txt)
@@ -126,15 +131,14 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
 
         txt = kana2roman.to_katakana(txt)
 
-
-        txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|v|sh|s|h)' + '(' + r'\1' + ')', r'\1' + 'u', txt)
+        txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|w|v|sh|s|h|z|f)' + '(' + r'\1' + ')', r'\1' + 'u', txt)
 
         if not nativize:
             txt = tokushuon(txt)
 
         txt = kana2roman.to_katakana(txt)
-        txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|v|sh|s|h)', r'\1' + 'u', txt)
-        txt = re.sub('([w])', r'\1' + 'i', txt)
+        txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|sh|s|h|z|f)', r'\1' + 'u', txt)
+        txt = re.sub('([wv])', r'\1' + 'i', txt)
 
         if not nativize:
             txt = tokushuon(txt)
@@ -1045,12 +1049,15 @@ def ThaiSajjhayawithA(Strng):
 def LaoSajjhaya(Strng):
     Strng = ThaiSajjhayaOrthography(Strng, Script = "LaoPali")
 
-    Strng = re.sub('([ເໂໄ])(.)(\u0E4E)', r'\2\3\1', Strng)
+    Strng = re.sub('([ເໂໄ])(.)(\u0ECE)', r'\2\3\1', Strng)
 
     return Strng
 
 def LaoSajjhayawithA(Strng):
     Strng = LaoSajjhaya(Strng)
+
+    # The below logic is for Thai yamakkan. Use Thai Yamakkan not to break it
+    Strng = Strng.replace('\u0ECE', '\u0E4E')
 
     Strng = Strng.replace('ັງ', 'ັງ຺')
     Strng = CF.LaoPaliTranscribe(Strng, anusvaraChange = True)
@@ -1065,6 +1072,9 @@ def LaoSajjhayawithA(Strng):
     Strng = re.sub('([ເໂໄ])(.๎)([ຍຣລວຨຩສຫຬ])ະ', r'\1\2\3', Strng)
 
     Strng = Strng.replace('າໍ', 'ຳ')
+
+    # Use Lao Yamakkan again
+    Strng = Strng.replace('\u0E4E', '\u0ECE')
 
     return Strng
 
@@ -2025,6 +2035,8 @@ def ThamTallAOthers(Strng):
 
 def LaoPhonetic(Strng):
     Strng = re.sub('(\u0EBA)([ໂເໄ]?)([ຍຣລວຫ])', '\u035C'+ r'\2\3', Strng)
+    Strng = re.sub('([ຍຣລວຫ])' + '\u035C' + '([ໂເໄ]?)' + r'\1', r'\1' + '\u0EBA' + r'\2\1', Strng)
+
     Strng = Strng.replace('ຫ\u0EBA', 'ຫ\u035C')
 
     Strng = re.sub('([ຍຣລວຫ])' + '\u035C' + r'\1', r'\1' + '\u0EBA' + r'\1', Strng)
@@ -2033,11 +2045,38 @@ def LaoPhonetic(Strng):
 
     Strng = Strng.replace('\u0EB0\u035C', '\u035C')
 
-    Strng = Strng.replace('ຄ', 'ກ')
-    Strng = Strng.replace('ຊ', 'ຈ')
+    #Strng = Strng.replace('ຄ', 'ກ')
+    #Strng = Strng.replace('ຊ', 'ຈ')
     Strng = Strng.replace('ທ', 'ດ')
     Strng = Strng.replace('ພ', 'ບ')
     Strng = Strng.replace('\u0ECD', 'ງໍ')
+
+    return Strng
+
+
+def RephaDoubleMalayalam(Strng):
+    repha = '[ർൎ]'
+
+    Target = 'Malayalam'
+
+    vir = GM.CrunchSymbols(GM.VowelSigns,Target)[0]
+    ConUnAsp = [GM.CrunchList('ConsonantMap', Target)[x] for x in [0,2,5,7,10,12,15,17,20,22,4,9,14,19,24,25,28,29,31]]
+    ConUnAsp = ConUnAsp + ['ള']
+    ConAsp   = [GM.CrunchList('ConsonantMap', Target)[x] for x in [1,3,6,8,11,13,16,18,21]]
+
+    Strng = re.sub('(' + repha + ')' + '('+'|'.join(ConUnAsp)+')', r'\1\2' + vir + r'\2', Strng)
+
+    for i in range(len(ConAsp)):
+        Strng = re.sub('(' + repha + ')' + '(' + ConAsp [i] +')', r'\1' +  ConUnAsp[i] + vir + r'\2', Strng)
+
+    # Dot reph with ya
+
+    # Strng = Strng.replace('ൎയ', 'ൎയ്യ')
+
+    return Strng
+
+def DograShaKha(Strng):
+    Strng = Strng.replace('𑠨', '𑠋')
 
     return Strng
 
@@ -2122,6 +2161,8 @@ def ThaiSajjhayaOrthography(Strng, Script = "Thai"):
         Strng = Strng.replace("ງ์", "ງ")
         Strng = Strng.replace("์", "໌")
         Strng = re.sub('(\u0EB1)(.)(\u0E4E)', r'\2\3', Strng)
+
+        Strng = Strng.replace('\u0E4E', '\u0ECE')
 
     #Strng = re.sub('([ยรลวศษสหฬ])(์)', r'\1' + '๎', Strng)
 
