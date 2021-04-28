@@ -331,7 +331,7 @@ def FixIndicOutput(Strng,Source,Target):
     Strng = ShiftDiacritics(Strng,Target,reverse=False)
 
     ## Make the Vedic Signs readable
-    vedicScripts = ['Assamese', 'Bengali', 'Devanagari', 'Gujarati', 'Kannada', 'Malayalam', 'Oriya', 'Gurmukhi', 'Tamil', 'Telugu', 'TamilExtended', 'Grantha']
+    vedicScripts = ['Assamese', 'Bengali', 'Devanagari', 'Gujarati', 'Kannada', 'Malayalam', 'Oriya', 'Gurmukhi', 'Tamil', 'Telugu', 'TamilExtended', 'Grantha', 'Sharada']
 
     if Target not in vedicScripts:
         Strng = Strng.replace('॒','↓')
@@ -342,7 +342,7 @@ def FixIndicOutput(Strng,Source,Target):
 
 def FixHebrew(Strng, reverse = False):
     vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew')) + ')'
-    consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Hebrew')) + ')'
+    consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Hebrew')+['צּ','גּ']) + ')'
 
     vowelsignsA = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['ַ']) + ')'
     vowelsignsAD = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['ַ', 'ּ']) + ')'
@@ -360,6 +360,9 @@ def FixHebrew(Strng, reverse = False):
     if not reverse:
         Strng = Strng.replace('\u02BD', '')
 
+        ## geminate cc/jj
+        Strng = Strng.replace('ג׳ְג׳', 'גּ׳').replace('צ׳ְצ׳', 'צּ׳')
+
         # Fix Anusvara
 
         # mK, mG, mp, mC, md, mt
@@ -369,11 +372,15 @@ def FixHebrew(Strng, reverse = False):
         # insert a_sign
         Strng = re.sub(consonants + '(?!' + vowelsigns + ')', r'\1' + '\u05B7' + r'\2', Strng)
 
+        # reverse dagesh patah
+        Strng = Strng.replace('\u05b7\u05Bc', '\u05Bc\u05b7')
+
         # fix double a to single a
         Strng = Strng.replace('\u05b7\u05b7', '\u05B7')
 
         # Fix a appear with Dagesh and Shva.. k -> kaph + patau + dagesh + shva -> kaph + dagesh + shva
         Strng = Strng.replace('\u05b7\u05bc\u05B0', '\u05bc\u05B0')
+
 
         # fix order of vowel signs and vowels sign with ch/j
         Strng = re.sub('(׳)' + vowelsigns, r'\2\1', Strng)
@@ -388,8 +395,12 @@ def FixHebrew(Strng, reverse = False):
 
         #Do gemination
         ## consonant doubling with Dagesh
-        Strng = re.sub('([' + 'ושרקסנמליזטײ' + '])(ְ)' + r'\1', r'\1' + 'ּ', Strng)
+        ## gemination with dagesh as well
+        Strng = re.sub('([' + 'ושרקסנמליזטײ' + 'הגדת' + '])(ְ)' + r'\1', r'\1' + 'ּ', Strng)
         Strng = re.sub('(שׁ)(ְ)' + r'\1', r'\1' + 'ּ', Strng)
+        ## for geminate ka use qa
+        ## bba -> ba, ppa -> pa ; cannot use dagesh for gemination too ambigous
+        Strng = Strng.replace('כְּכּ', 'קּ').replace('פְּפּ','פּ').replace('בְּבּ','בּ')
 
         # Fix Finals
 
@@ -398,7 +409,10 @@ def FixHebrew(Strng, reverse = False):
         vowelsAll = '(' + '|'.join(['\u05B7', '\u05B8', '\u05B4', '\u05BB', '\u05B5', '\u05B6', '\u05B9', '\u05B0', 'י', 'וֹ', 'וּ'] + ['׳']) + ')'
 
         for c, f in zip(finalCons, finals):
-            Strng = re.sub(vowelsAll + '(' + c + ')' + shortVowels + '(׳?)' + '(?!' + consonantsAll + ')', r'\1' + f +  r'\3' + r'\4', Strng)
+            Strng = re.sub(vowelsAll + '(' + c + ')' + shortVowels + '(׳?)' + '(?!' + consonantsAll + '|י|ו)', r'\1' + f +  r'\3' + r'\4', Strng)
+
+        # remove final schwa
+        Strng = re.sub('(?<!ה)(ְ)(׳?)' + '(?!' + consonantsAll + '|י|ו)', r'\2\3', Strng)
 
         # Fix Va + O
         Strng = Strng.replace('װ' + '\u05B9', '\u05D5\u05BA')
@@ -409,9 +423,10 @@ def FixHebrew(Strng, reverse = False):
         Strng = Strng.replace('\u02BC', '')
 
 
+
     else:
         vowels = ['ְ','ֱ','ֲ','ֳ','ִ','ֵ','ֶ','ַ','ָ','ֹ','ֺ','ֻ','ׇ']
-        vowelsR = '(' + '|'.join(vowels) + ')'
+        vowelsR = '(' + '|'.join(vowels + ['וֹ', 'וּ']) + ')'
 
         for f,c in zip(finals, finalCons):
             Strng = Strng.replace(f, c)
@@ -420,7 +435,7 @@ def FixHebrew(Strng, reverse = False):
         Strng = re.sub(vowelsR + '([ּׁׂ])', r'\2\1', Strng)
 
         ## gimme, teh and other consonants  with Dagesh just replace themselves
-        Strng = re.sub('([דתצ])(ּ)', r'\1', Strng)
+        #Strng = re.sub('([דתצ])(ּ)', r'\1', Strng)
 
         ## approx vowels
 
@@ -440,7 +455,10 @@ def FixHebrew(Strng, reverse = False):
         Strng = Strng.replace('הּ', 'ה')
 
         ## consonant doubling with Dagesh
+
         Strng = re.sub('([' + 'שרקסנמליזט' + '])(ּ)', r'\1' + 'ְ' + 'ְ' + r'\1', Strng) ## twice to mark it specifically
+        Strng = re.sub('([דתצה])(ּ)', r'\1'+ 'ְ' + 'ְ' + r'\1', Strng)
+
 
         ## approx Cons
         Strng = Strng.replace('ת', 'ט').replace('ח', 'כ').replace('ע', 'א').replace('שׂ', 'ס')
@@ -454,11 +472,14 @@ def FixHebrew(Strng, reverse = False):
         # swap garesh and short vowels
         Strng = re.sub(vowelsR + "(׳)", r'\2\1', Strng)
 
+        ## reverse dagesh of cca jja
+        Strng = Strng.replace('גּ׳', 'ג׳ְג׳').replace('צּ׳', 'צ׳ְצ׳')
+
         # tsa when not followed by gatresh with t+sa (including vowel signs)
         Strng = re.sub('צ' + '(?!׳)', 'טְְס', Strng)
 
         ## reinsert uo2dbc of vau based vowels
-        Strng = re.sub('(\s|^|\.|,|א)' + '(וֹ|וּ)', r'\1\2' + '\u02BC', Strng)
+        Strng = re.sub('(\s|^|\.|,|א)' + '(וֹ|וּ)', 'א' + r'\1\2' , Strng)
         Strng = re.sub('(וּ)' + vowelsignsA, 'װְװ' + r'\2', Strng)
 
         ## vav, yod to double vav/yod if followed by short vowels or long vowels
@@ -482,7 +503,6 @@ def FixHebrew(Strng, reverse = False):
 
         ## Aleph + Svha = a
         Strng = Strng.replace('אְ','')
-
 
         ## Hard Svha nakh
         if '௞' in Strng:

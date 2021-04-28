@@ -30,7 +30,7 @@ ModernVowelMap = [
                  ]
 
 SinhalaVowelMap = [
-                  '\uA984\uA9BC\u02BD'
+                  '\uA984\uA9BC\uA9B4'
                   ]
 
 VowelSignMap =  [
@@ -59,7 +59,7 @@ ModernVowelSignMap =[
                     '\uA9B4\u02BD']
 
 SinhalaVowelSignMap = [
-                      '\uA9BC\u02BD'
+                      '\uA9BC\uA9B4'
                       ]
 
 AyogavahaMap = [
