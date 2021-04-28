@@ -42,51 +42,63 @@ def verticalSiddham(Strng):
 
     return Strng
 
+def vtobJapanese(txt):
+
+    return txt
+
 def tokushuon(txt):
-   txt = txt.replace('si', 'suxi').replace('zi', 'zuxi').replace('she', 'shixe')
-   txt = txt.replace('vye', 'vuxixe').replace('vy', 'vuxy')
-   txt = txt.replace('yi','ixi').replace('ye', 'ixe')
-   txt = txt.replace('mye', 'mixe').replace('pye', 'pixe').replace('bye', 'bixe')
+   txt = txt.replace('si', 'suxi').replace('zi', 'zuxi')
+   txt = txt.replace('yi','ixi')
    txt = txt.replace('fy', 'fux')
    txt = txt.replace('nye', 'nixe')
-   txt = txt.replace('di', 'dexi').replace('du', 'doxu').replace('dyu','dexyu')
-   txt = txt.replace('ti', 'texi').replace('tu', 'toxu').replace('kwa', 'kuxwa')
-   txt = txt.replace('kwi', 'kuxi').replace('kwe', 'kuxwe').replace('kwo', 'kuxwo')
 
    txt = re.sub('(?<![sc])hu', 'hoxu', txt)
    txt = re.sub('(?<![sc])hye', 'hixe', txt)
 
    return txt
 
-def vtobJapanese(txt):
-
-    return txt
-
 def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
     from aksharamukha.ScriptMap.NonIndic import kana2roman
     import pykakasi
     from . import PostOptions, Convert
 
-    txt = PostOptions.ApplyScriptDefaults(Convert.convertScript(txt, src, "Telugu"), src, "Telugu")
+    txt = Convert.convertScript(txt, src, "Telugu")
 
     txt = txt.replace('ˆ', '')
-
     txt = Convert.convertScript(txt.lower(), "ISO", "Inter")
 
-    # replace virama with o except for kyo, cyo myo
     txt = Convert.convertScript(txt, "Telugu", "RomanKana")
+
+    # Visarga
+    txt = re.sub('([aiueo])' + r'\1' + 'H', r'\1' + r'\1' + 'h' + r'\1', txt)
+
+    txt = re.sub('([aiueo])H', r'\1' + 'h' + r'\1', txt)
+
+    # nasalization
+    txt = txt.replace('Gk', 'nk').replace('Gg', 'ng').replace('Jc', 'nc').replace('Jj', 'nj').replace('mb', 'nb').replace('mp', 'np')
 
     txt = txt.replace("nn", 'nnn').replace('c', 'ch').replace('chch', 'cch').replace('shsh', 'ssh').replace("mm", "nm")
 
     txt = txt.replace(',', '、').replace('\uEA01', '。')
 
-    txt = txt.replace('JJ', 'nny')
+    txt = txt.replace('JJ', 'nnny')
     txt = txt.replace('J', 'ny')
 
     if 'vtobJapanese' in postoptions:
         txt = txt.replace('v', 'b')
 
-    txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|w|sh|s|h)([yrl])', r'\1' + 'i' + r'\2', txt)
+    # fix tra, dra
+    txt = txt.replace('tr', 'tor').replace('dr', 'dor').replace('Dr', 'dor').replace('Tr', 'tor')
+
+    ## how to satya, sadya, sahya, asya, ask the person
+    txt = txt.replace('tya', 'tiya').replace('dya', 'diya').replace('sya', 'suya').replace('shya', 'shuya').replace('chya', 'chuya')#.replace('hya', 'hiya')
+    txt = txt.replace('di', 'dexi').replace('du', 'doxu')#.replace('dyu','dexyu')
+    txt = txt.replace('ti', 'texi').replace('tu', 'toxu')
+    #txt = txt.replace('kwi', 'kuxi').replace('kwe', 'kuxwe').replace('kwo', 'kuxwo').replace('kwa', 'kuxwa')
+    txt = txt.replace('mye', 'mixe').replace('pye', 'pixe').replace('bye', 'bixe')
+    txt = txt.replace('ye', 'ixe')
+    txt = txt.replace('vye', 'vuxixe').replace('vy', 'vuxy')
+    txt = txt.replace('she', 'shixe')
 
     #print(txt)
     if not nativize:
@@ -97,7 +109,8 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
 
         txt = tokushuon(txt)
     else:
-        txt = txt.replace('v', 'w').replace('r\u309A', 'r').replace('k\u309Ak' + '\u309A', 'nnn').replace('k\u309A', 'n')
+        #txt = txt.replace('v', 'w')
+        txt = txt.replace('r\u309A', 'r').replace('k\u309Ak' + '\u309A', 'nnn').replace('k\u309A', 'n')
         txt = txt.replace('yi', 'i').replace('ye', 'e').replace('wu', 'u')
         txt = txt.replace('wo', 'uxo')
 
@@ -109,14 +122,17 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
     if tgt == 'Hiragana':
         txt = kana2roman.to_hiragana(txt)
 
-        txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|w|sh|s|h|z|f)' + '(' + r'\1' + ')', r'\1' + 'u', txt)
+        txt = re.sub('(k|g|ch|j|p|b|m|y|r|w|sh|s|h|z|f)' + '(' + r'\1' + ')', r'\1' + 'u', txt)
+
+        txt = re.sub('(d|t)' + '(' + r'\1' + ')', r'\1' + 'o', txt)
 
         if not nativize:
             txt = tokushuon(txt)
 
         txt = kana2roman.to_hiragana(txt)
-        txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|sh|s|h|z|f)', r'\1' + 'u', txt)
-        txt = re.sub('([wv])', r'\1' + 'i', txt)
+
+        txt = re.sub('(k|g|ch|j|p|b|m|y|r|sh|s|h|z|f|v)', r'\1' + 'u', txt)
+        txt = re.sub('(d|t)', r'\1' + 'o', txt)
 
         if not nativize:
             txt = tokushuon(txt)
@@ -131,14 +147,15 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
 
         txt = kana2roman.to_katakana(txt)
 
-        txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|w|v|sh|s|h|z|f)' + '(' + r'\1' + ')', r'\1' + 'u', txt)
+        txt = re.sub('(k|g|ch|j|p|b|m|y|r|sh|s|h|z|f|v)' + '(' + r'\1' + ')', r'\1' + 'u', txt)
+        txt = re.sub('(d|t)' + '(' + r'\1' + ')', r'\1' + 'o', txt)
 
         if not nativize:
             txt = tokushuon(txt)
 
         txt = kana2roman.to_katakana(txt)
-        txt = re.sub('(k|g|ch|j|t|d|p|b|m|y|r|sh|s|h|z|f)', r'\1' + 'u', txt)
-        txt = re.sub('([wv])', r'\1' + 'i', txt)
+        txt = re.sub('(k|g|ch|j|p|b|m|y|r|sh|s|h|z|f|v)', r'\1' + 'u', txt)
+        txt = re.sub('(d|t)', r'\1' + 'o', txt)
 
         if not nativize:
             txt = tokushuon(txt)
@@ -720,6 +737,7 @@ def ThaiNativeConsonants(Strng):
     Strng = Strng.replace('ค', 'ก\u0325')
     Strng = Strng.replace('ช', 'จ\u0325')
 
+    Strng = Strng.replace('ํ', 'ง')
     Strng = Strng.replace('ง', 'งํ')
 
     Strng = Strng.replace('ะงํ\u035C', '\u0E31งํ')
@@ -2045,11 +2063,12 @@ def LaoPhonetic(Strng):
 
     Strng = Strng.replace('\u0EB0\u035C', '\u035C')
 
+    Strng = Strng.replace('ງ', 'ງໍ')
+
     #Strng = Strng.replace('ຄ', 'ກ')
     #Strng = Strng.replace('ຊ', 'ຈ')
     Strng = Strng.replace('ທ', 'ດ')
     Strng = Strng.replace('ພ', 'ບ')
-    Strng = Strng.replace('\u0ECD', 'ງໍ')
 
     return Strng
 

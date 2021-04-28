@@ -44,7 +44,7 @@ SinhalaVowelSignMap = SinhalaVowelMap[:]
 AyogavahaMap = [
                'n',
                'n',
-               '\u02BD'
+               'H'
                ]
 
 ViramaMap =  [
