@@ -79,7 +79,7 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
 
     txt = txt.replace("nn", 'nnn').replace('c', 'ch').replace('chch', 'cch').replace('shsh', 'ssh').replace("mm", "nm")
 
-    txt = txt.replace(',', '、').replace('\uEA01', '。')
+    txt = txt.replace(',', '、').replace('\uEA01', '。').replace('\uEA02', '。。')
 
     txt = txt.replace('JJ', 'nnny')
     txt = txt.replace('J', 'ny')
@@ -110,7 +110,9 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
         txt = tokushuon(txt)
     else:
         #txt = txt.replace('v', 'w')
-        txt = txt.replace('r\u309A', 'r').replace('k\u309Ak' + '\u309A', 'nnn').replace('k\u309A', 'n')
+        txt = txt.replace('r\u309A', 'r').replace('k\u309Ak' + '\u309A', 'ng').replace('k\u309A', 'ng')
+
+
         txt = txt.replace('yi', 'i').replace('ye', 'e').replace('wu', 'u')
         txt = txt.replace('wo', 'uxo')
 
@@ -970,7 +972,7 @@ def SoyomboSpaceTscheg(Strng):
 
     return Strng
 
-def NasaltoAnsvaraIASTISO(Strng):
+def AnusvaratoNasalASTISO(Strng):
     Strng = Strng.replace('ṁ', 'ṃ')
 
     Strng = re.sub('(ṃ)(k|g)', 'ṅ' + r'\2', Strng)
@@ -1556,13 +1558,17 @@ def GurmukhiTippiGemination(Strng):
 
     return Strng
 
+def khandatabatova(Strng):
+    Strng = Strng.replace('ৎব', 'ত্ৱ')
+
+    return Strng
+
 def KhandaTa(Strng,Target, reverse=False): #Check for Bhakt - Khanda Ta not formed
 
     ta = GM.CrunchSymbols(GM.Consonants, Target)[15]
     khandata = '\u09CE'
     vir = GM.CrunchSymbols(GM.VowelSigns,Target)[0]
-    ListC = '|'.join([GM.CrunchList('ConsonantMap', Target)[x] for x in [15,16,19,22,27,24,25,26]] + ['ৰ'])
-    #print ListC
+    ListC = '|'.join([GM.CrunchList('ConsonantMap', Target)[x] for x in [15,16,19,27,24,25,26,28]] + ['ৰ', 'য়'])
     if not reverse:
         Strng = re.sub('(?<!' + vir + ')' + '('+ta+')'+'('+vir+')'+'(?!'+ListC+')',khandata, Strng)
     else:
@@ -1754,7 +1760,17 @@ def VaToBa(Strng,Target):
     va = GM.CrunchSymbols(GM.Consonants, Target)[28]
     ba = GM.CrunchSymbols(GM.Consonants, Target)[22]
 
+    if Target == 'Bengali':
+        #Strng = Strng.replace('ৎৱ', 'ত্ব')
+        pass
+
     Strng = Strng.replace(va,ba)
+
+    return Strng
+
+def tbadiff(Strng,Target):
+
+    Strng = Strng.replace('ৎব', 'ত্ব')
 
     return Strng
 

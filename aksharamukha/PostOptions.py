@@ -26,7 +26,7 @@ def ApplyScriptDefaults(Strng,Source,Target):
         Options += ['TamilNaToNNa','AnusvaraToNasal', 'TamilpredictDentaNa']
 
     elif Target == 'Bengali':
-        Options += ['VaToBa','YaToYYa','KhandaTa']
+        Options += ['VaToBa','YaToYYa']
 
     elif Target == 'MeeteiMayek':
         Options += ['MeeteiMayekremoveHistorical']
@@ -35,7 +35,7 @@ def ApplyScriptDefaults(Strng,Source,Target):
         Options += ['LimburemoveHistorical']
 
     elif Target == 'Assamese':
-        Options += ['YaToYYa','KhandaTa']
+        Options += ['YaToYYa']
 
     elif Target == 'Oriya':
         Options += ['OriyaVa','YaToYYa']

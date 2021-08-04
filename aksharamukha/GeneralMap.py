@@ -181,7 +181,10 @@ Gemination =  {
                'Urdu': '\u0651',
                'Grantha': '𑌂',
                'Malayalam': 'ം',
-               'Khojki': '\U00011237'
+               'Khojki': '\U00011237',
+               'Buginese': '',
+               'Buhid': '',
+               'Tagbanwa': ''
               }
 
 Transliteration = ['IASTPali', 'RomanReadable', 'Aksharaa', 'ISO', 'IAST', 'HK','Titus','Itrans','Velthuis','WX', 'IPA', 'RussianCyrillic']
