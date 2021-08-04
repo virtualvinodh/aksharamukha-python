@@ -1233,6 +1233,22 @@ def AddRepha(Strng,Script,Repha,reverse=False):
 
     return Strng
 
+def FixTagbanwa(Strng, reverse = False):
+    if not reverse:
+        Strng = PostProcess.InsertGeminationSign(Strng, 'Tagbanwa')
+    else:
+        pass
+
+    return Strng
+
+def FixBuhid(Strng, reverse = False):
+    if not reverse:
+        Strng = PostProcess.InsertGeminationSign(Strng, 'Buhid')
+    else:
+        pass
+
+    return Strng
+
 def FixBuginese(Strng, reverse = False):
 
     if not reverse:
@@ -1240,6 +1256,8 @@ def FixBuginese(Strng, reverse = False):
         Strng = Strng.replace("ᨆ\u02BEᨄ","ᨇ")
         Strng = Strng.replace("ᨊ\u02BEᨑ","ᨋ")
         Strng = Strng.replace("ᨎ\u02BEᨌ","ᨏ")
+
+        Strng = PostProcess.InsertGeminationSign(Strng, 'Buginese')
 
         Strng = Strng.replace('\u02BE', '')
     else:
