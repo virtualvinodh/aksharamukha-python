@@ -297,7 +297,7 @@ def PostFixRomanOutput(Strng,Source,Target):
         if Source == 'Oriya':
             Strng = Strng.replace("ksh", "x")
             Strng = re.sub("x(?=[aeiou])", "ksh", Strng)
-            Strng = Strng.replace('jny', 'gy').replace("sh", "s")
+            Strng = Strng.replace('jny', 'gy').replace("sh", "s").replace('r\'', 'd')
         if Source == 'Bengali':
             Strng = Strng.replace('m\'', "ng")
 

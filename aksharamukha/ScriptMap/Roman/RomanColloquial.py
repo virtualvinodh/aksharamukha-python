@@ -105,8 +105,8 @@ NuktaConsonantMap =  [
                      'kh',
                      'g',
                      'z',
-                     'r',
-                     'rh',
+                     'r\'',
+                     'r\'h',
                      'f',
                      'y'
                      ]
