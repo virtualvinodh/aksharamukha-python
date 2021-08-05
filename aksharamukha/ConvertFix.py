@@ -288,6 +288,21 @@ def PostFixRomanOutput(Strng,Source,Target):
 
     if Target == "RomanReadable":
         Strng = FixRomanReadable(Strng)
+        if Source == 'Tamil':
+            Strng = Strng.replace('t', 'th').replace("d", "dh").replace("h'","")
+
+    if Target == "RomanColloquial":
+        if Source == 'Tamil':
+            Strng = Strng.replace('t', 'th').replace("d", "dh").replace("h'","")
+        if Source == 'Oriya':
+            Strng = Strng.replace("ksh", "x")
+            Strng = re.sub("x(?=[aeiou])", "ksh", Strng)
+            Strng = Strng.replace('jny', 'gy').replace("sh", "s")
+        if Source == 'Bengali':
+            Strng = Strng.replace('m\'', "ng")
+
+        Strng = FixRomanColloquial(Strng)
+
 
     if Target == "IAST" or Target == "IASTPali":
         Strng = Strng.replace("a_i", "aï")
@@ -2054,6 +2069,38 @@ def FixRomanReadable(Strng, reverse = False):
         Strng = Strng.replace("jnj", "jny")
 
         Strng = Strng.replace('\uE001', '\\n')
+    else:
+        pass
+
+    return Strng
+
+def FixRomanColloquial(Strng, reverse = False):
+    if not reverse:
+        Strng = Strng.replace('\\n', '\uE001')
+        Strng = re.sub('([aiueo])nj([aeiou])', r'\1' + 'ny' + r'\2', Strng)
+        Strng = re.sub('(\W)nj([aeiou])', r'\1' + 'ny' + r'\2', Strng)
+        Strng = re.sub('^nj([aeiou])', 'ny' + r'\1', Strng)
+
+        Strng = Strng.replace("njnj", "nny")
+
+        Strng = Strng.replace("Mk", "ngk")
+        Strng = Strng.replace("Mg", "ngg")
+        Strng = Strng.replace("Mc", "njc")
+        Strng = Strng.replace("Mj", "njj")
+        Strng = Strng.replace("Md", "nd")
+        Strng = Strng.replace("Mt", "nt")
+        Strng = Strng.replace("M", 'm')
+
+        Strng = Strng.replace("ngk", "nk")
+        Strng = Strng.replace("ngg", "ng")
+        Strng = Strng.replace("njc", "nc")
+        Strng = Strng.replace("njj", "nj")
+
+        Strng = Strng.replace("jnj", "jny")
+
+        Strng = Strng.replace('\uE001', '\\n')
+
+        Strng = Strng.replace('\'', '').replace("_", "")
     else:
         pass
 
