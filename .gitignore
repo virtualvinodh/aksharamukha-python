@@ -10,3 +10,9 @@ aksharamukha/__pycache__/
 aksharamukha/ScriptMap/Roman/__pycache__/
 
 aksharamukha/ScriptMap/NonIndic/__pycache__/
+
+env/
+
+aksharaenv/
+
+build/
