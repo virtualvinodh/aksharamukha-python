@@ -1,0 +1,31 @@
+Metadata-Version: 2.1
+Name: aksharamukha
+Version: 1.9
+Summary: Provides script conversion (a.k.a transliteration) between scripts within the Indic cultural sphere
+Home-page: https://github.com/@@@/aksharamukha
+Author: Vinodh Rajan
+Author-email: vinodh@virtualvindh.com
+License: GNU AGPL 3.0
+Description: # aksharamukha-python
+        Aksharamukha Python Library
+        
+Keywords: unicode indic indian language script brahmi brahmic asian transliteration conversion writing alphabet romanization
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: Developers
+Classifier: Natural Language :: Tamil
+Classifier: Natural Language :: Telugu
+Classifier: Natural Language :: Hindi
+Classifier: Natural Language :: Marathi
+Classifier: Natural Language :: Bengali
+Classifier: Natural Language :: Urdu
+Classifier: Natural Language :: Thai
+Classifier: Natural Language :: Tibetan
+Classifier: Topic :: Text Processing :: Linguistic
+Classifier: License :: OSI Approved :: GNU Affero General Public License v3
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Description-Content-Type: text/markdown
