@@ -106,7 +106,7 @@ def VedicSvarasDiacrtics(Strng, Target):
     Strng = Strng.replace('\\m++', 'gͫ̄')
     Strng = Strng.replace('\\m+', 'gͫ')
 
-    if (Target == 'ISO'):
+    if (Target == 'ISO' or Target == 'ISOPali'):
         Strng = Strng.replace('\\’’', '̎')
         Strng = Strng.replace('\\’', '̍')
 
@@ -230,7 +230,7 @@ def FixVedic(Strng, Target):
     Strng = Strng.replace('\\\\"', '\\"')
     Strng = Strng.replace('\\\\_', '\\_')
 
-    vedicDiacRoman = ["IAST", "IASTPali", "ISO", "Titus"]
+    vedicDiacRoman = ["IAST", "IASTPali", "ISO", "Titus", "ISOPali"]
     vedicnonDiacRoman = ["HK", "Itrans", "Velthuis", "SLP1", "WX"]
 
     if Target in vedicDiacRoman:
@@ -239,7 +239,7 @@ def FixVedic(Strng, Target):
         Strng = Strng.replace('\\"','↑↑').replace("\\_", '↓').replace("\\\'",'↑')
         Strng = Strng.replace('\\m++', 'gͫ̄')
         Strng = Strng.replace('\\m+', 'gͫ')
-    elif Target == "RomanReadable":
+    elif Target == "RomanReadable" or Target == "RomanColloquial":
         Strng = Strng.replace('\\"','').replace("\\_", '').replace("\\\'",'')
         Strng = Strng.replace('\\m++', 'ggum')
         Strng = Strng.replace('\\m+', 'gum')
@@ -308,8 +308,10 @@ def PostFixRomanOutput(Strng,Source,Target):
         Strng = Strng.replace("a_i", "aï")
         Strng = Strng.replace("a_u", "aü")
 
-    if Target == "ISO":
+    if Target == "ISO" or Target == "ISOPali":
         Strng = Strng.replace("\\’", "\\\'")
+        Strng = Strng.replace("\\’\u02BD", "\\\'")
+
         Strng = Strng.replace("a_i", "a:i")
         Strng = Strng.replace("a_u", "a:u")
 

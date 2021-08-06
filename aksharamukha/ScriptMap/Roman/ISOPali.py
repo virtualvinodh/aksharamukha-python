@@ -129,7 +129,7 @@ OmMap = [
 Aytham =['\u1E35']
 
 SignMap =[
-         '\u02BD\u02BD',
+         '’\u02BD',
          '\u002E',
          '\u002E\u002E'
          ]
