@@ -1,1 +1,2 @@
-requests
+Requests==2.20.1
+pykakasi==2.0.6
