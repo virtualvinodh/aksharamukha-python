@@ -714,7 +714,7 @@ def TeluguTamilZha(Strng):
 def TeluguTamilRra(Strng):
     Strng = Strng.replace('ఱ్ఱ', 'ౘ్ౘ')
     Strng = Strng.replace('ట్ర', 'ౘ్ౘ')
-    String = Strng.replac('ండ్ర','న్ఱ')
+    Strng = Strng.replace('ండ్ర','న్ఱ')
 
     return Strng
 
