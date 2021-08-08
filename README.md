@@ -4,7 +4,7 @@ Aksharamukha aims to provide transliteration a.k.a script conversion between var
 
 Apart from the simple mapping of characters, Askharamukha also attempts to implement various script/language-specific orthographic conventions (where known) such as vowel lengths, gemination and nasalization. It also provides several customization options to fine-tune and get the desired orthography.
 
-Aksharamukha as of now supports 85 scripts and 8 romanization methods.
+Aksharamukha as of now supports 94 scripts and several romanization methods.
 
 *Ahom, Ariyaka, Assamese, Avestan, Balinese, Batak Karo, Batak Mandailing, Batak Pakpak, Batak Toba, Batak Simalungun, Bengali (Bangla), Brahmi, Bhaiksuki, Buginese (Lontara), Buhid, Burmese (Myanmar), Chakma, Cham, Devanagari, Dogra, Gondi (Gunjala), Gondi (Masaram), Grantha, Grantha (Pandya), Gujarati, Hanunoo, Hebrew, Japanese (Hiragana), Japanese (Katakana), Javanese, Kaithi, Kannada, Kawi, Khamti Shan, Kharoshthi, Khmer (Cambodian), Khojki, Khom Thai, Khudawadi, Lao, Lao (Pali), Lepcha, Limbu, Malayalam, Mahajani, Marchen, Meetei Mayek (Manipuri), Modi, Mon, Mongolian (Ali Gali), Mro, Multani, Newa (Nepal Bhasa), Old Persian, Oriya (Odia), Pallava, PhagsPa, Punjabi (Gurmukhi), Ranjana (Lantsa), Rejang, Rohingya (Hanifi), Santali (Ol Chiki), Saurashtra, Siddham, Shan, Sharada, Sinhala, Sora Sompeng, Soyombo, Sundanese, Syloti Nagari, Tagbanwa, Tagalog, Tai Laing, Takri, Tamil, Tamil (Extended), Tamil Brahmi, Telugu, Thaana (Dhivehi), Thai, Tham (Lanna), Tham (Lao), Tham (Tai Khuen), Tham (Tai Lue), Tibetan, Tirhuta (Maithili), Urdu, Vatteluttu, Wancho, Warang Citi, Zanabazar Square, Cyrillic (Russian), IPA*
 
