@@ -137,6 +137,9 @@ def auto_detect(text, plugin = False):
         inputScript = 'ZanabazarSquare'
     elif inputScript == 'Arabic':
         inputScript = 'Urdu'
+        shahmukh_char = 'ݨ لؕ مھ نھ یھ رھ لھ وھ'.split(" ")
+        if any(char in text for char in shahmukh_char):
+            inputScript = 'Shahmukhi'
     elif inputScript == 'Latin':
         diacritics = ['ā', 'ī', 'ū', 'ṃ', 'ḥ', 'ś', 'ṣ', 'ṇ', 'ṛ', 'ṝ', 'ḷ', 'ḹ', 'ḻ', 'ṉ', 'ṟ', 'ṭ', 'ḍ', 'ṅ', 'ñ']
         Itrans = ['R^i', 'R^I', 'L^i', 'L^I', '.N', '~N', '~n', 'Ch', 'sh', 'Sh']
