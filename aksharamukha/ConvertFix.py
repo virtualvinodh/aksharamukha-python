@@ -11,6 +11,12 @@ import re
 ## ListC check.. if LLA is there in ListC... just now it has only Consonant Map
 ### Rewrite all ListC, ListV as sorted(List,key=len,reverse=True)
 
+def lenSort(x,y):
+    if(len(x[0]) > len(y[0])):
+        return -1
+    else:
+        return 0
+
 def OriyaIPAFixPre(Strng):
     Strng = Strng.replace('ଂ', 'ଙ୍')
     Strng = Strng.replace('ଃ', 'ହ୍')
@@ -1312,10 +1318,16 @@ def FixJavanese(Strng,reverse=False):
 
     return Strng
 
-# Urdu - Shadda, Final E
-def FixUrdu(Strng,reverse=False):
-    Target = 'Urdu'
 
+def FixUrdu(Strng, reverse=False):
+    return FixUrduShahmukhi("Urdu", Strng, reverse)
+
+
+def FixShahmukhi(Strng, reverse=False):
+    return FixUrduShahmukhi('Shahmukhi', Strng, reverse)
+
+# Urdu - Shadda, Final E
+def FixUrduShahmukhi(Target, Strng,reverse=False):
     # .replace(u'\u064E','')
 
     Strng = Strng.replace('\u02BD','')
@@ -1340,8 +1352,8 @@ def FixUrdu(Strng,reverse=False):
     if not reverse:
         ## Fixing Hamza
 
-        ListVS = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns,'Urdu')) + ')'
-        ListV = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels,'Urdu')) + ')'
+        ListVS = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns,Target)) + ')'
+        ListV = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels,Target)) + ')'
 
         hamzaFull = "\u0621"
         hamzaChair = "\u0626"
@@ -1352,7 +1364,7 @@ def FixUrdu(Strng,reverse=False):
 
         Strng = re.sub('('+a+')'+'('+ShortVowels+')',r'\2',Strng)
         Strng = re.sub('(?<!'+Aa+')'+'('+a+')'+'('+va+'|'+ya+')'+'(?!'+ ShortVowels +')',r'\2',Strng)
-        ListC = '|'.join(GM.CrunchSymbols(GM.Consonants,'Urdu')).replace(a,'')
+        ListC = '|'.join(GM.CrunchSymbols(GM.Consonants,Target)).replace(a,'')
         Ayoga = '|'.join(Urdu.AyogavahaMap[0] + Urdu.AyogavahaMap[1])
 
         Strng = Strng.replace(ya,yaBig)
@@ -1378,17 +1390,64 @@ def FixUrdu(Strng,reverse=False):
         Strng = Strng.replace('ےی', 'یی')
         Strng = Strng.replace('ےْ', 'یْ')
 
-        Strng = Strng.replace('ءاِی', 'ئی')
+        # Hamza on ya
+        Strng = Strng.replace('ءاِی','\u0626\u0650\u06CC')
         Strng = Strng.replace('ءاے', 'ئے')
 
-        ## Fix
+        Strng = Strng.replace('ءای', 'ئی')
 
-        Strng = Strng.replace('', '')
+        # Hamza on waw
+        Strng = Strng.replace('ءاو','ؤ') #o
+        Strng = Strng.replace('ءاُو', '\u0624\u064F') #long u
+
+        Strng = Strng.replace('ءاُ', '\u0624\u064F') #short u
+
+        # kau/ kaU
+
+        Strng = re.sub('('+ListC+')(اُو)', r'\1'+'\u0624\u064F', Strng)
+        Strng = re.sub('('+ListC+')(اُ)', r'\1'+'\u0624\u064F', Strng)
+
+        Strng = re.sub('('+ListC+')(او)', r'\1'+'\u0624', Strng)
+
+        # Hamza on ya for short i
+        Strng = Strng.replace('ءاِ', '\u0626\u0650')
+        Strng = Strng.replace('ئِءآ', '\u0626\u0650\u0627')
+
+        Strng = re.sub('('+ListC+')(\u0627\u0650)', r'\1'+'\u0626\u0650', Strng)
+
+        # for gae kae etc
+        Strng = re.sub('('+ListC+')(ا)(ے|ی)', r'\1'+'\u0626' + r'\3', Strng)
+
+        ## Fix Double Hamza to Single Hamza
+
+        Strng = Strng.replace('ئِئ', 'ئِ')
+        Strng = Strng.replace('ئِؤ', 'ئِو')
+
+        ## Fix Retroflex with combining characters
+        Strng = Strng.replace('ࣇ', 'لؕ')
+
+        if Target == 'Shahmukhi':
+            #aspirated nasals and liquids
+            Strng = re.sub('(ن|م|ی|ر|ل|و)(\u0652)(ہ)',r'\1'+'\u06BE', Strng)
+
     else:
         if True:
             #print(Strng)
 
-            ListC = GM.CrunchSymbols(GM.Consonants,'Urdu')
+            ## replace chaschmee ha with regular ha when not surrounded preceeded by consonnants
+            Strng = re.sub('(\s)\u06BE',r'\1'+'ہ', Strng)
+
+            #decompose hamza with long e
+            Strng = Strng.replace('ۓ', '_\u06d2')
+
+            if Target == 'Shahmukhi':
+                #aspirated nasals and liquids
+                Strng = re.sub('(ن|م|ی|ر|ل|و)(\u06BE)',r'\1'+'\u0652ہ', Strng)
+
+            ## Fix Retroflex with combining characters
+            Strng = Strng.replace('لؕ', 'ࣇ')
+
+            ListC = GM.CrunchSymbols(GM.Consonants,Target)
 
             ## Replacig Arabic with closest Indic counterparts
 
@@ -1431,10 +1490,12 @@ def FixUrdu(Strng,reverse=False):
 
 
             #print(Strng)
-
+            print(Target)
             if "\u02BB\u02BB" in Strng: ## Short Vowels not showm. INnsert /a/ to all consonats and approximate
                 Strng = Strng.replace('ا', 'اَ')
+                #retroflex la
 
+                Strng = Strng.replace('لؕ', 'لَؕ')
                 for c in ListC:
                     Strng = Strng.replace(c.replace(a, ''), c)
                     Strng = Strng.replace(c + 'اَ', c + 'ا')
@@ -1451,22 +1512,27 @@ def FixUrdu(Strng,reverse=False):
 
                 Strng = Strng.replace(a + a, a)
 
+                Strng = Strng.replace('اَے', 'اے')
                 Strng= Strng.replace(yaBig, ya)
 
                 Strng = Strng.replace('\u02BB\u02BB', '')
+
             else:
                 ShortVowelsR = '|'.join(['\u0652','\u0650','\u064F'])
                 longVowels = '|'.join(['و', 'ا', ya])
 
                 Strng= Strng.replace(yaBig, ya)
 
-                ListCR = '|'.join(GM.CrunchSymbols(GM.Consonants,'Urdu')).replace(a,'')
+                ListCR = '|'.join(GM.CrunchSymbols(GM.Consonants,Target)).replace(a,'')
 
                 Strng = re.sub('(' + ListCR + ')' + '('+ShortVowelsR+')',r'\1' + a + r'\2',Strng)
                 Strng = re.sub('(' + ListCR + ')' + '('+longVowels+')'  + '(?!' + ShortVowels + ')',r'\1' + a + r'\2',Strng)
 
+                #Hamzya ya va
+                Strng = re.sub('(' + ListCR + ')' + '(_)', r'\1' + a + r'\2',Strng)
 
-            VowelVS = '|'.join(GM.CrunchSymbols(GM.VowelSigns,'Urdu'))
+
+            VowelVS = '|'.join(GM.CrunchSymbols(GM.VowelSigns,Target))
 
 
         # print(Strng)
