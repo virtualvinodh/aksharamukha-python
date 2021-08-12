@@ -1,0 +1,8246 @@
+Aghb:
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Aghb-translit
+        lang_tag: und-Aghb
+        population: 0
+        script: Aghb
+        script_iso: Aghb
+        script_suffix: ""
+    xag:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Aghb-translit
+        family: cau-lzg
+        lang: xag
+        lang_tag: xag-Aghb
+        name: Aghwan
+        other_names:
+        - Caucasian Albanian
+        - Old Udi
+        population: 0
+        script: Aghb
+        script_iso: Aghb
+        script_suffix: ""
+Ahom:
+    aho:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ahom-translit
+        family: tai-swe
+        lang: aho
+        lang_tag: aho-Ahom
+        name: Ahom
+        population: 0
+        script: Ahom
+        script_iso: Ahom
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ahom-translit
+        lang_tag: und-Ahom
+        population: 0
+        script: Ahom
+        script_iso: Ahom
+        script_suffix: ""
+Arab:
+    ar:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ar-translit
+        aliases: &id001
+        - Standard Arabic
+        - Literary Arabic
+        - High Arabic
+        family: sem-arb
+        lang: ar
+        lang_tag: ar-Arab
+        name: Arabic
+        population: 350901502
+        script: Arab
+        script_iso: Arab
+        script_suffix: ""
+        varieties: &id002
+        - Modern Standard Arabic
+        - Classical Arabic
+        - Judeo-Arabic
+    awa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - inc-pra
+        family: inc-hie
+        lang: awa
+        lang_tag: awa-Arab
+        name: Awadhi
+        population: 25862924
+        script: fa-Arab
+        script_iso: Arab
+        script_suffix: ""
+    bhd:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        aliases:
+        - Bhadarwahi
+        family: him
+        lang: bhd
+        lang_tag: bhd-Arab
+        name: Bhadrawahi
+        population: 0
+        script: Arab
+        script_iso: Arab
+        script_suffix: ""
+    chg:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ar-translit
+        family: trk-kar
+        lang: chg
+        lang_tag: chg-Arab
+        name: Chagatai
+        population: 0
+        script: Arab
+        script_iso: Arab
+        script_suffix: ""
+    ckb:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ckb-translit
+        aliases:
+        - Sorani
+        ancestors:
+        - ku-pro
+        family: ku
+        lang: ckb
+        lang_tag: ckb-Arab
+        name: Central Kurdish
+        population: 11086549
+        script: ku-Arab
+        script_iso: Arab
+        script_suffix: ""
+    cpg:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: grc-translit
+        aliases:
+        - Cappadocian
+        ancestors:
+        - grc
+        family: grk
+        lang: cpg
+        lang_tag: cpg-Arab
+        name: Cappadocian Greek
+        population: 0
+        script: fa-Arab
+        script_iso: Arab
+        script_suffix: ""
+    dng:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: dng-translit
+        ancestors:
+        - cmn
+        family: zhx
+        lang: dng
+        lang_tag: dng-Arab
+        name: Dungan
+        population: 0
+        script: Arab
+        script_iso: Arab
+        script_suffix: ""
+    doi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: doi
+        lang_tag: doi-Arab
+        name: Dogri
+        population: 2652180
+        script: fa-Arab
+        script_iso: Arab
+        script_suffix: ""
+    hac:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ckb-translit
+        family: ira-zgr
+        lang: hac
+        lang_tag: hac-Arab
+        name: Gurani
+        other_names:
+        - Gorani
+        - Avromani
+        - Awroman
+        - Awromani
+        - Hawramani
+        - Hawrami
+        - Hewrami
+        - Hourami
+        - Howrami
+        - Ourami
+        population: 0
+        script: ku-Arab
+        script_iso: Arab
+        script_suffix: ""
+    inc-opa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pa-Arab-translit
+        ancestors:
+        - inc-tak
+        family: inc-pan
+        lang: inc-opa
+        lang_tag: inc-Arab-x-opa
+        name: Old Punjabi
+        population: 0
+        script: pa-Arab
+        script_iso: Arab
+        script_suffix: ""
+    kfr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: gu-translit
+        ancestors:
+        - inc-vra
+        family: inc-snd
+        lang: kfr
+        lang_tag: kfr-Arab
+        name: Kachchi
+        other_names:
+        - Kutchi
+        - Cutchi
+        - Kachchhi
+        - Kutchhi
+        population: 994568
+        script: sd-Arab
+        script_iso: Arab
+        script_suffix: ""
+    kk:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: kk-translit
+        family: trk-kno
+        lang: kk
+        lang_tag: kk-Arab
+        name: Kazakh
+        population: 13637392
+        script: kk-Arab
+        script_iso: Arab
+        script_suffix: ""
+    kmr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        ancestors:
+        - ku-pro
+        family: ku
+        lang: kmr
+        lang_tag: kmr-Arab
+        name: Northern Kurdish
+        other_names:
+        - Kurmanji
+        population: 0
+        script: ku-Arab
+        script_iso: Arab
+        script_suffix: ""
+    kok:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mr-translit
+        ancestors:
+        - pmh
+        family: inc-sou
+        lang: kok
+        lang_tag: kok-Arab
+        name: Konkani
+        population: 4906533
+        script: fa-Arab
+        script_iso: Arab
+        script_suffix: ""
+    ks:
+        Deva:
+            override: false
+            script: Deva
+            script_iso: Deva
+            translit: ks-Arab-to-Deva-translit
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ks-Arab-translit
+        aliases:
+        - Koshur
+        ancestors:
+        - inc-dar-pro
+        family: inc-dar
+        lang: ks
+        lang_tag: ks-Arab
+        name: Kashmiri
+        population: 5723031
+        script: ks-Arab
+        script_iso: Arab
+        script_suffix: ""
+    ky:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: ky-translit
+        aliases:
+        - Kirghiz
+        - Kirgiz
+        family: trk-kip
+        lang: ky
+        lang_tag: ky-Arab
+        name: Kyrgyz
+        population: 3338267
+        script: Arab
+        script_iso: Arab
+        script_suffix: ""
+    lki:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: lki-translit
+        ancestors:
+        - ku-pro
+        family: ku
+        lang: lki
+        lang_tag: lki-Arab
+        name: Laki
+        population: 645417
+        script: fa-Arab
+        script_iso: Arab
+        script_suffix: ""
+    nog:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: nog-translit
+        family: trk-kno
+        lang: nog
+        lang_tag: nog-Arab
+        name: Nogai
+        other_names:
+        - Nogay
+        population: 0
+        script: Arab
+        script_iso: Arab
+        script_suffix: ""
+    pa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pa-Arab-translit
+        aliases:
+        - Panjabi
+        ancestors:
+        - inc-opa
+        family: inc-pan
+        lang: pa
+        lang_tag: pa-Arab
+        name: Punjabi
+        population: 201120217
+        script: pa-Arab
+        script_iso: Arab
+        script_suffix: ""
+    rif:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Tfng-translit
+        family: ber
+        lang: rif
+        lang_tag: rif-Arab
+        name: Tarifit
+        other_names:
+        - Rifain
+        population: 3692411
+        script: Arab
+        script_iso: Arab
+        script_suffix: ""
+    sdh:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sdh-translit
+        ancestors:
+        - ku-pro
+        family: ku
+        lang: sdh
+        lang_tag: sdh-Arab
+        name: Southern Kurdish
+        other_names:
+        - Kermanshani
+        - Kermanshahi
+        - Kermanshahi Kurdish
+        - Kermanshani Kurdish
+        population: 3142162
+        script: ku-Arab
+        script_iso: Arab
+        script_suffix: ""
+    shi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Tfng-translit
+        family: ber
+        lang: shi
+        lang_tag: shi-Arab
+        name: Tashelhit
+        other_names:
+        - Tachelhit
+        - Chleuh
+        - Shilha
+        - Tashlhiyt
+        - Tashelhit Berber
+        - Tachelhit Berber
+        - Tashlhiyt Berber
+        population: 6187736
+        script: Arab
+        script_iso: Arab
+        script_suffix: ""
+    tg:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: tg-translit
+        aliases:
+        - Eastern Persian
+        - Tadjik
+        - Tadzhik
+        - Tajiki
+        - Tajik Persian
+        - Tajiki Persian
+        ancestors:
+        - pal
+        family: ira-swi
+        lang: tg
+        lang_tag: tg-Arab
+        name: Tajik
+        population: 9644223
+        script: fa-Arab
+        script_iso: Arab
+        script_suffix: ""
+    tt:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: tt-translit
+        family: trk-kbu
+        lang: tt
+        lang_tag: tt-Arab
+        name: Tatar
+        population: 1984108
+        script: tt-Arab
+        script_iso: Arab
+        script_suffix: ""
+    tzm:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Tfng-translit
+        family: ber
+        lang: tzm
+        lang_tag: tzm-Arab
+        name: Central Atlas Tamazight
+        population: 3485047
+        script: Arab
+        script_iso: Arab
+        script_suffix: ""
+    ug:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: ug-translit
+        aliases:
+        - Uigur
+        - Uighur
+        - Uygur
+        ancestors:
+        - chg
+        family: trk-kar
+        lang: ug
+        lang_tag: ug-Arab
+        name: Uyghur
+        population: 8052967
+        script: ug-Arab
+        script_iso: Arab
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ar-translit
+        aliases: *id001
+        family: sem-arb
+        lang: ar
+        lang_tag: ar-Arab
+        name: Arabic
+        population: 350901502
+        script: Arab
+        script_iso: Arab
+        script_suffix: ""
+        varieties: *id002
+    xco:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Chrs-translit
+        family: ira-sbc
+        lang: xco
+        lang_tag: xco-Arab
+        name: Khwarezmian
+        other_names:
+        - Chorasmian
+        - Khwarazmian
+        - Khorezmian
+        population: 0
+        script: Arab
+        script_iso: Arab
+        script_suffix: ""
+    xng:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mn-translit
+        family: xgn
+        lang: xng
+        lang_tag: xng-Arab
+        name: Middle Mongolian
+        population: 0
+        script: Arab
+        script_iso: Arab
+        script_suffix: ""
+    xnr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - doi
+        family: him
+        lang: xnr
+        lang_tag: xnr-Arab
+        name: Kangri
+        population: 2121744
+        script: fa-Arab
+        script_iso: Arab
+        script_suffix: ""
+Armi:
+    arc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Armi-translit
+        family: sem-ara
+        lang: arc
+        lang_tag: arc-Armi
+        name: Aramaic
+        population: 0
+        script: Armi
+        script_iso: Armi
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Armi-translit
+        lang_tag: und-Armi
+        population: 0
+        script: Armi
+        script_iso: Armi
+        script_suffix: ""
+    xco:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Chrs-translit
+        family: ira-sbc
+        lang: xco
+        lang_tag: xco-Armi
+        name: Khwarezmian
+        other_names:
+        - Chorasmian
+        - Khwarazmian
+        - Khorezmian
+        population: 0
+        script: Armi
+        script_iso: Armi
+        script_suffix: ""
+Armn:
+    axm:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Armn-translit
+        ancestors:
+        - xcl
+        family: hyx
+        lang: axm
+        lang_tag: axm-Armn
+        name: Middle Armenian
+        population: 0
+        script: Armn
+        script_iso: Armn
+        script_suffix: ""
+    hy:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Armn-translit
+        aliases:
+        - Modern Armenian
+        ancestors:
+        - axm
+        family: hyx
+        lang: hy
+        lang_tag: hy-Armn
+        name: Armenian
+        population: 5317273
+        script: Armn
+        script_iso: Armn
+        script_suffix: ""
+        varieties:
+        - Eastern Armenian
+        - Western Armenian
+    kmr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        ancestors:
+        - ku-pro
+        family: ku
+        lang: kmr
+        lang_tag: kmr-Armn
+        name: Northern Kurdish
+        other_names:
+        - Kurmanji
+        population: 0
+        script: Armn
+        script_iso: Armn
+        script_suffix: ""
+    qwm:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Armn-translit
+        family: trk-kip
+        lang: qwm
+        lang_tag: qwm-Armn
+        name: Kipchak
+        other_names:
+        - Kypchak
+        - Qypchaq
+        - Armeno-Kipchak
+        - Armeno-Qypchaq
+        - Mamluk-Kipchak
+        - Cuman
+        - Kuman
+        - Polovets
+        population: 0
+        script: Armn
+        script_iso: Armn
+        script_suffix: ""
+    rmi:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Armn-translit
+        ancestors:
+        - psu
+        - hy
+        family: qfa-mix
+        lang: rmi
+        lang_tag: rmi-Armn
+        name: Lomavren
+        population: 0
+        script: Armn
+        script_iso: Armn
+        script_suffix: ""
+    udi:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Armn-translit
+        ancestors:
+        - xag
+        family: cau-nec
+        lang: udi
+        lang_tag: udi-Armn
+        name: Udi
+        population: 0
+        script: Armn
+        script_iso: Armn
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: armn-translit
+        lang_tag: und-Armn
+        population: 0
+        script: Armn
+        script_iso: Armn
+        script_suffix: ""
+    xcl:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Armn-translit
+        family: hyx
+        lang: xcl
+        lang_tag: xcl-Armn
+        name: Old Armenian
+        other_names:
+        - Classical Armenian
+        - Liturgical Armenian
+        - Grabar
+        population: 0
+        script: Armn
+        script_iso: Armn
+        script_suffix: ""
+Avst:
+    ae:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Avst-translit
+        aliases:
+        - Zend
+        - Old Bactrian
+        family: ira-cen
+        lang: ae
+        lang_tag: ae-Avst
+        name: Avestan
+        population: 0
+        script: Avst
+        script_iso: Avst
+        script_suffix: ""
+    pal:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Avst-translit
+        ancestors:
+        - peo
+        family: ira-swi
+        lang: pal
+        lang_tag: pal-Avst
+        name: Middle Persian
+        other_names:
+        - Pahlavi
+        - Manichaean Middle Persian
+        population: 0
+        script: pal-Avst
+        script_iso: Avst
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: avst-translit
+        lang_tag: und-Avst
+        population: 0
+        script: Avst
+        script_iso: Avst
+        script_suffix: ""
+Bali:
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Bali
+        name: Sanskrit
+        population: 15913
+        script: Bali
+        script_iso: Bali
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Bali
+        name: Sanskrit
+        population: 15913
+        script: Bali
+        script_iso: Bali
+        script_suffix: ""
+Beng:
+    as:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: as-translit
+        aliases:
+        - Asamiya
+        ancestors:
+        - inc-mas
+        family: inc-eas
+        lang: as
+        lang_tag: as-Beng
+        name: Assamese
+        population: 17239170
+        script: as-Beng
+        script_iso: Beng
+        script_suffix: ""
+    bn:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: bn-translit
+        aliases:
+        - Bangla
+        ancestors:
+        - inc-mbn
+        family: inc-eas
+        lang: bn
+        lang_tag: bn-Beng
+        name: Bengali
+        population: 267280377
+        script: Beng
+        script_iso: Beng
+        script_suffix: ""
+    inc-mas:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: inc-mas-translit
+        ancestors:
+        - inc-oas
+        family: inc-eas
+        lang: inc-mas
+        lang_tag: inc-Beng-x-mas
+        name: Middle Assamese
+        population: 0
+        script: as-Beng
+        script_iso: Beng
+        script_suffix: ""
+    inc-mbn:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: inc-mbn-translit
+        ancestors:
+        - inc-obn
+        family: inc-eas
+        lang: inc-mbn
+        lang_tag: inc-Beng-x-mbn
+        name: Middle Bengali
+        population: 0
+        script: Beng
+        script_iso: Beng
+        script_suffix: ""
+    inc-oas:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: inc-oas-translit
+        ancestors:
+        - inc-kam
+        family: inc-eas
+        lang: inc-oas
+        lang_tag: inc-Beng-x-oas
+        name: Early Assamese
+        population: 0
+        script: as-Beng
+        script_iso: Beng
+        script_suffix: ""
+    inc-ork:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: as-translit
+        ancestors:
+        - inc-kam
+        family: inc-eas
+        lang: inc-ork
+        lang_tag: inc-Beng-x-ork
+        name: Old Kamta
+        population: 0
+        script: as-Beng
+        script_iso: Beng
+        script_suffix: ""
+    pi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        ancestors:
+        - sa
+        family: inc-mid
+        lang: pi
+        lang_tag: pi-Beng
+        name: Pali
+        population: 0
+        script: Beng
+        script_iso: Beng
+        script_suffix: ""
+    rhg:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Rohg-translit
+        ancestors:
+        - inc-obn
+        family: inc-eas
+        lang: rhg
+        lang_tag: rhg-Beng
+        name: Rohingya
+        population: 0
+        script: Beng
+        script_iso: Beng
+        script_suffix: ""
+    rkt:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: as-translit
+        ancestors:
+        - inc-ork
+        family: inc-eas
+        lang: rkt
+        lang_tag: rkt-Beng
+        name: Kamta
+        other_names:
+        - Rangpuri
+        population: 16274502
+        script: as-Beng
+        script_iso: Beng
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-Beng-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Beng
+        name: Sanskrit
+        population: 15913
+        script: as-Beng
+        script_iso: Beng
+        script_suffix: ""
+    syl:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: syl-translit
+        ancestors:
+        - inc-obn
+        family: inc-eas
+        lang: syl
+        lang_tag: syl-Beng
+        name: Sylheti
+        population: 8467932
+        script: Beng
+        script_iso: Beng
+        script_suffix: ""
+    und:
+        Deva:
+            override: false
+            script: Deva
+            script_iso: Deva
+            translit: Beng-Deva-translit
+        lang_tag: und-Beng
+        population: 0
+        script: Beng
+        script_iso: Beng
+        script_suffix: ""
+        to_script: Deva
+Bhks:
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-Beng-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Bhks
+        name: Sanskrit
+        population: 15913
+        script: Bhks
+        script_iso: Bhks
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-Beng-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Bhks
+        name: Sanskrit
+        population: 15913
+        script: Bhks
+        script_iso: Bhks
+        script_suffix: ""
+Brah:
+    inc-ash:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        ancestors:
+        - sa
+        family: inc-mid
+        lang: inc-ash
+        lang_tag: inc-Brah-x-ash
+        name: Ashokan Prakrit
+        population: 0
+        script: Brah
+        script_iso: Brah
+        script_suffix: ""
+    inc-mgd:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        ancestors:
+        - inc-pra
+        family: inc-mid
+        lang: inc-mgd
+        lang_tag: inc-Brah-x-mgd
+        name: Magadhi Prakrit
+        population: 0
+        script: Brah
+        script_iso: Brah
+        script_suffix: ""
+    inc-pra:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        ancestors:
+        - inc-ash
+        family: inc-mid
+        lang: inc-pra
+        lang_tag: inc-Brah-x-pra
+        name: Prakrit
+        population: 0
+        script: Brah
+        script_iso: Brah
+        script_suffix: ""
+    inc-psc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        ancestors:
+        - inc-ash
+        family: inc-mid
+        lang: inc-psc
+        lang_tag: inc-Brah-x-psc
+        name: Paisaci Prakrit
+        population: 0
+        script: Brah
+        script_iso: Brah
+        script_suffix: ""
+    kho:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        family: xsc-sak
+        lang: kho
+        lang_tag: kho-Brah
+        name: Khotanese
+        population: 0
+        script: Brah
+        script_iso: Brah
+        script_suffix: ""
+    oty:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        family: dra
+        lang: oty
+        lang_tag: oty-Brah
+        name: Old Tamil
+        population: 0
+        script: Brah
+        script_iso: Brah
+        script_suffix: ""
+    pi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        ancestors:
+        - sa
+        family: inc-mid
+        lang: pi
+        lang_tag: pi-Brah
+        name: Pali
+        population: 0
+        script: Brah
+        script_iso: Brah
+        script_suffix: ""
+    pka:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        ancestors:
+        - inc-pra
+        family: inc-mid
+        lang: pka
+        lang_tag: pka-Brah
+        name: Ardhamagadhi Prakrit
+        population: 0
+        script: Brah
+        script_iso: Brah
+        script_suffix: ""
+    pmh:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        ancestors:
+        - inc-pra
+        family: inc-mid
+        lang: pmh
+        lang_tag: pmh-Brah
+        name: Maharastri Prakrit
+        other_names:
+        - Maharashtri Prakrit
+        - Maharastri
+        - Maharashtri
+        population: 0
+        script: Brah
+        script_iso: Brah
+        script_suffix: ""
+    psu:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        ancestors:
+        - inc-pra
+        family: inc-psu
+        lang: psu
+        lang_tag: psu-Brah
+        name: Sauraseni Prakrit
+        other_names:
+        - Sauraseni
+        - Shauraseni
+        population: 0
+        script: Brah
+        script_iso: Brah
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Brah
+        name: Sanskrit
+        population: 15913
+        script: Brah
+        script_iso: Brah
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: brah-translit
+        lang_tag: und-Brah
+        population: 0
+        script: Brah
+        script_iso: Brah
+        script_suffix: ""
+    xtq:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        family: xsc-sak
+        lang: xtq
+        lang_tag: xtq-Brah
+        name: Tumshuqese
+        population: 0
+        script: Brah
+        script_iso: Brah
+        script_suffix: ""
+Brai:
+    ar:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ar-translit
+        aliases: &id003
+        - Standard Arabic
+        - Literary Arabic
+        - High Arabic
+        family: sem-arb
+        lang: ar
+        lang_tag: ar-Brai
+        name: Arabic
+        population: 350901502
+        script: Brai
+        script_iso: Brai
+        script_suffix: ""
+        varieties: &id004
+        - Modern Standard Arabic
+        - Classical Arabic
+        - Judeo-Arabic
+    el:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: el-translit
+        aliases:
+        - Modern Greek
+        - Neo-Hellenic
+        ancestors:
+        - grc
+        family: grk
+        lang: el
+        lang_tag: el-Brai
+        name: Greek
+        population: 12384863
+        script: Brai
+        script_iso: Brai
+        script_suffix: ""
+    hy:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Armn-translit
+        aliases:
+        - Modern Armenian
+        ancestors:
+        - axm
+        family: hyx
+        lang: hy
+        lang_tag: hy-Brai
+        name: Armenian
+        population: 5317273
+        script: Brai
+        script_iso: Brai
+        script_suffix: ""
+        varieties:
+        - Eastern Armenian
+        - Western Armenian
+    ko:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ko-translit
+        aliases:
+        - Modern Korean
+        ancestors:
+        - okm
+        family: qfa-kor
+        lang: ko
+        lang_tag: ko-Brai
+        name: Korean
+        population: 78187423
+        script: Brai
+        script_iso: Brai
+        script_suffix: ""
+    ru:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ru-translit
+        family: zle
+        lang: ru
+        lang_tag: ru-Brai
+        name: Russian
+        population: 195630064
+        script: Brai
+        script_iso: Brai
+        script_suffix: ""
+    th:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: th-translit
+        aliases:
+        - Central Thai
+        - Siamese
+        family: tai-swe
+        lang: th
+        lang_tag: th-Brai
+        name: Thai
+        population: 55181920
+        script: Brai
+        script_iso: Brai
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ar-translit
+        aliases: *id003
+        family: sem-arb
+        lang: ar
+        lang_tag: ar-Brai
+        name: Arabic
+        population: 350901502
+        script: Brai
+        script_iso: Brai
+        script_suffix: ""
+        varieties: *id004
+Cans:
+    cr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: cr-translit
+        family: alg
+        lang: cr
+        lang_tag: cr-Cans
+        name: Cree
+        population: 41464
+        script: Cans
+        script_iso: Cans
+        script_suffix: ""
+    crj:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: cr-translit
+        ancestors:
+        - cr
+        family: alg
+        lang: crj
+        lang_tag: crj-Cans
+        name: Southern East Cree
+        population: 7162
+        script: Cans
+        script_iso: Cans
+        script_suffix: ""
+    crl:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: cr-translit
+        ancestors:
+        - cr
+        family: alg
+        lang: crl
+        lang_tag: crl-Cans
+        name: Northern East Cree
+        population: 5277
+        script: Cans
+        script_iso: Cans
+        script_suffix: ""
+    iu:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: iu-translit
+        family: esx-inu
+        lang: iu
+        lang_tag: iu-Cans
+        name: Inuktitut
+        population: 31664
+        script: Cans
+        script_iso: Cans
+        script_suffix: ""
+        varieties:
+        - Aivilimmiut
+        -   - Eastern Canadian Inuktitut
+            - Eastern Canadian Inuit
+        -   - Inuinnaq
+            - Inuinnaqtun
+        -   - Inuvialuktun
+            - Inuvialuk
+            - Western Canadian Inuktitut
+            - Western Canadian Inuit
+            - Western Canadian Inuktun
+        - Kivallirmiut
+        - Natsilingmiut
+        - Nunavimmiutit
+        - Nunatsiavummiut
+        -   - Siglitun
+            - Siglit
+    nsk:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: nsk-translit
+        ancestors:
+        - cr
+        family: alg
+        lang: nsk
+        lang_tag: nsk-Cans
+        name: Naskapi
+        population: 1169
+        script: Cans
+        script_iso: Cans
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: cans-translit
+        lang_tag: und-Cans
+        population: 0
+        script: Cans
+        script_iso: Cans
+        script_suffix: ""
+Cher:
+    chr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Cher-translit
+        family: iro
+        lang: chr
+        lang_tag: chr-Cher
+        name: Cherokee
+        population: 25613
+        script: Cher
+        script_iso: Cher
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: cher-translit
+        lang_tag: und-Cher
+        population: 0
+        script: Cher
+        script_iso: Cher
+        script_suffix: ""
+Chrs:
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Chrs-translit
+        lang_tag: und-Chrs
+        population: 0
+        script: Chrs
+        script_iso: Chrs
+        script_suffix: ""
+    xco:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Chrs-translit
+        family: ira-sbc
+        lang: xco
+        lang_tag: xco-Chrs
+        name: Khwarezmian
+        other_names:
+        - Chorasmian
+        - Khwarazmian
+        - Khorezmian
+        population: 0
+        script: Chrs
+        script_iso: Chrs
+        script_suffix: ""
+Copt:
+    cop:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Copt-translit
+        ancestors:
+        - egx-dem
+        family: egx
+        lang: cop
+        lang_tag: cop-Copt
+        name: Coptic
+        population: 0
+        script: Copt
+        script_iso: Copt
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: copt-translit
+        lang_tag: und-Copt
+        population: 0
+        script: Copt
+        script_iso: Copt
+        script_suffix: ""
+Cprt:
+    grc:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Cprt-translit
+        family: grk
+        lang: grc
+        lang_tag: grc-Cprt
+        name: Ancient Greek
+        population: 0
+        script: Cprt
+        script_iso: Cprt
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: cprt-translit
+        lang_tag: und-Cprt
+        population: 0
+        script: Cprt
+        script_iso: Cprt
+        script_suffix: ""
+Cyrl:
+    ab:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: ab-translit
+        aliases:
+        - Abkhazian
+        - Abxazo
+        family: cau-abz
+        lang: ab
+        lang_tag: ab-Cyrl
+        name: Abkhaz
+        population: 91953
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    abq:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: abq-translit
+        family: cau-abz
+        lang: abq
+        lang_tag: abq-Cyrl
+        name: Abaza
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    ady:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: ady-translit
+        family: cau-cir
+        lang: ady
+        lang_tag: ady-Cyrl
+        name: Adyghe
+        other_names:
+        - West Circassian
+        population: 444583
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    alt:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Altai-translit
+        aliases:
+        - Southern Altay
+        - Altai
+        - Altay
+        family: trk-sib
+        lang: alt
+        lang_tag: alt-Cyrl
+        name: Southern Altai
+        population: 19841
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    atv:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Altai-translit
+        family: trk-sib
+        lang: atv
+        lang_tag: atv-Cyrl
+        name: Northern Altai
+        other_names:
+        - Northern Altay
+        - Altai
+        - Altay
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    av:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: av-translit
+        aliases:
+        - Avaric
+        ancestors:
+        - oav
+        family: cau-nec
+        lang: av
+        lang_tag: av-Cyrl
+        name: Avar
+        population: 552716
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    ba:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: ba-translit
+        family: trk-kbu
+        lang: ba
+        lang_tag: ba-Cyrl
+        name: Bashkir
+        population: 1842386
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    bdk:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: bdk-translit
+        aliases:
+        - Budugh
+        family: cau-lzg
+        lang: bdk
+        lang_tag: bdk-Cyrl
+        name: Budukh
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    be:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: be-translit
+        aliases:
+        - Belorussian
+        - Belarusan
+        - Bielorussian
+        - Byelorussian
+        - Belarussian
+        - White Russian
+        ancestors:
+        - orv
+        family: zle
+        lang: be
+        lang_tag: be-Cyrl
+        name: Belarusian
+        population: 10064517
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    bg:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: bg-translit
+        ancestors:
+        - cu
+        family: zls
+        lang: bg
+        lang_tag: bg-Cyrl
+        name: Bulgarian
+        population: 7878315
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    bua:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: bua-translit
+        aliases:
+        - Buriat
+        family: xgn
+        lang: bua
+        lang_tag: bua-Cyrl
+        name: Buryat
+        population: 311788
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    ce:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: ce-translit
+        family: cau-vay
+        lang: ce
+        lang_tag: ce-Cyrl
+        name: Chechen
+        population: 935365
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    chm:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: chm-translit
+        family: urj
+        lang: chm
+        lang_tag: chm-Cyrl
+        name: Eastern Mari
+        other_names:
+        - Meadow Mari
+        - Lowland Mari
+        - Midland Mari
+        - Standard Mari
+        - Upo Mari
+        - Mari
+        - Mari (Russia)
+        population: 524371
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    cv:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: cv-translit
+        ancestors:
+        - xbo
+        family: trk-ogr
+        lang: cv
+        lang_tag: cv-Cyrl
+        name: Chuvash
+        population: 1842386
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    dar:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: dar-translit
+        aliases:
+        - Dargin
+        family: cau-drg
+        lang: dar
+        lang_tag: dar-Cyrl
+        name: Dargwa
+        population: 368477
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    ddo:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ddo-translit
+        aliases:
+        - Tsezi
+        - Dido
+        family: cau-tsz
+        lang: ddo
+        lang_tag: ddo-Cyrl
+        name: Tsez
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    dng:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: dng-translit
+        ancestors:
+        - cmn
+        family: zhx
+        lang: dng
+        lang_tag: dng-Cyrl
+        name: Dungan
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    eve:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: eve-translit
+        family: tuw
+        lang: eve
+        lang_tag: eve-Cyrl
+        name: Even
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    evn:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: evn-translit
+        family: tuw
+        lang: evn
+        lang_tag: evn-Cyrl
+        name: Evenki
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    gin:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: gin-translit
+        aliases:
+        - Hinuq
+        - Hinux
+        - Ginukh
+        - Ginux
+        family: cau-tsz
+        lang: gin
+        lang_tag: gin-Cyrl
+        name: Hinukh
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    huz:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: huz-translit
+        family: cau-tsz
+        lang: huz
+        lang_tag: huz-Cyrl
+        name: Hunzib
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    inh:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: inh-translit
+        family: cau-vay
+        lang: inh
+        lang_tag: inh-Cyrl
+        name: Ingush
+        population: 226755
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    jdt:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: jdt-translit
+        ancestors:
+        - fa
+        family: ira-swi
+        lang: jdt
+        lang_tag: jdt-Cyrl
+        name: Judeo-Tat
+        other_names:
+        - Juhuri
+        - Juvuri
+        - Juwuri
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    kap:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: kap-translit
+        family: cau-tsz
+        lang: kap
+        lang_tag: kap-Cyrl
+        name: Bezhta
+        other_names:
+        - Bezheta
+        - Kapucha
+        - Bezhita
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    kbd:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: kbd-translit
+        family: cau-cir
+        lang: kbd
+        lang_tag: kbd-Cyrl
+        name: Kabardian
+        other_names:
+        - East Circassian
+        population: 1070873
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    kca:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: kca-translit
+        family: urj-ugr
+        lang: kca
+        lang_tag: kca-Cyrl
+        name: Khanty
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    khv:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: khv-translit
+        family: cau-tsz
+        lang: khv
+        lang_tag: khv-Cyrl
+        name: Khvarshi
+        other_names:
+        - Khwarshi
+        - Xvarshi
+        - Inkhokvari
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    kjh:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: kjh-translit
+        family: trk-sib
+        lang: kjh
+        lang_tag: kjh-Cyrl
+        name: Khakas
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    kjj:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: kjj-translit
+        family: cau-nec
+        lang: kjj
+        lang_tag: kjj-Cyrl
+        name: Khinalug
+        other_names:
+        - Khinalig
+        - Xinalug
+        - Xinalugh
+        - Khinalugh
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    kk:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: kk-translit
+        family: trk-kno
+        lang: kk
+        lang_tag: kk-Cyrl
+        name: Kazakh
+        population: 13637392
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    kmr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        ancestors:
+        - ku-pro
+        family: ku
+        lang: kmr
+        lang_tag: kmr-Cyrl
+        name: Northern Kurdish
+        other_names:
+        - Kurmanji
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    koi:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: kv-translit
+        family: urj-prm
+        lang: koi
+        lang_tag: koi-Cyrl
+        name: Komi-Permyak
+        population: 63775
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    kpv:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: kv-translit
+        family: urj-prm
+        lang: kpv
+        lang_tag: kpv-Cyrl
+        name: Komi-Zyrian
+        other_names:
+        - Komi
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    krc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: krc-translit
+        family: trk-kcu
+        lang: krc
+        lang_tag: krc-Cyrl
+        name: Karachay-Balkar
+        population: 240927
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    kum:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: kum-translit
+        family: trk-kcu
+        lang: kum
+        lang_tag: kum-Cyrl
+        name: Kumyk
+        population: 283444
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    ky:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: ky-translit
+        aliases:
+        - Kirghiz
+        - Kirgiz
+        family: trk-kip
+        lang: ky
+        lang_tag: ky-Cyrl
+        name: Kyrgyz
+        population: 3338267
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    lbe:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: lbe-translit
+        family: cau-nec
+        lang: lbe
+        lang_tag: lbe-Cyrl
+        name: Lak
+        population: 110543
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    lez:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: lez-translit
+        family: cau-lzg
+        lang: lez
+        lang_tag: lez-Cyrl
+        name: Lezgi
+        other_names:
+        - Lezgian
+        - Lezgin
+        population: 255100
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    mdf:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: mdf-translit
+        family: urj-mdv
+        lang: mdf
+        lang_tag: mdf-Cyrl
+        name: Moksha
+        other_names:
+        - Mordvin
+        population: 297616
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    mk:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mk-translit
+        family: zls
+        lang: mk
+        lang_tag: mk-Cyrl
+        name: Macedonian
+        population: 1608565
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    mn:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: mn-translit
+        ancestors:
+        - cmg
+        family: xgn
+        lang: mn
+        lang_tag: mn-Cyrl
+        name: Mongolian
+        population: 6572846
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+        varieties:
+        - Khalkha Mongolian
+    mns:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: mns-translit
+        family: urj-ugr
+        lang: mns
+        lang_tag: mns-Cyrl
+        name: Mansi
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    mrj:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: chm-translit
+        ancestors:
+        - chm
+        family: urj
+        lang: mrj
+        lang_tag: mrj-Cyrl
+        name: Western Mari
+        other_names:
+        - Hill Mari
+        - Mountain Mari
+        - Highland Mari
+        population: 29762
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    myv:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: myv-translit
+        family: urj-mdv
+        lang: myv
+        lang_tag: myv-Cyrl
+        name: Erzya
+        other_names:
+        - Mordvin
+        population: 439338
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    niv:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: niv-translit
+        family: qfa-iso
+        lang: niv
+        lang_tag: niv-Cyrl
+        name: Nivkh
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    nog:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: nog-translit
+        family: trk-kno
+        lang: nog
+        lang_tag: nog-Cyrl
+        name: Nogai
+        other_names:
+        - Nogay
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    omk:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: omk-translit
+        family: qfa-yuk
+        lang: omk
+        lang_tag: omk-Cyrl
+        name: Omok
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    os:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: os-translit
+        aliases:
+        - Ossete
+        - Ossetic
+        ancestors:
+        - oos
+        family: xsc
+        lang: os
+        lang_tag: os-Cyrl
+        name: Ossetian
+        population: 616987
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+        varieties:
+        - Digor
+        - Iron
+    pnt:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: grc-translit
+        ancestors:
+        - grc
+        family: grk
+        lang: pnt
+        lang_tag: pnt-Cyrl
+        name: Pontic Greek
+        other_names:
+        - Pontic
+        population: 392463
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    ru:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ru-translit
+        family: zle
+        lang: ru
+        lang_tag: ru-Cyrl
+        name: Russian
+        population: 195630064
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    rue:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: rue-translit
+        ancestors:
+        - orv
+        family: zle
+        lang: rue
+        lang_tag: rue-Cyrl
+        name: Rusyn
+        population: 527075
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    sah:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: sah-translit
+        family: trk-sib
+        lang: sah
+        lang_tag: sah-Cyrl
+        name: Yakut
+        other_names:
+        - Sakha
+        population: 453510
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    sgh:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: sgh-translit
+        ancestors:
+        - ira-shr-pro
+        family: ira-shy
+        lang: sgh
+        lang_tag: sgh-Cyrl
+        name: Shughni
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    sjd:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sjd-translit
+        family: smi
+        lang: sjd
+        lang_tag: sjd-Cyrl
+        name: Kildin Sami
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    sva:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: sva-translit
+        family: ccs
+        lang: sva
+        lang_tag: sva-Cyrl
+        name: Svan
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    tab:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: tab-translit
+        family: cau-lzg
+        lang: tab
+        lang_tag: tab-Cyrl
+        name: Tabasaran
+        other_names:
+        - Tabassaran
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    tg:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: tg-translit
+        aliases:
+        - Eastern Persian
+        - Tadjik
+        - Tadzhik
+        - Tajiki
+        - Tajik Persian
+        - Tajiki Persian
+        ancestors:
+        - pal
+        family: ira-swi
+        lang: tg
+        lang_tag: tg-Cyrl
+        name: Tajik
+        population: 9644223
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    tt:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: tt-translit
+        family: trk-kbu
+        lang: tt
+        lang_tag: tt-Cyrl
+        name: Tatar
+        population: 1984108
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    tyv:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: tyv-translit
+        family: trk-sib
+        lang: tyv
+        lang_tag: tyv-Cyrl
+        name: Tuvan
+        other_names:
+        - Tyvan
+        population: 184239
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    udi:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: udi-translit
+        ancestors:
+        - xag
+        family: cau-nec
+        lang: udi
+        lang_tag: udi-Cyrl
+        name: Udi
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    udm:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: udm-translit
+        family: urj-prm
+        lang: udm
+        lang_tag: udm-Cyrl
+        name: Udmurt
+        population: 538544
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    ug:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: ug-translit
+        aliases:
+        - Uigur
+        - Uighur
+        - Uygur
+        ancestors:
+        - chg
+        family: trk-kar
+        lang: ug
+        lang_tag: ug-Cyrl
+        name: Uyghur
+        population: 8052967
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    uk:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: uk-translit
+        ancestors:
+        - orv
+        family: zle
+        lang: uk
+        lang_tag: uk-Cyrl
+        name: Ukrainian
+        population: 29273587
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ru-translit
+        family: zle
+        lang: ru
+        lang_tag: ru-Cyrl
+        name: Russian
+        population: 195630064
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    wbl:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: tg-translit
+        family: xsc-skw
+        lang: wbl
+        lang_tag: wbl-Cyrl
+        name: Wakhi
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    xal:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: xal-translit
+        ancestors:
+        - xwo
+        family: xgn
+        lang: xal
+        lang_tag: xal-Cyrl
+        name: Kalmyk
+        other_names:
+        - Oirat
+        - Modern Oirat
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    yai:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: tg-translit
+        aliases:
+        - Yaghnobi
+        - Yaghnabi
+        - Yagnabi
+        family: ira-sgc
+        lang: yai
+        lang_tag: yai-Cyrl
+        name: Yagnobi
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    ykg:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ykg-translit
+        family: qfa-yuk
+        lang: ykg
+        lang_tag: ykg-Cyrl
+        name: Northern Yukaghir
+        other_names:
+        - Tundra Yukaghir
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+    yux:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: yux-translit
+        family: qfa-yuk
+        lang: yux
+        lang_tag: yux-Cyrl
+        name: Southern Yukaghir
+        other_names:
+        - Forest Yukaghir
+        - Kolyma Yukaghir
+        population: 0
+        script: Cyrl
+        script_iso: Cyrl
+        script_suffix: ""
+Cyrs:
+    cu:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Cyrs-Glag-translit
+        aliases:
+        - Old Church Slavic
+        family: zls
+        lang: cu
+        lang_tag: cu-Cyrs
+        name: Old Church Slavonic
+        population: 0
+        script: Cyrs
+        script_iso: Cyrs
+        script_suffix: ""
+    orv:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Cyrs-Glag-translit
+        family: zle
+        lang: orv
+        lang_tag: orv-Cyrs
+        name: Old East Slavic
+        other_names:
+        - Old Russian
+        population: 0
+        script: Cyrs
+        script_iso: Cyrs
+        script_suffix: ""
+    und:
+        Glag:
+            override: false
+            script: Glag
+            script_iso: Glag
+            translit: cyrs-glag-translit
+        lang_tag: und-Cyrs
+        population: 0
+        script: Cyrs
+        script_iso: Cyrs
+        script_suffix: ""
+        to_script: Glag
+    zle-ono:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Cyrs-Glag-translit
+        family: zle
+        lang: zle-ono
+        lang_tag: zle-Cyrs-x-ono
+        name: Old Novgorodian
+        population: 0
+        script: Cyrs
+        script_iso: Cyrs
+        script_suffix: ""
+Deva:
+    awa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - inc-pra
+        family: inc-hie
+        lang: awa
+        lang_tag: awa-Deva
+        name: Awadhi
+        population: 25862924
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    bfy:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - inc-pra
+        family: inc-hie
+        lang: bfy
+        lang_tag: bfy-Deva
+        name: Bagheli
+        population: 654424
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    bfz:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: bfz
+        lang_tag: bfz-Deva
+        name: Mahasu Pahari
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    bgc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - inc-ohi
+        family: inc-cen
+        lang: bgc
+        lang_tag: bgc-Deva
+        name: Haryanvi
+        population: 15913080
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    bhd:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        aliases:
+        - Bhadarwahi
+        family: him
+        lang: bhd
+        lang_tag: bhd-Deva
+        name: Bhadrawahi
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    bho:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: bho-translit
+        ancestors:
+        - bh
+        family: inc-hie
+        lang: bho
+        lang_tag: bho-Deva
+        name: Bhojpuri
+        population: 32934797
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    bns:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - inc-ohi
+        family: inc-cen
+        lang: bns
+        lang_tag: bns-Deva
+        name: Bundeli
+        other_names:
+        - Bundelkhandi
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    bpx:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - psu
+        family: inc-bhi
+        lang: bpx
+        lang_tag: bpx-Deva
+        name: Palya Bareli
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    bra:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - inc-ohi
+        family: inc-cen
+        lang: bra
+        lang_tag: bra-Deva
+        name: Braj
+        other_names:
+        - Braj Bhasha
+        population: 54370
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    brx:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: brx-translit
+        family: tbq-bdg
+        lang: brx
+        lang_tag: brx-Deva
+        name: Bodo (India)
+        other_names:
+        - Bodo
+        - Boro
+        - Boro (India)
+        - Mech
+        population: 1856526
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    cdh:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: cdh
+        lang_tag: cdh-Deva
+        name: Chambeali
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    cdj:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: cdj
+        lang_tag: cdj-Deva
+        name: Churahi
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    doi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: doi
+        lang_tag: doi-Deva
+        name: Dogri
+        population: 2652180
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    dty:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ne-translit
+        aliases:
+        - Dotyali
+        ancestors:
+        - ne
+        family: inc-pah
+        lang: dty
+        lang_tag: dty-Deva
+        name: Doteli
+        population: 758198
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    gbk:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: gbk
+        lang_tag: gbk-Deva
+        name: Gaddi
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    gbm:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: inc-pah
+        lang: gbm
+        lang_tag: gbm-Deva
+        name: Garhwali
+        population: 3580443
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    hi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - inc-ohi
+        family: inc-hnd
+        lang: hi
+        lang_tag: hi-Deva
+        name: Hindi
+        other_names:
+        - Hindavi
+        population: 546693674
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    inc-ogu:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-translit
+        ancestors:
+        - inc-gup
+        family: inc-wes
+        lang: inc-ogu
+        lang_tag: inc-Deva-x-ogu
+        name: Old Gujarati
+        other_names:
+        - Old Western Rajasthani
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    inc-ohi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-translit
+        ancestors:
+        - inc-sap
+        family: inc-hiw
+        lang: inc-ohi
+        lang_tag: inc-Deva-x-ohi
+        name: Old Hindi
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    inc-pra:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: inc-pra-Deva-translit
+        ancestors:
+        - inc-ash
+        family: inc-mid
+        lang: inc-pra
+        lang_tag: inc-Deva-x-pra
+        name: Prakrit
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    inc-tak:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-translit
+        ancestors:
+        - inc-pra
+        family: inc-pan
+        lang: inc-tak
+        lang_tag: inc-Deva-x-tak
+        name: Takka Apabhramsa
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    inc-vra:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-translit
+        ancestors:
+        - inc-pra
+        family: inc-snd
+        lang: inc-vra
+        lang_tag: inc-Deva-x-vra
+        name: Vracada Apabhramsa
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    kfs:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: kfs
+        lang_tag: kfs-Deva
+        name: Bilaspuri
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    kfx:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: kfx
+        lang_tag: kfx-Deva
+        name: Kullu Pahari
+        other_names:
+        - Kullu
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    kok:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mr-translit
+        ancestors:
+        - pmh
+        family: inc-sou
+        lang: kok
+        lang_tag: kok-Deva
+        name: Konkani
+        population: 4906533
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    ks:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ks-Deva-translit
+        aliases:
+        - Koshur
+        ancestors:
+        - inc-dar-pro
+        family: inc-dar
+        lang: ks
+        lang_tag: ks-Deva
+        name: Kashmiri
+        population: 5723031
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    mai:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mai-translit
+        ancestors:
+        - bh
+        family: inc-eas
+        lang: mai
+        lang_tag: mai-Deva
+        name: Maithili
+        population: 19249149
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    mjl:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: mjl
+        lang_tag: mjl-Deva
+        name: Mandeali
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    mr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mr-translit
+        ancestors:
+        - omr
+        family: inc-sou
+        lang: mr
+        lang_tag: mr-Deva
+        name: Marathi
+        population: 92826300
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    mtr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - raj
+        family: inc-wes
+        lang: mtr
+        lang_tag: mtr-Deva
+        name: Mewari
+        population: 1286307
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    mwr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - raj
+        family: inc-wes
+        lang: mwr
+        lang_tag: mwr-Deva
+        name: Marwari
+        other_names:
+        - Merwari
+        - Dhundari
+        - Shekhawati
+        - Harauti
+        - Goaria
+        - Gurgula
+        population: 15913080
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    ne:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ne-translit
+        aliases:
+        - Nepalese
+        family: inc-pah
+        lang: ne
+        lang_tag: ne-Deva
+        name: Nepali
+        population: 20903374
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+        varieties:
+        - Palpa
+    new:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: new-translit
+        ancestors:
+        - nwx
+        family: sit-new
+        lang: new
+        lang_tag: new-Deva
+        name: Newar
+        other_names:
+        - Newari
+        population: 1000821
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    omr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-translit
+        ancestors:
+        - pmh
+        family: inc-sou
+        lang: omr
+        lang_tag: omr-Deva
+        name: Old Marathi
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    pgd:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Khar-translit
+        ancestors:
+        - inc-ash
+        family: inc-mid
+        lang: pgd
+        lang_tag: pgd-Deva
+        name: Gandhari
+        other_names:
+        - Gāndhārī
+        - Gāndhārī Prakrit
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    pgg:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: pgg
+        lang_tag: pgg-Deva
+        name: Pangwali
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    pi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-translit
+        ancestors:
+        - sa
+        family: inc-mid
+        lang: pi
+        lang_tag: pi-Deva
+        name: Pali
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    pka:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        ancestors:
+        - inc-pra
+        family: inc-mid
+        lang: pka
+        lang_tag: pka-Deva
+        name: Ardhamagadhi Prakrit
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    pmh:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        ancestors:
+        - inc-pra
+        family: inc-mid
+        lang: pmh
+        lang_tag: pmh-Deva
+        name: Maharastri Prakrit
+        other_names:
+        - Maharashtri Prakrit
+        - Maharastri
+        - Maharashtri
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    psu:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        ancestors:
+        - inc-pra
+        family: inc-psu
+        lang: psu
+        lang_tag: psu-Deva
+        name: Sauraseni Prakrit
+        other_names:
+        - Sauraseni
+        - Shauraseni
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Deva
+        name: Sanskrit
+        population: 15913
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    saz:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: saz-translit
+        ancestors:
+        - inc-ogu
+        family: inc-wes
+        lang: saz
+        lang_tag: saz-Deva
+        name: Saurashtra
+        population: 384566
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    und:
+        Beng:
+            override: false
+            script: Beng
+            script_iso: Beng
+            translit: Deva-Beng-translit
+        Kthi:
+            override: false
+            script: Kthi
+            script_iso: Kthi
+            translit: Deva-Kthi-translit
+        Limb:
+            override: false
+            script: Limb
+            script_iso: Limb
+            translit: Deva-Limb-translit
+        Newa:
+            override: false
+            script: Newa
+            script_iso: Newa
+            translit: Deva-Newa-translit
+        Sind:
+            override: false
+            script: Sind
+            script_iso: Sind
+            translit: Deva-Sind-translit
+        Tirh:
+            override: false
+            script: Tirh
+            script_iso: Tirh
+            translit: Deva-Tirh-translit
+        lang_tag: und-Deva
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+        to_script: Beng
+    unr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: mun
+        lang: unr
+        lang_tag: unr-Deva
+        name: Mundari
+        population: 1252287
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    xnr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - doi
+        family: him
+        lang: xnr
+        lang_tag: xnr-Deva
+        name: Kangri
+        population: 2121744
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+    ybi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ybi-translit
+        family: sit-kie
+        lang: ybi
+        lang_tag: ybi-Deva
+        name: Yamphu
+        population: 0
+        script: Deva
+        script_iso: Deva
+        script_suffix: ""
+Dogr:
+    doi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: doi
+        lang_tag: doi-Dogr
+        name: Dogri
+        population: 2652180
+        script: Dogr
+        script_iso: Dogr
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: doi
+        lang_tag: doi-Dogr
+        name: Dogri
+        population: 2652180
+        script: Dogr
+        script_iso: Dogr
+        script_suffix: ""
+Ethi:
+    am:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ethi-translit
+        family: sem-eth
+        lang: am
+        lang_tag: am-Ethi
+        name: Amharic
+        population: 35728475
+        script: Ethi
+        script_iso: Ethi
+        script_suffix: ""
+    byn:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ethi-translit
+        aliases:
+        - Bilin
+        - Bilen
+        - Belen
+        - Bilein
+        family: cus
+        lang: byn
+        lang_tag: byn-Ethi
+        name: Blin
+        population: 79056
+        script: Ethi
+        script_iso: Ethi
+        script_suffix: ""
+    dlk:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ethi-translit
+        aliases:
+        - Dahlik
+        family: sem-eth
+        lang: dlk
+        lang_tag: dlk-Ethi
+        name: Dahalik
+        population: 0
+        script: Ethi
+        script_iso: Ethi
+        script_suffix: ""
+    gez:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ethi-translit
+        aliases:
+        - Ethiopic
+        - Gi'iz
+        - Geez
+        family: sem-eth
+        lang: gez
+        lang_tag: gez-Ethi
+        name: Ge'ez
+        population: 0
+        script: Ethi
+        script_iso: Ethi
+        script_suffix: ""
+    har:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ethi-translit
+        family: sem-eth
+        lang: har
+        lang_tag: har-Ethi
+        name: Harari
+        population: 0
+        script: Ethi
+        script_iso: Ethi
+        script_suffix: ""
+    sem-cha:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ethi-translit
+        aliases:
+        - Cheha
+        ancestors:
+        - sem-pro
+        family: sem-eth
+        lang: sem-cha
+        lang_tag: sem-Ethi-x-cha
+        name: Chaha
+        population: 0
+        script: Ethi
+        script_iso: Ethi
+        script_suffix: ""
+    ti:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ethi-translit
+        aliases:
+        - Tigrigna
+        family: sem-eth
+        lang: ti
+        lang_tag: ti-Ethi
+        name: Tigrinya
+        population: 10145911
+        script: Ethi
+        script_iso: Ethi
+        script_suffix: ""
+    tig:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ethi-translit
+        family: sem-eth
+        lang: tig
+        lang_tag: tig-Ethi
+        name: Tigre
+        population: 1094616
+        script: Ethi
+        script_iso: Ethi
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ethi-translit
+        lang_tag: und-Ethi
+        population: 0
+        script: Ethi
+        script_iso: Ethi
+        script_suffix: ""
+Geok:
+    ka:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Geor-translit
+        ancestors: &id005
+        - oge
+        family: ccs-gzn
+        lang: ka
+        lang_tag: ka-Geok
+        name: Georgian
+        population: 3543646
+        script: Geok
+        script_iso: Geok
+        script_suffix: ""
+        varieties: &id006
+        -   - Judeo-Georgian
+            - Kivruli
+            - Gruzinic
+    und:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Geor-translit
+        ancestors: *id005
+        family: ccs-gzn
+        lang: ka
+        lang_tag: ka-Geok
+        name: Georgian
+        population: 3543646
+        script: Geok
+        script_iso: Geok
+        script_suffix: ""
+        varieties: *id006
+Geor:
+    ab:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: ab-translit
+        aliases:
+        - Abkhazian
+        - Abxazo
+        family: cau-abz
+        lang: ab
+        lang_tag: ab-Geor
+        name: Abkhaz
+        population: 91953
+        script: Geor
+        script_iso: Geor
+        script_suffix: ""
+    bbl:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Geor-translit
+        family: cau-nkh
+        lang: bbl
+        lang_tag: bbl-Geor
+        name: Bats
+        other_names:
+        - Batsbi
+        - Tsova-Tush
+        population: 0
+        script: Geor
+        script_iso: Geor
+        script_suffix: ""
+    ka:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Geor-translit
+        ancestors:
+        - oge
+        family: ccs-gzn
+        lang: ka
+        lang_tag: ka-Geor
+        name: Georgian
+        population: 3543646
+        script: Geor
+        script_iso: Geor
+        script_suffix: ""
+        varieties:
+        -   - Judeo-Georgian
+            - Kivruli
+            - Gruzinic
+    lzz:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Geor-translit
+        family: ccs-zan
+        lang: lzz
+        lang_tag: lzz-Geor
+        name: Laz
+        population: 22965
+        script: Geor
+        script_iso: Geor
+        script_suffix: ""
+    oge:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Geor-translit
+        family: ccs-gzn
+        lang: oge
+        lang_tag: oge-Geor
+        name: Old Georgian
+        population: 0
+        script: Geor
+        script_iso: Geor
+        script_suffix: ""
+    os:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: os-translit
+        aliases:
+        - Ossete
+        - Ossetic
+        ancestors:
+        - oos
+        family: xsc
+        lang: os
+        lang_tag: os-Geor
+        name: Ossetian
+        population: 616987
+        script: Geor
+        script_iso: Geor
+        script_suffix: ""
+        varieties:
+        - Digor
+        - Iron
+    sva:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: sva-translit
+        family: ccs
+        lang: sva
+        lang_tag: sva-Geor
+        name: Svan
+        population: 0
+        script: Geor
+        script_iso: Geor
+        script_suffix: ""
+    udi:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Geor-translit
+        ancestors:
+        - xag
+        family: cau-nec
+        lang: udi
+        lang_tag: udi-Geor
+        name: Udi
+        population: 0
+        script: Geor
+        script_iso: Geor
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: geor-translit
+        lang_tag: und-Geor
+        population: 0
+        script: Geor
+        script_iso: Geor
+        script_suffix: ""
+    xmf:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Geor-translit
+        family: ccs-zan
+        lang: xmf
+        lang_tag: xmf-Geor
+        name: Mingrelian
+        other_names:
+        - Megrelian
+        - Mingrel
+        - Megrel
+        population: 439670
+        script: Geor
+        script_iso: Geor
+        script_suffix: ""
+Glag:
+    cu:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Cyrs-Glag-translit
+        aliases:
+        - Old Church Slavic
+        family: zls
+        lang: cu
+        lang_tag: cu-Glag
+        name: Old Church Slavonic
+        population: 0
+        script: Glag
+        script_iso: Glag
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Cyrs-Glag-translit
+        family: zle
+        lang: zle-ono
+        lang_tag: zle-Glag-x-ono
+        name: Old Novgorodian
+        population: 0
+        script: Glag
+        script_iso: Glag
+        script_suffix: ""
+    zle-ono:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Cyrs-Glag-translit
+        family: zle
+        lang: zle-ono
+        lang_tag: zle-Glag-x-ono
+        name: Old Novgorodian
+        population: 0
+        script: Glag
+        script_iso: Glag
+        script_suffix: ""
+Goth:
+    got:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Goth-translit
+        family: gme
+        lang: got
+        lang_tag: got-Goth
+        name: Gothic
+        population: 0
+        script: Goth
+        script_iso: Goth
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: goth-translit
+        lang_tag: und-Goth
+        population: 0
+        script: Goth
+        script_iso: Goth
+        script_suffix: ""
+Gran:
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Gran
+        name: Sanskrit
+        population: 15913
+        script: Gran
+        script_iso: Gran
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Gran
+        name: Sanskrit
+        population: 15913
+        script: Gran
+        script_iso: Gran
+        script_suffix: ""
+Grek:
+    cpg:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: grc-translit
+        aliases:
+        - Cappadocian
+        ancestors:
+        - grc
+        family: grk
+        lang: cpg
+        lang_tag: cpg-Grek-x-polyton
+        name: Cappadocian Greek
+        population: 0
+        script: polytonic
+        script_iso: Grek
+        script_suffix: polyton
+    el:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: el-translit
+        aliases: &id007
+        - Modern Greek
+        - Neo-Hellenic
+        ancestors: &id008
+        - grc
+        family: grk
+        lang: el
+        lang_tag: el-Grek
+        name: Greek
+        population: 12384863
+        script: Grek
+        script_iso: Grek
+        script_suffix: ""
+    grc:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: grc-translit
+        family: grk
+        lang: grc
+        lang_tag: grc-Grek-x-polyton
+        name: Ancient Greek
+        population: 0
+        script: polytonic
+        script_iso: Grek
+        script_suffix: polyton
+    ine-pae:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: grc-translit
+        family: ine
+        lang: ine-pae
+        lang_tag: ine-Grek-x-polyton-x-pae
+        name: Paeonian
+        population: 0
+        script: polytonic
+        script_iso: Grek
+        script_suffix: polyton
+    oos:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: grc-translit
+        ancestors:
+        - os-pro
+        family: xsc
+        lang: oos
+        lang_tag: oos-Grek
+        name: Old Ossetic
+        other_names:
+        - Old Ossetian
+        - Alanic
+        - Sarmatian
+        population: 0
+        script: Grek
+        script_iso: Grek
+        script_suffix: ""
+    pnt:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: grc-translit
+        ancestors:
+        - grc
+        family: grk
+        lang: pnt
+        lang_tag: pnt-Grek
+        name: Pontic Greek
+        other_names:
+        - Pontic
+        population: 392463
+        script: Grek
+        script_iso: Grek
+        script_suffix: ""
+    txh:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: el-translit
+        family: ine
+        lang: txh
+        lang_tag: txh-Grek
+        name: Thracian
+        population: 0
+        script: Grek
+        script_iso: Grek
+        script_suffix: ""
+    und:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: el-translit
+        aliases: *id007
+        ancestors: *id008
+        family: grk
+        lang: el
+        lang_tag: el-Grek
+        name: Greek
+        population: 12384863
+        script: Grek
+        script_iso: Grek
+        script_suffix: ""
+    xbc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: xbc-translit
+        family: ira-sbc
+        lang: xbc
+        lang_tag: xbc-Grek
+        name: Bactrian
+        other_names:
+        - Greco-Bactrian
+        - Kushan
+        - Kushano-Bactrian
+        population: 0
+        script: Grek
+        script_iso: Grek
+        script_suffix: ""
+    xmk:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: grc-translit
+        family: grk
+        lang: xmk
+        lang_tag: xmk-Grek-x-polyton
+        name: Ancient Macedonian
+        population: 0
+        script: polytonic
+        script_iso: Grek
+        script_suffix: polyton
+    xpg:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: grc-translit
+        family: ine
+        lang: xpg
+        lang_tag: xpg-Grek
+        name: Phrygian
+        population: 0
+        script: Grek
+        script_iso: Grek
+        script_suffix: ""
+Gujr:
+    ae:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Avst-translit
+        aliases:
+        - Zend
+        - Old Bactrian
+        family: ira-cen
+        lang: ae
+        lang_tag: ae-Gujr
+        name: Avestan
+        population: 0
+        script: Gujr
+        script_iso: Gujr
+        script_suffix: ""
+    gu:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: gu-translit
+        ancestors: &id009
+        - inc-mgu
+        family: inc-wes
+        lang: gu
+        lang_tag: gu-Gujr
+        name: Gujarati
+        population: 59679028
+        script: Gujr
+        script_iso: Gujr
+        script_suffix: ""
+    kfr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: gu-translit
+        ancestors:
+        - inc-vra
+        family: inc-snd
+        lang: kfr
+        lang_tag: kfr-Gujr
+        name: Kachchi
+        other_names:
+        - Kutchi
+        - Cutchi
+        - Kachchhi
+        - Kutchhi
+        population: 994568
+        script: Gujr
+        script_iso: Gujr
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-Gujr-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Gujr
+        name: Sanskrit
+        population: 15913
+        script: Gujr
+        script_iso: Gujr
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: gu-translit
+        ancestors: *id009
+        family: inc-wes
+        lang: gu
+        lang_tag: gu-Gujr
+        name: Gujarati
+        population: 59679028
+        script: Gujr
+        script_iso: Gujr
+        script_suffix: ""
+    vgr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: gu-translit
+        family: inc-bhi
+        lang: vgr
+        lang_tag: vgr-Gujr
+        name: Vaghri
+        population: 0
+        script: Gujr
+        script_iso: Gujr
+        script_suffix: ""
+Guru:
+    inc-opa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Guru-translit
+        ancestors:
+        - inc-tak
+        family: inc-pan
+        lang: inc-opa
+        lang_tag: inc-Guru-x-opa
+        name: Old Punjabi
+        population: 0
+        script: Guru
+        script_iso: Guru
+        script_suffix: ""
+    pa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Guru-translit
+        aliases:
+        - Panjabi
+        ancestors:
+        - inc-opa
+        family: inc-pan
+        lang: pa
+        lang_tag: pa-Guru
+        name: Punjabi
+        population: 201120217
+        script: Guru
+        script_iso: Guru
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-Gujr-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Guru
+        name: Sanskrit
+        population: 15913
+        script: Guru
+        script_iso: Guru
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: guru-translit
+        lang_tag: und-Guru
+        population: 0
+        script: Guru
+        script_iso: Guru
+        script_suffix: ""
+Hani:
+    dng:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: dng-translit
+        ancestors: &id010
+        - cmn
+        family: zhx
+        lang: dng
+        lang_tag: dng-Hani
+        name: Dungan
+        population: 0
+        script: Hani
+        script_iso: Hani
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: dng-translit
+        ancestors: *id010
+        family: zhx
+        lang: dng
+        lang_tag: dng-Hani
+        name: Dungan
+        population: 0
+        script: Hani
+        script_iso: Hani
+        script_suffix: ""
+Hatr:
+    arc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Palm-translit
+        family: sem-ara
+        lang: arc
+        lang_tag: arc-Hatr
+        name: Aramaic
+        population: 0
+        script: Hatr
+        script_iso: Hatr
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Palm-translit
+        family: sem-ara
+        lang: arc
+        lang_tag: arc-Hatr
+        name: Aramaic
+        population: 0
+        script: Hatr
+        script_iso: Hatr
+        script_suffix: ""
+Hebr:
+    ar:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ar-translit
+        aliases: &id011
+        - Standard Arabic
+        - Literary Arabic
+        - High Arabic
+        family: sem-arb
+        lang: ar
+        lang_tag: ar-Hebr
+        name: Arabic
+        population: 350901502
+        script: Hebr
+        script_iso: Hebr
+        script_suffix: ""
+        varieties: &id012
+        - Modern Standard Arabic
+        - Classical Arabic
+        - Judeo-Arabic
+    jdt:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: jdt-translit
+        ancestors:
+        - fa
+        family: ira-swi
+        lang: jdt
+        lang_tag: jdt-Hebr
+        name: Judeo-Tat
+        other_names:
+        - Juhuri
+        - Juvuri
+        - Juwuri
+        population: 0
+        script: Hebr
+        script_iso: Hebr
+        script_suffix: ""
+    ka:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Geor-translit
+        ancestors:
+        - oge
+        family: ccs-gzn
+        lang: ka
+        lang_tag: ka-Hebr
+        name: Georgian
+        population: 3543646
+        script: Hebr
+        script_iso: Hebr
+        script_suffix: ""
+        varieties:
+        -   - Judeo-Georgian
+            - Kivruli
+            - Gruzinic
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ar-translit
+        aliases: *id011
+        family: sem-arb
+        lang: ar
+        lang_tag: ar-Hebr
+        name: Arabic
+        population: 350901502
+        script: Hebr
+        script_iso: Hebr
+        script_suffix: ""
+        varieties: *id012
+    yi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: yi-translit
+        ancestors:
+        - gmh
+        family: gmw
+        lang: yi
+        lang_tag: yi-Hebr
+        name: Yiddish
+        population: 1046399
+        script: Hebr
+        script_iso: Hebr
+        script_suffix: ""
+        varieties:
+        - American Yiddish
+        - Daytshmerish Yiddish
+        - Mideastern Yiddish
+        - Galitzish
+        -   - Northeastern Yiddish
+            - Litvish
+            - Lithuanian Yiddish
+        -   - Northwestern Yiddish
+            - Netherlandic Yiddish
+        -   - Polish Yiddish
+            - Poylish
+        - South African Yiddish
+        -   - Southeastern Yiddish
+            - Ukrainian Yiddish
+            - Ukrainish
+        -   - Southwestern Yiddish
+            - Judeo-Alsatian
+        - Udmurtish
+Ital:
+    ett:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ital-translit
+        family: qfa-tyn
+        lang: ett
+        lang_tag: ett-Ital
+        name: Etruscan
+        population: 0
+        script: Ital
+        script_iso: Ital
+        script_suffix: ""
+    itc-ola:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ital-translit
+        aliases:
+        - Archaic Latin
+        - Early Latin
+        - Pre-Classical Latin
+        - Ante-Classical Latin
+        family: itc
+        lang: itc-ola
+        lang_tag: itc-Ital-x-ola
+        name: Old Latin
+        population: 0
+        script: Ital
+        script_iso: Ital
+        script_suffix: ""
+    nrp:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ital-translit
+        lang: nrp
+        lang_tag: nrp-Ital
+        name: North Picene
+        population: 0
+        script: Ital
+        script_iso: Ital
+        script_suffix: ""
+    osc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ital-translit
+        family: itc
+        lang: osc
+        lang_tag: osc-Ital
+        name: Oscan
+        population: 0
+        script: Ital
+        script_iso: Ital
+        script_suffix: ""
+    spx:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ital-translit
+        family: itc
+        lang: spx
+        lang_tag: spx-Ital
+        name: South Picene
+        other_names:
+        - Old Sabellic
+        - Old Sabellian
+        - Middle Adriatic
+        - Central Adriatic
+        population: 0
+        script: Ital
+        script_iso: Ital
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ital-translit
+        lang_tag: und-Ital
+        population: 0
+        script: Ital
+        script_iso: Ital
+        script_suffix: ""
+    xcc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ital-translit
+        lang: xcc
+        lang_tag: xcc-Ital
+        name: Camunic
+        population: 0
+        script: Ital
+        script_iso: Ital
+        script_suffix: ""
+    xfa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ital-translit
+        family: itc
+        lang: xfa
+        lang_tag: xfa-Ital
+        name: Faliscan
+        population: 0
+        script: Ital
+        script_iso: Ital
+        script_suffix: ""
+    xle:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ital-translit
+        family: qfa-tyn
+        lang: xle
+        lang_tag: xle-Ital
+        name: Lemnian
+        population: 0
+        script: Ital
+        script_iso: Ital
+        script_suffix: ""
+    xlp:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ital-translit
+        family: cel
+        lang: xlp
+        lang_tag: xlp-Ital
+        name: Lepontic
+        population: 0
+        script: Ital
+        script_iso: Ital
+        script_suffix: ""
+    xrr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ital-translit
+        lang: xrr
+        lang_tag: xrr-Ital
+        name: Raetic
+        other_names:
+        - Rhaetic
+        - Rhaetian
+        population: 0
+        script: Ital
+        script_iso: Ital
+        script_suffix: ""
+    xum:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ital-translit
+        family: itc
+        lang: xum
+        lang_tag: xum-Ital
+        name: Umbrian
+        population: 0
+        script: Ital
+        script_iso: Ital
+        script_suffix: ""
+    xve:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Ital-translit
+        family: ine
+        lang: xve
+        lang_tag: xve-Ital
+        name: Venetic
+        population: 0
+        script: Ital
+        script_iso: Ital
+        script_suffix: ""
+Java:
+    jv:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: jv-translit
+        ancestors: &id013
+        - kaw
+        family: poz-sus
+        lang: jv
+        lang_tag: jv-Java
+        name: Javanese
+        population: 91180665
+        script: Java
+        script_iso: Java
+        script_suffix: ""
+    kaw:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: jv-translit
+        family: poz-sus
+        lang: kaw
+        lang_tag: kaw-Java
+        name: Old Javanese
+        other_names:
+        - Kawi
+        population: 0
+        script: Java
+        script_iso: Java
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-Java-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Java
+        name: Sanskrit
+        population: 15913
+        script: Java
+        script_iso: Java
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: jv-translit
+        ancestors: *id013
+        family: poz-sus
+        lang: jv
+        lang_tag: jv-Java
+        name: Javanese
+        population: 91180665
+        script: Java
+        script_iso: Java
+        script_suffix: ""
+Kali:
+    kyu:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Kali-translit
+        family: kar
+        lang: kyu
+        lang_tag: kyu-Kali
+        name: Western Kayah
+        population: 0
+        script: Kali
+        script_iso: Kali
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Kali-translit
+        lang_tag: und-Kali
+        population: 0
+        script: Kali
+        script_iso: Kali
+        script_suffix: ""
+Kham:
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: kham-translit
+        lang_tag: und-Kham
+        population: 0
+        script: Kham
+        script_iso: Kham
+        script_suffix: ""
+Khar:
+    inc-ash:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Khar-translit
+        ancestors:
+        - sa
+        family: inc-mid
+        lang: inc-ash
+        lang_tag: inc-Khar-x-ash
+        name: Ashokan Prakrit
+        population: 0
+        script: Khar
+        script_iso: Khar
+        script_suffix: ""
+    kho:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        family: xsc-sak
+        lang: kho
+        lang_tag: kho-Khar
+        name: Khotanese
+        population: 0
+        script: Khar
+        script_iso: Khar
+        script_suffix: ""
+    pgd:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Khar-translit
+        ancestors:
+        - inc-ash
+        family: inc-mid
+        lang: pgd
+        lang_tag: pgd-Khar
+        name: Gandhari
+        other_names:
+        - Gāndhārī
+        - Gāndhārī Prakrit
+        population: 0
+        script: Khar
+        script_iso: Khar
+        script_suffix: ""
+    pra-niy:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Khar-translit
+        ancestors:
+        - inc-ash
+        family: inc-mid
+        lang: pra-niy
+        lang_tag: pra-Khar-x-niy
+        name: Niya Prakrit
+        population: 0
+        script: Khar
+        script_iso: Khar
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-Java-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Khar
+        name: Sanskrit
+        population: 15913
+        script: Khar
+        script_iso: Khar
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: khar-translit
+        lang_tag: und-Khar
+        population: 0
+        script: Khar
+        script_iso: Khar
+        script_suffix: ""
+    xtq:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Brah-translit
+        family: xsc-sak
+        lang: xtq
+        lang_tag: xtq-Khar
+        name: Tumshuqese
+        population: 0
+        script: Khar
+        script_iso: Khar
+        script_suffix: ""
+Khmr:
+    km:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: km-translit
+        aliases: &id014
+        - Cambodian
+        - Central Khmer
+        - Modern Khmer
+        ancestors: &id015
+        - mkh-mkm
+        family: mkh-kmr
+        lang: km
+        lang_tag: km-Khmr
+        name: Khmer
+        population: 15065030
+        script: Khmr
+        script_iso: Khmr
+        script_suffix: ""
+    pi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        ancestors:
+        - sa
+        family: inc-mid
+        lang: pi
+        lang_tag: pi-Khmr
+        name: Pali
+        population: 0
+        script: Khmr
+        script_iso: Khmr
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Khmr
+        name: Sanskrit
+        population: 15913
+        script: Khmr
+        script_iso: Khmr
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: km-translit
+        aliases: *id014
+        ancestors: *id015
+        family: mkh-kmr
+        lang: km
+        lang_tag: km-Khmr
+        name: Khmer
+        population: 15065030
+        script: Khmr
+        script_iso: Khmr
+        script_suffix: ""
+Knda:
+    dra-mkn:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: kn-translit
+        aliases:
+        - Nadugannada
+        ancestors:
+        - dra-okn
+        family: dra
+        lang: dra-mkn
+        lang_tag: dra-Knda-x-mkn
+        name: Middle Kannada
+        population: 0
+        script: Knda
+        script_iso: Knda
+        script_suffix: ""
+    dra-okn:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: kn-translit
+        aliases:
+        - Halegannada
+        ancestors:
+        - dra-pro
+        family: dra
+        lang: dra-okn
+        lang_tag: dra-Knda-x-okn
+        name: Old Kannada
+        population: 0
+        script: Knda
+        script_iso: Knda
+        script_suffix: ""
+    inc-pra:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: inc-pra-Knda-translit
+        ancestors:
+        - inc-ash
+        family: inc-mid
+        lang: inc-pra
+        lang_tag: inc-Knda-x-pra
+        name: Prakrit
+        population: 0
+        script: Knda
+        script_iso: Knda
+        script_suffix: ""
+    kn:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: kn-translit
+        ancestors: &id016
+        - dra-mkn
+        family: dra
+        lang: kn
+        lang_tag: kn-Knda
+        name: Kannada
+        population: 49065330
+        script: Knda
+        script_iso: Knda
+        script_suffix: ""
+    kok:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mr-translit
+        ancestors:
+        - pmh
+        family: inc-sou
+        lang: kok
+        lang_tag: kok-Knda
+        name: Konkani
+        population: 4906533
+        script: Knda
+        script_iso: Knda
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-Knda-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Knda
+        name: Sanskrit
+        population: 15913
+        script: Knda
+        script_iso: Knda
+        script_suffix: ""
+    tcy:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: kn-translit
+        family: dra
+        lang: tcy
+        lang_tag: tcy-Knda
+        name: Tulu
+        population: 1989135
+        script: Knda
+        script_iso: Knda
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: kn-translit
+        ancestors: *id016
+        family: dra
+        lang: kn
+        lang_tag: kn-Knda
+        name: Kannada
+        population: 49065330
+        script: Knda
+        script_iso: Knda
+        script_suffix: ""
+Kore:
+    ko:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ko-translit
+        aliases: &id017
+        - Modern Korean
+        ancestors: &id018
+        - okm
+        family: qfa-kor
+        lang: ko
+        lang_tag: ko-Kore
+        name: Korean
+        population: 78187423
+        script: Kore
+        script_iso: Kore
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ko-translit
+        aliases: *id017
+        ancestors: *id018
+        family: qfa-kor
+        lang: ko
+        lang_tag: ko-Kore
+        name: Korean
+        population: 78187423
+        script: Kore
+        script_iso: Kore
+        script_suffix: ""
+Kthi:
+    awa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - inc-pra
+        family: inc-hie
+        lang: awa
+        lang_tag: awa-Kthi
+        name: Awadhi
+        population: 25862924
+        script: Kthi
+        script_iso: Kthi
+        script_suffix: ""
+    bho:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: bho-Kthi-translit
+        ancestors:
+        - bh
+        family: inc-hie
+        lang: bho
+        lang_tag: bho-Kthi
+        name: Bhojpuri
+        population: 32934797
+        script: Kthi
+        script_iso: Kthi
+        script_suffix: ""
+    hi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors: &id019
+        - inc-ohi
+        family: inc-hnd
+        lang: hi
+        lang_tag: hi-Kthi
+        name: Hindi
+        other_names: &id020
+        - Hindavi
+        population: 546693674
+        script: Kthi
+        script_iso: Kthi
+        script_suffix: ""
+    mai:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: bho-Kthi-translit
+        ancestors:
+        - bh
+        family: inc-eas
+        lang: mai
+        lang_tag: mai-Kthi
+        name: Maithili
+        population: 19249149
+        script: Kthi
+        script_iso: Kthi
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors: *id019
+        family: inc-hnd
+        lang: hi
+        lang_tag: hi-Kthi
+        name: Hindi
+        other_names: *id020
+        population: 546693674
+        script: Kthi
+        script_iso: Kthi
+        script_suffix: ""
+Lana:
+    pi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        ancestors:
+        - sa
+        family: inc-mid
+        lang: pi
+        lang_tag: pi-Lana
+        name: Pali
+        population: 0
+        script: Lana
+        script_iso: Lana
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Lana
+        name: Sanskrit
+        population: 15913
+        script: Lana
+        script_iso: Lana
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Lana
+        name: Sanskrit
+        population: 15913
+        script: Lana
+        script_iso: Lana
+        script_suffix: ""
+Laoo:
+    lo:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: lo-translit
+        aliases: &id021
+        - Laotian
+        family: tai-swe
+        lang: lo
+        lang_tag: lo-Laoo
+        name: Lao
+        population: 5138706
+        script: Laoo
+        script_iso: Laoo
+        script_suffix: ""
+    pi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        ancestors:
+        - sa
+        family: inc-mid
+        lang: pi
+        lang_tag: pi-Laoo
+        name: Pali
+        population: 0
+        script: Laoo
+        script_iso: Laoo
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Laoo
+        name: Sanskrit
+        population: 15913
+        script: Laoo
+        script_iso: Laoo
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: lo-translit
+        aliases: *id021
+        family: tai-swe
+        lang: lo
+        lang_tag: lo-Laoo
+        name: Lao
+        population: 5138706
+        script: Laoo
+        script_iso: Laoo
+        script_suffix: ""
+Latn:
+    und:
+        Beng:
+            override: false
+            script: Beng
+            script_iso: Beng
+            translit: pi-Latn-translit
+        Brah:
+            override: false
+            script: Brah
+            script_iso: Brah
+            translit: pi-Latn-translit
+        Deva:
+            override: false
+            script: Deva
+            script_iso: Deva
+            translit: pi-Latn-translit
+        Khmr:
+            override: false
+            script: Khmr
+            script_iso: Khmr
+            translit: pi-Latn-translit
+        Lana:
+            override: false
+            script: Lana
+            script_iso: Lana
+            translit: pi-Latn-translit
+        Laoo:
+            override: false
+            script: Laoo
+            script_iso: Laoo
+            translit: pi-Latn-translit
+        Mymr:
+            override: false
+            script: Mymr
+            script_iso: Mymr
+            translit: pi-Latn-translit
+        Sinh:
+            override: false
+            script: Sinh
+            script_iso: Sinh
+            translit: pi-Latn-translit
+        Thai:
+            override: false
+            script: Thai
+            script_iso: Thai
+            translit: pi-Latn-translit
+        lang_tag: und-Latn
+        population: 0
+        script: Latn
+        script_iso: Latn
+        script_suffix: ""
+        to_script: Beng
+        translit_tr_arg: Beng
+Lepc:
+    lep:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: lep-translit
+        family: sit
+        lang: lep
+        lang_tag: lep-Lepc
+        name: Lepcha
+        population: 79743
+        script: Lepc
+        script_iso: Lepc
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: lep-translit
+        family: sit
+        lang: lep
+        lang_tag: lep-Lepc
+        name: Lepcha
+        population: 79743
+        script: Lepc
+        script_iso: Lepc
+        script_suffix: ""
+Limb:
+    lif:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: lif-translit
+        family: sit-kir
+        lang: lif
+        lang_tag: lif-Limb
+        name: Limbu
+        population: 368085
+        script: Limb
+        script_iso: Limb
+        script_suffix: ""
+    und:
+        Deva:
+            override: false
+            script: Deva
+            script_iso: Deva
+            translit: Limb-Deva-translit
+        lang_tag: und-Limb
+        population: 0
+        script: Limb
+        script_iso: Limb
+        script_suffix: ""
+        to_script: Deva
+Linb:
+    gmy:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Linb-translit
+        family: grk
+        lang: gmy
+        lang_tag: gmy-Linb
+        name: Mycenaean Greek
+        population: 0
+        script: Linb
+        script_iso: Linb
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: linb-translit
+        lang_tag: und-Linb
+        population: 0
+        script: Linb
+        script_iso: Linb
+        script_suffix: ""
+Lyci:
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: lyci-translit
+        lang_tag: und-Lyci
+        population: 0
+        script: Lyci
+        script_iso: Lyci
+        script_suffix: ""
+    xlc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Lyci-translit
+        family: ine-ana
+        lang: xlc
+        lang_tag: xlc-Lyci
+        name: Lycian
+        population: 0
+        script: Lyci
+        script_iso: Lyci
+        script_suffix: ""
+Lydi:
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: lydi-translit
+        lang_tag: und-Lydi
+        population: 0
+        script: Lydi
+        script_iso: Lydi
+        script_suffix: ""
+    xld:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Lydi-translit
+        family: ine-ana
+        lang: xld
+        lang_tag: xld-Lydi
+        name: Lydian
+        population: 0
+        script: Lydi
+        script_iso: Lydi
+        script_suffix: ""
+Mahj:
+    mwr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors: &id022
+        - raj
+        family: inc-wes
+        lang: mwr
+        lang_tag: mwr-Mahj
+        name: Marwari
+        other_names: &id023
+        - Merwari
+        - Dhundari
+        - Shekhawati
+        - Harauti
+        - Goaria
+        - Gurgula
+        population: 15913080
+        script: Mahj
+        script_iso: Mahj
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors: *id022
+        family: inc-wes
+        lang: mwr
+        lang_tag: mwr-Mahj
+        name: Marwari
+        other_names: *id023
+        population: 15913080
+        script: Mahj
+        script_iso: Mahj
+        script_suffix: ""
+Mand:
+    arc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Palm-translit
+        family: sem-ara
+        lang: arc
+        lang_tag: arc-Mand
+        name: Aramaic
+        population: 0
+        script: Mand
+        script_iso: Mand
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Palm-translit
+        family: sem-ara
+        lang: arc
+        lang_tag: arc-Mand
+        name: Aramaic
+        population: 0
+        script: Mand
+        script_iso: Mand
+        script_suffix: ""
+Mani:
+    pal:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Mani-translit
+        ancestors:
+        - peo
+        family: ira-swi
+        lang: pal
+        lang_tag: pal-Mani
+        name: Middle Persian
+        other_names:
+        - Pahlavi
+        - Manichaean Middle Persian
+        population: 0
+        script: Mani
+        script_iso: Mani
+        script_suffix: ""
+    sog:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Mani-translit
+        family: ira-sgc
+        lang: sog
+        lang_tag: sog-Mani
+        name: Sogdian
+        population: 0
+        script: Mani
+        script_iso: Mani
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mani-translit
+        lang_tag: und-Mani
+        population: 0
+        script: Mani
+        script_iso: Mani
+        script_suffix: ""
+    xbc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: xbc-translit
+        family: ira-sbc
+        lang: xbc
+        lang_tag: xbc-Mani
+        name: Bactrian
+        other_names:
+        - Greco-Bactrian
+        - Kushan
+        - Kushano-Bactrian
+        population: 0
+        script: Mani
+        script_iso: Mani
+        script_suffix: ""
+    xpr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Mani-translit
+        family: ira-mpr
+        lang: xpr
+        lang_tag: xpr-Mani
+        name: Parthian
+        population: 0
+        script: Mani
+        script_iso: Mani
+        script_suffix: ""
+Merc:
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: xmr-translit
+        family: afa
+        lang: xmr
+        lang_tag: xmr-Merc
+        name: Meroitic
+        other_names: &id024
+        - Kushite
+        population: 0
+        script: Merc
+        script_iso: Merc
+        script_suffix: ""
+    xmr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: xmr-translit
+        family: afa
+        lang: xmr
+        lang_tag: xmr-Merc
+        name: Meroitic
+        other_names: *id024
+        population: 0
+        script: Merc
+        script_iso: Merc
+        script_suffix: ""
+Mero:
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: xmr-translit
+        family: afa
+        lang: xmr
+        lang_tag: xmr-Mero
+        name: Meroitic
+        other_names: &id025
+        - Kushite
+        population: 0
+        script: Mero
+        script_iso: Mero
+        script_suffix: ""
+    xmr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: xmr-translit
+        family: afa
+        lang: xmr
+        lang_tag: xmr-Mero
+        name: Meroitic
+        other_names: *id025
+        population: 0
+        script: Mero
+        script_iso: Mero
+        script_suffix: ""
+Mlym:
+    kok:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mr-translit
+        ancestors:
+        - pmh
+        family: inc-sou
+        lang: kok
+        lang_tag: kok-Mlym
+        name: Konkani
+        population: 4906533
+        script: Mlym
+        script_iso: Mlym
+        script_suffix: ""
+    ml:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: ml-translit
+        family: dra
+        lang: ml
+        lang_tag: ml-Mlym
+        name: Malayalam
+        population: 43280500
+        script: Mlym
+        script_iso: Mlym
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Mlym
+        name: Sanskrit
+        population: 15913
+        script: Mlym
+        script_iso: Mlym
+        script_suffix: ""
+    und:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: ml-translit
+        family: dra
+        lang: ml
+        lang_tag: ml-Mlym
+        name: Malayalam
+        population: 43280500
+        script: Mlym
+        script_iso: Mlym
+        script_suffix: ""
+Modi:
+    mr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mr-translit
+        ancestors:
+        - omr
+        family: inc-sou
+        lang: mr
+        lang_tag: mr-Modi
+        name: Marathi
+        population: 92826300
+        script: Modi
+        script_iso: Modi
+        script_suffix: ""
+    omr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Modi-translit
+        ancestors:
+        - pmh
+        family: inc-sou
+        lang: omr
+        lang_tag: omr-Modi
+        name: Old Marathi
+        population: 0
+        script: Modi
+        script_iso: Modi
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-Modi-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Modi
+        name: Sanskrit
+        population: 15913
+        script: Modi
+        script_iso: Modi
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Modi-translit
+        lang_tag: und-Modi
+        population: 0
+        script: Modi
+        script_iso: Modi
+        script_suffix: ""
+Mong:
+    bua:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: bua-translit
+        aliases:
+        - Buriat
+        family: xgn
+        lang: bua
+        lang_tag: bua-Mong
+        name: Buryat
+        population: 311788
+        script: Mong
+        script_iso: Mong
+        script_suffix: ""
+    cmg:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mn-translit
+        ancestors:
+        - xng
+        family: xgn
+        lang: cmg
+        lang_tag: cmg-Mong
+        name: Classical Mongolian
+        population: 0
+        script: Mong
+        script_iso: Mong
+        script_suffix: ""
+    mn:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: mn-translit
+        ancestors: &id026
+        - cmg
+        family: xgn
+        lang: mn
+        lang_tag: mn-Mong
+        name: Mongolian
+        population: 6572846
+        script: Mong
+        script_iso: Mong
+        script_suffix: ""
+        varieties: &id027
+        - Khalkha Mongolian
+    mnc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mnc-translit
+        ancestors:
+        - juc
+        family: tuw
+        lang: mnc
+        lang_tag: mnc-Mong
+        name: Manchu
+        population: 0
+        script: Mong
+        script_iso: Mong
+        script_suffix: ""
+    und:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: mn-translit
+        ancestors: *id026
+        family: xgn
+        lang: mn
+        lang_tag: mn-Mong
+        name: Mongolian
+        population: 6572846
+        script: Mong
+        script_iso: Mong
+        script_suffix: ""
+        varieties: *id027
+    xng:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mn-translit
+        family: xgn
+        lang: xng
+        lang_tag: xng-Mong
+        name: Middle Mongolian
+        population: 0
+        script: Mong
+        script_iso: Mong
+        script_suffix: ""
+    xwo:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: xwo-translit
+        family: xgn
+        lang: xwo
+        lang_tag: xwo-Mong
+        name: Written Oirat
+        population: 0
+        script: Mong
+        script_iso: Mong
+        script_suffix: ""
+Mymr:
+    ksw:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ksw-translit
+        aliases:
+        - S'gaw Kayin
+        - S'gaw
+        - Sgaw
+        - White Karen
+        family: kar
+        lang: ksw
+        lang_tag: ksw-Mymr
+        name: S'gaw Karen
+        population: 0
+        script: Mymr
+        script_iso: Mymr
+        script_suffix: ""
+    my:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: my-translit
+        aliases: &id028
+        - Myanmar
+        ancestors: &id029
+        - obr
+        family: tbq-brm
+        lang: my
+        lang_tag: my-Mymr
+        name: Burmese
+        population: 36559231
+        script: Mymr
+        script_iso: Mymr
+        script_suffix: ""
+        varieties: &id030
+        - Mandalay Burmese
+        - Myeik Burmese
+        - Palaw Burmese
+        -   - Rangoon Burmese
+            - Yangon Burmese
+        - Yaw Burmese
+    pi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        ancestors:
+        - sa
+        family: inc-mid
+        lang: pi
+        lang_tag: pi-Mymr
+        name: Pali
+        population: 0
+        script: Mymr
+        script_iso: Mymr
+        script_suffix: ""
+    rhg:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Rohg-translit
+        ancestors:
+        - inc-obn
+        family: inc-eas
+        lang: rhg
+        lang_tag: rhg-Mymr
+        name: Rohingya
+        population: 0
+        script: Mymr
+        script_iso: Mymr
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Mymr
+        name: Sanskrit
+        population: 15913
+        script: Mymr
+        script_iso: Mymr
+        script_suffix: ""
+    shn:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: shn-translit
+        family: tai-swe
+        lang: shn
+        lang_tag: shn-Mymr
+        name: Shan
+        other_names:
+        - Kwam Tai
+        - Kam Tai
+        - Tai Yai
+        population: 3687984
+        script: Mymr
+        script_iso: Mymr
+        script_suffix: ""
+    und:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: my-translit
+        aliases: *id028
+        ancestors: *id029
+        family: tbq-brm
+        lang: my
+        lang_tag: my-Mymr
+        name: Burmese
+        population: 36559231
+        script: Mymr
+        script_iso: Mymr
+        script_suffix: ""
+        varieties: *id030
+Narb:
+    sem-dad:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Narb-translit
+        family: sem-cen
+        lang: sem-dad
+        lang_tag: sem-Narb-x-dad
+        name: Dadanitic
+        other_names:
+        - Dadanite
+        - Lihyanite
+        - Lihyanitic
+        population: 0
+        script: Narb
+        script_iso: Narb
+        script_suffix: ""
+    sem-dum:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Narb-translit
+        family: sem-cen
+        lang: sem-dum
+        lang_tag: sem-Narb-x-dum
+        name: Dumaitic
+        population: 0
+        script: Narb
+        script_iso: Narb
+        script_suffix: ""
+    sem-has:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Narb-translit
+        family: sem-cen
+        lang: sem-has
+        lang_tag: sem-Narb-x-has
+        name: Hasaitic
+        population: 0
+        script: Narb
+        script_iso: Narb
+        script_suffix: ""
+    sem-his:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Narb-translit
+        family: sem-cen
+        lang: sem-his
+        lang_tag: sem-Narb-x-his
+        name: Hismaic
+        other_names:
+        - Thamudic E
+        population: 0
+        script: Narb
+        script_iso: Narb
+        script_suffix: ""
+    sem-saf:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Narb-translit
+        family: sem-cen
+        lang: sem-saf
+        lang_tag: sem-Narb-x-saf
+        name: Safaitic
+        population: 0
+        script: Narb
+        script_iso: Narb
+        script_suffix: ""
+    sem-tay:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Narb-translit
+        family: sem-cen
+        lang: sem-tay
+        lang_tag: sem-Narb-x-tay
+        name: Taymanitic
+        other_names:
+        - Taymanite
+        - Thamudic A
+        population: 0
+        script: Narb
+        script_iso: Narb
+        script_suffix: ""
+    sem-tha:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Narb-translit
+        family: sem-cen
+        lang: sem-tha
+        lang_tag: sem-Narb-x-tha
+        name: Thamudic
+        population: 0
+        script: Narb
+        script_iso: Narb
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Narb-translit
+        lang_tag: und-Narb
+        population: 0
+        script: Narb
+        script_iso: Narb
+        script_suffix: ""
+Nbat:
+    arc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Palm-translit
+        family: sem-ara
+        lang: arc
+        lang_tag: arc-Nbat
+        name: Aramaic
+        population: 0
+        script: Nbat
+        script_iso: Nbat
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Palm-translit
+        family: sem-ara
+        lang: arc
+        lang_tag: arc-Nbat
+        name: Aramaic
+        population: 0
+        script: Nbat
+        script_iso: Nbat
+        script_suffix: ""
+Newa:
+    bn:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: bn-translit
+        aliases:
+        - Bangla
+        ancestors:
+        - inc-mbn
+        family: inc-eas
+        lang: bn
+        lang_tag: bn-Newa
+        name: Bengali
+        population: 267280377
+        script: Newa
+        script_iso: Newa
+        script_suffix: ""
+    hi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - inc-ohi
+        family: inc-hnd
+        lang: hi
+        lang_tag: hi-Newa
+        name: Hindi
+        other_names:
+        - Hindavi
+        population: 546693674
+        script: Newa
+        script_iso: Newa
+        script_suffix: ""
+    mai:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: bho-Kthi-translit
+        ancestors:
+        - bh
+        family: inc-eas
+        lang: mai
+        lang_tag: mai-Newa
+        name: Maithili
+        population: 19249149
+        script: Newa
+        script_iso: Newa
+        script_suffix: ""
+    ne:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ne-translit
+        aliases:
+        - Nepalese
+        family: inc-pah
+        lang: ne
+        lang_tag: ne-Newa
+        name: Nepali
+        population: 20903374
+        script: Newa
+        script_iso: Newa
+        script_suffix: ""
+        varieties:
+        - Palpa
+    new:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: new-Newa-translit
+        ancestors:
+        - nwx
+        family: sit-new
+        lang: new
+        lang_tag: new-Newa
+        name: Newar
+        other_names:
+        - Newari
+        population: 1000821
+        script: Newa
+        script_iso: Newa
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Newa
+        name: Sanskrit
+        population: 15913
+        script: Newa
+        script_iso: Newa
+        script_suffix: ""
+    und:
+        Deva:
+            override: false
+            script: Deva
+            script_iso: Deva
+            translit: Newa-Deva-translit
+        lang_tag: und-Newa
+        population: 0
+        script: Newa
+        script_iso: Newa
+        script_suffix: ""
+        to_script: Deva
+Ogam:
+    pgl:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pgl-translit
+        family: cel-gae
+        lang: pgl
+        lang_tag: pgl-Ogam
+        name: Primitive Irish
+        population: 0
+        script: Ogam
+        script_iso: Ogam
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pgl-translit
+        family: cel-gae
+        lang: pgl
+        lang_tag: pgl-Ogam
+        name: Primitive Irish
+        population: 0
+        script: Ogam
+        script_iso: Ogam
+        script_suffix: ""
+Olck:
+    sat:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: Olck-translit
+        family: mun
+        lang: sat
+        lang_tag: sat-Olck
+        name: Santali
+        population: 7293495
+        script: Olck
+        script_iso: Olck
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Olck-translit
+        lang_tag: und-Olck
+        population: 0
+        script: Olck
+        script_iso: Olck
+        script_suffix: ""
+Orkh:
+    otk:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Orkh-translit
+        family: trk
+        lang: otk
+        lang_tag: otk-Orkh
+        name: Old Turkic
+        other_names:
+        - Orkhon Turkic
+        - Orkhon
+        population: 0
+        script: Orkh
+        script_iso: Orkh
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Orkh-Bitig-translit
+        lang_tag: und-Orkh
+        population: 0
+        script: Orkh
+        script_iso: Orkh
+        script_suffix: ""
+Orya:
+    or:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: or-translit
+        aliases: &id031
+        - Odia
+        - Oorya
+        ancestors: &id032
+        - inc-mor
+        family: inc-eas
+        lang: or
+        lang_tag: or-Orya
+        name: Oriya
+        population: 42434880
+        script: Orya
+        script_iso: Orya
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-Orya-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Orya
+        name: Sanskrit
+        population: 15913
+        script: Orya
+        script_iso: Orya
+        script_suffix: ""
+    spv:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: or-translit
+        ancestors:
+        - or
+        family: inc-eas
+        lang: spv
+        lang_tag: spv-Orya
+        name: Sambalpuri
+        other_names:
+        - Kosali
+        - Koshali
+        population: 0
+        script: Orya
+        script_iso: Orya
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: or-translit
+        aliases: *id031
+        ancestors: *id032
+        family: inc-eas
+        lang: or
+        lang_tag: or-Orya
+        name: Oriya
+        population: 42434880
+        script: Orya
+        script_iso: Orya
+        script_suffix: ""
+Palm:
+    arc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Palm-translit
+        family: sem-ara
+        lang: arc
+        lang_tag: arc-Palm
+        name: Aramaic
+        population: 0
+        script: Palm
+        script_iso: Palm
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Palm-translit
+        lang_tag: und-Palm
+        population: 0
+        script: Palm
+        script_iso: Palm
+        script_suffix: ""
+Perm:
+    koi:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: kv-translit
+        family: urj-prm
+        lang: koi
+        lang_tag: koi-Perm
+        name: Komi-Permyak
+        population: 63775
+        script: Perm
+        script_iso: Perm
+        script_suffix: ""
+    und:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: kv-translit
+        family: urj-prm
+        lang: koi
+        lang_tag: koi-Perm
+        name: Komi-Permyak
+        population: 63775
+        script: Perm
+        script_iso: Perm
+        script_suffix: ""
+Phag:
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mn-translit
+        family: xgn
+        lang: xng
+        lang_tag: xng-Phag
+        name: Middle Mongolian
+        population: 0
+        script: Phag
+        script_iso: Phag
+        script_suffix: ""
+    xng:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mn-translit
+        family: xgn
+        lang: xng
+        lang_tag: xng-Phag
+        name: Middle Mongolian
+        population: 0
+        script: Phag
+        script_iso: Phag
+        script_suffix: ""
+Phli:
+    pal:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Phli-translit
+        ancestors:
+        - peo
+        family: ira-swi
+        lang: pal
+        lang_tag: pal-Phli
+        name: Middle Persian
+        other_names:
+        - Pahlavi
+        - Manichaean Middle Persian
+        population: 0
+        script: Phli
+        script_iso: Phli
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: phli-translit
+        lang_tag: und-Phli
+        population: 0
+        script: Phli
+        script_iso: Phli
+        script_suffix: ""
+Phlv:
+    pal:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Phlv-translit
+        ancestors:
+        - peo
+        family: ira-swi
+        lang: pal
+        lang_tag: pal-Phlv
+        name: Middle Persian
+        other_names:
+        - Pahlavi
+        - Manichaean Middle Persian
+        population: 0
+        script: Phlv
+        script_iso: Phlv
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Phlv-translit
+        lang_tag: und-Phlv
+        population: 0
+        script: Phlv
+        script_iso: Phlv
+        script_suffix: ""
+    xco:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Chrs-translit
+        family: ira-sbc
+        lang: xco
+        lang_tag: xco-Phlv
+        name: Khwarezmian
+        other_names:
+        - Chorasmian
+        - Khwarazmian
+        - Khorezmian
+        population: 0
+        script: Phlv
+        script_iso: Phlv
+        script_suffix: ""
+Phnx:
+    arc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Palm-translit
+        family: sem-ara
+        lang: arc
+        lang_tag: arc-Phnx
+        name: Aramaic
+        population: 0
+        script: Phnx
+        script_iso: Phnx
+        script_suffix: ""
+    obm:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Phnx-translit
+        family: sem-can
+        lang: obm
+        lang_tag: obm-Phnx
+        name: Moabite
+        population: 0
+        script: Phnx
+        script_iso: Phnx
+        script_suffix: ""
+    phn:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Phnx-translit
+        family: sem-can
+        lang: phn
+        lang_tag: phn-Phnx
+        name: Phoenician
+        population: 0
+        script: Phnx
+        script_iso: Phnx
+        script_suffix: ""
+    sem-amm:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Phnx-translit
+        family: sem-can
+        lang: sem-amm
+        lang_tag: sem-Phnx-x-amm
+        name: Ammonite
+        population: 0
+        script: Phnx
+        script_iso: Phnx
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Phnx-translit
+        lang_tag: und-Phnx
+        population: 0
+        script: Phnx
+        script_iso: Phnx
+        script_suffix: ""
+    xdm:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Phnx-translit
+        family: sem-can
+        lang: xdm
+        lang_tag: xdm-Phnx
+        name: Edomite
+        population: 0
+        script: Phnx
+        script_iso: Phnx
+        script_suffix: ""
+    xpu:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Phnx-translit
+        ancestors:
+        - phn
+        family: sem-can
+        lang: xpu
+        lang_tag: xpu-Phnx
+        name: Punic
+        population: 0
+        script: Phnx
+        script_iso: Phnx
+        script_suffix: ""
+Prti:
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: prti-translit
+        lang_tag: und-Prti
+        population: 0
+        script: Prti
+        script_iso: Prti
+        script_suffix: ""
+    xpr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Prti-translit
+        family: ira-mpr
+        lang: xpr
+        lang_tag: xpr-Prti
+        name: Parthian
+        population: 0
+        script: Prti
+        script_iso: Prti
+        script_suffix: ""
+Rohg:
+    rhg:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Rohg-translit
+        ancestors:
+        - inc-obn
+        family: inc-eas
+        lang: rhg
+        lang_tag: rhg-Rohg
+        name: Rohingya
+        population: 0
+        script: Rohg
+        script_iso: Rohg
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Rohg-translit
+        lang_tag: und-Rohg
+        population: 0
+        script: Rohg
+        script_iso: Rohg
+        script_suffix: ""
+Runr:
+    ang:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Runr-translit
+        aliases:
+        - Anglo-Saxon
+        family: gmw
+        lang: ang
+        lang_tag: ang-Runr
+        name: Old English
+        population: 0
+        script: Runr
+        script_iso: Runr
+        script_suffix: ""
+    gmq-pro:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Runr-translit
+        aliases:
+        - Proto-Scandinavian
+        - Primitive Norse
+        - Proto-Nordic
+        - Ancient Nordic
+        - Ancient Scandinavian
+        - Old Nordic
+        - Old Scandinavian
+        - Proto-North Germanic
+        - North Proto-Germanic
+        - Common Scandinavian
+        family: gmq
+        lang: gmq-pro
+        lang_tag: gmq-Runr-x-pro
+        name: Proto-Norse
+        population: 0
+        script: Runr
+        script_iso: Runr
+        script_suffix: ""
+    got:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Goth-translit
+        family: gme
+        lang: got
+        lang_tag: got-Runr
+        name: Gothic
+        population: 0
+        script: Runr
+        script_iso: Runr
+        script_suffix: ""
+    non:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Runr-translit
+        family: gmq
+        lang: non
+        lang_tag: non-Runr
+        name: Old Norse
+        other_names:
+        - Old Icelandic
+        - Old Norwegian
+        population: 0
+        script: Runr
+        script_iso: Runr
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Runr-translit
+        lang_tag: und-Runr
+        population: 0
+        script: Runr
+        script_iso: Runr
+        script_suffix: ""
+Samr:
+    arc:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Palm-translit
+        family: sem-ara
+        lang: arc
+        lang_tag: arc-Samr
+        name: Aramaic
+        population: 0
+        script: Samr
+        script_iso: Samr
+        script_suffix: ""
+    sam:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Samr-translit
+        family: sem-arw
+        lang: sam
+        lang_tag: sam-Samr
+        name: Samaritan Aramaic
+        other_names:
+        - Samaritan
+        population: 0
+        script: Samr
+        script_iso: Samr
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Samr-translit
+        lang_tag: und-Samr
+        population: 0
+        script: Samr
+        script_iso: Samr
+        script_suffix: ""
+Sarb:
+    inm:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Sarb-translit
+        family: sem-osa
+        lang: inm
+        lang_tag: inm-Sarb
+        name: Minaean
+        population: 0
+        script: Sarb
+        script_iso: Sarb
+        script_suffix: ""
+    sem-srb:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Sarb-translit
+        family: sem-osa
+        lang: sem-srb
+        lang_tag: sem-Sarb-x-srb
+        name: Old South Arabian
+        population: 0
+        script: Sarb
+        script_iso: Sarb
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sarb-translit
+        lang_tag: und-Sarb
+        population: 0
+        script: Sarb
+        script_iso: Sarb
+        script_suffix: ""
+    xha:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Sarb-translit
+        lang: xha
+        lang_tag: xha-Sarb
+        name: Harami
+        population: 0
+        script: Sarb
+        script_iso: Sarb
+        script_suffix: ""
+    xhd:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Sarb-translit
+        lang: xhd
+        lang_tag: xhd-Sarb
+        name: Hadrami
+        population: 0
+        script: Sarb
+        script_iso: Sarb
+        script_suffix: ""
+    xqt:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Sarb-translit
+        family: sem-osa
+        lang: xqt
+        lang_tag: xqt-Sarb
+        name: Qatabanian
+        population: 0
+        script: Sarb
+        script_iso: Sarb
+        script_suffix: ""
+    xsa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Sarb-translit
+        family: sem-osa
+        lang: xsa
+        lang_tag: xsa-Sarb
+        name: Sabaean
+        population: 0
+        script: Sarb
+        script_iso: Sarb
+        script_suffix: ""
+Saur:
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-Orya-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Saur
+        name: Sanskrit
+        population: 15913
+        script: Saur
+        script_iso: Saur
+        script_suffix: ""
+    saz:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: saz-translit
+        ancestors: &id033
+        - inc-ogu
+        family: inc-wes
+        lang: saz
+        lang_tag: saz-Saur
+        name: Saurashtra
+        population: 384566
+        script: Saur
+        script_iso: Saur
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: saz-translit
+        ancestors: *id033
+        family: inc-wes
+        lang: saz
+        lang_tag: saz-Saur
+        name: Saurashtra
+        population: 384566
+        script: Saur
+        script_iso: Saur
+        script_suffix: ""
+Shrd:
+    ks:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Shrd-translit
+        aliases:
+        - Koshur
+        ancestors:
+        - inc-dar-pro
+        family: inc-dar
+        lang: ks
+        lang_tag: ks-Shrd
+        name: Kashmiri
+        population: 5723031
+        script: Shrd
+        script_iso: Shrd
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-Orya-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Shrd
+        name: Sanskrit
+        population: 15913
+        script: Shrd
+        script_iso: Shrd
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Shrd-translit
+        lang_tag: und-Shrd
+        population: 0
+        script: Shrd
+        script_iso: Shrd
+        script_suffix: ""
+Sidd:
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-Orya-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Sidd
+        name: Sanskrit
+        population: 15913
+        script: Sidd
+        script_iso: Sidd
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: sa-Orya-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Sidd
+        name: Sanskrit
+        population: 15913
+        script: Sidd
+        script_iso: Sidd
+        script_suffix: ""
+Sind:
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Sind-translit
+        lang_tag: und-Sind
+        population: 0
+        script: Sind
+        script_iso: Sind
+        script_suffix: ""
+Sinh:
+    pi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: si-translit
+        ancestors:
+        - sa
+        family: inc-mid
+        lang: pi
+        lang_tag: pi-Sinh
+        name: Pali
+        population: 0
+        script: Sinh
+        script_iso: Sinh
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: si-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Sinh
+        name: Sanskrit
+        population: 15913
+        script: Sinh
+        script_iso: Sinh
+        script_suffix: ""
+    si:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: si-translit
+        aliases: &id034
+        - Singhalese
+        - Sinhala
+        ancestors: &id035
+        - elu-prk
+        family: inc-ins
+        lang: si
+        lang_tag: si-Sinh
+        name: Sinhalese
+        population: 15564656
+        script: Sinh
+        script_iso: Sinh
+        script_suffix: ""
+    und:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: si-translit
+        aliases: *id034
+        ancestors: *id035
+        family: inc-ins
+        lang: si
+        lang_tag: si-Sinh
+        name: Sinhalese
+        population: 15564656
+        script: Sinh
+        script_iso: Sinh
+        script_suffix: ""
+Sogd:
+    sog:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Sogd-translit
+        family: ira-sgc
+        lang: sog
+        lang_tag: sog-Sogd
+        name: Sogdian
+        population: 0
+        script: Sogd
+        script_iso: Sogd
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Sogd-translit
+        lang_tag: und-Sogd
+        population: 0
+        script: Sogd
+        script_iso: Sogd
+        script_suffix: ""
+    xco:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Chrs-translit
+        family: ira-sbc
+        lang: xco
+        lang_tag: xco-Sogd
+        name: Khwarezmian
+        other_names:
+        - Chorasmian
+        - Khwarazmian
+        - Khorezmian
+        population: 0
+        script: Sogd
+        script_iso: Sogd
+        script_suffix: ""
+Sogo:
+    sog:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Sogo-translit
+        family: ira-sgc
+        lang: sog
+        lang_tag: sog-Sogo
+        name: Sogdian
+        population: 0
+        script: Sogo
+        script_iso: Sogo
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Sogo-translit
+        lang_tag: und-Sogo
+        population: 0
+        script: Sogo
+        script_iso: Sogo
+        script_suffix: ""
+Soyo:
+    mn:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: mn-translit
+        ancestors: &id036
+        - cmg
+        family: xgn
+        lang: mn
+        lang_tag: mn-Soyo
+        name: Mongolian
+        population: 6572846
+        script: Soyo
+        script_iso: Soyo
+        script_suffix: ""
+        varieties: &id037
+        - Khalkha Mongolian
+    und:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: mn-translit
+        ancestors: *id036
+        family: xgn
+        lang: mn
+        lang_tag: mn-Soyo
+        name: Mongolian
+        population: 6572846
+        script: Soyo
+        script_iso: Soyo
+        script_suffix: ""
+        varieties: *id037
+Sund:
+    su:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: su-translit
+        family: poz-msa
+        lang: su
+        lang_tag: su-Sund
+        name: Sundanese
+        population: 32043120
+        script: Sund
+        script_iso: Sund
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: su-translit
+        family: poz-msa
+        lang: su
+        lang_tag: su-Sund
+        name: Sundanese
+        population: 32043120
+        script: Sund
+        script_iso: Sund
+        script_suffix: ""
+Sylo:
+    syl:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: syl-translit
+        ancestors: &id038
+        - inc-obn
+        family: inc-eas
+        lang: syl
+        lang_tag: syl-Sylo
+        name: Sylheti
+        population: 8467932
+        script: Sylo
+        script_iso: Sylo
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: syl-translit
+        ancestors: *id038
+        family: inc-eas
+        lang: syl
+        lang_tag: syl-Sylo
+        name: Sylheti
+        population: 8467932
+        script: Sylo
+        script_iso: Sylo
+        script_suffix: ""
+Takr:
+    cdh:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: cdh
+        lang_tag: cdh-Takr
+        name: Chambeali
+        population: 0
+        script: Takr
+        script_iso: Takr
+        script_suffix: ""
+    doi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: doi
+        lang_tag: doi-Takr
+        name: Dogri
+        population: 2652180
+        script: Takr
+        script_iso: Takr
+        script_suffix: ""
+    gbk:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: gbk
+        lang_tag: gbk-Takr
+        name: Gaddi
+        population: 0
+        script: Takr
+        script_iso: Takr
+        script_suffix: ""
+    kfs:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: kfs
+        lang_tag: kfs-Takr
+        name: Bilaspuri
+        population: 0
+        script: Takr
+        script_iso: Takr
+        script_suffix: ""
+    mjl:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: mjl
+        lang_tag: mjl-Takr
+        name: Mandeali
+        population: 0
+        script: Takr
+        script_iso: Takr
+        script_suffix: ""
+    pgg:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: pgg
+        lang_tag: pgg-Takr
+        name: Pangwali
+        population: 0
+        script: Takr
+        script_iso: Takr
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        family: him
+        lang: doi
+        lang_tag: doi-Takr
+        name: Dogri
+        population: 2652180
+        script: Takr
+        script_iso: Takr
+        script_suffix: ""
+    xnr:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: hi-translit
+        ancestors:
+        - doi
+        family: him
+        lang: xnr
+        lang_tag: xnr-Takr
+        name: Kangri
+        population: 2121744
+        script: Takr
+        script_iso: Takr
+        script_suffix: ""
+Tale:
+    tdd:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Tale-translit
+        aliases:
+        - Tai Nuea
+        - Dehong Dai
+        - Tai Dehong
+        - Tai Le
+        - Chinese Shan
+        - Chinese Tai
+        family: tai-swe
+        lang: tdd
+        lang_tag: tdd-Tale
+        name: Tai Nüa
+        population: 264864
+        script: Tale
+        script_iso: Tale
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Tale-translit
+        lang_tag: und-Tale
+        population: 0
+        script: Tale
+        script_iso: Tale
+        script_suffix: ""
+Talu:
+    khb:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Talu-translit
+        aliases:
+        - Lue
+        - Tai Lü
+        - Tai Lue
+        - Dai Lue
+        family: tai-swe
+        lang: khb
+        lang_tag: khb-Talu
+        name: Lü
+        population: 264864
+        script: Talu
+        script_iso: Talu
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: talu-translit
+        lang_tag: und-Talu
+        population: 0
+        script: Talu
+        script_iso: Talu
+        script_suffix: ""
+Taml:
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: si-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Taml
+        name: Sanskrit
+        population: 15913
+        script: Taml
+        script_iso: Taml
+        script_suffix: ""
+    saz:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: saz-translit
+        ancestors:
+        - inc-ogu
+        family: inc-wes
+        lang: saz
+        lang_tag: saz-Taml
+        name: Saurashtra
+        population: 384566
+        script: Taml
+        script_iso: Taml
+        script_suffix: ""
+    ta:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: ta-translit
+        ancestors: &id039
+        - oty
+        family: dra
+        lang: ta
+        lang_tag: ta-Taml
+        name: Tamil
+        population: 83327103
+        script: Taml
+        script_iso: Taml
+        script_suffix: ""
+    und:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: ta-translit
+        ancestors: *id039
+        family: dra
+        lang: ta
+        lang_tag: ta-Taml
+        name: Tamil
+        population: 83327103
+        script: Taml
+        script_iso: Taml
+        script_suffix: ""
+Tavt:
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Tavt-translit
+        lang_tag: und-Tavt
+        population: 0
+        script: Tavt
+        script_iso: Tavt
+        script_suffix: ""
+Telu:
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: si-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Telu
+        name: Sanskrit
+        population: 15913
+        script: Telu
+        script_iso: Telu
+        script_suffix: ""
+    te:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: te-translit
+        family: dra
+        lang: te
+        lang_tag: te-Telu
+        name: Telugu
+        population: 95478480
+        script: Telu
+        script_iso: Telu
+        script_suffix: ""
+    und:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: te-translit
+        family: dra
+        lang: te
+        lang_tag: te-Telu
+        name: Telugu
+        population: 95478480
+        script: Telu
+        script_iso: Telu
+        script_suffix: ""
+Tfng:
+    rif:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Tfng-translit
+        family: ber
+        lang: rif
+        lang_tag: rif-Tfng
+        name: Tarifit
+        other_names:
+        - Rifain
+        population: 3692411
+        script: Tfng
+        script_iso: Tfng
+        script_suffix: ""
+    shi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Tfng-translit
+        family: ber
+        lang: shi
+        lang_tag: shi-Tfng
+        name: Tashelhit
+        other_names:
+        - Tachelhit
+        - Chleuh
+        - Shilha
+        - Tashlhiyt
+        - Tashelhit Berber
+        - Tachelhit Berber
+        - Tashlhiyt Berber
+        population: 6187736
+        script: Tfng
+        script_iso: Tfng
+        script_suffix: ""
+    tzm:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Tfng-translit
+        family: ber
+        lang: tzm
+        lang_tag: tzm-Tfng
+        name: Central Atlas Tamazight
+        population: 3485047
+        script: Tfng
+        script_iso: Tfng
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Tfng-translit
+        lang_tag: und-Tfng
+        population: 0
+        script: Tfng
+        script_iso: Tfng
+        script_suffix: ""
+    zgh:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Tfng-translit
+        aliases:
+        - Standard Moroccan Amazigh
+        - Standard Moroccan Tamazight
+        - Standard Moroccan Berber
+        - Amazigh
+        - Tamazight
+        family: ber
+        lang: zgh
+        lang_tag: zgh-Tfng
+        name: Moroccan Amazigh
+        population: 7823574
+        script: Tfng
+        script_iso: Tfng
+        script_suffix: ""
+Thaa:
+    dv:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: dv-translit
+        aliases: &id040
+        - Divehi
+        - Maldivian
+        ancestors: &id041
+        - elu-prk
+        family: inc-ins
+        lang: dv
+        lang_tag: dv-Thaa
+        name: Dhivehi
+        population: 372368
+        script: Thaa
+        script_iso: Thaa
+        script_suffix: ""
+        varieties: &id042
+        -   - Mahal
+            - Mahl
+    und:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: dv-translit
+        aliases: *id040
+        ancestors: *id041
+        family: inc-ins
+        lang: dv
+        lang_tag: dv-Thaa
+        name: Dhivehi
+        population: 372368
+        script: Thaa
+        script_iso: Thaa
+        script_suffix: ""
+        varieties: *id042
+Thai:
+    pi:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        ancestors:
+        - sa
+        family: inc-mid
+        lang: pi
+        lang_tag: pi-Thai
+        name: Pali
+        population: 0
+        script: Thai
+        script_iso: Thai
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Thai
+        name: Sanskrit
+        population: 15913
+        script: Thai
+        script_iso: Thai
+        script_suffix: ""
+    th:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: th-translit
+        aliases: &id043
+        - Central Thai
+        - Siamese
+        family: tai-swe
+        lang: th
+        lang_tag: th-Thai
+        name: Thai
+        population: 55181920
+        script: Thai
+        script_iso: Thai
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: th-translit
+        aliases: *id043
+        family: tai-swe
+        lang: th
+        lang_tag: th-Thai
+        name: Thai
+        population: 55181920
+        script: Thai
+        script_iso: Thai
+        script_suffix: ""
+Tibt:
+    bo:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: bo-translit
+        ancestors: &id044
+        - xct
+        family: sit-tib
+        lang: bo
+        lang_tag: bo-Tibt
+        name: Tibetan
+        population: 3006697
+        script: Tibt
+        script_iso: Tibt
+        script_suffix: ""
+        varieties: &id045
+        -   - Amdo Tibetan
+            - Amdo
+        - Dolpo
+        -   - Khams
+            - Khams Tibetan
+        - Khamba
+        - Gola
+        - Humla
+        - Limi
+        -   - Lhasa
+            - Lhasa Tibetan
+        - Lhomi
+        - Loke
+        - Lowa
+        - Mugom
+        - Mugu
+        - Mustang
+        - Nubri
+        - Panang
+        - Shing Saapa
+        - Thudam
+        - Tichurong
+        - Tseku
+        -   - Ü
+            - Dbus
+        - Walungge
+    dz:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: bo-translit
+        ancestors:
+        - xct
+        family: sit-tib
+        lang: dz
+        lang_tag: dz-Tibt
+        name: Dzongkha
+        population: 370341
+        script: Tibt
+        script_iso: Tibt
+        script_suffix: ""
+    lbj:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: bo-translit
+        family: sit-lab
+        lang: lbj
+        lang_tag: lbj-Tibt
+        name: Ladakhi
+        other_names:
+        - Bhoti
+        population: 0
+        script: Tibt
+        script_iso: Tibt
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Tibt
+        name: Sanskrit
+        population: 15913
+        script: Tibt
+        script_iso: Tibt
+        script_suffix: ""
+    sip:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: bo-translit
+        aliases:
+        - Bhutia
+        - Dranjongke
+        - Dranjoke
+        - Denjongka
+        - Denzongpeke
+        - Denzongke
+        ancestors:
+        - xct
+        family: sit-tib
+        lang: sip
+        lang_tag: sip-Tibt
+        name: Sikkimese
+        population: 0
+        script: Tibt
+        script_iso: Tibt
+        script_suffix: ""
+    und:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: bo-translit
+        ancestors: *id044
+        family: sit-tib
+        lang: bo
+        lang_tag: bo-Tibt
+        name: Tibetan
+        population: 3006697
+        script: Tibt
+        script_iso: Tibt
+        script_suffix: ""
+        varieties: *id045
+Tirh:
+    mai:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: mai-Tirh-translit
+        ancestors:
+        - bh
+        family: inc-eas
+        lang: mai
+        lang_tag: mai-Tirh
+        name: Maithili
+        population: 19249149
+        script: Tirh
+        script_iso: Tirh
+        script_suffix: ""
+    sa:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: pi-translit
+        family: inc-old
+        lang: sa
+        lang_tag: sa-Tirh
+        name: Sanskrit
+        population: 15913
+        script: Tirh
+        script_iso: Tirh
+        script_suffix: ""
+    und:
+        Deva:
+            override: false
+            script: Deva
+            script_iso: Deva
+            translit: Tirh-Deva-translit
+        lang_tag: und-Tirh
+        population: 0
+        script: Tirh
+        script_iso: Tirh
+        script_suffix: ""
+        to_script: Deva
+Ugar:
+    uga:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: uga-translit
+        family: sem-nwe
+        lang: uga
+        lang_tag: uga-Ugar
+        name: Ugaritic
+        population: 0
+        script: Ugar
+        script_iso: Ugar
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: uga-translit
+        family: sem-nwe
+        lang: uga
+        lang_tag: uga-Ugar
+        name: Ugaritic
+        population: 0
+        script: Ugar
+        script_iso: Ugar
+        script_suffix: ""
+Vaii:
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Vaii-translit
+        lang_tag: und-Vaii
+        population: 0
+        script: Vaii
+        script_iso: Vaii
+        script_suffix: ""
+    vai:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: Vaii-translit
+        family: dmn-vak
+        lang: vai
+        lang_tag: vai-Vaii
+        name: Vai
+        other_names:
+        - Gallinas
+        - Vy
+        population: 131906
+        script: Vaii
+        script_iso: Vaii
+        script_suffix: ""
+Xpeo:
+    peo:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: peo-translit
+        family: ira-swi
+        lang: peo
+        lang_tag: peo-Xpeo
+        name: Old Persian
+        population: 0
+        script: Xpeo
+        script_iso: Xpeo
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: peo-translit
+        family: ira-swi
+        lang: peo
+        lang_tag: peo-Xpeo
+        name: Old Persian
+        population: 0
+        script: Xpeo
+        script_iso: Xpeo
+        script_suffix: ""
+Yiii:
+    ii:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ii-translit
+        aliases: &id046
+        - Nuosu
+        - Nosu
+        - Northern Yi
+        - Liangshan Yi
+        family: tbq-lol
+        lang: ii
+        lang_tag: ii-Yiii
+        name: Sichuan Yi
+        population: 8364120
+        script: Yiii
+        script_iso: Yiii
+        script_suffix: ""
+    und:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ii-translit
+        aliases: *id046
+        family: tbq-lol
+        lang: ii
+        lang_tag: ii-Yiii
+        name: Sichuan Yi
+        population: 8364120
+        script: Yiii
+        script_iso: Yiii
+        script_suffix: ""
+Zanb:
+    mn:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: mn-translit
+        ancestors: &id047
+        - cmg
+        family: xgn
+        lang: mn
+        lang_tag: mn-Zanb
+        name: Mongolian
+        population: 6572846
+        script: Zanb
+        script_iso: Zanb
+        script_suffix: ""
+        varieties: &id048
+        - Khalkha Mongolian
+    und:
+        Latn:
+            override: true
+            script: Latn
+            script_iso: Latn
+            translit: mn-translit
+        ancestors: *id047
+        family: xgn
+        lang: mn
+        lang_tag: mn-Zanb
+        name: Mongolian
+        population: 6572846
+        script: Zanb
+        script_iso: Zanb
+        script_suffix: ""
+        varieties: *id048
