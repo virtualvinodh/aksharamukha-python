@@ -9,6 +9,9 @@ from collections import Counter
 import unicodedata
 import io
 import collections
+'''import yaml
+import warnings
+import langcodes'''
 
 def removeA(a):
     if a.count('a') == 1:
@@ -291,14 +294,67 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     return transliteration
 
 def process(src, tgt, txt, nativize = True, post_options = [], pre_options = []):
-    ## implement src autodetect
+    '''with open("aksharamukha/aksharamukha-scripts.yaml", 'r') as stream:
+        data_loaded = yaml.safe_load(stream)'''
 
     if src == 'autodetect':
         src = auto_detect(txt)
         pre_options = detect_preoptions(txt, src)
 
+    # font hack warning
+    '''font_hack_warning = tgt + ' users hacked fonts to display the script. In the absence of this font, you text may appear different. \n See: https://aksharamukha.appspot.com/describe/' + tgt + ' for the font used'
+    if tgt in data_loaded and 'font_hack' in data_loaded[tgt]:
+        warnings.warn(font_hack_warning)'''
+
     return convert(src, tgt, txt, nativize, pre_options, post_options)
 
+'''
+def process_script_tag(src_tag, tgt_tag, txt, nativize = True, post_options = [], pre_options = []):
+    # Read YAML file
+    import os
+    cwd = os.getcwd()
+    with open("aksharamukha/aksharamukha-scripts.yaml", 'r') as stream:
+        data_loaded = yaml.safe_load(stream)
 
+    for name in data_loaded.keys():
+        if data_loaded[name]['script'].lower() == src_tag.lower():
+            src = name
+        if data_loaded[name]['script'].lower() == tgt_tag.lower():
+            tgt = name
 
+    return convert(src, tgt, txt, nativize, pre_options, post_options)
 
+def process_lang_tag(src_tag, tgt_tag, txt, nativize = True, post_options = [], pre_options = []):
+    # Read YAML file
+    import os
+    cwd = os.getcwd()
+    with open("aksharamukha/wikitra2-data.yaml", 'r', encoding='utf8') as stream:
+        data_loaded = yaml.safe_load(stream)
+
+    src = []
+    tgt = []
+    for scrpt in data_loaded.keys():
+        for lang in data_loaded[scrpt]:
+            if lang == src_tag:
+                src.append((len(data_loaded[scrpt]), scrpt))
+            if lang == tgt_tag:
+                tgt.append((len(data_loaded[scrpt]), scrpt))
+
+    src_pop = sorted(src, reverse=True)[0][1]
+    tgt_pop = sorted(tgt, reverse=True)[0][1]
+    if len(src) > 1:
+        warn = "Multiple scripts associated with the input language. The most popular one '" + src_pop + "' has been selected"
+        warnings.warn(warn)
+    if len(tgt) > 1:
+        warn = "Multiple scripts associated with the target language. The most popular one '" + tgt_pop + "' has been selected"
+        warnings.warn(warn)
+
+    return process_script_tag(src_pop, tgt_pop, txt, nativize = True, post_options = [], pre_options = [])
+
+def process_lang_name(src_name, tgt_name, txt, nativize = True, post_options = [], pre_options = []):
+    src = langcodes.find(src_name)
+    tgt = langcodes.find(tgt_name)
+
+    return process_lang_tag(str(src), str(tgt), txt, nativize = True, post_options = [], pre_options = [])
+'''
+## add the new libraries to requiesments.txt in both folders
