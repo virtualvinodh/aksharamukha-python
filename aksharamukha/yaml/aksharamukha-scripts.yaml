@@ -207,6 +207,10 @@ Mahajani:
   script: Mahj
   lang: mwr
   lang-desc: Marwari
+Makasar:
+  script: Makar
+  lang: mak
+  lang-desc: Makasar
 Malayalam:
   sanskrit: true
   script: Mlym
@@ -283,6 +287,10 @@ Rejang:
   script: Rjng
   lang: rej
   lang-desc: Rejang
+RussianCyrillic:
+  script: Cyrl
+  lang: ru, rus
+  lang-desc: Russian
 Santali:
   script: Olck
   lang: sat, mjx
