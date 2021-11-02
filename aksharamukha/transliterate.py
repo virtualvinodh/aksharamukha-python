@@ -1,3 +1,4 @@
+from aksharamukha import GeneralMap
 import re
 from . import Convert,PostOptions,PostProcess,PreProcess
 from . import ConvertFix
@@ -9,9 +10,11 @@ from collections import Counter
 import unicodedata
 import io
 import collections
-'''import yaml
+import yaml
 import warnings
-import langcodes'''
+import langcodes
+from inspect import getmembers, isfunction
+
 
 def removeA(a):
     if a.count('a') == 1:
@@ -293,68 +296,302 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     return transliteration
 
-def process(src, tgt, txt, nativize = True, post_options = [], pre_options = []):
-    '''with open("aksharamukha/aksharamukha-scripts.yaml", 'r') as stream:
-        data_loaded = yaml.safe_load(stream)'''
+def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [], param="default"):
+    if param == "default":
+        return process_default(src, tgt, txt, nativize, post_options, pre_options)
+
+    if param == "script_code":
+        return process_script_tag(src, tgt, txt, nativize, post_options, pre_options)
+
+    if param == "lang_code":
+        return process_lang_tag(src, tgt, txt, nativize, post_options, pre_options)
+
+    if param == "lang_name":
+        return process_lang_name(src, tgt, txt, nativize, post_options, pre_options)
+
+def convert_default(src, tgt, txt, nativize = True, post_options = [], pre_options = []):
+    import os
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    with open(dir_path + "/yaml/aksharamukha-scripts.yaml", 'r') as stream:
+        data_loaded = yaml.safe_load(stream)
+
+    scriptList = GeneralMap.IndicScripts + GeneralMap.LatinScripts
+
+    preOptionList = list(map(lambda x: x[0], getmembers(PreProcess, isfunction)))
+    preOptionListLower = list(map(lambda x: x.lower(), preOptionList))
+
+    postOptionList = list(map(lambda x: x[0], getmembers(PostProcess, isfunction)))
+    postOptionListLower = list(map(lambda x: x.lower(), postOptionList))
+
+    post_options = [option_id for option in post_options for option_id in postOptionList if option.lower() == option_id.lower()]
+    pre_options = [option_id for option in pre_options for option_id in preOptionList if option.lower() == option_id.lower()]
+
+    # font hack warning
+    font_hack_warning = tgt + ' uses an hacked font to display the script. In the absence of this font, you text may appear different. \n See: https://aksharamukha.appspot.com/describe/' + tgt + ' for the font used'
+
+    if tgt in data_loaded and 'font_hack' in data_loaded[tgt]:
+        warnings.warn(font_hack_warning)
+
+    if src not in scriptList:
+        script_not_found = 'Source script: ' + src + ' not found in the list of scripts supported. The text will not be transliterated.'
+        warnings.warn(script_not_found)
+
+    if tgt not in scriptList:
+        script_not_found = 'Target script: ' + tgt + ' not found in the list of scripts supported. The text will not be transliterated.'
+        warnings.warn(script_not_found)
+
+    return convert(src, tgt, txt, nativize, pre_options, post_options)
+
+def process_default(src, tgt, txt, nativize, post_options, pre_options):
+    scriptList = GeneralMap.IndicScripts + GeneralMap.LatinScripts
+    scriptListLower = list(map(lambda x: x.lower(), scriptList))
 
     if src == 'autodetect':
         src = auto_detect(txt)
         pre_options = detect_preoptions(txt, src)
+    elif src.lower() in scriptListLower:
+        src = [script_id for script_id in scriptList if src.lower() == script_id.lower()][0]
 
-    # font hack warning
-    '''font_hack_warning = tgt + ' users hacked fonts to display the script. In the absence of this font, you text may appear different. \n See: https://aksharamukha.appspot.com/describe/' + tgt + ' for the font used'
-    if tgt in data_loaded and 'font_hack' in data_loaded[tgt]:
-        warnings.warn(font_hack_warning)'''
+    if tgt.lower() in scriptListLower:
+        tgt = [script_id for script_id in scriptList if tgt.lower() == script_id.lower()][0]
 
-    return convert(src, tgt, txt, nativize, pre_options, post_options)
+    return convert_default(src, tgt, txt, nativize, post_options, pre_options)
 
-'''
-def process_script_tag(src_tag, tgt_tag, txt, nativize = True, post_options = [], pre_options = []):
+
+def process_script_tag(src_tag, tgt_tag, txt, nativize, post_options, pre_options):
     # Read YAML file
     import os
-    cwd = os.getcwd()
-    with open("aksharamukha/aksharamukha-scripts.yaml", 'r') as stream:
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+
+    with open(dir_path + "/yaml/aksharamukha-scripts.yaml", 'r') as stream:
         data_loaded = yaml.safe_load(stream)
 
-    for name in data_loaded.keys():
-        if data_loaded[name]['script'].lower() == src_tag.lower():
-            src = name
-        if data_loaded[name]['script'].lower() == tgt_tag.lower():
-            tgt = name
-
-    return convert(src, tgt, txt, nativize, pre_options, post_options)
-
-def process_lang_tag(src_tag, tgt_tag, txt, nativize = True, post_options = [], pre_options = []):
-    # Read YAML file
-    import os
-    cwd = os.getcwd()
-    with open("aksharamukha/wikitra2-data.yaml", 'r', encoding='utf8') as stream:
-        data_loaded = yaml.safe_load(stream)
+    with open(dir_path + "/yaml/wikitra2-data.yaml", 'r', encoding='utf8') as stream:
+        data_loaded_wiki = yaml.safe_load(stream)
 
     src = []
     tgt = []
-    for scrpt in data_loaded.keys():
-        for lang in data_loaded[scrpt]:
-            if lang == src_tag:
-                src.append((len(data_loaded[scrpt]), scrpt))
-            if lang == tgt_tag:
-                tgt.append((len(data_loaded[scrpt]), scrpt))
 
-    src_pop = sorted(src, reverse=True)[0][1]
-    tgt_pop = sorted(tgt, reverse=True)[0][1]
+    # loop through yaml to find match
+    for scrpt in data_loaded.keys():
+        scrpt_tag = data_loaded[scrpt]['script']
+
+        # get the popuation of each language of the script
+        if 'lang' in data_loaded[scrpt].keys():
+            lang_tag = data_loaded[scrpt]['lang'].split(',')[0]
+            lang = list(map(lambda x: x.lower(), data_loaded[scrpt]['lang'].split(',')))
+        else:
+            population = 0
+            lang = ''
+
+        if scrpt_tag in data_loaded_wiki.keys() and lang_tag in data_loaded_wiki[scrpt_tag].keys():
+            population = data_loaded_wiki[scrpt_tag][lang_tag]['population']
+        else:
+            population = 0
+
+        # find the match in the file
+        if '-' not in src_tag and data_loaded[scrpt]['script'].lower() == src_tag.lower():
+            src.append((population, scrpt))
+
+        if '-' not in tgt_tag and data_loaded[scrpt]['script'].lower() == tgt_tag.lower():
+            tgt.append((population, scrpt))
+
+        # if hypthenated find the exact match
+        if '-' in tgt_tag:
+            lang_part = tgt_tag.split('-')[0].lower()
+            script_part = tgt_tag.split('-')[1].lower()
+
+            if scrpt_tag.lower() == script_part.lower() and 'lang' in data_loaded[scrpt].keys() and lang_part.lower() in lang:
+                tgt.append((0, scrpt))
+
+        if '-' in src_tag:
+            lang_part = src_tag.split('-')[0].lower()
+            script_part = src_tag.split('-')[1].lower()
+
+            if scrpt_tag.lower() == script_part.lower() and 'lang' in data_loaded[scrpt].keys() and lang_part.lower() in lang:
+                src.append((0, scrpt))
+
+    if src_tag.lower() in ['latn', 'en', 'eng']:
+        warn = "Latin has multiple transcription schemes. 'ISO 15919' has been selected by default"
+        warn += "\n Please use a transcription format e.g. la-IAST or la-HK to select a particular scheme"
+        warnings.warn(warn)
+
+        src = [(0, 'ISO')]
+
+    if tgt_tag.lower() in ['latn', 'en', 'eng']:
+        warn = "Latin has multiple transcription schemes. 'ISO 15919' has been selected by default"
+        warn += "\n Please use a transcription format e.g. la-IAST or la-HK to select a particular scheme"
+        warnings.warn(warn)
+
+        tgt = [(0, 'ISO')]
+
+    # if latin ignore la and get the following part
+    if '-' in src_tag and src_tag.split('-')[0].lower() in ['latn', 'en', 'eng']:
+        src = [(0, src_tag.split('-')[1])]
+
+    if '-' in tgt_tag and tgt_tag.split('-')[0].lower() in ['latn', 'en', 'eng']:
+        tgt = [(0, tgt_tag.split('-')[1])]
+
+    if src_tag == 'autodetect':
+        src = [(0, auto_detect(txt))]
+        pre_options = detect_preoptions(txt, src)
+
+    if len(src) > 0:
+        src_pop = sorted(src, reverse=True)[0][1]
+    else:
+        raise Exception('Source script code: ' + src_tag + ' not found')
+
+    if len(tgt) > 0:
+        tgt_pop = sorted(tgt, reverse=True)[0][1]
+    else:
+        raise Exception('Target script code: ' + tgt_tag + ' not found')
+
     if len(src) > 1:
-        warn = "Multiple scripts associated with the input language. The most popular one '" + src_pop + "' has been selected"
+        warn = "Multiple orthographies, " + ','.join(map(lambda x: x[1], src)) + ", are associated with the input script. The most popular '" + src_pop + "' has been selected"
+        warn += "\n Please use the format lang_code-script_code e.g. ur-Arab or pa-Arab to select a particular orthography"
+
         warnings.warn(warn)
     if len(tgt) > 1:
-        warn = "Multiple scripts associated with the target language. The most popular one '" + tgt_pop + "' has been selected"
+        warn = "Multiple orthographies: " + ', '.join(map(lambda x: x[1], tgt)) + " are associated with the target script. The most popular '" + tgt_pop + "' has been selected"
+        warn += "\n Please use the format lang_code-script_code e.g. ur-Arab or pa-Arab to select a particular orthography"
         warnings.warn(warn)
 
-    return process_script_tag(src_pop, tgt_pop, txt, nativize = True, post_options = [], pre_options = [])
+    return process_default(src_pop, tgt_pop, txt, nativize, post_options, pre_options)
 
-def process_lang_name(src_name, tgt_name, txt, nativize = True, post_options = [], pre_options = []):
-    src = langcodes.find(src_name)
-    tgt = langcodes.find(tgt_name)
+def process_lang_tag(src_tag, tgt_tag, txt, nativize, post_options, pre_options):
+    # Read YAML file
+    import os
+    dir_path = os.path.dirname(os.path.realpath(__file__))
 
-    return process_lang_tag(str(src), str(tgt), txt, nativize = True, post_options = [], pre_options = [])
-'''
+    with open(dir_path + "/yaml/aksharamukha-scripts.yaml", 'r') as stream:
+        data_loaded = yaml.safe_load(stream)
+
+    with open(dir_path + "/yaml/wikitra2-data.yaml", 'r', encoding='utf8') as stream:
+        data_loaded_wiki = yaml.safe_load(stream)
+
+    src = []
+    tgt = []
+
+    # iterate through the yaml file
+    for scrpt in data_loaded.keys():
+        if 'lang' in data_loaded[scrpt].keys():
+            lang = list(map(lambda x: x.lower(), data_loaded[scrpt]['lang'].split(',')))
+        else:
+            lang = ''
+
+        scrpt_tag = data_loaded[scrpt]['script']
+
+        # try to get the popular script from wiktionary file
+        if scrpt_tag in data_loaded_wiki.keys():
+            script_count = len(data_loaded_wiki[scrpt_tag])
+        else:
+            script_count = 1
+
+        # trying to find the match in the yaml file
+        if src_tag.lower() in lang:
+            src.append((script_count, scrpt))
+
+        if tgt_tag.lower() in lang:
+            tgt.append((script_count, scrpt))
+
+        if '-' in tgt_tag:
+            lang_part = tgt_tag.split('-')[0].lower()
+            script_part = tgt_tag.split('-')[1].lower()
+
+            if scrpt_tag.lower() == script_part and lang_part in lang:
+                tgt.append((0, scrpt))
+
+        if '-' in src_tag:
+            lang_part = src_tag.split('-')[0].lower()
+            script_part = src_tag.split('-')[1].lower()
+
+            if scrpt_tag.lower() == script_part and lang_part in lang:
+                src.append((0, scrpt))
+
+    if src_tag.lower() in ['sa','san', 'pi', 'pli']:
+        warn = "The input language: " + src_tag + " is script-agnostic and can be written in multiple scripts. The most popular 'Devanagari' has been selected"
+        warn += "\n Please use the format lang_code-script_code e.g. sa-Gran or sa-Sidd to select a particular script"
+        warnings.warn(warn)
+
+        src = [(0, 'Devanagari')]
+
+    if tgt_tag.lower() in ['sa','san', 'pi', 'pli']:
+        warn = "The ouptput language: " + tgt_tag + " is script-agnostic and can be written in multiple scripts. The most popular 'Devanagari' has been selected"
+        warn += "\n Please use the format lang_code-script_code e.g. sa-Gran or sa-Sidd to select a particular script"
+        warnings.warn(warn)
+
+        tgt = [(0, 'Devanagari')]
+
+    # if sa-deva ignore sanskrita and only get deva
+    if '-' in src_tag and src_tag.split('-')[0].lower() in ['sa','san', 'pi', 'pli']:
+        for scrpt in data_loaded.keys():
+            scrpt_tag = data_loaded[scrpt]['script']
+
+            if scrpt_tag.lower() == src_tag.split('-')[1].lower():
+                src = [(0, scrpt)]
+
+    if '-' in tgt_tag and tgt_tag.split('-')[0].lower() in ['sa','san', 'pi', 'pli']:
+        for scrpt in data_loaded.keys():
+            scrpt_tag = data_loaded[scrpt]['script']
+
+            if scrpt_tag.lower() == tgt_tag.split('-')[1].lower():
+                tgt = [(0, scrpt)]
+
+    if src_tag.lower() in ['la', 'en', 'eng']:
+        warn = "Latin has multiple transcription schemes. 'ISO 15919' has been selected by default"
+        warn += "\n Please use a transcription format e.g. Latn-IAST or Latn-HK to select a particular scheme"
+        warnings.warn(warn)
+
+        src = [(0, 'ISO')]
+
+    if tgt_tag.lower() in ['la', 'en', 'eng']:
+        warn = "Latin has multiple transcription schemes. 'ISO 15919' has been selected by default"
+        warn += "\n Please use a transcription format e.g. Latn-IAST or Latn-HK to select a particular scheme"
+        warnings.warn(warn)
+
+        tgt = [(0, 'ISO')]
+
+    # if latin ignore la and get the following part
+    if '-' in src_tag and src_tag.split('-')[0].lower() in ['la', 'en', 'eng']:
+        src = [(0, src_tag.split('-')[1])]
+
+    if '-' in tgt_tag and tgt_tag.split('-')[0].lower() in ['la', 'en', 'eng']:
+        tgt = [(0, tgt_tag.split('-')[1])]
+
+    if src_tag == 'autodetect':
+        src = [(0,auto_detect(txt))]
+        pre_options = detect_preoptions(txt, src)
+
+    if len(src) > 0:
+        src_pop = sorted(src, reverse=True)[0][1]
+    else:
+        raise Exception('Source language code: ' + src_tag + ' not found')
+
+    if len(tgt) > 0:
+        tgt_pop = sorted(tgt, reverse=True)[0][1]
+    else:
+        raise Exception('Target language code: ' + tgt_tag + ' not found')
+
+    if len(src) > 1:
+        warn = "Multiple scripts " + ','.join(map(lambda x: x[1], src)) + " associated with the input language. The most popular '" + src_pop + "' has been selected"
+        warn += "\n Please use the format lang_code-script_code e.g. pa-Guru or pa-Arab to select a particular script"
+        warnings.warn(warn)
+    if len(tgt) > 1:
+        warn = "Multiple scripts " + ','.join(map(lambda x: x[1], tgt)) + " associated with the target language. The most popular '" + tgt_pop + "' has been selected"
+        warn += "\n Please use the format lang_code-script_code e.g. pa-Guru or pa-Arab to select a particular script"
+        warnings.warn(warn)
+
+    return process_default(src_pop, tgt_pop, txt, nativize, post_options, pre_options)
+
+def process_lang_name(src_name, tgt_name, txt, nativize, post_options, pre_options):
+    if src_name == 'autodetect':
+        src = auto_detect(txt)
+        pre_options = detect_preoptions(txt, src)
+    else:
+        src = str(langcodes.find(src_name))
+
+    tgt = str(langcodes.find(tgt_name))
+
+    return process_lang_tag(src, tgt, txt, nativize, post_options, pre_options)
+
 ## add the new libraries to requiesments.txt in both folders

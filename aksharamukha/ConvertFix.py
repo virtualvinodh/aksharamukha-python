@@ -2,7 +2,7 @@
 from . import GeneralMap as GM
 from aksharamukha.ScriptMap.Roman import Avestan, IAST
 from aksharamukha.ScriptMap.MainIndic import Ahom, Tamil,TamilGrantha, Limbu, MeeteiMayek, Urdu, Lepcha, Chakma, Kannada, Gurmukhi, Newa
-from aksharamukha.ScriptMap.EastIndic import Lao, TaiTham,Tibetan,Burmese,Khmer,Balinese,Javanese,Thai, Sundanese, PhagsPa, Cham, Thaana, Rejang, ZanabazarSquare
+from aksharamukha.ScriptMap.EastIndic import Lao, TaiTham,Tibetan,Burmese,Khmer,Balinese,Javanese,Thai, Sundanese, PhagsPa, Cham, Thaana, Rejang, ZanabazarSquare, Makasar
 from . import PostProcess
 import re
 
@@ -1354,13 +1354,14 @@ def FixUrduShahmukhi(Target, Strng,reverse=False):
 
         ListVS = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns,Target)) + ')'
         ListV = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels,Target)) + ')'
+        ListVSA = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns,Target)+[a]) + ')'
 
         hamzaFull = "\u0621"
         hamzaChair = "\u0626"
 
         Strng = re.sub(ListVS + ListV, r'\1' + hamzaFull + r'\2', Strng)
         Strng = re.sub(ListV + ListV, r'\1' + hamzaFull + r'\2', Strng)
-
+        Strng = re.sub('('+a+')' + ListV +'(?!' + ListVSA + ')'   , r'\1' + hamzaFull + r'\2', Strng)
 
         Strng = re.sub('('+a+')'+'('+ShortVowels+')',r'\2',Strng)
         Strng = re.sub('(?<!'+Aa+')'+'('+a+')'+'('+va+'|'+ya+')'+'(?!'+ ShortVowels +')',r'\2',Strng)
@@ -1373,7 +1374,8 @@ def FixUrduShahmukhi(Target, Strng,reverse=False):
         Strng = re.sub('('+yaBig+')'+'('+Ayoga+')',ya+r'\2',Strng)
 
         Strng = Strng.replace('\u0650'+yaBig,'\u0650'+ya)
-        Strng = Strng.replace(a+Urdu.VowelSignMap[0],Urdu.VowelSignMap[0])
+
+        #Strng = Strng.replace(a+Urdu.VowelSignMap[0],Urdu.VowelSignMap[0]) ## remove a sign from consonants
 
         ## ye ## yezu ## Fix this
 
@@ -1390,6 +1392,8 @@ def FixUrduShahmukhi(Target, Strng,reverse=False):
         Strng = Strng.replace('ےی', 'یی')
         Strng = Strng.replace('ےْ', 'یْ')
 
+        #http://www.columbia.edu/~mk2580/urdu_section/handouts/hamza.pdf
+
         # Hamza on ya
         Strng = Strng.replace('ءاِی','\u0626\u0650\u06CC')
         Strng = Strng.replace('ءاے', 'ئے')
@@ -1404,19 +1408,19 @@ def FixUrduShahmukhi(Target, Strng,reverse=False):
 
         # kau/ kaU
 
-        Strng = re.sub('('+ListC+')(اُو)', r'\1'+'\u0624\u064F', Strng)
-        Strng = re.sub('('+ListC+')(اُ)', r'\1'+'\u0624\u064F', Strng)
+        Strng = re.sub('('+hamzaFull+')(اُو)', r'\1'+'\u0624\u064F', Strng)
+        Strng = re.sub('('+hamzaFull+')(اُ)', r'\1'+'\u0624\u064F', Strng)
 
-        Strng = re.sub('('+ListC+')(او)', r'\1'+'\u0624', Strng)
+        Strng = re.sub('('+hamzaFull+')(او)', r'\1'+'\u0624', Strng)
 
         # Hamza on ya for short i
         Strng = Strng.replace('ءاِ', '\u0626\u0650')
         Strng = Strng.replace('ئِءآ', '\u0626\u0650\u0627')
 
-        Strng = re.sub('('+ListC+')(\u0627\u0650)', r'\1'+'\u0626\u0650', Strng)
+        Strng = re.sub('('+hamzaFull+')(\u0627\u0650)', r'\1'+'\u0626\u0650', Strng)
 
         # for gae kae etc
-        Strng = re.sub('('+ListC+')(ا)(ے|ی)', r'\1'+'\u0626' + r'\3', Strng)
+        Strng = re.sub('('+hamzaFull+')(ا)(ے|ی)', r'\1'+'\u0626' + r'\3', Strng)
 
         ## Fix Double Hamza to Single Hamza
 
@@ -1777,6 +1781,21 @@ def FixLaoPali(Strng,reverse=False):
     else:
         # VS AA + Anusvara <- VS AM (Ligature)
         Strng= Strng.replace("\u0EB3","\u0EB2\u0ECD")
+
+    return Strng
+
+def FixMakasar(Strng, reverse=False):
+
+    ListC = "|".join(Makasar.ConsonantMap)
+    ListV = "|".join(Makasar.VowelSignMap)
+    Anka = '\U00011EF2'
+
+    if not reverse:
+        Strng = PostProcess.InsertGeminationSign(Strng, 'Makasar')
+        Strng = Strng.replace('\u02BE', '')
+        Strng = re.sub('(' + ListC + ')' + '(' + ListV + ')?' + r'\1', r'\1' + r'\2' + Anka, Strng)
+    else:
+        Strng = re.sub('(' + ListC + ')' + '(' + ListV + ')?' + Anka, r'\1' + r'\2' + r'\1', Strng)
 
     return Strng
 
@@ -2326,6 +2345,14 @@ def FixKaithi(Strng, reverse=False):
 
 def FixLao2(Strng, reverse = False):
     return FixLao(Strng, reverse)
+
+def FixNandinagari(Strng, reverse=False):
+    if not reverse:
+        pass
+    else:
+        Strng = PostProcess.NandinagariPrishtamatra(Strng, reverse=True)
+
+    return Strng
 
 #Subjoined, final and la-ligatures
 # Fix aH -> a ;
