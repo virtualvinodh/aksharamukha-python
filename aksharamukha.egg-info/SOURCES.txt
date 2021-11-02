@@ -38,6 +38,7 @@ aksharamukha/ScriptMap/EastIndic/Lao2.py
 aksharamukha/ScriptMap/EastIndic/LaoPali.py
 aksharamukha/ScriptMap/EastIndic/LaoTham.py
 aksharamukha/ScriptMap/EastIndic/LueTham.py
+aksharamukha/ScriptMap/EastIndic/Makasar.py
 aksharamukha/ScriptMap/EastIndic/Marchen.py
 aksharamukha/ScriptMap/EastIndic/Mon.py
 aksharamukha/ScriptMap/EastIndic/Pallava.py
@@ -84,14 +85,17 @@ aksharamukha/ScriptMap/MainIndic/MasaramGondi.py
 aksharamukha/ScriptMap/MainIndic/MeeteiMayek.py
 aksharamukha/ScriptMap/MainIndic/Modi.py
 aksharamukha/ScriptMap/MainIndic/Multani.py
+aksharamukha/ScriptMap/MainIndic/Nandinagari.py
 aksharamukha/ScriptMap/MainIndic/Newa.py
 aksharamukha/ScriptMap/MainIndic/Oriya.py
 aksharamukha/ScriptMap/MainIndic/Ranjana.py
 aksharamukha/ScriptMap/MainIndic/Saurashtra.py
+aksharamukha/ScriptMap/MainIndic/Shahmukhi.py
 aksharamukha/ScriptMap/MainIndic/Sharada.py
 aksharamukha/ScriptMap/MainIndic/SiddhamDevanagari.py
 aksharamukha/ScriptMap/MainIndic/Sinhala.py
 aksharamukha/ScriptMap/MainIndic/SylotiNagri.py
+aksharamukha/ScriptMap/MainIndic/SyriacMalayalam.py
 aksharamukha/ScriptMap/MainIndic/Takri.py
 aksharamukha/ScriptMap/MainIndic/Tamil.py
 aksharamukha/ScriptMap/MainIndic/TamilBrahmi.py
@@ -138,3 +142,5 @@ aksharamukha/ScriptMap/Roman/WX.py
 aksharamukha/ScriptMap/Roman/Wancho.py
 aksharamukha/ScriptMap/Roman/WarangCiti.py
 aksharamukha/ScriptMap/Roman/__init__.py
+aksharamukha/yaml/aksharamukha-scripts.yaml
+aksharamukha/yaml/wikitra2-data.yaml

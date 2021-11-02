@@ -24,7 +24,7 @@ setup(
   # Versions should comply with PEP440.  For a discussion on single-sourcing
   # the version across setup.py and the project code, see
   # https://packaging.python.org/en/latest/single_source_version.html
-  version='@@@',
+  version='1.9.5',
 
   description='Provides script conversion (a.k.a transliteration) between scripts within the Indic cultural sphere',
   long_description=long_description,
@@ -90,7 +90,7 @@ setup(
   # your project is installed. For an analysis of "install_requires" vs pip's
   # requirements files see:
   # https://packaging.python.org/en/latest/requirements.html
-  install_requires=['Requests==2.20.1', 'pykakasi==2.0.6'],
+  install_requires=['Requests>=2.20.1', 'pykakasi>=2.0.6', 'pyyaml>=5.4.1', 'langcodes>=3.1.0' , 'language_data'],
 
   # List additional groups of dependencies here (e.g. development
   # dependencies). You can install these using the following syntax,
@@ -99,9 +99,9 @@ setup(
   # If there are data files included in your packages that need to be
   # installed, specify them here.  If using Python 2.6 or less, then these
   # have to be included in MANIFEST.in as well.
-  # package_data={
-  #     'sample': ['package_data.dat'],
-  # },
+  package_data={
+    'aksharamukha': ['yaml/aksharamukha-scripts.yaml', 'yaml/wikitra2-data.yaml'],
+  },
 
   # Although 'package_data' is the preferred approach, in some case you may
   # need to place data files outside of your packages. See:
