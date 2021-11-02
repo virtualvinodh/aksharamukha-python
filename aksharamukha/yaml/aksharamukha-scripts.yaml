@@ -1,56 +1,80 @@
 Ahom:
   script: Ahom
+  lang: aho
+  lang-desc: Ahom
 Ariyaka:
   script: Zzzz
+  font_hack: true
 Assamese:
   lang: as
+  lang-desc: Assamese
   sanskrit: true
   script: Beng
 Avestan:
   script: Avst
+  lang: ae, ave
+  lang-desc: Avestan
 Balinese:
   sanskrit: true
   script: Bali
+  lang: ban
+  lang-desc: Balinese
 BatakKaro:
   lang: btx
   script: Batk
+  lang-desc: Batak Karo
 BatakManda:
   lang: btm
   script: Batk
+  lang-desc: Batak Manda
 BatakPakpak:
   lang: btd
   script: Batk
+  lang-desc: Batak Pakpak
 BatakSima:
   lang: bts
   script: Batk
+  lang-desc: Batak Sima
 BatakToba:
   lang: bbc
   script: Batk
+  lang-desc: Batak Toba
 Bengali:
   sanskrit: true
   script: Beng
+  lang: bn, ben
+  lang-desc: Bengali, Bangla
 Bhaiksuki:
   sanskrit: true
   script: Bhks
 Brahmi:
-  parent: Gran
   sanskrit: true
   script: Brah
 Buginese:
   script: Bugi
+  lang: bug
+  lang-desc: Buginese
 Buhid:
   script: Buhd
+  lang: bku
+  lang-desc: Buhid
 Burmese:
   sanskrit: true
   script: Mymr
+  lang: my, bur, mya
+  lang-desc: Myanamar, Burmese
 Chakma:
   script: Cakm
-  skip: true
+  lang: ccp
+  lang-desc: Chakma
 Cham:
-  parent: Gran
   script: Cham
+  lang: cja, cjm
+  lang-desc: Cham
 Devanagari:
   sanskrit: true
+  lang: hi, hin, mr, mar
+  lang-desc: Hindi, Marathi
   script: Deva
   hi:
     preoption:
@@ -58,143 +82,228 @@ Devanagari:
 Dogra:
   sanskrit: true
   script: Dogr
+  lang: doi
+  lang-desc: Dogri
 Grantha:
   sanskrit: true
   script: Gran
 GranthaPandya:
-  script: Mlym
-  skip: true
+  sanskrit: true
+  script: Zzzz
+  font_hack: true
 Gujarati:
   sanskrit: true
   script: Gujr
+  lang: gu, guj
+  lang-desc: Gujarati
 GunjalaGondi:
+  sanskrit: true
   script: Gong
+  lang: gon
+  lang-desc: Gondi
 Gurmukhi:
   script: Guru
-  skip: true
+  lang: pa, pan, pnb
+  lang-desc: Punjabi, Panjabi
 HanifiRohingya:
   script: Rohg
-  skip: true
+  lang: rhg
+  lang-desc: Rohingya
 Hanunoo:
   script: Hano
+  lang: hnn
+  lang-desc: Hanunoo
 Hebrew:
   script: Hebr
+  lang: he, heb
+  lang-desc: Hebrew
   skip: true
 Hiragana:
   script: Hira
+  lang: ja, jpn
+  lang-desc: Japanese
 Javanese:
   sanskrit: true
   script: Java
+  lang: jv, jav
+  lang-desc: Javanese
 Kaithi:
   script: Kthi
+  lang: hi, hin, bho, mag, awa, anp
+  lang-desc: Hindi, Bhojpuri, Magahi, Awadhi, Angika
 Kannada:
   sanskrit: true
   script: Knda
+  lang: kn, kan
+  lang-desc: Kannada
 Katakana:
   script: Kana
+  lang: ja, jpn
+  lang-desc: Japanese
+Kawi:
+  script: Kawi
+  font-hack: true
+  lang: kaw
+  lang-desc: Old Javanese, Kawi
 KhamtiShan:
   lang: kht
+  lang-desc: Khamti Shan
   script: Mymr
   skip: true
 Kharoshthi:
   sanskrit: true
   script: Khar
+  lang-desc: Gandhari
+  lang: pgd
 Khmer:
-  parent: Gran
   sanskrit: true
   script: Khmr
-  skip: true
+  lang: km, khm
+  lang-desc: Khmer
 Khojki:
   script: Khoj
 KhomThai:
   sanskrit: true
-  script: Thai
+  script: Zzzz
+  font-hack: true
   variant: true
 Khudawadi:
   script: Sind
+  lang: sd, snd
+  lang-desc: Sindhi
 KhuenTham:
   lang: kkh
   sanskrit: true
   script: Lana
-  skip: true
 Lao:
   script: Laoo
+  lang: lo, lau
+  lang-desc: Lao
   skip: true
 LaoPali:
-  lang: san
+  lang: san, pi, pli
+  lang-desc: Sanskrit, Pali
   sanskrit: true
   script: Laoo
 LaoTham:
-  lang: lo
+  lang: lo, lau
   sanskrit: true
   script: Lana
   skip: true
 Lepcha:
   script: Lepc
+  lang: lep
+  lang-desc: Lephcha
 Limbu:
   script: Limb
   nativize: false
+  lang: lif
+  lang-desc: Limbu
 LueTham:
   lang: khb
   sanskrit: true
   script: Lana
 Mahajani:
   script: Mahj
+  lang: mwr
+  lang-desc: Marwari
 Malayalam:
   sanskrit: true
   script: Mlym
+  lang: ml, mal
+  lang-desc: Malayalam
 Marchen:
   post_options:
     - MarchenSanskritPalatals
   script: Marc
+  lang: xzh
+  lang-desc: Zhang-Zhung, Zhang Zhung
 MasaramGondi:
   sanskrit: true
   script: Gonm
+  lang: gon
+  lang-desc: Gondi
 MeeteiMayek:
   sanskrit: true
   nativize: false
   script: Mtei
+  lang: mni
+  lang-desc: Manipuri, Meetei, Meitei
 Modi:
   sanskrit: true
   script: Modi
+  lang: mr, mar
+  lang-desc: Marathi
 Mon:
   lang: mnw
+  lang-desc: Mon
   sanskrit: true
   script: Mymr
-  skip: true
 Mongolian:
   sanskrit: true
   script: Mong
 Mro:
   script: Mroo
+  lang: mro
+  lang-desc: Mro, Mru
 Multani:
   script: Mult
+  lang: skr
+  lang-desc: Saraiki
+Nandinagari:
+  sanskrit: true
+  script: Nand
 Newa:
   sanskrit: true
   script: Newa
+  lang: new, nwx
+  lang-desc: Newar, Middle Newar, Nepal Bhasa
 OldPersian:
   script: Xpeo
+  lang: fa, per
+  lang-desc: Persian, Farsi
 Oriya:
   sanskrit: true
   script: Orya
+  lang: or, ori, ory
+  lang-desc: Oriya, Odia
+Pallava:
+  sanskrit: true
+  script: Zzzz
 PhagsPa:
   sanskrit: true
   script: Phag
 Ranjana:
   script: Ranj
+  font-hack: true
+  sanskrit: true
+  lang: new, nwx
+  lang-desc: Newar, Middle Newar, Nepal Bhasa
 Rejang:
   script: Rjng
+  lang: rej
+  lang-desc: Rejang
 Santali:
   script: Olck
+  lang: sat, mjx
+  lang-desc: Santali, Mahali
 Saurashtra:
   sanskrit: true
   script: Saur
+  lang: saz
+  lang-desc: Saurashtra
+Shahmukhi:
+  script: Arab
+  lang: pa, pan, pnb
+  lang-desc: Punjabi, Panjabi
 Shan:
   lang: shn
+  lang-desc: Shan
   script: Mymr
-  skip: true
 Sharada:
   sanskrit: true
+  lang: ks, kas
+  lang-desc: Kashmiri
   script: Shrd
 Siddham:
   sanskrit: true
@@ -204,8 +313,12 @@ Sinhala:
     - SinhalaPali
   sanskrit: true
   script: Sinh
+  lang: si, sin
+  lang-desc: Sinhala
 SoraSompeng:
   script: Sora
+  lang: srb
+  lang-desc: Sora
 Soyombo:
   post_options:
     - SoyomboSanskritPalatals
@@ -213,64 +326,95 @@ Soyombo:
   script: Soyo
 Sundanese:
   script: Sund
+  lang: su, sun, bac, osn
+  lang-desc: Sundanese, Baduy Sundanese, Old Sundanese
 SylotiNagri:
   script: Sylo
+  lang: syl
+  lang-desc: Sylheti
 Tagalog:
   script: Tglg
+  lang: tl, tgl,fil
+  lang-desc: Tagalog, Filipino
   skip: true
 Tagbanwa:
   script: Tagb
+  lang: tbw, tbk, tgt
+  lang-desc: Aborlan Tagbanwa, Calamian Tagbanwa, Central Tagbanwa, Tagbanwa
 TaiLaing:
   lang: tjl
+  lang-desc: Tai Laing
   script: Mymr
   skip: true
 TaiTham:
   sanskrit: true
   script: Lana
-  skip: true
 Takri:
   script: Takr
+  lang: doi
+  lang-desc: Dogri
 Tamil:
-  parent: Gran
-  post_options:
-    - ContextualLLa
+  pre_options:
+    - TamilTranscribe
   sanskrit: true
   script: Taml
+  lang: ta, tam
+  lang-desc: Tamil
 TamilBrahmi:
   lang: oty
-  parent: Gran
+  lang-desc: Old Tamil
   script: Brah
 TamilExtended:
   script: Zzzz
+  sanskrit: true
   font_hack: true
 Telugu:
   sanskrit: true
   script: Telu
+  lang: te, tel
+  lang-desc: Telugu
 Thaana:
   script: Thaa
   skip: true
+  lang: dv, div
+  lang-desc: Dhivehi, Maldivian
 Thai:
   sanskrit: true
   script: Thai
+  lang-desc: Thai
+  lang: th, tha
+  lang-desc: thai
 Tibetan:
   post_options:
     - TibetanSanskritPalatals
   sanskrit: true
+  lang: bo, bod, tib
+  lang-desc: Tibetan
   script: Tibt
 Tirhuta:
   sanskrit: true
   script: Tirh
+  lang: mai
+  lang-desc: Maithili
 Urdu:
   sanskrit: true
+  lang: ur, urd
+  lang-desc: Urdu
   script: Arab
 Vatteluttu:
   script: Zzzz
+  lang: ta, tam, oty, ml, mal
+  lang-desc: Tamil, Old Tamil, Malayalam
   font_hack: true
   skip: true
 Wancho:
   script: Wcho
+  lang: nnp
+  lang-desc: Wancho
 WarangCiti:
   script: Wara
+  lang: hoc
+  lang-desc: Ho
 ZanabazarSquare:
   post_options:
     - ZanabazarSanskritPalatals

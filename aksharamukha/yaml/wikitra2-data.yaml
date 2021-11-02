@@ -388,6 +388,24 @@ Arab:
         script: pa-Arab
         script_iso: Arab
         script_suffix: ""
+    ur:
+        Latn:
+            override: false
+            script: Latn
+            script_iso: Latn
+            translit: ur-Arab-translit
+        aliases:
+        - Urdu
+        ancestors:
+        - inc-opa
+        family: inc-ur
+        lang: ur
+        lang_tag: ur-Arab
+        name: Urdu
+        population: 1700000000
+        script: ur-Arab
+        script_iso: Arab
+        script_suffix: ""
     rif:
         Latn:
             override: false

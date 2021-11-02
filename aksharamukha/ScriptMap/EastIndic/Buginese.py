@@ -30,7 +30,7 @@ ModernVowelMap = [
                  ]
 
 SinhalaVowelMap = [
-                  '\u1A15\u02BD'
+                  '\u1A15\u1A1B\u02BD'
                   ]
 
 VowelSignMap =  [

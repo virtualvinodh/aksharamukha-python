@@ -1316,6 +1316,21 @@ def LimbuDevanagariConvention(Strng):
 
     return Strng
 
+def NandinagariPrishtamatra(Strng, reverse = False):
+    if not reverse:
+        Strng = Strng.replace('𑧚','𑧤')
+        Strng = Strng.replace('𑧛','𑧤𑧚')
+        Strng = Strng.replace('𑧜','𑧤𑧑')
+        Strng = Strng.replace('𑧝','𑧤𑧜')
+    else:
+        Strng = Strng.replace('𑧤𑧚', '𑧛')
+        Strng = Strng.replace('𑧤𑧑', '𑧜')
+        Strng = Strng.replace('𑧤𑧜', '𑧝')
+        Strng = Strng.replace('𑧤', '𑧚')
+
+
+    return Strng
+
 def DevanagariPrishtamatra(Strng, reverse = False):
     if not reverse:
         Strng = Strng.replace('े','ॎ')
