@@ -1492,9 +1492,8 @@ def FixUrduShahmukhi(Target, Strng,reverse=False):
             Strng = re.sub('(' + ShortVowels + ')(ّ)', r'\2'+r'\1', Strng)
             Strng = re.sub('(.)(ّ)', r'\1'+'ْ'+r'\1', Strng)
 
-
             #print(Strng)
-            print(Target)
+            #print(Target)
             if "\u02BB\u02BB" in Strng: ## Short Vowels not showm. INnsert /a/ to all consonats and approximate
                 Strng = Strng.replace('ا', 'اَ')
                 #retroflex la
