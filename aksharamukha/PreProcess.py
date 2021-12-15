@@ -25,6 +25,22 @@ def default(Strng):
 
     return Strng
 
+def retainLatin(Strng, reverse=False):
+    latn_basic_lower = 'a b c d e f g h i j k l m n o p q r s t u v w x y z ḥ ṭ ṣ ʾ ʿ š ā ī ū ē ō'
+    latn_basic_upper = latn_basic_lower.upper()
+    latn_all = latn_basic_lower + latn_basic_upper
+    latn_all = latn_all.split(' ')
+
+    if not reverse:
+        for i, c in enumerate(latn_all):
+            Strng = Strng.replace(c, chr(60929+i))
+    else:
+        # print('I am trying to reverse Lating')
+        for i, c in enumerate(latn_all):
+            Strng = Strng.replace(chr(60929+i), c)
+
+    return Strng
+
 def JapanesePreProcess(src, txt, preoptions):
     import pykakasi
     from . import Convert
@@ -465,7 +481,7 @@ def RomanPreFix(Strng,Source):
     return Strng
 
 def PreProcess(Strng,Source,Target):
-    if Source in GM.RomanDiacritic:
+    if Source in GM.RomanDiacritic or Source == 'Latn':
         Strng = Strng.lower()
 
     pipeScripts = ["HK", "IASTPali", "IAST", "ISO"]
