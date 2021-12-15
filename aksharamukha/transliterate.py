@@ -164,7 +164,7 @@ def auto_detect(text, plugin = False):
             inputScript = 'Itrans'
         else:
             inputScript = 'HK'
-    elif inputScript in GeneralMap.IndicScripts:
+    elif inputScript in GeneralMap.IndicScripts or inputScript in ['Hiragana', 'Katakana']:
         pass
     else:
         from . import gimeltra
@@ -248,6 +248,12 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     srcOld = ""
 
+    ### retain Latin ###
+    if (src != 'Latn' and src in GeneralMap.SemiticScripts) or \
+        (src in GeneralMap.IndicScripts and tgt in GeneralMap.SemiticScripts and src not in GeneralMap.LatinScripts) or \
+            (src in ['Hiragana', 'Katakana']):
+        txt = PreProcess.retainLatin(txt)
+
     if src == 'Hiragana' or src == 'Katakana':
         txt = PreProcess.JapanesePreProcess(src, txt, preoptions)
         srcOld = 'Japanese'
@@ -304,6 +310,9 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         textConv = collections.OrderedDict(sorted(textConv.items()))
         transliteration = "".join(textConv.values())
 
+    ### return Latin ###
+    transliteration = PreProcess.retainLatin(transliteration, reverse=True)
+
     return transliteration
 
 def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [], param="default"):
@@ -358,6 +367,7 @@ def process_default(src, tgt, txt, nativize, post_options, pre_options):
 
     if src == 'autodetect':
         src = auto_detect(txt)
+        #print('The autodetection is ' + src)
         pre_options = detect_preoptions(txt, src)
     elif src.lower() in scriptListLower:
         src = [script_id for script_id in scriptList if src.lower() == script_id.lower()][0]
