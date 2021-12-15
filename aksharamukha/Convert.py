@@ -7,7 +7,7 @@ import string
 import re
 from functools import cmp_to_key
 import json
-
+from . import gimeltra
 
 ### Mapping : https://viss.wordpress.com/2015/05/17/how-to-transcribe-pa%E1%B8%B7i-in-lanna-and-burmese/ ###
 ### Assmae kva -> becomes kba ## Check Assamese Wikipedia
@@ -254,13 +254,59 @@ def convertScript(Strng,Source,Target):
         Strng = CF.PostFixRomanOutput(Strng,Source,Target)
 
         # Convert Syllabic lR -> l_R Important !!!
-    elif Source in GM.SiddhamRanjana:
-        Strng = SR.SiddhRanjConv(Strng,Source,reverse=True)
-        Strng = convertScript(Strng,"HK",Target)
 
-    elif Target in GM.SiddhamRanjana:
-        Strng = convertScript(Strng,Source,"HK")
-        Strng = SR.SiddhRanjConv(Strng,Target)
+    elif Source in GM.SemiticScripts and Target in GM.SemiticScripts:
+        tr = gimeltra.Transliterator()
+
+        if Source == 'Ugar':
+            Strng = Strng.replace('𐎟', ' ') # reverse ugaritic word separator
+
+        Strng = tr.tr(Strng, sc=Source, to_sc=Target)
+
+    elif Source in (GM.IndicScripts + GM.LatinScripts) and Target in GM.SemiticScripts:
+        tr = gimeltra.Transliterator()
+
+        if Source == 'Hebrew':
+            Strng = tr.tr(Strng, sc='Hebr', to_sc=Target)
+        else:
+            Strng = convertScript(Strng, Source, "RomanSemitic")
+            Strng = Strng.replace('QQ', '').replace('mQ', '') ## avoiding Q, mQ for Urdu to Semitic : Check why
+
+            # remove gemination
+            Strng = re.sub('(.)' + '×' + r'\1', r'\1', Strng)
+
+            # remove Virama
+            Strng = Strng.replace('×', '')
+
+            # create nukta equivalents
+            SemiticIndic=[('ʿ', 'ʾQ'), ('ṣ', 'sQ'), ('ṭ', 'tQ'), ('ḥ', 'hQ'), ('ḍ', 'dQ'), ('p̣', 'pQ')]
+
+            if Target == 'Ugar':
+                Strng = Strng.replace(' ', '𐎟') #Ugaritic word separator
+
+            for s, i in SemiticIndic:
+                Strng = Strng.replace(i, s)
+
+            #print(Strng)
+            Strng = tr.tr(Strng, sc='Latn', to_sc=Target)
+
+    elif Source in GM.SemiticScripts and Target in (GM.IndicScripts + GM.LatinScripts):
+        tr = gimeltra.Transliterator()
+
+        SemiticIndic=[('ṣ', 'sQ'), ('ʿ', 'ʾQ'), ('ṭ', 'tQ'), ('ḥ', 'hQ'), ('ḍ', 'dQ'), ('p̣', 'pQ'), ('ž', 'z'), ('ẓ', 'z'), ('ḏ', 'dQ'), ('ṯ', 'tQ'), ("ḵ", "k")]
+
+        if Target == 'Hebrew':
+            Strng = tr.tr(Strng, sc=Source, to_sc='Hebr')
+        else:
+            Strng = tr.tr(Strng, sc=Source, to_sc='Latn')
+
+            for s, i in SemiticIndic:
+                Strng = Strng.replace(s, i)
+
+            Strng = convertScript(Strng, 'RomanSemitic', Target)
+
+        if Source == 'Ugar':
+            Strng = Strng.replace('𐎟', ' ') # reverse ugaritic word separator
 
     Strng = PP.default(Strng)
 

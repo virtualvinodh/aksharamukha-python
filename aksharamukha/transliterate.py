@@ -1,5 +1,7 @@
 from aksharamukha import GeneralMap
 import re
+
+from aksharamukha.gimeltra import Transliterator
 from . import Convert,PostOptions,PostProcess,PreProcess
 from . import ConvertFix
 import json
@@ -42,7 +44,11 @@ def auto_detect(text, plugin = False):
 
     for uchar in text:
         try:
-            scripts.append(unicodedata.name(uchar).split(' ')[0].lower())
+            script_name = unicodedata.name(uchar).split(' ')[0].lower()
+            if script_name != 'old':
+                scripts.append(script_name)
+            else:
+                scripts.append(unicodedata.name(uchar).split(' ')[1].lower())
         except ValueError:
             pass
             # print('Script not found')
@@ -71,8 +77,6 @@ def auto_detect(text, plugin = False):
         else:
             script = ''
 
-    #print('the script is')
-    #print(script)
     inputScript = script[0].upper() + script[1:]
 
     laoPali = ['ຆ', 'ຉ', 'ຌ', 'ຎ', 'ຏ', 'ຐ', 'ຑ', 'ຒ', 'ຓ', 'ຘ', 'ຠ', 'ຨ', 'ຩ', 'ຬ', '຺']
@@ -121,7 +125,7 @@ def auto_detect(text, plugin = False):
 
     elif inputScript == 'Meetei':
         inputScript = 'MeeteiMayek'
-    elif inputScript == 'Old':
+    elif inputScript == 'Persian':
         inputScript = 'OldPersian'
     elif inputScript == 'Phags-pa':
         inputScript = 'PhagsPa'
@@ -160,6 +164,12 @@ def auto_detect(text, plugin = False):
             inputScript = 'Itrans'
         else:
             inputScript = 'HK'
+    elif inputScript in GeneralMap.IndicScripts:
+        pass
+    else:
+        from . import gimeltra
+        tr = gimeltra.Transliterator()
+        inputScript = tr.auto_script(text)
 
     return inputScript
 
@@ -315,7 +325,7 @@ def convert_default(src, tgt, txt, nativize = True, post_options = [], pre_optio
     with open(dir_path + "/yaml/aksharamukha-scripts.yaml", 'r') as stream:
         data_loaded = yaml.safe_load(stream)
 
-    scriptList = GeneralMap.IndicScripts + GeneralMap.LatinScripts
+    scriptList = GeneralMap.IndicScripts + GeneralMap.LatinScripts + GeneralMap.SemiticScripts
 
     preOptionList = list(map(lambda x: x[0], getmembers(PreProcess, isfunction)))
     preOptionListLower = list(map(lambda x: x.lower(), preOptionList))
@@ -593,5 +603,13 @@ def process_lang_name(src_name, tgt_name, txt, nativize, post_options, pre_optio
     tgt = str(langcodes.find(tgt_name))
 
     return process_lang_tag(src, tgt, txt, nativize, post_options, pre_options)
+
+def get_semitic_json():
+    from pathlib import Path
+    cwd = Path(Path(__file__).parent)
+    with open(Path(cwd, "gimeltra_data.json"), "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    return data
 
 ## add the new libraries to requiesments.txt in both folders
