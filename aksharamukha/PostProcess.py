@@ -21,6 +21,18 @@ def default(Strng):
 
     return Strng
 
+def estrangelasyriac(Strng):
+
+    return Strng
+
+def easternsyriac(Strng):
+
+    return Strng
+
+def westernsyriac(Strng):
+
+    return Strng
+
 def kawitan(Strng):
 
     return Strng

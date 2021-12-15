@@ -2215,6 +2215,10 @@ def FixWarangCiti(Strng, reverse = False):
 
         Strng = Strng.replace('\u00BD', '\U000118C1')
 
+        # remove Nukta
+
+        Strng = Strng.replace("\u02BF", "")
+
     else:
         Strng = Strng.lower()
         ## Replace hb -> vQ

@@ -573,6 +573,11 @@ def RemoveJoiners(Strng):
 
     return Strng
 
+def ArabicGimelJa(Strng):
+    Strng = Strng.replace("ج", "j")
+
+    return Strng
+
 # Normalize Input
 # ka + <nukta> -> qa etc
 def normalize(Strng,Source):

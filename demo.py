@@ -1,5 +1,5 @@
 from aksharamukha import transliterate
-
+""""
 print(transliterate.process('hk', 'siddham', 'buddhaH'))
 
 print(transliterate.process('autodetect', 'iast', 'ꯃꯤꯇꯩ_ꯃꯌꯦꯛ'))
@@ -40,8 +40,22 @@ print(transliterate.process('sa-Deva', 'ru', 'धर्म भारत की '
 print(transliterate.process('deva', 'taml', 'धर्म भारत की ', param="script_code"))
 print(transliterate.process('te', 'ur', 'ధర్మ భారత', param="lang_code"))
 print(transliterate.process('odia', 'ho', 'ଧର୍ମ ଭାରତ', param="lang_name"))
+"""
+
+#print(transliterate.process('Devanagari', 'Phnx', "तांश्च"))
+#print(transliterate.process('HK', 'Syrc', "buddha"))
 
 
+from aksharamukha import gimeltra
 
-## multiple orthographies associated with script example
+tr = gimeltra.Transliterator()
 
+#print(tr.tr('č', sc='Latn',  to_sc='RomanSemitic'))
+
+print(tr.tr('č', 'Latn', 'Latn'))
+print(tr.tr('چ', 'Arab', 'Phnx'))
+print(tr.tr('א           טט', 'Hebr', 'Arab'))
+#print(tr.tr('tp tp tkk tk', 'Latn', 'Hebr'))
+
+## multiple orthographies associated with s
+# cript example
