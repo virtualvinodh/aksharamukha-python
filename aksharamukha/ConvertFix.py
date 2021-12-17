@@ -184,6 +184,10 @@ def FixRomanOutput(Strng,Target):
     ConsH = TargetCons[32] # Consonant H
     UnAspCons = '|'.join([TargetCons[i] for i in [0,2,5,7,10,12,15,17,20,22]]).replace('^','\^').replace('.','\.') # All Unaspirated Plosives
 
+    #Transcribe Malayalam half-u
+    if Target in ['IAST', 'ISO', 'ISOPali', 'Titus']:
+        Strng = Strng.replace('u' + Virama, Virama + 'ŭ')
+
     # कि कइ - ki -> k_i
     Strng = re.sub('(?<='+Schwa+DepV+')'+'('+VowelIU+')',r'_\1',Strng)
     # Output: kʌ× kʌ×a kʌ kʌā kʌr̥ kʌ×hʌ bʌ̄× bʌ̄ bʌ̄ō bhʌ× bhʌ bhʌā kʌi kʌṿ_i kʌṿī
@@ -265,8 +269,8 @@ def PostFixRomanOutput(Strng,Source,Target):
     Strng = FixVedic(Strng, Target)
 
     # For Kashmiri
-    Strng = Strng.replace("uʼ", "u'")
-    Strng = Strng.replace("ūʼ", "ū'")
+    if Target in ['IAST', 'ISO', 'ISOPali', 'Titus']:
+        Strng = Strng.replace("uʼ", "ü").replace("ūʼ", "ǖ").replace('aʼ', 'ö').replace('āʼ', 'ȫ')
 
     if Source == 'Sinhala' and Target == 'IPA':
         Strng = SinhalaIPAFix(Strng)
@@ -332,6 +336,15 @@ def PostFixRomanOutput(Strng,Source,Target):
 
     if Target == "Mongolian":
         Strng = FixMongolian(Strng)
+
+    return Strng
+
+def FixSemiticOutput(Strng,Source,Target):
+    try:
+        Strng = globals()["Fix"+Target](Strng)
+    except KeyError:
+        pass
+        #print #"Fix"+Target+" doesn't exist"
 
     return Strng
 
@@ -860,7 +873,6 @@ def FixTamil(Strng,reverse=False):
         for x in TamilDiacritic:
             for y in VedicSign:
                 Strng = Strng.replace(x + y, y + x)
-
     else:
         Strng = Strng.replace(avaA,ava+ava)
         Strng = Strng.replace('ஷ²', 'ஶ')
@@ -936,7 +948,14 @@ def ShiftDiacritics(Strng,Target,reverse=False):
 
     if not reverse:
         Strng = re.sub('('+Diac+')'+'('+VS+')',r'\2\1',Strng)
+
+        if Target == 'Tamil':
+            Strng = Strng.replace( '³்', '்³',)
+
     else:
+        if Target == 'Tamil':
+            Strng = Strng.replace( '்³', '³்',)
+
         Strng = re.sub('('+VS+')'+'('+Diac+')',r'\2\1',Strng)
 
     return Strng
@@ -2323,6 +2342,15 @@ def FixDevanagari(Strng, reverse=False):
 
         Strng = Strng.replace('उʼ', 'ॶ').replace('ऊʼ', 'ॷ').replace('ुʼ', 'ॖ').replace('ूʼ','ॗ')
 
+        # Kashmir oe oe
+
+        Strng = Strng.replace('अʼ', 'ॳ').replace('आʼ', 'ॴ')
+
+        ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Devanagari'))
+
+        Strng = re.sub('(' + ListC + ')' + 'ʼ', r'\1' + '\u093A', Strng)
+        Strng = Strng.replace('\u093Eʼ','\u093B')
+
     else:
         Strng = PostProcess.DevanagariPrishtamatra(Strng, reverse=True)
         Strng = Strng.replace('ॽ', 'ʔ')
@@ -2333,7 +2361,11 @@ def FixDevanagari(Strng, reverse=False):
 
         # Kashmiri ux, uux
 
-        Strng = Strng.replace('ॶ', 'उʼ\u200C').replace('ॷ', 'ऊʼ\u200C').replace('ॖ', 'ुʼ\u200C').replace('ॗ', 'ूʼ\u200C')
+        Strng = Strng.replace('ॶ', 'उʼ').replace('ॷ', 'ऊʼ').replace('ॖ', 'ुʼ').replace('ॗ', 'ूʼ')
+
+        # oe
+        Strng = Strng.replace('ॳ', 'अʼ').replace('ॴ', 'आʼ').replace('\u093B', '\u093Eʼ').replace('\u093A','ʼ')
+
 
     return Strng
 
@@ -2720,11 +2752,30 @@ def FixPhagsPa(Strng,reverse=False):
 # Think of a-k-ka vers a-ka+vir-ka, also ag to ak. (Virama extends to second letter... ag could be replaced by ak..
 # since a+ga+vir woould orthographically wrong (it has no following consonant to extend to), considered replacing a+g+virama with a+k
 
+def FixUgar(Strng, reverse=False):
+    if not reverse:
+        Strng = Strng.replace("𐎒²","𐎝")
+    else:
+        pass
+
+    return Strng
+
+def FixSogd(Strng, reverse=False):
+    if not reverse:
+        Strng = Strng.replace("𐼹²","𐽄")
+    else:
+        pass
+
+    return Strng
+
 def FixMalayalam(Strng, reverse=False):
     Strng = PostProcess.MalayalamChillu(Strng, reverse)
     if not reverse:
         Strng = PostProcess.RetainDandasIndic(Strng, 'Malayalam', True)
         Strng = PostProcess.RetainIndicNumerals(Strng, 'Malayalam', True)
+
+        # fix n2ra
+        #Strng = Strng.replace('ன்ற')
 
     Chillus=['\u0D7A','\u0D7B','\u0D7C','\u0D7D','\u0D7E', 'ഩ‍്']
 
@@ -2978,21 +3029,37 @@ def FixAssamese(Strng,reverse=False):
 def FixSharada(Strng,reverse=False):
     Strng = PostProcess.KhandaTa(Strng, 'Assamese', reverse)
 
-    if not reverse:
-        ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Sharada'))
-        Nukta = '|'.join(GM.CrunchSymbols(GM.CombiningSigns,'Sharada')[-1])
-        Virama = ''.join(GM.CrunchSymbols(['ViramaMap'], 'Sharada'))
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Sharada'))
+    Nukta = '|'.join(GM.CrunchSymbols(GM.CombiningSigns,'Sharada')[-1])
+    Virama = ''.join(GM.CrunchSymbols(['ViramaMap'], 'Sharada'))
 
+    if not reverse:
         Strng = Strng.replace( Nukta + Virama, Nukta + Virama + '\u200C')
         Strng = re.sub('(' + Virama + ')' + '(' + ListC + ')' + '(' + Nukta + ')', r'\1' + '\u200C' + r'\2\3', Strng)
 
-        Strng = Strng.replace('𑆇ʼ','𑆃᳘').replace('𑆈ʼ','𑆃᳕').replace('𑆶ʼ','᳘').replace('𑆷ʼ','᳕')
+        Strng = Strng.replace('𑆇ʼ','\U00011183\U000111CB\U000111B6').replace('𑆈ʼ','\U00011183\U000111CB\U000111B7')\
+            .replace('𑆶ʼ','\U000111CB\U000111B6').replace('𑆷ʼ','\U000111CB\U000111B7')
+
+        Strng = Strng.replace('\U00011184ʼ', '𑆃𑇋𑆳')
+        Strng = re.sub('(?<!\U000111BE)\U000111B3ʼ', '\U000111CB\U000111B3', Strng)
+
+        Strng = Strng.replace('𑆃ʼ', '𑆃𑇋', )
+        Strng = re.sub('(' + ListC + ')'+ 'ʼ', r'\1' + '\U000111CB', Strng)
+
 
     else:
         # u^ u^^ to vriaama
         # Fix Devanagari as well u^ u^^ to devanagri vowels
 
-        Strng = Strng.replace('𑆃᳘', '𑆇ʼ').replace('𑆃᳕', '𑆈ʼ').replace('᳘', '𑆶ʼ').replace('᳕', '𑆷ʼ')
+        # half-u and half-long-u
+        Strng = Strng.replace('\U00011183\U000111CB\U000111B6', '𑆇ʼ').replace('\U00011183\U000111CB\U000111B7', '𑆈ʼ').\
+            replace('\U000111CB\U000111B6', '𑆶ʼ').replace('\U000111CB\U000111B7', '𑆷ʼ')
+
+        Strng = Strng.replace('𑆃𑇋𑆳', '\U00011184ʼ')
+        Strng = re.sub('(?<!\U000111BE)\U000111CB\U000111B3', '\U000111B3ʼ', Strng)
+
+        Strng = Strng.replace('𑆃𑇋', '𑆃ʼ')
+        Strng = re.sub('(' + ListC + ')'+ '\U000111CB', r'\1' +  'ʼ', Strng)
 
     return Strng
 

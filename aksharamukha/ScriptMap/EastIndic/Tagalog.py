@@ -105,7 +105,7 @@ ConsonantMap =  [
                 '\u170B',
 
                 '\u170C',
-                '\u170E\u02BD',
+                '\u170D',
                 '\u170E',
                 '\u170F',
 
@@ -118,7 +118,7 @@ ConsonantMap =  [
 SouthConsonantMap = [
                     '\u170E\u02BD',
                     '\u170E\u02BD',
-                    '\u170E\u02BD',
+                    '\u170D\u02BD',
                     '\u1708\u02BD'
                     ]
 

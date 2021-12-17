@@ -153,8 +153,11 @@ def auto_detect(text, plugin = False):
     elif inputScript == 'Latin':
         diacritics = ['ā', 'ī', 'ū', 'ṃ', 'ḥ', 'ś', 'ṣ', 'ṇ', 'ṛ', 'ṝ', 'ḷ', 'ḹ', 'ḻ', 'ṉ', 'ṟ', 'ṭ', 'ḍ', 'ṅ', 'ñ']
         Itrans = ['R^i', 'R^I', 'L^i', 'L^I', '.N', '~N', '~n', 'Ch', 'sh', 'Sh']
+        semitic = ['ʾ', 'ʿ', 'š', 'w']
         if 'ʰ' in text:
             inputScript = 'Titus'
+        elif any(char in text for char in semitic):
+            inputScript = 'Latn'
         elif any(char in text for char in diacritics):
             if 'ē' in text or 'ō' in text or 'r̥' in text:
                 inputScript = 'ISO'
@@ -240,6 +243,8 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     if 'ranjanawartu' in postoptions and tgt == 'Ranjana':
         tgt = 'Tibetan'
         nativize = False
+    if src in GeneralMap.SemiticScripts and (tgt == 'Urdu' or tgt == 'Shahmukhi'):
+        tgt = 'Arab'
     if 'SoyomboFinals' in postoptions and tgt == 'Soyombo':
         txt = '\u02BE' + txt
 

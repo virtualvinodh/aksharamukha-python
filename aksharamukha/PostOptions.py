@@ -16,6 +16,9 @@ def ApplyScriptDefaults(Strng,Source,Target):
     if Target == 'Telugu' or Target == 'Kannada':
         Options += ['NasalToAnusvara','MToAnusvara']
 
+    elif Target == 'Nandinagari':
+        Options += ['NasalToAnusvara']
+
     elif Target == 'Hebrew':
         Options += ['HebrewVetVav', 'HebrewnonFinalShort']
 

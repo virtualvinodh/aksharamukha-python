@@ -20,17 +20,17 @@ VowelMap =  [
             ]
 
 SouthVowelMap = [
-                '𑆍ᳮ',
-                '𑆃ᳯ',
+                '\U0001118D\U000111CC',
+                '\U0001118F\U000111CC',
                 ]
 
 ModernVowelMap = [
-                 '𑆃᳐',
-                  '𑆄᳐'
+                 '𑆃\U000111BE\U000111CB',
+                  '𑆃\U000111BE\U000111CB\U000111B3'
                  ]
 
 SinhalaVowelMap = [
-                 '𑆃᳐\u02BD',
+                 '𑆃\U000111BE\U000111CB\u02BD',
                   ]
 
 VowelSignMap =  [
@@ -50,17 +50,17 @@ VowelSignMap =  [
                 ]
 
 SouthVowelSignMap = [
-                    'ᳮ',
-                    'ᳯ',
+                '\U000111BC\U000111CC',
+                '\U000111BE\U000111CC',
                     ]
 
 ModernVowelSignMap =[
-                    '\u1CD0',
-                    '\U000111B3\u1CD0',
+                 '\U000111BE\U000111CB',
+                  '\U000111BE\U000111CB\U000111B3'
                     ]
 
 SinhalaVowelSignMap = [
-                    '\u1CD0\u02BD',
+                 '\U000111BE\U000111CB\u02BD',
                       ]
 
 AyogavahaMap = [
