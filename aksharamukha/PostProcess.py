@@ -58,6 +58,25 @@ def vtobJapanese(txt):
 
     return txt
 
+def SogdReshAyin(Strng):
+    Strng = Strng.replace('𐼽', '𐽀')
+
+    return Strng
+
+def SogoReshAyinDaleth(Strng):
+    Strng = Strng.replace('𐼓','𐼘')
+
+    return Strng
+
+def arabPaFa(Strng):
+
+    return Strng.replace('پ','ف')
+
+
+def arabChaSa(Strng):
+
+    return Strng.replace('چ', 'س')
+
 def tokushuon(txt):
    txt = txt.replace('si', 'suxi').replace('zi', 'zuxi')
    txt = txt.replace('yi','ixi')

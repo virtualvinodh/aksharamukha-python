@@ -65,6 +65,10 @@ def convertScript(Strng,Source,Target):
             pass
             #print #"Fix"+Target+" doesn't exist - Reverse"
 
+       #short u
+        if Source in ['IAST', 'ISO', 'ISOPali', 'Titus']:
+            Strng = Strng.replace('ŭ', 'u\u00D7') # special explicit Virama
+
         ## Joiners {} : ZWNJ : () : ZWJ
         Strng = Strng.replace("{}", "\u200C")
         Strng = Strng.replace("()", "\u200D")
@@ -130,6 +134,9 @@ def convertScript(Strng,Source,Target):
         ## Joiners Vir + ZWJ
         vir = GM.CrunchList('ViramaMap', Target)[0]
         Strng = Strng.replace(vir + "[]", "\u200D" + vir)
+
+        if Source in ['Inter']:
+            Strng = Strng.replace('\u00D7', vir) # special explicit Virama
 
         #print Strng
 
@@ -263,6 +270,9 @@ def convertScript(Strng,Source,Target):
 
         Strng = tr.tr(Strng, sc=Source, to_sc=Target)
 
+        # Apply Fixes on the Output based on the Script
+        Strng = CF.FixSemiticOutput(Strng, Source, Target)
+
     elif Source in (GM.IndicScripts + GM.LatinScripts) and Target in GM.SemiticScripts:
         tr = gimeltra.Transliterator()
 
@@ -289,6 +299,9 @@ def convertScript(Strng,Source,Target):
 
             #print(Strng)
             Strng = tr.tr(Strng, sc='Latn', to_sc=Target)
+
+            # Apply Fixes on the Output based on the Script
+            Strng = CF.FixSemiticOutput(Strng, Source, Target)
 
     elif Source in GM.SemiticScripts and Target in (GM.IndicScripts + GM.LatinScripts):
         tr = gimeltra.Transliterator()

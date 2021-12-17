@@ -25,6 +25,95 @@ def default(Strng):
 
     return Strng
 
+def SogdReshAyin(Strng):
+    Strng = Strng.replace('𐽀', '[\uEA01-\uEA02]') # resh yin
+
+    return Strng
+
+def SogoReshAyinDaleth(Strng):
+    Strng = Strng.replace('𐼘', '[\uEA01-\uEA02-\uEA06]') # resh yin daleth
+
+    return Strng
+
+def PhlpMemQoph(Strng):
+    Strng = Strng.replace('𐮋', '[\uEA03-\uEA04]') # mem qoph
+
+    return Strng
+
+def PhlpWawAyinResh(Strng):
+    Strng = Strng.replace('𐮅', '[\uEA05-\uEA02-\uEA01]') # resh yin
+
+    return Strng
+
+def PhliWawAyinResh(Strng):
+    Strng = Strng.replace('𐭥', '[\uEA05-\uEA02-\uEA01]') # resh yin
+
+    return Strng
+
+def HatrDalethResh(Strng):
+    Strng = Strng.replace('𐣣', '[\uEA06-\uEA01]') # resh yin
+
+    return Strng
+
+def MalayalamHalfu(Strng):
+    consu = '[കചടതറനണരലവഴളറ]'
+    vir = GM.CrunchSymbols(GM.VowelSigns, 'Malayalam')[0]
+    consAll = "(" + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Malayalam')) + ")"
+
+    Strng = re.sub('(?<=' + consu + ')' + '(' + vir + ')' + '(?!' +  consAll + ')', r'\2' + 'ു്', Strng)
+
+    return Strng
+
+def MalayalamTranscribe(Strng):
+    Strng = MalayalamHalfu(Strng)
+
+    script = "Malayalam"
+
+    ListC = GM.CrunchList('ConsonantMap',script)
+    ListSC = GM.CrunchList('SouthConsonantMap',script)
+    vir = GM.CrunchSymbols(GM.VowelSigns, script)[0]
+
+    ConUnVoiced = [ListC[x] for x in [0,5,10,15,20]]
+    ConVoicedJ =  [ListC[x] for x in [2,7,12,17,22]]
+    ConVoicedS =  [ListC[x] for x in [2,5,12,17,22]]
+
+    ConNasalsAll = '|'.join([ListC[x] for x in [4, 9, 14, 19, 24]])
+    conNasalCa = '|'.join([ListC[x] for x in [9]])
+    ConNasalsGroup = [ConNasalsAll, conNasalCa, ConNasalsAll, ConNasalsAll, ConNasalsAll]
+
+    ConMedials = '|'.join(ListC[25:28]+ListSC[0:2]+ListSC[3:4])
+    Vowels = '|'.join(GM.CrunchSymbols(GM.Vowels+GM.VowelSignsNV, script))
+    Aytham = GM.CrunchList('Aytham',script)[0]
+    Consonants = '|'.join(GM.CrunchSymbols(GM.Consonants,script))
+
+    NRA =ListSC[3] + vir + ListSC[2]
+    NDRA = ListC[14] + vir + ListC[12] + vir + ListC[26]
+
+    ### Check Siva Siva Mails
+    ### Do something about Eyelash ra in Transliterated text
+
+    for i in range(len(ConUnVoiced)):
+        pass
+        #Strng = re.sub('('+Vowels+Consonants+')'+ConUnVoiced[i]+'('+Vowels+Consonants+')',r'\1'+ConVoicedS[i]+r'\2',Strng)
+        Strng = re.sub('('+Vowels+'|'+Consonants+'|'+Aytham+')'+ConUnVoiced[i]+'(?!'+vir+')',r'\1'+ConVoicedS[i],Strng)
+        Strng = re.sub('('+ConVoicedS[i]+')'+ConUnVoiced[i]+'(?!'+vir+')',r'\1'+ConVoicedS[i],Strng)
+
+        # Nasals + Unvoiced -> voiced
+        # Rule applied even if spaced -> ulakaJ cuRRu -> ulakaJ juRRu; cenJu -> senju
+        # Strng = re.sub('('+ConNasalsSpace+')'+'('+vir+')'+'( ?)'+ConUnVoiced[i],r'\1\2\3'+ConVoicedJ[i],Strng)
+
+        # Only without space : vampu -> vambu;  varim panam -> varim panam
+        Strng = re.sub('('+ConNasalsGroup[i]+')'+'('+vir+')'+ConUnVoiced[i],r'\1\2'+ConVoicedJ[i],Strng)
+
+        # Medials + Unvoiced -> Voiced
+        Strng = re.sub('('+ConMedials+')'+'('+vir+')'+ConUnVoiced[i]+'(?!'+vir+')',r'\1\2'+ConVoicedS[i],Strng)
+
+    #RRA NRA
+
+    Strng = Strng.replace('റ്റ', 'ട്ട').replace('ന്റ', 'ണ്ഡ')
+
+    return Strng
+
 def retainLatin(Strng, reverse=False):
     latn_basic_lower = 'a b c d e f g h i j k l m n o p q r s t u v w x y z ḥ ṭ ṣ ʾ ʿ š ā ī ū ē ō'
     latn_basic_upper = latn_basic_lower.upper()
@@ -34,6 +123,10 @@ def retainLatin(Strng, reverse=False):
     if not reverse:
         for i, c in enumerate(latn_all):
             Strng = Strng.replace(c, chr(60929+i))
+
+        # for disambiguating preprocessed consonants
+        Strng = Strng.replace('\uEA01', 'r').replace('\uEA02', 'ʿ').replace('\uEA03', 'm').replace('\uEA04', 'q').replace('\uEA05', 'w').replace('\uEA06', 'd')
+
     else:
         # print('I am trying to reverse Lating')
         for i, c in enumerate(latn_all):
@@ -610,6 +703,9 @@ def normalize(Strng,Source):
         for x,y in zip(nuktaDecom,nuktaPrecom):
             Strng = Strng.replace(x,y)
 
+    if Source in ['IAST', 'ISO', 'ISOPali', 'Titus']:
+        Strng = Strng.replace("ü", "uʼ").replace("ǖ", "ūʼ").replace( 'ö', 'aʼ',).replace('ȫ', 'āʼ')
+
     # Sindhi C+Anudatta <- Sindhi Underscore characters
     # For easy Transliteration
 
@@ -624,6 +720,10 @@ def normalize(Strng,Source):
     Strng = Strng.replace('ൌ', 'ൗ')
     Strng = Strng.replace('ൟ', 'ഈ')
     Strng = Strng.replace('ൎ', 'ര്')
+
+    # Malayalam chill + virama to just letter + virama
+
+    Strng = Strng.replace('ൻ്റ', 'ന്റ')
 
     # Bengali Khanda Ta
 
@@ -772,9 +872,11 @@ def PhagsPaArrange(Strng,Source):
 
 def TamilTranscribe(Strng):
 
-    ListC = GM.CrunchList('ConsonantMap',"Tamil")
-    ListSC = GM.CrunchList('SouthConsonantMap',"Tamil")
-    vir = GM.CrunchSymbols(GM.VowelSigns,"Tamil")[0]
+    script = "Tamil"
+
+    ListC = GM.CrunchList('ConsonantMap',script)
+    ListSC = GM.CrunchList('SouthConsonantMap',script)
+    vir = GM.CrunchSymbols(GM.VowelSigns, script)[0]
 
     ConUnVoiced = [ListC[x] for x in [0,5,10,15,20]]
     ConVoicedJ =  [ListC[x] for x in [2,7,12,17,22]]
@@ -785,9 +887,9 @@ def TamilTranscribe(Strng):
     ConNasalsGroup = [ConNasalsAll, conNasalCa, ConNasalsAll, ConNasalsAll, ConNasalsAll]
 
     ConMedials = '|'.join(ListC[25:28]+ListSC[0:2]+ListSC[3:4])
-    Vowels = '|'.join(GM.CrunchSymbols(GM.Vowels+GM.VowelSignsNV, "Tamil"))
-    Aytham = GM.CrunchList('Aytham',"Tamil")[0]
-    Consonants = '|'.join(GM.CrunchSymbols(GM.Consonants,"Tamil"))
+    Vowels = '|'.join(GM.CrunchSymbols(GM.Vowels+GM.VowelSignsNV, script))
+    Aytham = GM.CrunchList('Aytham',script)[0]
+    Consonants = '|'.join(GM.CrunchSymbols(GM.Consonants,script))
     NRA =ListSC[3] + vir + ListSC[2]
     NDRA = ListC[14] + vir + ListC[12] + vir + ListC[26]
 
