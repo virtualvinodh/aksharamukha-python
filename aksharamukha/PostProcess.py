@@ -41,6 +41,14 @@ def sundapura(Strng):
 
     return Strng
 
+def readableItrans(Strng):
+    pairsReadable = [('R^i','RRi'), ('R^I','RRii'), ('',''), ('',''), ('A', 'aa'), ('I', 'ii'), ('U', 'uu'), ('Ch', 'chh'), ('kSh','x'), ('M', '.m')]
+
+    for x, y in pairsReadable:
+        Strng = Strng.replace(x,y)
+
+    return Strng
+
 def NasalTilde(Strng):
     Strng = re.sub('(m̐|ṃ|ṁ)', '\u0303', Strng)
 

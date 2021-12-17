@@ -608,6 +608,11 @@ def PreProcess(Strng,Source,Target):
         for x,y in zip(AltForm,NormForm):
             Strng = Strng.replace(x,y)
 
+        AltForms = [('ee', 'I'), ('dny', 'j~n'), ('oo', 'U'), ('kS', 'kSh'), ('w', 'v'), ('|', '.'), ('kShh', 'kSh')]
+
+        for x,y in AltForms:
+            Strng = Strng.replace(x,y)
+
         Strng = Strng.replace('OM', 'oM')
 
     if Source == 'BarahaNorth' or Source == 'BarahaSouth':
