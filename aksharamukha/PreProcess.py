@@ -669,6 +669,13 @@ def PreProcess(Strng,Source,Target):
     if Source == "WarangCiti":
         Strng = Strng.replace('\u200D', '\u00D7')
 
+    if Source == "Arab-Fa":
+        # accept variants with dotes
+        dot_var = [('עׄ','ג'), ('תׄ','ת֒'), ('ת','ת̈'), ('ק','ק̈')]
+
+        for char, char_var in dot_var:
+            Strng = Strng.replace(char_var, char)
+
     ## Normalize Input Strings
 
     Strng = normalize(Strng,Source)

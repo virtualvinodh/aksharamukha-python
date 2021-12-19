@@ -395,6 +395,7 @@ def FixHebrew(Strng, reverse = False):
 
     if not reverse:
         Strng = Strng.replace('\u02BD', '')
+        Strng = Strng.replace('\u02BE', '')
 
         ## geminate cc/jj
         Strng = Strng.replace('ג׳ְג׳', 'גּ׳').replace('צ׳ְצ׳', 'צּ׳')

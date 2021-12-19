@@ -85,6 +85,18 @@ def arabChaSa(Strng):
 
     return Strng.replace('چ', 'س')
 
+def gainGimel(Strng):
+    return Strng.replace('עׄ','ג')
+
+def tavTwodot(Strng):
+    return Strng.replace('ת','ת̈')
+
+def tavThreedot(Strng):
+    return Strng.replace('תׄ','ת֒')
+
+def gainGimel(Strng):
+    return Strng.replace('ק','ק̈')
+
 def tokushuon(txt):
    txt = txt.replace('si', 'suxi').replace('zi', 'zuxi')
    txt = txt.replace('yi','ixi')
