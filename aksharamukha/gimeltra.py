@@ -4,6 +4,8 @@
 # Copyright © 2021 Adam Twardoch, MIT license
 # Adapted from : https://github.com/twardoch/gimeltra
 
+# Modified by Vinodh Rajan
+
 import os
 import regex as re
 from pathlib import Path
@@ -45,7 +47,9 @@ class Transliterator(object):
         for rule_i, rule_o in self.db_ccmp.get(sc, {}).items():
             t = t.replace(rule_i, rule_o)
         t = ucd.normalize('NFD', t)
-        t = re.sub(r"\p{M}","", t)
+
+        t = re.sub(r"(?![\u05C4\u0308])\p{M}","", t)
+
         logging.debug(f"Pre: {list(t)}")
         return t
 
@@ -57,29 +61,49 @@ class Transliterator(object):
         for rule_i, rule_o in self.db_liga.get(sc, {}).items():
             t = t.replace(rule_i, rule_o)
         logging.debug(f"Post: {list(t)}")
+
         return t
 
+    def _to_latin(self, text, sc, to_sc):
+        chars = list(self.db[sc]["Latn"])
+        chars.sort(key=len, reverse=True)
+        for char in chars:
+            text = text.replace(char, self.db[sc]["Latn"][char])
+
+        return text
+
+    def _from_latin(self, text, sc, to_sc):
+        chars = list(self.db["Latn"][to_sc])
+        chars.sort(key=len, reverse=True)
+
+        if sc != 'Latn':
+            chars_missing = set(list(self.db[sc]["Latn"].values())) - set(chars)
+            # print("Missing chars ")
+            # print(chars_missing)
+
+        if sc == 'Latn':
+            chars_missing = set(self.db_simplify) - set(list(self.db[to_sc]["Latn"].values()))
+            # print("Missing chars ")
+            # print(chars_missing)
+
+        for char in chars_missing:
+
+            if char in self.db_simplify:
+                text = text.replace(char, self.db_simplify[char])
+
+        for char in chars:
+            text = text.replace(char, self.db["Latn"][to_sc][char])
+
+        return text
+
     def _convert(self, text, sc, to_sc):
-        t = ''
-        for c in text:
-            oc = c
-            c_dir = self.db.get(sc, {}).get(to_sc, {}).get(c, None)
-            #print(f"C:{c} D:{c_dir}")
-            if c_dir:
-                t += c_dir
-                continue
-            c_lat = self.db.get(sc, {}).get('Latn', {}).get(c, c)
-            c_tgt = self.db.get("Latn", {}).get(to_sc, {}).get(c_lat, None)
-            #print(f"C:{c} L:{c_lat} T:{c_tgt}")
-            if not c_tgt:
-                c_lat = self.db_simplify.get(c_lat, c_lat)
-                c_tgt = ""
-                for c_l in c_lat:
-                    #print(c_l)
-                    c_tgt += self.db.get("Latn", {}).get(to_sc, {}).get(c_l, c)
-            t += c_tgt
-        #print(f"Conv: {list(t)}")
-        return t
+        if to_sc == 'Latn':
+            return self._to_latin(text, sc, to_sc)
+        elif sc == 'Latn':
+            return self._from_latin(text, sc, to_sc)
+        else:
+            txt_latn = self._to_latin(text, sc, to_sc)
+            return self._from_latin(txt_latn, sc, to_sc)
 
     def tr(self, text, sc=None, to_sc='Latn'):
         if not sc:

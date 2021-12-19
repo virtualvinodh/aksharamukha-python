@@ -243,8 +243,10 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     if 'ranjanawartu' in postoptions and tgt == 'Ranjana':
         tgt = 'Tibetan'
         nativize = False
+    if 'novowelshebrew' in preoptions and src == 'Hebrew':
+        src = 'Hebr'
     if src in GeneralMap.SemiticScripts and (tgt == 'Urdu' or tgt == 'Shahmukhi'):
-        tgt = 'Arab'
+        tgt = 'Arab-Fa'
     if 'SoyomboFinals' in postoptions and tgt == 'Soyombo':
         txt = '\u02BE' + txt
 
