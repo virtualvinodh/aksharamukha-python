@@ -76,6 +76,9 @@ def ApplyScriptDefaults(Strng,Source,Target):
     elif Target == "WarangCiti":
         Options += ['WarangCitiModernOrthogaphy']
 
+    elif Target == "Latn":
+        Options += ['LatnInitialVowels']
+
     else:
         Options += []
 

@@ -3,115 +3,115 @@
 # Script Mapping for ISO
 
 VowelMap =  [
-            'ʾ',
-            'ʾ\u02BD', # A
-            'i', #i
-            'ʾy\u02BD', #I
-            'u', # u
-            'ʾw\u02BD', # U
-            'r\u02BD',
-            'r\u02BD',
-            'l\u02BD',
-            'l\u02BD',
-            'ʾy\u02BD', #e
-            'ʾy\u02BD', #ai
-            'ʾw\u02BD', #o
-            'ʾw\u02BD' #au
+            'â',
+            'ā̂', # A
+            'î', #i
+            'ī̂', #I
+            'û', # u
+            'ū̂', # U
+            'ru\u02BD',
+            'rū\u02BD',
+            'lu\u02BD',
+            'lū\u02BD',
+            'ē̂', #e
+            'âŷ', #ai
+            'ō̂', #o
+            'âŵ' #au
             ]
 
 SouthVowelMap = [
-                'ʾ\u02BD',
-                'ʾ\u02BD',
+                'ê',
+                'ô'
                 ]
 
 ModernVowelMap = [
-                 'ʾ\u02BD',
-                 'ʾ\u02BD',
+                 'ē̂\u02BD',
+                 'ā̂\u02BD'
                  ]
 
 SinhalaVowelMap = [
-                  'y\u02BD'
+                  'ê\u02BD'
                   ]
 
 VowelSignMap =  [
-            'ʾ\u02BD', # A
-            '\u02BD\u02BD\u02BD\u02BD', #i
-            'y\u02BD\u02BD\u02BD\u02BD', #I
-            '\u02BD', # u
-            'w\u02BD', # U
-            'r\u02BD',
-            'r\u02BD',
-            'l\u02BD',
-            'l\u02BD',
-            'y\u02BD', #e
-            'y\u02BD', #ai
-            'w\u02BD', #o
-            'w\u02BD' #au
+            'ā', # A
+            'i', #i
+            'ī', #I
+            'u', # u
+            'ū', # U
+            '\u033Dru\u02BD',
+            '\u033Drū\u02BD',
+            '\u033Dru\u02BD',
+            '\u033Drū\u02BD',
+            'ē', #e
+            'aŷ', #ai
+            'ō', #o
+            'aŵ' #au
 ]
 
-SouthVowelSignMap = ['\u02BD\u02BD\u02BD\u02BD','\u02BD\u02BD\u02BD\u02BD']
+SouthVowelSignMap = ['e','o']
 
-ModernVowelSignMap = ['\u02BD\u02BD\u02BD\u02BD','\u02BD\u02BD\u02BD\u02BD']
+ModernVowelSignMap = ['e\u02BD','ā\u02BD']
 
 SinhalaVowelSignMap = [
-                  'y\u02BD'
+                  'ē\u02BD'
                   ]
 
 AyogavahaMap = [
-               'm\u02BD',
-               'm\u02BD',
-               'h\u02BD'
+               'm\u033D\u02BD',
+               'ⁿ', ## Check nasalization
+               'h\u033D\u02BD'
                ]
 
 ViramaMap =  [
-             '\u00D7'
+             '\u033D'
              ]
 
 ConsonantMap =  [
                 'k',
-                'k\u02BD',
+                'kʰ',
                 'g',
-                'g\u02BD',
+                'gʰ',
                 'n\u02BD',
 
                 'č',
-                'č\u02BD',
+                'čʰ',
                 'j',
-                'j\u02BD',
-                'n\u02BD',
+                'jʰ',
+                'ɲ',
 
-                't\u02BD',
-                't\u02BD',
-                'd\u02BD',
-                'd\u02BD',
-                'n\u02BD',
+                'ʈ',
+                'ʈʰ',
+                'ɖ',
+                'ɖʰ',
+                'ɳ',
 
                 't',
-                't\u02BD',
+                'tʰ',
                 'd',
-                'd\u02BD',
+                'dʰ',
                 'n',
 
                 'p',
-                'p\u02BD',
+                'pʰ',
                 'b',
-                'b\u02BD',
+                'bʰ',
                 'm',
 
                 'y',
                 'r',
                 'l',
-                'w',
+                'v',
 
                 'š',
-                'š\u02BD',
+                'ʂ',
                 's',
                 'h',
                 ]
 
 SouthConsonantMap = [
-                    'l\u02BD',
-                    'l\u02BD',
+                    'ɭ',
+                    'ɭ\u02BD',
                     'r\u02BD',
                     'n\u02BD'
                     ]
@@ -121,18 +121,18 @@ NuktaConsonantMap =  [
                      'ḫ',
                      'ġ',
                      'z',
-                     'd\u02BD',
-                     'd\u02BD',
+                     'ɽ',
+                     'ɽʰ',
                      'f',
                      'y\u02BD'
                      ]
 
 SinhalaConsonantMap =[
-                     'ng\u02BD',
-                     'nj\u02BD',
-                     'nd\u02BD',
-                     'nd\u02BD',
-                     'mb\u02BD',
+                     'n\u033Dg\u02BD',
+                     'n\u033Dj\u02BD',
+                     'n\u033Dd\u02BD',
+                     'n\u033Dd\u02BD',
+                     'm\u033Db\u02BD',
                       ]
 
 NuktaMap = [
@@ -140,7 +140,7 @@ NuktaMap = [
            ]
 
 OmMap = [
-        'wm\u02BD'
+        'ō̂m\u033D\u02BD'
         ]
 
 SignMap =[
@@ -149,7 +149,7 @@ SignMap =[
          '..'
          ]
 
-Aytham =['h\u02BD']
+Aytham =['h\u033D\u02BD']
 
 NumeralMap = [
              '\u0030',

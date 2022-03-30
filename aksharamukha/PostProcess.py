@@ -18,6 +18,107 @@ import functools
 ## Fix Font links and names in description
 
 def default(Strng):
+    Strng = Strng.replace("\uF001", "") ## remove token characters for specialized processing
+
+    return Strng
+
+def HebrewNikkud(Strng):
+
+    return Strng
+
+def LatnInitialVowels(Strng):
+    initVow = 'â ā̂ î ī̂ û ū̂ ê ē̂ âŷ ô ō̂ âŵ'.split(' ')
+    nonInitVow = 'a ā i ī u ū e ē aŷ o ō aŵ'.split(' ')
+
+    for x, y in zip(initVow, nonInitVow):
+        Strng = Strng.replace(x, y)
+
+    return Strng
+
+def removeMajliyana(Strng):
+    Strng = Strng.replace('\u0330', '')
+
+    return Strng
+
+def removeRukkaka(Strng):
+    Strng = Strng.replace('\u0741', '')
+
+    return Strng
+
+def removeQussaya(Strng):
+    Strng = Strng.replace('\u0742', '')
+
+    return Strng
+
+def removeVowelsSyriac(Strng):
+    Strng = re.sub('[\u0732\u0735\u073C\u0738\u0739\u073F]', '', Strng)
+
+    return Strng
+
+def removeDiacriticsArabic(Strng):
+    diacrtics = ["\u0652", "\u064E", "\u0650", "\u064F"]
+
+    for diacritic in diacrtics:
+        Strng = Strng.replace(diacritic, '')
+
+    return Strng
+
+def removeSukunEnd(Strng):
+    Strng = re.sub('(\u0652)(\W|$)', r'\2', Strng)
+
+    return Strng
+
+def removeDiacriticsPersian(Strng):
+
+    return Strng
+
+def removeDiacriticsSyriac(Strng):
+
+    return Strng
+
+def useKtivMale(Strng):
+
+    return Strng
+
+def PhoneticMapping(Strng):
+
+    return Strng
+
+def ArabicGimelGaGha(Strng):
+    Strng = Strng.replace('ج', 'غ')
+
+    return Strng
+
+def ArabicGimelPaBa(Strng):
+    Strng = Strng.replace('ف', 'ب')
+
+    return Strng
+
+
+def insertARomanSemitic(Strng):
+    basic_vowels = ['a', 'ā', 'i', 'ī', 'u', 'ū', 'ē', 'ō', 'e', 'o', '#', '\u033D']
+    Strng = Strng.replace('\u02BD', '')
+    consonantsAll = '(' + '|'.join(sorted(GM.CrunchSymbols(GM.Consonants, 'RomanSemitic'), key = len, reverse=True)) + ')'
+    vowelsAll = '(' + '|'.join(basic_vowels) + ')'
+    #print(Strng)
+    Strng = re.sub(consonantsAll + '(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
+    #print(Strng)
+
+    return Strng
+
+def FixSemiticRoman(Strng, Target):
+    vir = '\u033D'
+    Strng = re.sub('ō̂̄̂', 'ō̂', Strng)
+
+    if "Arab" in Target:
+        consonantsAll = '(' + '|'.join(sorted(GM.CrunchSymbols(GM.Consonants, 'RomanSemitic'), key = len, reverse=True)) + ')'
+        Strng = re.sub(consonantsAll + vir + r'\1', r'\1' + '꞉', Strng)
+        #Strng = re.sub('(꞉)([aiuāīū])', r'\2\1', Strng)
+
+    return Strng
+
+def ArabAtoAleph(Strng):
+    Strng = Strng.replace('أ', 'ا')
 
     return Strng
 

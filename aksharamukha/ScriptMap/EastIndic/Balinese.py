@@ -140,6 +140,10 @@ SinhalaConsonantMap =[
                      '\u1B01\u1B29\u02BD',
                       ]
 
+uniqueCons = {
+        'w': 'ᬯ᬴'
+}
+
 NuktaMap = [
            '\u1B34'
            ]

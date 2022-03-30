@@ -23,9 +23,10 @@ class Transliterator(object):
             data = json.load(f)
         self.db = data['ssub']
         self.db_ccmp = data['ccmp']
-        self.db_simplify = data['simp']
+        self.db_simplify = data['simp']['general']
         self.db_fina = data['fina']
         self.db_liga = data['liga']
+        self.vocalized = ['Hebr', 'Hebr-Ar', 'Syrc', 'Arab-Fa', 'Arab-Ph', 'Latn', 'Latn-No', 'Type', 'Arab', 'Arab-Ur', "Thaa"]
 
     def auto_script(self, text):
         sc_count = Counter([ucd.script(c) for c in text])
@@ -37,18 +38,19 @@ class Transliterator(object):
     def _tr(self, text, sc, to_sc):
         t = text
         if sc != 'Latn':
-            t = self._preprocess(t, sc)
+            t = self._preprocess(t, sc, to_sc)
         t = self._convert(t, sc, to_sc)
         t = self._postprocess(t, to_sc)
         return t
 
-    def _preprocess(self, text, sc):
+    def _preprocess(self, text, sc, to_sc):
         t = text
         for rule_i, rule_o in self.db_ccmp.get(sc, {}).items():
             t = t.replace(rule_i, rule_o)
-        t = ucd.normalize('NFD', t)
 
-        t = re.sub(r"(?![\u05C4\u0308])\p{M}","", t)
+        if sc not in self.vocalized or to_sc not in self.vocalized:
+            t = ucd.normalize('NFD', t)
+            t = re.sub(r"(?![\u05C4\u0308])\p{M}","", t)
 
         logging.debug(f"Pre: {list(t)}")
         return t
@@ -67,7 +69,9 @@ class Transliterator(object):
     def _to_latin(self, text, sc, to_sc):
         chars = list(self.db[sc]["Latn"])
         chars.sort(key=len, reverse=True)
+        # print(chars)
         for char in chars:
+            # print(char + ' : ' + self.db[sc]["Latn"][char])
             text = text.replace(char, self.db[sc]["Latn"][char])
 
         return text
@@ -76,22 +80,22 @@ class Transliterator(object):
         chars = list(self.db["Latn"][to_sc])
         chars.sort(key=len, reverse=True)
 
-        if sc != 'Latn':
-            chars_missing = set(list(self.db[sc]["Latn"].values())) - set(chars)
-            # print("Missing chars ")
-            # print(chars_missing)
+        #if sc != 'Latn':
+            # chars_missing = set(list(self.db[sc]["Latn"].values())) - set(chars)
 
-        if sc == 'Latn':
-            chars_missing = set(self.db_simplify) - set(list(self.db[to_sc]["Latn"].values()))
-            # print("Missing chars ")
-            # print(chars_missing)
+        #if sc == 'Latn':
+            #chars_missing = set(self.db_simplify) -  set(chars) #set(list(self.db[to_sc]["Latn"].values()))
+            #print(chars)
+
+        chars_missing = sorted(list(set(self.db_simplify) -  set(chars)), key=len, reverse=True)
 
         for char in chars_missing:
-
             if char in self.db_simplify:
                 text = text.replace(char, self.db_simplify[char])
 
         for char in chars:
+            #print(text)
+            #print(char + " " + self.db["Latn"][to_sc][char])
             text = text.replace(char, self.db["Latn"][to_sc][char])
 
         return text
@@ -120,7 +124,7 @@ class Transliterator(object):
 
 def tr(text, sc=None, to_sc='Latn'):
     tr = Transliterator()
-    print(sc +' ' + to_sc)
+    # print(sc +' ' + to_sc)
     if sc != to_sc:
         return tr.tr(text, sc, to_sc)
     else:

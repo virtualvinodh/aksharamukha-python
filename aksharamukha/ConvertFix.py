@@ -268,6 +268,8 @@ def PostFixRomanOutput(Strng,Source,Target):
 
     Strng = FixVedic(Strng, Target)
 
+    print(Source, Target)
+
     # For Kashmiri
     if Target in ['IAST', 'ISO', 'ISOPali', 'Titus']:
         Strng = Strng.replace("uʼ", "ü").replace("ūʼ", "ǖ").replace('aʼ', 'ö').replace('āʼ', 'ȫ')
@@ -337,14 +339,19 @@ def PostFixRomanOutput(Strng,Source,Target):
     if Target == "Mongolian":
         Strng = FixMongolian(Strng)
 
+    if Source == "RomanSemitic":
+        pass
+        #Strng = Strng.replace('a̤', '\u0324')
+
     return Strng
 
 def FixSemiticOutput(Strng,Source,Target):
+    Strng = Strng.replace('\u02DE', '') ## dummy
     try:
-        Strng = globals()["Fix"+Target](Strng)
+        Strng = globals()["Fix"+Target.replace('-','_')](Strng, Source)
     except KeyError:
         pass
-        #print #"Fix"+Target+" doesn't exist"
+        #print("Fix"+Target+" doesn't exist")
 
     return Strng
 
@@ -1455,6 +1462,7 @@ def FixUrduShahmukhi(Target, Strng,reverse=False):
             Strng = re.sub('(ن|م|ی|ر|ل|و)(\u0652)(ہ)',r'\1'+'\u06BE', Strng)
 
     else:
+        print('I am being called')
         if True:
             #print(Strng)
 
@@ -1573,12 +1581,7 @@ def FixUrduShahmukhi(Target, Strng,reverse=False):
     ### Todo
 
     # Punctuation
-    if ( not reverse):
-        for x,y in zip([',','?',';'],['،','؟','؛']):
-            Strng = Strng.replace(x,y)
-    else :
-        for x,y in zip([',','?',';'],['،','؟','؛']):
-            Strng = Strng.replace(y,x)
+    Strng = PersoArabicPuntuation(Strng, reverse)
 
 #    Strng = Strng.replace(Aa+Aa,Aa+hamzaFull+Aa)
 #    Strng = re.sub("("+ListVS+")"+"(?="+iii+")",r'\1'+hamzaChair,Strng)
@@ -1586,6 +1589,22 @@ def FixUrduShahmukhi(Target, Strng,reverse=False):
 #    Strng = Strng.replace(u"\u02BE","")
 
     #Strng = re.sub('('+ListC+')'+'(?!'+ListVS+')',r'\1'+a,Strng)
+
+    return Strng
+
+
+def PersoArabicPuntuation(Strng, reverse=False):
+    # Punctuation
+    # print("Trying to reverse thigns")
+    if (not reverse):
+        for x,y in zip([',','?',';'],['،','؟','؛']):
+            Strng = Strng.replace(x,y)
+        Strng = Strng.replace(".", "۔")
+    else :
+        print("here reversing things")
+        for x,y in zip([',','?',';'],['،','؟','؛']):
+            Strng = Strng.replace(y,x)
+        Strng = Strng.replace("۔", ".")
 
     return Strng
 
@@ -2331,7 +2350,7 @@ def FixDevanagari(Strng, reverse=False):
             Strng = Strng.replace(y, x)
 
         Strng = Strng.replace('ज़़','ॹ')
-
+        Strng = Strng.replace('श़','ॹ')
         Strng = Strng.replace('ऱ्', 'ऱ्‌') ## Prevent RRA from forming conjuncts
 
         ## Except for YA and HA
@@ -2753,7 +2772,58 @@ def FixPhagsPa(Strng,reverse=False):
 # Think of a-k-ka vers a-ka+vir-ka, also ag to ak. (Virama extends to second letter... ag could be replaced by ak..
 # since a+ga+vir woould orthographically wrong (it has no following consonant to extend to), considered replacing a+g+virama with a+k
 
-def FixUgar(Strng, reverse=False):
+def FixLatn(Strng, Source, reverse=False):
+    vir = ''
+
+    #print('here at last ')
+
+    if not reverse:
+        Strng = re.sub('([aiuāīū' + vir + '])(꞉)', r'\2\1', Strng)
+        Strng = re.sub('(꞉)(\u033D)', r'\2\1', Strng)
+
+        #Strng = PostProcess.LatnInitialVowels(Strng)
+    else:
+        Strng = re.sub('([aiuāīū' + vir + '])(꞉)', r'\2\1', Strng)
+        Strng = re.sub('(\u033D)(꞉)', r'\2\1', Strng)
+
+    return Strng
+
+def FixArab(Strng, Source, reverse=False):
+    #print("I am here " + str(reverse))
+    Strng = PersoArabicPuntuation(Strng, reverse)
+    if not reverse:
+        pass
+        #Strng = Strng.replace('â', 'ʾ')
+    else:
+        pass
+
+    return Strng
+
+def FixThaa(Strng, Source, reverse=False):
+    #print("I am here " + str(reverse))
+    Strng = PersoArabicPuntuation(Strng, reverse)
+    if not reverse:
+        pass
+        #Strng = Strng.replace('â', 'ʾ')
+    else:
+        pass
+
+    return Strng
+
+def FixArab_Ph(Strng, Source, reverse=False):
+    return FixArab(Strng, Source, reverse)
+
+def FixArab_Fa(Strng, Source, reverse=False):
+    Strng = FixArab(Strng, Source, reverse)
+
+    return Strng
+
+def FixArab_Ur(Strng, Source, reverse=False):
+    Strng = FixArab(Strng, Source, reverse)
+
+    return Strng
+
+def FixUgar(Strng, Source, reverse=False):
     if not reverse:
         Strng = Strng.replace("𐎒²","𐎝")
     else:

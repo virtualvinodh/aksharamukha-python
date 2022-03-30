@@ -249,9 +249,23 @@ def convertScript(Strng,Source,Target):
 
         charPairs = sorted(charPairs,key=cmp_to_key(lenSort))
 
-        # Perform replacement sequentially for each character group
-        for x,y in charPairs:
-            Strng = Strng.replace(x,y)
+        # special case just for roman semitic
+        if Source == 'RomanSemitic':
+            unasp = ['k', 'g', 'c', 'j', 't', 'd', 'p', 'b', 'ɽ', 'ʈ', 'ɖ', 'r']
+            charPairsH = [(x, y) for x, y in charPairs if 'ʰ' in x]
+            charPairsNotH = [(x, y) for x, y in charPairs if 'ʰ' not in x]
+            charPairs = charPairsNotH + charPairsH
+            for x, y in charPairs:
+                if x in unasp:
+                    Strng = re.sub(x + '(?!(ʰ|\u0324))', y, Strng)
+                else:
+                    Strng = Strng.replace(x,y)
+        # for all other transformations
+        else:
+            # Perform replacement sequentially for each character group
+            for x,y in charPairs:
+                #print(x + " : " + y)
+                Strng = Strng.replace(x,y)
 
         # Remove all intermediate characters and fix Output
         Strng = CF.FixRomanOutput(Strng,Target)
@@ -263,11 +277,17 @@ def convertScript(Strng,Source,Target):
         # Convert Syllabic lR -> l_R Important !!!
 
     elif Source in GM.SemiticScripts and Target in GM.SemiticScripts:
+        try:
+            Strng = getattr(CF,"Fix"+Source.replace('-', '_'))(Strng,Source,reverse=True)
+        except AttributeError:
+            pass
+
         tr = gimeltra.Transliterator()
 
         if Source == 'Ugar':
             Strng = Strng.replace('𐎟', ' ') # reverse ugaritic word separator
 
+        #print(Strng)
         Strng = tr.tr(Strng, sc=Source, to_sc=Target)
 
         # Apply Fixes on the Output based on the Script
@@ -278,18 +298,30 @@ def convertScript(Strng,Source,Target):
 
         if Source == 'Hebrew':
             Strng = tr.tr(Strng, sc='Hebr', to_sc=Target)
+        elif Source == 'Thaana':
+            Strng = tr.tr(Strng, sc='Thaa', to_sc=Target)
         else:
             Strng = convertScript(Strng, Source, "RomanSemitic")
             Strng = Strng.replace('QQ', '').replace('mQ', '') ## avoiding Q, mQ for Urdu to Semitic : Check why
-
+            # print(Strng)
             # remove gemination
-            Strng = re.sub('(.)' + '×' + r'\1', r'\1', Strng)
+            Strng = re.sub('(.)' + '\u033D' + r'\1', r'\1', Strng)
+
+            # insert explicit 'a'
+            # RomanSemitic is mapped as an Indic script : So no explicit a is added
+            # hence /a/ is added explicitly
+            Strng = PP.insertARomanSemitic(Strng)
+
+            Strng = PP.FixSemiticRoman(Strng, Target)
 
             # remove Virama
-            Strng = Strng.replace('×', '')
+            # Strng = Strng.replace('×', '')
 
             # create nukta equivalents
-            SemiticIndic=[('ʿ', 'ʾQ'), ('ṣ', 'sQ'), ('ṭ', 'tQ'), ('ḥ', 'hQ'), ('ḍ', 'dQ'), ('p̣', 'pQ')]
+            # move nukta before /a/
+            Strng = re.sub("âQ", "ʿ", Strng)
+            Strng = re.sub('aQ', 'Qa', Strng)
+            SemiticIndic=[('ṣ', 'sQ'), ('ʿ', 'ʾQ'), ('ṭ', 'tQ'), ('ḥ', 'hQ'), ('ḍ', 'dQ'), ('p̣', 'pQ'), ('ž', 'šQ'), ('ẓ', 'jʰQ'), ('ḏ', 'dʰQ'), ('ṯ', 'tʰQ')]
 
             if Target == 'Ugar':
                 Strng = Strng.replace(' ', '𐎟') #Ugaritic word separator
@@ -297,24 +329,37 @@ def convertScript(Strng,Source,Target):
             for s, i in SemiticIndic:
                 Strng = Strng.replace(i, s)
 
-            #print(Strng)
             Strng = tr.tr(Strng, sc='Latn', to_sc=Target)
 
-            # Apply Fixes on the Output based on the Script
-            Strng = CF.FixSemiticOutput(Strng, Source, Target)
+        # Apply Fixes on the Output based on the Script
+        Strng = CF.FixSemiticOutput(Strng, Source, Target)
 
     elif Source in GM.SemiticScripts and Target in (GM.IndicScripts + GM.LatinScripts):
+        try:
+            Strng = getattr(CF,"Fix"+Source.replace('-', '_'))(Strng,Source,reverse=True)
+        except AttributeError:
+            pass
+
         tr = gimeltra.Transliterator()
 
-        SemiticIndic=[('ṣ', 'sQ'), ('ʿ', 'ʾQ'), ('ṭ', 'tQ'), ('ḥ', 'hQ'), ('ḍ', 'dQ'), ('p̣', 'pQ'), ('ž', 'z'), ('ẓ', 'z'), ('ḏ', 'dQ'), ('ṯ', 'tQ'), ("ḵ", "k")]
+        SemiticIndic=[('ṣ', 'sQ'), ('ʿ', 'ʾQ'), ('ṭ', 'tQ'), ('ḥ', 'hQ'), \
+            ('ḍ', 'dQ'), ('p̣', 'pQ'), ('ž', 'šQ'), ('ẓ', 'jʰQ'), ('ḏ', 'dʰQ'), ('ṯ', 'tʰQ'),\
+                ('w', 'vQ'), ('ḵ', 'k')]
 
         if Target == 'Hebrew':
             Strng = tr.tr(Strng, sc=Source, to_sc='Hebr')
+        elif Target == 'Thaana':
+            Strng = tr.tr(Strng, sc=Source, to_sc='Thaa')
         else:
             Strng = tr.tr(Strng, sc=Source, to_sc='Latn')
+            Strng = CF.FixSemiticOutput(Strng, Source, Target) ## generic fixes
+
+            Strng = PrP.FixSemiticRoman(Strng, Source) ## Specific fixes
 
             for s, i in SemiticIndic:
                 Strng = Strng.replace(s, i)
+
+            Strng = Strng.replace('ʾ', 'â')
 
             Strng = convertScript(Strng, 'RomanSemitic', Target)
 
