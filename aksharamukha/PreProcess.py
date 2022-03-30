@@ -9,6 +9,93 @@ from aksharamukha.ScriptMap.EastIndic import PhagsPa
 from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 ### Use escape char in all functions
 
+
+def insertViramaSyriac(Strng):
+    Strng += "\uF001"
+    return Strng
+
+def removeFinalSchwaArab(Strng):
+    diacrtics = ["\u0652", "\u064E", "\u0650", "\u064F"]
+    Strng = re.sub('([\u0628-\u064A])(?![\u0652\u064E\u0650\u064F\u0651])(?=(\W|$))', r'\1' + '\u0652', Strng)
+    Strng = re.sub('([\u0628-\u064A]\u0651)(?![\u0652\u064E\u0650\u064F])(?=(\W|$))', r'\1' + '\u0652', Strng)
+
+    return Strng
+
+def FixSemiticRoman(Strng, Source):
+    vir = '\u033D'
+
+    if Source == 'Syrc':
+        consSyrc = "|".join(["ʾ", "b",  "v", "g", "ġ", "d", "ḏ", "h", "w", "z", "ḥ", "ṭ", "y", "k", "ḫ", "l", "m", "n", "s", "ʿ", "p", "f", "ṣ", "q", "r", "š", "t", "ṯ", "č", "ž", "j"])
+        vowelSyrc = ["a", "ā", "e", "ē", "ū", "ō", "ī", "â", "ā̂", "ê", "ē̂"]
+
+        vowelsDepSyrc = "|".join(["a", "ā", "e", "ē", "u", "i", "o"])
+        vowelsInDepSyrc1 = ["i", "u", "o"]
+        vowelsInDepSyrc2 = ["ī̂", "û", "ô"]
+
+        if any([vow in Strng for vow in vowelSyrc]):
+            #print(Strng)
+            #print([(vow, vow in Strng) for vow in vowelSyrc])
+            Strng = Strng.replace('ī', 'i').replace('ū', 'u').replace('ō', 'o')
+
+            for vow1, vow2 in zip(vowelsInDepSyrc1, vowelsInDepSyrc2):
+                Strng = re.sub('(?<!\w)' + vow1, vow2, Strng)
+
+            if "\uF001" in Strng:
+                Strng = re.sub('(' + consSyrc + ')' + '(?!' + vowelsDepSyrc + ')', r'\1' + vir, Strng)
+
+            Strng = re.sub('a(?!\u0304)', '', Strng)
+
+        Strng = Strng.replace("\uF001", "")
+
+    if "Arab" in Source or Source == 'Latn':
+        basic_vowels = '(' + '|'.join(['a', 'ā', 'i', 'ī', 'u', 'ū', 'ē', 'ō', 'e', 'o', '#', vir]) + ')'
+        Strng = re.sub('(ŵ)(?=' + basic_vowels + ')', "w", Strng)
+        Strng = re.sub('(ŷ)(?=' + basic_vowels + ')', "y", Strng)
+
+        Strng = re.sub('a(?!(ŵ|ŷ|\u0304|\u032E))', '', Strng)
+
+        Strng = Strng.replace('a̮', "ā")
+        Strng = Strng.replace('\u0308', "")
+
+        Strng = Strng.replace("ʿ" + vir, "ʿ" + vir + "\u200B")
+
+        Strng = re.sub('([aiuāīū])(꞉)', r'\2\1', Strng)
+        Strng = re.sub('(.)(꞉)', r'\1' + vir + r'\1', Strng)
+
+
+    return Strng
+
+def perisanizeArab(Strng):
+    arabKafYe = 'ك ي'.split(' ')
+    persKafYe = 'ک ی'.split(' ')
+
+    for x, y in zip(arabKafYe, persKafYe):
+        Strng = Strng.replace(x, y)
+
+    return Strng
+
+def ArabizePersian(Strng):
+    ## how to deal with ga
+    arabKafYe = 'ك ي'.split(' ')
+    persKafYe = 'ک ی'.split(' ')
+
+    for x, y in zip(arabKafYe, persKafYe):
+        Strng = Strng.replace(y, x)
+
+    return Strng
+
+def semiticizeUrdu(Strng):
+    urduSpecific = 'ے ڈ ٹ ہ'.split(' ')
+    semitic = 'ي د ت ه'.split(' ')
+
+    for x, y in zip(urduSpecific, semitic):
+        Strng = Strng.replace(x, y)
+
+    ## remove Do chashme he
+    Strng = Strng.replace('ھ', '')
+
+    return Strng
+
 def ShowChillus(Strng):
 
     return PostProcess.MalayalamChillu(Strng, True, True)
@@ -582,6 +669,10 @@ def PreProcess(Strng,Source,Target):
     if Source in pipeScripts:
         Strng = Strng.replace("|", ".").replace("||", "..")
 
+    if 'Arab' in Source:
+        Strng = re.sub('([وي])(?=[\u064E\u0650\u064F\u0651\u064B\u064C\u064D])', '\u02DE' + r'\1', Strng)
+        #Strng = re.sub('((\u064E|\u0650|\u0652|\u064F))(\u0651)', r'\2', Strng)
+
     if Source == 'Itrans':
         sOm = 'OM'
         tOm = 'oM'
@@ -669,7 +760,7 @@ def PreProcess(Strng,Source,Target):
     if Source == "WarangCiti":
         Strng = Strng.replace('\u200D', '\u00D7')
 
-    if Source == "Arab-Fa":
+    if Source == "Hebr-Ar":
         # accept variants with dotes
         dot_var = [('עׄ','ג'), ('תׄ','ת֒'), ('ת','ת̈'), ('ק','ק̈')]
 
@@ -717,6 +808,12 @@ def normalize(Strng,Source):
 
     if Source in ['IAST', 'ISO', 'ISOPali', 'Titus']:
         Strng = Strng.replace("ü", "uʼ").replace("ǖ", "ūʼ").replace( 'ö', 'aʼ',).replace('ȫ', 'āʼ')
+
+    if Source == "Hebrew" or Source == "Hebr":
+        vowels = ['ְ','ֱ','ֲ','ֳ','ִ','ֵ','ֶ','ַ','ָ','ֹ','ֺ','ֻ','ׇ']
+        vowelsR = '(' + '|'.join(vowels + ['וֹ', 'וּ']) + ')'
+        # Swap the order of diacritics
+        Strng = re.sub(vowelsR + '([ּׁׂ])', r'\2\1', Strng)
 
     # Sindhi C+Anudatta <- Sindhi Underscore characters
     # For easy Transliteration

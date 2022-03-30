@@ -50,8 +50,8 @@ VowelSignMap =  [
                 ]
 
 SouthVowelSignMap = [
-                '\U00011EF5\u02BD',
-                '\U00011EF6\u02BD',
+                '\U00011EF5',
+                '\U00011EF6',
                     ]
 
 ModernVowelSignMap =[

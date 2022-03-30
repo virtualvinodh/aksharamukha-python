@@ -217,7 +217,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     if preoptions == [] and postoptions == [] and nativize == False and src == tgt:
         return txt
 
-    if src == tgt and (src != 'Hiragana' and src != 'Katakana'):
+    if src == tgt and (src != 'Hiragana' and src != 'Katakana') and src not in GeneralMap.SemiticScripts:
         tgtOld = tgt
         tgt = "Devanagari"
 
@@ -243,12 +243,51 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     if 'ranjanawartu' in postoptions and tgt == 'Ranjana':
         tgt = 'Tibetan'
         nativize = False
-    if 'novowelshebrew' in preoptions and src == 'Hebrew':
-        src = 'Hebr'
-    if src in GeneralMap.SemiticScripts and (tgt == 'Urdu' or tgt == 'Shahmukhi'):
-        tgt = 'Arab-Fa'
     if 'SoyomboFinals' in postoptions and tgt == 'Soyombo':
         txt = '\u02BE' + txt
+    if src not in GeneralMap.SemiticScripts and tgt == 'Arab':
+        tgt = 'Arab-Ph'
+    if 'PhoneticMapping' in postoptions and tgt == 'Arab':
+        tgt = 'Arab-Ph'
+
+    ### Semitic Switches
+    if 'novowelshebrew' in preoptions and src == 'Hebrew':
+        src = 'Hebr'
+    if src in GeneralMap.SemiticScripts and src not in ['Arab-Fa', 'Arab', 'Latn'] and (tgt in ['Urdu', 'Shahmukhi']):
+        tgt = 'Arab-Fa'
+
+## recheck this the logic is missing
+
+    if src in ['Urdu', 'Shahmukhi'] and tgt == 'Arab':
+        print('Semiticizing Urdu')
+        txt = PreProcess.semiticizeUrdu(txt)
+        txt = PreProcess.ArabizePersian(txt)
+        src = "Arab-Fa"
+        tgt = "Arab"
+
+    if src in ['Urdu', 'Shahmukhi'] and tgt == 'Arab-Fa':
+        txt = PreProcess.semiticizeUrdu(txt)
+        src = "none"
+        tgt = "none"
+
+    if src == 'Arab-Fa' and tgt == 'Arab':
+        txt = PreProcess.ArabizePersian(txt)
+        #src = "none"
+        #tgt = "none"
+
+    if src  == 'Arab' and tgt == 'Arab-Fa':
+        txt = PreProcess.perisanizeArab(txt)
+        src = "none"
+        tgt = "none"
+
+    if src  == 'Arab' and tgt in ['Urdu', 'Shahmukhi']:
+        txt = PreProcess.perisanizeArab(txt)
+        src = "none"
+        tgt = "Arab-Fa"
+
+    if src in 'Arab-Fa' and tgt in ['Urdu', 'Shahmukhi']:
+        src = "none"
+        tgt = "none"
 
     for options in preoptions:
       txt = getattr(PreProcess, options)(txt)
@@ -256,7 +295,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     srcOld = ""
 
     ### retain Latin ###
-    if (src != 'Latn' and src in GeneralMap.SemiticScripts) or \
+    if (src != 'Latn'and src != 'Type' and src in GeneralMap.SemiticScripts) or \
         (src in GeneralMap.IndicScripts and tgt in GeneralMap.SemiticScripts and src not in GeneralMap.LatinScripts) or \
             (src in ['Hiragana', 'Katakana']):
         txt = PreProcess.retainLatin(txt)
