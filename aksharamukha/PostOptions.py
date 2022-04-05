@@ -10,6 +10,8 @@ from . import GeneralMap as GM
 def ApplyScriptDefaults(Strng,Source,Target):
     Options = []
 
+    print('Target is ' + Target)
+
     if Target in GM.IndicScripts:
         Options += []#['RemoveDiacritics'] #Sometimes you may wanna keep it. Adjust options
 
@@ -78,6 +80,9 @@ def ApplyScriptDefaults(Strng,Source,Target):
 
     elif Target == "Latn":
         Options += ['LatnInitialVowels']
+
+    elif Target == "Arab":
+        Options += ['ArabRemoveAdditions']
 
     else:
         Options += []
