@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from ast import Str
 from . import GeneralMap as GM
 import re
 import string
@@ -21,10 +22,24 @@ def removeFinalSchwaArab(Strng):
 
     return Strng
 
+# Indic Target
 def FixSemiticRoman(Strng, Source):
     vir = '\u033D'
 
-    if Source == 'Syrc':
+    if "\u05CC" in Strng:
+        Strng = PostProcess.removeSemiticLetters(Strng)
+
+    # remove sin/shin dot
+    Strng = Strng.replace('\u032A', '').replace('\u032E', '')
+
+    # duplicate consonants
+    Strng = re.sub('([aiuāīū])(꞉)', r'\2\1', Strng)
+    Strng = re.sub('(.)(꞉)', r'\1' + vir + r'\1', Strng)
+
+    # avoid fusion of Ayn
+    Strng = Strng.replace("ʿ" + vir, "ʿ" + vir + "\u200B")
+
+    if 'Syr' in Source: ## converting from Syriac through Latin
         consSyrc = "|".join(["ʾ", "b",  "v", "g", "ġ", "d", "ḏ", "h", "w", "z", "ḥ", "ṭ", "y", "k", "ḫ", "l", "m", "n", "s", "ʿ", "p", "f", "ṣ", "q", "r", "š", "t", "ṯ", "č", "ž", "j"])
         vowelSyrc = ["a", "ā", "e", "ē", "ū", "ō", "ī", "â", "ā̂", "ê", "ē̂"]
 
@@ -47,21 +62,27 @@ def FixSemiticRoman(Strng, Source):
 
         Strng = Strng.replace("\uF001", "")
 
-    if "Arab" in Source or Source == 'Latn':
+    ## Add scripts with vowels here
+    if "Arab" in Source or Source == 'Latn' or Source == "Hebr" or Source == "Thaa":
         basic_vowels = '(' + '|'.join(['a', 'ā', 'i', 'ī', 'u', 'ū', 'ē', 'ō', 'e', 'o', '#', vir]) + ')'
         Strng = re.sub('(ŵ)(?=' + basic_vowels + ')', "w", Strng)
         Strng = re.sub('(ŷ)(?=' + basic_vowels + ')', "y", Strng)
 
         Strng = re.sub('a(?!(ŵ|ŷ|\u0304|\u032E))', '', Strng)
 
-        Strng = Strng.replace('a̮', "ā")
-        Strng = Strng.replace('\u0308', "")
+    ## Semitic to Indic equivalents
+    SemiticIndic=[('ṣ', 'sQ'), ('ʿ', 'ʾQ'), ('ṭ', 'tQ'), ('ḥ', 'hQ'), \
+        ('ḍ', 'dQ'), ('p̣', 'pQ'), ('ž', 'šQ'), ('ẓ', 'jʰQ'), ('ḏ', 'dʰQ'), ('ṯ', 'tʰQ'),\
+            ('w', 'vQ'), ('ḵ', 'k'), ('\u032A', ''), ('\u032E', ''),('a̮', "ā"),('\u0308', ""),\
+                    ('ĕ\u0302', 'ê'), ('ă\u0302', 'â'), ('ŏ\u0302','ô'), ('ĕ', 'e'), ('ă', ''), ('ŏ','o'), ('ḵ', 'k'),\
+                        ('ʾQā', 'ā̂Q'), ('ʾQi', 'îQ'), ('ʾQī', 'ī̂Q'), ('ʾQu', 'ûQ'), ('ʾQū', 'ū̂Q'), ('ʾQe', 'êQ'), ('ʾQē', 'ē̂Q'),\
+                             ('ʾQo', 'ôQ'), ('ʾQō', 'ō̂Q')]
 
-        Strng = Strng.replace("ʿ" + vir, "ʿ" + vir + "\u200B")
+    for s, i in SemiticIndic:
+        Strng = Strng.replace(s, i)
 
-        Strng = re.sub('([aiuāīū])(꞉)', r'\2\1', Strng)
-        Strng = re.sub('(.)(꞉)', r'\1' + vir + r'\1', Strng)
-
+    ## Lone Aliph to Nukta
+    Strng = Strng.replace('ʾ', 'â')
 
     return Strng
 
@@ -786,7 +807,7 @@ def RemoveJoiners(Strng):
     return Strng
 
 def ArabicGimelJa(Strng):
-    Strng = Strng.replace("ج", "j")
+    Strng = Strng.replace("ج", "ڨ")
 
     return Strng
 
@@ -809,11 +830,17 @@ def normalize(Strng,Source):
     if Source in ['IAST', 'ISO', 'ISOPali', 'Titus']:
         Strng = Strng.replace("ü", "uʼ").replace("ǖ", "ūʼ").replace( 'ö', 'aʼ',).replace('ȫ', 'āʼ')
 
-    if Source == "Hebrew" or Source == "Hebr":
+    if Source == 'Arab-Ur' or Source == 'Arab-Pa':
+        Strng = Strng.replace('ك', 'ک')
+        Strng = Strng.replace('ي', 'ی')
+
+    if Source == "Hebr":
         vowels = ['ְ','ֱ','ֲ','ֳ','ִ','ֵ','ֶ','ַ','ָ','ֹ','ֺ','ֻ','ׇ']
         vowelsR = '(' + '|'.join(vowels + ['וֹ', 'וּ']) + ')'
+
         # Swap the order of diacritics
         Strng = re.sub(vowelsR + '([ּׁׂ])', r'\2\1', Strng)
+        Strng = Strng.replace('\u05BC\u05B0\u05C1', '\u05C1\u05BC\u05B0')
 
     # Sindhi C+Anudatta <- Sindhi Underscore characters
     # For easy Transliteration

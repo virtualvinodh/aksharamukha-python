@@ -217,48 +217,31 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     if preoptions == [] and postoptions == [] and nativize == False and src == tgt:
         return txt
 
-    if src == tgt and (src != 'Hiragana' and src != 'Katakana') and src not in GeneralMap.SemiticScripts:
-        tgtOld = tgt
-        tgt = "Devanagari"
+    ## Semitic Switches - Add Shahmukhi/Sindhi later
+    IndicSemiticMapping = { 'Hebrew': 'Hebr', 'Thaana': 'Thaa', 'Urdu': 'Arab-Ur'}
 
-    txt = PreProcess.PreProcess(txt,src,tgt)
+    if tgt in GeneralMap.SemiticScripts and src in IndicSemiticMapping.keys():
+        src = IndicSemiticMapping[src]
+    if src in GeneralMap.SemiticScripts and tgt in IndicSemiticMapping.keys():
+        tgt = IndicSemiticMapping[tgt]
+    if src in IndicSemiticMapping.keys() and tgt in IndicSemiticMapping.keys():
+        src = IndicSemiticMapping[src]
+        tgt = IndicSemiticMapping[tgt]
 
-    if 'siddhammukta' in postoptions and tgt == 'Siddham':
-        tgt = 'SiddhamDevanagari'
-    if 'siddhamap' in postoptions and tgt == 'Siddham':
-        tgt = 'SiddhamDevanagari'
-    if 'siddhammukta' in preoptions and src == 'Siddham':
-        src = 'SiddhamDevanagari'
-    if 'LaoNative' in postoptions and tgt == 'Lao':
-        tgt = 'Lao2'
-    if 'egrantamil' in preoptions and src == 'Grantha':
-        src = 'GranthaGrantamil'
-    if 'egrantamil' in postoptions and tgt == 'Grantha':
-        tgt = 'GranthaGrantamil'
-    if 'nepaldevafont' in postoptions and tgt == 'Newa':
-        tgt = 'Devanagari'
-    if 'ranjanalantsa' in postoptions and tgt == 'Ranjana':
-        tgt = 'Tibetan'
-        nativize = False
-    if 'ranjanawartu' in postoptions and tgt == 'Ranjana':
-        tgt = 'Tibetan'
-        nativize = False
-    if 'SoyomboFinals' in postoptions and tgt == 'Soyombo':
-        txt = '\u02BE' + txt
-    if src not in GeneralMap.SemiticScripts and tgt == 'Arab':
-        tgt = 'Arab-Ph'
-    if 'PhoneticMapping' in postoptions and tgt == 'Arab':
-        tgt = 'Arab-Ph'
-
-    ### Semitic Switches
-    if 'novowelshebrew' in preoptions and src == 'Hebrew':
+    # preserve semitic pattern
+    if not nativize and src == 'Hebrew':
         src = 'Hebr'
-    if src in GeneralMap.SemiticScripts and src not in ['Arab-Fa', 'Arab', 'Latn'] and (tgt in ['Urdu', 'Shahmukhi']):
-        tgt = 'Arab-Fa'
+    if not nativize and src == 'Urdu':
+        src = 'Arab-Ur'
+    if not nativize and src == 'Thaana':
+        src = 'Thaa'
 
-## recheck this the logic is missing
+    ## Semitic to Urdu this is not needed
+    #if src in GeneralMap.SemiticScripts and src not in ['Arab-Fa', 'Arab', 'Latn'] and (tgt in ['Urdu', 'Shahmukhi']):
+    #    tgt = 'Arab-Fa'
 
-    if src in ['Urdu', 'Shahmukhi'] and tgt == 'Arab':
+    ## recheck this the logic is missing :: This is not required
+    """if src in ['Urdu', 'Shahmukhi'] and tgt == 'Arab':
         print('Semiticizing Urdu')
         txt = PreProcess.semiticizeUrdu(txt)
         txt = PreProcess.ArabizePersian(txt)
@@ -287,10 +270,50 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     if src in 'Arab-Fa' and tgt in ['Urdu', 'Shahmukhi']:
         src = "none"
-        tgt = "none"
+        tgt = "none" """
+
+    ## Semitic Naivization : remove pesky Nuktas
+    if nativize:
+        if src in GeneralMap.SemiticScripts and tgt in GeneralMap.IndicScripts:
+            txt += "\u05CC"
+
+    if src == tgt and (src != 'Hiragana' and src != 'Katakana') and src not in GeneralMap.SemiticScripts:
+        tgtOld = tgt
+        tgt = "Devanagari"
+
+    txt = PreProcess.PreProcess(txt,src,tgt)
+
+    if 'siddhammukta' in postoptions and tgt == 'Siddham':
+        tgt = 'SiddhamDevanagari'
+    if 'siddhamap' in postoptions and tgt == 'Siddham':
+        tgt = 'SiddhamDevanagari'
+    if 'siddhammukta' in preoptions and src == 'Siddham':
+        src = 'SiddhamDevanagari'
+    if 'LaoNative' in postoptions and tgt == 'Lao':
+        tgt = 'Lao2'
+    if 'egrantamil' in preoptions and src == 'Grantha':
+        src = 'GranthaGrantamil'
+    if 'egrantamil' in postoptions and tgt == 'Grantha':
+        tgt = 'GranthaGrantamil'
+    if 'nepaldevafont' in postoptions and tgt == 'Newa':
+        tgt = 'Devanagari'
+    if 'ranjanalantsa' in postoptions and tgt == 'Ranjana':
+        tgt = 'Tibetan'
+        nativize = False
+    if 'ranjanawartu' in postoptions and tgt == 'Ranjana':
+        tgt = 'Tibetan'
+        nativize = False
+    if 'SoyomboFinals' in postoptions and tgt == 'Soyombo':
+        txt = '\u02BE' + txt
+    #if src not in GeneralMap.SemiticScripts and tgt == 'Arab' and not nativize:
+        #postoptions.append('arabicRemoveAdditionsPhonetic')
 
     for options in preoptions:
       txt = getattr(PreProcess, options)(txt)
+
+    ### Semitic Switches
+    if 'novowelshebrew' in preoptions and src == 'Hebr':
+        txt = txt.replace('\u05B7', '')
 
     srcOld = ""
 
@@ -328,6 +351,10 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     if src == tgtOld:
         tgt = tgtOld
         transliteration = Convert.convertScript(transliteration, "Devanagari", tgt)
+
+    ## apply phonetic mapping for Arabic beforehand if not semitic source
+    if (src not in GeneralMap.SemiticScripts and tgt == 'Arab' and nativize) or 'arabicRemoveAdditionsPhonetic' in postoptions:
+        transliteration = getattr(PostProcess, 'arabicRemoveAdditionsPhonetic')(transliteration)
 
     if nativize:
       transliteration =  PostOptions.ApplyScriptDefaults(transliteration, src, tgt)

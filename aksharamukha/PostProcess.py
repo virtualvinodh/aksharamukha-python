@@ -18,11 +18,41 @@ import functools
 ## Fix Font links and names in description
 
 def default(Strng):
-    Strng = Strng.replace("\uF001", "") ## remove token characters for specialized processing
+    Strng = Strng.replace("\uF001", "").replace("\u05CC", "").\
+        replace("ʻʻ", "") ## remove token characters for specialized processing
 
     return Strng
 
-def HebrewNikkud(Strng):
+def syriacVowelsBelow(Strng):
+
+    return Strng
+
+def syriacWesternOToU(Strng):
+
+    return Strng
+
+def ArabRemoveAdditions(Strng):
+    Strng = Strng.replace('ڨ', 'ج').replace('ڤ', 'ف').replace('پ', 'ف')
+
+    return Strng
+
+def arabicRemoveAdditionsPhonetic(Strng):
+
+    Strng = Strng.replace('ڨ', 'غ').replace('ڤ', 'ف').replace('پ', 'ب')
+
+    return Strng
+
+def removeSemiticLetters(Strng):
+    Strng = Strng.replace('ṭ', 't').replace('ḥ', 'h').replace('ḍ', 'z').replace('ḏ', 'z').replace('ẓ', 'z').replace('w', 'v')
+
+    return Strng
+
+def removeNikkud(Strng):
+    nikkuds = ["\u05B7","\u05B8","\u05B4","\u05B4י","\u05BB", "\u05C2", "\u05C1",\
+    "\u05B6","\u05B5","\u05B9","וֹ","\u05B1","\u05B2","\u05B3","\u05BC","\u05B0", "\u05C7"]
+
+    for nikkud in nikkuds:
+        Strng = Strng.replace(nikkud, '')
 
     return Strng
 
@@ -33,6 +63,8 @@ def LatnInitialVowels(Strng):
     for x, y in zip(initVow, nonInitVow):
         Strng = Strng.replace(x, y)
 
+    Strng = Strng.replace('\u0302', '')
+    #Strng = 'Vinodh'
     return Strng
 
 def removeMajliyana(Strng):
@@ -94,7 +126,6 @@ def ArabicGimelPaBa(Strng):
 
     return Strng
 
-
 def insertARomanSemitic(Strng):
     basic_vowels = ['a', 'ā', 'i', 'ī', 'u', 'ū', 'ē', 'ō', 'e', 'o', '#', '\u033D']
     Strng = Strng.replace('\u02BD', '')
@@ -106,14 +137,33 @@ def insertARomanSemitic(Strng):
 
     return Strng
 
+# Semitic Target
 def FixSemiticRoman(Strng, Target):
     vir = '\u033D'
     Strng = re.sub('ō̂̄̂', 'ō̂', Strng)
 
+    print('Strng is ' + Strng)
+
+    ## For Gemination
     if "Arab" in Target:
         consonantsAll = '(' + '|'.join(sorted(GM.CrunchSymbols(GM.Consonants, 'RomanSemitic'), key = len, reverse=True)) + ')'
         Strng = re.sub(consonantsAll + vir + r'\1', r'\1' + '꞉', Strng)
         #Strng = re.sub('(꞉)([aiuāīū])', r'\2\1', Strng)
+
+    # create nukta equivalents
+    # move nukta before /a/
+
+    Strng = re.sub("âQ", "ʿ", Strng)
+    Strng = re.sub('aQ', 'Qa', Strng)
+
+    SemiticIndic=[('ʾQā', 'ā̂Q'), ('ʾQi', 'îQ'), ('ʾQī', 'ī̂Q'), ('ʾQu', 'ûQ'), ('ʾQū', 'ū̂Q'), ('ʾQe', 'êQ'), ('ʾQē', 'ē̂Q'),\
+        ('ʾQo', 'ôQ'), ('ʾQō', 'ō̂Q'), ('ṣ', 'sQ'), ('ʿ', 'ʾQ'), \
+                                 ('ṭ', 'tQ'), ('ḥ', 'hQ'), ('ḍ', 'dQ'), ('p̣', 'pQ'), ('ž', 'šQ'), ('ẓ', 'jʰQ'), ('ḏ', 'dʰQ'), ('ṯ', 'tʰQ'),
+                                     ('w', 'vQ')
+                        ]
+
+    for s, i in SemiticIndic:
+        Strng = Strng.replace(i, s)
 
     return Strng
 

@@ -26,7 +26,7 @@ class Transliterator(object):
         self.db_simplify = data['simp']['general']
         self.db_fina = data['fina']
         self.db_liga = data['liga']
-        self.vocalized = ['Hebr', 'Hebr-Ar', 'Syrc', 'Arab-Fa', 'Arab-Ph', 'Latn', 'Latn-No', 'Type', 'Arab', 'Arab-Ur', "Thaa"]
+        self.vocalized = ['Hebr', 'Hebr-Ar', 'Syrj', 'Syrn', 'Arab-Fa', 'Latn', 'Latn-No', 'Type', 'Arab', 'Arab-Ur', 'Arab-Ga', "Thaa"]
 
     def auto_script(self, text):
         sc_count = Counter([ucd.script(c) for c in text])
@@ -91,6 +91,7 @@ class Transliterator(object):
 
         for char in chars_missing:
             if char in self.db_simplify:
+                #print(char, self.db_simplify[char])
                 text = text.replace(char, self.db_simplify[char])
 
         for char in chars:

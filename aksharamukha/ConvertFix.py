@@ -383,6 +383,32 @@ def FixIndicOutput(Strng,Source,Target):
 
     return Strng
 
+def FixHebr(Strng, Source, reverse = False):
+    vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['\u05BC']) + ')'
+    vowelsigns2 = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['\u05BC']) + ')?'
+
+    print('here fixing')
+    print('reverse is ', str(reverse), 'vinodh')
+    if not reverse:
+        # fix order of vowel signs and vowels sign with ch/j
+        print('here garesh')
+        Strng = re.sub('(׳)' + vowelsigns + vowelsigns2, r'\3\2\1', Strng)
+        Strng = re.sub('(וֹ)(׳)', r'\2\1', Strng)
+        Strng = re.sub('(וּ)(׳)', r'\2\1', Strng)
+        Strng = re.sub('(׳)(\u05b7)', r'\2\1', Strng)
+        Strng = re.sub('(׳)(\u05b7)', r'\1', Strng)
+    else:
+        # swap garesh and short vowels
+        vowels = ['ְ','ֱ','ֲ','ֳ','ִ','ֵ','ֶ','ַ','ָ','ֹ','ֺ','ֻ','ׇ','\u05BC']
+        vowelsR = '(' + '|'.join(vowels + ['וֹ', 'וּ']) + ')'
+        Strng = re.sub(vowelsR + "(׳)", r'\2\1', Strng)
+        Strng = re.sub(vowelsR + "(׳)", r'\2\1', Strng)
+
+        Strng = re.sub(vowelsR + "(׳)", r'\2\1', Strng)
+        Strng = re.sub(vowelsR + "(׳)", r'\2\1', Strng)
+
+    return Strng
+
 def FixHebrew(Strng, reverse = False):
     vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew')) + ')'
     consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Hebrew')+['צּ','גּ']) + ')'
@@ -1357,6 +1383,8 @@ def FixShahmukhi(Strng, reverse=False):
 def FixUrduShahmukhi(Target, Strng,reverse=False):
     # .replace(u'\u064E','')
 
+    print('I am here in Fixing Urdu')
+
     Strng = Strng.replace('\u02BD','')
 
     vir = GM.CrunchSymbols(GM.VowelSigns,Target)[0]
@@ -1503,9 +1531,9 @@ def FixUrduShahmukhi(Target, Strng,reverse=False):
 
             Strng = Strng.replace('ئ', '_'+ya)
 
-            Strng = Strng.replace('ؤ', '_'+'و')
+            Strng = Strng.replace('ؤ', '_'+va+a)
 
-            Strng = Strng.replace('ء‬', '_')
+            Strng = Strng.replace('ء', '_')
 
             Strng = Strng.replace('یٰ', 'ا')
 
@@ -2781,10 +2809,13 @@ def FixLatn(Strng, Source, reverse=False):
         Strng = re.sub('([aiuāīū' + vir + '])(꞉)', r'\2\1', Strng)
         Strng = re.sub('(꞉)(\u033D)', r'\2\1', Strng)
 
+        Strng = Strng.replace('aʰ', 'ʰ') ## Remove extraneous h
         #Strng = PostProcess.LatnInitialVowels(Strng)
     else:
+        print(Strng)
         Strng = re.sub('([aiuāīū' + vir + '])(꞉)', r'\2\1', Strng)
         Strng = re.sub('(\u033D)(꞉)', r'\2\1', Strng)
+        print(Strng)
 
     return Strng
 
@@ -2821,17 +2852,25 @@ def FixArab_Fa(Strng, Source, reverse=False):
 def FixArab_Ur(Strng, Source, reverse=False):
     Strng = FixArab(Strng, Source, reverse)
 
-    return Strng
-
-def FixUgar(Strng, Source, reverse=False):
     if not reverse:
-        Strng = Strng.replace("𐎒²","𐎝")
+        if Source != 'Type':
+            ## introduce hamza
+            pass
     else:
         pass
 
     return Strng
 
-def FixSogd(Strng, reverse=False):
+def FixUgar(Strng, Source, reverse=False):
+    if not reverse:
+        Strng = Strng.replace("𐎒²","𐎝")
+        Strng = Strng.replace(' ', '𐎟')
+    else:
+        Strng = Strng.replace('𐎟', '')
+
+    return Strng
+
+def FixSogd(Strng, Source, reverse=False):
     if not reverse:
         Strng = Strng.replace("𐼹²","𐽄")
     else:
@@ -3138,6 +3177,8 @@ def FixKannada(Strng,reverse=False):
     if not reverse:
         Strng = PostProcess.RetainDandasIndic(Strng, 'Kannada', True)
         Strng = PostProcess.RetainIndicNumerals(Strng, 'Kannada', True)
+
+        Strng = re.sub('(\u0CCD)([^\u0CAB\u0C9C])(\u0CBC)', r'\1' + '\u200C' + r'\2\3', Strng)
 
     return Strng
 
