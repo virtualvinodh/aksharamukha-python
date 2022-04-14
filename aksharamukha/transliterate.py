@@ -218,7 +218,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         return txt
 
     ## Semitic Switches - Add Shahmukhi/Sindhi later
-    IndicSemiticMapping = { 'Hebrew': 'Hebr', 'Thaana': 'Thaa', 'Urdu': 'Arab-Ur'}
+    IndicSemiticMapping = { 'Hebrew': 'Hebr', 'Thaana': 'Thaa', 'Urdu': 'Arab-Ur', 'Shahmukhi': 'Arab-Pa'}
 
     if tgt in GeneralMap.SemiticScripts and src in IndicSemiticMapping.keys():
         src = IndicSemiticMapping[src]
@@ -233,6 +233,8 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         src = 'Hebr'
     if not nativize and src == 'Urdu':
         src = 'Arab-Ur'
+    if not nativize and src == 'Urdu':
+        src = 'Arab-Pa'
     if not nativize and src == 'Thaana':
         src = 'Thaa'
 
@@ -358,10 +360,11 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     if nativize:
       transliteration =  PostOptions.ApplyScriptDefaults(transliteration, src, tgt)
-      if tgt != 'Tamil':
-        transliteration = PostProcess.RemoveDiacritics(transliteration)
-      else:
-        transliteration = PostProcess.RemoveDiacriticsTamil(transliteration)
+      if tgt != 'Latn':
+        if tgt != 'Tamil':
+            transliteration = PostProcess.RemoveDiacritics(transliteration)
+        else:
+            transliteration = PostProcess.RemoveDiacriticsTamil(transliteration)
 
     if 'RemoveDiacritics' in postoptions:
       if tgt == 'Tamil':

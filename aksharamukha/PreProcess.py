@@ -76,7 +76,7 @@ def FixSemiticRoman(Strng, Source):
             ('w', 'vQ'), ('ḵ', 'k'), ('\u032A', ''), ('\u032E', ''),('a̮', "ā"),('\u0308', ""),\
                     ('ĕ\u0302', 'ê'), ('ă\u0302', 'â'), ('ŏ\u0302','ô'), ('ĕ', 'e'), ('ă', ''), ('ŏ','o'), ('ḵ', 'k'),\
                         ('ʾQā', 'ā̂Q'), ('ʾQi', 'îQ'), ('ʾQī', 'ī̂Q'), ('ʾQu', 'ûQ'), ('ʾQū', 'ū̂Q'), ('ʾQe', 'êQ'), ('ʾQē', 'ē̂Q'),\
-                             ('ʾQo', 'ôQ'), ('ʾQō', 'ō̂Q')]
+                             ('ʾQo', 'ôQ'), ('ʾQō', 'ō̂Q'), ('ⁿ', 'n\u033D')]
 
     for s, i in SemiticIndic:
         Strng = Strng.replace(s, i)
@@ -685,6 +685,7 @@ def PreProcess(Strng,Source,Target):
     if Source in GM.RomanDiacritic or Source == 'Latn':
         Strng = Strng.lower()
 
+
     pipeScripts = ["HK", "IASTPali", "IAST", "ISO"]
 
     if Source in pipeScripts:
@@ -767,6 +768,9 @@ def PreProcess(Strng,Source,Target):
 
     if Source == "ISO" or Source == "IAST" or Source == "Titus" or "RussianCyrillic":
         Strng = CF.VedicSvarasNonDiacritic(Strng)
+
+    if Source == "Latn":
+        Strng = Strng.replace('ḇ', 'v').replace('ḡ', 'ḡ').replace('ḵ', 'ḫ').replace('p̄', 'f')
 
     if ('↓' in Strng or '↑' in Strng) and Target in GM.IndicScripts :
         Strng = Strng.replace('↓', '॒')

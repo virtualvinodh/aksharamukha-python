@@ -58,8 +58,8 @@ SinhalaVowelSignMap = [
                   ]
 
 AyogavahaMap = [
-               'm\u033D\u02BD',
-               'ⁿ', ## Check nasalization
+               'ₘ',
+               'ₘ', ## Check nasalization
                'h\u033D\u02BD'
                ]
 

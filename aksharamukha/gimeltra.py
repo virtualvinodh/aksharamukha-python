@@ -26,7 +26,7 @@ class Transliterator(object):
         self.db_simplify = data['simp']['general']
         self.db_fina = data['fina']
         self.db_liga = data['liga']
-        self.vocalized = ['Hebr', 'Hebr-Ar', 'Syrj', 'Syrn', 'Arab-Fa', 'Latn', 'Latn-No', 'Type', 'Arab', 'Arab-Ur', 'Arab-Ga', "Thaa"]
+        self.vocalized = ['Hebr', 'Hebr-Ar', 'Syrj', 'Syrn', 'Arab-Fa', 'Arab-Pa', 'Latn', 'Latn-No', 'Type', 'Arab', 'Arab-Ur', 'Thaa']
 
     def auto_script(self, text):
         sc_count = Counter([ucd.script(c) for c in text])
@@ -69,11 +69,12 @@ class Transliterator(object):
     def _to_latin(self, text, sc, to_sc):
         chars = list(self.db[sc]["Latn"])
         chars.sort(key=len, reverse=True)
-        # print(chars)
+        #print(chars)
         for char in chars:
-            # print(char + ' : ' + self.db[sc]["Latn"][char])
+            #print(char + ' : ' + self.db[sc]["Latn"][char])
             text = text.replace(char, self.db[sc]["Latn"][char])
 
+        #print(text)
         return text
 
     def _from_latin(self, text, sc, to_sc):
@@ -88,16 +89,22 @@ class Transliterator(object):
             #print(chars)
 
         chars_missing = sorted(list(set(self.db_simplify) -  set(chars)), key=len, reverse=True)
+        #chars_missing = list(set(self.db_simplify) -  set(chars))
 
         for char in chars_missing:
             if char in self.db_simplify:
                 #print(char, self.db_simplify[char])
-                text = text.replace(char, self.db_simplify[char])
+                if '\u033D' in self.db_simplify[char]: ## override for Virama
+                    text = text.replace(char, self.db_simplify[char])
+                    text = text.replace('\u033D', self.db_simplify['\u033D'])
+                else:
+                    text = text.replace(char, self.db_simplify[char])
 
         for char in chars:
             #print(text)
             #print(char + " " + self.db["Latn"][to_sc][char])
             text = text.replace(char, self.db["Latn"][to_sc][char])
+            #print(text)
 
         return text
 
