@@ -31,6 +31,73 @@ def syriacWesternOToU(Strng):
 
     return Strng
 
+def arabizeLatn(Strng):
+    cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
+
+    # opt 1
+    Strng = re.sub(cons + '(ʾ)', r'\1' + 'ā', Strng)
+    ### implement ths as a preoption for all semitic scripts
+    ### SemiticIndic Option
+
+    # opt 2
+    Strng = re.sub('ʾ', 'a', Strng)
+
+    # opt 3
+    Strng = re.sub('(a̮|ā̮)', 'ā', Strng)
+    Strng = re.sub('ˀ?ā̮̂', 'ʼā', Strng)
+
+    Strng = re.sub('[ˀʔ]', 'ʼ', Strng)
+    Strng = LatnInitialVowels(Strng, 'ʾ')
+    Strng = re.sub('ʼʾ', 'ʼ', Strng)
+
+    Strng = re.sub('\u033d', '', Strng)
+
+    return Strng
+
+def urduizeLatn(Strng):
+    cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
+
+    # opt 1
+    Strng = re.sub(cons + '(ʾ)', r'\1' + 'ā', Strng)
+
+    # opt 2
+    Strng = re.sub('ʾ', 'a', Strng)
+
+    # opt 3
+    Strng = re.sub('[ˀʔ]', 'ʾ', Strng)
+    Strng = re.sub('(a̮|ā̮)', 'ā', Strng)
+    Strng = re.sub('ˀ?ā̮̂', 'ʼā', Strng)
+    Strng = re.sub('\u033d', '', Strng)
+
+    Strng = LatnInitialVowels(Strng)
+
+    return Strng
+
+def syricizeLatn(Strng):
+    cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
+
+    # opt 3
+    Strng = re.sub('â', 'ʼa', Strng)
+    Strng = re.sub('ā̂', 'ʼā', Strng)
+    Strng = LatnInitialVowels(Strng)
+
+    return Strng
+
+def hebraizeLatn(Strng):
+    Strng = LatnInitialVowels(Strng, 'ʾ')
+
+    return Strng
+
+def syriacRoman(Strng):
+    Strng = Strng.replace('v', 'ḇ').replace('ḡ','ḡ').replace('ḫ','ḵ').replace('f','p̄')
+
+    return Strng
+
+def alephAyinLatnAlternate(Strng):
+    Strng = Strng.replace('ʾ', 'ʼ').replace('ʿ', 'ʽ')
+
+    return Strng
+
 def ArabRemoveAdditions(Strng):
     Strng = Strng.replace('ڨ', 'ج').replace('ڤ', 'ف').replace('پ', 'ف')
 
@@ -43,7 +110,8 @@ def arabicRemoveAdditionsPhonetic(Strng):
     return Strng
 
 def removeSemiticLetters(Strng):
-    Strng = Strng.replace('ṭ', 't').replace('ḥ', 'h').replace('ḍ', 'z').replace('ḏ', 'z').replace('ẓ', 'z').replace('w', 'v')
+    Strng = Strng.replace('ṭ', 't').replace('ḥ', 'h').replace('ḍ', 'z').replace('ḏ', 'z').replace('ẓ', 'z')\
+        .replace('w', 'v').replace('ʿ', 'ʾ').replace('ṣ', '')
 
     return Strng
 
@@ -56,14 +124,16 @@ def removeNikkud(Strng):
 
     return Strng
 
-def LatnInitialVowels(Strng):
+def LatnInitialVowels(Strng, initLetter=''):
     initVow = 'â ā̂ î ī̂ û ū̂ ê ē̂ âŷ ô ō̂ âŵ'.split(' ')
     nonInitVow = 'a ā i ī u ū e ē aŷ o ō aŵ'.split(' ')
 
     for x, y in zip(initVow, nonInitVow):
-        Strng = Strng.replace(x, y)
+        Strng = Strng.replace(x, initLetter+y)
 
     Strng = Strng.replace('\u0302', '')
+
+    Strng = re.sub('\u033d', '', Strng)
     #Strng = 'Vinodh'
     return Strng
 
@@ -85,6 +155,8 @@ def removeQussaya(Strng):
 def removeVowelsSyriac(Strng):
     Strng = re.sub('[\u0732\u0735\u073C\u0738\u0739\u073F]', '', Strng)
 
+    Strng = re.sub('[ّܰܶܺܽ]', '', Strng)
+
     return Strng
 
 def removeDiacriticsArabic(Strng):
@@ -97,6 +169,11 @@ def removeDiacriticsArabic(Strng):
 
 def removeSukunEnd(Strng):
     Strng = re.sub('(\u0652)(\W|$)', r'\2', Strng)
+
+    return Strng
+
+def persianPaGaFaJa(Strng):
+    Strng = Strng.replace('پ', 'ف').replace('گ', 'ج')
 
     return Strng
 
@@ -126,11 +203,12 @@ def ArabicGimelPaBa(Strng):
 
     return Strng
 
+### Add new consonants here when added to gimeltra_data
 def insertARomanSemitic(Strng):
-    basic_vowels = ['a', 'ā', 'i', 'ī', 'u', 'ū', 'ē', 'ō', 'e', 'o', '#', '\u033D']
     Strng = Strng.replace('\u02BD', '')
-    consonantsAll = '(' + '|'.join(sorted(GM.CrunchSymbols(GM.Consonants, 'RomanSemitic'), key = len, reverse=True)) + ')'
-    vowelsAll = '(' + '|'.join(basic_vowels) + ')'
+    consonantsAll = '(' + '|'.join(sorted(GM.SemiticConsonants, key = len, reverse=True)) + ')'
+    #above does not ocntain semitic consonants
+    vowelsAll = '(' + '|'.join(GM.SemiticVowels) + ')'
     #print(Strng)
     Strng = re.sub(consonantsAll + '(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
     #print(Strng)
@@ -142,7 +220,7 @@ def FixSemiticRoman(Strng, Target):
     vir = '\u033D'
     Strng = re.sub('ō̂̄̂', 'ō̂', Strng)
 
-    print('Strng is ' + Strng)
+    #print('Strng is ' + Strng)
 
     ## For Gemination
     if "Arab" in Target:
@@ -158,17 +236,19 @@ def FixSemiticRoman(Strng, Target):
 
     SemiticIndic=[('ʾQā', 'ā̂Q'), ('ʾQi', 'îQ'), ('ʾQī', 'ī̂Q'), ('ʾQu', 'ûQ'), ('ʾQū', 'ū̂Q'), ('ʾQe', 'êQ'), ('ʾQē', 'ē̂Q'),\
         ('ʾQo', 'ôQ'), ('ʾQō', 'ō̂Q'), ('ṣ', 'sQ'), ('ʿ', 'ʾQ'), \
-                                 ('ṭ', 'tQ'), ('ḥ', 'hQ'), ('ḍ', 'dQ'), ('p̣', 'pQ'), ('ž', 'šQ'), ('ẓ', 'jʰQ'), ('ḏ', 'dʰQ'), ('ṯ', 'tʰQ'),
+                                 ('ṭ', 'tQ'), ('ḥ', 'hQ'), ('ḍ', 'dQ'), ('p̣', 'pQ'), ('ž', 'šQ'), ('ž', 'zQ'), ('ẓ', 'jʰQ'), ('ḏ', 'dʰQ'), ('ṯ', 'tʰQ'),
                                      ('w', 'vQ')
                         ]
-
     for s, i in SemiticIndic:
         Strng = Strng.replace(i, s)
+
+    Strng = Strng.replace('\u033d\u033d', '\u033d')
 
     return Strng
 
 def ArabAtoAleph(Strng):
     Strng = Strng.replace('أ', 'ا')
+
 
     return Strng
 

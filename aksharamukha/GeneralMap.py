@@ -195,4 +195,13 @@ Gemination =  {
 
 Transliteration = ['IASTPali', 'RomanReadable', 'Aksharaa', 'ISO', 'IAST', 'HK','Titus','Itrans','Velthuis','WX', 'IPA', 'RussianCyrillic']
 
-SemiticScripts = ['Syrj', 'Syrn', 'Syre', 'Thaa', 'Arab-Ur', 'Arab-Ph', 'Arab-Ga', 'Type', 'Hebr-Ar', 'Arab-Fa', 'Latn', 'Arab', 'Ethi', 'Armi', 'Brah', 'Chrs', 'Egyp', 'Elym', 'Grek', 'Hatr', 'Hebr', 'Mani', 'Narb', 'Nbat', 'Palm', 'Phli', 'Phlp', 'Phnx', 'Prti', 'Samr', 'Sarb', 'Sogd', 'Sogo', 'Ugar']
+SemiticScripts = ['Arab-Pa', 'Syrj', 'Syrn', 'Syre', 'Thaa', 'Arab-Ur', 'Arab-Ph', 'Arab-Ga', 'Type', 'Hebr-Ar', 'Arab-Fa', 'Latn', 'Arab', 'Ethi', 'Armi', 'Brah', 'Chrs', 'Egyp', 'Elym', 'Grek', 'Hatr', 'Hebr', 'Mani', 'Narb', 'Nbat', 'Palm', 'Phli', 'Phlp', 'Phnx', 'Prti', 'Samr', 'Sarb', 'Sogd', 'Sogo', 'Ugar']
+
+## Add new consonants here
+
+SemiticConsonants = ['ʾ','b','v','g','j','d','h','w','z','ḥ','ṭ','y','k','l','m','n','s','ʿ','f','ṣ','q','r','š','t','ḍ','ḏ','ḫ','ġ','ṯ','ẓ','p','č','ž','ɖ','ʈ','ʂ','ɭ','ɲ','ɳ','ɽ'] # make a list
+
+SemiticVowels = ['a', 'ā', 'i', 'ī', 'u', 'ū', 'ē', 'ō', 'e', 'o', '#', '\u033D']
+
+semiticVowelsAll = '꞉ a ā i ī u ū e ē o ō a̮ ̽ ā̮ ĕ ă ŏ aŷ aŵ a aⁿ uⁿ iⁿ'.split(' ')
+vowelsInitialAll = 'ˀā̮̂ ā̮̂ â ā̂ î ī̂ û ū̂ ê ē̂ ô ō̂ âŷ âŵ ˀâ ˀî'.split(' ')

@@ -331,8 +331,11 @@ def convertScript(Strng,Source,Target):
         tr = gimeltra.Transliterator()
 
         Strng = tr.tr(Strng, sc=Source, to_sc='Latn')
+        #print(Strng)
         Strng = CF.FixSemiticOutput(Strng, Source, Target) ## generic fixes
+        #print(Strng)
         Strng = PrP.FixSemiticRoman(Strng, Source) ## Specific fixes
+        #print(Strng)
 
         Strng = convertScript(Strng, 'RomanSemitic', Target)
 

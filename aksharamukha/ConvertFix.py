@@ -1629,7 +1629,7 @@ def PersoArabicPuntuation(Strng, reverse=False):
             Strng = Strng.replace(x,y)
         Strng = Strng.replace(".", "۔")
     else :
-        print("here reversing things")
+        #print("here reversing things")
         for x,y in zip([',','?',';'],['،','؟','؛']):
             Strng = Strng.replace(y,x)
         Strng = Strng.replace("۔", ".")
@@ -1885,7 +1885,7 @@ def FixAvestan(Strng, reverse=False):
         Strng = Strng.replace(Avestan.ConsonantMap[15]  + '\u02BF', '\U00010B1D') ## TTE
         Strng = Strng.replace(va + '\u02BF', '\U00010B21') # BHA
 
-        Strng = Strng.replace('𐬰\u02BF', '𐬲') ## ZHA
+        Strng = Strng.replace('𐬰\u02BF', '𐬲').replace('𐬱\u02BF', '𐬲') ## ZHA
         Strng = Strng.replace('𐬢\u02BF','𐬤') ## NGVA
         Strng = Strng.replace('𐬁_𐬋', '𐬃') ## AO
 
@@ -2812,10 +2812,10 @@ def FixLatn(Strng, Source, reverse=False):
         Strng = Strng.replace('aʰ', 'ʰ') ## Remove extraneous h
         #Strng = PostProcess.LatnInitialVowels(Strng)
     else:
-        print(Strng)
+        #print(Strng)
         Strng = re.sub('([aiuāīū' + vir + '])(꞉)', r'\2\1', Strng)
         Strng = re.sub('(\u033D)(꞉)', r'\2\1', Strng)
-        print(Strng)
+        #print(Strng)
 
     return Strng
 
@@ -3253,10 +3253,10 @@ def FixMultani(Strng, reverse = False):
 def FixGujarati(Strng,reverse=False):
     if not reverse:
         Strng = PostProcess.RetainDandasIndic(Strng, 'Gujarati', True)
-        Strng = Strng.replace('જ઼઼', 'ૹ')
+        Strng = Strng.replace('જ઼઼', 'ૹ').replace('શ઼', 'ૹ')
     else:
         pass
-        Strng = Strng.replace('ૹ', 'જ઼઼')
+        Strng = Strng.replace('ૹ', 'જ઼઼').replace('ૹ', 'શ઼')
 
     return Strng
 
