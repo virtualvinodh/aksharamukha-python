@@ -74,7 +74,7 @@ class Transliterator(object):
             #print(char + ' : ' + self.db[sc]["Latn"][char])
             text = text.replace(char, self.db[sc]["Latn"][char])
 
-        #print(text)
+        print(text)
         return text
 
     def _from_latin(self, text, sc, to_sc):
@@ -94,7 +94,7 @@ class Transliterator(object):
         for char in chars_missing:
             if char in self.db_simplify:
                 #print(char, self.db_simplify[char])
-                if '\u033D' in self.db_simplify[char]: ## override for Virama
+                if '\u033D' in char: ## override for Virama
                     text = text.replace(char, self.db_simplify[char])
                     text = text.replace('\u033D', self.db_simplify['\u033D'])
                 else:

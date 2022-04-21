@@ -347,6 +347,8 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     else:
         transliteration = Convert.convertScript(txt, src, tgt)
 
+    print(transliteration)
+
     if srcOld == 'Japanese' and tgt != 'Devanagari' and 'siddhammukta' not in postoptions:
         transliteration = Convert.convertScript(transliteration, "Devanagari", "ISO")
 
@@ -358,6 +360,8 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     if (src not in GeneralMap.SemiticScripts and tgt == 'Arab' and nativize) or 'arabicRemoveAdditionsPhonetic' in postoptions:
         transliteration = getattr(PostProcess, 'arabicRemoveAdditionsPhonetic')(transliteration)
 
+    #print(transliteration)
+
     if nativize:
       transliteration =  PostOptions.ApplyScriptDefaults(transliteration, src, tgt)
       if tgt != 'Latn':
@@ -365,6 +369,8 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
             transliteration = PostProcess.RemoveDiacritics(transliteration)
         else:
             transliteration = PostProcess.RemoveDiacriticsTamil(transliteration)
+
+    #print(transliteration)
 
     if 'RemoveDiacritics' in postoptions:
       if tgt == 'Tamil':
@@ -388,6 +394,8 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     ### return Latin ###
     transliteration = PreProcess.retainLatin(transliteration, reverse=True)
+
+    #print(transliteration)
 
     return transliteration
 
