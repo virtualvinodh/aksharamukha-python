@@ -289,6 +289,7 @@ def convertScript(Strng,Source,Target):
 
         #print(Strng)
         Strng = tr.tr(Strng, sc=Source, to_sc=Target)
+        #print(Strng)
 
         # Apply Fixes on the Output based on the Script
         Strng = CF.FixSemiticOutput(Strng, Source, Target)
