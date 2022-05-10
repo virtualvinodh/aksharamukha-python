@@ -233,10 +233,13 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         src = 'Hebr'
     if not nativize and src == 'Urdu':
         src = 'Arab-Ur'
-    if not nativize and src == 'Urdu':
+    if not nativize and src == 'Shahmukhi':
         src = 'Arab-Pa'
     if not nativize and src == 'Thaana':
         src = 'Thaa'
+
+    if src in ['Arab-Ur', 'Arab-Pa'] and tgt in GeneralMap.IndicScripts:
+        txt += '\u05CD'
 
     ## Semitic to Urdu this is not needed
     #if src in GeneralMap.SemiticScripts and src not in ['Arab-Fa', 'Arab', 'Latn'] and (tgt in ['Urdu', 'Shahmukhi']):
@@ -347,7 +350,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     else:
         transliteration = Convert.convertScript(txt, src, tgt)
 
-    print(transliteration)
+    #print(transliteration)
 
     if srcOld == 'Japanese' and tgt != 'Devanagari' and 'siddhammukta' not in postoptions:
         transliteration = Convert.convertScript(transliteration, "Devanagari", "ISO")

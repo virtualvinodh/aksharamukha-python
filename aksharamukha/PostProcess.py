@@ -19,7 +19,7 @@ import functools
 
 def default(Strng):
     Strng = Strng.replace("\uF001", "").replace("\u05CC", "").\
-        replace("ʻʻ", "") ## remove token characters for specialized processing
+        replace("ʻʻ", "").replace('\u05CD', '') ## remove token characters for specialized processing
 
     return Strng
 
@@ -31,60 +31,101 @@ def syriacWesternOToU(Strng):
 
     return Strng
 
-def arabizeLatn(Strng):
+def olddogra(Strng):
+
+    return Strng
+
+def arabizeLatn(Strng, target='semitic'):
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
     # opt 1
     Strng = re.sub(cons + '(ʾ)', r'\1' + 'ā', Strng)
     ### implement ths as a preoption for all semitic scripts
-    ### SemiticIndic Option
+
+    print('Arabized string is', Strng)
+
+    ## Strng = re.sub('ʾ[aiu]ⁿ', '')
+
+    if target == 'indic':
+        Strng = Strng.replace('ʾā', 'ā̂')
 
     # opt 2
-    Strng = re.sub('ʾ', 'a', Strng)
+    if target != 'indic':
+        Strng = re.sub('ʾ', 'a', Strng)
+    else:
+        Strng = re.sub('ʾ', 'â', Strng)
 
     # opt 3
     Strng = re.sub('(a̮|ā̮)', 'ā', Strng)
     Strng = re.sub('ˀ?ā̮̂', 'ʼā', Strng)
 
-    Strng = re.sub('[ˀʔ]', 'ʼ', Strng)
-    Strng = LatnInitialVowels(Strng, 'ʾ')
-    Strng = re.sub('ʼʾ', 'ʼ', Strng)
+    if target != 'indic':
+        Strng = re.sub('[ˀʔ]', 'ʼ', Strng)
+    else:
+         Strng = re.sub('[ˀʔ]', '', Strng)
 
-    Strng = re.sub('\u033d', '', Strng)
+    if target != 'indic':
+        Strng = LatnInitialVowels(Strng, 'ʾ') ## Check this
+
+    if target != 'indic':
+        Strng = re.sub('ʼʾ', 'ʼ', Strng)
+
+    if target != 'indic':
+        Strng = re.sub('\u033d', '', Strng)
+
+    print('Arabized string is', Strng)
 
     return Strng
 
-def urduizeLatn(Strng):
+def AlephMaterLectionis(Strng, target='semitic'):
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
     # opt 1
     Strng = re.sub(cons + '(ʾ)', r'\1' + 'ā', Strng)
 
+    return Strng
+
+def urduizeLatn(Strng, target='semitic'):
+    cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
+
+    # opt 1
+    Strng = re.sub(cons + '(ʾ)', r'\1' + 'ā', Strng)
+
+    if target == 'indic':
+        Strng = Strng.replace('ʾā', 'ā̂') ## Check this
+
     # opt 2
-    Strng = re.sub('ʾ', 'a', Strng)
+    Strng = re.sub('ʾ', 'â', Strng)
 
     # opt 3
     Strng = re.sub('[ˀʔ]', 'ʾ', Strng)
     Strng = re.sub('(a̮|ā̮)', 'ā', Strng)
     Strng = re.sub('ˀ?ā̮̂', 'ʼā', Strng)
-    Strng = re.sub('\u033d', '', Strng)
 
-    Strng = LatnInitialVowels(Strng)
+    if target != 'indic':
+        Strng = re.sub('\u033d', '', Strng)
+
+    if target != 'indic':
+        Strng = LatnInitialVowels(Strng)
 
     return Strng
 
-def syricizeLatn(Strng):
+def syricizeLatn(Strng, target='semitic'):
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
     # opt 3
     Strng = re.sub('â', 'ʼa', Strng)
     Strng = re.sub('ā̂', 'ʼā', Strng)
-    Strng = LatnInitialVowels(Strng)
+
+    if target != 'indic':
+        Strng = LatnInitialVowels(Strng)
 
     return Strng
 
-def hebraizeLatn(Strng):
-    Strng = LatnInitialVowels(Strng, 'ʾ')
+def hebraizeLatn(Strng, target='semitic'):
+    #print('Hebraizing Latin')
+    if target != 'indic':
+        Strng = LatnInitialVowels(Strng, 'ʾ')
 
     return Strng
 
@@ -111,7 +152,7 @@ def arabicRemoveAdditionsPhonetic(Strng):
 
 def removeSemiticLetters(Strng):
     Strng = Strng.replace('ṭ', 't').replace('ḥ', 'h').replace('ḍ', 'z').replace('ḏ', 'z').replace('ẓ', 'z')\
-        .replace('w', 'v').replace('ʿ', 'ʾ').replace('ṣ', '')
+        .replace('w', 'v').replace('ʿ', 'ʾ').replace('ṣ', 's')
 
     return Strng
 
@@ -210,8 +251,11 @@ def insertARomanSemitic(Strng):
     #above does not ocntain semitic consonants
     vowelsAll = '(' + '|'.join(GM.SemiticVowels) + ')'
     #print(Strng)
-    Strng = re.sub(consonantsAll + '(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
-    #print(Strng)
+    Strng = re.sub(consonantsAll + '(?!꞉?ʰ?' + vowelsAll + ')', r'\1' + 'a', Strng)
+    #Strng = re.sub(consonantsAll + '(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
+
+
+    print(Strng)
 
     return Strng
 
@@ -243,6 +287,8 @@ def FixSemiticRoman(Strng, Target):
         Strng = Strng.replace(i, s)
 
     Strng = Strng.replace('\u033d\u033d', '\u033d')
+
+    #print('Strng is ' + Strng)
 
     return Strng
 
@@ -1782,7 +1828,7 @@ def MalayalamChillu(Strng, reverse=False, preserve=False):
 
 def RemoveSchwa(Strng,Target):
 
-    vir = GM.CrunchSymbols(GM.VowelSigns,Target)[0]
+    vir = GM.CrunchSymbols(GM.VowelSigns,Target)[0] + GM.CrunchSymbols(GM.VowelSigns,Target)[0]
     ListC = '|'.join(GM.CrunchSymbols(GM.Consonants,Target))
     ListV = '|'.join(GM.CrunchSymbols(GM.Vowels,Target))
     ListVS = '|'.join(GM.CrunchSymbols(GM.VowelSignsNV,Target))
@@ -1829,7 +1875,7 @@ def GurmukhiTippiBindu(Strng): # Check this Function
     Bindi = Gurmukhi.AyogavahaMap[1];
     Tippi = '\u0A70'
     ListTippi = '|'.join(GM.CrunchSymbols(GM.Consonants, 'Gurmukhi')+[Gurmukhi.VowelMap[x] for x in [0,2,3,4]]
-        +[Gurmukhi.VowelSignMap[1]]+[Gurmukhi.VowelSignMap[3]])
+        +[Gurmukhi.VowelSignMap[1]]+[Gurmukhi.VowelSignMap[3]]+[Gurmukhi.VowelSignMap[4]])
 
     Char = '|'.join(GM.CrunchSymbols(GM.Consonants, 'Gurmukhi') + GM.CrunchSymbols(GM.Vowels, 'Gurmukhi'))
 

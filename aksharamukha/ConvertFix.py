@@ -268,7 +268,7 @@ def PostFixRomanOutput(Strng,Source,Target):
 
     Strng = FixVedic(Strng, Target)
 
-    print(Source, Target)
+    #print(Source, Target)
 
     # For Kashmiri
     if Target in ['IAST', 'ISO', 'ISOPali', 'Titus']:
@@ -387,11 +387,11 @@ def FixHebr(Strng, Source, reverse = False):
     vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['\u05BC']) + ')'
     vowelsigns2 = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['\u05BC']) + ')?'
 
-    print('here fixing')
-    print('reverse is ', str(reverse), 'vinodh')
+    #print('here fixing')
+    #print('reverse is ', str(reverse), 'vinodh')
     if not reverse:
         # fix order of vowel signs and vowels sign with ch/j
-        print('here garesh')
+        #print('here garesh')
         Strng = re.sub('(׳)' + vowelsigns + vowelsigns2, r'\3\2\1', Strng)
         Strng = re.sub('(וֹ)(׳)', r'\2\1', Strng)
         Strng = re.sub('(וּ)(׳)', r'\2\1', Strng)
@@ -1383,7 +1383,7 @@ def FixShahmukhi(Strng, reverse=False):
 def FixUrduShahmukhi(Target, Strng,reverse=False):
     # .replace(u'\u064E','')
 
-    print('I am here in Fixing Urdu')
+    #print('I am here in Fixing Urdu')
 
     Strng = Strng.replace('\u02BD','')
 
@@ -1490,7 +1490,7 @@ def FixUrduShahmukhi(Target, Strng,reverse=False):
             Strng = re.sub('(ن|م|ی|ر|ل|و)(\u0652)(ہ)',r'\1'+'\u06BE', Strng)
 
     else:
-        print('I am being called')
+        #print('I am being called')
         if True:
             #print(Strng)
 
