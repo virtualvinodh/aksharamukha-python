@@ -79,9 +79,10 @@ def ApplyScriptDefaults(Strng,Source,Target):
         Options += ['WarangCitiModernOrthogaphy']
 
     elif Target == "Latn":
+        ## Also make changes in FixSemiticPreProcess
         if Source == 'Arab':
             Options += ['arabizeLatn']
-        elif Source == 'Arab-Ur' or Source == 'Arab-Pa':
+        elif Source == 'Arab-Ur' or Source == 'Arab-Pa' or Source == 'Arab-Fa':
             Options += ['urduizeLatn']
         elif Source == 'Syrn':
             Options += ['syricizeLatn']

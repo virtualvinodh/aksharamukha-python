@@ -13,9 +13,9 @@ def ApplyPreProcessing(Strng,Source,Target):
     for Option in Options:
         if Option.find(Target) != -1:
             Strng = getattr(PP,Option)(Strng,Source)
-            print (Strng)
+            #print (Strng)
         else:
             Strng = getattr(PP,Option)(Strng,Target)
-            print(Strng)
+            #print(Strng)
 
     return Strng

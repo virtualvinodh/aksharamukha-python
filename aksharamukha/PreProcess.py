@@ -16,9 +16,16 @@ def insertViramaSyriac(Strng):
     return Strng
 
 def removeFinalSchwaArab(Strng):
+    print('here', Strng)
     diacrtics = ["\u0652", "\u064E", "\u0650", "\u064F"]
     Strng = re.sub('([\u0628-\u064A])(?![\u0652\u064E\u0650\u064F\u0651])(?=(\W|$))', r'\1' + '\u0652', Strng)
     Strng = re.sub('([\u0628-\u064A]\u0651)(?![\u0652\u064E\u0650\u064F])(?=(\W|$))', r'\1' + '\u0652', Strng)
+    print('here2', Strng)
+
+    return Strng
+
+def AlephMaterLectionis(Strng, target='semitic'):
+    Strng += "\u05CD"
 
     return Strng
 
@@ -26,8 +33,20 @@ def removeFinalSchwaArab(Strng):
 def FixSemiticRoman(Strng, Source):
     vir = '\u033D'
 
+    if "\u05CD" in Strng:
+        Strng = PostProcess.AlephMaterLectionis(Strng)
+
     if "\u05CC" in Strng:
         Strng = PostProcess.removeSemiticLetters(Strng)
+        ## Also make changes in PostOptionsLatn
+        if Source == 'Arab':
+            Strng = PostProcess.arabizeLatn(Strng, target="indic")
+        elif Source == 'Arab-Ur' or Source == 'Arab-Pa' or Source == 'Arab-Fa':
+            Strng = PostProcess.urduizeLatn(Strng, target="indic")
+        elif Source == 'Syrn':
+            Strng = PostProcess.syricizeLatn(Strng, target="indic")
+        elif Source == 'Syrj' or Source == 'Hebr':
+            Strng = PostProcess.hebraizeLatn(Strng, target="indic")
 
     # remove sin/shin dot
     Strng = Strng.replace('\u032A', '').replace('\u032E', '')
@@ -63,12 +82,14 @@ def FixSemiticRoman(Strng, Source):
         Strng = Strng.replace("\uF001", "")
 
     ## Add scripts with vowels here
-    if "Arab" in Source or Source == 'Latn' or Source == "Hebr" or Source == "Thaa":
+    if "Arab" in Source or Source == 'Latn' or Source == "Hebr" or Source == "Thaa" or Source == 'Type':
         basic_vowels = '(' + '|'.join(['a', 'ā', 'i', 'ī', 'u', 'ū', 'ē', 'ō', 'e', 'o', '#', vir]) + ')'
         Strng = re.sub('(ŵ)(?=' + basic_vowels + ')', "w", Strng)
         Strng = re.sub('(ŷ)(?=' + basic_vowels + ')', "y", Strng)
 
-        Strng = re.sub('a(?!(ŵ|ŷ|\u0304|\u032E))', '', Strng)
+        cons_prev = '|'.join(GM.SemiticConsonants)
+
+        Strng = re.sub('(?<=' + cons_prev + ')' + 'a(?!(ŵ|ŷ|\u0304|\u032E))', '', Strng)
 
     ## Semitic to Indic equivalents
     SemiticIndic=[('ṣ', 'sQ'), ('ʿ', 'ʾQ'), ('ṭ', 'tQ'), ('ḥ', 'hQ'), \
@@ -294,13 +315,21 @@ def holamlong(Strng):
 
     return Strng
 
-def novowelshebrew(Strng):
+def novowelshebrewIndic(Strng):
+    Strng = novowelshebrewSemitic(Strng)
+
     finals = ['ך', 'ם', 'ן', 'ף', 'ץ', 'ףּ', 'ךּ']
     otherCons = 'ב,ח,ע,צ,ש,ת'.split(',')
     consonantsAll = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Hebrew') + finals  + otherCons + ['׳', 'י', 'ו' ,'א']) + ')'
     vowelsignsADShinG = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['ַ', 'ּ', 'ׁ', '׳']) + ')'
 
     Strng = re.sub(consonantsAll + "(?!" + vowelsignsADShinG + ')', r'\1' + 'ַ' + r'\2', Strng)
+
+    return Strng
+
+def novowelshebrewSemitic(Strng):
+    Strng = Strng.replace('כ', 'כּ').replace('פ', 'פּ').replace( 'ב', 'בּ')
+    Strng = Strng.replace('ך', 'ךּ').replace('ף','ףּ')
 
     return Strng
 
@@ -500,14 +529,19 @@ def RemoveSchwaHindi(Strng):
     SylAny = "((" + Cons + VowS + "?" + ')' + Nas + ")"
 
     vir = '्'
+    vir2 = '्'
 
-    Cons2 = '((' + Cons + vir + ')?' + Cons + ')'
+    Cons2 = '((' + Cons + vir + ')?' +'(?![यर])'+ Cons + ')'
 
     Strng = re.sub(ISyl+Cons+Cons+SylAny+"(?!" + Char + ")", r'\1\8' + vir + r'\9\10', Strng) # bhAratIya --> bhArtIy
     Strng = re.sub(ISyl+Cons+Syl+SylAny+"(?!" + Char + ")", r'\1\8' + vir + r'\9\15', Strng) # bhAratIya --> bhArtIy
     Strng = re.sub(ISyl+Cons+Syl+"(?!" + Char + ")", r'\1\8' + vir + r'\9', Strng) # namakIn -> namkIn
     Strng = re.sub(ISyl+Cons2+"(?!" + Char + ")", r'\1\8' + vir, Strng) # kama -> kam
     #Strng = re.sub(VowI + Nas + Cons2+"(?!" + Char + ")", r'\1\2\3' + vir, Strng)
+
+    #Strng = re.sub('([यर])(' + vir + ')', r'\1' + vir2, Strng)
+
+    Strng = Strng.replace(vir, vir2)
 
     return Strng
 

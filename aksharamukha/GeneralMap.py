@@ -199,7 +199,7 @@ SemiticScripts = ['Arab-Pa', 'Syrj', 'Syrn', 'Syre', 'Thaa', 'Arab-Ur', 'Arab-Ph
 
 ## Add new consonants here
 
-SemiticConsonants = ['ʾ','b','v','g','j','d','h','w','z','ḥ','ṭ','y','k','l','m','n','s','ʿ','f','ṣ','q','r','š','t','ḍ','ḏ','ḫ','ġ','ṯ','ẓ','p','č','ž','ɖ','ʈ','ʂ','ɭ','ɲ','ɳ','ɽ'] # make a list
+SemiticConsonants = ['ʾ','b','v','g','j','d','h','w','z','ḥ','ṭ','y','k','l','m','n','s','ʿ','f','ṣ','q','r','š','t','ḍ','ḏ','ḫ','ġ','ṯ','ẓ','p','č','ž','ɖ','ʈ','ʂ','ɭ','ɲ','ɳ','ɽ','ʰ'] # make a list
 
 SemiticVowels = ['a', 'ā', 'i', 'ī', 'u', 'ū', 'ē', 'ō', 'e', 'o', '#', '\u033D']
 

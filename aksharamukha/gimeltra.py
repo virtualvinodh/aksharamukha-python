@@ -58,8 +58,11 @@ class Transliterator(object):
     def _postprocess(self, text, sc):
         t = text
         for rule_i, rule_o in self.db_fina.get(sc, {}).items():
-            t = re.subf(fr"(\p{{L}})({rule_i})([^\p{{L}}])", f"{{1}}{rule_o}{{3}}", t)
-            t = re.subf(fr"(\p{{L}})({rule_i})$", f"{{1}}{rule_o}", t)
+            #t = re.subf(fr"(\p{{L}})({rule_i})([^\p{{L}}])", f"{{1}}{rule_o}{{3}}", t)
+            #t = re.subf(fr"(\p{{L}})({rule_i})$", f"{{1}}{rule_o}", t)
+
+            t = re.subf(fr"(\p{{L}})(\p{{M}}*?)({rule_i})([^\p{{L}}])", f"{{1}}{{2}}{rule_o}{{4}}", t)
+            t = re.subf(fr"(\p{{L}})(\p{{M}}*?)({rule_i})$", f"{{1}}{{2}}{rule_o}", t)
         for rule_i, rule_o in self.db_liga.get(sc, {}).items():
             t = t.replace(rule_i, rule_o)
         logging.debug(f"Post: {list(t)}")
@@ -74,7 +77,7 @@ class Transliterator(object):
             #print(char + ' : ' + self.db[sc]["Latn"][char])
             text = text.replace(char, self.db[sc]["Latn"][char])
 
-        print(text)
+        # print(text)
         return text
 
     def _from_latin(self, text, sc, to_sc):
