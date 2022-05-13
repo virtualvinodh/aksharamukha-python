@@ -559,8 +559,12 @@ def RemoveFinal(Strng, Target):
     SylAny = "((" + Cons + VowS + "?" + ')' + Nas + ")"
 
     vir = GM.CrunchList("ViramaMap", Target)[0]
-    Cons2 = '((' + Cons + vir + ')?' + Cons + ')'
+    if Target != 'Bengali':
+        Cons2 = '((' + Cons + vir + ')?' + Cons + ')'
+    else:
+        Cons2 = '(()?' + Cons + ')'
 
+    Strng = re.sub(ISyl + Cons2+"(?!" + Char + ")", r'\1\8' + vir, Strng) # kama -> kam
     Strng = re.sub(ISyl + Cons2+"(?!" + Char + ")", r'\1\8' + vir, Strng) # kama -> kam
 
     #Strng = re.sub(VowI + Nas + Cons2+"(?!" + Char + ")", r'\1\2\3' + vir, Strng)
@@ -803,7 +807,7 @@ def PreProcess(Strng,Source,Target):
     if Source == "ISO" or Source == "IAST" or Source == "Titus" or "RussianCyrillic":
         Strng = CF.VedicSvarasNonDiacritic(Strng)
 
-    if Source == "Latn":
+    if Source == "Latn" and 'Syr' in Target:
         Strng = Strng.replace('ḇ', 'v').replace('ḡ', 'ḡ').replace('ḵ', 'ḫ').replace('p̄', 'f')
 
     if ('↓' in Strng or '↑' in Strng) and Target in GM.IndicScripts :
@@ -831,6 +835,81 @@ def PreProcess(Strng,Source,Target):
     Strng = normalize(Strng,Source)
 
     ## Remove unsupported letters and replace with supported ones
+
+    return Strng
+
+def ISO259Target(Strng):
+    Strng = Strng.replace('א', 'ʾ').replace('׳', '’')
+
+    return Strng
+
+def ISO233Target(Strng):
+    replacements = [('أ', 'ˈʾ'), ('ء', '¦'), ('إ', 'ˌʾ')]
+
+    for x, y in replacements:
+        Strng = Strng.replace(x, y)
+
+    return Strng
+
+def PersianDMGTarget(Strng):
+    replacements = [('ا', 'ʾ')]
+
+    for x, y in replacements:
+        Strng = Strng.replace(x, y)
+
+    return Strng
+
+def ISO233Source(Strng):
+    replacements = [('أ', 'ˈʾ'), ('ء', '¦'), ('إ', 'ˌʾ')]
+
+    for x, y in replacements:
+        Strng = Strng.replace(y, x)
+
+    replacements = [('j', 'ǧ'), ('g', 'ǧ'), ('ḧ', 'ẗ'), ('ḫ', 'ẖ'), ('a̮', 'ỳ'), \
+        ('aⁿ', 'á'), ('iⁿ', 'í'), ('uⁿ', 'ú'), ('ā̂', 'ʾâ'), ('ˀ', 'ˈ')]
+
+    for x, y in replacements:
+        Strng = Strng.replace(y, x)
+
+    return Strng
+
+def HebrewSBLTarget(Strng):
+    Strng = Strng.replace('א', 'ʾ').replace('׳', '’')
+
+    return Strng
+
+def HebrewSBLSource(Strng):
+    Strng = Strng.replace('ʾ', 'א',).replace('’', '׳')
+    Strng = Strng.replace('\u0307\u00B0', '\u00B0\u0307')
+
+    replacements = [('v', 'ḇ'), ('f', 'p̄'), ('d꞉', 'd'), ('d', 'ḏ'), \
+        ('g꞉', 'g'), ('g', 'ḡ'), \
+            ('t꞉', 't'), ('t', 'ṯ'),
+         ('š̮', 'š'), ('š̪', 'ś'),
+        ('ō', 'ô'), ('ū', 'û'), ('\u033D', 'ĕ')
+    ]
+
+    for x, y in replacements:
+        Strng = Strng.replace(y, x)
+
+    return Strng
+
+def ISO259Source(Strng):
+    Strng = Strng.replace('ʾ', 'א',).replace('’', '׳')
+    Strng = Strng.replace('\u0307\u00B0', '\u00B0\u0307')
+
+    replacements = [('ḵ', 'k'), ('v', 'b'), ('f', 'p'), ('b', 'ḃ'), ('p', 'ṗ'), ('k', 'k̇'), ('꞉', '\u0307'),\
+        ('š̮', 'š'), ('š', 's̀'), ('š̪', 'ś'),
+        ('ā', 'å'), ('e', 'ȩ'), ('ō', 'ŵ'), ('ū', 'ẇ'), ('\u033D', '°'), ('ĕ', 'ḝ')
+    ]
+
+    for x, y in replacements:
+        Strng = Strng.replace(y, x)
+
+    import unicodedata
+    Strng = unicodedata.normalize('NFD', Strng)
+    Strng = Strng.replace('\u0307', '꞉')
+    Strng = unicodedata.normalize('NFC', Strng)
 
     return Strng
 

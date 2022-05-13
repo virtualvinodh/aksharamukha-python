@@ -513,7 +513,7 @@ def FixHebrew(Strng, reverse = False):
         Strng = Strng.replace('אֲ', 'אַ')
         Strng = Strng.replace('עֲ', 'אַ')
 
-        Strng = Strng.replace('\u05B1', '\u05B6').replace('\u05B3', '\u05B9').replace('\u05B2','')
+        Strng = Strng.replace('\u05B1', '\u05B6').replace('\u05B3', '\u05B9').replace('\u05B2','\u05b7')
 
         # replace malei forms
         Strng = re.sub('(?<=[ֵֶַָֹ])([א])'+'(?!' + vowelsignsA + ')', '', Strng)

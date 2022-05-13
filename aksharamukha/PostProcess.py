@@ -35,6 +35,85 @@ def olddogra(Strng):
 
     return Strng
 
+def ISO259Target(Strng):
+    replacements = [('b', 'ḃ'), ('p', 'ṗ'), ('k', 'k̇'), ('ḵ', 'k'), ('v', 'b'), ('f', 'p'), ('꞉', '\u0307'),\
+         ('š̪', 'ś'), ('š̮', 'š'), ('š', 's̀'),
+        ('ā', 'å'), ('e', 'ȩ'), ('ō', 'ŵ'), ('ū', 'ẇ'), ('\u033D', '°'), ('ĕ', 'ḝ')
+    ]
+
+    for x, y in replacements:
+        Strng = Strng.replace(x, y)
+
+    Strng = Strng.replace('\u00B0\u0307', '\u0307\u00B0')
+
+    return Strng
+
+def HebrewSBLTarget(Strng):
+    replacements = [('v', 'ḇ'), ('f', 'p̄'), ('d', 'ḏ'), ('ḏ꞉', 'd'), \
+        ('g', 'ḡ'), ('ḡ꞉', 'g'),\
+            ('t', 'ṯ'), ('ṯ꞉', 't'),
+         ('š̪', 'ś'), ('š̮', 'š'),
+        ('ō', 'ô'), ('ū', 'û'), ('\u033D', 'ĕ')
+    ]
+
+    for x, y in replacements:
+        Strng = Strng.replace(x, y)
+
+    if '\u05CE' in Strng:
+        Strng = Strng.replace('ḏ', 'd').replace('ṯ', 't').replace('ḡ', 'g').replace('\u05CE', '')
+
+    Strng = Strng.replace('\u00B0\u0307', '\u0307\u00B0')
+
+    return Strng
+
+def removetddash(Strng):
+    Strng += '\u05CE'
+
+    return Strng
+
+def ISO259Source(Strng):
+
+    return Strng
+
+def ISO233Source(Strng):
+
+    return Strng
+
+def HebrewSBLSource(Strng):
+
+    return Strng
+
+def PersianDMGSBLSource(Strng):
+
+    return Strng
+
+def ISO233Target(Strng):
+    replacements = [('j', 'ǧ'), ('g', 'ǧ'), ('ḧ', 'ẗ'), ('ḫ', 'ẖ'), ('a̮', 'ỳ'), ('ˀ', 'ˈ'), \
+        ('aⁿ', 'á'), ('iⁿ', 'í'), ('uⁿ', 'ú'), ('ā̂', 'ʾâ'), ('\u033D', '')]
+
+    for x, y in replacements:
+        Strng = Strng.replace(x, y)
+
+    return Strng
+
+def inherentAO(Strng):
+    Strng = Strng.replace('a', 'ô')
+
+    return Strng
+
+def BengaliOldRA(Strng):
+    Strng = Strng.replace('র', 'ৰ')
+
+    return Strng
+
+def PersianDMGTarget(Strng):
+    replacements = [('ḏ', 'ẕ'), ('ḍ', 'ż'), ('ṯ', 's̱'), ('j', 'ǧ'), ('ˀ','ʼ'), ('ʔ', 'ʼ'), ('ȳ', 'ye'), ("ā̂", "ā"), ('\u033D', '')]
+
+    for x, y in replacements:
+        Strng = Strng.replace(x, y)
+
+    return Strng
+
 def arabizeLatn(Strng, target='semitic'):
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
