@@ -61,8 +61,11 @@ class Transliterator(object):
             #t = re.subf(fr"(\p{{L}})({rule_i})([^\p{{L}}])", f"{{1}}{rule_o}{{3}}", t)
             #t = re.subf(fr"(\p{{L}})({rule_i})$", f"{{1}}{rule_o}", t)
 
-            t = re.subf(fr"(\p{{L}})(\p{{M}}*?)({rule_i})([^\p{{L}}])", f"{{1}}{{2}}{rule_o}{{4}}", t)
-            t = re.subf(fr"(\p{{L}})(\p{{M}}*?)({rule_i})$", f"{{1}}{{2}}{rule_o}", t)
+            t = re.subf(fr"(\p{{L}})(\p{{M}}*?)({rule_i})(\p{{M}}*?)([^\p{{L}}])", f"{{1}}{{2}}{rule_o}{{4}}{{5}}", t)
+            t = re.subf(fr"(\p{{L}})(\p{{M}}*?)({rule_i})(\p{{M}}*?)$", f"{{1}}{{2}}{rule_o}{{4}}", t)
+            t = re.subf(fr"({rule_o})(\p{{M}}+)(\p{{L}})", f"{rule_i}{{2}}{{3}}", t)
+
+
         for rule_i, rule_o in self.db_liga.get(sc, {}).items():
             t = t.replace(rule_i, rule_o)
         logging.debug(f"Post: {list(t)}")

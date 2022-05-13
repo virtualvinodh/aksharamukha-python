@@ -217,6 +217,44 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     if preoptions == [] and postoptions == [] and nativize == False and src == tgt:
         return txt
 
+   ## Semitic ISO Standards
+    if tgt == "ISO259":
+        tgt = 'Latn'
+        preoptions += ['ISO259Target']
+        postoptions += ['ISO259Target']
+        nativize = False
+    elif src == "ISO259":
+        src = 'Latn'
+        preoptions += ['ISO259Source']
+        postoptions += ['ISO259Source']
+    elif tgt == "HebrewSBL":
+        tgt = 'Latn'
+        preoptions += ['HebrewSBLTarget']
+        postoptions += ['HebrewSBLTarget']
+        nativize = False
+    elif src == "HebrewSBL":
+        src = 'Latn'
+        preoptions += ['HebrewSBLSource']
+        postoptions += ['HebrewSBLSource']
+    elif tgt == "ISO233":
+        tgt = 'Latn'
+        preoptions += ['ISO233Target']
+        postoptions += ['ISO233Target']
+        nativize = False
+    elif src == "ISO233":
+        src = 'Latn'
+        preoptions += ['ISO233Source']
+        postoptions += ['ISO233Source']
+    elif tgt == "PersianDMG":
+        tgt = 'Latn'
+        preoptions += ['PersianDMGTarget']
+        postoptions += ['PersianDMGTarget']
+        nativize = False
+    elif src == "PersianDMG":
+        src = 'Latn'
+        preoptions += ['PersianDMGSource']
+        postoptions += ['PersianDMGSource']
+
     ## Semitic Switches - Add Shahmukhi/Sindhi later
     IndicSemiticMapping = { 'Hebrew': 'Hebr', 'Thaana': 'Thaa', 'Urdu': 'Arab-Ur', 'Shahmukhi': 'Arab-Pa'}
 
