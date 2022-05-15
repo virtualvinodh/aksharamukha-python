@@ -7,7 +7,7 @@
 from . import PostProcess as PP
 from . import GeneralMap as GM
 
-def ApplyScriptDefaults(Strng,Source,Target):
+def ApplyScriptDefaults(Strng,Source,Target, PostOptions=[]):
     Options = []
 
     #print('Target is ' + Target)
@@ -31,7 +31,10 @@ def ApplyScriptDefaults(Strng,Source,Target):
         Options += ['TamilNaToNNa','AnusvaraToNasal', 'TamilpredictDentaNa']
 
     elif Target == 'Bengali':
-        Options += ['VaToBa','YaToYYa']
+        if 'BengaliRaBa' in PostOptions:
+            Options += ['YaToYYa','AnusvaraToNasal']
+        else:
+            Options += ['VaToBa','YaToYYa','AnusvaraToNasal']
 
     elif Target == 'MeeteiMayek':
         Options += ['MeeteiMayekremoveHistorical']
@@ -40,10 +43,10 @@ def ApplyScriptDefaults(Strng,Source,Target):
         Options += ['LimburemoveHistorical']
 
     elif Target == 'Assamese':
-        Options += ['YaToYYa']
+        Options += ['YaToYYa','AnusvaraToNasal']
 
     elif Target == 'Oriya':
-        Options += ['OriyaVa','YaToYYa']
+        Options += ['OriyaVa','YaToYYa','AnusvaraToNasal']
 
     elif Target == 'Chakma':
         Options += ['YaToYYa']
