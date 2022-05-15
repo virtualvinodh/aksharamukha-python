@@ -404,7 +404,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     #print(transliteration)
 
     if nativize:
-      transliteration =  PostOptions.ApplyScriptDefaults(transliteration, src, tgt)
+      transliteration =  PostOptions.ApplyScriptDefaults(transliteration, src, tgt, postoptions)
       if tgt != 'Latn':
         if tgt != 'Tamil':
             transliteration = PostProcess.RemoveDiacritics(transliteration)

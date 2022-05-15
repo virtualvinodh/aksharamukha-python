@@ -58,6 +58,8 @@ def FixSemiticRoman(Strng, Source):
     # avoid fusion of Ayn
     Strng = Strng.replace("ʿ" + vir, "ʿ" + vir + "\u200B")
 
+    cons_prev = '|'.join(GM.SemiticConsonants)
+
     if 'Syr' in Source: ## converting from Syriac through Latin
         consSyrc = "|".join(["ʾ", "b",  "v", "g", "ġ", "d", "ḏ", "h", "w", "z", "ḥ", "ṭ", "y", "k", "ḫ", "l", "m", "n", "s", "ʿ", "p", "f", "ṣ", "q", "r", "š", "t", "ṯ", "č", "ž", "j"])
         vowelSyrc = ["a", "ā", "e", "ē", "ū", "ō", "ī", "â", "ā̂", "ê", "ē̂"]
@@ -77,7 +79,8 @@ def FixSemiticRoman(Strng, Source):
             if "\uF001" in Strng:
                 Strng = re.sub('(' + consSyrc + ')' + '(?!' + vowelsDepSyrc + ')', r'\1' + vir, Strng)
 
-            Strng = re.sub('a(?!\u0304)', '', Strng)
+            # print(Strng)
+            Strng = re.sub('(?<=' + cons_prev + ')' + 'a(?!\u0304)', '', Strng)
 
         Strng = Strng.replace("\uF001", "")
 
@@ -87,7 +90,7 @@ def FixSemiticRoman(Strng, Source):
         Strng = re.sub('(ŵ)(?=' + basic_vowels + ')', "w", Strng)
         Strng = re.sub('(ŷ)(?=' + basic_vowels + ')', "y", Strng)
 
-        cons_prev = '|'.join(GM.SemiticConsonants)
+        print(Strng)
 
         Strng = re.sub('(?<=' + cons_prev + ')' + 'a(?!(ŵ|ŷ|\u0304|\u032E))', '', Strng)
 
@@ -719,6 +722,21 @@ def RomanPreFix(Strng,Source):
 
     return Strng
 
+def joinVowelCons(Strng, script):
+    consonantsAll = '(' + '|'.join(sorted(GM.CrunchSymbols(GM.Consonants, script), key = len, reverse=True)) + ')'
+    vowelsAll = '(' + '|'.join(sorted(GM.CrunchSymbols(GM.Vowels, script), key = len, reverse=True)) + ')'
+
+    Strng = re.sub(consonantsAll + ' ' + vowelsAll, r'\1\2', Strng)
+    Strng = re.sub(consonantsAll + ' ' + consonantsAll, r'\1\2', Strng)
+
+    return Strng
+
+def joinVowelConsIAST(Strng):
+    return joinVowelCons(Strng, 'IAST')
+
+def joinVowelConsISO(Strng):
+    return joinVowelCons(Strng, 'ISO')
+
 def PreProcess(Strng,Source,Target):
     if Source in GM.RomanDiacritic or Source == 'Latn':
         Strng = Strng.lower()
@@ -753,8 +771,8 @@ def PreProcess(Strng,Source,Target):
         Strng = re.sub('^' + sOm + '$', tOm, Strng)
 
 
-        AltForm = ['O', 'aa','ii','uu','RRi','RRI','LLi','LLI','N^','JN','chh','shh','x','GY','.n','.m','.h', 'AUM', 'E', 'J']
-        NormForm = ['^o', 'A','I','U','R^i','R^I','L^i','L^I','~N','~n','Ch','Sh','kSh','j~n','M','M','','oM', '^e', 'z']
+        AltForm = ['O', 'aa','ii','uu','RRi','RRI','LLi','LLI','N^','JN','chh','shh','x','GY','.n','.m','.h', 'AUM', 'E', 'J', 'c.o', 'c.e']
+        NormForm = ['^o', 'A','I','U','R^i','R^I','L^i','L^I','~N','~n','Ch','Sh','kSh','j~n','M','M','','oM', '^e', 'z', 'A.c', 'e.c']
 
         for x,y in zip(AltForm,NormForm):
             Strng = Strng.replace(x,y)

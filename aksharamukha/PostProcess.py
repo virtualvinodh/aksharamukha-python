@@ -193,8 +193,9 @@ def syricizeLatn(Strng, target='semitic'):
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
     # opt 3
-    Strng = re.sub('â', 'ʼa', Strng)
-    Strng = re.sub('ā̂', 'ʼā', Strng)
+    if target != 'indic':
+        Strng = re.sub('â', 'a', Strng)
+        Strng = re.sub('ā̂', 'ā', Strng)
 
     if target != 'indic':
         Strng = LatnInitialVowels(Strng)
@@ -331,6 +332,8 @@ def insertARomanSemitic(Strng):
     vowelsAll = '(' + '|'.join(GM.SemiticVowels) + ')'
     #print(Strng)
     Strng = re.sub(consonantsAll + '(?!꞉?ʰ?' + vowelsAll + ')', r'\1' + 'a', Strng)
+    ## avoid double /a/ just in case
+    Strng = Strng.replace('aa', 'a')
     #Strng = re.sub(consonantsAll + '(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
 
 
@@ -1984,6 +1987,34 @@ def GurmukhiTippiGemination(Strng):
 
 def khandatabatova(Strng):
     Strng = Strng.replace('ৎব', 'ত্ৱ')
+
+    return Strng
+
+def BengaliRaBa(Strng):
+    Strng = Strng.replace('ব', 'ৰ').replace('ভ়', 'ব').replace('ৰু', 'ৰ‌ু').replace('ৰূ', 'ৰ‌ূ')
+    ## Avoid bba -> rra
+    ## break all ba conjuncts
+    Strng = Strng.replace('\u09CD\u09F0', '\u09CD\u200C\u09F0')
+
+    ## bra/bya bru fix
+    Strng = re.sub('(\u09F0)(\u09CD)([\u09B0\u09AF])', r'\1' + '\u200D' + r'\2\3', Strng)
+    Strng = re.sub('(\u09F0)(\u09CD)', r'\1\2' + '\u200C', Strng)
+
+
+    ## rba
+    Strng = Strng.replace('র্‌ৰ', 'ৰ্ৰ')
+
+    return Strng
+
+def BengaliIntervocalicDDA(Strng):
+    Target = 'Bengali'
+
+    ListC = '|'.join(GM.CrunchSymbols(GM.Characters, Target)+[GM.CrunchList('SignMap',Target)[0]] + ['ৰ'])
+
+    replacements = [('ড', 'ড়'), ('ঢ', 'ঢ়')]
+
+    for x, y in replacements:
+        Strng = re.sub('('+ListC+')'+ GM.VedicSvaras + x,r'\1\2'+y,Strng)
 
     return Strng
 

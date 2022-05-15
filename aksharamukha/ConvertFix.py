@@ -3119,6 +3119,11 @@ def LaoPaliTranscribe(Strng,reverse=False, anusvaraChange = True):
 # Assamese and Bengali have the same mapping file duplicated
 # Replace Bengali /ra/ with Assamese /ra/
 def FixBengali(Strng, reverse=False):
+    Virama = ''.join(GM.CrunchSymbols(['ViramaMap'], 'Bengali'))
+    ba = 'ব'
+
+    Strng = re.sub('(?<![বম])' + Virama + ba,  Virama + '\u200C' + ba, Strng)
+
     Strng = PostProcess.KhandaTa(Strng, 'Bengali', reverse)
 
     return Strng
