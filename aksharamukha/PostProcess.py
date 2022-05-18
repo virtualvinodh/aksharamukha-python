@@ -152,6 +152,8 @@ def arabizeLatn(Strng, target='semitic'):
     if target != 'indic':
         Strng = re.sub('\u033d', '', Strng)
 
+    Strng = re.sub('(ā)([iau])(ⁿ)', r'\2\3', Strng)
+
     print('Arabized string is', Strng)
 
     return Strng
@@ -187,6 +189,8 @@ def urduizeLatn(Strng, target='semitic'):
     if target != 'indic':
         Strng = LatnInitialVowels(Strng)
 
+    Strng = re.sub('(ā)([iau])(ⁿ)', r'\2\3', Strng)
+
     return Strng
 
 def syricizeLatn(Strng, target='semitic'):
@@ -216,6 +220,12 @@ def syriacRoman(Strng):
 
 def alephAyinLatnAlternate(Strng):
     Strng = Strng.replace('ʾ', 'ʼ').replace('ʿ', 'ʽ')
+
+    return Strng
+
+
+def alephAyinLatnAlternate2(Strng):
+    Strng = Strng.replace('ʾ', 'ʔ').replace('ʿ', 'ʕ')
 
     return Strng
 
@@ -331,7 +341,7 @@ def insertARomanSemitic(Strng):
     #above does not ocntain semitic consonants
     vowelsAll = '(' + '|'.join(GM.SemiticVowels) + ')'
     #print(Strng)
-    Strng = re.sub(consonantsAll + '(?!꞉?ʰ?' + vowelsAll + ')', r'\1' + 'a', Strng)
+    Strng = re.sub(consonantsAll + '(?![꞉ʰ])(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
     ## avoid double /a/ just in case
     Strng = Strng.replace('aa', 'a')
     #Strng = re.sub(consonantsAll + '(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
@@ -2474,7 +2484,26 @@ def ThaiLaoTranscription(Strng,Script,shortA,shortAconj,reverse=False, anusvaraC
 
         Strng = re.sub("(?<!["+EAIO+"])"+"("+cons+")"+"(?!["+AIUVir+"])",r'\1'+shortA,Strng)
         Strng = re.sub("("+shortA+")"+"(?=("+cons+")"+"("+vir+"))",shortAconj,Strng)
+
+
+        # prahlada -> ปรหลาทะ
+        Strng = Strng.replace(shortAconj + 'ห'+vir, 'ห'+vir)
+        # katra -> กะตระ
+        Strng = re.sub("("+shortAconj+")"+ "(.)("+vir+")([รล])",shortA + r'\2\3\4',Strng)
+
+        ## swap rl
+
+        consswap = "|".join(GM.CrunchSymbols(GM.Consonants, "Thai"))
+        Strng = re.sub("("+consswap+")"+"("+vir+")"+"(["+EAIO+"])"+"([รล])",r"\3\1\2\4",Strng)
+
+        ## katro -> กะโตร
+        Strng = re.sub(shortAconj +"(["+EAIO+"])", shortA + r'\1', Strng)
+
         Strng = Strng.replace(vir, '')
+
+        ## Fix sarva --> srrva ; สัรวะ ->
+        Strng = Strng.replace(shortAconj + 'ร', 'รร')
+
 
         ## Fix Purevowels
 
@@ -2494,7 +2523,11 @@ def ThaiLaoTranscription(Strng,Script,shortA,shortAconj,reverse=False, anusvaraC
             Strng = re.sub('(?<!โ)' + '(?<!แ)'+'(?<!เ)' + '('+aVow+')' + '(?<!เ)' + shortA+"|"+shortAconj, r"\1",Strng)
             Strng = re.sub('(' + consOnly + ')' + '(?<!า|โ|แ|เ)' + shortA+"|"+shortAconj, r"\1",Strng)
 
+            # ธรรมะ -> dharma
+            Strng = re.sub(vir + 'รฺรฺ', 'รฺ', Strng)
 
+            # พรหมา  -> Brahma
+            Strng = re.sub(vir + 'หฺ', 'หฺ', Strng)
 
     return Strng
 
@@ -2671,6 +2704,8 @@ def ThaiTranscription(Strng, anusvaraChange = True):
     Strng = Strng.replace('ะ์','์')
 
     Strng = Strng.replace('ะงัง', '\u0E31งํ')
+
+    print(Strng)
 
 #    shortA = u'\u0E30'
 #    shortAconj = u'\u0E31'

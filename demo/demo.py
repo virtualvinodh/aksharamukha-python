@@ -1,4 +1,4 @@
-from aksharamukha import transliterate
+from ../aksharamukha import transliterate
 
 print(transliterate.process('hk', 'siddham', 'buddhaH'))
 

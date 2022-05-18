@@ -57,5 +57,7 @@ print(tr.tr('چ', 'Arab', 'Phnx'))
 print(tr.tr('א           טט', 'Hebr', 'Arab'))
 #print(tr.tr('tp tp tkk tk', 'Latn', 'Hebr'))
 
+print(transliterate.process('telu', 'Armi', 'ధర్మ భారత', param="script_code"))
+
 ## multiple orthographies associated with s
 # cript example
