@@ -145,8 +145,22 @@ def auto_detect(text, plugin = False):
         inputScript = 'RussianCyrillic'
     elif inputScript == 'Zanabazar':
         inputScript = 'ZanabazarSquare'
+    elif inputScript == 'Syriac':
+        inputScript = 'Syre'
+        eastern_dia = 'ܲ ܵ ܝܼ ܘܼ ܸ ܹ ܘܿ'.split(' ')
+        if any(char in text for char in eastern_dia):
+            inputScript = 'Syrn'
+        western_dia = 'ܰ ܺ ܶ ّ ܽ'.split(' ')
+        if any(char in text for char in western_dia):
+            inputScript = 'Syrj'
     elif inputScript == 'Arabic':
-        inputScript = 'Urdu'
+        inputScript = 'Arab'
+        persian_char = 'چ گ ژ پ هٔ'.split(' ')
+        if any(char in text for char in persian_char):
+            inputScript = 'Arab-Fa'
+        urdu_char = 'ڈ ٹ ڑ ھ'.split(' ')
+        if any(char in text for char in urdu_char):
+            inputScript = 'Urdu'
         shahmukh_char = 'ݨ لؕ مھ نھ یھ رھ لھ وھ'.split(" ")
         if any(char in text for char in shahmukh_char):
             inputScript = 'Shahmukhi'
