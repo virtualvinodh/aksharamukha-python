@@ -34,7 +34,7 @@ SinhalaVowelMap = [
                   ]
 
 VowelSignMap =  [
-                '\u02BD',
+                '\u02BD\u02BD',
                 '\u1BEA',
                 '\u1BEA\u02BD',
                 '\u1BEE',
@@ -56,7 +56,7 @@ SouthVowelSignMap = [
 
 ModernVowelSignMap =[
                      '\u1BE7',
-                     '\u02BD',
+                     '\u02BD\u02BD',
                     ]
 
 SinhalaVowelSignMap = [

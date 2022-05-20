@@ -62,7 +62,7 @@ AyogavahaMap = [
                ]
 
 ViramaMap =  [
-             '\u02BD'
+             '\u02BD\u02BD'
              ]
 
 ConsonantMap =  [
@@ -142,7 +142,7 @@ OmMap = [
         ]
 
 SignMap =[
-         '\u02BD',
+         '\u02BD\u02BD',
          '\U000103D0\U000103D0',
          '\U000103D0\U000103D0\u02BD',
          ]

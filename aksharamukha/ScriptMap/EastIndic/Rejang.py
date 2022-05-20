@@ -34,7 +34,7 @@ SinhalaVowelMap = [
                   ]
 
 VowelSignMap =  [
-                '\u02BD',
+                '\u02BD\u02BD',
                 '\uA947',
                 '\uA947\u02BD',
                 '\uA948',
