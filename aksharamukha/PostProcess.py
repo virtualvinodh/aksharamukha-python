@@ -121,7 +121,7 @@ def arabizeLatn(Strng, target='semitic'):
     Strng = re.sub(cons + '(ʾ)', r'\1' + 'ā', Strng)
     ### implement ths as a preoption for all semitic scripts
 
-    print('Arabized string is', Strng)
+    #print('Arabized string is', Strng)
 
     ## Strng = re.sub('ʾ[aiu]ⁿ', '')
 
@@ -154,7 +154,14 @@ def arabizeLatn(Strng, target='semitic'):
 
     Strng = re.sub('(ā)([iau])(ⁿ)', r'\2\3', Strng)
 
-    print('Arabized string is', Strng)
+    #print('Arabized string is', Strng)
+
+    return Strng
+
+def BengaliSwitchYaYYa(Strng):
+    Strng = re.sub('(?<!\u09CD)য', '@#$', Strng)
+    Strng = re.sub('য়', 'য', Strng)
+    Strng = Strng.replace('@#$', 'য়')
 
     return Strng
 
@@ -347,7 +354,7 @@ def insertARomanSemitic(Strng):
     #Strng = re.sub(consonantsAll + '(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
 
 
-    print(Strng)
+    #print(Strng)
 
     return Strng
 
@@ -355,8 +362,6 @@ def insertARomanSemitic(Strng):
 def FixSemiticRoman(Strng, Target):
     vir = '\u033D'
     Strng = re.sub('ō̂̄̂', 'ō̂', Strng)
-
-    #print('Strng is ' + Strng)
 
     ## For Gemination
     if "Arab" in Target:
@@ -670,8 +675,8 @@ def HebrewnonFinalShort(Strng):
 
     uVowels = ['וֹ', 'וּ']
 
-    for s in uVowels:
-        Strng = re.sub('(' + s + ')' + '(׳?)' + '(?!' + consonantsAll + ')', r'\1\2' + 'א', Strng )
+    #for s in uVowels:
+        #Strng = re.sub('(' + s + ')' + '(׳?)' + '(?!' + consonantsAll + ')', r'\1\2' + 'א', Strng )
 
     return Strng
 
@@ -2705,7 +2710,7 @@ def ThaiTranscription(Strng, anusvaraChange = True):
 
     Strng = Strng.replace('ะงัง', '\u0E31งํ')
 
-    print(Strng)
+    #print(Strng)
 
 #    shortA = u'\u0E30'
 #    shortAconj = u'\u0E31'

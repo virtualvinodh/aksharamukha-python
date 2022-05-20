@@ -473,7 +473,6 @@ def FixHebrew(Strng, reverse = False):
         Strng = Strng.replace('כְּכּ', 'קּ').replace('פְּפּ','פּ').replace('בְּבּ','בּ')
 
         # Fix Finals
-
         shortVowels = '(' + '|'.join(['\u05B7', '\u05B8', '\u05B4', '\u05BB', '\u05B5', '\u05B6', '\u05B9', '\u05B0']) + ')'
 
         vowelsAll = '(' + '|'.join(['\u05B7', '\u05B8', '\u05B4', '\u05BB', '\u05B5', '\u05B6', '\u05B9', '\u05B0', 'י', 'וֹ', 'וּ'] + ['׳']) + ')'
@@ -491,8 +490,6 @@ def FixHebrew(Strng, reverse = False):
         Strng = Strng.replace('ײ' , 'י')
 
         Strng = Strng.replace('\u02BC', '')
-
-
 
     else:
         vowels = ['ְ','ֱ','ֲ','ֳ','ִ','ֵ','ֶ','ַ','ָ','ֹ','ֺ','ֻ','ׇ']

@@ -409,6 +409,16 @@ Urdu:
   lang: ur, urd
   lang-desc: Urdu
   script: Arab
+Arab:
+  sanskrit: false
+  lang: ar, ara
+  lang-desc: Arabic
+  script: Arab
+Arab-Fa:
+  sanskrit: false
+  lang: fa, fas, per
+  lang-desc: Persian
+  script: Arab
 Vatteluttu:
   script: Zzzz
   lang: ta, tam, oty, ml, mal
@@ -428,3 +438,87 @@ ZanabazarSquare:
     - ZanabazarSanskritPalatals
   sanskrit: true
   script: Zanb
+Elym:
+  script: Elym
+  lang: arc
+  lang-desc: Aramaic
+Ethi:
+  script: Ethi
+  lang: gez
+  lang-desc: Geʽez
+Hatr:
+  script: Hatr
+  lang: arc
+  lang-desc: Aramaic
+Hebr-Ar:
+  script: Hebr-Ar
+  lang: Ar, Ara
+  lang-desc: Arabic
+Armi:
+  script: Armi
+  lang: arc
+  lang-desc: Aramaic
+Phli:
+  script: Phli
+  lang: pal
+  lang-desc: Middle Persian
+Prti:
+  script: Prti
+  lang: pal
+  lang-desc: Middle Persian
+Mani:
+  script: Mani
+  lang: pal
+  lang-desc: Middle Persian
+Nbat:
+  script: Nbat
+  lang: qhy
+  lang-desc: Nabatean
+Narb:
+  script: Narb
+  lang: ar, ara
+  lang-desc: Arabic
+Sogo:
+  script: Sogo
+  lang: sog
+  lang-desc: Sogdian
+Sarb:
+  script: Sarb
+  lang: ar, ara
+  lang-desc: Arabic
+Palm:
+  script: Palm
+  lang: arc
+  lang-desc: Aramaic
+Phnx:
+  script: Phnx
+  lang: phn
+  lang-desc: Phoenician
+Phlp:
+  script: Phlp
+  lang: pal
+  lang-desc: Middle Persian
+Samr:
+  script: Samr
+  lang: sam
+  lang-desc: Samaritan
+Sogd:
+  script: Sogd
+  lang: sog
+  lang-desc: Sogdian
+Syre:
+  script: Syre
+  lang: Syr
+  lang-desc: Syriac
+Syrn:
+  script: Syrn
+  lang: Syr
+  lang-desc: Syriac
+Syrj:
+  script: Syrj
+  lang: Syr
+  lang-desc: Syriac
+Ugar:
+  script: Ugar
+  lang: uga
+  lang-desc: Ugaritic

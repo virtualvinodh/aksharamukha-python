@@ -19,7 +19,7 @@ cwd = Path(Path(__file__).parent)
 
 class Transliterator(object):
     def __init__(self):
-        with open(Path(cwd, "gimeltra_data.json"), "r", encoding="utf-8") as f:
+        with open(Path(cwd, "json/gimeltra_data.json"), "r", encoding="utf-8") as f:
             data = json.load(f)
         self.db = data['ssub']
         self.db_ccmp = data['ccmp']
