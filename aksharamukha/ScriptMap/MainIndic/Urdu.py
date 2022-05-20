@@ -150,7 +150,7 @@ OmMap = [
         ]
 
 SignMap =[
-         '\u02BD',
+         '\u02BD\u02BD',
          '\u06D4',
          '\u06D4\u06D4'
          ]
