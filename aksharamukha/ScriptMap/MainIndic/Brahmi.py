@@ -141,7 +141,7 @@ SinhalaConsonantMap =[
                       ]
 
 NuktaMap = [
-           '\u02BD'
+           '\u02BD\u02BD\u02BD\u02BD'
            ]
 
 OmMap = [

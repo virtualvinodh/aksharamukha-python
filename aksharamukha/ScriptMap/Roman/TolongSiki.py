@@ -35,9 +35,9 @@ ModernVowelMap = [
 SinhalaVowelMap = [
                   '\u0041\u02BD'
                   ]
-    
+
 VowelSignMap =  VowelMap[1:]
-               
+
 SouthVowelSignMap = SouthVowelMap[:]
 
 ModernVowelSignMap = ModernVowelMap[:]
@@ -49,7 +49,7 @@ AyogavahaMap = [
                '\u004D',
                '\u0068\u02BD'
                ]
-    
+
 ViramaMap =  [
              '\u00D7'
              ]
@@ -60,36 +60,36 @@ ConsonantMap =  [
                 '\u0067',
                 '\u0047',
                 '\u0057',
-                
+
                 '\u0063',
                 '\u0043',
                 '\u006A',
                 '\u004A',
                 '\u0059',
-                
+
                 '\u0074',
                 '\u0054',
                 '\u0064',
                 '\u0044',
                 '\u004E',
-                
+
                 '\u0071',
                 '\u0051',
                 '\u0076',
                 '\u0056',
                 '\u006E',
-                
+
                 '\u0070',
                 '\u0050',
                 '\u0062',
                 '\u0042',
                 '\u006D',
-                
+
                 '\u0079',
                 '\u0072',
                 '\u006C',
                 '\u0077',
-                
+
                 '\u0073\u02BD',
                 '\u0073\u02BD',
                 '\u0073',
@@ -121,12 +121,12 @@ SinhalaConsonantMap =[
                      '\u004D\u0064',
                      '\u004D\u0076',
                      '\u004D\u0062',
-                      ] 
+                      ]
 
 NuktaMap = [
-           '\u02BD'
+           '\u02BD\u02BD\u02BD\u02BD'
            ]
-    
+
 OmMap = [
         '\u006F\u004D'
         ]
