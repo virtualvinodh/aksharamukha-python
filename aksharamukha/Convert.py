@@ -205,11 +205,15 @@ def convertScript(Strng,Source,Target):
         #Sort based on Length - Longest first
         charPairs = sorted(charPairs,key=cmp_to_key(lenSort))
 
+        print(Strng)
+
         # Perform replacement sequentially for each character group
         for x,y in charPairs:
-            #print x,y
+            # print(x,y)
             Strng = Strng.replace(x,y)
-            #print Strng
+            # print(Strng)
+
+        # print(Strng)
 
         #Strng = Strng.replace(GM.CrunchList('OmMap', Source)[0],GM.CrunchList('OmMap', Target)[0])
         # Apply Fixes on the Output based on the Script
@@ -298,6 +302,9 @@ def convertScript(Strng,Source,Target):
         tr = gimeltra.Transliterator()
 
         Strng = convertScript(Strng, Source, "RomanSemitic")
+
+        # print("The string is", Strng)
+
         Strng = Strng.replace('QQ', '').replace('mQ', '') ## avoiding Q, mQ for Urdu to Semitic : Check why
 
         # remove gemination for every script except......

@@ -531,6 +531,13 @@ def process_script_tag(src_tag, tgt_tag, txt, nativize, post_options, pre_option
     src = []
     tgt = []
 
+    if src_tag == 'Syrc':
+        src_tag = 'Syre'
+        warnings.warn("Please specify the variety of Syriac script for the source: Estrangelo (Syre), Eastern (Syrn) or Wester (Syrj). Defaulting to Syre")
+    if tgt_tag == 'Syrc':
+        tgt_tag = 'Syre'
+        warnings.warn("Please specify the variety of Syriac script for the target: Estrangelo (Syre), Eastern (Syrn) or Wester (Syrj). Defaulting to Syre")
+
     # loop through yaml to find match
     for scrpt in data_loaded.keys():
         scrpt_tag = data_loaded[scrpt]['script']
@@ -543,6 +550,7 @@ def process_script_tag(src_tag, tgt_tag, txt, nativize, post_options, pre_option
             population = 0
             lang = ''
 
+        #print(scrpt_tag, lang_tag)
         if scrpt_tag in data_loaded_wiki.keys() and lang_tag in data_loaded_wiki[scrpt_tag].keys():
             population = data_loaded_wiki[scrpt_tag][lang_tag]['population']
         else:
@@ -555,6 +563,7 @@ def process_script_tag(src_tag, tgt_tag, txt, nativize, post_options, pre_option
         if '-' not in tgt_tag and data_loaded[scrpt]['script'].lower() == tgt_tag.lower():
             tgt.append((population, scrpt))
 
+        #print(population)
         # if hypthenated find the exact match
         if '-' in tgt_tag:
             lang_part = tgt_tag.split('-')[0].lower()
@@ -597,11 +606,15 @@ def process_script_tag(src_tag, tgt_tag, txt, nativize, post_options, pre_option
 
     if len(src) > 0:
         src_pop = sorted(src, reverse=True)[0][1]
+    elif src_tag in GeneralMap.SemiticScripts:
+            src_pop = src_tag
     else:
         raise Exception('Source script code: ' + src_tag + ' not found')
 
     if len(tgt) > 0:
         tgt_pop = sorted(tgt, reverse=True)[0][1]
+    elif tgt_tag in GeneralMap.SemiticScripts:
+        tgt_pop = tgt_tag
     else:
         raise Exception('Target script code: ' + tgt_tag + ' not found')
 
@@ -756,7 +769,7 @@ def process_lang_name(src_name, tgt_name, txt, nativize, post_options, pre_optio
 def get_semitic_json():
     from pathlib import Path
     cwd = Path(Path(__file__).parent)
-    with open(Path(cwd, "gimeltra_data.json"), "r", encoding="utf-8") as f:
+    with open(Path(cwd, "json/gimeltra_data.json"), "r", encoding="utf-8") as f:
         data = json.load(f)
 
     return data

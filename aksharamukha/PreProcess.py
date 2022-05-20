@@ -15,12 +15,20 @@ def insertViramaSyriac(Strng):
     Strng += "\uF001"
     return Strng
 
+def BengaliSwitchYaYYa(Strng):
+    Strng = re.sub('(?<!\u09CD)য', '@#$', Strng)
+    Strng = re.sub('য়', 'য', Strng)
+    Strng = Strng.replace('@#$', 'য়')
+
+    return Strng
+
+
 def removeFinalSchwaArab(Strng):
-    print('here', Strng)
+    #print('here', Strng)
     diacrtics = ["\u0652", "\u064E", "\u0650", "\u064F"]
     Strng = re.sub('([\u0628-\u064A])(?![\u0652\u064E\u0650\u064F\u0651])(?=(\W|$))', r'\1' + '\u0652', Strng)
     Strng = re.sub('([\u0628-\u064A]\u0651)(?![\u0652\u064E\u0650\u064F])(?=(\W|$))', r'\1' + '\u0652', Strng)
-    print('here2', Strng)
+    #print('here2', Strng)
 
     return Strng
 
@@ -1143,8 +1151,7 @@ def PhagsPaArrange(Strng,Source):
 
     return Strng
 
-def TamilTranscribe(Strng):
-
+def TamilTranscribeCommon(Strng, c = 31):
     script = "Tamil"
 
     ListC = GM.CrunchList('ConsonantMap',script)
@@ -1189,17 +1196,17 @@ def TamilTranscribe(Strng):
     Strng = Strng.replace(NRA,NDRA)
 
     # Intervocalic S
-    Strng = re.sub('(?<!'+'('+ListC[5]+'|'+ListSC[2] +'|' + 'ட' + ')'+vir+')'+ListC[5]+'(?!'+vir+')',ListC[31],Strng)
+    Strng = re.sub('(?<!'+'('+ListC[5]+'|'+ListSC[2] +'|' + 'ட' + ')'+vir+')'+ListC[5]+'(?!'+vir+')',ListC[c],Strng)
 
     import string
 
     punct = "|".join(['\\'+x for x in list(string.punctuation.replace(".","").replace("?",""))])+"|\s"
 
     # CA + Spac | Punct + SA -> CCA
-    Strng = re.sub('('+ListC[5]+vir+')'+'(('+punct+')+)'+'('+ListC[31]+')',r'\1\2'+ListC[5],Strng)
+    Strng = re.sub('('+ListC[5]+vir+')'+'(('+punct+')+)'+'('+ListC[c]+')',r'\1\2'+ListC[5],Strng)
 
     # JA + Spac | Punct + SA -> JCA
-    Strng = re.sub('('+ListC[9]+vir+')'+'(('+punct+')+)'+'('+ListC[31]+')',r'\1\2'+ListC[7],Strng)
+    Strng = re.sub('('+ListC[9]+vir+')'+'(('+punct+')+)'+'('+ListC[c]+')',r'\1\2'+ListC[7],Strng)
 
     # GA + Spac | Punct + KA ->
     Strng = re.sub('('+ListC[4]+vir+')'+'(('+punct+')+)'+'('+ListC[0]+')',r'\1\2'+ListC[2],Strng)
@@ -1220,12 +1227,22 @@ def TamilTranscribe(Strng):
     Strng = re.sub(ListSC[2]+vir+ListSC[2],ListC[10]+vir+ListC[26],Strng)
 
     # RR | TT + /s + SA -> RR + /s + CA
-    Strng = re.sub("("+'['+ListC[10]+ListSC[2]+']'+vir+')'+'(\s)'+'('+ListC[31]+')',r'\1\2'+ListC[5],Strng)
+    Strng = re.sub("("+'['+ListC[10]+ListSC[2]+']'+vir+')'+'(\s)'+'('+ListC[c]+')',r'\1\2'+ListC[5],Strng)
 
     ## NNN to N, RR to R
 
     Strng = Strng.replace(ListSC[3],ListC[19])
     #Strng = Strng.replace(ListSC[2],ListC[26])
+
+    return Strng
+
+def TamilTranscribe(Strng):
+    Strng = TamilTranscribeCommon(Strng)
+
+    return Strng
+
+def TamilTranscribeDialect(Strng):
+    Strng = TamilTranscribeCommon(Strng, c=29)
 
     return Strng
 
