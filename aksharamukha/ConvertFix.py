@@ -1186,6 +1186,7 @@ def FixMon(Strng, reverse=False):
 def FixBurmese(Strng,reverse=False):
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Burmese'))
     vir = Burmese.ViramaMap[0]
+
     AA = Burmese.VowelSignMap[0]
     E = Burmese.VowelSignMap[9]
 

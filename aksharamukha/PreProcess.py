@@ -1,15 +1,106 @@
 # -*- coding: utf-8 -*-
 
 from ast import Str
+from asyncio import constants
 from . import GeneralMap as GM
 import re
 import string
 from . import PostProcess
 from . import ConvertFix as CF
-from aksharamukha.ScriptMap.EastIndic import PhagsPa
+from aksharamukha.ScriptMap.EastIndic import PhagsPa, Burmese
 from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 ### Use escape char in all functions
 
+def ALALCBurmeseSource(Strng):
+    # adhoc chars
+    chars_misc = {
+        "e*": "၏",
+        'n*': "၌",
+        'r*': '၍',
+        'l*': '၎'
+    }
+
+    for lat, bur in chars_misc.items():
+        Strng = Strng.replace(lat, bur)
+
+    # reverse danda to comma and double danda to full stop
+    Strng = Strng.replace(',', '၊').replace('.', '။')
+
+    # restore visarga
+    Strng = Strng.replace('˝', 'ḥ')
+
+    # restore tone
+    Strng = Strng.replace('´', '˳')
+
+    # replace quotation mark with modifier letter
+    vowelSigns = '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, 'IAST'))
+    Strng = re.sub('(’)(a|' + vowelSigns + ')', 'ʼ' + r'\2', Strng)
+
+    # left quotation mark -> modifier letter comma
+    consonants = '|'.join(GM.CrunchSymbols(GM.Consonants, 'IAST'))
+    Strng = re.sub('(' + consonants + ')(‘)', r'\1' + 'ʻ', Strng)
+
+    Strng = Strng.replace('o‘', 'oʻ')
+
+    # reverse o' to au
+    Strng = Strng.replace('oʻ', 'au')
+
+    return Strng
+
+def segmentBurmeseSyllables(Strng):
+    # segment text into syllables
+
+    # https://github.com/ye-kyaw-thu/myWord/blob/main/syl_segment.py
+    myConsonant = r"က-အ"
+    otherChar = r"ဣဤဥဦဧဩဪဿ၌၍၏၀-၉၊။!-/:-@[-`{-~\s"
+    ssSymbol = r'္'
+    aThat = r'်'
+
+    BreakPattern = re.compile(r"((?<!" + ssSymbol + r")["+ myConsonant + r"](?![" + aThat + ssSymbol + r"])" + r"|["  + otherChar + r"])", re.UNICODE)
+    Strng = Strng.replace("့်", "့်")
+    Strng = BreakPattern.sub(' ' + r"\1", Strng)
+
+    return Strng
+
+def ALALCBurmeseTarget(Strng):
+    # swap iu -> ui
+    Strng = Strng.replace('\u102D\u102F', '\u102F\u102D')
+
+    # mark Independent au -> o'
+    Strng = Strng.replace('ဪ','ဩʻ')
+
+    ## sort subjoined consonants
+    yrvh = Burmese.ConsonantMap[25:27] + Burmese.ConsonantMap[28:29] + Burmese.ConsonantMap[32:33]
+    yrvhsub = ['\u103B','\u103C','\u103D','\u103E']
+    vir = Burmese.ViramaMap[0]
+
+    for x,y in zip(yrvh,yrvhsub):
+        # Undo Replace subjoining forms: exp-virama + y/r/v/h <- subjoining y/r/v/h
+        Strng = Strng.replace(y, vir + vir + x)
+
+    # swap tone + virama to proper order
+    Strng = Strng.replace("့်", "့်")
+
+    # mark pure viramas
+    aThat = r'်'
+    Strng = Strng.replace(aThat, aThat + 'ʻ')
+
+    # mark a as glottalstop
+    Strng = Strng.replace('အ','ʼအ')
+
+    # replace vowel + diac with vowels
+    vowDep = 'အော် အော အိ အီ အု အူ အေ'.split(' ')
+    vowIndep = 'ဪ ဩ ဣ ဤ ဥ ဦ ဧ'.split(' ')
+
+    for x, y in zip(vowDep, vowIndep):
+        Strng = Strng.replace(x, y)
+
+    # danda to comma and double danda to full stop
+    Strng = Strng.replace('၊', ',').replace('။', '.')
+
+    #print(Strng)
+
+    return Strng
 
 def insertViramaSyriac(Strng):
     Strng += "\uF001"
@@ -552,7 +643,7 @@ def RemoveSchwaHindi(Strng):
     Strng = re.sub(ISyl+Cons2+"(?!" + Char + ")", r'\1\8' + vir, Strng) # kama -> kam
     #Strng = re.sub(VowI + Nas + Cons2+"(?!" + Char + ")", r'\1\2\3' + vir, Strng)
 
-    #Strng = re.sub('([यर])(' + vir + ')', r'\1' + vir2, Strng)
+    cons_pyramid = ['यरलव', 'नमण', 'शषस', 'कखपफ', 'टठतथ', 'चछजझ']
 
     Strng = Strng.replace(vir, vir2)
 

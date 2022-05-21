@@ -341,6 +341,74 @@ def ArabicGimelPaBa(Strng):
 
     return Strng
 
+def ALALCBurmeseSource(Strng):
+    # remove marking for pure virama
+    Strng = Strng.replace('ʻ', '')
+
+    # restore superscript Ga into normal subjoined y, r , v, h
+    yrvh = Burmese.ConsonantMap[25:27] + Burmese.ConsonantMap[28:29] + Burmese.ConsonantMap[32:33]
+    yrvhPat = ''.join(yrvh)
+    Strng = re.sub(f'(\u103A)(\u1039)([{yrvhPat}])', r'\2\3', Strng)
+
+    # restrore special yrvh
+    virsub = '\u1039'
+    yrvhsub = ['\u103B','\u103C','\u103D','\u103E']
+
+    for x,y in zip(yrvh,yrvhsub):
+        # Undo Replace subjoining forms: exp-virama + y/r/v/h <- subjoining y/r/v/h
+        Strng = Strng.replace(virsub + x, y)
+
+    # u-Indep-i -> u-dep-i
+    Strng = Strng.replace('\u102Fဣ', '\u102D\u102F')
+
+    # reverse replace vowel + diac with vowels
+    vowDep = 'အော် အော အိ အီ အု အူ အေ'.split(' ')
+    vowIndep = 'ဪ ဩ ဣ ဤ ဥ ဦ ဧ'.split(' ')
+
+    for x, y in zip(vowDep, vowIndep):
+        Strng = Strng.replace('ʼ' + y, x)
+
+    # reverse mark a as glottalstop
+    Strng = Strng.replace('ʼအ', 'အ')
+
+    return Strng
+
+def removeSegmentSpacesBurmese(Strng):
+    # segment text into syllables
+    import regex
+
+    Strng = regex.sub('(\p{L}\p{M}*) (\p{L})', r'\1\2', Strng)
+    Strng = regex.sub('(\p{L}\p{M}*) (\p{L})', r'\1\2', Strng)
+
+    return Strng
+
+def ALALCBurmeseTarget(Strng):
+    #print(Strng)
+    # mark tone
+    Strng = Strng.replace('˳', '´')
+
+    # mark depaend au -> o'
+    Strng = Strng.replace('auʻ','oʻ')
+
+    # mark visarga as tone
+    Strng = Strng.replace('ḥ', '˝')
+
+    # sort subjoined consonants
+    # Strng = Strng.replace('‘‘', '')
+
+    # adhoc chars
+    chars_misc = {
+        "e*": "၏",
+        'n*': "၌",
+        'r*': '၍',
+        'l*': '၎'
+    }
+
+    for lat, bur in chars_misc.items():
+        Strng = Strng.replace(bur, lat)
+
+    return Strng
+
 ### Add new consonants here when added to gimeltra_data
 def insertARomanSemitic(Strng):
     Strng = Strng.replace('\u02BD', '')
