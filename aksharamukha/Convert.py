@@ -3,6 +3,7 @@
 from . import GeneralMap as GM, PreProcess as PrP, ConvertFix as CF
 from . import PostProcess as PP
 import aksharamukha.ScriptMap.EastIndic.SiddhamRanjana as SR
+import aksharamukha.ScriptMap.FallBack as FB
 import string
 import re
 from functools import cmp_to_key
@@ -350,6 +351,10 @@ def convertScript(Strng,Source,Target):
         if Source == 'Ugar':
             Strng = Strng.replace('𐎟', ' ') # reverse ugaritic word separator
 
+    #print(Strng)
+
     Strng = PP.default(Strng)
+
+    #print(Strng)
 
     return Strng

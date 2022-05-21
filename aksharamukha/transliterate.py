@@ -231,43 +231,29 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     if preoptions == [] and postoptions == [] and nativize == False and src == tgt:
         return txt
 
-   ## Semitic ISO Standards
-    if tgt == "ISO259":
-        tgt = 'Latn'
-        preoptions += ['ISO259Target']
-        postoptions += ['ISO259Target']
+    ## ALA-LC Romanization
+    if tgt == 'ALALCBurmese':
+        # the below order for preoptions is important
+        preoptions = preoptions + [tgt + 'Target']
+
+        postoptions =  [tgt + 'Target'] + postoptions
+        tgt = 'IAST'
+    if src == 'ALALCBurmese':
+        preoptions = [src + 'Source'] + preoptions
+        postoptions =  [src + 'Source'] + postoptions
+        src = 'IAST'
+
+    ## Semitic ISO Standards
+    semiticISO = ['ISO259', 'HebrewSBL', 'ISO233', 'PersianDMG']
+    if tgt in semiticISO:
+        preoptions = [tgt + 'Target'] + preoptions
+        postoptions =  [tgt + 'Target'] + postoptions
         nativize = False
-    elif src == "ISO259":
-        src = 'Latn'
-        preoptions += ['ISO259Source']
-        postoptions += ['ISO259Source']
-    elif tgt == "HebrewSBL":
         tgt = 'Latn'
-        preoptions += ['HebrewSBLTarget']
-        postoptions += ['HebrewSBLTarget']
-        nativize = False
-    elif src == "HebrewSBL":
+    elif src in semiticISO:
+        preoptions = [src + 'Source'] + preoptions
+        postoptions = [src + 'Source'] + postoptions
         src = 'Latn'
-        preoptions += ['HebrewSBLSource']
-        postoptions += ['HebrewSBLSource']
-    elif tgt == "ISO233":
-        tgt = 'Latn'
-        preoptions += ['ISO233Target']
-        postoptions += ['ISO233Target']
-        nativize = False
-    elif src == "ISO233":
-        src = 'Latn'
-        preoptions += ['ISO233Source']
-        postoptions += ['ISO233Source']
-    elif tgt == "PersianDMG":
-        tgt = 'Latn'
-        preoptions += ['PersianDMGTarget']
-        postoptions += ['PersianDMGTarget']
-        nativize = False
-    elif src == "PersianDMG":
-        src = 'Latn'
-        preoptions += ['PersianDMGSource']
-        postoptions += ['PersianDMGSource']
 
     ## Semitic Switches - Add Shahmukhi/Sindhi later
     IndicSemiticMapping = { 'Hebrew': 'Hebr', 'Thaana': 'Thaa', 'Urdu': 'Arab-Ur', 'Shahmukhi': 'Arab-Pa'}
