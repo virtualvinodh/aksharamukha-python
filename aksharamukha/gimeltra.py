@@ -79,6 +79,7 @@ class Transliterator(object):
         for char in chars:
             #print(char + ' : ' + self.db[sc]["Latn"][char])
             text = text.replace(char, self.db[sc]["Latn"][char])
+            #print(text)
 
         # print(text)
         return text
