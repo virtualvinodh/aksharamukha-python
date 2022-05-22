@@ -11,7 +11,7 @@ from aksharamukha.ScriptMap.EastIndic import PhagsPa, Burmese
 from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 ### Use escape char in all functions
 
-def ALALCBurmeseSource(Strng):
+def IASTLOCBurmeseSource(Strng):
     # adhoc chars
     chars_misc = {
         "e*": "၏",
@@ -62,7 +62,7 @@ def segmentBurmeseSyllables(Strng):
 
     return Strng
 
-def ALALCBurmeseTarget(Strng):
+def IASTLOCBurmeseTarget(Strng):
     # swap iu -> ui
     Strng = Strng.replace('\u102D\u102F', '\u102F\u102D')
 
@@ -635,15 +635,36 @@ def RemoveSchwaHindi(Strng):
     vir = '्'
     vir2 = '्'
 
-    Cons2 = '((' + Cons + vir + ')?' +'(?![यर])'+ Cons + ')'
-
     Strng = re.sub(ISyl+Cons+Cons+SylAny+"(?!" + Char + ")", r'\1\8' + vir + r'\9\10', Strng) # bhAratIya --> bhArtIy
     Strng = re.sub(ISyl+Cons+Syl+SylAny+"(?!" + Char + ")", r'\1\8' + vir + r'\9\15', Strng) # bhAratIya --> bhArtIy
     Strng = re.sub(ISyl+Cons+Syl+"(?!" + Char + ")", r'\1\8' + vir + r'\9', Strng) # namakIn -> namkIn
-    Strng = re.sub(ISyl+Cons2+"(?!" + Char + ")", r'\1\8' + vir, Strng) # kama -> kam
+
+    Strng = re.sub(ISyl+Cons+"(?!" + Char + ")", r'\1\8' + vir, Strng) # kama -> kam
+
+    Cons_sss = '((' + Cons + vir + ')' +'([शषस]))' # delete if double ends with s, sh, s
+    Strng = re.sub(ISyl+Cons_sss+"(?!" + Char + ")", r'\1\8' + vir, Strng)
+
+    ## remove from geminated consonants
+    Target = 'Devanagari'
+
+    ConUnAsp = [GM.CrunchList('ConsonantMap', Target)[x] for x in [0,2,5,7,10,12,15,17,20,22,4,9,14,19,24,25,26,27,28,29,30,31,32]]
+    ConUnAsp = ConUnAsp + GM.CrunchList('SouthConsonantMap',Target) + GM.CrunchList('NuktaConsonantMap',Target)
+    ConAsp   = [GM.CrunchList('ConsonantMap', Target)[x] for x in [1,3,6,8,11,13,16,18,21,23]]
+
+    Strng = re.sub(ISyl + '('+'|'.join(ConUnAsp)+')'+'('+vir+')('+r'\8'+")(?!" + Char + ")", r'\1\8\9\10' + vir,Strng)
+
+    for i in range(len(ConAsp)):
+        Strng = re.sub(ISyl +'('+ConUnAsp[i]+')'+'('+vir+')'+'('+ConAsp[i]+')'+'(?!" + Char + ")', r'\1\8\9\10' + vir,Strng)
+
     #Strng = re.sub(VowI + Nas + Cons2+"(?!" + Char + ")", r'\1\2\3' + vir, Strng)
 
-    cons_pyramid = ['यरलव', 'नमण', 'शषस', 'कखपफ', 'टठतथ', 'चछजझ']
+    cons_pyramid = ['[यरलव]', '[नमण]', '[शषस]', '[कखपफगघबभ]', '[टठतथडढदध]', '[चछजझज़]']
+    for c1, cons1 in enumerate(cons_pyramid):
+        for c2, cons2 in enumerate(cons_pyramid):
+            if c1 < c2: # delete if ascending order
+                Cons_pyr = '((' + cons1 + vir + ')' +'('+cons2+'))'
+                Strng = re.sub(ISyl+Cons_pyr+"(?!" + Char + ")", r'\1\8' + vir, Strng)
+
 
     Strng = Strng.replace(vir, vir2)
 

@@ -341,7 +341,7 @@ def ArabicGimelPaBa(Strng):
 
     return Strng
 
-def ALALCBurmeseSource(Strng):
+def IASTLOCBurmeseSource(Strng):
     # remove marking for pure virama
     Strng = Strng.replace('ʻ', '')
 
@@ -382,7 +382,7 @@ def removeSegmentSpacesBurmese(Strng):
 
     return Strng
 
-def ALALCBurmeseTarget(Strng):
+def IASTLOCBurmeseTarget(Strng):
     #print(Strng)
     # mark tone
     Strng = Strng.replace('˳', '´')
