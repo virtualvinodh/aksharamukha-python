@@ -141,7 +141,7 @@ def arabizeLatn(Strng, target='semitic'):
     if target != 'indic':
         Strng = re.sub('[ˀʔ]', 'ʼ', Strng)
     else:
-         Strng = re.sub('[ˀʔ]', '', Strng)
+         Strng = re.sub('[ˀ]', '', Strng)
 
     if target != 'indic':
         Strng = LatnInitialVowels(Strng, 'ʾ') ## Check this
@@ -417,8 +417,9 @@ def insertARomanSemitic(Strng):
     vowelsAll = '(' + '|'.join(GM.SemiticVowels) + ')'
     #print(Strng)
     Strng = re.sub(consonantsAll + '(?![꞉ʰ])(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
+    Strng = re.sub('(꞉)(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
     ## avoid double /a/ just in case
-    Strng = Strng.replace('aa', 'a')
+    #Strng = Strng.replace('aa', 'a')
     #Strng = re.sub(consonantsAll + '(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
 
 

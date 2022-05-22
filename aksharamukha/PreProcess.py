@@ -117,8 +117,14 @@ def BengaliSwitchYaYYa(Strng):
 def removeFinalSchwaArab(Strng):
     #print('here', Strng)
     diacrtics = ["\u0652", "\u064E", "\u0650", "\u064F"]
-    Strng = re.sub('([\u0628-\u064A])(?![\u0652\u064E\u0650\u064F\u0651])(?=(\W|$))', r'\1' + '\u0652', Strng)
-    Strng = re.sub('([\u0628-\u064A]\u0651)(?![\u0652\u064E\u0650\u064F])(?=(\W|$))', r'\1' + '\u0652', Strng)
+    Strng = re.sub('([\u0628-\u0647])(?![\u0652\u064E\u0650\u064F\u0651\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
+    Strng = re.sub('([\u0628-\u0647]\u0651)(?![\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
+    Strng = re.sub('(?<!\u0650)([\u064A])(?![\u0651\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
+    Strng = re.sub('(?<!\u0650)([\u064A]\u0651)(?![\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
+    Strng = re.sub('(?<!\u064F)([\u0648])(?![\u0651\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
+    Strng = re.sub('(?<!\u064F)([\u0648]\u0651)(?![\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
+
+    #print(Strng)
     #print('here2', Strng)
 
     return Strng
@@ -136,10 +142,21 @@ def FixSemiticRoman(Strng, Source):
         Strng = PostProcess.AlephMaterLectionis(Strng)
 
     if "\u05CC" in Strng:
+        #print('before1', Strng)
         Strng = PostProcess.removeSemiticLetters(Strng)
+        #print('after1', Strng)
+
+        ## Fix Ayin -> Aleph approximation
+        AyinAlephInitial = [('ʾa', 'ʾ'),('ʾā', 'ā̂'), ('ʾi', 'î'), ('ʾī', 'ī̂'), ('ʾu', 'û'), ('ʾū', 'ū̂'), ('ʾe', 'ê'), ('ʾē', 'ē̂'),\
+                             ('ʾo', 'ô'), ('ʾō', 'ō̂')]
+
+        for x, y in AyinAlephInitial:
+            Strng = Strng.replace(x, y)
+
         ## Also make changes in PostOptionsLatn
         if Source == 'Arab':
             Strng = PostProcess.arabizeLatn(Strng, target="indic")
+            #print('after2', Strng)
         elif Source == 'Arab-Ur' or Source == 'Arab-Pa' or Source == 'Arab-Fa':
             Strng = PostProcess.urduizeLatn(Strng, target="indic")
         elif Source == 'Syrn':
@@ -175,6 +192,8 @@ def FixSemiticRoman(Strng, Source):
             for vow1, vow2 in zip(vowelsInDepSyrc1, vowelsInDepSyrc2):
                 Strng = re.sub('(?<!\w)' + vow1, vow2, Strng)
 
+            Strng = Strng.replace('̂̂', '̂').replace('ô̂', 'ô') # [oi]^^ -> i^
+
             if "\uF001" in Strng:
                 Strng = re.sub('(' + consSyrc + ')' + '(?!' + vowelsDepSyrc + ')', r'\1' + vir, Strng)
 
@@ -189,9 +208,21 @@ def FixSemiticRoman(Strng, Source):
         Strng = re.sub('(ŵ)(?=' + basic_vowels + ')', "w", Strng)
         Strng = re.sub('(ŷ)(?=' + basic_vowels + ')', "y", Strng)
 
-        print(Strng)
-
         Strng = re.sub('(?<=' + cons_prev + ')' + 'a(?!(ŵ|ŷ|\u0304|\u032E))', '', Strng)
+        Strng = re.sub('(?<=ḧ)' + 'a(?!(ŵ|ŷ|\u0304|\u032E))', '', Strng)
+
+        ## Hamza with vowels
+        if 'Arab' in Source:
+            simp_vow = 'a ā i ī u ū'.split(' ')
+            init_vow = 'â ā̂ î ī̂ û ū̂'.split(' ')
+
+            # Hamsa + vow -> indep vow
+            for x, y in zip(simp_vow, init_vow):
+                Strng = re.sub('ʔ' + x, y, Strng)
+
+            # remove leftover hamza if nativizing
+            if "\u05CC" in Strng:
+                Strng = Strng.replace("ʔ", "")
 
     ## Semitic to Indic equivalents
     SemiticIndic=[('ṣ', 'sQ'), ('ʿ', 'ʾQ'), ('ṭ', 'tQ'), ('ḥ', 'hQ'), \
@@ -204,7 +235,9 @@ def FixSemiticRoman(Strng, Source):
     for s, i in SemiticIndic:
         Strng = Strng.replace(s, i)
 
-    #print(Strng)
+    if 'Arab' in Source:
+        Strng = re.sub('(\u033D)([iuā])', r'\2', Strng)
+        Strng = re.sub('(\u033D)([a])', '', Strng)
 
     ## Lone Aliph to Nukta
     Strng = Strng.replace('ʾ', 'â')

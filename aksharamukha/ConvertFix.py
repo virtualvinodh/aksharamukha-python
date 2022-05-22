@@ -2824,7 +2824,9 @@ def FixArab(Strng, Source, reverse=False):
         pass
         #Strng = Strng.replace('â', 'ʾ')
     else:
-        pass
+        Strng = Strng.replace('آ', 'آ').replace('ـ', '')
+        ## reverse shadda kasra
+        Strng = Strng.replace('\u064E\u0651', '\u0651\u064E')
 
     return Strng
 
