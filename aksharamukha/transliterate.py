@@ -220,6 +220,56 @@ def detect_preoptions(text, inputScript):
 def convert(src, tgt, txt, nativize, preoptions, postoptions):
     tgtOld = ""
 
+    ## ALA-LC Romanizations
+    ## If associated script of LoC is not in Source, convert source into that script. The convert it to the actual target
+    ## Text (non-Burmese) -> Burmese -> LoC
+    if tgt == 'IASTLOC' and src != 'Burmese':
+        txt = convert(src, "Burmese", txt, nativize, preoptions, postoptions)
+        src = 'Burmese'
+
+    ## process as follows, if source is associated with LoC script
+    if tgt == 'IASTLOC' and src == 'Burmese':
+        # the below order for preoptions is important
+        preoptions = preoptions + [tgt + src + 'Target']
+        postoptions =  [tgt + src + 'Target'] + postoptions
+        nativize = False
+
+    ## if target is associated with the loc Script
+    if src == 'IASTLOC' and tgt == 'Burmese':
+        preoptions = [src + tgt + 'Source'] + preoptions
+        postoptions =  [src + tgt + 'Source'] + postoptions
+        nativize = False
+
+    ## else convert the Loc input into the associated script and then convert it into Loc
+    ## Text (Loc) -> Burmese -> non-Burmese
+    if src == 'IASTLOC' and tgt != 'Burmese':
+        txt = convert(src, "Burmese", txt, nativize, preoptions, postoptions)
+        src = 'Burmese'
+
+    ## Semitic ISO Standards
+    ### same as below use intermediates to convert non-associated input/output
+    if tgt in GeneralMap.semiticISO.keys():
+        if GeneralMap.semiticISO[tgt] != src:
+            txt = convert(src, GeneralMap.semiticISO[tgt], txt, nativize, preoptions, postoptions)
+            src = GeneralMap.semiticISO[tgt]
+
+        if GeneralMap.semiticISO[tgt] == src:
+            preoptions = [tgt + 'Target'] + preoptions
+            postoptions =  [tgt + 'Target'] + postoptions
+            nativize = False
+            tgt = 'Latn'
+
+    if src in GeneralMap.semiticISO.keys():
+        if GeneralMap.semiticISO[src] == tgt:
+            print('here1')
+            preoptions = [src + 'Source'] + preoptions
+            postoptions = [src + 'Source'] + postoptions
+            src = 'Latn'
+        else:
+            print('here2')
+            txt = convert(src, GeneralMap.semiticISO[src], txt, nativize, preoptions, postoptions)
+            src = GeneralMap.semiticISO[src]
+
     if src == "Itrans" and '##' in txt:
         textNew = [[i,word] for i, word in enumerate(txt.split("##")) if (i%2 == 0)]
         textRest = [(i,word) for i, word in enumerate(txt.split("##")) if (i%2 == 1)]
@@ -231,36 +281,12 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     if preoptions == [] and postoptions == [] and nativize == False and src == tgt:
         return txt
 
-    ## ALA-LC Romanization
-    if tgt == 'ALALCBurmese':
-        # the below order for preoptions is important
-        preoptions = preoptions + [tgt + 'Target']
-
-        postoptions =  [tgt + 'Target'] + postoptions
-        tgt = 'IAST'
-    if src == 'ALALCBurmese':
-        preoptions = [src + 'Source'] + preoptions
-        postoptions =  [src + 'Source'] + postoptions
-        src = 'IAST'
-
-    ## Semitic ISO Standards
-    semiticISO = ['ISO259', 'HebrewSBL', 'ISO233', 'PersianDMG']
-    if tgt in semiticISO:
-        preoptions = [tgt + 'Target'] + preoptions
-        postoptions =  [tgt + 'Target'] + postoptions
-        nativize = False
-        tgt = 'Latn'
-    elif src in semiticISO:
-        preoptions = [src + 'Source'] + preoptions
-        postoptions = [src + 'Source'] + postoptions
-        src = 'Latn'
-
     ## Semitic Switches - Add Shahmukhi/Sindhi later
     IndicSemiticMapping = { 'Hebrew': 'Hebr', 'Thaana': 'Thaa', 'Urdu': 'Arab-Ur', 'Shahmukhi': 'Arab-Pa'}
 
-    if tgt in GeneralMap.SemiticScripts and src in IndicSemiticMapping.keys():
+    if (tgt in GeneralMap.SemiticScripts or tgt in GeneralMap.semiticISO.keys()) and src in IndicSemiticMapping.keys():
         src = IndicSemiticMapping[src]
-    if src in GeneralMap.SemiticScripts and tgt in IndicSemiticMapping.keys():
+    if (src in GeneralMap.SemiticScripts or src in GeneralMap.semiticISO.keys()) and tgt in IndicSemiticMapping.keys():
         tgt = IndicSemiticMapping[tgt]
     if src in IndicSemiticMapping.keys() and tgt in IndicSemiticMapping.keys():
         src = IndicSemiticMapping[src]
