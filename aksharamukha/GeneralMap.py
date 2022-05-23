@@ -63,7 +63,7 @@ MainIndic = ['Nandinagari','Shahmukhi', 'TamilExtended','MasaramGondi','GunjalaG
 EastIndic =['BurmeseALALC', 'Makasar', 'Kawi', 'Pallava', 'LaoTham', 'LueTham', 'KhuenTham', 'Marchen', 'Soyombo', 'KhomThai', 'KhamtiShan', 'TaiLaing', 'Mon', 'Shan', 'ZanabazarSquare','Rejang', 'Lao2','Buhid', 'Hanunoo', 'Siddham', 'Tibetan','Lao','TaiTham','Cham','BatakKaro','BatakPakpak','BatakSima','BatakToba','BatakManda','LaoPali','PhagsPa','Buginese','Tagbanwa','Tagalog','Sundanese','Balinese','Burmese','Javanese','Khmer','Siddham','Ranjana','Thaana','Thai', 'BurmeseALALC']
 NonIndic = ['OldPersian', 'Hebrew']
 Roman =['IASTLOC', 'RomanSemitic', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya', 'Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng',"WX-kok",'Avestan','HK','IAST','ISO','Itrans','Titus','Titus','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
-RomanDiacritic = ['IAST','Titus','ISO','IPA', 'IASTPali']
+RomanDiacritic = ['IAST','Titus','ISO','IPA', 'IASTPali', 'ISOPali', 'IASTLOC', 'ISOLOC', 'RomanSemitic']
 
 ScriptCategory = {}
 
@@ -88,7 +88,6 @@ DiacriticsRemovableTamil = ['ˇ', 'ˆ', '˘', '\u00B7']
 ScriptAll = ['Aytham', 'Signs', 'CombiningSigns', 'VowelSigns', 'Vowels', 'Consonants', 'Numerals']
 
 IndicScripts = [
-               'BurmeseALALC',
                'RomanSemitic',
                 'Makasar',
                 'Nandinagari',
@@ -196,7 +195,7 @@ Gemination =  {
 
 Transliteration = ['IASTPali', 'RomanReadable', 'Aksharaa', 'ISO', 'IAST', 'HK','Titus','Itrans','Velthuis','WX', 'IPA', 'RussianCyrillic']
 
-SemiticScripts = ['Arab-Pa', 'Syrj', 'Syrn', 'Syre', 'Thaa', 'Arab-Ur', 'Arab-Ph', 'Arab-Ga', 'Type', 'Hebr-Ar', 'Arab-Fa', 'Latn', 'Arab', 'Ethi', 'Armi', 'Brah', 'Chrs', 'Egyp', 'Elym', 'Grek', 'Hatr', 'Hebr', 'Mani', 'Narb', 'Nbat', 'Palm', 'Phli', 'Phlp', 'Phnx', 'Prti', 'Samr', 'Sarb', 'Sogd', 'Sogo', 'Ugar']
+SemiticScripts = ['Arab-Pa', 'Syrj', 'Syrn', 'Syre', 'Thaa', 'Arab-Ur', 'Type', 'Hebr-Ar', 'Arab-Fa', 'Latn', 'Arab', 'Ethi', 'Armi', 'Brah', 'Chrs', 'Egyp', 'Elym', 'Grek', 'Hatr', 'Hebr', 'Mani', 'Narb', 'Nbat', 'Palm', 'Phli', 'Phlp', 'Phnx', 'Prti', 'Samr', 'Sarb', 'Sogd', 'Sogo', 'Ugar']
 
 ## Add new consonants here
 

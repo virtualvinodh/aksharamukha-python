@@ -53,11 +53,13 @@ def HebrewSBLTarget(Strng):
         ('g', 'ḡ'), ('ḡ꞉', 'g'),\
             ('t', 'ṯ'), ('ṯ꞉', 't'),
          ('š̪', 'ś'), ('š̮', 'š'),
-        ('ō', 'ô'), ('ū', 'û'), ('\u033D', 'ĕ')
+        ('ō', 'ô'), ('o', 'ō'), ('ū', 'û'), ('\u033D', 'ĕ')
     ]
 
     for x, y in replacements:
         Strng = Strng.replace(x, y)
+
+    Strng = Strng.replace('ĕ꞉', '꞉ĕ')
 
     if '\u05CE' in Strng:
         Strng = Strng.replace('ḏ', 'd').replace('ṯ', 't').replace('ḡ', 'g').replace('\u05CE', '')
@@ -69,7 +71,11 @@ def HebrewSBLTarget(Strng):
 def removetddash(Strng):
     Strng += '\u05CE'
 
+    Strng = Strng.replace('d', 'd꞉').replace('t', 't꞉').replace('g', 'g꞉')
+    Strng = Strng.replace('ḏ', 'd').replace('ṯ', 't').replace('ḡ', 'g').replace('\u05CE', '')
+
     return Strng
+
 
 def ISO259Source(Strng):
 
