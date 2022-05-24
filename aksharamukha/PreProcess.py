@@ -906,6 +906,10 @@ def PreProcess(Strng,Source,Target):
         Strng = re.sub('([وي])(?=[\u064E\u0650\u064F\u0651\u064B\u064C\u064D])', '\u02DE' + r'\1', Strng)
         #Strng = re.sub('((\u064E|\u0650|\u0652|\u064F))(\u0651)', r'\2', Strng)
 
+    if Source in ["Syrj", "Syrn"]:
+        Strng = Strng.replace('\u0323', '\u0742')
+
+
     if Source == 'Itrans':
         sOm = 'OM'
         tOm = 'oM'

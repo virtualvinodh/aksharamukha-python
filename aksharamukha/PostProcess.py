@@ -211,8 +211,10 @@ def syricizeLatn(Strng, target='semitic'):
 
     # opt 3
     if target != 'indic':
-        Strng = re.sub('â', 'a', Strng)
-        Strng = re.sub('ā̂', 'ā', Strng)
+        Strng = re.sub('â', 'ʾa', Strng)
+        Strng = re.sub('ā̂', 'ʾā', Strng)
+        Strng = re.sub("ê", "ʾe", Strng)
+        Strng = re.sub("ē̂", "ʾē", Strng)
 
     if target != 'indic':
         Strng = LatnInitialVowels(Strng)
@@ -227,7 +229,7 @@ def hebraizeLatn(Strng, target='semitic'):
     return Strng
 
 def syriacRoman(Strng):
-    Strng = Strng.replace('v', 'ḇ').replace('ḡ','ḡ').replace('ḫ','ḵ').replace('f','p̄')
+    Strng = Strng.replace('v', 'ḇ').replace('ġ','ḡ').replace('ḫ','ḵ').replace('f','p̄')
 
     return Strng
 
