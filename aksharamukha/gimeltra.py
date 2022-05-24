@@ -101,7 +101,10 @@ class Transliterator(object):
         for char in chars_missing:
             if char in self.db_simplify:
                 #print(char, self.db_simplify[char])
-                if '\u033D' in char or '\u033D' in self.db_simplify[char]: ## override for Virama
+                ## if Virama is misssing and characts has virama remove virama
+                if '\u033D' in chars_missing and '\u033D' in self.db_simplify[char]:
+                    #print('here removing vriama')
+                    #print(char, self.db_simplify[char])
                     text = text.replace(char, self.db_simplify[char])
                     text = text.replace('\u033D', self.db_simplify['\u033D'])
                 else:
