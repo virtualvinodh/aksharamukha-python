@@ -12,6 +12,8 @@ from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 ### Use escape char in all functions
 
 def IASTLOCBurmeseSource(Strng):
+    Strng = Strng.replace('ṁ', 'ṃ')
+
     # adhoc chars
     chars_misc = {
         "e*": "၏",

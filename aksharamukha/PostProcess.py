@@ -415,6 +415,8 @@ def IASTLOCBurmeseTarget(Strng):
     for lat, bur in chars_misc.items():
         Strng = Strng.replace(bur, lat)
 
+    Strng = Strng.replace('ṃ', 'ṁ')
+
     return Strng
 
 ### Add new consonants here when added to gimeltra_data
