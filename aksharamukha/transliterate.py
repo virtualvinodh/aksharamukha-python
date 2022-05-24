@@ -168,10 +168,13 @@ def auto_detect(text, plugin = False):
         diacritics = ['ā', 'ī', 'ū', 'ṃ', 'ḥ', 'ś', 'ṣ', 'ṇ', 'ṛ', 'ṝ', 'ḷ', 'ḹ', 'ḻ', 'ṉ', 'ṟ', 'ṭ', 'ḍ', 'ṅ', 'ñ']
         Itrans = ['R^i', 'R^I', 'L^i', 'L^I', '.N', '~N', '~n', 'Ch', 'sh', 'Sh']
         semitic = ['ʾ', 'ʿ', 'š', 'w']
+        BurmeseLOC = ['´', '˝', 'ʻ']
         if 'ʰ' in text:
             inputScript = 'Titus'
         elif any(char in text for char in semitic):
             inputScript = 'Latn'
+        elif any(char in text for char in BurmeseLOC):
+            inputScript = 'IASTLOC' ## Change for other LoC schemese
         elif any(char in text for char in diacritics):
             if 'ē' in text or 'ō' in text or 'r̥' in text:
                 inputScript = 'ISO'
