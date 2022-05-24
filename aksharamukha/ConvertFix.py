@@ -612,6 +612,10 @@ def FixMongolian(Strng, reverse=False):
         Strng = Strng.replace(' \u02BC', '\u200B')
         Strng = Strng.replace('\u02BC', '\u200B')
 
+    else:
+        ## add variation seelct one
+        Strng = re.sub('(ᠠ)(?<!\u180B)', r'\1' + '\u180B', Strng)
+
     return Strng
 
 def FixHanifiRohingya(Strng, reverse=False):
