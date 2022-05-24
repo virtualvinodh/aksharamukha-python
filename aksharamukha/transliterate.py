@@ -181,7 +181,7 @@ def auto_detect(text, plugin = False):
             inputScript = 'Itrans'
         else:
             inputScript = 'HK'
-    elif inputScript in GeneralMap.IndicScripts or inputScript in ['Hiragana', 'Katakana']:
+    elif inputScript in GeneralMap.IndicScripts or inputScript in GeneralMap.LatinScripts or inputScript in ['Hiragana', 'Katakana']:
         pass
     else:
         from . import gimeltra
