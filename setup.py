@@ -26,7 +26,7 @@ setup(
   # https://packaging.python.org/en/latest/single_source_version.html
   version='2',
 
-  description='Provides script conversion (a.k.a transliteration) between scripts within the Indic cultural sphere',
+  description='Provides script conversion (a.k.a transliteration) between various scripts',
   long_description=long_description,
   long_description_content_type='text/markdown',
 
@@ -62,6 +62,8 @@ setup(
     'Natural Language :: Urdu',
     'Natural Language :: Thai',
     'Natural Language :: Tibetan',
+    'Natural Language :: Hebrew',
+    'Natural Language :: Arabic',
 
     'Topic :: Text Processing :: Linguistic',
 
@@ -76,7 +78,7 @@ setup(
   ],
 
   # What does your project relate to?
-  keywords='unicode indic indian language script brahmi brahmic asian transliteration conversion writing alphabet romanization',
+  keywords='unicode semitic arabic syriac hebrew indic indian language script brahmi brahmic asian transliteration conversion writing alphabet romanization',
 
   # You can just specify the packages manually here if your project is
   # simple. Or you can use find_packages().
