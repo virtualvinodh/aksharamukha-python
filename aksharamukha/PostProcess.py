@@ -301,7 +301,7 @@ def removeQussaya(Strng):
 def removeVowelsSyriac(Strng):
     Strng = re.sub('[\u0732\u0735\u073C\u0738\u0739\u073F]', '', Strng)
 
-    Strng = re.sub('[ّܰܶܺܽ]', '', Strng)
+    Strng = re.sub('[ّܰܶܺܽܳ]', '', Strng)
 
     return Strng
 
