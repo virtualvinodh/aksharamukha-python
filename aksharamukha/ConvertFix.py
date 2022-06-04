@@ -3126,7 +3126,7 @@ def FixBengali(Strng, reverse=False):
     Virama = ''.join(GM.CrunchSymbols(['ViramaMap'], 'Bengali'))
     ba = 'ব'
 
-    Strng = re.sub('(?<![বম])' + Virama + ba,  Virama + '\u200C' + ba, Strng)
+    Strng = re.sub('(?<![রবম])' + Virama + ba,  Virama + '\u200C' + ba, Strng)
 
     Strng = PostProcess.KhandaTa(Strng, 'Bengali', reverse)
 
