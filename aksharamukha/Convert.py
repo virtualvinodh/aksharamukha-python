@@ -206,7 +206,7 @@ def convertScript(Strng,Source,Target):
         #Sort based on Length - Longest first
         charPairs = sorted(charPairs,key=cmp_to_key(lenSort))
 
-        print(Strng)
+        #print(Strng)
 
         # Perform replacement sequentially for each character group
         for x,y in charPairs:

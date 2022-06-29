@@ -23,6 +23,37 @@ def default(Strng):
 
     return Strng
 
+def KannadaNotRepha(Strng):
+    ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Kannada')) + ")"
+
+    Strng = re.sub('ರ್(?=' + ListC + ')', 'ರ‍್', Strng)
+
+    return Strng
+
+def KannadaNakaraPollu(Strng):
+    ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Kannada')) + ")"
+
+    Strng = re.sub('ನ್(?!' + ListC + ')', '\u0CDD', Strng)
+
+    return Strng
+
+def TeluguRemoveNukta(Strng):
+    Strng = Strng.replace('\u0C3C', '')
+
+    return Strng
+
+def TeluguRemoveAeAo(Strng):
+    Strng = Strng.replace('\u0952\u200B', '')
+
+    return Strng
+
+def TeluguNakaraPollu(Strng):
+    ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Telugu')) + ")"
+
+    Strng = re.sub('న్(?!' + ListC + ')', '\u0C5D', Strng)
+
+    return Strng
+
 def syriacVowelsBelow(Strng):
 
     return Strng

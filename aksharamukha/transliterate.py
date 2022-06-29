@@ -17,6 +17,8 @@ import warnings
 import langcodes
 from inspect import getmembers, isfunction
 
+#import sys
+#sys.stdout = None
 
 def removeA(a):
     if a.count('a') == 1:
@@ -264,12 +266,12 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     if src in GeneralMap.semiticISO.keys():
         if GeneralMap.semiticISO[src] == tgt:
-            print('here1')
+            #print('here1')
             preoptions = [src + 'Source'] + preoptions
             postoptions = [src + 'Source'] + postoptions
             src = 'Latn'
         else:
-            print('here2')
+            #print('here2')
             txt = convert(src, GeneralMap.semiticISO[src], txt, nativize, preoptions, postoptions)
             src = GeneralMap.semiticISO[src]
 
@@ -314,7 +316,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     ## recheck this the logic is missing :: This is not required
     """if src in ['Urdu', 'Shahmukhi'] and tgt == 'Arab':
-        print('Semiticizing Urdu')
+        #print('Semiticizing Urdu')
         txt = PreProcess.semiticizeUrdu(txt)
         txt = PreProcess.ArabizePersian(txt)
         src = "Arab-Fa"
