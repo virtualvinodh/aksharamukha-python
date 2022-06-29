@@ -1157,6 +1157,11 @@ def normalize(Strng,Source):
 
     Strng = Strng.replace('ൻ്റ', 'ന്റ')
 
+    # Telugu/Kananda Nakaarapollu
+
+    Strng = Strng.replace('ೝ', 'ನ್') # Kannada
+    Strng = Strng.replace('ౝ', 'న్') # Telugu
+
     # Bengali Khanda Ta
 
     Strng = Strng.replace("ৎ","ত্‍")

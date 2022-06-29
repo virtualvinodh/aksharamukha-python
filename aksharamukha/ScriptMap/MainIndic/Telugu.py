@@ -118,18 +118,18 @@ SouthConsonantMap = [
                     '\u0C33',
                     'ఴ',
                     '\u0C31',
-                    '\u0C28\u00B7'
+                    '\u0C28\u0C3C'
                     ]
 
 NuktaConsonantMap =  [
-                     '\u0C15\u00B7',
-                     '\u0C16\u00B7',
-                     '\u0C17\u00B7',
-                     '\u0C1C\u00B7',
-                     '\u0C21\u00B7',
-                     '\u0C22\u00B7',
-                     '\u0C2B\u00B7',
-                     '\u0C2F\u00B7'
+                     '\u0C15\u0C3C',
+                     '\u0C16\u0C3C',
+                     '\u0C17\u0C3C',
+                     '\u0C1C\u0C3C',
+                     '\u0C21\u0C3C',
+                     '\u0C22\u0C3C',
+                     '\u0C2B\u0C3C',
+                     '\u0C2F\u0C3C'
                      ]
 
 SinhalaConsonantMap =[
@@ -141,7 +141,7 @@ SinhalaConsonantMap =[
                       ]
 
 NuktaMap = [
-           '\u00B7'
+           '\u0C3C'
            ]
 
 OmMap = [

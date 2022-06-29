@@ -15,7 +15,10 @@ def ApplyScriptDefaults(Strng,Source,Target, PostOptions=[]):
     if Target in GM.IndicScripts:
         Options += []#['RemoveDiacritics'] #Sometimes you may wanna keep it. Adjust options
 
-    if Target == 'Telugu' or Target == 'Kannada':
+    if Target == 'Telugu':
+        Options += ['NasalToAnusvara','MToAnusvara', 'TeluguRemoveNukta', 'TeluguRemoveAeAo']
+
+    elif Target == 'Kannada':
         Options += ['NasalToAnusvara','MToAnusvara']
 
     elif Target == 'Nandinagari':
