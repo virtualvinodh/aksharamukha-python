@@ -12,8 +12,6 @@ from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 ### Use escape char in all functions
 
 def IASTLOCBurmeseSource(Strng):
-    Strng = Strng.replace('ṁ', 'ṃ')
-
     # adhoc chars
     chars_misc = {
         "e*": "၏",
@@ -25,18 +23,20 @@ def IASTLOCBurmeseSource(Strng):
     for lat, bur in chars_misc.items():
         Strng = Strng.replace(lat, bur)
 
+    Strng = Strng.replace('ṁ', 'ṃ')
+
     # reverse danda to comma and double danda to full stop
     Strng = Strng.replace(',', '၊').replace('.', '။')
 
-    # restore visarga
-    Strng = Strng.replace('˝', 'ḥ')
+    # restore visarga and fix incorrect diacritic character
+    Strng = Strng.replace('˝', 'ʺ').replace('ʺ', 'ḥ')
 
-    # restore tone
-    Strng = Strng.replace('´', '˳')
+    # restore visarga and fix incorrect diacritic character
+    Strng = Strng.replace('´','ʹ').replace('ʹ', '˳')
 
-    # replace quotation mark with modifier letter
+    # replace modifier letter with quotation mark
     vowelSigns = '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, 'IAST'))
-    Strng = re.sub('(’)(a|' + vowelSigns + ')', 'ʼ' + r'\2', Strng)
+    Strng = re.sub('(ʼ)(a|' + vowelSigns + ')', '’' + r'\2', Strng)
 
     # left quotation mark -> modifier letter comma
     consonants = '|'.join(GM.CrunchSymbols(GM.Consonants, 'IAST'))
@@ -65,6 +65,9 @@ def segmentBurmeseSyllables(Strng):
     return Strng
 
 def IASTLOCBurmeseTarget(Strng):
+    # asat + virma to just virama
+    Strng = Strng.replace('\u103A\u1039', '\u1039')
+
     # swap iu -> ui
     Strng = Strng.replace('\u102D\u102F', '\u102F\u102D')
 
@@ -88,7 +91,7 @@ def IASTLOCBurmeseTarget(Strng):
     Strng = Strng.replace(aThat, aThat + 'ʻ')
 
     # mark a as glottalstop
-    Strng = Strng.replace('အ','ʼအ')
+    Strng = Strng.replace('အ','’အ')
 
     # replace vowel + diac with vowels
     vowDep = 'အော် အော အိ အီ အု အူ အေ'.split(' ')

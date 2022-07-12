@@ -397,18 +397,24 @@ def IASTLOCBurmeseSource(Strng):
         # Undo Replace subjoining forms: exp-virama + y/r/v/h <- subjoining y/r/v/h
         Strng = Strng.replace(virsub + x, y)
 
-    # u-Indep-i -> u-dep-i
-    Strng = Strng.replace('\u102Fဣ', '\u102D\u102F')
-
     # reverse replace vowel + diac with vowels
     vowDep = 'အော် အော အိ အီ အု အူ အေ'.split(' ')
     vowIndep = 'ဪ ဩ ဣ ဤ ဥ ဦ ဧ'.split(' ')
 
+    ## Fix modifier letter apostrephe to normal quotation mark
+    Strng = Strng.replace('ʼ', '’')
+
     for x, y in zip(vowDep, vowIndep):
-        Strng = Strng.replace('ʼ' + y, x)
+        Strng = Strng.replace('’' + y, x)
+
+    # u-Indep-i -> u-dep-i
+    Strng = Strng.replace('\u102Fဣ', '\u102D\u102F')
 
     # reverse mark a as glottalstop
-    Strng = Strng.replace('ʼအ', 'အ')
+    Strng = Strng.replace('’အ', 'အ')
+
+    # swap tone + virama to proper order
+    Strng = Strng.replace("့်", "့်")
 
     return Strng
 
@@ -424,13 +430,13 @@ def removeSegmentSpacesBurmese(Strng):
 def IASTLOCBurmeseTarget(Strng):
     #print(Strng)
     # mark tone
-    Strng = Strng.replace('˳', '´')
+    Strng = Strng.replace('˳', 'ʹ')
 
     # mark depaend au -> o'
     Strng = Strng.replace('auʻ','oʻ')
 
     # mark visarga as tone
-    Strng = Strng.replace('ḥ', '˝')
+    Strng = Strng.replace('ḥ', 'ʺ')
 
     # sort subjoined consonants
     # Strng = Strng.replace('‘‘', '')
@@ -446,7 +452,7 @@ def IASTLOCBurmeseTarget(Strng):
     for lat, bur in chars_misc.items():
         Strng = Strng.replace(bur, lat)
 
-    Strng = Strng.replace('ṃ', 'ṁ')
+    #Strng = Strng.replace('ṃ', 'ṁ')
 
     return Strng
 
