@@ -1,5 +1,4 @@
 from aksharamukha import GeneralMap
-import re
 
 from aksharamukha.gimeltra import Transliterator
 from . import Convert,PostOptions,PostProcess,PreProcess
@@ -16,12 +15,7 @@ import yaml
 import warnings
 import langcodes
 from inspect import getmembers, isfunction
-import xml.etree.ElementTree as ET
-import tempfile
-from bs4 import BeautifulSoup
 from lxml import etree
-import shutil
-import os
 from zipfile import ZipFile
 
 #import sys
@@ -524,102 +518,42 @@ def convert_default(src, tgt, txt, nativize = True, post_options = [], pre_optio
 
     return convert(src, tgt, txt, nativize, pre_options, post_options)
 
-'''tmp dir approach'''
+def convert_docx(src, tgt, file, nativize, pre_options, post_options):
+    new_file = io.BytesIO()      
 
-
-def convert_docx_files_tmp(src, tgt, docx_file, nativize, pre_options, post_options):
-    # create a temporary dir
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        # move the docx file to tmp dir and convert to zip file
-        shutil.move(docx_file, tmp_dir + "\\.zip")
-
-        # extract the file in subdir inside tmpdir
-        with tempfile.TemporaryDirectory(dir=tmp_dir) as tmp_sub_dir:
-            shutil.unpack_archive(tmp_dir + "\\.zip", tmp_sub_dir)
-
-            # get all xml files inside word folder
-            files_to_convert = [f for f in os.listdir(
-                tmp_sub_dir + '/word') if f.endswith('.xml')]
-            # convert xml files data
-            for file_name in files_to_convert:
-                with open((tmp_sub_dir + '/word/' + file_name), "rb") as xml_file:
-                # BeautifulSoup approach
-                    # tree = BeautifulSoup(xml_file, 'xml')
-                    # for element in tree.find_all('w:t'):
-                    #     element.string.replace_with(convert(
-                    #             src, tgt, element.text, nativize, post_options, pre_options))
-                    
-                    # strr = str(tree).encode("UTF-8")
-
-                # lxml approach
-                    tree = etree.parse(xml_file)
-                    for element in tree.getroot().iter():
-                        if element.tag == "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t":
-                            element.text = convert(
-                                src, tgt, element.text, nativize, post_options, pre_options)
-
-                    str = etree.tostring(
-                                tree.getroot(), xml_declaration=True, encoding="UTF-8", standalone=True)
-
-                
-                with open((tmp_sub_dir + '/word/' + file_name), "wb") as f:
-                    f.write(str)
-
-            shutil.make_archive(root_dir=tmp_sub_dir,
-                                format='zip',
-                                base_name=tmp_dir + "//new_file")
-
-        shutil.move(tmp_dir + "//new_file.zip", docx_file)
-
-
-'''in-memory approach'''
-
-
-def convert_docx_files_memory(src, tgt, docx_file, nativize, pre_options, post_options):
-    new_zip = io.BytesIO()
-
-    # change the extension of the docx file to zip
-    pre, ext = os.path.splitext(docx_file)
-    os.rename(docx_file, pre + ".zip")
-    zip_file = pre + ".zip"
-
-    with ZipFile(zip_file, 'r') as old_archive:
-        with ZipFile(new_zip, 'w') as new_archive:
+    with ZipFile(file, 'r') as old_archive:
+        with ZipFile(new_file, 'w') as new_archive:
             for item in old_archive.filelist:
                 if item.filename.startswith('word/') and item.filename.endswith('.xml'):
                     with old_archive.open(item, 'r') as xml_file:
-                        # BeautifulSoup approach
-                        # tree = BeautifulSoup(xml_file, 'xml')
-                        # for element in tree.find_all('w:t'):
-                        #     element.string.replace_with(convert(
-                        #             src, tgt, element.text, nativize, post_options, pre_options))
-
-                        # new_archive.writestr(item, str(tree))
-                        
-                        # lxml approach
                         tree = etree.parse(xml_file)
                         for element in tree.getroot().iter():
                             if element.tag == "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t":
                                 element.text = convert(
                                     src, tgt, element.text, nativize, post_options, pre_options)
 
-                        str = etree.tostring(
+                        string = etree.tostring(
                         tree.getroot(), xml_declaration=True, encoding="UTF-8", standalone=True)
 
-                        new_archive.writestr(item, str)
+                        new_archive.writestr(item, string)
 
                 else:
                     # Copy other contents as it is
                     new_archive.writestr(item, old_archive.read(item.filename))
 
-    # Flush new zip to dir of old archive
-    with open(zip_file, 'wb') as f:
-        f.write(new_zip.getbuffer())
-
-    new_zip.close()
-
-    pre, ext = os.path.splitext(zip_file)
-    os.rename(zip_file, pre + ".docx")
+    if(isinstance(file, str)):
+        # python package use
+        # Flush new zip to the file
+        with open(file, 'wb') as f:
+            f.write(new_file.getvalue())
+    else:
+        # web-api call
+        # Flush new zip into new in-memory stream
+        file = io.BytesIO(new_file.getvalue())
+    
+    new_file.close()
+     
+    return file
 
 def process_default(src, tgt, txt, nativize, post_options, pre_options):
     scriptList = GeneralMap.IndicScripts + GeneralMap.LatinScripts
