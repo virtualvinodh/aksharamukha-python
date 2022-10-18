@@ -1,5 +1,4 @@
 from aksharamukha import GeneralMap
-
 from aksharamukha.gimeltra import Transliterator
 from . import Convert,PostOptions,PostProcess,PreProcess
 from . import ConvertFix
@@ -9,14 +8,11 @@ import html
 import itertools
 from collections import Counter
 import unicodedata
-import io
 import collections
 import yaml
 import warnings
 import langcodes
 from inspect import getmembers, isfunction
-from lxml import etree
-from zipfile import ZipFile
 
 #import sys
 #sys.stdout = None
@@ -517,43 +513,6 @@ def convert_default(src, tgt, txt, nativize = True, post_options = [], pre_optio
         warnings.warn(script_not_found)
 
     return convert(src, tgt, txt, nativize, pre_options, post_options)
-
-def convert_docx(src, tgt, file, nativize, pre_options, post_options):
-    new_file = io.BytesIO()      
-
-    with ZipFile(file, 'r') as old_archive:
-        with ZipFile(new_file, 'w') as new_archive:
-            for item in old_archive.filelist:
-                if item.filename.startswith('word/') and item.filename.endswith('.xml'):
-                    with old_archive.open(item, 'r') as xml_file:
-                        tree = etree.parse(xml_file)
-                        for element in tree.getroot().iter():
-                            if element.tag == "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t":
-                                element.text = convert(
-                                    src, tgt, element.text, nativize, post_options, pre_options)
-
-                        string = etree.tostring(
-                        tree.getroot(), xml_declaration=True, encoding="UTF-8", standalone=True)
-
-                        new_archive.writestr(item, string)
-
-                else:
-                    # Copy other contents as it is
-                    new_archive.writestr(item, old_archive.read(item.filename))
-
-    if(isinstance(file, str)):
-        # python package use
-        # Flush new zip to the file
-        with open(file, 'wb') as f:
-            f.write(new_file.getvalue())
-    else:
-        # web-api call
-        # Flush new zip into new in-memory stream
-        file = io.BytesIO(new_file.getvalue())
-    
-    new_file.close()
-     
-    return file
 
 def process_default(src, tgt, txt, nativize, post_options, pre_options):
     scriptList = GeneralMap.IndicScripts + GeneralMap.LatinScripts
