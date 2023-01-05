@@ -721,6 +721,9 @@ def RemoveSchwaHindi(Strng):
 
 # consider adding an optional NUkta to the post consonantal position
 def RemoveFinal(Strng, Target):
+    if Target == 'Bengali':
+        Strng = PostProcess.KhandaTa(Strng, Target, True)
+
     VowI = "(" + '|'.join(GM.CrunchSymbols(GM.Vowels,Target)) + ")"
     VowS = "(" + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, Target)) + ")"
     Cons = "(" + '|'.join(GM.CrunchSymbols(GM.Consonants, Target)) + ")"

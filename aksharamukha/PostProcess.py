@@ -2173,6 +2173,7 @@ def KhandaTa(Strng,Target, reverse=False): #Check for Bhakt - Khanda Ta not form
     ListC = '|'.join([GM.CrunchList('ConsonantMap', Target)[x] for x in [15,16,19,27,24,25,26,28]] + ['ৰ', 'য়'])
     if not reverse:
         Strng = re.sub('(?<!' + vir + ')' + '('+ta+')'+'('+vir+')'+'(?!'+ListC+')',khandata, Strng)
+        Strng = Strng.replace('ৎˍ', 'ৎ')
     else:
         Strng = Strng.replace(khandata, ta + vir)
 
