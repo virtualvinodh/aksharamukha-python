@@ -53,6 +53,10 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(transliterate.process('Burmese', 'IASTLOC', '၊ ။'), \
             ', .')
 
+    def test_ll(self):
+        self.assertEqual(transliterate.process('Burmese', 'IASTLOC', 'ပါဠိ'), \
+            'pāḷi')
+
     def test_example_1(self):
         self.assertEqual(transliterate.process('Burmese', 'IASTLOC', 'ကော်မီတီ ဥပုသ် ပန်းကန် ကော်ပြန့်'), \
             'koʻmītī upusʻ panʻʺkanʻ koʻpranʻʹ')
@@ -133,6 +137,10 @@ duṭṭhagāmaṇimaṅʻʺkrīʺvatthu''')
     def test_punct_rev(self):
         self.assertEqual(transliterate.process('IASTLOC', 'Burmese', ', .'), \
             '၊ ။')
+
+    def test_ll_rev(self):
+        self.assertEqual(transliterate.process('IASTLOC', 'Burmese', 'pāḷi'), \
+            'ပါဠိ')
 
     def test_example_1_rev(self):
         self.assertEqual(transliterate.process('IASTLOC', 'Burmese', 'koʻmītī upusʻ panʻʺkanʻ koʻpranʻʹ'), \
