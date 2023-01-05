@@ -173,6 +173,10 @@ def FixSemiticRoman(Strng, Source):
     Strng = Strng.replace('\u032A', '').replace('\u032E', '')
 
     # duplicate consonants
+    ## move do chashmee ha + gemination sign
+    ## tʰ꞉ -> t꞉ʰ
+    Strng = re.sub('([ʰ])(꞉)', r'\2\1', Strng)
+
     Strng = re.sub('([aiuāīū])(꞉)', r'\2\1', Strng)
     Strng = re.sub('(.)(꞉)', r'\1' + vir + r'\1', Strng)
 
@@ -283,6 +287,13 @@ def semiticizeUrdu(Strng):
 def ShowChillus(Strng):
 
     return PostProcess.MalayalamChillu(Strng, True, True)
+
+def ShowKhandaTa(Strng):
+    print(Strng)
+    Strng = Strng.replace('ৎ', 'ত্ˍ')
+    print(Strng)
+
+    return Strng
 
 def eiaudipthongs(Strng):
 
@@ -1167,7 +1178,7 @@ def normalize(Strng,Source):
 
     # Bengali Khanda Ta
 
-    Strng = Strng.replace("ৎ","ত্‍")
+    # Strng = Strng.replace("ৎ","ত্‍")
 
     # Tamil
 

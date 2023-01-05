@@ -35,9 +35,9 @@ def ApplyScriptDefaults(Strng,Source,Target, PostOptions=[]):
 
     elif Target == 'Bengali':
         if 'BengaliRaBa' in PostOptions:
-            Options += ['YaToYYa','AnusvaraToNasal']
+            Options += ['YaToYYa','AnusvaraToNasal', 'BengaliConjunctVB']
         else:
-            Options += ['VaToBa','YaToYYa','AnusvaraToNasal']
+            Options += ['VaToBa','YaToYYa','AnusvaraToNasal', 'BengaliConjunctVB']
 
     elif Target == 'MeeteiMayek':
         Options += ['MeeteiMayekremoveHistorical']

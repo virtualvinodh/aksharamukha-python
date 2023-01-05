@@ -1115,7 +1115,7 @@ def FixShan(Strng, reverse=False):
     if not reverse:
         Strng = Strng.replace('်ရ', 'ြ')
         Strng = Strng.replace('်ယ', 'ျ')
-        Strng = Strng.replace('်ဝ', 'ွ')
+        Strng = Strng.replace('်ဝ', '\u1082')
         Strng = Strng.replace('်ႁ', 'ှ')
 
         ## Maintain the order of the medials
@@ -1134,6 +1134,7 @@ def FixShan(Strng, reverse=False):
         Strng = Strng.replace('ြ', '်ရ')
         Strng = Strng.replace('ျ', '်ယ')
         Strng = Strng.replace('ွ', '်ဝ')
+        Strng = Strng.replace('\u1082', '်ဝ')
         Strng = Strng.replace('ှ', '်ႁ')
 
     return Strng
@@ -1443,6 +1444,10 @@ def FixUrduShahmukhi(Target, Strng,reverse=False):
 
         Strng = re.sub('('+'|'.join(ConUnAsp_a)+')'+'('+vir+')'+r'\1',r'\1'+GM.Gemination[Target],Strng)
 
+        ## Move Shadda to the ha do=chasmee
+        ## katthu -> کَتھُّ
+        Strng = re.sub('(.)(ّ)(\u06BE)', r'\1\3\2', Strng)
+
         ## Fix
 
         Strng = Strng.replace('ےے', 'یے')
@@ -1546,6 +1551,9 @@ def FixUrduShahmukhi(Target, Strng,reverse=False):
             #print(Strng)
 
             ## Gemination ##
+
+            ## Move Shadda before the ha do=chasmee
+            Strng = re.sub('(\u06BE)(ّ)', r'\2\1', Strng)
 
             Strng = re.sub('(' + ShortVowels + ')(ّ)', r'\2'+r'\1', Strng)
             Strng = re.sub('(.)(ّ)', r'\1'+'ْ'+r'\1', Strng)
@@ -2884,6 +2892,7 @@ def FixSogd(Strng, Source, reverse=False):
 
 def FixMalayalam(Strng, reverse=False):
     Strng = PostProcess.MalayalamChillu(Strng, reverse)
+
     if not reverse:
         Strng = PostProcess.RetainDandasIndic(Strng, 'Malayalam', True)
         Strng = PostProcess.RetainIndicNumerals(Strng, 'Malayalam', True)
@@ -3132,6 +3141,10 @@ def FixBengali(Strng, reverse=False):
         pass
 
     Strng = PostProcess.KhandaTa(Strng, 'Bengali', reverse)
+
+    ## Fix স্ভ়ারা  -> স্বারা ; subjoined ba is by default pronounced as /va/ in Bengali
+
+    Strng = Strng.replace('\u09CD\u09AD\u09BC', '\u09CD\u09AC')
 
     return Strng
 
