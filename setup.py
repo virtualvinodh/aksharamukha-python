@@ -24,7 +24,7 @@ setup(
   # Versions should comply with PEP440.  For a discussion on single-sourcing
   # the version across setup.py and the project code, see
   # https://packaging.python.org/en/latest/single_source_version.html
-  version='2.0.4',
+  version='2.1.2',
 
   description='Provides script conversion (a.k.a transliteration) between various scripts',
   long_description=long_description,
@@ -72,9 +72,9 @@ setup(
 
     # Specify the Python versions you support here. In particular, ensure
     # that you indicate whether you support Python 2, Python 3 or both.
-    'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.6',
-    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
   ],
 
   # What does your project relate to?
@@ -93,7 +93,7 @@ setup(
   # requirements files see:
   # https://packaging.python.org/en/latest/requirements.html
   install_requires=['Requests>=2.20.1', 'pykakasi>=2.0.6', 'pyyaml>=5.4.1', 'langcodes>=3.1.0' , 'language_data', \
-    'langcodes>=3.1.0', 'language_data', 'regex>=2021.8.3', 'fonttools[unicode]>=4.31', 'lxml'],
+    'langcodes>=3.1.0', 'language_data', 'regex>=2021.8.3', 'fonttools[unicode]>=4.27', 'lxml'],
 
   # List additional groups of dependencies here (e.g. development
   # dependencies). You can install these using the following syntax,

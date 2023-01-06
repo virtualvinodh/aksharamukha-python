@@ -780,6 +780,7 @@ def process_lang_name(src_name, tgt_name, txt, nativize, post_options, pre_optio
 
     return process_lang_tag(src, tgt, txt, nativize, post_options, pre_options)
 
+@functools.cache
 def get_semitic_json():
     from pathlib import Path
     cwd = Path(Path(__file__).parent)
