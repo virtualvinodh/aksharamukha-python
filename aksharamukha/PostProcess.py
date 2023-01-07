@@ -23,6 +23,11 @@ def default(Strng):
 
     return Strng
 
+def KannadaSpacingCandrabindu(Strng):
+    Strng = Strng.replace('\u0C81', '\u0C80')
+
+    return Strng
+
 def KannadaNotRepha(Strng):
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Kannada')) + ")"
 
@@ -464,11 +469,11 @@ def insertARomanSemitic(Strng):
     vowelsAll = '(' + '|'.join(GM.SemiticVowels) + ')'
     #print(Strng)
     Strng = re.sub(consonantsAll + '(?![꞉ʰ])(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
-    Strng = re.sub('(꞉)(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
+    #print(Strng)
+    Strng = re.sub('(꞉)(?!ʰ)(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
     ## avoid double /a/ just in case
     #Strng = Strng.replace('aa', 'a')
     #Strng = re.sub(consonantsAll + '(?!' + vowelsAll + ')', r'\1' + 'a', Strng)
-
 
     #print(Strng)
 
@@ -2029,6 +2034,9 @@ def MalayalamChillu(Strng, reverse=False, preserve=False):
             Strng = re.sub(ListC + GM.VedicSvaras + '('+ConVir[i]+')'+'(?=(['+''.join(CList[i])+'])' + vir + r'\4' + ')',r'\1\2' + Chillus[i],Strng)
 
 
+        ## remove _ appearing due to the preserve chillu option
+        Strng = re.sub('(?<!ത്)ˍ', '', Strng)
+
     else:
         if preserve:
             for x,y in zip(Chillus, ConVir):
@@ -2116,8 +2124,16 @@ def GurmukhiTippiGemination(Strng):
 
     return Strng
 
+def BengaliConjunctVB(Strng):
+    ## kva / kba will be rendered the same
+    Strng = Strng.replace('\u09CD\u200C\u09AC', '\u09CD\u09AC')
+    Strng = khandatabatova(Strng)
+
+    return Strng
+
 def khandatabatova(Strng):
-    Strng = Strng.replace('ৎব', 'ত্ৱ')
+    Strng = Strng.replace('ৎব', 'ত্ব')
+    Strng = Strng.replace('ৎ\u200Cব', 'ত্ব')
 
     return Strng
 
@@ -2157,6 +2173,7 @@ def KhandaTa(Strng,Target, reverse=False): #Check for Bhakt - Khanda Ta not form
     ListC = '|'.join([GM.CrunchList('ConsonantMap', Target)[x] for x in [15,16,19,27,24,25,26,28]] + ['ৰ', 'য়'])
     if not reverse:
         Strng = re.sub('(?<!' + vir + ')' + '('+ta+')'+'('+vir+')'+'(?!'+ListC+')',khandata, Strng)
+        Strng = Strng.replace('ৎˍ', 'ৎ')
     else:
         Strng = Strng.replace(khandata, ta + vir)
 

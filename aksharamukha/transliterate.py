@@ -481,11 +481,18 @@ def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [],
     if param == "lang_name":
         return process_lang_name(src, tgt, txt, nativize, post_options, pre_options)
 
-def convert_default(src, tgt, txt, nativize = True, post_options = [], pre_options = []):
+import functools
+
+@functools.cache
+def _load_data(file_path):
     import os
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(dir_path + "/yaml/aksharamukha-scripts.yaml", 'r') as stream:
+    with open(dir_path + file_path, 'r', encoding='utf8') as stream:
         data_loaded = yaml.safe_load(stream)
+    return data_loaded
+
+def convert_default(src, tgt, txt, nativize = True, post_options = [], pre_options = []):
+    data_loaded = _load_data("/yaml/aksharamukha-scripts.yaml")
 
     scriptList = GeneralMap.IndicScripts + GeneralMap.LatinScripts + GeneralMap.SemiticScripts
 
@@ -533,14 +540,9 @@ def process_default(src, tgt, txt, nativize, post_options, pre_options):
 
 def process_script_tag(src_tag, tgt_tag, txt, nativize, post_options, pre_options):
     # Read YAML file
-    import os
-    dir_path = os.path.dirname(os.path.realpath(__file__))
+    data_loaded = _load_data("/yaml/aksharamukha-scripts.yaml")
 
-    with open(dir_path + "/yaml/aksharamukha-scripts.yaml", 'r') as stream:
-        data_loaded = yaml.safe_load(stream)
-
-    with open(dir_path + "/yaml/wikitra2-data.yaml", 'r', encoding='utf8') as stream:
-        data_loaded_wiki = yaml.safe_load(stream)
+    data_loaded_wiki = _load_data("/yaml/wikitra2-data.yaml")
 
     src = []
     tgt = []
@@ -646,14 +648,9 @@ def process_script_tag(src_tag, tgt_tag, txt, nativize, post_options, pre_option
 
 def process_lang_tag(src_tag, tgt_tag, txt, nativize, post_options, pre_options):
     # Read YAML file
-    import os
-    dir_path = os.path.dirname(os.path.realpath(__file__))
+    data_loaded = _load_data("/yaml/aksharamukha-scripts.yaml")
 
-    with open(dir_path + "/yaml/aksharamukha-scripts.yaml", 'r') as stream:
-        data_loaded = yaml.safe_load(stream)
-
-    with open(dir_path + "/yaml/wikitra2-data.yaml", 'r', encoding='utf8') as stream:
-        data_loaded_wiki = yaml.safe_load(stream)
+    data_loaded_wiki = _load_data("/yaml/wikitra2-data.yaml")
 
     src = []
     tgt = []
@@ -780,6 +777,7 @@ def process_lang_name(src_name, tgt_name, txt, nativize, post_options, pre_optio
 
     return process_lang_tag(src, tgt, txt, nativize, post_options, pre_options)
 
+@functools.cache
 def get_semitic_json():
     from pathlib import Path
     cwd = Path(Path(__file__).parent)
