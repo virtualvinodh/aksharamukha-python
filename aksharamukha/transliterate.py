@@ -1,6 +1,4 @@
 from aksharamukha import GeneralMap
-import re
-
 from aksharamukha.gimeltra import Transliterator
 from . import Convert,PostOptions,PostProcess,PreProcess
 from . import ConvertFix
@@ -10,7 +8,6 @@ import html
 import itertools
 from collections import Counter
 import unicodedata
-import io
 import collections
 import yaml
 import warnings
