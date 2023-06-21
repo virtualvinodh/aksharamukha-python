@@ -95,7 +95,7 @@ class Transliterator(object):
             #chars_missing = set(self.db_simplify) -  set(chars) #set(list(self.db[to_sc]["Latn"].values()))
             #print(chars)
 
-        chars_missing = sorted(list(set(self.db_simplify) -  set(chars)), key=len, reverse=True)
+        chars_missing = [x for x in self.db_simplify if x not in chars]
         #chars_missing = list(set(self.db_simplify) -  set(chars))
 
         for char in chars_missing:
@@ -109,6 +109,7 @@ class Transliterator(object):
                     text = text.replace('\u033D', self.db_simplify['\u033D'])
                 else:
                     text = text.replace(char, self.db_simplify[char])
+
 
         for char in chars:
             #print(text)
