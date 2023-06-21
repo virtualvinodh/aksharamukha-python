@@ -17,10 +17,25 @@ import functools
 ## Todo
 ## Fix Font links and names in description
 
-def default(Strng):
+def default(Strng, langage=""):
     Strng = Strng.replace("\uF001", "").replace("\u05CC", "").\
         replace("ʻʻ", "").replace('\u05CD', '') ## remove token characters for specialized processing
 
+    return Strng
+
+def defaultPost(Strng):
+    Strng = Strng.replace('\u034F', '') ## remove token characters for specialized processing
+    return Strng
+
+#show Schwa
+def AnusvaraAsN(Strng):
+    Strng = Strng.replace('m\u034F', 'n')
+    return Strng
+
+#show Schwa
+def ShowSchwaHindi(Strng):
+    from . import PreProcess as PreP
+    Strng = PreP.RemoveSchwaHindi(Strng, True)
     return Strng
 
 def KannadaSpacingCandrabindu(Strng):
@@ -2398,6 +2413,19 @@ def RetainIndicNumerals(Strng,Target, reverse=False):
             Strng = re.sub('(?<!h)' + x, y, Strng)
     else:
         for x,y in zip(NativeNumerals, ArabicNumerals):
+            Strng = Strng.replace(x, y)
+
+    return Strng
+
+def RetainRomanNumerals(Strng,Target, reverse=False):
+    NativeNumerals = GM.CrunchList('NumeralMap', Target)
+    ArabicNumerals = GM.CrunchList('NumeralMap', 'ISO')
+
+    if not reverse:
+        for y,x in zip(ArabicNumerals, NativeNumerals):
+            Strng = re.sub('(?<!h)' + x, y, Strng)
+    else:
+        for y,x in zip(NativeNumerals, ArabicNumerals):
             Strng = Strng.replace(x, y)
 
     return Strng
