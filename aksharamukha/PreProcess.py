@@ -11,6 +11,11 @@ from aksharamukha.ScriptMap.EastIndic import PhagsPa, Burmese
 from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 ### Use escape char in all functions
 
+def BengaliSubojinedVa(Strng):
+    Strng = re.sub('(?<![মব])(্ব)', '্ভ়', Strng)
+
+    return Strng
+
 def IASTLOCBurmeseSource(Strng):
     # adhoc chars
     chars_misc = {
@@ -671,7 +676,7 @@ def LaoSajhayaOrthographywithA(Strng):
     return Strng
 
 # consider adding an optional NUkta to the post consonantal position
-def RemoveSchwaHindi(Strng):
+def RemoveSchwaHindi(Strng, showschwa=False):
     VowI = "(" + '|'.join(GM.CrunchSymbols(GM.Vowels,'Devanagari')) + ")"
     VowS = "(" + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, 'Devanagari')) + ")"
     Cons = "(" + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Devanagari')) + ")"
@@ -681,8 +686,12 @@ def RemoveSchwaHindi(Strng):
     Syl = "((" + Cons + VowS + ')' + Nas + ")"
     SylAny = "((" + Cons + VowS + "?" + ')' + Nas + ")"
 
-    vir = '्'
-    vir2 = '्'
+    if not showschwa:
+        vir = '्'
+        vir2 = '्'
+    else:
+        vir = '\u0954'
+        vir2 = '\u0954'
 
     Strng = re.sub(ISyl+Cons+Cons+SylAny+"(?!" + Char + ")", r'\1\8' + vir + r'\9\10', Strng) # bhAratIya --> bhArtIy
     Strng = re.sub(ISyl+Cons+Syl+SylAny+"(?!" + Char + ")", r'\1\8' + vir + r'\9\15', Strng) # bhAratIya --> bhArtIy
