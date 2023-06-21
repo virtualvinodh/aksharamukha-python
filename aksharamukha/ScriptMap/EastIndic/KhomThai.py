@@ -172,3 +172,8 @@ NumeralMap = [
              '\u0E58',
              '\u0E59',
              ]
+
+from ... import GeneralMap as GM
+
+GM.add_additional_chars(dict([(charlist, globals()[charlist]) for charlist in GM.CharmapLists]),
+                        __file__.split('.')[0].split('\\')[-1])

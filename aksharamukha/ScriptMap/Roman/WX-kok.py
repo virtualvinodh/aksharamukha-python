@@ -32,9 +32,9 @@ ModernVowelMap = [
 SinhalaVowelMap = [
                   '\u0041\u0045\u0056Y'
                   ]
-    
+
 VowelSignMap =  VowelMap[1:]
-               
+
 SouthVowelSignMap = SouthVowelMap[:]
 
 ModernVowelSignMap = ModernVowelMap[:]
@@ -46,7 +46,7 @@ AyogavahaMap = [
                'M',
                'H'
                ]
-    
+
 ViramaMap =  [
              '\u00D7'
              ]
@@ -57,36 +57,36 @@ ConsonantMap =  [
                 '\u0067',
                 '\u0047',
                 'f',
-                
+
                 '\u0063',
                 '\u0043',
                 '\u006A',
                 '\u004A',
                 'F',
-                
+
                 '\u0074',
                 '\u0054',
                 '\u0064',
                 '\u0044',
                 '\u004E',
-                
+
                 '\u0077',
                 '\u0057',
                 '\u0078',
                 '\u0058',
                 '\u006E',
-                
+
                 '\u0070',
                 '\u0050',
                 '\u0062',
                 '\u0042',
                 '\u006D',
-                
+
                 '\u0079',
                 '\u0072',
                 '\u006C',
                 '\u0076',
-                
+
                 'z',
                 'S',
                 's',
@@ -117,12 +117,12 @@ SinhalaConsonantMap =[
                      '\u006E\u0059\u0059\u0064Y',
                      '\u006E\u0059\u0059\u0078Y',
                      '\u006D\u0059\u0059\u0062Y',
-                      ] 
+                      ]
 
 NuktaMap = [
            '\u0051Y'
            ]
-    
+
 OmMap = [
         '\u006F\u004DY'
         ]
@@ -147,3 +147,8 @@ NumeralMap = [
              '\u0038',
              '\u0039',
              ]
+
+from ... import GeneralMap as GM
+
+GM.add_additional_chars(dict([(charlist, globals()[charlist]) for charlist in GM.CharmapLists]),
+                        __file__.split('.')[0].split('\\')[-1])
