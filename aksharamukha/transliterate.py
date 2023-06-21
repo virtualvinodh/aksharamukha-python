@@ -275,11 +275,11 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
             txt = convert(src, GeneralMap.semiticISO[src], txt, nativize, preoptions, postoptions)
             src = GeneralMap.semiticISO[src]
 
-    if src == "Itrans" and '##' in txt:
+    '''if src == "Itrans" and '##' in txt:
         textNew = [[i,word] for i, word in enumerate(txt.split("##")) if (i%2 == 0)]
         textRest = [(i,word) for i, word in enumerate(txt.split("##")) if (i%2 == 1)]
 
-        txt = json.dumps(textNew).replace("\\n", "\n")
+        txt = json.dumps(textNew).replace("\\n", "\n")'''
 
     if tgt == "" or tgt == "Ignore":
         return txt
@@ -423,6 +423,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     if srcOld == 'Japanese' and tgt != 'Devanagari' and 'siddhammukta' not in postoptions:
         transliteration = Convert.convertScript(transliteration, "Devanagari", "ISO")
+        # print(transliteration)
 
     if src == tgtOld:
         tgt = tgtOld
@@ -459,13 +460,17 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     if src == "Oriya" and tgt == "IPA":
         transliteration = ConvertFix.OriyaIPAFix(transliteration)
 
-    if src == "Itrans" and '##' in txt:
+    '''if src == "Itrans" and '##' in txt:
         textConv = {**dict(list(json.loads(transliteration.replace("\n", "\\n")))), ** dict(textRest)}
         textConv = collections.OrderedDict(sorted(textConv.items()))
-        transliteration = "".join(textConv.values())
+        transliteration = "".join(textConv.values())'''
 
     ### return Latin ###
     transliteration = PreProcess.retainLatin(transliteration, reverse=True)
+
+    ## DefaultPostProcess ##
+
+    transliteration = PostProcess.defaultPost(transliteration)
 
     #print(transliteration)
 
