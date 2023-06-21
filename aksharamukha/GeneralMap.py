@@ -5,6 +5,7 @@
 import importlib, string
 import re
 from functools import reduce
+from . import FallBack as fb
 
 # Crunch Symbols
 
@@ -212,3 +213,26 @@ semiticISO = {
                 'ISO233': 'Arab',
                 'PersianDMG': 'Arab-Fa'
 }
+
+ReversibleScripts = ['Devanagari', 'Tamil', 'Telugu', 'Kannada', 'Sinhala', 'Oriya', 'Gujarati', 'Bengali', 'Assamese', 'Malayalam', 'Gurmukhi']
+
+CharmapLists = ['VowelMap', 'VowelSignMap', 'ConsonantMap', 'SignMap', 'AyogavahaMap']
+
+def add_additional_chars(script_char_map, file_script):
+    for charlist in CharmapLists:
+        mapping_char = getattr(fb, charlist)
+        ModScript = importlib.import_module(ScriptPath(file_script))
+        for char, mapping in mapping_char.items():
+                if file_script in mapping.keys():
+                        script_char_map[charlist].append(mapping[file_script])
+                else:
+                        if file_script in ReversibleScripts:
+                                if mapping['OthersRev'][0] != -1:
+                                        script_char_map[charlist].append(script_char_map[charlist][mapping['OthersRev'][0]] + mapping['OthersRev'][1])
+                                else:
+                                        script_char_map[charlist].append(mapping['OthersRev'][1])
+                        else:
+                                if mapping['OthersNonRev'][0] != -1:
+                                        script_char_map[charlist].append(script_char_map[charlist][mapping['OthersNonRev'][0]] + '\u02BD\u02BD')
+                                else:
+                                       script_char_map[charlist].append('\u02BD\u02BD')

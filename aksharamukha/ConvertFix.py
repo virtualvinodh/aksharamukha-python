@@ -2222,7 +2222,10 @@ def FixRomanReadable(Strng, reverse = False):
         Strng = Strng.replace("Mj", "njj")
         Strng = Strng.replace("Md", "nd")
         Strng = Strng.replace("Mt", "nt")
-        Strng = Strng.replace("M", 'm')
+        Strng = Strng.replace("Mb", "mb")
+        Strng = Strng.replace("Mp", "mp")
+
+        Strng = Strng.replace("M", 'm\u034F\'')
 
         Strng = Strng.replace("ngk", "nk")
         Strng = Strng.replace("ngg", "ng")
@@ -2252,7 +2255,10 @@ def FixRomanColloquial(Strng, reverse = False):
         Strng = Strng.replace("Mj", "njj")
         Strng = Strng.replace("Md", "nd")
         Strng = Strng.replace("Mt", "nt")
-        Strng = Strng.replace("M", 'm')
+        Strng = Strng.replace("Mb", "mb")
+        Strng = Strng.replace("Mp", "mp")
+
+        Strng = Strng.replace("M", 'm\u034F')
 
         Strng = Strng.replace("ngk", "nk")
         Strng = Strng.replace("ngg", "ng")
@@ -2392,17 +2398,16 @@ def FixDevanagari(Strng, reverse=False):
         Strng = Strng.replace('ऱ्', 'ऱ्‌') ## Prevent RRA from forming conjuncts
 
         ## Except for YA and HA
-
         Strng = Strng.replace('ऱ्‌य', 'ऱ्य')
         Strng = Strng.replace('ऱ्‌ह', 'ऱ्ह')
 
         # Kashmiri ux, uux
 
-        Strng = Strng.replace('उʼ', 'ॶ').replace('ऊʼ', 'ॷ').replace('ुʼ', 'ॖ').replace('ूʼ','ॗ')
+        #Strng = Strng.replace('उʼ', 'ॶ').replace('ऊʼ', 'ॷ').replace('ुʼ', 'ॖ').replace('ूʼ','ॗ')
 
         # Kashmir oe oe
 
-        Strng = Strng.replace('अʼ', 'ॳ').replace('आʼ', 'ॴ')
+        #Strng = Strng.replace('अʼ', 'ॳ').replace('आʼ', 'ॴ')
 
         ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Devanagari'))
 
@@ -2410,6 +2415,9 @@ def FixDevanagari(Strng, reverse=False):
         Strng = Strng.replace('\u093Eʼ','\u093B')
 
     else:
+        # remove schwa accent
+        Strng = Strng.replace('\u0954', '')
+
         Strng = PostProcess.DevanagariPrishtamatra(Strng, reverse=True)
         Strng = Strng.replace('ॽ', 'ʔ')
         Strng = Strng.replace('ॹ', 'ज़़')
@@ -2418,11 +2426,10 @@ def FixDevanagari(Strng, reverse=False):
             Strng = Strng.replace(x, y)
 
         # Kashmiri ux, uux
-
-        Strng = Strng.replace('ॶ', 'उʼ').replace('ॷ', 'ऊʼ').replace('ॖ', 'ुʼ').replace('ॗ', 'ूʼ')
+        #Strng = Strng.replace('ॶ', 'उʼ').replace('ॷ', 'ऊʼ').replace('ॖ', 'ुʼ').replace('ॗ', 'ूʼ')
 
         # oe
-        Strng = Strng.replace('ॳ', 'अʼ').replace('ॴ', 'आʼ').replace('\u093B', '\u093Eʼ').replace('\u093A','ʼ')
+        #Strng = Strng.replace('ॳ', 'अʼ').replace('ॴ', 'आʼ').replace('\u093B', '\u093Eʼ').replace('\u093A','ʼ')
 
 
     return Strng
@@ -3137,14 +3144,13 @@ def FixBengali(Strng, reverse=False):
 
     if not reverse:
         Strng = re.sub('(?<![রবম])' + Virama + ba,  Virama + '\u200C' + ba, Strng)
+
+        ## Fix স্ভ়ারা  -> স্বারা ; subjoined ba is by default pronounced as /va/ in Bengali
+        Strng = Strng.replace('\u09CD\u09AD\u09BC', '\u09CD\u09AC')
     else:
         pass
 
     Strng = PostProcess.KhandaTa(Strng, 'Bengali', reverse)
-
-    ## Fix স্ভ়ারা  -> স্বারা ; subjoined ba is by default pronounced as /va/ in Bengali
-
-    Strng = Strng.replace('\u09CD\u09AD\u09BC', '\u09CD\u09AC')
 
     return Strng
 
@@ -3172,29 +3178,30 @@ def FixSharada(Strng,reverse=False):
         Strng = Strng.replace( Nukta + Virama, Nukta + Virama + '\u200C')
         Strng = re.sub('(' + Virama + ')' + '(' + ListC + ')' + '(' + Nukta + ')', r'\1' + '\u200C' + r'\2\3', Strng)
 
-        Strng = Strng.replace('𑆇ʼ','\U00011183\U000111CB\U000111B6').replace('𑆈ʼ','\U00011183\U000111CB\U000111B7')\
+        '''Strng = Strng.replace('𑆇ʼ','\U00011183\U000111CB\U000111B6').replace('𑆈ʼ','\U00011183\U000111CB\U000111B7')\
             .replace('𑆶ʼ','\U000111CB\U000111B6').replace('𑆷ʼ','\U000111CB\U000111B7')
 
         Strng = Strng.replace('\U00011184ʼ', '𑆃𑇋𑆳')
         Strng = re.sub('(?<!\U000111BE)\U000111B3ʼ', '\U000111CB\U000111B3', Strng)
 
         Strng = Strng.replace('𑆃ʼ', '𑆃𑇋', )
-        Strng = re.sub('(' + ListC + ')'+ 'ʼ', r'\1' + '\U000111CB', Strng)
+        Strng = re.sub('(' + ListC + ')'+ 'ʼ', r'\1' + '\U000111CB', Strng)'''
 
 
     else:
+        pass
         # u^ u^^ to vriaama
         # Fix Devanagari as well u^ u^^ to devanagri vowels
 
         # half-u and half-long-u
-        Strng = Strng.replace('\U00011183\U000111CB\U000111B6', '𑆇ʼ').replace('\U00011183\U000111CB\U000111B7', '𑆈ʼ').\
-            replace('\U000111CB\U000111B6', '𑆶ʼ').replace('\U000111CB\U000111B7', '𑆷ʼ')
+        #Strng = Strng.replace('\U00011183\U000111CB\U000111B6', '𑆇ʼ').replace('\U00011183\U000111CB\U000111B7', '𑆈ʼ').\
+        #    replace('\U000111CB\U000111B6', '𑆶ʼ').replace('\U000111CB\U000111B7', '𑆷ʼ')
 
-        Strng = Strng.replace('𑆃𑇋𑆳', '\U00011184ʼ')
-        Strng = re.sub('(?<!\U000111BE)\U000111CB\U000111B3', '\U000111B3ʼ', Strng)
+        #Strng = Strng.replace('𑆃𑇋𑆳', '\U00011184ʼ')
+        #Strng = re.sub('(?<!\U000111BE)\U000111CB\U000111B3', '\U000111B3ʼ', Strng)
 
-        Strng = Strng.replace('𑆃𑇋', '𑆃ʼ')
-        Strng = re.sub('(' + ListC + ')'+ '\U000111CB', r'\1' +  'ʼ', Strng)
+        #Strng = Strng.replace('𑆃𑇋', '𑆃ʼ')
+        #Strng = re.sub('(' + ListC + ')'+ '\U000111CB', r'\1' +  'ʼ', Strng)
 
     return Strng
 

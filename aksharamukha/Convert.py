@@ -3,7 +3,7 @@
 from . import GeneralMap as GM, PreProcess as PrP, ConvertFix as CF
 from . import PostProcess as PP
 import aksharamukha.ScriptMap.EastIndic.SiddhamRanjana as SR
-import aksharamukha.ScriptMap.FallBack as FB
+import aksharamukha.FallBack as FB
 import string
 import re
 from functools import cmp_to_key
@@ -305,6 +305,8 @@ def convertScript(Strng,Source,Target):
         Strng = convertScript(Strng, Source, "RomanSemitic")
 
         # print("The string is", Strng)
+
+        #print(Strng)
 
         Strng = Strng.replace('QQ', '').replace('mQ', '') ## avoiding Q, mQ for Urdu to Semitic : Check why
 
