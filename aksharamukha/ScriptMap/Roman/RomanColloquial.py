@@ -42,8 +42,8 @@ ModernVowelSignMap = ModernVowelMap[:]
 SinhalaVowelSignMap = SinhalaVowelMap[:]
 
 AyogavahaMap = [
-               'm\'',
-               'm\'',
+               '\u004D',
+               '\u004D',
                'h'
                ]
 
@@ -147,3 +147,8 @@ NumeralMap = [
              '\u0038',
              '\u0039',
              ]
+
+from ... import GeneralMap as GM
+
+GM.add_additional_chars(dict([(charlist, globals()[charlist]) for charlist in GM.CharmapLists]),
+                        __file__.split('.')[0].split('\\')[-1])

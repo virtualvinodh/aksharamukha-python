@@ -32,7 +32,7 @@ ModernVowelMap = [
 SinhalaVowelMap = [
                   '\u0B8F\u02C7'
                   ]
-    
+
 VowelSignMap =  [
                 '\u0BBE',
                 '\u0BBF',
@@ -67,7 +67,7 @@ AyogavahaMap = [
                '\u0982',
                '\u0983'
                ]
-    
+
 ViramaMap =  [
              '\u0BCD'
              ]
@@ -78,36 +78,36 @@ ConsonantMap =  [
                 '\u0997',
                 '\u0998',
                 '\u0B99',
-                
+
                 '\u0B9A',
                 '\u099B',
                 '\u0B9C',
                 '\u099D',
                 '\u0B9E',
-                
+
                 '\u0B9F',
                 '\u09A0',
                 '\u09A1',
                 '\u09A2',
                 '\u0BA3',
-                
+
                 '\u0BA4',
                 '\u09A5',
                 '\u09A6',
                 '\u09A7',
                 '\u0BA8',
-                
+
                 '\u0BAA',
                 '\u09AB',
                 '\u09AC',
                 '\u09AD',
                 '\u0BAE',
-                
+
                 '\u0BAF',
                 '\u0BB0',
                 '\u0BB2',
                 '\u0BB5',
-                
+
                 '\u0BB6',
                 '\u0BB7',
                 '\u0BB8',
@@ -119,7 +119,7 @@ SouthConsonantMap = [
                     '\u0BB4',
                     '\u0BB1',
                     '\u0BA9'
-                    ]                   
+                    ]
 
 NuktaConsonantMap =  [
                      '\u0B95\u09BC',
@@ -143,7 +143,7 @@ SinhalaConsonantMap =[
 NuktaMap = [
            '\u09BC'
            ]
-    
+
 OmMap = [
         '\u0BD0'
         ]
@@ -168,3 +168,8 @@ NumeralMap = [
              '\u09EE',
              '\u09EF'
              ]
+
+from ... import GeneralMap as GM
+
+GM.add_additional_chars(dict([(charlist, globals()[charlist]) for charlist in GM.CharmapLists]),
+                        __file__.split('.')[0].split('\\')[-1])

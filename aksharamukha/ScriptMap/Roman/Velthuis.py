@@ -32,9 +32,9 @@ ModernVowelMap = [
 SinhalaVowelMap = [
                   '\u0041\u0045'
                   ]
-    
+
 VowelSignMap =  VowelMap[1:]
-               
+
 SouthVowelSignMap = SouthVowelMap[:]
 
 ModernVowelSignMap = ModernVowelMap[:]
@@ -46,7 +46,7 @@ AyogavahaMap = [
                '\u002E\u006D',
                '\u002E\u0068'
                ]
-    
+
 ViramaMap =  [
              '\u00D7'
              ]
@@ -57,36 +57,36 @@ ConsonantMap =  [
                 '\u0067',
                 '\u0067\u0068',
                 '\u0022\u006E',
-                
+
                 '\u0063',
                 '\u0063\u0068',
                 '\u006A',
                 '\u006A\u0068',
                 '\u007E\u006E',
-                
+
                 '\u002E\u0074',
                 '\u002E\u0074\u0068',
                 '\u002E\u0064',
                 '\u002E\u0064\u0068',
                 '\u002E\u006E',
-                
+
                 '\u0074',
                 '\u0074\u0068',
                 '\u0064',
                 '\u0064\u0068',
                 '\u006E',
-                
+
                 '\u0070',
                 '\u0070\u0068',
                 '\u0062',
                 '\u0062\u0068',
                 '\u006D',
-                
+
                 '\u0079',
                 '\u0072',
                 '\u006C',
                 '\u0076',
-                
+
                 '\u0022\u0073',
                 '\u002E\u0073',
                 '\u0073',
@@ -117,12 +117,12 @@ SinhalaConsonantMap =[
                      '\u006E\u002A\u002E\u0064',
                      '\u006E\u002A\u0064',
                      '\u006D\u002A\u0062',
-                      ] 
+                      ]
 
 NuktaMap = [
            '\u0051'
            ]
-    
+
 OmMap = [
         'o.m'
         ]
@@ -147,3 +147,8 @@ NumeralMap = [
              '\u0038',
              '\u0039',
              ]
+
+from ... import GeneralMap as GM
+
+GM.add_additional_chars(dict([(charlist, globals()[charlist]) for charlist in GM.CharmapLists]),
+                        __file__.split('.')[0].split('\\')[-1])
