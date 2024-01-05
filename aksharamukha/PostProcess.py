@@ -3,7 +3,7 @@
 from . import GeneralMap as GM
 from . import ScriptMap
 from aksharamukha.ScriptMap.Roman import Avestan
-from aksharamukha.ScriptMap.MainIndic import Ahom, Tamil,Malayalam,Gurmukhi,Oriya,Saurashtra,Sinhala,Urdu,Devanagari, Chakma, Limbu, Takri, TamilExtended
+from aksharamukha.ScriptMap.MainIndic import Ahom, Tamil,Malayalam,Gurmukhi,Oriya,Saurashtra,Sinhala,Urdu,Devanagari, Chakma, Limbu, Takri, TamilExtended, Kannada
 from aksharamukha.ScriptMap.EastIndic import Tibetan, Thai, PhagsPa, ZanabazarSquare, Burmese, KhamtiShan
 from . import ConvertFix as CF
 import re
@@ -27,7 +27,6 @@ def defaultPost(Strng):
     Strng = Strng.replace('\u034F', '') ## remove token characters for specialized processing
     return Strng
 
-#show Schwa
 def AnusvaraAsN(Strng):
     Strng = Strng.replace('m\u034F', 'n')
     return Strng
@@ -53,7 +52,7 @@ def KannadaNotRepha(Strng):
 def KannadaNakaraPollu(Strng):
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Kannada')) + ")"
 
-    Strng = re.sub('ನ್(?!' + ListC + ')', '\u0CDD', Strng)
+    Strng = re.sub('(?<!\u0CCD)ನ್(?!' + ListC + ')', '\u0CDD', Strng)
 
     return Strng
 
@@ -70,22 +69,26 @@ def TeluguRemoveAeAo(Strng):
 def TeluguNakaraPollu(Strng):
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Telugu')) + ")"
 
-    Strng = re.sub('న్(?!' + ListC + ')', '\u0C5D', Strng)
+    Strng = re.sub('(?<!\u0C4D)న్(?!' + ListC + ')', '\u0C5D', Strng)
 
     return Strng
 
+#testcase todo
 def syriacVowelsBelow(Strng):
 
     return Strng
 
+#testcase todo
 def syriacWesternOToU(Strng):
 
     return Strng
 
+#testcase todo
 def olddogra(Strng):
 
     return Strng
 
+#testcase todo
 def ISO259Target(Strng):
     replacements = [('b', 'ḃ'), ('p', 'ṗ'), ('k', 'k̇'), ('ḵ', 'k'), ('v', 'b'), ('f', 'p'), ('꞉', '\u0307'),\
          ('š̪', 'ś'), ('š̮', 'š'), ('š', 's̀'),
@@ -99,6 +102,7 @@ def ISO259Target(Strng):
 
     return Strng
 
+#testcase todo
 def HebrewSBLTarget(Strng):
     replacements = [('v', 'ḇ'), ('f', 'p̄'), ('d', 'ḏ'), ('ḏ꞉', 'd'), \
         ('g', 'ḡ'), ('ḡ꞉', 'g'),\
@@ -119,6 +123,7 @@ def HebrewSBLTarget(Strng):
 
     return Strng
 
+#testcase todo
 def removetddash(Strng):
     Strng += '\u05CE'
 
@@ -127,23 +132,27 @@ def removetddash(Strng):
 
     return Strng
 
-
+#testcase todo
 def ISO259Source(Strng):
 
     return Strng
 
+#testcase todo
 def ISO233Source(Strng):
 
     return Strng
 
+#testcase todo
 def HebrewSBLSource(Strng):
 
     return Strng
 
+#testcase todo
 def PersianDMGSBLSource(Strng):
 
     return Strng
 
+#testcase todo
 def ISO233Target(Strng):
     replacements = [('j', 'ǧ'), ('g', 'ǧ'), ('ḧ', 'ẗ'), ('ḫ', 'ẖ'), ('a̮', 'ỳ'), ('ˀ', 'ˈ'), \
         ('aⁿ', 'á'), ('iⁿ', 'í'), ('uⁿ', 'ú'), ('ā̂', 'ʾâ'), ('\u033D', '')]
@@ -153,6 +162,7 @@ def ISO233Target(Strng):
 
     return Strng
 
+#todo add to frontend
 def inherentAO(Strng):
     Strng = Strng.replace('a', 'ô')
 
@@ -163,6 +173,7 @@ def BengaliOldRA(Strng):
 
     return Strng
 
+#testcase todo
 def PersianDMGTarget(Strng):
     replacements = [('ḏ', 'ẕ'), ('ḍ', 'ż'), ('ṯ', 's̱'), ('j', 'ǧ'), ('ˀ','ʼ'), ('ʔ', 'ʼ'), ('ȳ', 'ye'), ("ā̂", "ā"), ('\u033D', '')]
 
@@ -171,6 +182,7 @@ def PersianDMGTarget(Strng):
 
     return Strng
 
+#testcase todo
 def arabizeLatn(Strng, target='semitic'):
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
@@ -215,6 +227,8 @@ def arabizeLatn(Strng, target='semitic'):
 
     return Strng
 
+#trigger - UI prompt to show "preserve source" must be enabled for this option
+#testcase todo
 def BengaliSwitchYaYYa(Strng):
     Strng = re.sub('(?<!\u09CD)য', '@#$', Strng)
     Strng = re.sub('য়', 'য', Strng)
@@ -222,6 +236,7 @@ def BengaliSwitchYaYYa(Strng):
 
     return Strng
 
+#testcase todo
 def AlephMaterLectionis(Strng, target='semitic'):
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
@@ -230,6 +245,7 @@ def AlephMaterLectionis(Strng, target='semitic'):
 
     return Strng
 
+#testcase todo
 def urduizeLatn(Strng, target='semitic'):
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
@@ -257,6 +273,7 @@ def urduizeLatn(Strng, target='semitic'):
 
     return Strng
 
+#testcase todo
 def syricizeLatn(Strng, target='semitic'):
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
@@ -272,6 +289,7 @@ def syricizeLatn(Strng, target='semitic'):
 
     return Strng
 
+#testcase todo
 def hebraizeLatn(Strng, target='semitic'):
     #print('Hebraizing Latin')
     if target != 'indic':
@@ -279,39 +297,45 @@ def hebraizeLatn(Strng, target='semitic'):
 
     return Strng
 
+#testcase todo
 def syriacRoman(Strng):
     Strng = Strng.replace('v', 'ḇ').replace('ġ','ḡ').replace('ḫ','ḵ').replace('f','p̄')
 
     return Strng
 
+#testcase todo
 def alephAyinLatnAlternate(Strng):
     Strng = Strng.replace('ʾ', 'ʼ').replace('ʿ', 'ʽ')
 
     return Strng
 
-
+#testcase todo
 def alephAyinLatnAlternate2(Strng):
     Strng = Strng.replace('ʾ', 'ʔ').replace('ʿ', 'ʕ')
 
     return Strng
 
+#testcase todo
 def ArabRemoveAdditions(Strng):
     Strng = Strng.replace('ڨ', 'ج').replace('ڤ', 'ف').replace('پ', 'ف')
 
     return Strng
 
+#testcase todo
 def arabicRemoveAdditionsPhonetic(Strng):
 
     Strng = Strng.replace('ڨ', 'غ').replace('ڤ', 'ف').replace('پ', 'ب')
 
     return Strng
 
+#testcase todo
 def removeSemiticLetters(Strng):
     Strng = Strng.replace('ṭ', 't').replace('ḥ', 'h').replace('ḍ', 'z').replace('ḏ', 'z').replace('ẓ', 'z')\
         .replace('w', 'v').replace('ʿ', 'ʾ').replace('ṣ', 's')
 
     return Strng
 
+#testcase todo
 def removeNikkud(Strng):
     nikkuds = ["\u05B7","\u05B8","\u05B4","\u05B4י","\u05BB", "\u05C2", "\u05C1",\
     "\u05B6","\u05B5","\u05B9","וֹ","\u05B1","\u05B2","\u05B3","\u05BC","\u05B0", "\u05C7"]
@@ -321,6 +345,7 @@ def removeNikkud(Strng):
 
     return Strng
 
+#testcase todo
 def LatnInitialVowels(Strng, initLetter=''):
     initVow = 'â ā̂ î ī̂ û ū̂ ê ē̂ âŷ ô ō̂ âŵ'.split(' ')
     nonInitVow = 'a ā i ī u ū e ē aŷ o ō aŵ'.split(' ')
@@ -334,21 +359,25 @@ def LatnInitialVowels(Strng, initLetter=''):
     #Strng = 'Vinodh'
     return Strng
 
+#testcase todo
 def removeMajliyana(Strng):
     Strng = Strng.replace('\u0330', '')
 
     return Strng
 
+#testcase todo
 def removeRukkaka(Strng):
     Strng = Strng.replace('\u0741', '')
 
     return Strng
 
+#testcase todo
 def removeQussaya(Strng):
     Strng = Strng.replace('\u0742', '')
 
     return Strng
 
+#testcase todo
 def removeVowelsSyriac(Strng):
     Strng = re.sub('[\u0732\u0735\u073C\u0738\u0739\u073F]', '', Strng)
 
@@ -356,6 +385,7 @@ def removeVowelsSyriac(Strng):
 
     return Strng
 
+#testcase todo
 def removeDiacriticsArabic(Strng):
     diacrtics = ["\u0652", "\u064E", "\u0650", "\u064F"]
 
@@ -364,42 +394,51 @@ def removeDiacriticsArabic(Strng):
 
     return Strng
 
+#testcase todo
 def removeSukunEnd(Strng):
     Strng = re.sub('(\u0652)(\W|$)', r'\2', Strng)
 
     return Strng
 
+#testcase todo
 def persianPaGaFaJa(Strng):
     Strng = Strng.replace('پ', 'ف').replace('گ', 'ج')
 
     return Strng
 
+#testcase todo
 def removeDiacriticsPersian(Strng):
 
     return Strng
 
+#testcase todo
 def removeDiacriticsSyriac(Strng):
 
     return Strng
 
+#testcase todo
 def useKtivMale(Strng):
 
     return Strng
 
+#testcase todo
 def PhoneticMapping(Strng):
 
     return Strng
 
+#testcase todo
 def ArabicGimelGaGha(Strng):
     Strng = Strng.replace('ج', 'غ')
 
     return Strng
 
+#testcase todo
 def ArabicGimelPaBa(Strng):
     Strng = Strng.replace('ف', 'ب')
 
     return Strng
 
+#testcase todo
 def IASTLOCBurmeseSource(Strng):
     # remove marking for pure virama
     Strng = Strng.replace('ʻ', '')
@@ -438,6 +477,7 @@ def IASTLOCBurmeseSource(Strng):
 
     return Strng
 
+#testcase todo
 def removeSegmentSpacesBurmese(Strng):
     # segment text into syllables
     import regex
@@ -447,6 +487,7 @@ def removeSegmentSpacesBurmese(Strng):
 
     return Strng
 
+#testcase todo
 def IASTLOCBurmeseTarget(Strng):
     #print(Strng)
     # mark tone
@@ -477,6 +518,7 @@ def IASTLOCBurmeseTarget(Strng):
     return Strng
 
 ### Add new consonants here when added to gimeltra_data
+#testcase todo
 def insertARomanSemitic(Strng):
     Strng = Strng.replace('\u02BD', '')
     consonantsAll = '(' + '|'.join(sorted(GM.SemiticConsonants, key = len, reverse=True)) + ')'
@@ -495,6 +537,7 @@ def insertARomanSemitic(Strng):
     return Strng
 
 # Semitic Target
+#testcase todo
 def FixSemiticRoman(Strng, Target):
     vir = '\u033D'
     Strng = re.sub('ō̂̄̂', 'ō̂', Strng)
@@ -525,23 +568,28 @@ def FixSemiticRoman(Strng, Target):
 
     return Strng
 
+#testcase todo
 def ArabAtoAleph(Strng):
     Strng = Strng.replace('أ', 'ا')
 
 
     return Strng
 
+#testcase todo
 def estrangelasyriac(Strng):
 
     return Strng
 
+#testcase todo
 def easternsyriac(Strng):
 
     return Strng
 
+#testcase todo
 def westernsyriac(Strng):
 
     return Strng
+
 
 def kawitan(Strng):
 
@@ -559,54 +607,73 @@ def readableItrans(Strng):
 
     return Strng
 
+#todo change UI example : haMpi  ha~pi hA~s hAMs hU~ hUM -> hampi hAA hAs
 def NasalTilde(Strng):
+    Strng = AnusvaratoNasalASTISO(Strng)
     Strng = re.sub('(m̐|ṃ|ṁ)', '\u0303', Strng)
 
     return Strng
 
+#todo feature
+def siddhamBija(Strng):
+
+    return Strng
+
+#todo feature
 def verticalKana(Strng):
 
     return Strng
 
+#todo feature
 def verticalSiddham(Strng):
 
     return Strng
 
+#todo testcase
 def vtobJapanese(txt):
 
     return txt
 
+#todo testcase
 def SogdReshAyin(Strng):
     Strng = Strng.replace('𐼽', '𐽀')
 
     return Strng
 
+#todo testcase
 def SogoReshAyinDaleth(Strng):
     Strng = Strng.replace('𐼓','𐼘')
 
     return Strng
 
+#todo testcase
 def arabPaFa(Strng):
 
     return Strng.replace('پ','ف')
 
 
+#todo testcase
 def arabChaSa(Strng):
 
     return Strng.replace('چ', 'س')
 
+#todo testcase
 def gainGimel(Strng):
     return Strng.replace('עׄ','ג')
 
+#todo testcase
 def tavTwodot(Strng):
     return Strng.replace('ת','ת̈')
 
+#todo testcase
 def tavThreedot(Strng):
     return Strng.replace('תׄ','ת֒')
 
+#todo testcase
 def gainGimel(Strng):
     return Strng.replace('ק','ק̈')
 
+#todo testcase
 def tokushuon(txt):
    txt = txt.replace('si', 'suxi').replace('zi', 'zuxi')
    txt = txt.replace('yi','ixi')
@@ -618,6 +685,7 @@ def tokushuon(txt):
 
    return txt
 
+#todo testcase
 def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
     from aksharamukha.ScriptMap.NonIndic import kana2roman
     import pykakasi
@@ -729,11 +797,13 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
 
     return txt
 
+#todo check if used
 def urduRemoveInherent(Strng):
     Strng = re.sub('\Ba', '', Strng)
 
     return Strng
 
+#todo testcase
 def HebrewVetVav(Strng):
     shortVowels = '(' + '|'.join(['\u05B7', '\u05B8', '\u05B4', '\u05BB', '\u05B5', '\u05B6', '\u05B9', '\u05B0']) + ')'
 
@@ -765,26 +835,31 @@ def HiraganaaunotDipthong(Strng):
 
     return Strng
 
+#not used
 def IASTISONasalTilde(Strng):
 
     return Strng
 
+#todo testcase
 def HeberewQoph(Strng):
     Strng = Strng.replace('כּ', 'ק').replace('ךּ', 'ק')
 
     return Strng
 
+#todo testcase
 def HebewShortO(Strng):
     Strng = re.sub('(?<!ו)\u05B9', '\u05C7', Strng)
 
     return Strng
 
+#todo testcase
 def HebrewKatevMalei(Strng):
     Strng = Strng.replace('ָ', 'א') # long aa
     Strng = Strng.replace('ַ', 'א') # short a
 
     return Strng
 
+#todo testcase
 def HebrewnonFinalShort(Strng):
     finals = ['ך', 'ם', 'ן', 'ף', 'ץ', 'ףּ', 'ךּ']
     finalCons = ['כ', 'מ', 'נ', 'פ', 'צ', 'פּ', 'כּ']
@@ -834,6 +909,8 @@ def mDotAboveToBelow(Strng):
     Strng = Strng.replace('ṃ', 'ṁ')
 
     return Strng
+
+#todo : ISOPali postoptions empty todo
 
 def noLongEO(Strng):
     Strng = Strng.replace('ē', 'e').replace('ō', 'o')
@@ -2652,13 +2729,12 @@ def ThaiLaoTranscription(Strng,Script,shortA,shortAconj,reverse=False, anusvaraC
         Strng = re.sub("("+shortA+")"+"(?=("+cons+")"+"("+vir+"))",shortAconj,Strng)
 
 
-        # prahlada -> ปรหลาทะ
-        Strng = Strng.replace(shortAconj + 'ห'+vir, 'ห'+vir)
+        # prahlada -> ประหลาทะ
+        Strng = Strng.replace(shortAconj + 'ห'+vir, shortA + 'ห'+vir)
         # katra -> กะตระ
         Strng = re.sub("("+shortAconj+")"+ "(.)("+vir+")([รล])",shortA + r'\2\3\4',Strng)
 
         ## swap rl
-
         consswap = "|".join(GM.CrunchSymbols(GM.Consonants, "Thai"))
         Strng = re.sub("("+consswap+")"+"("+vir+")"+"(["+EAIO+"])"+"([รล])",r"\3\1\2\4",Strng)
 
@@ -2721,6 +2797,7 @@ def ThamTallAOthers(Strng):
 
     return Strng
 
+#start here
 def LaoPhonetic(Strng):
     Strng = re.sub('(\u0EBA)([ໂເໄ]?)([ຍຣລວຫ])', '\u035C'+ r'\2\3', Strng)
     Strng = re.sub('([ຍຣລວຫ])' + '\u035C' + '([ໂເໄ]?)' + r'\1', r'\1' + '\u0EBA' + r'\2\1', Strng)
@@ -2753,10 +2830,13 @@ def RephaDoubleMalayalam(Strng):
     ConUnAsp = ConUnAsp + ['ള']
     ConAsp   = [GM.CrunchList('ConsonantMap', Target)[x] for x in [1,3,6,8,11,13,16,18,21]]
 
-    Strng = re.sub('(' + repha + ')' + '('+'|'.join(ConUnAsp)+')', r'\1\2' + vir + r'\2', Strng)
+    # don't replace after virma
+    # arka -> arkka but arkya -> arkya
+    Strng = re.sub('(' + repha + ')' + '('+'|'.join(ConUnAsp)+')' +'(?!' + vir +')', r'\1\2' + vir + r'\2', Strng)
 
+    # ardha -> arddha but ardya -> ardya
     for i in range(len(ConAsp)):
-        Strng = re.sub('(' + repha + ')' + '(' + ConAsp [i] +')', r'\1' +  ConUnAsp[i] + vir + r'\2', Strng)
+        Strng = re.sub('(' + repha + ')' + '(' + ConAsp [i] +')' +'(?!' + vir +')', r'\1' +  ConUnAsp[i] + vir + r'\2', Strng)
 
     # Dot reph with ya
 
@@ -2782,6 +2862,7 @@ def ThamShiftMaiKangLai(Strng):
 
     return Strng
 
+# not used
 def FixTallA(Strng, TallACons):
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'TaiTham'))
     Sub =['\u1A55','\u1A56'] # Subjoined Forms of /ra/ and /la/
@@ -2940,20 +3021,25 @@ def AvestanConventions(Strng):
 
     return Strng
 
+# not used
 def TaiThamO(Strng):
     Strng = Strng.replace("\u1A6E\u1A63","\u1A70")
 
     return Strng
 
+# not used
 def TaiThamHighNga(Strng):
     Strng = Strng.replace('\u1A58','\u1A59')
 
     return Strng
 
+# not used
 def TaiThamMoveNnga(Strng):
-    Strng = re.sub('(.)(\u1A58|\u1A50)',r'\2\1',Strng) # Probably its u1A59
+    Strng = re.sub('(.)(\u1A58)',r'\2\1',Strng) # Probably its u1A59
+    print(Strng)
+    print('here')
 
-    return Strng
+    return "Vinodh"
 
 def UrduRemoveShortVowels(Strng):
     ShortVowels = ['\u0652','\u064E','\u0650','\u064F']
@@ -2968,6 +3054,7 @@ def LatinPipes(Strng):
 
     return Strng
 
+# not used
 def PhagsPaRearrange(Strng,Target):
     vir = GM.CrunchList('ViramaMap', Target)[0]
     ListC = '|'.join(GM.CrunchSymbols(GM.Consonants,Target))
@@ -2980,6 +3067,7 @@ def PhagsPaRearrange(Strng,Target):
     Strng = Strng.replace(" ","").replace("᠂"," ").replace("᠃"," ")
     return Strng
 
+# not used
 def DevanagariAVowels(Strng):
     oldVowels = Devanagari.VowelMap[2:12]+Devanagari.SouthVowelMap[:1]
     a = Devanagari.VowelMap[0]
@@ -2990,6 +3078,7 @@ def DevanagariAVowels(Strng):
 
     return Strng
 
+# not used
 def AnusvaraToNasalIPA(Strng):
 
     Strng = Strng.replace("̃k","ŋk")
@@ -3018,12 +3107,14 @@ def AnusvaraToNasalIPA(Strng):
 
     return Strng
 
+# not used
 def IPARemoveCross(Strng):
 
     Strng = Strng.replace('×','')
 
     return Strng
 
+# not used
 def ChakmaAVowels(Strng):
 
     return Strng
@@ -3051,7 +3142,7 @@ def ZanabazarSquareMongolianFinal(Strng):
     return Strng
 
 def TamilRemoveApostrophe(Strng):
-    Strng = Strng.replace('ʼ', '')
+    Strng = Strng.replace('ʼ', '').replace('ˮ', '')
 
     return Strng
 
@@ -3073,8 +3164,11 @@ def TamilDisableSHA(Strng):
     Strng = Strng.replace('ஶ', 'ஷ²')
     Strng = CF.ShiftDiacritics(Strng,'Tamil')
 
+    Strng = Strng.replace( 'ஷ்²ரீ', 'ஶ்ரீ')
+
     return Strng
 
+# not used
 def swapEe(Strng):
     Strng = Strng.replace('e', 'X@X@')
     Strng = Strng.replace('e', 'E')
