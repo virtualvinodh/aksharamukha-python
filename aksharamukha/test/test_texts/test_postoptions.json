@@ -1,0 +1,189 @@
+{
+    "UseAlternateI1": [{
+
+        "source": "HK",
+        "target": "Siddham",
+        "cases": [["i", "𑗘"]]
+    }],
+    "NewaDisableRepha": [{
+        "source": "HK",
+        "target": "Newa",
+        "cases": [["rka", "𑐬𑑂‍𑐎"], ["rya", "𑐬𑑂‍𑐫"],["rra", "𑐬𑑂‍𑐬"], ["kra", "𑐎𑑂𑐬"]]
+    }],
+    "capitalizeSentence": [{
+        "source": "HK",
+        "target": "IAST",
+        "cases": [["kA. ka? ku! ki123 k.m\nkA", "Kā. Ka? Ku! Ki123 K.M\nKā"], ["@buddha", "Buddha"]]
+    },
+    {
+        "source": "HK",
+        "target": "ISO",
+        "cases": [["kA. ka? ku! ki123 k.m\nkA", "Kā. Ka? Ku! Ki123 K.M\nKā"], ["@buddha", "Buddha"]]
+    }],
+    "TamilDisableSHA": [{
+        "source": "HK",
+        "target": "Tamil",
+        "cases": [["za zi zo zvA", "ஷ² ஷி² ஷோ² ஷ்²வா"], ["zrI", "ஶ்ரீ"]]
+    },
+    {
+        "source": "Tamil",
+        "target": "HK",
+        "cases": [["ஷ² ஷி² ஷோ² ஷ்²வா", "za zi zo zvA"], ["ஶ்ரீ", "zrI"]]
+    }],
+    "NewaSpecialTa": [{
+        "source": "HK",
+        "target": "Newa",
+        "cases": [["tra tya tva tna tta", "𑐟𑑂‍𑐬 𑐟𑑂‍𑐫 𑐟𑑂‍𑐰 𑐟𑑂‍𑐣 𑐟𑑂‍𑐟"]]
+    }],
+    "TamilRemoveNumbers": [{
+        "source": "HK",
+        "target": "Tamil",
+        "cases": [["kha ga gha M ~ R R", "க க க ம்ʼ ம்ˮ ருʼ ருʼ"]]
+    }],
+    "TamilRemoveApostrophe": [{
+        "source": "HK",
+        "target": "Tamil",
+        "cases": [["kha ga gha M ~ R R", "க² க³ க⁴ ம் ம் ரு ரு"]]
+    }],
+    "ZanabazarSquareMongolianFinal": [{
+        "source": "HK",
+        "target": "ZanabazarSquare",
+        "cases": [["kat katra", "𑨋𑨙𑨳 𑨋𑨙𑩇𑨫"]]
+    }],
+    "ZanabazarSquareAiAu": [{
+        "source": "HK",
+        "target": "ZanabazarSquare",
+        "cases": [["kai kau ai au", "𑨋𑨇 𑨋𑨈 𑨀𑨇 𑨀𑨈"]]
+    }],
+    "ZanabazarSquareContextual": [{
+        "source": "HK",
+        "target": "ZanabazarSquare",
+        "cases": [["kya kra kla kva yya rra lla arka", "𑨋𑨻 𑨋𑨼 𑨋𑨽 𑨋𑨾 𑨪𑨻 𑨫𑨼 𑨬𑨽 𑨀𑨺𑨋"],["rra rya rla rva", "𑨫𑨼 𑨫𑨻 𑨫𑨽 𑨫𑨾"], ["rka rna", "𑨺𑨋 𑨺𑨝"]],
+        "comments": "Case 2: rra, rya, rla, rva do not use Repha and use the subjoined forms"
+    }],
+    "UrduRemoveShortVowels": [{
+        "source": "HK",
+        "target": "Urdu",
+        "cases": [["ka ki ku  a i u", "ک ک ک  ا ا ا"]]
+    }],
+    "AvestanConventions": [{
+        "source": "HK",
+        "target": "LaoTham",
+        "cases": []
+    }],
+    "ThaiTranscription": [{
+        "source": "HK",
+        "target": "Thai",
+        "cases": [["makana makka mak akka aka", "มะกะนะ มักกะ มัก อักกะ อะกะ"], ["sarva", "สรรวะ"], ["katra katla", "กะตระ กะตละ"], ["prahlAda", "ประหลาทะ"], ["koka keka kok kek kokaH kekaH kauka", "โกกะ เกกะ โกก เกก โกกะห์ เกกะห์ เกากะ"], ["kre kle kro klo", "เกร เกล โกร โกล"], ["kAM kaM kiM kIM aGaM", "กาง กัง กิง กีง อังํ"]]
+    }],
+    "ThaiSajjhayaOrthography": [{
+        "source": "HK",
+        "target": "Thai",
+        "cases": [["tassa tessa brahma naska vismaya", "ตัส์ส เตส์ส พ๎รห๎ม นส๎ก วิส๎มย"],["vayha vayya vassa varra", "วย๎ห วัย์ย วัส์ส วัร์ร"],["dve sme tyo", "เท๎ว เส๎ม โต๎ย"],["aM saGgha", "อํ สังฆ"]]
+    }],
+    "ThamShiftMaiKangLai": [{
+        "source": "HK",
+        "target": "TaiTham",
+        "cases": [["saGga", "ᩈᨣᩘ"]]
+    }],
+    "DograShaKha": [{
+        "source": "HK",
+        "target": "Dogra",
+        "cases": [["niSA", "𑠝𑠭𑠋𑠬"]]
+    }],
+    "RephaDoubleMalayalam": [{
+        "source": "HK",
+        "target": "Malayalam",
+        "cases": [["arka ardha arkya ardhya arba arbha sarga dharma karNa", "അർക്ക അർദ്ധ അർക്യ അർധ്യ അർബ്ബ അർഭ സർഗ്ഗ ധർമ്മ കർണ്ണ"]]
+    }],
+    "AnusvaraAsN": [{
+        "source": "HK",
+        "target": "RomanReadable",
+        "cases": [["hAM hU~", "haan' hoon'"]]
+        },
+        {
+        "source": "HK",
+        "target": "RomanColloquial",
+        "cases": [["hAM hU~", "han hun"]]
+    }],
+    "ShowSchwaHindi": [{
+        "source": "HK",
+        "target": "Devanagari",
+        "cases": [["rAma jAnakI bajraMga rAmacari", "राम॔ जान॔॔की बज्रंग॔ राम॔॔चरि"]]
+    }],
+    "KannadaSpacingCandrabindu": [{
+        "source": "HK",
+        "target": "Kannada",
+        "cases": [["kA~", "ಕಾಀ"]]
+    }],
+    "KannadaNotRepha": [{
+        "source": "HK",
+        "target": "Kannada",
+        "cases": [["dharma dharra dharya arka", "ಧರ‍್ಮ ಧರ‍್ರ ಧರ‍್ಯ ಅರ‍್ಕ"]]
+    }],
+    "TeluguRemoveNukta": [{
+        "source": "HK",
+        "target": "Telugu",
+        "cases": [["vaqa", "వక"]]
+    }],
+    "TeluguRemoveAeAo": [{
+        "source": "HK",
+        "target": "Telugu",
+        "cases": [["aE AE kaE kAE", "ఎ ఏ కె కే"]]
+    }],
+    "TeluguNakaraPollu": [{
+        "source": "HK",
+        "target": "Telugu",
+        "cases": [["dharma dharra dharya arka", "ధర్మ ధర్ర ధర్య అర్క"]]
+    }],
+    "BengaliOldRA": [{
+        "source": "HK",
+        "target": "Bengali",
+        "cases": [["dharma dharama krama", "ধৰ্ম ধৰম ক্ৰম"]]
+    }],
+    "readableItrans": [{
+        "source": "HK",
+        "target": "Itrans",
+        "cases": [["kRSNa kUna kAni kaca kacha lakSmi kAM", "kRRiShNa kuuna kaani kacha kachha laxmi kaa.m"]]
+    }],
+    "NasalTilde": [{
+        "source": "HK",
+        "target": "IAST",
+        "cases": [["haMs ha~s haMpi aMta ha~pi hUM hU~", "hãs hãs hampi anta hãpi hū̃ hū̃"]]
+    }],
+    "DevanagariAnusvara": [{
+        "source": "IAST",
+        "target": "Devanagari",
+        "cases": [["aṅka aṅkha aṅga aṅgha añca añcha añja añjha aṇṭa aṇṭha aṇḍa aṇḍha anta antha anda andha ampa ampha amba ambha aṃya aṃsa aṃśa aṃha", "अंक अंख अंग अंघ अंच अंछ अंज अंझ अंट अंठ अंड अंढ अंत अंथ अंद अंध अंप अंफ अंब अंभ अंय अंस अंश अंह"]]
+    }],
+    "jainomDevangari": [{
+        "source": "HK",
+        "target": "Devanagari",
+        "cases": [["oM", "ꣽ"]]
+    }],
+    "GurmukhiCandrabindu": [{
+        "source": "HK",
+        "target": "Gurmukhi",
+        "cases": [["hA~", "ਹਾਂ"]]
+    }],
+    "mDotAboveToBelow": [{
+        "source": "HK",
+        "target": "IAST",
+        "cases": [["hAM", "hāṁ"]]
+    }],
+    "noLongEO": [{
+        "source": "HK",
+        "target": "ISO",
+        "cases": [["ko ke e o", "ko ke e o"]]
+    }],
+    "TamilStyleUUCore": [{
+        "source": "Itrans",
+        "target": "TamilExtended",
+        "cases": [["khugughu jhuchhu ThuDuDhu thududhu phububhu khuuguughuu jhuuchhuu ThuuDuuDhuu thuuduudhuu phuubuubhuu", "ഖ‍ുഗ‍ുഘ‍ു ഝ‍ുഛ‍ു ഠ‍ുഡ‍ുഢ‍ു ഥ‍ുദ‍ുധ‍ു ഫ‍ുബ‍ുഭ‍ു ഖ‍ൂഗ‍ൂഘ‍ൂ ഝ‍ൂഛ‍ൂ ഠ‍ൂഡ‍ൂഢ‍ൂ ഥ‍ൂദ‍ൂധ‍ൂ ഫ‍ൂബ‍ൂഭ‍ൂ"]]
+    }],
+    "TamilStyleUUOther": [{
+        "source": "HK",
+        "target": "TamilExtended",
+        "cases": [["ju jU su sU zu zU Su SU zru zrU kSu kSU", "ജ‍ു ജ‍ൂ സ‍ു സ‍ൂ ശ‍ു ശ‍ൂ ഷ‍ു ഷ‍ൂ ശ്‍ര‍ു ശ്‍ര‍ൂ ക്ഷ‍ു ക്ഷ‍ൂ"]]
+    }]
+}
