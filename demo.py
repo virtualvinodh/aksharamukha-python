@@ -1,10 +1,10 @@
 from aksharamukha import transliterate
 
-from aksharamukha import ConvertDocxHTML
+from aksharamukha import transliterate_file
 
-ConvertDocxHTML.convert_file('HK', 'Tamil', "C:\\Users\\vinod\Desktop\\test_conv_aksharamukha.docx")
-ConvertDocxHTML.convert_file('Devanagari', 'Tamil', "C:\\Users\\vinod\\Desktop\\Agni Suktam.html")
-ConvertDocxHTML.convert_file('HK', 'Tamil', "C:\\Users\\vinod\\Desktop\\scripts_to_be_added.txt")
+transliterate_file.process('HK', 'Tamil', "C:\\Users\\vinod\Desktop\\test_conv_aksharamukha.docx")
+transliterate_file.process('Devanagari', 'Tamil', "C:\\Users\\vinod\\Desktop\\Agni Suktam.html")
+transliterate_file.process('HK', 'Tamil', "C:\\Users\\vinod\\Desktop\\scripts_to_be_added.txt")
 
 
 ''' print(transliterate.process('hk', 'siddham', 'buddhaH'))
