@@ -8,15 +8,18 @@ import warnings
 
 MS_WORD_TEXT_SCHEMA = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t"
 
-def convert_file(src, tgt, file, nativize=True, pre_options=[], post_options=[], is_api_mode=False):
-    if '.txt' in file:
-        convert_txt(src, tgt, file, nativize, pre_options, post_options, is_api_mode)
-    elif '.docx' in file:
-        convert_docx(src, tgt, file, nativize, pre_options, post_options, is_api_mode)
-    elif '.htm' in file:
-        convert_html(src, tgt, file, nativize, pre_options, post_options, is_api_mode)
+def process(src, tgt, file, nativize=True, pre_options=[], post_options=[], is_api_mode=False):
+    if os.path.isfile(file):
+        if '.txt' in file:
+            convert_txt(src, tgt, file, nativize, pre_options, post_options, is_api_mode)
+        elif '.docx' in file:
+            convert_docx(src, tgt, file, nativize, pre_options, post_options, is_api_mode)
+        elif '.htm' in file:
+            convert_html(src, tgt, file, nativize, pre_options, post_options, is_api_mode)
+        else:
+            warnings.warn('Only .txt, .html, .docx formats are supported for file conversion. Input file not processed.')
     else:
-        warnings.warn('Only .txt, .html, .docx formats are supported for file conversion. Input file not processed.')
+        warnings.warn('Not a file. Please pass a file as an argument')
 
 def convert_txt(src, tgt, file, nativize=True, pre_options=[], post_options=[], is_api_mode=False):
     with open(file, 'r', encoding='utf8') as f:
