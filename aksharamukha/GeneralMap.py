@@ -227,8 +227,10 @@ def add_additional_chars(script_char_map, file_script):
                         script_char_map[charlist].append(mapping[file_script])
                 else:
                         if file_script in ReversibleScripts:
+                                #print('reversible')
                                 if mapping['OthersRev'][0] != -1:
                                         script_char_map[charlist].append(script_char_map[charlist][mapping['OthersRev'][0]] + mapping['OthersRev'][1])
+                                        #print(script_char_map[charlist][mapping['OthersRev'][0]] + mapping['OthersRev'][1])
                                 else:
                                         script_char_map[charlist].append(mapping['OthersRev'][1])
                         else:

@@ -488,7 +488,7 @@ def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [],
 
 import functools
 
-@functools.cache
+@functools.lru_cache(maxsize=None)
 def _load_data(file_path):
     import os
     dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -782,7 +782,7 @@ def process_lang_name(src_name, tgt_name, txt, nativize, post_options, pre_optio
 
     return process_lang_tag(src, tgt, txt, nativize, post_options, pre_options)
 
-@functools.cache
+@functools.lru_cache(maxsize=None)
 def get_semitic_json():
     from pathlib import Path
     cwd = Path(Path(__file__).parent)
