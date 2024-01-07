@@ -108,7 +108,7 @@ AyogavahaMap = {
     'Newa': '\U00011460',
     'Soyombo': '\U00011A84',
     'OthersRev': [2, '\u02BD'],
-    'OthersNonRev': [2]
+    'OthersNonRev': [2, '\u02BD']
     },
 'Upadhmaniya': {
     'IAST': 'ḫ',
@@ -127,6 +127,6 @@ AyogavahaMap = {
     'Newa': '\U00011461',
     'Soyombo': '\U00011A85',
     'OthersRev': [2, '\u02BD'],
-    'OthersNonRev': [2]
+    'OthersNonRev': [2, '\u02BD']
     }
 }
