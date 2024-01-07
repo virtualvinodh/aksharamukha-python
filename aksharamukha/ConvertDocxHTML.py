@@ -4,15 +4,38 @@ import os
 from lxml import etree
 from zipfile import ZipFile
 from bs4 import BeautifulSoup
+import warnings
 
 MS_WORD_TEXT_SCHEMA = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t"
+
+def convert_file(src, tgt, file, nativize=True, pre_options=[], post_options=[], is_api_mode=False):
+    if '.txt' in file:
+        convert_txt(src, tgt, file, nativize, pre_options, post_options, is_api_mode)
+    elif '.docx' in file:
+        convert_docx(src, tgt, file, nativize, pre_options, post_options, is_api_mode)
+    elif '.htm' in file:
+        convert_html(src, tgt, file, nativize, pre_options, post_options, is_api_mode)
+    else:
+        warnings.warn('Only .txt, .html, .docx formats are supported for file conversion. Input file not processed.')
+
+def convert_txt(src, tgt, file, nativize=True, pre_options=[], post_options=[], is_api_mode=False):
+    with open(file, 'r', encoding='utf8') as f:
+        txt = f.read()
+
+    file_parts = os.path.splitext(file)
+    new_file = file_parts[0] + '_' + src + tgt + file_parts[1]
+
+    with open(new_file, 'w', encoding='utf8') as f:
+        f.write(convert(src, tgt, txt, nativize, pre_options, post_options))
+
+    print('The following file has been created: ' + new_file)
 
 def convert_html(src, tgt, file, nativize=True, pre_options=[], post_options=[], is_api_mode=False):
     if is_api_mode:
         html = file
     else:
-        f = open(file, 'r')
-        html = file.read()
+        with open(file, 'r', encoding='utf8') as f:
+            html = f.read()
 
     soup = BeautifulSoup(html)
 
@@ -26,8 +49,10 @@ def convert_html(src, tgt, file, nativize=True, pre_options=[], post_options=[],
         file_parts = os.path.splitext(file)
         new_file = file_parts[0] + '_' + src + tgt + file_parts[1]
 
-        with open(new_file, 'wb') as f:
-            f.write(html)
+        with open(new_file, 'w', encoding='utf8') as f:
+            f.write(soup.prettify())
+
+        print('The following file has been created: ' + new_file)
 
 def convert_docx(src, tgt, file, nativize=True, pre_options=[], post_options=[], is_api_mode=False):
     conversion_data = {
@@ -95,3 +120,5 @@ def flush_zip_to_file(file, zip, is_api_mode, src, tgt):
 
         with open(new_file, 'wb') as f:
             f.write(zip.getvalue())
+
+        print('The following file has been created: ' + new_file)

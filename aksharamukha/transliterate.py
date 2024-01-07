@@ -12,6 +12,8 @@ import collections
 import yaml
 import warnings
 import langcodes
+import os
+import ConvertDocxHTML
 from inspect import getmembers, isfunction
 
 #import sys
@@ -474,6 +476,9 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     return transliteration
 
 def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [], param="default"):
+    if os.path.isfile(txt):
+        return ConvertDocxHTML.convert_file(src, tgt, txt, nativize, post_options, pre_options)
+
     if param == "default":
         return process_default(src, tgt, txt, nativize, post_options, pre_options)
 

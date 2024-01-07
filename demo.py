@@ -1,6 +1,13 @@
 from aksharamukha import transliterate
 
-print(transliterate.process('hk', 'siddham', 'buddhaH'))
+from aksharamukha import ConvertDocxHTML
+
+ConvertDocxHTML.convert_file('HK', 'Tamil', "C:\\Users\\vinod\Desktop\\test_conv_aksharamukha.docx")
+ConvertDocxHTML.convert_file('Devanagari', 'Tamil', "C:\\Users\\vinod\\Desktop\\Agni Suktam.html")
+ConvertDocxHTML.convert_file('HK', 'Tamil', "C:\\Users\\vinod\\Desktop\\scripts_to_be_added.txt")
+
+
+''' print(transliterate.process('hk', 'siddham', 'buddhaH'))
 
 print(transliterate.process('autodetect', 'iast', 'ꯃꯤꯇꯩ_ꯃꯌꯦꯛ'))
 
@@ -19,8 +26,10 @@ print(transliterate.auto_detect('ꯃꯤꯇꯩ_ꯃꯌꯦꯛ'))
 print(transliterate.process('Devanagari', 'IAST', 'धर्म भारत की श्रमण परम्परा से निकला धर्म और दर्शन है', pre_options=['RemoveSchwaHindi']))
 
 print(transliterate.process('deva', 'taml', 'धर्म भारत की ', param="script_code"))
-print(transliterate.process('te', 'ur', 'ధర్మ భారత', param="lang_code"))
-print(transliterate.process('odia', 'ho', 'ଧର୍ମ ଭାରତ', param="lang_name"))
+
+print(transliterate.process('hi', 'ur', 'धर्म भारत की ', param="lang_code"))
+
+print(transliterate.process('sanskrit', 'telugu', 'धर्म भारत की ', param="lang_name"))
 
 print(transliterate.process('hindi', 'kannada', 'धर्म भारत की ', param="lang_name"))
 
@@ -28,25 +37,15 @@ print(transliterate.process('devanagari', 'granthapandya', 'धर्म'))
 
 print(transliterate.process('hi', 'pa', 'धर्म भारत की ', param="lang_code"))
 print(transliterate.process('deva', 'arab', 'धर्म भारत की ', param="script_code"))
-
 print(transliterate.process('autodetect', 'latn-iast', 'धर्म भारत की ', param="script_code"))
-print(transliterate.process('la-HK', 'pa-guru', 'namo buddhAya', param="lang_code"))
+print(transliterate.process('la-hK', 'pa-guru', 'namo buddhAya', param="lang_code"))
 
 print(transliterate.process('hi-Deva', 'hi-kthi', 'धर्म भारत की ', param="lang_code"))
 print(transliterate.process('hi-Deva', 'mak', 'धर्म भारत की ', param="lang_code"))
 print(transliterate.process('hi-Deva', 'cyrl', 'धर्म भारत की ', param="script_code"))
 print(transliterate.process('sa-Deva', 'ru', 'धर्म भारत की ', param="lang_code"))
 
-print(transliterate.process('deva', 'taml', 'धर्म भारत की ', param="script_code"))
-print(transliterate.process('te', 'ur', 'ధర్మ భారత', param="lang_code"))
-print(transliterate.process('odia', 'ho', 'ଧର୍ମ ଭାରତ', param="lang_name"))
 
 
-print(transliterate.process('Devanagari', 'Phnx', "तांश्च"))
-print(transliterate.process('HK', 'Syrc', "buddha"))
+## multiple orthographies associated with script example '''
 
-
-
-
-## multiple orthographies associated with s
-# cript example
