@@ -2323,6 +2323,7 @@ def AnusvaraToNasal(Strng,Target):
     return Strng
 
 def MalayalamAnusvaraNasal(Strng):
+    ListCAll = '(' + '|'.join(GM.CrunchSymbols(GM.Characters, 'Malayalam')) + ')'
 
     ListNNasal = [Malayalam.ConsonantMap[x] for x in [4,9,14,19,24]]
     ListCNasal = [
@@ -2348,7 +2349,7 @@ def MalayalamAnusvaraNasal(Strng):
         Strng = re.sub('('+Anu+')'+'('+ListCNasal[i]+')',ListNNasal[i]+vir+r'\2',Strng)
 
     for i in range(len(ListNAnu)):
-        Strng = re.sub('(?<![' + ".".join(Chillus) + '])' + '('+ListNAnu[i]+')'+'('+vir+')'+'('+ListCAnu[i]+')',Anu+r'\3',Strng)
+        Strng = re.sub(ListCAll + GM.VedicSvaras + '(?<!' + vir + ')'+'(?<![' + ".".join(Chillus) + '])(?<!' + vir +')' + '('+ListNAnu[i]+')'+'('+vir+')'+'('+ListCAnu[i]+')',r'\1\2'+Anu+r'\5',Strng)
 
     return Strng
 
