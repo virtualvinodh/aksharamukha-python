@@ -11,8 +11,28 @@ from aksharamukha.ScriptMap.EastIndic import PhagsPa, Burmese
 from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 ### Use escape char in all functions
 
+def IASTLDotRetroflex(Strng):
+    Strng = Strng.replace('ḷ', 'l̤')
+
+    return Strng
+
 def BengaliSubojinedVa(Strng):
     Strng = re.sub('(?<![মব])(্ব)', '্ভ়', Strng)
+
+    return Strng
+
+def BengaliTargetVa(Strng):
+    Strng = Strng.replace('ব', 'ভ়')
+
+    return Strng
+
+def BengaliTargetVa(Strng):
+    Strng = Strng.replace('ব', 'ভ়')
+
+    return Strng
+
+def OriyaTargetVa(Strng):
+    Strng = Strng.replace('ବ', 'ୱ')
 
     return Strng
 
@@ -398,6 +418,9 @@ def MalayalamTranscribe(Strng):
     #RRA NRA
 
     Strng = Strng.replace('റ്റ', 'ട്ട').replace('ന്റ', 'ണ്ഡ')
+
+    #anusvara with m
+    Strng = Strng.replace('ം', 'മ്')
 
     return Strng
 
@@ -972,9 +995,13 @@ def PreProcess(Strng,Source,Target):
         Strng = Strng.replace('OM', 'oM')
 
     if Source == 'BarahaNorth' or Source == 'BarahaSouth':
+        # alternate representations
+
         Strng = Strng.replace('A', 'aa')
         Strng = Strng.replace('I', 'ee')
         Strng = Strng.replace('U', 'oo')
+        Strng = Strng.replace('~loo', '~lU') # Fix vocalic vowels
+        Strng = Strng.replace('Roo', 'RU') # Fix vocalic vowels
 
         Strng = Strng.replace('ou', 'au')
         Strng = Strng.replace('K', 'kh')
@@ -982,6 +1009,8 @@ def PreProcess(Strng,Source,Target):
         Strng = Strng.replace('ch', 'c')
         Strng = Strng.replace('Ch', 'C')
         Strng = Strng.replace('J','jh')
+        Strng = Strng.replace('P', 'ph')
+        Strng = Strng.replace('B', 'bh')
         Strng = Strng.replace('w', 'v')
         Strng = Strng.replace('sh', 'S')
         Strng = Strng.replace('~h', '_h')

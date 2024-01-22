@@ -339,6 +339,10 @@ def PostFixRomanOutput(Strng,Source,Target):
     if Target == "Mongolian":
         Strng = FixMongolian(Strng)
 
+    if Target == "Itrans":
+        Strng = re.sub('([aAiIuUeo])(RRi)', r'\1'+'R_Ri', Strng)
+        Strng = re.sub('([aAiIuUeo])(LLi)', r'\1'+'L_Li', Strng)
+
     if Source == "RomanSemitic":
         pass
         #Strng = Strng.replace('a̤', '\u0324')
@@ -909,6 +913,8 @@ def FixTamil(Strng,reverse=False):
             for y in VedicSign:
                 Strng = Strng.replace(x + y, y + x)
     else:
+        Strng = PostProcess.RetainDandasIndic(Strng, 'Tamil')
+        Strng = PostProcess.RetainIndicNumerals(Strng, 'Tamil')
         Strng = Strng.replace(avaA,ava+ava)
         Strng = Strng.replace('ஷ²', 'ஶ')
 
@@ -948,6 +954,7 @@ def FixGurmukhi(Strng,reverse=False):
         Strng = re.sub(Vedicomp + '\u0A71' + '(.)', r'\1' + r'\2' + Gurmukhi.ViramaMap[0] + r'\2' , Strng)
 
     else:
+        Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi')
         Strng = Strng.replace(avaA,ava+ava)
         Strng = PostProcess.ReverseGeminationSign(Strng, 'Gurmukhi')
         Strng = Strng.replace('ੰਨ','ਨ੍ਨ')
@@ -1414,6 +1421,10 @@ def FixUrduShahmukhi(Target, Strng,reverse=False):
         ListV = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels,Target)) + ')'
         ListVSA = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns,Target)+[a]) + ')'
 
+        ListC = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants,Target)) + ')'
+        # Fix NunGhunna
+        Strng = re.sub('(\u06BA\u02BD?)' + ListC, '\u0646\u0658' + r'\2', Strng)
+
         hamzaFull = "\u0621"
         hamzaChair = "\u0626"
 
@@ -1496,10 +1507,16 @@ def FixUrduShahmukhi(Target, Strng,reverse=False):
             #aspirated nasals and liquids
             Strng = re.sub('(ن|م|ی|ر|ل|و)(\u0652)(ہ)',r'\1'+'\u06BE', Strng)
 
+        # Fix word-final ha
+
+
     else:
         #print('I am being called')
         if True:
             #print(Strng)
+
+            #Fix Nun Ghuunnai
+            Strng = Strng.replace('\u0646\u0658', '\u06BA')
 
             ## replace chaschmee ha with regular ha when not surrounded preceeded by consonnants
             Strng = re.sub('(\s)\u06BE',r'\1'+'ہ', Strng)
@@ -2507,6 +2524,7 @@ def FixLepcha(Strng,reverse=False):
 
     conFinal = [x+vir for x in [Lepcha.ConsonantMap[c] for c in [0,15,19,20,24,26,27]]]
     conF = ['\u1C2D','\u1C33','\u1C30','\u1C31','\u1C2E','\u1C32','\u1C2F',]
+    finConsList = ''.join(conF)
 
     signAll = '|'.join(GM.CrunchSymbols(GM.Consonants+GM.Vowels+GM.VowelSignsNV, "Lepcha"))
 
@@ -2515,6 +2533,8 @@ def FixLepcha(Strng,reverse=False):
             # Replace final consonants
             Strng = re.sub('('+signAll+')'+'('+x+')',r'\1'+y,Strng)
         else:
+            # KIp ᰀᰧᰱᰶ -> rang, final consonant
+            Strng = re.sub('([' + finConsList + '])' + '(ᰶ)', r'\2\1', Strng)
             Strng = Strng.replace(y,x)
 
     # Remove Virama - Lepcha doesn't have virama ?
@@ -2528,9 +2548,12 @@ def FixLepcha(Strng,reverse=False):
         # kiM -> ki + 1C35 ; kaM -> ka + 1C34
         Strng = re.sub("("+signVow+')'+'('+Lepcha.AyogavahaMap[1]+')',r'\1'+'\u1C35',Strng)
         Strng = Strng.replace("ᰧᰶᰵ", "ᰧᰵᰶ") ## Fiximg IM issues kIM swap the Ran and M to display it better
+        # swap rang + final con - unicode ordering to get the correct rendering
+        # kIP -> ᰀᰧᰱᰶ
+        Strng = re.sub('(ᰶ)' + '([' + finConsList + '])', r'\2\1', Strng)
     else:
         Strng = Strng.replace('\u1C35',Lepcha.AyogavahaMap[1])
-        Strng = Strng.replace("ᰧᰵᰶ","ᰧᰶᰵ") ## Fiximg IM issues kIM swap the Ran and M to display it better
+        Strng = Strng.replace("\u1C34\u1C36","\u1C36\u1C34") ## Fiximg IM issues kIM swap the Ran and M to display it better
 
     return Strng
 
@@ -2906,10 +2929,14 @@ def FixMalayalam(Strng, reverse=False):
 
         # fix n2ra
         #Strng = Strng.replace('ன்ற')
+    else:
+        Strng = PostProcess.RetainIndicNumerals(Strng, 'Malayalam')
+        Strng = PostProcess.RetainDandasIndic(Strng, 'Malayalam')
 
     Chillus=['\u0D7A','\u0D7B','\u0D7C','\u0D7D','\u0D7E', 'ഩ‍്']
 
     Anu = GM.CrunchSymbols(GM.CombiningSigns,'Malayalam')[1]
+
 
     return Strng
 
@@ -2918,6 +2945,8 @@ def FixTelugu(Strng, reverse=False):
         Strng = PostProcess.RetainDandasIndic(Strng, 'Telugu', True)
         Strng = PostProcess.RetainIndicNumerals(Strng, 'Telugu', True)
     else:
+        Strng = PostProcess.RetainIndicNumerals(Strng, 'Telugu')
+        Strng = PostProcess.RetainDandasIndic(Strng, 'Telugu')
         Strng = Strng.replace('ఁ', 'ఀ')
 
     return Strng
@@ -3144,13 +3173,15 @@ def FixBengali(Strng, reverse=False):
 
     if not reverse:
         Strng = re.sub('(?<![রবম])' + Virama + ba,  Virama + '\u200C' + ba, Strng)
-
+        #print(Strng)
         ## Fix স্ভ়ারা  -> স্বারা ; subjoined ba is by default pronounced as /va/ in Bengali
-        Strng = Strng.replace('\u09CD\u09AD\u09BC', '\u09CD\u09AC')
+        Strng = re.sub('(?<![রবমভ়])' + '(\u09CD\u09AD\u09BC)', '\u09CD\u09AC', Strng)
+        #print(Strng)
     else:
         pass
 
     Strng = PostProcess.KhandaTa(Strng, 'Bengali', reverse)
+    #print(Strng)
 
     return Strng
 
@@ -3208,9 +3239,11 @@ def FixSharada(Strng,reverse=False):
 def FixKannada(Strng,reverse=False):
     if not reverse:
         Strng = PostProcess.RetainDandasIndic(Strng, 'Kannada', True)
-        Strng = PostProcess.RetainIndicNumerals(Strng, 'Kannada', True)
+        #Strng = PostProcess.RetainIndicNumerals(Strng, 'Kannada', True)
 
         Strng = re.sub('(\u0CCD)([^\u0CAB\u0C9C])(\u0CBC)', r'\1' + '\u200C' + r'\2\3', Strng)
+    else:
+        Strng = PostProcess.RetainDandasIndic(Strng, 'Kannada')
 
     return Strng
 
@@ -3287,7 +3320,7 @@ def FixGujarati(Strng,reverse=False):
         Strng = PostProcess.RetainDandasIndic(Strng, 'Gujarati', True)
         Strng = Strng.replace('જ઼઼', 'ૹ').replace('શ઼', 'ૹ')
     else:
-        pass
+        Strng = PostProcess.RetainDandasIndic(Strng, 'Gujarati')
         Strng = Strng.replace('ૹ', 'જ઼઼').replace('ૹ', 'શ઼')
 
     return Strng

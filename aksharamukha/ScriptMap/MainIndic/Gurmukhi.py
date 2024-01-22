@@ -127,7 +127,7 @@ NuktaConsonantMap =  [
                      '\u0A5A',
                      '\u0A5B',
                      '\u0A5C',
-                     '\u0A22\u0A3C',
+                     'ੜ੍ਹ',
                      '\u0A5E',
                      '\u0A2F\u0A3C'
                      ]

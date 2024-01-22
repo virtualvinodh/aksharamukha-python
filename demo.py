@@ -2,9 +2,11 @@ from aksharamukha import transliterate
 
 from aksharamukha import transliterate_file
 
-transliterate_file.process('HK', 'Tamil', "C:\\Users\\vinod\Desktop\\test_conv_aksharamukha.docx")
+''' transliterate_file.process('HK', 'Tamil', "C:\\Users\\vinod\Desktop\\test_conv_aksharamukha.docx")
 transliterate_file.process('Devanagari', 'Tamil', "C:\\Users\\vinod\\Desktop\\Agni Suktam.html")
-transliterate_file.process('HK', 'Tamil', "C:\\Users\\vinod\\Desktop\\scripts_to_be_added.txt")
+transliterate_file.process('HK', 'Tamil', "C:\\Users\\vinod\\Desktop\\scripts_to_be_added.txt") '''
+
+print(transliterate.process('itrans', 'telugu', 'rAma ##( test )## rAma'))
 
 
 ''' print(transliterate.process('hk', 'siddham', 'buddhaH'))
