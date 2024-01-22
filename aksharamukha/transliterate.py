@@ -375,6 +375,9 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     if 'ranjanawartu' in postoptions and tgt == 'Ranjana':
         tgt = 'Tibetan'
         nativize = False
+    if 'BengaliRaBa' in postoptions and tgt == 'Bengali':
+        tgt = 'BengaliRaBa'
+        nativize = False
     if 'SoyomboFinals' in postoptions and tgt == 'Soyombo':
         txt = '\u02BE' + txt
     #if src not in GeneralMap.SemiticScripts and tgt == 'Arab' and not nativize:

@@ -1613,15 +1613,16 @@ def SoyomboSpaceTscheg(Strng):
     return Strng
 
 def AnusvaratoNasalASTISO(Strng):
-    Strng = Strng.replace('ṁ', 'ṃ')
+    #Strng = Strng.replace('ṁ', 'ṃ')
 
-    Strng = re.sub('(ṃ)(k|g)', 'ṅ' + r'\2', Strng)
-    Strng = re.sub('(ṃ)(c|j)', 'ñ' + r'\2', Strng)
-    Strng = re.sub('(ṃ)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
-    Strng = re.sub('(ṃ)(t|d)', 'n' + r'\2', Strng)
-    Strng = re.sub('(ṃ)(p|b)', 'm' + r'\2', Strng)
+    Strng = re.sub('(ṃ|ṁ)(k|g)', 'ṅ' + r'\2', Strng)
+    Strng = re.sub('(ṃ|ṁ)(c|j)', 'ñ' + r'\2', Strng)
+    Strng = re.sub('(ṃ|ṁ)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
+    Strng = re.sub('(ṃ|ṁ)(t|d)', 'n' + r'\2', Strng)
+    Strng = re.sub('(ṃ|ṁ)(p|b)', 'm' + r'\2', Strng)
 
     return Strng
+
 
 def removeDiacritics(Strng):
     diacritics = ['\u0331', '\u0306', '\u0323', '\u035F', '\u0324', '\u035F', '\u0307', '\u0301', '\u0303', '\u0310', '\u0306', '\u0302', '\u0304']
@@ -2177,6 +2178,9 @@ def ReverseGeminationSign(Strng,Target): #Fix this
     ConAsp   = [GM.CrunchList('ConsonantMap', Target)[x] for x in [1,3,6,8,11,13,16,18,21,23]]
     ConOthrs = [GM.CrunchList('ConsonantMap', Target)[x] for x in [0,2,5,7,10,12,15,17,20,22,4,9,14,19,24]]
 
+    if Target == 'Gurmukhi':
+        Strng = Strng.replace('ੱਸ਼਼', 'ਸ਼਼੍ਸ਼਼')
+
     Strng = re.sub('(' + GM.Gemination[Target] + ')' + '('+'|'.join(ConUnAsp)+')', r'\2' + vir + r'\2', Strng)
 
     for i in range(len(ConAsp)):
@@ -2230,7 +2234,7 @@ def khandatabatova(Strng):
     return Strng
 
 def BengaliRaBa(Strng):
-    Strng = Strng.replace('ব', 'ৰ').replace('ভ়', 'ব').replace('ৰু', 'ৰ‌ু').replace('ৰূ', 'ৰ‌ূ')
+    Strng = Strng.replace('ৰু', 'ৰ‌ু').replace('ৰূ', 'ৰ‌ূ')
     ## Avoid bba -> rra
     ## break all ba conjuncts
     Strng = Strng.replace('\u09CD\u09F0', '\u09CD\u200C\u09F0')
@@ -2238,7 +2242,6 @@ def BengaliRaBa(Strng):
     ## bra/bya bru fix
     Strng = re.sub('(\u09F0)(\u09CD)([\u09B0\u09AF])', r'\1' + '\u200D' + r'\2\3', Strng)
     Strng = re.sub('(\u09F0)(\u09CD)', r'\1\2' + '\u200C', Strng)
-
 
     ## rba
     Strng = Strng.replace('র্‌ৰ', 'ৰ্ৰ')
@@ -2262,7 +2265,8 @@ def KhandaTa(Strng,Target, reverse=False): #Check for Bhakt - Khanda Ta not form
     ta = GM.CrunchSymbols(GM.Consonants, Target)[15]
     khandata = '\u09CE'
     vir = GM.CrunchSymbols(GM.VowelSigns,Target)[0]
-    ListC = '|'.join([GM.CrunchList('ConsonantMap', Target)[x] for x in [15,16,19,27,24,25,26,28]] + ['ৰ', 'য়'])
+    ListC = '|'.join([GM.CrunchList('ConsonantMap', Target)[x] for x in [15,16,19,27,24,25,26,28]] + ['ব', 'ৰ', 'য়'])
+    #print(ListC)
     if not reverse:
         Strng = re.sub('(?<!' + vir + ')' + '('+ta+')'+'('+vir+')'+'(?!'+ListC+')',khandata, Strng)
         Strng = Strng.replace('ৎˍ', 'ৎ')
@@ -2297,6 +2301,7 @@ def NasalToAnusvara(Strng,Target):
     return Strng
 
 def AnusvaraToNasal(Strng,Target):
+    nukta = GM.CrunchList('NuktaMap', Target)[0]
 
     ListN = [GM.CrunchSymbols(GM.Consonants, Target)[x] for x in [4,9,14,19,24]]
     ListC = [
@@ -2310,7 +2315,7 @@ def AnusvaraToNasal(Strng,Target):
     Anu = GM.CrunchSymbols(GM.CombiningSigns,Target)[1]
 
     for i in range(len(ListN)):
-        Strng = re.sub('('+Anu+')'+ GM.VedicSvaras + '('+ListC[i]+')',ListN[i]+vir+r'\2\3',Strng)
+        Strng = re.sub('('+Anu+')'+ GM.VedicSvaras + '('+ListC[i]+')(?!' + nukta + ')',ListN[i]+vir+r'\2\3',Strng)
 
         if Target == "Tamil":
             Strng = re.sub('(ம்)'+ GM.VedicSvaras + '(ʼ)' + '('+ListC[i]+')',ListN[i]+vir+r'\2\4',Strng)
@@ -3042,7 +3047,7 @@ def TaiThamMoveNnga(Strng):
     return "Vinodh"
 
 def UrduRemoveShortVowels(Strng):
-    ShortVowels = ['\u0652','\u064E','\u0650','\u064F']
+    ShortVowels = ['\u0652','\u064E','\u0650','\u064F', '\u0658']
 
     for vow in ShortVowels:
         Strng = Strng.replace(vow,"")
@@ -3168,11 +3173,25 @@ def TamilDisableSHA(Strng):
 
     return Strng
 
-# not used
 def swapEe(Strng):
-    Strng = Strng.replace('e', 'X@X@')
+    Strng = Strng.replace('E', 'X@X@')
     Strng = Strng.replace('e', 'E')
-    Strng = Strng.replace('X@X@')
+    Strng = Strng.replace('X@X@', 'e')
+
+    Strng = Strng.replace('O', 'X@X@')
+    Strng = Strng.replace('o', 'O')
+    Strng = Strng.replace('X@X@', 'o')
+
+    return Strng
+
+def swapEeItrans(Strng):
+    Strng = Strng.replace('^e', 'X@X@')
+    Strng = Strng.replace('e', 'E')
+    Strng = Strng.replace('X@X@', 'e')
+
+    Strng = Strng.replace('^o', 'X@X@')
+    Strng = Strng.replace('o', 'O')
+    Strng = Strng.replace('X@X@', 'o')
 
     return Strng
 

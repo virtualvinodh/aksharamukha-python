@@ -1,0 +1,63 @@
+{
+    "Kannada": [
+    {
+        "source": "Kannada",
+        "target": "IAST",
+        "reverse": true,
+        "cases": [["ಘಟನೆ ೧.ಕಪಿಲವಸ್ತುವಿನಲ್ಲಿ ಸಾಂಪ್ರದಾಯಿಕ ಸಮಾರಂಭವೊಂದು ಏರ್ಪಟ್ಟಿತು. ವ್ಯವಸಾಯದ ಕಾಲ ಪ್ರಾರಂಭವಾದಾಗ, ಕೃಷಿ ಆರಂಭೋತ್ಸವದಲ್ಲಿ ಭಾಗವಹಿಸಲು, ಸಿದ್ದಾರ್ಥನಿಗೆ ರಾಜ ಶುದ್ಧೋದನ ಹೇಳಿದನು. ಅದರಂತೆ ಬಂಗಾರದ ನೇಗಿಲಿಗೆ, ಸುಂದರವಾದ ಶ್ವೇತವರ್ಣದ ಎತ್ತುಗಳನ್ನು ಕಟ್ಟಿ, ಮುಂದುಗಡೆಯಲ್ಲಿ ರಾಜಕುಮಾರ ಸಿದ್ದಾರ್ಥ ನೆಲವನ್ನು ಉತ್ತನು. ನಂತರ ರಾಜಕುಮಾರ ಸಿದ್ದಾರ್ಥನ ಹಿಂದೆ ಸಾವಿರಾರು ಜನ ಉಳುಮೆ ಮಾಡುವುದರಲ್ಲಿ ಭಾಗವಹಿಸಿದರು. ಅವರೆಲ್ಲ ನೇಗಿಲಿನಿಂದ ನೆಲವನ್ನು ಬಗೆದೊಡನೆ, ನೆಲದಿಂದ ಅನೇಕ ಕ್ರಿಮಿ ಕೀಟಗಳು ಹೊರಗೆ ಬರಲಾರಂಭಿಸಿದವು. ಅವನ್ನು ಕಂಡು ಅಂತರಿಕ್ಷದಲ್ಲಿ ಹಾರಾಡುತ್ತಿದ್ದ ಪಕ್ಷಿಗಳು ಬಂದು ಅವುಗಳನ್ನು ಕೊಕ್ಕಿನಲ್ಲಿ ಕುಕ್ಕಿ ತಿನ್ನುವುದನ್ನು ಕಂಡಾಗ ರಾಜಕುಮಾರ ಸಿದ್ದಾರ್ಥನ ಮನದಲ್ಲಿ ವೇದನೆ ಉಂಟಾಯಿತು. ಆದರದನ್ನು ಅವನು ಯಾರಿಗೂ ತಿಳಿಸಲಿಲ್ಲ.ಘ ಟನೆ ೨. ಒಂದು ದಿನ ಸೋದರ ದೇವದತ್ತನು ಉದ್ಯಾನವನದಲ್ಲಿ ಹಾರಾಡುತ್ತಿದ್ದ ಹಂಸಪಕ್ಷಿಗೆ ಬಾಣ ಪ್ರಯೋಗ ಮಾಡಿದನು.", "ghaṭanĕ 1.kapilavastuvinalli sāṃpradāyika samāraṃbhavŏṃdu erpaṭṭitu. vyavasāyada kāla prāraṃbhavādāga, kṛṣi āraṃbhotsavadalli bhāgavahisalu, siddārthanigĕ rāja śuddhodana hel̤idanu. adaraṃtĕ baṃgārada negiligĕ, suṃdaravāda śvetavarṇada ĕttugal̤annu kaṭṭi, muṃdugaḍĕyalli rājakumāra siddārtha nĕlavannu uttanu. naṃtara rājakumāra siddārthana hiṃdĕ sāvirāru jana ul̤umĕ māḍuvudaralli bhāgavahisidaru. avarĕlla negiliniṃda nĕlavannu bagĕdŏḍanĕ, nĕladiṃda aneka krimi kīṭagal̤u hŏragĕ baralāraṃbhisidavu. avannu kaṃḍu aṃtarikṣadalli hārāḍuttidda pakṣigal̤u baṃdu avugal̤annu kŏkkinalli kukki tinnuvudannu kaṃḍāga rājakumāra siddārthana manadalli vedanĕ uṃṭāyitu. ādaradannu avanu yārigū til̤isalilla.gha ṭanĕ 2. ŏṃdu dina sodara devadattanu udyānavanadalli hārāḍuttidda haṃsapakṣigĕ bāṇa prayoga māḍidanu."]]
+    },
+    {
+        "source": "HK",
+        "target": "Kannada",
+        "nativize": true,
+        "cases": [["sam saGka saGkha saGga saGga saJca saJcha saJja saJjha saNTa saNTha saNDa saNDha santa santha sanda sandha sampa sampha samba sambha Gka mba samn samm saml sArGga vAZndu ko'Gka", "ಸಂ ಸಂಕ ಸಂಖ ಸಂಗ ಸಂಗ ಸಂಚ ಸಂಛ ಸಂಜ ಸಂಝ ಸಂಟ ಸಂಠ ಸಂಡ ಸಂಢ ಸಂತ ಸಂಥ ಸಂದ ಸಂಧ ಸಂಪ ಸಂಫ ಸಂಬ ಸಂಭ ಙ್ಕ ಮ್ಬ ಸಮ್ನ್ ಸಮ್ಮ್ ಸಮ್ಲ್ ಸಾರ್ಙ್ಗ ವಾೞ್ನ್ದು ಕೋಽಙ್ಕ"]]
+    },
+    {
+        "source": "HK",
+        "target": "Kannada",
+        "reverse": true,
+        "nativize": false,
+        "cases": [["sam saGka saGkha saGga saGga saJca saJcha saJja saJjha saNTa saNTha saNDa saNDha santa santha sanda sandha sampa sampha samba sambha Gka mba samn samm saml sArGga vAZndu ko'Gka", "ಸಮ್ ಸಙ್ಕ ಸಙ್ಖ ಸಙ್ಗ ಸಙ್ಗ ಸಞ್ಚ ಸಞ್ಛ ಸಞ್ಜ ಸಞ್ಝ ಸಣ್ಟ ಸಣ್ಠ ಸಣ್ಡ ಸಣ್ಢ ಸನ್ತ ಸನ್ಥ ಸನ್ದ ಸನ್ಧ ಸಮ್ಪ ಸಮ್ಫ ಸಮ್ಬ ಸಮ್ಭ ಙ್ಕ ಮ್ಬ ಸಮ್ನ್ ಸಮ್ಮ್ ಸಮ್ಲ್ ಸಾರ್ಙ್ಗ ವಾೞ್ನ್ದು ಕೋಽಙ್ಕ"]]
+    }],
+    "Telugu": [
+        {
+            "source": "Telugu",
+            "target": "IAST",
+            "reverse": true,
+            "cases": [["సిద్ధార్ధుడు కపిలవస్తు దేశానికీ చెందిన లుంబిని పట్టణంలో జన్మించాడు. భౌగొళికంగా ఈ ప్రాంతం ప్రస్తుత నేపాల్ దేశంలో ఉంది. కానీ చారిత్రకంగా ఈ ప్రాంతం ప్రాచీన భారతదేశంలోకి వస్తుంది. గౌతమ అనునది సిద్ధార్ధుని ఇంటి పేరు కాదు సిద్ధార్ధుని పెంచిన తల్లి గౌతమి. అందుకు గాను అతనికి ఆ పేరు వచ్చింది. తండ్రి శుద్ధోధనుడు, తల్లిమహామాయ (మాయాదేవి, కోళియన్ దేశపు రాకుమారి). సిద్దార్డుడు గర్భమందున్నప్పుడు, మాయాదేవి, ఒక ఆరు దంతముల ఏనుగు తన గర్భములోకి కుడి వైపు నుండి ప్రవేశించినట్లుగా ఒక స్వప్నమందు దర్శించింది. అది జరిగిన పది చంద్ర మాసముల తర్వాత సిద్ధార్డుడు జన్మించెను. శాక్యవంశాచారము ప్రకారం, గర్భావతిగానున్న మాయాదేవి, ప్రసవానికి తన తండ్రిగారింటికి బయలుదేరింది. కానీ మార్గమధ్యంలో, లుంబిని అనే ప్రాంతంలో ఒక సాలవృక్షం క్రింద ఒక మగ బిడ్డను ప్రసవించింది.", "siddhārdhuḍu kapilavastu deśānikī cĕṃdina luṃbini paṭṭaṇaṃlo janmiṃcāḍu. bhaugŏl̤ikaṃgā ī prāṃtaṃ prastuta nepāl deśaṃlo uṃdi. kānī cāritrakaṃgā ī prāṃtaṃ prācīna bhāratadeśaṃloki vastuṃdi. gautama anunadi siddhārdhuni iṃṭi peru kādu siddhārdhuni pĕṃcina talli gautami. aṃduku gānu ataniki ā peru vacciṃdi. taṃḍri śuddhodhanuḍu, tallimahāmāya (māyādevi, kol̤iyan deśapu rākumāri). siddārḍuḍu garbhamaṃdunnappuḍu, māyādevi, ŏka āru daṃtamula enugu tana garbhamuloki kuḍi vaipu nuṃḍi praveśiṃcinaṭlugā ŏka svapnamaṃdu darśiṃciṃdi. adi jarigina padi caṃdra māsamula tarvāta siddhārḍuḍu janmiṃcĕnu. śākyavaṃśācāramu prakāraṃ, garbhāvatigānunna māyādevi, prasavāniki tana taṃḍrigāriṃṭiki bayaluderiṃdi. kānī mārgamadhyaṃlo, luṃbini ane prāṃtaṃlo ŏka sālavṛkṣaṃ kriṃda ŏka maga biḍḍanu prasaviṃciṃdi."]]
+        },
+        {
+            "source": "HK",
+            "target": "Telugu",
+            "nativize": true,
+            "cases": [["sam saGka saGkha saGga saGga saJca saJcha saJja saJjha saNTa saNTha saNDa saNDha santa santha sanda sandha sampa sampha samba sambha Gka mba samn samm saml sArGga vAZndu ko'Gka", "సం సంక సంఖ సంగ సంగ సంచ సంఛ సంజ సంఝ సంట సంఠ సండ సంఢ సంత సంథ సంద సంధ సంప సంఫ సంబ సంభ ఙ్క మ్బ సమ్న్ సమ్మ్ సమ్ల్ సార్ఙ్గ వాఴ్న్దు కోఽఙ్క"]]
+        },
+        {
+            "source": "HK",
+            "target": "Telugu",
+            "reverse": true,
+            "nativize": false,
+            "cases": [["sam saGka saGkha saGga saGga saJca saJcha saJja saJjha saNTa saNTha saNDa saNDha santa santha sanda sandha sampa sampha samba sambha Gka mba samn samm saml sArGga vAZndu ko'Gka", "సమ్ సఙ్క సఙ్ఖ సఙ్గ సఙ్గ సఞ్చ సఞ్ఛ సఞ్జ సఞ్ఝ సణ్ట సణ్ఠ సణ్డ సణ్ఢ సన్త సన్థ సన్ద సన్ధ సమ్ప సమ్ఫ సమ్బ సమ్భ ఙ్క మ్బ సమ్న్ సమ్మ్ సమ్ల్ సార్ఙ్గ వాఴ్న్దు కోఽఙ్క"]]
+        }],
+        "Malayalam": [
+            {
+                "source": "Malayalam",
+                "target": "IAST",
+                "reverse": true,
+                "cases": [["ധർമ്മപദത്തിൽ ഇരുപത്തിനാലദ്ധ്യായങ്ങളിൽ ബുദ്ധമതത്തിന്റെ സാരം അടങ്ങിയിരിയ്ക്കുന്നു. ബുദ്ധമതം എന്നു വെച്ചാൽ ബുദ്ധൻ പ്രസംഗിച്ച പ്രകാരത്തിലുള്ള തത്ത്വങ്ങളും ആദികാലങ്ങളിൽ ധർമ്മം എന്ന വിശേഷനാമത്തോടുകൂടിയുള്ള മതവുമാകുന്നു. \"പാപത്തെ ദൂരെ ത്യജിക്കുകയും, പുണ്യത്തെ എല്ലായ്പോഴും ചെയ്യുകയും, പ്രാണികളിൽ സ്നേഹം, സത്യം, ക്ഷമ, ശുദ്ധി, ഇവയോടും കൂടി ഇരിയ്ക്കുകയുമാകുന്നു\" ധർമ്മം എന്നതിന്റെ സാരാർത്ഥം എന്ന് അശോകൻ പറയുന്നു. ബുദ്ധമത തത്ത്വചിന്തയുടെ ഒരു പ്രധാനപ്പെട്ട തത്ത്വമാണ് ചതുര സത്യങ്ങൾ എന്നറിയപ്പെടുന്നത്. ദുഃഖം, ദുഖ കാരണം, ദുഖനിവാരണം, ദുഖ നിവാരണമാർഗ്ഗം എന്നിവ ചതുര സത്യങ്ങളായി അറിയപെടുന്നു. ക്രിസ്താബ്ദത്തിന്ന് 563 കൊല്ലം മുന്പ്, കപിലവസ്തുവിനു സമീപം ലുംബിനി ഉപവനത്തിൽ ജനിച്ചു. എന്നിരുന്നാലും ശ്രീബുദ്ധന്റെ ജനനത്തെപ്പറ്റി ആധികാരികമായ രേഖകൾ ഇല്ല. മിക്ക ചരിത്രകാരന്മാരും പല അവലംബം ഉപയോഗിച്ച് വ്യത്യസ്തമായ കാലഘട്ടങ്ങളാണ് സൂചിപ്പിക്കുന്നത്. ക്രി.മു. 400 ന് മുന്നായിരിക്കണം അദ്ദേഹം ജനിച്ചത് എന്ന് ഒരു വിഭാഗം വിചാരിക്കുന്നു.", "dharmmapadattil irupattināladdhyāyaṅṅal̤il buddhamatattinṟĕ sāraṃ aṭaṅṅiyiriykkunnu. buddhamataṃ ĕnnu vĕccāl buddhan prasaṃgicca prakārattilul̤l̤a tattvaṅṅal̤uṃ ādikālaṅṅal̤il dharmmaṃ ĕnna viśeṣanāmattoṭukūṭiyul̤l̤a matavumākunnu. \"pāpattĕ dūrĕ tyajikkukayuṃ, puṇyattĕ ĕllāypoḻuṃ cĕyyukayuṃ, prāṇikal̤il snehaṃ, satyaṃ, kṣama, śuddhi, ivayoṭuṃ kūṭi iriykkukayumākunnu\" dharmmaṃ ĕnnatinṟĕ sārārtthaṃ ĕnn aśokan paṟayunnu. buddhamata tattvacintayuṭĕ ŏru pradhānappĕṭṭa tattvamāṇ catura satyaṅṅal̤ ĕnnaṟiyappĕṭunnat. duḥkhaṃ, dukha kāraṇaṃ, dukhanivāraṇaṃ, dukha nivāraṇamārggaṃ ĕnniva catura satyaṅṅal̤āyi aṟiyapĕṭunnu. kristābdattinn 563 kŏllaṃ munp, kapilavastuvinu samīpaṃ luṃbini upavanattil janiccu. ĕnnirunnāluṃ śrībuddhanṟĕ jananattĕppaṟṟi ādhikārikamāya rekhakal̤ illa. mikka caritrakāranmāruṃ pala avalaṃbaṃ upayogicc vyatyastamāya kālaghaṭṭaṅṅal̤āṇ sūcippikkunnat. kri.mu. 400 n munnāyirikkaṇaṃ addehaṃ janiccat ĕnn ŏru vibhāgaṃ vicārikkunnu."]]
+            },
+            {
+                "source": "HK",
+                "target": "Malayalam",
+                "nativize": true,
+                "cases": [["", ""]]
+            },
+            {
+                "source": "HK",
+                "target": "Malayalam",
+                "reverse": true,
+                "nativize": false,
+                "cases": [["", ""]]
+            }]
+
+}
