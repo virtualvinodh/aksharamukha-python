@@ -26,11 +26,6 @@ def BengaliTargetVa(Strng):
 
     return Strng
 
-def BengaliTargetVa(Strng):
-    Strng = Strng.replace('ব', 'ভ়')
-
-    return Strng
-
 def OriyaTargetVa(Strng):
     Strng = Strng.replace('ବ', 'ୱ')
 

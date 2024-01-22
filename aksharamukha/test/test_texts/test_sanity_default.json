@@ -50,14 +50,14 @@
                 "source": "HK",
                 "target": "Malayalam",
                 "nativize": true,
-                "cases": [["", ""]]
+                "cases": [["sam saGka saGkha saGga saGgha saJca saJcha saJja saJjha saNTa saNTha saNDa saNDha santa santha sanda sandha sampa sampha samba sambha Gka mba samn samm saml sArGga samn sanm sanmba salmba kanpa", "സം സങ്ക സംഖ സംഗ സംഘ സഞ്ച സഞ്ഛ സഞ്ജ സഞ്ഝ സണ്ട സണ്ഠ സണ്ഡ സണ്ഢ സന്ത സന്ഥ സന്ദ സന്ധ സമ്പ സംഫ സംബ സംഭ ങ്ക മ്ബ സമ്ന് സമ്മ് സമ്ല് സാർങ്ഗ സമ്ന് സന്മ് സന്മ്ബ സല്മ്ബ കൻപ"]]
             },
             {
                 "source": "HK",
                 "target": "Malayalam",
                 "reverse": true,
                 "nativize": false,
-                "cases": [["", ""]]
+                "cases": [["sam saGka saGkha saGga saGgha saJca saJcha saJja saJjha saNTa saNTha saNDa saNDha santa santha sanda sandha sampa sampha samba sambha Gka mba samn samm saml sArGga samn sanm sanmba salmba kanpa", "സമ് സങ്ക സങ്ഖ സങ്ഗ സങ്ഘ സഞ്ച സഞ്ഛ സഞ്ജ സഞ്ഝ സണ്ട സണ്ഠ സണ്ഡ സണ്ഢ സന്ത സന്ഥ സന്ദ സന്ധ സമ്പ സമ്ഫ സമ്ബ സമ്ഭ ങ്ക മ്ബ സമ്ന് സമ്മ് സമ്ല് സാർങ്ഗ സമ്ന് സന്മ് സന്മ്ബ സല്മ്ബ കൻപ"]]
             }]
 
 }
