@@ -31,7 +31,18 @@ def OriyaTargetVa(Strng):
 
     return Strng
 
-def IASTLOCBurmeseSource(Strng):
+# shan
+def ShanLoCRomanLoCTarget(Strng):
+    pass
+
+    return Strng
+
+def ShanLoCRomanLoCSource(Strng):
+    pass
+
+    return Strng
+
+def BurmeseRomanLoCSource(Strng):
     # adhoc chars
     chars_misc = {
         "e*": "၏",
@@ -84,7 +95,7 @@ def segmentBurmeseSyllables(Strng):
 
     return Strng
 
-def IASTLOCBurmeseTarget(Strng):
+def BurmeseRomanLoCTarget(Strng):
     # asat + virma to just virama
     Strng = Strng.replace('\u103A\u1039', '\u1039')
 
@@ -904,7 +915,7 @@ def RomanPreFix(Strng,Source):
     VowelA = GM.CrunchSymbols(['VowelMap'],Source)[0]
 
     ListV = '|'.join(GM.CrunchSymbols(GM.VowelSigns,Source))
-    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants,Source))
+    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants,Source)).replace(Nuk, '')
 
     Strng = re.sub('('+ListC+')'+'(?!'+ListV+'|'+VowelA+')',r'\1'+DepV+Vir,Strng)
 

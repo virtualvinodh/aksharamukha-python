@@ -61,10 +61,10 @@ om = ['OmMap']
 virama = ['ViramaMap']
 
 MainIndic = ['BengaliRaBa', 'Nandinagari','Shahmukhi', 'TamilExtended','MasaramGondi','GunjalaGondi','Dogra', 'Ranjana', 'Khojki','GranthaGrantamil', 'Multani', 'Ahom', 'Mahajani','SiddhamDevanagari', 'Vatteluttu', 'GranthaPandya', 'Khudawadi', 'Bhaiksuki', 'Sharada', 'Newa', 'SylotiNagri', 'Takri', 'Tirhuta', 'Modi', 'Kaithi', 'Kharoshthi','Lepcha','Chakma','Brahmi','MeeteiMayek','Limbu','Assamese','Bengali','Devanagari','Grantha','Gujarati','Gurmukhi','Kannada','Malayalam','Oriya','Saurashtra','Sinhala','Tamil','TamilBrahmi','TamilGrantha','Telugu','Urdu']
-EastIndic =['BurmeseALALC', 'Makasar', 'Kawi', 'Pallava', 'LaoTham', 'LueTham', 'KhuenTham', 'Marchen', 'Soyombo', 'KhomThai', 'KhamtiShan', 'TaiLaing', 'Mon', 'Shan', 'ZanabazarSquare','Rejang', 'Lao2','Buhid', 'Hanunoo', 'Siddham', 'Tibetan','Lao','TaiTham','Cham','BatakKaro','BatakPakpak','BatakSima','BatakToba','BatakManda','LaoPali','PhagsPa','Buginese','Tagbanwa','Tagalog','Sundanese','Balinese','Burmese','Javanese','Khmer','Siddham','Ranjana','Thaana','Thai', 'BurmeseALALC']
+EastIndic =['ShanLoC', 'Makasar', 'Kawi', 'Pallava', 'LaoTham', 'LueTham', 'KhuenTham', 'Marchen', 'Soyombo', 'KhomThai', 'KhamtiShan', 'TaiLaing', 'Mon', 'Shan', 'ZanabazarSquare','Rejang', 'Lao2','Buhid', 'Hanunoo', 'Siddham', 'Tibetan','Lao','TaiTham','Cham','BatakKaro','BatakPakpak','BatakSima','BatakToba','BatakManda','LaoPali','PhagsPa','Buginese','Tagbanwa','Tagalog','Sundanese','Balinese','Burmese','Javanese','Khmer','Siddham','Ranjana','Thaana','Thai', 'BurmeseALALC']
 NonIndic = ['OldPersian', 'Hebrew']
-Roman =['IASTLOC', 'RomanSemitic', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya', 'Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng',"WX-kok",'Avestan','HK','IAST','ISO','Itrans','Titus','Titus','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
-RomanDiacritic = ['IAST','Titus','ISO','IPA', 'IASTPali', 'ISOPali', 'IASTLOC', 'ISOLOC', 'RomanSemitic']
+Roman =['ShanLoCRomanLoC', 'BurmeseRomanLoC', 'RomanSemitic', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya', 'Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng',"WX-kok",'Avestan','HK','IAST','ISO','Itrans','Titus','Titus','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
+RomanDiacritic = ['IAST','Titus','ISO','IPA', 'IASTPali', 'ISOPali', 'BurmeseRomanLoC', 'ISOLOC', 'RomanSemitic', 'ShanLoCRomanLoC']
 
 ScriptCategory = {}
 
@@ -89,6 +89,7 @@ DiacriticsRemovableTamil = ['ˇ', 'ˆ', '˘', '\u00B7']
 ScriptAll = ['Aytham', 'Signs', 'CombiningSigns', 'VowelSigns', 'Vowels', 'Consonants', 'Numerals']
 
 IndicScripts = [
+               'ShanLoC',
                'BengaliRaBa',
                'RomanSemitic',
                 'Makasar',
@@ -179,7 +180,7 @@ IndicScripts = [
 
 SiddhamRanjana = ['Ranjana']
 
-LatinScripts = ['IASTLOC', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya','Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng','WX-kok','Avestan','ISO','IAST','HK','Titus','Itrans','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
+LatinScripts = ['ShanLoCRomanLoC', 'BurmeseRomanLoC', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya','Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng','WX-kok','Avestan','ISO','IAST','HK','Titus','Itrans','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
 
 Gemination =  {
                'Gurmukhi' : '\u0A71',
@@ -196,6 +197,8 @@ Gemination =  {
               }
 
 Transliteration = ['IASTPali', 'RomanReadable', 'Aksharaa', 'ISO', 'IAST', 'HK','Titus','Itrans','Velthuis','WX', 'IPA', 'RussianCyrillic']
+
+LoCScripts = ['Burmese', 'Shan', 'Khmer', 'Khuen']
 
 SemiticScripts = ['Arab-Pa', 'Syrj', 'Syrn', 'Syre', 'Thaa', 'Arab-Ur', 'Type', 'Hebr-Ar', 'Arab-Fa', 'Latn', 'Arab', 'Ethi', 'Armi', 'Brah', 'Chrs', 'Egyp', 'Elym', 'Grek', 'Hatr', 'Hebr', 'Mani', 'Narb', 'Nbat', 'Palm', 'Phli', 'Phlp', 'Phnx', 'Prti', 'Samr', 'Sarb', 'Sogd', 'Sogo', 'Ugar']
 
@@ -219,7 +222,7 @@ ReversibleScripts = ['Devanagari', 'Tamil', 'Telugu', 'Kannada', 'Sinhala', 'Ori
 
 RomanReversible = ['IAST', 'HK', 'Itrans', 'Velthuis', 'Titus', 'WX', 'RussianCyrillic', 'ISO']
 
-CharmapLists = ['VowelMap', 'VowelSignMap', 'ConsonantMap', 'SignMap', 'AyogavahaMap']
+CharmapLists = ['VowelMap', 'VowelSignMap', 'ConsonantMap', 'SignMap', 'AyogavahaMap', 'ModernVowelMap', 'ModernVowelSignMap']
 
 def add_additional_chars(script_char_map, file_script):
     for charlist in CharmapLists:
@@ -229,15 +232,24 @@ def add_additional_chars(script_char_map, file_script):
                 if file_script in mapping.keys():
                         script_char_map[charlist].append(mapping[file_script])
                 else:
-                        if file_script in ReversibleScripts:
-                                #print('reversible')
-                                if mapping['OthersRev'][0] != -1:
-                                        script_char_map[charlist].append(script_char_map[charlist][mapping['OthersRev'][0]] + mapping['OthersRev'][1])
-                                        #print(script_char_map[charlist][mapping['OthersRev'][0]] + mapping['OthersRev'][1])
-                                else:
-                                        script_char_map[charlist].append(mapping['OthersRev'][1])
+                    if file_script in ReversibleScripts:
+                        mapchar = 'OthersRev'
+                    else:
+                        mapchar = 'OthersNonRev'
+
+                    if mapping[mapchar][0] == -1:
+                         first_char = ''
+                    else:
+                         first_char= script_char_map[charlist][mapping[mapchar][0]]
+
+                    if len(mapping[mapchar]) > 1:
+                        if 'nukta' in mapping[mapchar]:
+                            second_char = ModScript.NuktaMap[0]
                         else:
-                                if mapping['OthersNonRev'][0] != -1:
-                                        script_char_map[charlist].append(script_char_map[charlist][mapping['OthersNonRev'][0]] + '\u02BD\u02BD')
-                                else:
-                                       script_char_map[charlist].append('\u02BD\u02BD')
+                            second_char = mapping[mapchar][1]
+
+                    if len(mapping[mapchar]) == 1:
+                        script_char_map[charlist].append(first_char)
+                    else:
+                        script_char_map[charlist].append(first_char+second_char)
+

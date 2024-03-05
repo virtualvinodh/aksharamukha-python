@@ -1880,12 +1880,15 @@ def FixLaoPali(Strng,reverse=False):
 def FixMakasar(Strng, reverse=False):
 
     ListC = "|".join(Makasar.ConsonantMap)
-    ListV = "|".join(Makasar.VowelSignMap)
+    #ListV = "|".join(Makasar.VowelSignMap)
+    #print(ListV)
+    ListV = "|".join(['\U00011EF3', '\U00011EF4', '\U00011EF5', '\U00011EF6'])
     Anka = '\U00011EF2'
+    #print(Makasar.VowelSignMap)
 
     if not reverse:
         Strng = PostProcess.InsertGeminationSign(Strng, 'Makasar')
-        Strng = Strng.replace('\u02BE', '')
+        Strng = Strng.replace('\u02BE', '').replace('\u02BD', '')
         Strng = re.sub('(' + ListC + ')' + '(' + ListV + ')?' + r'\1', r'\1' + r'\2' + Anka, Strng)
     else:
         Strng = re.sub('(' + ListC + ')' + '(' + ListV + ')?' + Anka, r'\1' + r'\2' + r'\1', Strng)

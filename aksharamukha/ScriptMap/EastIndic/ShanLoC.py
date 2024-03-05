@@ -16,12 +16,12 @@ VowelMap =  [
                 '\u1022\u1031',
                 '\u1022ႆ',
                 '\u1022\u1031ႃ',
-                '\u1022ဝ်\u02BD',
+                '\u1022ွ',
             ]
 
 SouthVowelMap = [
                 '\u1022\u1031\u02BD',
-                'ွ',
+                '\u1022\u1031ႃ\u02BD',
                 ]
 
 ModernVowelMap = [
@@ -46,7 +46,7 @@ VowelSignMap =  [
                 '\u1031',
                 'ႆ',
                 '\u1031ႃ',
-                'ဝ်\u02BD',
+                'ွ',
                 ]
 
 SouthVowelSignMap = [
