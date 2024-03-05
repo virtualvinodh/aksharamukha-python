@@ -21,7 +21,7 @@ VowelMap =  [
 
 SouthVowelMap = [
                 '\u1022\u1031\u02BD',
-                '\u1022\u1031ႃ\u02BD',
+                'ွ',
                 ]
 
 ModernVowelMap = [

@@ -168,13 +168,13 @@ def auto_detect(text, plugin = False):
         diacritics = ['ā', 'ī', 'ū', 'ṃ', 'ḥ', 'ś', 'ṣ', 'ṇ', 'ṛ', 'ṝ', 'ḷ', 'ḹ', 'ḻ', 'ṉ', 'ṟ', 'ṭ', 'ḍ', 'ṅ', 'ñ']
         Itrans = ['R^i', 'R^I', 'L^i', 'L^I', '.N', '~N', '~n', 'Ch', 'sh', 'Sh']
         semitic = ['ʾ', 'ʿ', 'š', 'w']
-        BurmeseLOC = ['´', '˝', 'ʻ']
+        BurmeseRomanLoC = ['´', '˝', 'ʻ']
         if 'ʰ' in text:
             inputScript = 'Titus'
         elif any(char in text for char in semitic):
             inputScript = 'Latn'
-        elif any(char in text for char in BurmeseLOC):
-            inputScript = 'IASTLOC' ## Change for other LoC schemese
+        elif any(char in text for char in BurmeseRomanLoC):
+            inputScript = 'BurmeseRomanLoC' ## Change for other LoC schemese
         elif any(char in text for char in diacritics):
             if 'ē' in text or 'ō' in text or 'r̥' in text:
                 inputScript = 'ISO'
@@ -226,28 +226,50 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     ## ALA-LC Romanizations
     ## If associated script of LoC is not in Source, convert source into that script. The convert it to the actual target
     ## Text (non-Burmese) -> Burmese -> LoC
-    if tgt == 'IASTLOC' and src != 'Burmese':
-        txt = convert(src, "Burmese", txt, nativize, preoptions, postoptions)
-        src = 'Burmese'
+    ## if tgt == 'BurmeseRomanLoC' and src != 'Burmese':
+    ##    txt = convert(src, "Burmese", txt, nativize, preoptions, postoptions)
+    ##    src = 'Burmese'
 
     ## process as follows, if source is associated with LoC script
-    if tgt == 'IASTLOC' and src == 'Burmese':
+    if tgt == 'RomanLoC' and src in GeneralMap.LoCScripts:
+        if src == 'Shan':
+            src = 'ShanLoC'
+
+        tgt = src + tgt
         # the below order for preoptions is important
-        preoptions = preoptions + [tgt + src + 'Target']
-        postoptions =  [tgt + src + 'Target'] + postoptions
+        preoptions = preoptions + [tgt + 'Target']
+        postoptions =  [tgt + 'Target'] + postoptions
         nativize = False
 
+    ## if source is not associated with LoC script
+    if tgt == 'RomanLoC' and src not in GeneralMap.LoCScripts:
+        if src in GeneralMap.SemiticScripts:
+            tgt = 'ISO233'
+        else:
+            tgt = 'iso'
+
     ## if target is associated with the loc Script
-    if src == 'IASTLOC' and tgt == 'Burmese':
-        preoptions = [src + tgt + 'Source'] + preoptions
-        postoptions =  [src + tgt + 'Source'] + postoptions
+    if src == 'RomanLoC' and tgt in GeneralMap.LoCScripts:
+        if tgt == 'Shan':
+            tgt = 'ShanLoC'
+
+        src = tgt + src
+        preoptions = [src + 'Source'] + preoptions
+        postoptions =  [src + 'Source'] + postoptions
         nativize = False
+
+    ## if target is not associated with the loc Script
+    if src == 'RomanLoC' and tgt not in GeneralMap.LoCScripts:
+        if tgt in GeneralMap.SemiticScripts:
+            src = 'ISO233'
+        else:
+            src = 'ISO'
 
     ## else convert the Loc input into the associated script and then convert it into Loc
     ## Text (Loc) -> Burmese -> non-Burmese
-    if src == 'IASTLOC' and tgt != 'Burmese':
-        txt = convert(src, "Burmese", txt, nativize, preoptions, postoptions)
-        src = 'Burmese'
+    #if src == 'BurmeseRomanLoC' and tgt != 'Burmese':
+    #    txt = convert(src, "Burmese", txt, nativize, preoptions, postoptions)
+    #    src = 'Burmese'
 
     ## Semitic ISO Standards
     ### same as below use intermediates to convert non-associated input/output

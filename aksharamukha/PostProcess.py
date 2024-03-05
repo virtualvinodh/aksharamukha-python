@@ -19,7 +19,7 @@ import functools
 
 def default(Strng, langage=""):
     Strng = Strng.replace("\uF001", "").replace("\u05CC", "").\
-        replace("ʻʻ", "").replace('\u05CD', '') ## remove token characters for specialized processing
+        replace("ʻʻ", "").replace('\u05CD', '').replace('\u02C2', '') ## remove token characters for specialized processing
 
     return Strng
 
@@ -439,7 +439,7 @@ def ArabicGimelPaBa(Strng):
     return Strng
 
 #testcase todo
-def IASTLOCBurmeseSource(Strng):
+def BurmeseRomanLoCSource(Strng):
     # remove marking for pure virama
     Strng = Strng.replace('ʻ', '')
 
@@ -487,8 +487,19 @@ def removeSegmentSpacesBurmese(Strng):
 
     return Strng
 
+# shan
+def ShanLoCRomanLoCTarget(Strng):
+    pass
+
+    return Strng
+
+def ShanLoCRomanLoCSource(Strng):
+    pass
+
+    return Strng
+
 #testcase todo
-def IASTLOCBurmeseTarget(Strng):
+def BurmeseRomanLoCTarget(Strng):
     #print(Strng)
     # mark tone
     Strng = Strng.replace('˳', 'ʹ')
@@ -2113,11 +2124,11 @@ def MalayalamChillu(Strng, reverse=False, preserve=False):
     ## may be include ha ?
     CList = [
             Malayalam.ConsonantMap[10:15]+Malayalam.ConsonantMap[24:26]+Malayalam.ConsonantMap[28:29],
-            Malayalam.ConsonantMap[15:20]+Malayalam.ConsonantMap[24:27]+Malayalam.ConsonantMap[28:29],
+            Malayalam.ConsonantMap[15:20]+Malayalam.ConsonantMap[24:27]+Malayalam.ConsonantMap[28:29]+['റ'],
             Malayalam.ConsonantMap[25:27],
             Malayalam.ConsonantMap[20:21] + Malayalam.ConsonantMap[24:26] + Malayalam.ConsonantMap[27:29],
             Malayalam.SouthConsonantMap[0:1]+Malayalam.ConsonantMap[25:27],
-            Malayalam.ConsonantMap[15:20]+Malayalam.ConsonantMap[24:27]+Malayalam.ConsonantMap[28:29]
+            Malayalam.ConsonantMap[15:20]+Malayalam.ConsonantMap[24:27]+Malayalam.ConsonantMap[28:29]+['റ']
             ]
 
     if not reverse:
