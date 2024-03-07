@@ -27,6 +27,11 @@ def defaultPost(Strng):
     Strng = Strng.replace('\u034F', '') ## remove token characters for specialized processing
     return Strng
 
+def LoCMarc8(Strng):
+    import unicodedata
+    Strng = unicodedata.normalize('NFD', Strng)
+    return Strng
+
 def AnusvaraAsN(Strng):
     Strng = Strng.replace('m\u034F', 'n')
     return Strng
@@ -489,12 +494,39 @@ def removeSegmentSpacesBurmese(Strng):
 
 # shan
 def ShanLoCRomanLoCTarget(Strng):
-    pass
+    Strng = re.sub('(ʻ)([\u0310\u0322])', r'\2\1', Strng)
+    Strng = re.sub('(ō)([\u0310\u0322]?)(ʻ)', r'\1\2', Strng)
 
     return Strng
 
 def ShanLoCRomanLoCSource(Strng):
-    pass
+    # restrore special yrvh
+    yrv = Burmese.ConsonantMap[25:27] + Burmese.ConsonantMap[28:29]
+    vir = '်'
+    yrvsub = ['\u103B','\u103C','\u1082']
+
+    for x,y in zip(yrv,yrvsub):
+        # Undo Replace subjoining forms: exp-virama + y/r/v/h <- subjoining y/r/v/h
+        Strng = Strng.replace(vir + x, y)
+
+    ## Fix modifier letter apostrephe to normal quotation mark
+    Strng = Strng.replace('ʼ', '’')
+    #remove purevowel marker
+    Strng = Strng.replace('’', '')
+    # remove marking for pure virama
+    Strng = Strng.replace('ʻ', '')
+
+    #ai reversal
+    Strng = Strng.replace('\u036E', 'ႂ်')
+
+    # closed vs open
+    cons = "[ၵၶၷꧠငၸꧡꩡꧢၺꩦꩧꩨꩩꧣတထၻꩪၼပၽၿꧤမယရလဝသႁꩮၹၾႀဢ]"
+    open = ['ႃ', 'ႄ', 'ေ']
+    closed = ['ၢ', 'ႅ', 'ဵ']
+
+    for o, c in zip(open, closed):
+        pass
+        Strng = re.sub('(' + cons + ')' + '(' + o + ')' + '(' + cons + ')', r'\1' + c + r'\3', Strng)
 
     return Strng
 

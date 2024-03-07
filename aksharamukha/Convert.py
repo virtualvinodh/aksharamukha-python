@@ -43,6 +43,8 @@ def convertInter(Strng,Source):
     for x,y in ScriptMapAll:
         Strng = Strng.replace(x,y)
 
+    #print(Strng)
+
     return Strng
 
 # Conversion Module
@@ -99,6 +101,7 @@ def convertScript(Strng,Source,Target):
         Source = GM.Inter
         Strng = PrP.RomanPreFix(Strng,Source)
 
+        #print(Strng)
         ## HK l_R l_RR
 
         Strng = Strng.replace("ṿ×_","ṿ")
@@ -125,8 +128,9 @@ def convertScript(Strng,Source,Target):
 
         # Perform replacement sequentially for each character group
         for x,y in charPairs:
-            #print x,y
+            #print(x, '-->', y)
             Strng = Strng.replace(x,y)
+            #print(Strng)
 
         ## a_i => a<dev>i<dev> ; a_u = a<dev>u<dev>
         Strng=Strng.replace('_' + GM.CrunchSymbols(GM.Vowels,Target)[2],  GM.CrunchSymbols(GM.Vowels,Target)[2])

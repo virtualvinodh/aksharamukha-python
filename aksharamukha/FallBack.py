@@ -50,6 +50,69 @@ VowelMap = {
     'IPA': 'ʉː',
     'OthersRev': [1, 'ʼʼʼ'],
     'OthersNonRev': [1, '\u02C2']
+    },
+'ShanLoCesup': {
+        'ShanLoC': 'ဢဵ',
+        'Shan': 'ဢဵ',
+        'ShanLoCRomanLoC': 'e\u02BD',
+        'OthersRev': [9, '\u02C2'],
+        'OthersNonRev': [9, '\u02C2'],
+    },
+'ShanLoCui': {
+       'ShanLoC': 'ဢို',
+       'Shan': 'ဢို',
+       'ShanLoCRomanLoC': 'ui',
+       'OthersRev': [5, '\u02C2'],
+       'OthersNonRev': [5, '\u02C2'],
+    },
+'ShanLoCuui': {
+       'ShanLoC': 'ဢိူ',
+       'Shan': 'ဢိူ',
+       'ShanLoCRomanLoC': 'ūi',
+       'OthersRev': [6, '\u02C2'],
+       'OthersNonRev': [6, '\u02C2'],
+    },
+'ShanLoCuuiv': {
+       'ShanLoC': 'ဢိူဝ်',
+       'Shan': 'ဢိူဝ်',
+       'ShanLoCRomanLoC': 'ūiv',
+       'OthersRev': [6, '\u02C2'],
+       'OthersNonRev': [6, '\u02C2'],
+    },
+'ShanLoCaai': {
+       'ShanLoC': 'ဢၢႆ',
+       'Shan': 'ဢၢႆ',
+       'ShanLoCRomanLoC': 'āi',
+       'OthersRev': [10, '\u02C2'],
+       'OthersNonRev': [10, '\u02C2'],
+    },
+'ShanLoCaoi': {
+       'ShanLoC': 'ဢွႆ',
+       'Shan': 'ဢွႆ',
+       'ShanLoCRomanLoC': 'oi',
+       'OthersRev': [10, '\u02C2'],
+       'OthersNonRev': [10, '\u02C2'],
+    },
+'ShanLoCoalt1': {
+       'ShanLoC': 'ဢေႃ်',
+       'Shan': 'ဢေႃ်',
+       'ShanLoCRomanLoC': 'ò',
+       'OthersRev': [11, '\u02C2'],
+       'OthersNonRev': [11, '\u02C2'],
+    },
+ 'ShanLoCoalt': {
+     'ShanLoC': 'ဢူဝ်',
+     'Shan': 'ဢူဝ်',
+     'ShanLoCRomanLoC': 'ō',
+     'OthersRev': [11, '\u02C2'],
+     'OthersNonRev': [11, '\u02C2'],
+    },
+ 'ShanLoCaialt': {
+     'ShanLoC': 'ဢ\u036E',
+     'Shan': 'ဢ\u036E',
+     'ShanLoCRomanLoC': 'ái',
+     'OthersRev': [12, '\u02C2'],
+     'OthersNonRev': [12, '\u02C2'],
     }
 }
 
@@ -96,49 +159,64 @@ VowelSignMap = {
     },
 'ShanLoCesup': {
         'ShanLoC': 'ဵ',
-        'ShanLoCRomanLoC': 'e',
+        'Shan': 'ဵ',
+        'ShanLoCRomanLoC': 'e\u02BD',
         'OthersRev': [9, '\u02C2'],
         'OthersNonRev': [9, '\u02C2'],
     },
 'ShanLoCui': {
        'ShanLoC': 'ို',
+       'Shan': 'ို',
        'ShanLoCRomanLoC': 'ui',
        'OthersRev': [5, '\u02C2'],
        'OthersNonRev': [5, '\u02C2'],
     },
 'ShanLoCuui': {
        'ShanLoC': 'ိူ',
+       'Shan': 'ိူ',
        'ShanLoCRomanLoC': 'ūi',
+       'OthersRev': [6, '\u02C2'],
+       'OthersNonRev': [6, '\u02C2'],
+    },
+'ShanLoCuuiv': {
+       'ShanLoC': 'ိူဝ်',
+       'Shan': 'ိူဝ်',
+       'ShanLoCRomanLoC': 'ūiv',
        'OthersRev': [6, '\u02C2'],
        'OthersNonRev': [6, '\u02C2'],
     },
 'ShanLoCaai': {
        'ShanLoC': 'ၢႆ',
+       'Shan': 'ၢႆ',
        'ShanLoCRomanLoC': 'āi',
        'OthersRev': [10, '\u02C2'],
        'OthersNonRev': [10, '\u02C2'],
     },
 'ShanLoCaoi': {
        'ShanLoC': 'ွႆ',
+       'Shan': 'ွႆ',
        'ShanLoCRomanLoC': 'oi',
        'OthersRev': [10, '\u02C2'],
        'OthersNonRev': [10, '\u02C2'],
     },
 'ShanLoCoalt1': {
        'ShanLoC': 'ေႃ်',
+       'Shan': 'ေႃ်',
        'ShanLoCRomanLoC': 'ò',
        'OthersRev': [11, '\u02C2'],
        'OthersNonRev': [11, '\u02C2'],
     },
  'ShanLoCoalt': {
      'ShanLoC': 'ူဝ်',
+     'Shan': 'ူဝ်',
      'ShanLoCRomanLoC': 'ō',
      'OthersRev': [11, '\u02C2'],
      'OthersNonRev': [11, '\u02C2'],
     },
  'ShanLoCaialt': {
-     'ShanLoC': 'ႂ်',
-     'ShanLoCRomanLoC': 'ài',
+     'ShanLoC': '\u036E',
+     'Shan': '\u036E',
+     'ShanLoCRomanLoC': 'ái',
      'OthersRev': [12, '\u02C2'],
      'OthersNonRev': [12, '\u02C2'],
     }
@@ -147,24 +225,41 @@ VowelSignMap = {
 ModernVowelSignMap = {
 'ShanLoCeaeup': {
         'ShanLoC': 'ႅ',
-        'ShanLoCRomanLoC': 'è',
+        'Shan': 'ႅ',
+        'ShanLoCRomanLoC': 'è\u02BD',
         'OthersRev': [0, '\u02C2'],
         'OthersNonRev': [0, '\u02C2'],
     },
 'ShanLoCeae2': {
         'ShanLoC': 'ေေ',
-        'ShanLoCRomanLoC': 'è',
+        'Shan': 'ေေ',
+        'ShanLoCRomanLoC': 'è\u02BD',
         'OthersRev': [0, '\u02C2'],
         'OthersNonRev': [0, '\u02C2'],
     },
 }
 
 ModernVowelMap = {
+'ShanLoCeaeup': {
+        'ShanLoC': 'ဢႅ',
+        'Shan': 'ဢႅ',
+        'ShanLoCRomanLoC': 'è',
+        'OthersRev': [0, '\u02C2'],
+        'OthersNonRev': [0, '\u02C2'],
+    },
+'ShanLoCeae2': {
+        'ShanLoC': 'ဢေေ',
+        'Shan': 'ဢေေ',
+        'ShanLoCRomanLoC': 'è',
+        'OthersRev': [0, '\u02C2'],
+        'OthersNonRev': [0, '\u02C2'],
+    },
 }
 
 ConsonantMap = {
 'theta': {
         'ShanLoC': 'ႀ',
+        'Shan': 'ႀ',
         'ShanLoCRomanLoC': 'x',
         'OthersRev': [15, 'nukta'],
         'OthersNonRev': [15, 'nukta'],
@@ -172,6 +267,48 @@ ConsonantMap = {
 }
 
 SignMap = {
+    'shantone2' : {
+        'ShanLoC': 'ႇ',
+        'Shan': 'ႇ',
+        'ShanLoCRomanLoC': '\u0322',
+        'OthersRev': [-1, '\u0C2C'],
+        'OthersNonRev': [-1, '\u0C2C'],
+    },
+    'shantone3' : {
+        'ShanLoC': 'ႈ',
+        'Shan': 'ႈ',
+        'ShanLoCRomanLoC': '\u0310',
+        'OthersRev': [-1, '\u0C2C\u0C2C'],
+        'OthersNonRev': [-1, '\u0C2C\u0C2C'],
+    },
+    'shantone5' : {
+        'ShanLoC': 'ႉ',
+        'Shan': 'ႉ',
+        'ShanLoCRomanLoC': 'ʹ',
+        'OthersRev': [-1, '\u0C2C\u0C2C\u0C2C'],
+        'OthersNonRev': [-1, '\u0C2C\u0C2C\u0C2C'],
+    },
+    'shantone6' : {
+        'ShanLoC': 'ႊ',
+        'Shan': 'ႊ',
+        'ShanLoCRomanLoC': '˝',
+        'OthersRev': [-1, '\u0C2C\u0C2C\u0C2C\u0C2C'],
+        'OthersNonRev': [-1, '\u0C2C\u0C2C\u0C2C\u0C2C'],
+    },
+    'shanexcl' : {
+        'ShanLoC': '႟',
+        'Shan': '႟',
+        'ShanLoCRomanLoC': 'u*',
+        'OthersRev': [-1, '!\u0C2C\u0C2C\u0C2C\u0C2C\u0C2C'],
+        'OthersNonRev': [-1, '!\u0C2C\u0C2C\u0C2C\u0C2C'],
+    },
+    'shanone' : {
+        'ShanLoC': '႞',
+        'Shan': '႞',
+        'ShanLoCRomanLoC': 'n*',
+        'OthersRev': [-1, '!!\u0C2C'],
+        'OthersNonRev': [-1, '!!\u0C2C'],
+    }
 }
 
 AyogavahaMap = {

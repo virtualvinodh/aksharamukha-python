@@ -1123,13 +1123,16 @@ def FixShan(Strng, reverse=False):
         Strng = Strng.replace('်ရ', 'ြ')
         Strng = Strng.replace('်ယ', 'ျ')
         Strng = Strng.replace('်ဝ', '\u1082')
-        Strng = Strng.replace('်ႁ', 'ှ')
+        #Strng = Strng.replace('်ႁ', 'ှ')
 
         ## Maintain the order of the medials
         Strng = re.sub('(ှ)' + '([ျြွ])', r'\2\1', Strng)
         Strng = Strng.replace("\u103C\u103B", "\u103B\u103C")
         Strng = Strng.replace("\u103D\u103B", "\u103B\u103D")
         Strng = Strng.replace("ွ\u103C", "\u103Cွ")
+
+        ## Fix Shya
+        Strng = re.sub('သျ\u02BD?ျ', 'သျ်ယ', Strng)
 
     else:
         ## Reverse the order of the medials

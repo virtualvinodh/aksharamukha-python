@@ -5,6 +5,7 @@ from asyncio import constants
 from . import GeneralMap as GM
 import re
 import string
+import unicodedata
 from . import PostProcess
 from . import ConvertFix as CF
 from aksharamukha.ScriptMap.EastIndic import PhagsPa, Burmese
@@ -33,12 +34,37 @@ def OriyaTargetVa(Strng):
 
 # shan
 def ShanLoCRomanLoCTarget(Strng):
-    pass
+    #preserve ႂ်
+    Strng = Strng.replace('ႂ်', '\u036E')
+
+    # Shan normalize /aa/
+    Strng = Strng.replace('ၢ', 'ႃ')
+    Strng = Strng.replace('ါ', 'ႃ')
+
+    Strng = Strng.replace('ႃႆ', 'ၢႆ').replace('ႆၢ', 'ၢႆ').replace('ႆႃ', 'ၢႆ')
+
+    # asat + virma to just virama
+    Strng = Strng.replace('\u103A\u1039', '\u1039')
+
+    ## sort subjoined consonants
+    yrv = Burmese.ConsonantMap[25:27] + Burmese.ConsonantMap[28:29]
+    yrvsub = ['\u103B','\u103C','\u1082']
+    vir = Burmese.ViramaMap[0]
+
+    for x,y in zip(yrv,yrvsub):
+        # Undo Replace subjoining forms: exp-virama + y/r/v/h <- subjoining y/r/v/h
+        Strng = Strng.replace(y, vir + vir + x)
+
+    # mark pure viramas
+    aThat = r'်'
+    Strng = re.sub('(?<!ႃ)'+aThat, aThat + 'ʻ', Strng)
+
+    # mark a as glottalstop
+    Strng = Strng.replace('ဢ','’ဢ')
 
     return Strng
 
 def ShanLoCRomanLoCSource(Strng):
-    pass
 
     return Strng
 
@@ -86,6 +112,21 @@ def segmentBurmeseSyllables(Strng):
     # https://github.com/ye-kyaw-thu/myWord/blob/main/syl_segment.py
     myConsonant = r"က-အ"
     otherChar = r"ဣဤဥဦဧဩဪဿ၌၍၏၀-၉၊။!-/:-@[-`{-~\s"
+    ssSymbol = r'္'
+    aThat = r'်'
+
+    BreakPattern = re.compile(r"((?<!" + ssSymbol + r")["+ myConsonant + r"](?![" + aThat + ssSymbol + r"])" + r"|["  + otherChar + r"])", re.UNICODE)
+    Strng = Strng.replace("့်", "့်")
+    Strng = BreakPattern.sub(' ' + r"\1", Strng)
+
+    return Strng
+
+def segmentShanSyllables(Strng):
+    # segment text into syllables
+
+    # https://github.com/ye-kyaw-thu/myWord/blob/main/syl_segment.py
+    myConsonant = r"ၵၶၷꧠငၸꧡꩡꧢၺꩦꩧꩨꩩꧣတထၻꩪၼပၽၿꧤမယရလဝသႁꩮၹၾႀဢ"
+    otherChar = r"႞႟႐-႙၊။!-/:-@[-`{-~\s"
     ssSymbol = r'္'
     aThat = r'်'
 
@@ -915,7 +956,7 @@ def RomanPreFix(Strng,Source):
     VowelA = GM.CrunchSymbols(['VowelMap'],Source)[0]
 
     ListV = '|'.join(GM.CrunchSymbols(GM.VowelSigns,Source))
-    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants,Source)).replace(Nuk, '')
+    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants,Source))
 
     Strng = re.sub('('+ListC+')'+'(?!'+ListV+'|'+VowelA+')',r'\1'+DepV+Vir,Strng)
 
@@ -1146,7 +1187,6 @@ def ISO259Source(Strng):
     for x, y in replacements:
         Strng = Strng.replace(y, x)
 
-    import unicodedata
     Strng = unicodedata.normalize('NFD', Strng)
     Strng = Strng.replace('\u0307', '꞉')
     Strng = unicodedata.normalize('NFC', Strng)
@@ -1184,8 +1224,11 @@ def normalize(Strng,Source):
         for x,y in zip(nuktaDecom,nuktaPrecom):
             Strng = Strng.replace(x,y)
 
-    if Source in ['IAST', 'ISO', 'ISOPali', 'Titus']:
+    if Source in ['IAST', 'ISO', 'ISOPali', 'Titus', 'IASTPali']:
         Strng = Strng.replace("ü", "uʼ").replace("ǖ", "ūʼ").replace( 'ö', 'aʼ',).replace('ȫ', 'āʼ')
+
+    if Source in ['IAST', 'ISO', 'ISOPali', 'IASTPali'] or 'RomanLoC' in Source:
+        Strng = unicodedata.normalize('NFC', Strng)
 
     if Source == 'Arab-Ur' or Source == 'Arab-Pa':
         Strng = Strng.replace('ك', 'ک')
