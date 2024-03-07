@@ -180,7 +180,7 @@ IndicScripts = [
 
 SiddhamRanjana = ['Ranjana']
 
-LatinScripts = ['ShanLoCRomanLoC', 'BurmeseRomanLoC', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya','Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng','WX-kok','Avestan','ISO','IAST','HK','Titus','Itrans','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
+LatinScripts = ['RomanLoC', 'ShanLoCRomanLoC', 'BurmeseRomanLoC', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya','Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng','WX-kok','Avestan','ISO','IAST','HK','Titus','Itrans','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
 
 Gemination =  {
                'Gurmukhi' : '\u0A71',
@@ -198,7 +198,7 @@ Gemination =  {
 
 Transliteration = ['IASTPali', 'RomanReadable', 'Aksharaa', 'ISO', 'IAST', 'HK','Titus','Itrans','Velthuis','WX', 'IPA', 'RussianCyrillic']
 
-LoCScripts = ['Burmese', 'Shan', 'Khmer', 'Khuen']
+LoCScripts = ['Burmese', 'Shan', 'Khmer', 'KhuenTham', 'TaiTham', 'LaoTham']
 
 SemiticScripts = ['Arab-Pa', 'Syrj', 'Syrn', 'Syre', 'Thaa', 'Arab-Ur', 'Type', 'Hebr-Ar', 'Arab-Fa', 'Latn', 'Arab', 'Ethi', 'Armi', 'Brah', 'Chrs', 'Egyp', 'Elym', 'Grek', 'Hatr', 'Hebr', 'Mani', 'Narb', 'Nbat', 'Palm', 'Phli', 'Phlp', 'Phnx', 'Prti', 'Samr', 'Sarb', 'Sogd', 'Sogo', 'Ugar']
 
@@ -223,14 +223,19 @@ ReversibleScripts = ['Devanagari', 'Tamil', 'Telugu', 'Kannada', 'Sinhala', 'Ori
 RomanReversible = ['IAST', 'HK', 'Itrans', 'Velthuis', 'Titus', 'WX', 'RussianCyrillic', 'ISO']
 
 CharmapLists = ['VowelMap', 'VowelSignMap', 'ConsonantMap', 'SignMap', 'AyogavahaMap', 'ModernVowelMap', 'ModernVowelSignMap']
+InterAdd = {'VowelMap': '\U000F0000', 'VowelSignMap': '\U000F0000', 'ConsonantMap':'\U000F2000', 'SignMap':'\U000F3000', 'AyogavahaMap':'\U000F4000', 'ModernVowelMap': '\U000F5000', 'ModernVowelSignMap':'\U000F5000'}
 
 def add_additional_chars(script_char_map, file_script):
     for charlist in CharmapLists:
         mapping_char = getattr(fb, charlist)
         ModScript = importlib.import_module(ScriptPath(file_script))
-        for char, mapping in mapping_char.items():
+        InterAddIndex = ord(InterAdd[charlist])
+        for num, mapng in enumerate(mapping_char.items()):
+                char, mapping = mapng
                 if file_script in mapping.keys():
                         script_char_map[charlist].append(mapping[file_script])
+                elif file_script == 'Inter':
+                        script_char_map[charlist].append(chr(InterAddIndex+num))
                 else:
                     if file_script in ReversibleScripts:
                         mapchar = 'OthersRev'

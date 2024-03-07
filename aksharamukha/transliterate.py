@@ -232,8 +232,10 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     ## process as follows, if source is associated with LoC script
     if tgt == 'RomanLoC' and src in GeneralMap.LoCScripts:
+    ### swtiches for Source scripts
         if src == 'Shan':
             src = 'ShanLoC'
+
 
         tgt = src + tgt
         # the below order for preoptions is important
@@ -241,13 +243,19 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         postoptions =  [tgt + 'Target'] + postoptions
         nativize = False
 
+        if src in ['TaiTham', 'LaoTham', 'Kannada', 'Tamil']:
+            tgt = 'IASTPali'
+            preoptions = []
+            postoptions = ['AnusvaratoNasalASTISO']
+
     ## if source is not associated with LoC script
     if tgt == 'RomanLoC' and src not in GeneralMap.LoCScripts:
         if src in GeneralMap.SemiticScripts:
             tgt = 'ISO233'
         else:
-            tgt = 'iso'
+            tgt = 'ISO'
 
+    ## Switches for Target scripts
     ## if target is associated with the loc Script
     if src == 'RomanLoC' and tgt in GeneralMap.LoCScripts:
         if tgt == 'Shan':
