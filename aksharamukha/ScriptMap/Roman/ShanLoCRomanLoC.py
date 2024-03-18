@@ -94,7 +94,7 @@ ConsonantMap =  [
                 ]
 
 SouthConsonantMap = [
-                    '\u006C\u0324',
+                    'ḷ',
                     '\u1E3B',
                     '\u1E5F',
                     '\u1E49'

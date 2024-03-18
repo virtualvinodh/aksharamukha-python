@@ -235,7 +235,8 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     ### swtiches for Source scripts
         if src == 'Shan':
             src = 'ShanLoC'
-
+        if src == 'Khmer':
+            src = 'KhmerLoC'
 
         tgt = src + tgt
         # the below order for preoptions is important
@@ -247,6 +248,8 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
             tgt = 'IASTPali'
             preoptions = []
             postoptions = ['AnusvaratoNasalASTISO']
+        elif src in ['KhmerLoC']:
+            preoptions =  preoptions + ['SchwaFinalKhmerLoC']
 
     ## if source is not associated with LoC script
     if tgt == 'RomanLoC' and src not in GeneralMap.LoCScripts:
@@ -260,6 +263,8 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     if src == 'RomanLoC' and tgt in GeneralMap.LoCScripts:
         if tgt == 'Shan':
             tgt = 'ShanLoC'
+        if tgt == 'Khmer':
+            tgt = 'KhmerLoC'
 
         src = tgt + src
         preoptions = [src + 'Source'] + preoptions

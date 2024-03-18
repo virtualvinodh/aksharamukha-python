@@ -20,4 +20,10 @@ build/
 demoenv/
 
 aksharamukha.egg-info/
-__pycache__/loc_burmese_test_cases.cpython-310-pytest-7.2.2.pyc
+__pycache__/
+aksharamukha/test/__pycache__/
+aksharamukha/test/__pycache__/__init__.cpython-310.pyc
+aksharamukha/test/__pycache__/loc_burmese_test_cases.cpython-310-pytest-7.2.2.pyc
+aksharamukha/test/__pycache__/loc_shan_test_cases.cpython-310-pytest-7.2.2.pyc
+aksharamukha/test/__pycache__/test_file_generator.cpython-310-pytest-7.2.2.pyc
+aksharamukha/test/__pycache__/testsuite.cpython-310-pytest-7.2.2.pyc

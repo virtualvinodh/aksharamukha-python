@@ -113,7 +113,55 @@ VowelMap = {
      'ShanLoCRomanLoC': 'ái',
      'OthersRev': [12, '\u02C2'],
      'OthersNonRev': [12, '\u02C2'],
-    }
+    },
+  'Khmery2': {
+      'KhmerLoC': 'ឪ',
+      'KhmerLoCRomanLoC': 'ýu',
+     'OthersRev': [12, '\u02C2'],
+     'OthersNonRev': [12, '\u02C2'],
+  },
+  'Khmery': {
+      'KhmerLoC': 'អ\u17B7\u17C6\u02B2',
+      'KhmerLoCRomanLoC': 'ẏ',
+     'OthersRev': [12, '\u02C2'],
+     'OthersNonRev': [12, '\u02C2'],
+  },
+  'Khmeryy': {
+      'KhmerLoC': 'អឺ\u02B2',
+      'KhmerLoCRomanLoC': 'ȳ',
+      'OthersRev': [12, '\u02C2'],
+      'OthersNonRev': [12, '\u02C2'],
+  },
+  'Khmerua': {
+      'KhmerLoC': 'អួ\u02B2',
+      'KhmerLoCRomanLoC': 'ua',
+      'OthersRev': [11, '\u02C2'],
+      'OthersNonRev': [11, '\u02C2'],
+  },
+  'Khmeroe': {
+      'KhmerLoC': 'អើ\u02B2',
+      'KhmerLoCRomanLoC': 'oe',
+     'OthersRev': [12, '\u02C2'],
+     'OthersNonRev': [12, '\u02C2'],
+  },
+  'Khmeryye': {
+      'KhmerLoC': 'អឿ\u02B2',
+      'KhmerLoCRomanLoC': 'ẏa',
+     'OthersRev': [12, '\u02C2'],
+     'OthersNonRev': [12, '\u02C2'],
+  },
+  'Khmeria': {
+      'KhmerLoC': 'អៀ\u02B2',
+      'KhmerLoCRomanLoC': 'ia',
+     'OthersRev': [12, '\u02C2'],
+     'OthersNonRev': [12, '\u02C2'],
+  },
+  'Khmershortaa': {
+      'KhmerLoC': 'អា់\u02B2',
+      'KhmerLoCRomanLoC': 'â',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  }
 }
 
 VowelSignMap = {
@@ -168,22 +216,22 @@ VowelSignMap = {
        'ShanLoC': 'ို',
        'Shan': 'ို',
        'ShanLoCRomanLoC': 'ui',
-       'OthersRev': [5, '\u02C2'],
-       'OthersNonRev': [5, '\u02C2'],
+       'OthersRev': [3, '\u02C2'],
+       'OthersNonRev': [3, '\u02C2'],
     },
 'ShanLoCuui': {
        'ShanLoC': 'ိူ',
        'Shan': 'ိူ',
        'ShanLoCRomanLoC': 'ūi',
-       'OthersRev': [6, '\u02C2'],
-       'OthersNonRev': [6, '\u02C2'],
+       'OthersRev': [4, '\u02C2'],
+       'OthersNonRev': [4, '\u02C2'],
     },
 'ShanLoCuuiv': {
        'ShanLoC': 'ိူဝ်',
        'Shan': 'ိူဝ်',
        'ShanLoCRomanLoC': 'ūiv',
-       'OthersRev': [6, '\u02C2'],
-       'OthersNonRev': [6, '\u02C2'],
+       'OthersRev': [4, '\u02C2'],
+       'OthersNonRev': [4, '\u02C2'],
     },
 'ShanLoCaai': {
        'ShanLoC': 'ၢႆ',
@@ -219,7 +267,55 @@ VowelSignMap = {
      'ShanLoCRomanLoC': 'ái',
      'OthersRev': [12, '\u02C2'],
      'OthersNonRev': [12, '\u02C2'],
-    }
+    },
+  'Khmery2': {
+      'KhmerLoC': '្ឪ',
+      'KhmerLoCRomanLoC': 'ýu',
+     'OthersRev': [12, '\u02C2'],
+     'OthersNonRev': [12, '\u02C2'],
+  },
+  'Khmery': {
+      'KhmerLoC': '\u17B7\u17C6\u02BD',
+      'KhmerLoCRomanLoC': 'ẏ',
+     'OthersRev': [12, '\u02C2'],
+     'OthersNonRev': [12, '\u02C2'],
+  },
+  'Khmeryy': {
+      'KhmerLoC': 'ឺ',
+      'KhmerLoCRomanLoC': 'ȳ',
+      'OthersRev': [12, '\u02C2'],
+      'OthersNonRev': [12, '\u02C2'],
+  },
+  'Khmerua': {
+      'KhmerLoC': 'ួ',
+      'KhmerLoCRomanLoC': 'ua',
+      'OthersRev': [11, '\u02C2'],
+      'OthersNonRev': [11, '\u02C2'],
+  },
+  'Khmeroe': {
+      'KhmerLoC': 'ើ',
+      'KhmerLoCRomanLoC': 'oe',
+     'OthersRev': [12, '\u02C2'],
+     'OthersNonRev': [12, '\u02C2'],
+  },
+  'Khmeryye': {
+      'KhmerLoC': 'ឿ',
+      'KhmerLoCRomanLoC': 'ẏa',
+     'OthersRev': [12, '\u02C2'],
+     'OthersNonRev': [12, '\u02C2'],
+  },
+  'Khmeria': {
+      'KhmerLoC': 'ៀ',
+      'KhmerLoCRomanLoC': 'ia',
+     'OthersRev': [12, '\u02C2'],
+     'OthersNonRev': [12, '\u02C2'],
+  },
+  'Khmershortaa': {
+      'KhmerLoC': 'ា់',
+      'KhmerLoCRomanLoC': 'â',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  }
 }
 
 ModernVowelSignMap = {
@@ -236,7 +332,7 @@ ModernVowelSignMap = {
         'ShanLoCRomanLoC': 'è\u02BD',
         'OthersRev': [0, '\u02C2'],
         'OthersNonRev': [0, '\u02C2'],
-    },
+    }
 }
 
 ModernVowelMap = {
@@ -263,51 +359,101 @@ ConsonantMap = {
         'ShanLoCRomanLoC': 'x',
         'OthersRev': [15, 'nukta'],
         'OthersNonRev': [15, 'nukta'],
-    }
+    },
+ 'khmernga': {
+     'KhmerLoC' : 'ង៉',
+     'KhmerLoCRomanLoC': 'ṅ″',
+     'OthersRev': [10, '\u02C2'],
+     'OthersNonRev': [11, 'nukta'],
+ },
+ 'khmernja': {
+     'KhmerLoC' : 'ញ៉',
+     'KhmerLoCRomanLoC': 'ñ″',
+     'OthersRev': [9, '\u02C2'],
+     'OthersNonRev': [9, 'nukta'],
+ },
+ 'khmerma': {
+     'KhmerLoC' : 'ម៉',
+     'KhmerLoCRomanLoC': 'm″',
+     'OthersRev': [8, '\u02C2'],
+     'OthersNonRev': [8, 'nukta'],
+ },
+ 'khmerpa': {
+     'KhmerLoC' : 'ប៉',
+     'KhmerLoCRomanLoC': 'p″',
+     'OthersRev': [7, '\u02C2'],
+     'OthersNonRev': [7, 'nukta'],
+ },
+ 'khmerya': {
+     'KhmerLoC' : 'យ៉',
+     'KhmerLoCRomanLoC': 'y″',
+     'OthersRev': [11, '\u02C2'],
+     'OthersNonRev': [11, 'nukta'],
+ },
+ 'khmerra': {
+     'KhmerLoC' : 'រ៉',
+     'KhmerLoCRomanLoC': 'r″',
+     'OthersRev': [12, '\u02C2'],
+     'OthersNonRev': [12, 'nukta'],
+ },
+ 'khmerva': {
+     'KhmerLoC' : 'វ៉',
+     'KhmerLoCRomanLoC': 'v″',
+     'OthersRev': [13, '\u02C2'],
+     'OthersNonRev': [13, 'nukta'],
+ },
+ 'khmerpa2': {
+     'KhmerLoC' : 'ប៊',
+     'KhmerLoCRomanLoC': 'p′',
+     'OthersRev': [14, '\u02C2'],
+     'OthersNonRev': [14, 'nukta'],
+ },
+ 'khmersa': {
+     'KhmerLoC' : 'ស៊',
+     'KhmerLoCRomanLoC': 's′',
+     'OthersRev': [16, '\u02C2'],
+     'OthersNonRev': [16, 'nukta'],
+ },
+ 'khmerha': {
+     'KhmerLoC' : 'ហ៊',
+     'KhmerLoCRomanLoC': 'h′',
+     'OthersRev': [17, '\u02C2'],
+     'OthersNonRev': [17, 'nukta'],
+ },
+ 'khmeracons': {
+     'KhmerLoC' : 'អ',
+     'KhmerLoCRomanLoC': '‛ʹ',
+     'OthersRev': [18, '\u02C2'],
+     'OthersNonRev': [18, 'nukta'],
+ },
+ 'khmeraconsmod': {
+     'KhmerLoC' : 'អ៊',
+     'KhmerLoCRomanLoC': '‛ʹ′',
+     'OthersRev': [18, '\u02C2'],
+     'OthersNonRev': [18, 'nukta'],
+ }
 }
 
 SignMap = {
-    'shantone2' : {
-        'ShanLoC': 'ႇ',
-        'Shan': 'ႇ',
-        'ShanLoCRomanLoC': '\u0322',
-        'OthersRev': [-1, '\u0C2C'],
-        'OthersNonRev': [-1, '\u0C2C'],
-    },
-    'shantone3' : {
-        'ShanLoC': 'ႈ',
-        'Shan': 'ႈ',
-        'ShanLoCRomanLoC': '\u0310',
-        'OthersRev': [-1, '\u0C2C\u0C2C'],
-        'OthersNonRev': [-1, '\u0C2C\u0C2C'],
-    },
-    'shantone5' : {
-        'ShanLoC': 'ႉ',
-        'Shan': 'ႉ',
-        'ShanLoCRomanLoC': 'ʹ',
-        'OthersRev': [-1, '\u0C2C\u0C2C\u0C2C'],
-        'OthersNonRev': [-1, '\u0C2C\u0C2C\u0C2C'],
-    },
-    'shantone6' : {
-        'ShanLoC': 'ႊ',
-        'Shan': 'ႊ',
-        'ShanLoCRomanLoC': '˝',
-        'OthersRev': [-1, '\u0C2C\u0C2C\u0C2C\u0C2C'],
-        'OthersNonRev': [-1, '\u0C2C\u0C2C\u0C2C\u0C2C'],
-    },
     'shanexcl' : {
         'ShanLoC': '႟',
         'Shan': '႟',
         'ShanLoCRomanLoC': 'u*',
-        'OthersRev': [-1, '!\u0C2C\u0C2C\u0C2C\u0C2C\u0C2C'],
-        'OthersNonRev': [-1, '!\u0C2C\u0C2C\u0C2C\u0C2C'],
+        'OthersRev': [-1, '!\u02C2\u02C2\u02C2\u02C2\u02C2'],
+        'OthersNonRev': [-1, '!\u02C2\u02C2\u02C2\u02C2'],
     },
     'shanone' : {
         'ShanLoC': '႞',
         'Shan': '႞',
         'ShanLoCRomanLoC': 'n*',
-        'OthersRev': [-1, '!!\u0C2C'],
-        'OthersNonRev': [-1, '!!\u0C2C'],
+        'OthersRev': [-1, '!!\u02C2'],
+        'OthersNonRev': [-1, '!!\u02C2'],
+    },
+    'Khmerdivider' : {
+      'KhmerLoC': '៖',
+      'KhmerLoCRomanLoC': ':',
+     'OthersRev': [-1, '!!!\u02C2'],
+     'OthersNonRev': [-1, '!!!\u02C2'],
     }
 }
 
@@ -349,5 +495,69 @@ AyogavahaMap = {
     'Soyombo': '\U00011A85',
     'OthersRev': [2, '\u02C2'],
     'OthersNonRev': [2, '\u02C2']
-    }
+    },
+    'shantone2' : {
+        'ShanLoC': 'ႇ',
+        'Shan': 'ႇ',
+        'ShanLoCRomanLoC': '\u0322',
+        'OthersRev': [-1, '\u02C2'],
+        'OthersNonRev': [-1, '\u02C2'],
+    },
+    'shantone3' : {
+        'ShanLoC': 'ႈ',
+        'Shan': 'ႈ',
+        'ShanLoCRomanLoC': '\u0310',
+        'OthersRev': [-1, '\u02C2\u02C2'],
+        'OthersNonRev': [-1, '\u02C2\u02C2'],
+    },
+    'shantone5' : {
+        'ShanLoC': 'ႉ',
+        'Shan': 'ႉ',
+        'ShanLoCRomanLoC': 'ʹ',
+        'OthersRev': [-1, '\u02C2\u02C2\u02C2'],
+        'OthersNonRev': [-1, '\u02C2\u02C2\u02C2'],
+    },
+    'shantone6' : {
+        'ShanLoC': 'ႊ',
+        'Shan': 'ႊ',
+        'ShanLoCRomanLoC': '˝',
+        'OthersRev': [-1, '\u02C2\u02C2\u02C2\u02C2'],
+        'OthersNonRev': [-1, '\u02C2\u02C2\u02C2\u02C2'],
+    },
+    'KhmerTone3' : {
+        'KhmerLoC': '៍',
+        'KhmerLoCRomanLoC': '\u02DA',
+        'OthersRev': [-1, '\u02C2\u02C2\u02C2'],
+        'OthersNonRev': [-1, '\u02C2\u02C2\u02C2'],
+    },
+    'KhmerTone4' : {
+        'KhmerLoC': '៎',
+        'KhmerLoCRomanLoC': '’',
+        'OthersRev': [-1, '\u02C2\u02C2\u02C2'],
+        'OthersNonRev': [-1, '\u02C2\u02C2\u02C2'],
+    },
+    'KhmerTone5' : {
+        'KhmerLoC': '៏',
+        'KhmerLoCRomanLoC': 'ʻ',
+        'OthersRev': [-1, '\u02C2\u02C2\u02C2'],
+        'OthersNonRev': [-1, '\u02C2\u02C2\u02C2'],
+    },
+  'Khmerbreve': {
+      'KhmerLoC': '័',
+      'KhmerLoCRomanLoC': '\u0306',
+     'OthersRev': [-1, '\u02C2'],
+     'OthersNonRev': [-1, '\u02C2'],
+  },
+  'Khmervisarga2': {
+      'KhmerLoC': 'ៈ',
+      'KhmerLoCRomanLoC': '\u0300',
+     'OthersRev': [-1, '\u02C2'],
+     'OthersNonRev': [-1, '\u02C2'],
+  },
+  'Khmershortener': {
+      'KhmerLoC': '់',
+      'KhmerLoCRomanLoC': '\u0301',
+     'OthersRev': [-1, '\u02C2'],
+     'OthersNonRev': [-1, '\u02C2'],
+  }
 }

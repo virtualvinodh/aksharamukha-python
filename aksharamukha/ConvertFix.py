@@ -1047,9 +1047,15 @@ def FixTamilGrantha(Strng,reverse=False):
 
     return Strng
 
+def FixKhmerLoC(Strng,reverse=False):
+    return FixKhmer(Strng, reverse, target="KhmerLoC")
+
 # Khmer - Subjoining Consonants and Repha
-def FixKhmer(Strng,reverse=False):
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Khmer'))
+def FixKhmer(Strng,reverse=False, target="Khmer"):
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target))
+    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,target))
+    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,target))
+
     ra = Khmer.ConsonantMap[26]
     vir = Khmer.ViramaMap[0]
 
@@ -1059,7 +1065,8 @@ def FixKhmer(Strng,reverse=False):
         # Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
         Strng = re.sub('(?<!\u17D2)('+ra+')'+'\u17D2'+'('+ListC+')',r'\2'+'\u17CC',Strng)
         # i + Anusara -> i-Anusvara ligature
-        Strng = Strng.replace('\u1787\u17C6','\u17B9')
+        Strng = Strng.replace('\u17B7\u17C6','\u17B9')
+
     else:
         # Replace Subjoining Virama with Explicit Virama
         Strng = Strng.replace('\u17D2',vir)
@@ -1067,7 +1074,8 @@ def FixKhmer(Strng,reverse=False):
         # Remove Repha : ra + sub Virama + Cons <- Cons + Repha
         Strng = re.sub('('+ListC+')'+'\u17CC',ra+vir+r'\1',Strng)
         # i + Anusara -> i-Anusvara ligature
-        Strng = Strng.replace('\u17B9','\u1787\u17C6')
+        Strng = Strng.replace('\u17B9','\u17B7\u17C6')
+        print(Strng)
 
     return Strng
 
@@ -2510,7 +2518,7 @@ def FixLepcha(Strng,reverse=False):
     ## Consider adding -u instead of mass replacement [for Cham too] !
 
     listNF = [Lepcha.ConsonantMap[x] for x in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,17,18,21,22,23,29,30,31]]
-    listF = [(Lepcha.ConsonantMap+Lepcha.AyogavahaMap)[x] for x in [0,0,0,34,0,0,0,0,19,15,15,15,15,19,15,15,15,20,20,20,15,15,15]]
+    listF = [(Lepcha.ConsonantMap[:33]+Lepcha.AyogavahaMap)[x] for x in [0,0,0,34,0,0,0,0,19,15,15,15,15,19,15,15,15,20,20,20,15,15,15]]
 
     listNF += Lepcha.ConsonantMap[25:26]+Lepcha.ConsonantMap[28:29]
     listF += Lepcha.VowelMap[2:3] + Lepcha.VowelMap[4:5]

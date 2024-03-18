@@ -226,14 +226,16 @@ def convertScript(Strng,Source,Target):
         Strng = CF.FixIndicOutput(Strng, Source, Target)
 
     elif Source in GM.IndicScripts and Target in GM.LatinScripts:
+        #print(Strng)
         Strng = PrP.RemoveJoiners(Strng)
         Strng = CF.ShiftDiacritics(Strng, Source, reverse=True)
+        #print(Strng)
         try:
             Strng = getattr(CF,"Fix"+Source)(Strng,reverse=True)
         except AttributeError:
             pass
             #print #"Fix"+Target+" doesn't exist - Reverse"
-
+        #print(Strng)
         sOm, tOm = GM.CrunchList('OmMap', Source)[0],GM.CrunchList('OmMap', Target)[0]
 
         Strng = Strng.replace(sOm, tOm)
@@ -272,9 +274,10 @@ def convertScript(Strng,Source,Target):
         # for all other transformations
         else:
             # Perform replacement sequentially for each character group
+            #print(Strng)
             for x,y in charPairs:
-                #print(x + " : " + y)
                 Strng = Strng.replace(x,y)
+
 
         # Remove all intermediate characters and fix Output
         Strng = CF.FixRomanOutput(Strng,Target)

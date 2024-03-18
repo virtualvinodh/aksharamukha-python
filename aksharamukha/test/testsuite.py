@@ -52,7 +52,7 @@ class TestOverallReversible:
     @pytest.mark.parametrize("target_script", reversible_scripts)
     @pytest.mark.parametrize("source_text", source_texts)
     def test_overall_reversible(self, source_script, target_script, source_text):
-        if target_script != 'Bengali' and source_script != 'Bengali':
+        if target_script != 'Bengali':
             text_compare_reversible(source_script, target_script, source_text)
 
 class TestOverallReversible2:
