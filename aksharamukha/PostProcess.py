@@ -4,7 +4,7 @@ from . import GeneralMap as GM
 from . import ScriptMap
 from aksharamukha.ScriptMap.Roman import Avestan
 from aksharamukha.ScriptMap.MainIndic import Ahom, Tamil,Malayalam,Gurmukhi,Oriya,Saurashtra,Sinhala,Urdu,Devanagari, Chakma, Limbu, Takri, TamilExtended, Kannada
-from aksharamukha.ScriptMap.EastIndic import Tibetan, Thai, PhagsPa, ZanabazarSquare, Burmese, KhamtiShan
+from aksharamukha.ScriptMap.EastIndic import Tibetan, Thai, PhagsPa, ZanabazarSquare, Burmese, KhamtiShan, Khmer
 from . import ConvertFix as CF
 import re
 import functools
@@ -30,6 +30,7 @@ def defaultPost(Strng):
 def LoCMarc8(Strng):
     import unicodedata
     Strng = unicodedata.normalize('NFD', Strng)
+    Strng = Strng.replace('\u02DA', '\u02D9')
     return Strng
 
 def AnusvaraAsN(Strng):
@@ -489,6 +490,48 @@ def removeSegmentSpacesBurmese(Strng):
 
     Strng = regex.sub('(\p{L}\p{M}*) (\p{L})', r'\1\2', Strng)
     Strng = regex.sub('(\p{L}\p{M}*) (\p{L})', r'\1\2', Strng)
+
+    return Strng
+
+# khmer
+def KhmerLoCRomanLoCTarget(Strng):
+    import unicodedata
+    Strng = unicodedata.normalize('NFC', Strng)
+
+    #move consonant modifiers
+    #Strng = re.sub('(‛ʹ)(′?)(a)(?![ṃḥ])', r'\1\2', Strng)
+    Strng = re.sub('(ʹ)(′?)(?=[aāiīuūẏȳeoăáâààáéíóúàèìòùă])', r'\2', Strng)
+    #Strng = re.sub('(ʹ)(′?)(a)(?=[aāiīuūẏȳeoă])', r'\2', Strng)
+
+    #fix Oh
+    Strng = Strng.replace('oḥ', 'oaḥ')
+    Strng = Strng.replace('  ', ' ')
+
+
+    return Strng
+
+def KhmerLoCRomanLoCSource(Strng):
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Khmer'))
+    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,'Khmer'))
+    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,'Khmer'))
+
+    vir = Khmer.ViramaMap[0]
+
+    #move bantoc around
+    Strng = re.sub('(\u17CB)(.)', r'\2\1', Strng)
+
+    #move tonemarks around
+    Strng = re.sub('('+ListC+')'+'('+ListV+')''('+ListA+')?''([៎៏])',r'\1\4\2\3',Strng)
+
+    #subjoined a
+    #Strng = Strng.replace(vir + '‛', '\u17D2')
+
+    #mark consonant modifiers with subbase form
+    Strng = re.sub('([ងញមបយរវ])(៉)([ិឹីឺ])', r'\1''ុ'r'\3', Strng)
+    Strng = re.sub('([សហអ])(៊)([ិឹីឺ])', r'\1''ុ'r'\3', Strng)
+
+    #remove virama
+    Strng = Strng.replace(vir, '')
 
     return Strng
 

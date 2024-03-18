@@ -8,7 +8,7 @@ import string
 import unicodedata
 from . import PostProcess
 from . import ConvertFix as CF
-from aksharamukha.ScriptMap.EastIndic import PhagsPa, Burmese
+from aksharamukha.ScriptMap.EastIndic import PhagsPa, Burmese, Khmer
 from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 ### Use escape char in all functions
 
@@ -29,6 +29,56 @@ def BengaliTargetVa(Strng):
 
 def OriyaTargetVa(Strng):
     Strng = Strng.replace('ବ', 'ୱ')
+
+    return Strng
+
+def KhmerLoCRomanLoCTarget(Strng):
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Khmer'))
+    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,'Khmer'))
+    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,'Khmer'))
+
+    vir = Khmer.ViramaMap[0]
+
+    #split words
+
+    from khmernltk import word_tokenize
+    sents = Strng.split('\n')
+    sent_token = []
+    for sent in sents:
+        sent_token.append(' '.join(word_tokenize(sent)))
+    Strng = '\n'.join(sent_token)
+    Strng = Strng.replace('  ', ' ')
+
+    #Mark im
+    Strng = Strng.replace('ឹ', 'ិំ\u02BD')
+
+    #move bantoc around
+    Strng = re.sub('(.)(.(\u17D2.)*)(\u17CB)', r'\1\4\2', Strng)
+
+    #mark consonant modifiers with subbase form
+    Strng = re.sub('([ងញមបយរវ])(ុ)([ិឹីឺ])', r'\1''៉'r'\3', Strng)
+    Strng = re.sub('([សហអ])(ុ)([ិឹីឺ])', r'\1''៊'r'\3', Strng)
+
+    #move tonemarks around
+    Strng = re.sub('('+ListC+')'+'([៎៏])''('+ListV+')''('+ListA+')?',r'\1\3\4\2',Strng)
+    Strng = re.sub('('+ListC+')'+'('+ListV+')''([៎៏៊៉])''('+ListA+')?',r'\1\2\4\3',Strng)
+
+    #fix oya to oy
+    Strng = Strng.replace('ឲ្យ', 'ឱ្យ').replace('ឱ្យ', 'ឱ្យ' + vir)
+
+    #ignore the following
+    Strng = re.sub('[៙៚]', '', Strng)
+
+    return Strng
+
+def KhmerLoCRomanLoCSource(Strng):
+    listdenormalize = ['å', 'ẙ', 'à', 'á', 'é', 'í', 'ó', 'ú', 'à', 'è', 'ì', 'ò', 'ù', 'ă']
+
+    for let in listdenormalize:
+        Strng = Strng.replace(let, unicodedata.normalize('NFD', let))
+
+    Strng = re.sub('‛(?!ʹ)', '‛ʹ', Strng)
+    Strng = re.sub('oaḥ', 'oḥ', Strng)
 
     return Strng
 
@@ -807,7 +857,6 @@ def RemoveFinal(Strng, Target):
     VowS = "(" + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, Target)) + ")"
     Cons = "(" + '|'.join(GM.CrunchSymbols(GM.Consonants, Target)) + ")"
     Char = "(" + '|'.join(GM.CrunchSymbols(GM.Characters, Target)) + ")"
-
     Nas = "([" + '|'.join(GM.CrunchList('AyogavahaMap',Target)) + "]?)"
 
     ISyl = "((" + VowI + "|" + "(" + Cons + VowS + "?" + ")" + Nas + '))'
@@ -820,8 +869,16 @@ def RemoveFinal(Strng, Target):
     else:
         Cons2 = '(()?' + Cons + ')'
 
-    Strng = re.sub(ISyl + Cons2+"(?!" + Char + ")", r'\1\8' + vir, Strng) # kama -> kam
-    Strng = re.sub(ISyl + Cons2+"(?!" + Char + ")", r'\1\8' + vir, Strng) # kama -> kam
+    if Target == 'Khmer' or Target == 'KhmerLoC':
+        ListC ='|'.join(GM.CrunchSymbols(sorted(GM.Consonants, key=len, reverse=True),Target))
+        ra = Khmer.ConsonantMap[26]
+        Strng = re.sub('('+ListC+')'+'\u17CC',ra+'\u17D2'+r'\1',Strng)
+
+        Strng = re.sub(ISyl + '('+ListC +')' + '(((\u17D2)' + '('+ListC +'))*)([៍៎៏]?)(?=[\s\n])', r'\1\8\9' + vir + r'\13', Strng) # kama -> kam
+        Strng = re.sub(ISyl + '('+ListC +')' + '(((\u17D2)' + '('+ListC +'))*)([៍៎៏]?)$', r'\1\8\9' + vir + r'\13', Strng) # kama -> kam
+    else:
+        Strng = re.sub(ISyl + Cons2+"(?!" + Char + ")", r'\1\8' + vir, Strng) # kama -> kam
+        Strng = re.sub(ISyl + Cons2+"(?!" + Char + ")", r'\1\8' + vir, Strng) # kama -> kam
 
     #Strng = re.sub(VowI + Nas + Cons2+"(?!" + Char + ")", r'\1\2\3' + vir, Strng)
 
@@ -842,6 +899,18 @@ def SchwaFinalGujarati(Strng):
 def SchwaFinalBengali(Strng):
 
     Strng = RemoveFinal(Strng, 'Bengali')
+
+    return Strng
+
+def SchwaFinalKhmerLoC(Strng):
+
+    Strng = RemoveFinal(Strng, 'KhmerLoC')
+
+    return Strng
+
+def SchwaFinalKhmer(Strng):
+
+    Strng = RemoveFinal(Strng, 'Khmer')
 
     return Strng
 
@@ -1229,6 +1298,9 @@ def normalize(Strng,Source):
 
     if Source in ['IAST', 'ISO', 'ISOPali', 'IASTPali'] or 'RomanLoC' in Source:
         Strng = unicodedata.normalize('NFC', Strng)
+
+        if 'RomanLoC' in Source:
+            Strng = Strng.replace('\u02D9', '\u02DA')
 
     if Source == 'Arab-Ur' or Source == 'Arab-Pa':
         Strng = Strng.replace('ك', 'ک')
