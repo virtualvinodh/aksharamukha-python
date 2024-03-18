@@ -32,15 +32,7 @@ def OriyaTargetVa(Strng):
 
     return Strng
 
-def KhmerLoCRomanLoCTarget(Strng):
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Khmer'))
-    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,'Khmer'))
-    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,'Khmer'))
-
-    vir = Khmer.ViramaMap[0]
-
-    #split words
-
+def KhmerWordSplit(Strng):
     from khmernltk import word_tokenize
     sents = Strng.split('\n')
     sent_token = []
@@ -48,6 +40,15 @@ def KhmerLoCRomanLoCTarget(Strng):
         sent_token.append(' '.join(word_tokenize(sent)))
     Strng = '\n'.join(sent_token)
     Strng = Strng.replace('  ', ' ')
+
+    return Strng
+
+def KhmerLoCRomanLoCTarget(Strng):
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Khmer'))
+    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,'Khmer'))
+    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,'Khmer'))
+
+    vir = Khmer.ViramaMap[0]
 
     #Mark im
     Strng = Strng.replace('ឹ', 'ិំ\u02BD')
