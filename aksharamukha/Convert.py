@@ -49,9 +49,6 @@ def convertInter(Strng,Source):
 
 # Conversion Module
 def convertScript(Strng,Source,Target):
-    #print(Target)
-    #print(Target in GM.IndicScripts)
-
     #print("I am here")
 
     charPairs=[];

@@ -32,6 +32,40 @@ def OriyaTargetVa(Strng):
 
     return Strng
 
+#ThamLoC
+def ThamLoCRomanLoCTarget(Strng):
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ThamLoC'))
+
+    #Fix o
+    Strng = Strng.replace('ᩮᩣ', 'ᩰ')
+
+    #eo
+    Strng = re.sub('ᩴ᩠ᨿ', '\u1A74\u1A7Fᨿ', Strng)
+
+    #aiy
+    Strng = re.sub('ᩱ᩠ᨿ', 'ᩱ\u1A7Fᨿ', Strng)
+
+    #koi
+    Strng = re.sub('᩠ᩅᩭ', '\u1A7Fᩅᩭ', Strng)
+
+    #au
+    Strng = re.sub('\u1A60\u1A45\u1A6B', '\u1A7F\u1A45\u1A6B', Strng)
+
+    #close e/au
+    Strng = re.sub('(᩠)(ᨿ|ᩅ)(?=(' + ListC + '))', '\u1A7F'+r'\2', Strng)
+
+
+    return Strng
+
+def ThamLoCRomanLoCSource(Strng):
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ThamLoCRomanLoC'))
+    ListV ='|'.join(GM.CrunchSymbols(GM.Vowels,'ThamLoCRomanLoC'))
+
+    #a
+    Strng = re.sub('(a|ǫḥ|ǫ|œ|au)(?=(' + ListC + '))', r'\1''\u02BD', Strng)
+
+    return Strng
+
 def KhmerWordSplit(Strng):
     from khmernltk import word_tokenize
     sents = Strng.split('\n')
@@ -154,6 +188,25 @@ def BurmeseRomanLoCSource(Strng):
 
     # reverse o' to au
     Strng = Strng.replace('oʻ', 'au')
+
+    return Strng
+
+def paliTham(Strng):
+
+    return Strng
+
+def segmentThamSyllabes(Strng):
+    # segment text into syllables
+
+    # https://github.com/ye-kyaw-thu/myWord/blob/main/syl_segment.py
+    myConsonant = r"ᨠ-ᩌ"
+    otherChar = r"ᩍ-ᩔ!-/:-@[-`{-~\s"
+    ssSymbol = r'᩠'
+    aThat = r'᩺'
+
+    BreakPattern = re.compile(r"((?<!" + ssSymbol + r")["+ myConsonant + r"](?![" + aThat + ssSymbol + r"])" + r"|["  + otherChar + r"])", re.UNICODE)
+    #Strng = Strng.replace("့်", "့်")
+    Strng = BreakPattern.sub(' ' + r"\1", Strng)
 
     return Strng
 
