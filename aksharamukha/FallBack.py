@@ -89,7 +89,9 @@ VowelMap = {
 'ShanLoCaoi': {
        'ShanLoC': 'ဢွႆ',
        'Shan': 'ဢွႆ',
+       'ThamLoC': 'ᩋ\u1A7Fᩅᩭ',
        'ShanLoCRomanLoC': 'oi',
+       'ThamLoCRomanLoC': 'oi',
        'OthersRev': [10, '\u02C2'],
        'OthersNonRev': [10, '\u02C2'],
     },
@@ -159,6 +161,98 @@ VowelMap = {
   'Khmershortaa': {
       'KhmerLoC': 'អា់\u02B2',
       'KhmerLoCRomanLoC': 'â',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamcloseda': {
+     'ThamLoC': 'ᩋᩢ',
+      'ThamLoCRomanLoC': 'a\u02BD',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamclosede': {
+   'ThamLoC': 'ᩋ\u1A7Fᨿ',
+    'ThamLoCRomanLoC': 'è',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+
+  },
+  'Thamclosedau': {
+     'ThamLoC': 'ᩋ\u1A7Fᩅ',
+      'ThamLoCRomanLoC': 'au\u02BD',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+
+  },
+  'Thamopeno2h': {
+     'ThamLoC': 'ᩋ\u1A70\u1A6C\u1A61',
+      'ThamLoCRomanLoC': 'ǫḥ',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamclosedo2h': {
+     'ThamLoC': 'ᩋᩫ',
+      'ThamLoCRomanLoC': 'ǫḥ\u02BD',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamohook': {
+     'ThamLoC': 'ᩋᩳ',
+      'ThamLoCRomanLoC': 'ǫ',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamohookclosed': {
+     'ThamLoC': 'ᩋᩬ',
+      'ThamLoCRomanLoC': 'ǫ\u02BD',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamouhookk': {
+     'ThamLoC': 'ᩋᩧ',
+      'ThamLoCRomanLoC': 'ư',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamuuhook': {
+     'ThamLoC': 'ᩋᩨ',
+      'ThamLoCRomanLoC': 'ư̄',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamhoe': {
+     'ThamLoC': 'ᩋᩮᩨᩬ',
+      'ThamLoCRomanLoC': 'œ',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamoeclosed': {
+     'ThamLoC': 'ᩋᩮᩨ',
+      'ThamLoCRomanLoC': 'œ\u02BD',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamaiy': {
+     'ThamLoC': 'ᩋᩱ\u1A7Fᨿ',
+      'ThamLoCRomanLoC': 'aiy\u1A7A',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamohohooki': {
+     'ThamLoC': 'ᩋᩭ',
+      'ThamLoCRomanLoC': 'ǫi',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thameo2': {
+     'ThamLoC': 'ᩋ\u1A74\u1A7Fᨿ',
+      'ThamLoCRomanLoC': 'eo',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamohao': {
+     'ThamLoC': 'ᩋᩮᩢᩣ',
+      'ThamLoCRomanLoC': 'ao',
      'OthersRev': [0, '\u02C2'],
      'OthersNonRev': [0, '\u02C2'],
   }
@@ -243,7 +337,9 @@ VowelSignMap = {
 'ShanLoCaoi': {
        'ShanLoC': 'ွႆ',
        'Shan': 'ွႆ',
+       'ThamLoC': '\u1A7Fᩅᩭ',
        'ShanLoCRomanLoC': 'oi',
+       'ThamLoCRomanLoC': 'oi',
        'OthersRev': [10, '\u02C2'],
        'OthersNonRev': [10, '\u02C2'],
     },
@@ -313,6 +409,98 @@ VowelSignMap = {
   'Khmershortaa': {
       'KhmerLoC': 'ា់',
       'KhmerLoCRomanLoC': 'â',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamcloseda': {
+      'ThamLoC': 'ᩢ',
+      'ThamLoCRomanLoC': 'a\u02BD',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamclosede': {
+    'ThamLoC': '\u1A7Fᨿ',
+    'ThamLoCRomanLoC': 'è',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+
+  },
+  'Thamclosedau': {
+      'ThamLoC': '\u1A7Fᩅ',
+      'ThamLoCRomanLoC': 'au\u02BD',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+
+  },
+  'Thamopeno2h': {
+      'ThamLoC': '\u1A70\u1A6C\u1A61',
+      'ThamLoCRomanLoC': 'ǫḥ',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamclosedo2h': {
+      'ThamLoC': 'ᩫ',
+      'ThamLoCRomanLoC': 'ǫḥ\u02BD',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamohook': {
+      'ThamLoC': 'ᩳ',
+      'ThamLoCRomanLoC': 'ǫ',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamohookclosed': {
+      'ThamLoC': 'ᩬ',
+      'ThamLoCRomanLoC': 'ǫ\u02BD',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamouhookk': {
+      'ThamLoC': 'ᩧ',
+      'ThamLoCRomanLoC': 'ư',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamuuhook': {
+      'ThamLoC': 'ᩨ',
+      'ThamLoCRomanLoC': 'ư̄',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamhoe': {
+      'ThamLoC': 'ᩮᩨᩬ',
+      'ThamLoCRomanLoC': 'œ',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamoeclosed': {
+      'ThamLoC': 'ᩮᩨ',
+      'ThamLoCRomanLoC': 'œ\u02BD',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamaiy': {
+      'ThamLoC': 'ᩱ\u1A7Fᨿ',
+      'ThamLoCRomanLoC': 'aiy\u1A7A',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamohohooki': {
+      'ThamLoC': 'ᩭ',
+      'ThamLoCRomanLoC': 'ǫi',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thameo2': {
+      'ThamLoC': '\u1A74\u1A7Fᨿ',
+      'ThamLoCRomanLoC': 'eo',
+     'OthersRev': [0, '\u02C2'],
+     'OthersNonRev': [0, '\u02C2'],
+  },
+  'Thamohao': {
+      'ThamLoC': 'ᩮᩢᩣ',
+      'ThamLoCRomanLoC': 'ao',
      'OthersRev': [0, '\u02C2'],
      'OthersNonRev': [0, '\u02C2'],
   }
@@ -431,7 +619,14 @@ ConsonantMap = {
      'KhmerLoCRomanLoC': '‛ʹ′',
      'OthersRev': [18, '\u02C2'],
      'OthersNonRev': [18, 'nukta'],
- }
+ },
+ 'ThamDoubleNJNJ': {
+     'ThamLoC' : 'ᨬᩚ',
+     'ThamLoCRomanLoC': 'ññ',
+     'OthersRev': [18, '\u02C2'],
+     'OthersNonRev': [18, 'nukta'],
+ },
+
 }
 
 SignMap = {
@@ -454,7 +649,15 @@ SignMap = {
       'KhmerLoCRomanLoC': ':',
      'OthersRev': [-1, '!!!\u02C2'],
      'OthersNonRev': [-1, '!!!\u02C2'],
+    },
+    'Thamlae': {
+        'ThamLoC': 'ᩓ',
+        'ThamLoCRomanLoC': 'læ',
+        'OthersRev': [-1, '!!!\u02C2'],
+        'OthersNonRev': [-1, '!!!\u02C2'],
     }
+
+   ## Add option for alternate o for Tham
 }
 
 AyogavahaMap = {

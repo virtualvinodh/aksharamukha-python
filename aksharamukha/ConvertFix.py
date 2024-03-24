@@ -3082,6 +3082,7 @@ def FixTaiTham(Strng,reverse=False):
     if not reverse:
         # Strng = Strng.replace("\u1A63\u1A74","\u1A74\u1A63") # kAM -> kMA (Like Thai ำ )
         # Check above in Pali texts
+        Strng = Strng.replace('ᩰ', 'ᩮᩣ')
         pass
     else:
         #Strng = Strng.replace("\u1A74\u1A63","\u1A63\u1A74") # kAM <- kMA
@@ -3121,6 +3122,21 @@ def FixTaiTham(Strng,reverse=False):
 
 def FixLaoTham(Strng, reverse=False):
     Strng = FixTaiTham(Strng, reverse)
+
+    return Strng
+
+def FixThamLoC(Strng, reverse=False):
+    Strng = FixTaiTham(Strng, reverse)
+
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'TaiTham'))
+    if not reverse:
+        E = "ᩮ"
+        AA = 'ᩣ'
+        TallACons = '|'.join(['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ', 'ᨷ']) ## va da dha ga
+        Strng = re.sub('('+TallACons+')(᩠)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4'+'ᩤ',Strng)
+        Strng = re.sub('('+TallACons+')(᩠)('+ListC +')'+'(᩠)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4\5\6'+'ᩤ',Strng)
+    else:
+        pass
 
     return Strng
 

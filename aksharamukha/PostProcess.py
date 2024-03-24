@@ -493,6 +493,30 @@ def removeSegmentSpacesBurmese(Strng):
 
     return Strng
 
+def UseAlternateo1(Strng):
+    Strng = Strng.replace('ᩮᩣ', 'ᩰ')
+
+    return Strng
+
+
+def UseAlternateo2(Strng):
+    Strng = Strng.replace('ᩰ', 'ᩮᩣ')
+
+    return Strng
+
+#ThamLoC
+def ThamLoCRomanLoCTarget(Strng):
+    return Strng
+
+def ThamLoCRomanLoCSource(Strng):
+    #cryptogammic dot to Sakot
+    Strng = Strng.replace('\u1A7F', '᩠')
+
+    #fixing aiy
+    Strng = Strng.replace('\u1A71\u1A3F\u1A7A', '\u1A71᩠ᨿ')
+
+    return Strng
+
 # khmer
 def KhmerLoCRomanLoCTarget(Strng):
     import unicodedata

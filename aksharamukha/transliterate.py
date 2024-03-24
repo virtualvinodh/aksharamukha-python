@@ -238,13 +238,18 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         if src == 'Khmer':
             src = 'KhmerLoC'
 
-        tgt = src + tgt
+        if 'Tham' in src:
+            src = 'ThamLoC'
+            tgt = 'ThamLoCRomanLoC'
+        else:
+            tgt = src + tgt
+
         # the below order for preoptions is important
         preoptions = preoptions + [tgt + 'Target']
         postoptions =  [tgt + 'Target'] + postoptions
         nativize = False
 
-        if src in ['TaiTham', 'LaoTham', 'Kannada', 'Tamil']:
+        if src in ['Kannada', 'Tamil']:
             tgt = 'IASTPali'
             preoptions = []
             postoptions = ['AnusvaratoNasalASTISO']
@@ -266,7 +271,12 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         if tgt == 'Khmer':
             tgt = 'KhmerLoC'
 
-        src = tgt + src
+        if 'Tham' in tgt:
+            src = 'ThamLoCRomanLoC'
+            tgt = 'ThamLoC'
+        else:
+            src = tgt + src
+
         preoptions = [src + 'Source'] + preoptions
         postoptions =  [src + 'Source'] + postoptions
         nativize = False
