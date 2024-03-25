@@ -12,7 +12,7 @@ The Indic Romanization Formats supported are: *Harvard-Kyoto, ITRANS, Velthuis, 
 
 ## Usage and Examples
 
-Please use `pip aksharamukha` to install the Python package.
+Please use `pip install aksharamukha` to install the Python package.
 
 Please find the usage instructions and relevant documentation [here](http://aksharamukha.appspot.com/#/python).
 
