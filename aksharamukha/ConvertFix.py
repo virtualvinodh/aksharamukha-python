@@ -3082,7 +3082,7 @@ def FixTaiTham(Strng,reverse=False):
     if not reverse:
         # Strng = Strng.replace("\u1A63\u1A74","\u1A74\u1A63") # kAM -> kMA (Like Thai ำ )
         # Check above in Pali texts
-        Strng = Strng.replace('ᩰ', 'ᩮᩣ')
+        #Strng = Strng.replace('ᩰ', 'ᩮᩣ')
         pass
     else:
         #Strng = Strng.replace("\u1A74\u1A63","\u1A63\u1A74") # kAM <- kMA
