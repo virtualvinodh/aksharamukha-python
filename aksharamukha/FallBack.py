@@ -765,6 +765,16 @@ SignMap = {
         'ThamLoCRomanLoC': 'læ',
         'OthersRev': [-1, '!!!\u02C2'],
         'OthersNonRev': [-1, '!!!\u02C2'],
+    },
+    'Danda1': {
+        'Devanagari': '│',
+        'OthersRev': [1, '\u02C2'],
+        'OthersNonRev': [1, '\u02C2'],
+    },
+    'Danda2': {
+        'Devanagari': '┃',
+        'OthersRev': [2, '\u02C2'],
+        'OthersNonRev': [2, '\u02C2'],
     }
 
    ## Add option for alternate o for Tham

@@ -32,6 +32,11 @@ def OriyaTargetVa(Strng):
 
     return Strng
 
+def RetainDevangariDanda(Strng):
+    Strng = Strng.replace('।', '│').replace('┃', '')
+
+    return Strng
+
 #ThamLoC
 def ThamLoCRomanLoCTarget(Strng):
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ThamLoC'))

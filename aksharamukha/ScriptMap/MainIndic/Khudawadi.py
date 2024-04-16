@@ -125,7 +125,7 @@ SouthConsonantMap = [
 NuktaConsonantMap =  [
                      '𑊺𑋩',
                      '𑊻𑋩',
-                     '𑊾𑋩',
+                     '𑊼𑋩',
                      '𑋂𑋩',
                      '𑋊',
                      '𑋋𑋩',
