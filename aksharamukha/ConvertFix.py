@@ -2,7 +2,7 @@
 from . import GeneralMap as GM
 from aksharamukha.ScriptMap.Roman import Avestan, IAST
 from aksharamukha.ScriptMap.MainIndic import Ahom, Tamil,TamilGrantha, Limbu, MeeteiMayek, Urdu, Lepcha, Chakma, Kannada, Gurmukhi, Newa
-from aksharamukha.ScriptMap.EastIndic import Lao, TaiTham,Tibetan,Burmese,Khmer,Balinese,Javanese,Thai, Sundanese, PhagsPa, Cham, Thaana, Rejang, ZanabazarSquare, Makasar
+from aksharamukha.ScriptMap.EastIndic import Lao, TaiTham,Tibetan,Burmese,Khmer,Balinese,Javanese,Thai, Sundanese, PhagsPa, Cham, Thaana, Rejang, ZanabazarSquare, Makasar, Kawi
 from . import PostProcess
 import re
 
@@ -346,6 +346,9 @@ def PostFixRomanOutput(Strng,Source,Target):
     if Source == "RomanSemitic":
         pass
         #Strng = Strng.replace('a̤', '\u0324')
+
+    if Source in ['IAST','ISO'] and Target == 'Malayalam':
+        Strng = Strng.replace('ṯ', 'ṟ')
 
     return Strng
 
@@ -934,6 +937,34 @@ def FixOriya(Strng, reverse=False):
 
     return Strng
 
+def FixGurmukhiLoC(Strng,reverse=False):
+    Strng = CorrectRuLu(Strng,"Gurmukhi",reverse)
+
+    ava = Gurmukhi.SignMap[0]
+    avaA = '\u0028\u0A06\u0029'
+
+    # Tippi/Bindu conversion options are optional. Look into PostProcess
+
+    if not reverse:
+        Strng = Strng.replace(ava+ava,avaA)
+        Strng = PostProcess.InsertGeminationSign(Strng, 'Gurmukhi')
+        Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi', True)
+
+        Vedicomp = '([' + ''.join(GM.VedicSvarasList) + '])'
+
+        Strng = re.sub(Vedicomp + '\u0A71' + '(.)', r'\1' + r'\2' + Gurmukhi.ViramaMap[0] + r'\2' , Strng)
+
+    else:
+        Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi')
+        Strng = Strng.replace(avaA,ava+ava)
+        Strng = PostProcess.ReverseGeminationSign(Strng, 'Gurmukhi')
+        #Strng = Strng.replace('ੰਨ','ਨ੍ਨ')
+        #Strng = Strng.replace('ੰਮ','ਮ੍ਮ')
+        # Replace Tippi by Bindu
+        #Strng = PostProcess.GurmukhiYakaash(Strng, True)
+
+    return Strng
+
 # Correct Ru'', Lu'' -> R, lR
 # Tippi/Bindu
 def FixGurmukhi(Strng,reverse=False):
@@ -1075,7 +1106,6 @@ def FixKhmer(Strng,reverse=False, target="Khmer"):
         Strng = re.sub('('+ListC+')'+'\u17CC',ra+vir+r'\1',Strng)
         # i + Anusara -> i-Anusvara ligature
         Strng = Strng.replace('\u17B9','\u17B7\u17C6')
-        print(Strng)
 
     return Strng
 
@@ -1372,6 +1402,97 @@ def FixBalinese(Strng,reverse=False):
 
     Strng = AddRepha(Strng,"Balinese",Repha,reverse)
 
+    if not reverse:
+        pass
+    else:
+        # reversing archaic jna
+        Strng = Strng.replace('ᭌ', 'ᬚ᭄ᬜ')
+        # Fix a-based vowels
+        vowelsA = ['ᬅᬶ', 'ᬅᬷ', 'ᬅᬸ', 'ᬅᬹ', 'ᬅᬺ', 'ᬅᬻ', 'ᬅ᭄ᬮᭂ', 'ᬅ᭄ᬮᭃ', 'ᬅᬾ', 'ᬅᬿ', 'ᬅᭀ', 'ᬅᭁ']
+        vowels = ['ᬇ', 'ᬈ', 'ᬉ', 'ᬊ', 'ᬋ', 'ᬌ', 'ᬍ', 'ᬎ', 'ᬏ', 'ᬐ', 'ᬑ', 'ᬒ']
+
+        for v, vA in zip(vowels, vowelsA):
+            Strng = Strng.replace(vA, v)
+
+    return Strng
+
+# Javanese - Reppha & Subjoining ra & ya
+def FixDivesAkuru(Strng,reverse=False):
+    target = 'DivesAkuru'
+
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target)+['\U00011926'])
+    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,target))
+    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,target))
+
+    ra = GM.CrunchSymbols(GM.Consonants,target)[26]
+    ya = GM.CrunchSymbols(GM.Consonants,target)[25]
+    vir = GM.CrunchSymbols(GM.virama,target)[0]
+    combVir = '\U0001193E'
+    aVS = '\U00011F34'
+
+    if not reverse:
+        # Replace Explicit Virama + Cons -> Subjoining Virama + Cons
+        Strng = re.sub(vir+'('+ListC+')', combVir+r'\1',Strng)
+        # Replace Explicit Virama + Cons -> Subjoining Virama + Cons
+        Strng = re.sub(combVir +ra, '\U00011942',Strng)
+        # Replace Explicit Virama + Cons -> Subjoining Virama + Cons
+        Strng = re.sub(combVir +ya, '\U00011940',Strng)
+        # Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
+        Strng = re.sub('(?<!\U0001193E)'+ra+'\U0001193E'+'('+ListC+')','\U00011941'+r'\1',Strng)
+    else:
+        # reverse homonasal
+        homoNasal = '\U0001193F'
+
+        Strng = re.sub(homoNasal+'(?=[𑤌𑤍𑤎𑤏])', '𑤐\U0001193E', Strng)
+        Strng = re.sub(homoNasal+'(?=[𑤑𑤒𑤓])', '𑤕\U0001193E', Strng)
+        Strng = re.sub(homoNasal+'(?=[𑤖𑤘𑤙])', '𑤚\U0001193E', Strng)
+        Strng = re.sub(homoNasal+'(?=[𑤛𑤜𑤝𑤞])', '𑤟\U0001193E', Strng)
+        Strng = re.sub(homoNasal+'(?=[𑤠𑤡𑤢𑤣])', '𑤤\U0001193E', Strng)
+
+        # reverse the joning virama
+        Strng = Strng.replace(combVir, vir)
+        # replace alter. ya
+        Strng = Strng.replace("\U00011926", "\U00011925")
+
+
+    return Strng
+
+# Javanese - Reppha & Subjoining ra & ya
+def FixKawi(Strng,reverse=False):
+    target = 'Kawi'
+
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target))
+    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,target))
+    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,target))
+
+    ra = Kawi.ConsonantMap[26]
+    vir = Kawi.ViramaMap[0]
+    aVS = '\U00011F34'
+    aVSAlt = '\U00011F35'
+
+    if not reverse:
+        # Replace Explicit Virama + Cons -> Subjoining Virama + Cons
+        Strng = re.sub(vir+'('+ListC+')','\U00011F42'+r'\1',Strng)
+        # Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
+        Strng = re.sub('(?<!\U00011F42)'+ra+'\U00011F42'+'('+ListC+')','\U00011F02'+r'\1',Strng)
+        #special AA
+        consA = ['\U00011F26', '\U00011F16', '\U00011F1C']
+        for cons in consA:
+            Strng = Strng.replace(cons + aVS, cons + aVSAlt)
+    else:
+        # Replace Subjoining Virama with Explicit Virama
+        Strng = Strng.replace('\U00011F42',vir)
+        # Replace Repha
+        Strng = Strng.replace('\U00011F02', ra + vir)
+        # reverse AltA
+        Strng = Strng.replace(aVSAlt, aVS)
+        # reverse JNA
+        Strng = Strng.replace('\U00011F33', '𑼙𑽂𑼛')
+        # decompose ind.vowels
+        Strng = Strng.replace('\U00011F04\U00011F34', '\U00011F05').replace('\U00011F06\U00011F34', '\U00011F07').replace('\U00011F08\U00011F34', '\U00011F09')
+        # reverse Alt ai, alt au
+        Strng = Strng.replace('\U00011F3E\U00011F3E', '\U00011F3F')
+
     return Strng
 
 # Javanese - Reppha & Subjoining ra & ya
@@ -1389,6 +1510,14 @@ def FixJavanese(Strng,reverse=False):
     else:
         # Replace Subjoining forms with cons+vir
         Strng = Strng.replace(SubRa,vir+ra).replace(SubYa,vir+ya)
+        # reversing archaic jna
+        Strng = Strng.replace('ᭌ', 'ᬚ᭄ᬜ')
+        # reverse a-based vowels
+        vowelsA = ['ꦄꦶ', 'ꦄꦷ', 'ꦄꦸ', 'ꦄꦹ', 'ꦄꦽ', 'ꦄ꧀ꦉꦴ', 'ꦄ꧀ꦭꦼ', 'ꦄ꧀ꦭꦼꦴ', 'ꦄꦺ', 'ꦄꦻ', 'ꦄꦺꦴ', 'ꦄꦻꦴ']
+        vowels = ['ꦆ', 'ꦇ', 'ꦈ', 'ꦈꦴ', 'ꦉ', 'ꦉꦴ', 'ꦊ', 'ꦋ', 'ꦌ', 'ꦍ', 'ꦎ', 'ꦎꦴ']
+
+        for v, vA in zip(vowels, vowelsA):
+            Strng = Strng.replace(vA, v)
 
     return Strng
 
@@ -1727,6 +1856,9 @@ def FixSaurashtra(Strng, reverse = False):
         Strng = Strng.replace('ꢴ','꣄ꢲ')
 
     return Strng
+
+def FixTibetanLoC(Strng,reverse=False):
+    return FixTibetan(Strng,reverse)
 
 # Tibetan Subjoining Consnants
 def FixTibetan(Strng,reverse=False):
@@ -2358,6 +2490,13 @@ def FixWarangCiti(Strng, reverse = False):
         Strng = Strng.replace('𑣁' + '\u02BB', '')
 
         Strng = Strng.replace('\U000118C1\u00BD', '\U000118C1\U000118D9\u02BE')
+
+    return Strng
+
+def FixLimbuLoC(Strng, reverse=False):
+    Strng = FixLimbu(Strng, reverse)
+    if reverse:
+        Strng = Strng.replace('ʔ', '᤹')
 
     return Strng
 

@@ -766,7 +766,7 @@ SignMap = {
         'OthersRev': [-1, '!!!\u02C2'],
         'OthersNonRev': [-1, '!!!\u02C2'],
     },
-    'Danda1': {
+    """'Danda1': {
         'Devanagari': '│',
         'OthersRev': [1, '\u02C2'],
         'OthersNonRev': [1, '\u02C2'],
@@ -775,6 +775,62 @@ SignMap = {
         'Devanagari': '┃',
         'OthersRev': [2, '\u02C2'],
         'OthersNonRev': [2, '\u02C2'],
+    },"""
+    'Thamlae': {
+        'ThamLoC': 'ᩓ',
+        'ThamLoCRomanLoC': 'læ',
+        'OthersRev': [-1, '!!!\u02C2'],
+        'OthersNonRev': [-1, '!!!\u02C2'],
+    },
+    'ThamTone1': {
+        'ThamLoC': '᩵',
+        'TaiTham': '᩵',
+        'LaoTham': '᩵',
+        'LueTham': '᩵',
+        'KhuenTham': '᩵',
+        'ThamLoCRomanLoC': '\u2032',
+        'OthersRev': [-1, '!\u02C2\u02C2\u02C2\u02C2\u02C2'],
+        'OthersNonRev': [-1, '!\u02C2\u02C2\u02C2\u02C2\u02C2'],
+    },
+    'ThamTone2': {
+        'ThamLoC': '᩶',
+        'TaiTham': '᩶',
+        'LaoTham': '᩶',
+        'LueTham': '᩶',
+        'KhuenTham': '᩶',
+        'ThamLoCRomanLoC': '\u2033',
+        'OthersRev': [-1, '!\u02C2\u02C2\u02C2\u02C2\u02C2'],
+        'OthersNonRev': [-1, '!\u02C2\u02C2\u02C2\u02C2\u02C2'],
+    },
+    'ThamTone3': {
+        'ThamLoC': '᩷',
+        'TaiTham': '᩷',
+        'LaoTham': '᩷',
+        'LueTham': '᩷',
+        'KhuenTham': '᩷',
+        'ThamLoCRomanLoC': 'ˆ',
+        'OthersRev': [-1, '!\u02C2\u02C2\u02C2\u02C2\u02C2'],
+        'OthersNonRev': [-1, '!\u02C2\u02C2\u02C2\u02C2\u02C2'],
+    },
+    'ThamTone4': {
+        'ThamLoC': '᩸',
+        'TaiTham': '᩸',
+        'LaoTham': '᩸',
+        'LueTham': '᩸',
+        'KhuenTham': '᩸',
+        'ThamLoCRomanLoC': 'ᴶ',
+        'OthersRev': [-1, '!\u02C2\u02C2\u02C2\u02C2\u02C2'],
+        'OthersNonRev': [-1, '!\u02C2\u02C2\u02C2\u02C2\u02C2'],
+    },
+    'ThamTone5': {
+        'ThamLoC': '᩹',
+        'TaiTham': '᩹',
+        'LaoTham': '᩹',
+        'LueTham': '᩹',
+        'KhuenTham': '᩹',
+        'ThamLoCRomanLoC': 'ʵ',
+        'OthersRev': [-1, '!\u02C2\u02C2\u02C2\u02C2\u02C2'],
+        'OthersNonRev': [-1, '!\u02C2\u02C2\u02C2\u02C2\u02C2'],
     }
 
    ## Add option for alternate o for Tham

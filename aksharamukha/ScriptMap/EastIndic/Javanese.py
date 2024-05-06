@@ -128,7 +128,7 @@ NuktaConsonantMap =  [
                      '\uA997\uA9B3',
                      '\uA99D\uA9B3',
                      '\uA99E\uA9B3',
-                     '\uA9A6\uA9B3',
+                     '\uA9A5\uA9B3',
                      '\uA9AA\uA9B3'
                      ]
 

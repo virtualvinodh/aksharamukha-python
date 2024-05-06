@@ -12,8 +12,132 @@ from aksharamukha.ScriptMap.EastIndic import PhagsPa, Burmese, Khmer
 from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 ### Use escape char in all functions
 
+
+def RomanLoCChandrabindu(Strng):
+    Strng = re.sub('n̐', 'm̐', Strng)
+
+    return Strng
+
+def BalineseRomanLoCFix(Strng):
+    Strng = Strng.replace('‘', 'ṅ̈')
+
+    return Strng
+
+def JavaneseRomanLoCFix(Strng):
+    Strng = Strng.replace('‘', 'ṅ̈')
+
+    return Strng
+
+def HindiMarathiRomanLoCFix(Strng):
+    Strng = Strng.replace('sh', 'ṣ')
+    Strng = Strng.replace('ḷ', 'ḻ')
+    Strng = Strng.replace('l̤', 'l̳')
+
+    return Strng
+
+def RomanLoCLaUnderscoreDoubleDot(Strng):
+    Strng = Strng.replace('ḻ', 'l̤')
+
+# reverse these in preprocess
+def RomanLoCVaWa(Strng):
+    Strng = Strng.replace('w', 'v')
+    return Strng
+
+def RomanLoCSasha(Strng):
+    Strng = Strng.replace('sh', 'ṣ')
+
+    return Strng
+
+def RomanLoCSLaDotLaUnderscore(Strng):
+    Strng = Strng.replace('ḻ', 'l̤')
+    Strng = Strng.replace( 'l̳', 'ḻ',)
+
+    return Strng
+
+def RomanLoCLaUnderscoreDoubleDot(Strng):
+    Strng = Strng.replace('l̤', 'ḻ')
+
+    return Strng
+
+def MalayalamRomanLoCFix(Strng):
+    Strng = Strng.replace('ṯṯ', 'ṟṟ')
+    Strng = Strng.replace('ȧ', 'ŭ')
+    return Strng
+
+def DevanagariRomanLoCFix(Strng):
+    Strng = Strng.replace('g̳h̳', 'gḧ').replace('t̤', 'ṭ̈').replace('s̤', 's̈')\
+        .replace('h̤', 'ḧ')
+
+    return Strng
+
 def IASTLDotRetroflex(Strng):
     Strng = Strng.replace('ḷ', 'l̤')
+
+    return Strng
+
+def ArchaicJnaSimplifyRomanLOC(Strng):
+    Strng = Strng.replace('ꦘ', 'ꦚ')
+    return Strng
+
+def KhandaTaRomanLoC(Strng):
+    Strng = Strng.replace('ৎ', 'ṯ')
+
+    return Strng
+
+def TibetanLoCRomanLoCFix(Strng):
+    Strng = re.sub('t(?!ʹh)', 'tʹ', Strng)
+    Strng = re.sub('n(?!ʹ)', 'nʹ', Strng)
+
+    return Strng
+
+def BalineseJavaneseMoveRepha(Strng, tgt, reph):
+    repha = '(' + reph + ')'
+
+    cons = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, tgt)) + ')'
+    vows = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, tgt)) + ')'
+    vir = GM.CrunchSymbols(GM.virama, tgt)[0]
+
+    candAnu = '[' + ''.join(GM.CrunchSymbols(GM.CombiningSigns, tgt)[:2]) + ']'
+    Strng = re.sub('(' + candAnu + ')' + repha, r'\2\1', Strng)
+
+    Strng = re.sub('('+cons+')'+'('+ vir + cons +')*'+'(' + vows + ')?'+ repha, r'\7\1\3\5', Strng)
+
+    return Strng
+
+def DivesAkuruAlternateIndVowels(Strng):
+    # use alt /y/
+    #Strng = Strng.replace("\U00011925", "\U00011926")
+
+    # replace ind. vow with /y/
+
+    vow = "𑤁 𑤂 𑤃 𑤄 𑤅 𑤆 𑤆𑤵 𑤉 𑤀".split(" ")
+    vowy = "𑤥𑤰 𑤥𑤱 𑤥𑤲 𑤥𑤳 𑤥𑤴 𑤥𑤵 𑤥𑤷 𑤥𑤸 𑤥".split(" ")
+
+    for v, vy in zip(vow, vowy):
+        Strng = Strng.replace(vy, v)
+
+    return Strng
+
+def KawiMoveRepha(Strng):
+    tgt = 'Kawi'
+    repha = '\U00011F02'
+
+    cons = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants + GM.Vowels, tgt)) + ')'
+    vows = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, tgt)) + ')'
+    vir = '\U00011F42'
+
+    Strng = re.sub(repha + '(('+cons+')' + '('+ vir + cons +')*'+'(' + vows + ')?)', r'\1' + repha, Strng)
+
+    return Strng
+
+def JavaneseMoveRepha(Strng):
+    return BalineseJavaneseMoveRepha(Strng, 'Javanese', 'ꦂ')
+
+def BalineseMoveRepha(Strng):
+    return BalineseJavaneseMoveRepha(Strng, 'Balinese', 'ᬃ')
+
+def OriyaSubojinedVa(Strng):
+    Strng = re.sub('(??<![ମବ])(୍ବ)', '୍ୱ', Strng)
 
     return Strng
 
@@ -33,7 +157,7 @@ def OriyaTargetVa(Strng):
     return Strng
 
 def RetainDevangariDanda(Strng):
-    Strng = Strng.replace('।', '│').replace('┃', '')
+    Strng = Strng.replace('।', '│').replace('॥', '┃')
 
     return Strng
 
@@ -1200,12 +1324,12 @@ def PreProcess(Strng,Source,Target):
         Strng = Strng.replace('$', '\\"')
 
 
-    if Source == 'IAST':
+    if 'IAST' in Source:
         Strng = Strng.replace("aï", "a_i")
         Strng = Strng.replace("aü", "a_u")
         Strng = Strng.replace('\u0303', 'ṃ')
 
-    if Source == "ISO":
+    if "ISO" in Source:
         Strng = Strng.replace('a:i', 'a_i')
         Strng = Strng.replace('a:u', 'a_u')
         Strng = Strng.replace('\u0303', 'ṁ')
@@ -1355,8 +1479,9 @@ def normalize(Strng,Source):
     if Source in ['IAST', 'ISO', 'ISOPali', 'Titus', 'IASTPali']:
         Strng = Strng.replace("ü", "uʼ").replace("ǖ", "ūʼ").replace( 'ö', 'aʼ',).replace('ȫ', 'āʼ')
 
-    if Source in ['IAST', 'ISO', 'ISOPali', 'IASTPali'] or 'RomanLoC' in Source:
+    if Source in ['IAST', 'ISO', 'ISOPali', 'IASTPali', 'Titus'] or 'RomanLoC' in Source:
         Strng = unicodedata.normalize('NFC', Strng)
+        Strng = Strng.replace("ẗ", "ẗ").replace("ÿ", "ÿ").replace("ḧ", "ḧ")
 
         if 'RomanLoC' in Source:
             Strng = Strng.replace('\u02D9', '\u02DA')
