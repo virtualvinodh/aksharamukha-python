@@ -4,7 +4,7 @@ from . import GeneralMap as GM
 from . import ScriptMap
 from aksharamukha.ScriptMap.Roman import Avestan
 from aksharamukha.ScriptMap.MainIndic import Ahom, Tamil,Malayalam,Gurmukhi,Oriya,Saurashtra,Sinhala,Urdu,Devanagari, Chakma, Limbu, Takri, TamilExtended, Kannada
-from aksharamukha.ScriptMap.EastIndic import Tibetan, Thai, PhagsPa, ZanabazarSquare, Burmese, KhamtiShan, Khmer
+from aksharamukha.ScriptMap.EastIndic import Tibetan, Thai, PhagsPa, ZanabazarSquare, Burmese, KhamtiShan, Khmer, Balinese, Javanese
 from . import ConvertFix as CF
 import re
 import functools
@@ -20,6 +20,9 @@ import functools
 def default(Strng, langage=""):
     Strng = Strng.replace("\uF001", "").replace("\u05CC", "").\
         replace("ʻʻ", "").replace('\u05CD', '').replace('\u02C2', '') ## remove token characters for specialized processing
+
+    #Devanagari Dandas
+    Strng = Strng.replace( '│', '।',).replace('┃', '॥')
 
     return Strng
 
@@ -1719,6 +1722,209 @@ def ZanzabarSpaceTsheg(Strng):
 
 def SoyomboSpaceTscheg(Strng):
     Strng = Strng.replace(' ', '\U00011A9A')
+
+    return Strng
+
+def KhandaTaRomanLoC(Strng):
+    Strng = Strng.replace('ṯ', 'ৎ')
+
+    return Strng
+
+# reverse these in preprocess
+def RomanLoCVaWa(Strng):
+    Strng = Strng.replace('v', 'w')
+    return Strng
+
+def RomanLoCSasha(Strng):
+    Strng = Strng.replace('ṣ', 'sh')
+    return Strng
+
+def RomanLoCSLaDotLaUnderscore(Strng):
+    Strng = Strng.replace('ḻ', 'l̳')
+    Strng = Strng.replace('l̤', 'ḻ')
+
+    return Strng
+
+def RomanLoCLaUnderscoreDoubleDot(Strng):
+    Strng = Strng.replace('ḻ', 'l̤')
+
+    return Strng
+
+def HindiMarathiRomanLoCFix(Strng):
+    Strng = Strng.replace('ṣ', 'sh')
+    Strng = Strng.replace('ḻ', 'ḷ')
+    Strng = Strng.replace('l̳', 'l̤')
+
+    return Strng
+
+def DivesAkuruHomoOrganNasal(Strng):
+    homoNasal = '\U0001193F'
+
+    Strng = re.sub('(𑤐\U0001193E)(?=[𑤌𑤍𑤎𑤏])', homoNasal, Strng)
+    Strng = re.sub('(𑤕\U0001193E)(?=[𑤑𑤒𑤓])', homoNasal, Strng)
+    Strng = re.sub('(𑤚\U0001193E)(?=[𑤖𑤘𑤙])', homoNasal, Strng)
+    Strng = re.sub('(𑤟\U0001193E)(?=[𑤛𑤜𑤝𑤞])', homoNasal, Strng)
+    Strng = re.sub('(𑤤\U0001193E)(?=[𑤠𑤡𑤢𑤣])', homoNasal, Strng)
+
+
+    return Strng
+
+def DivesAkuruAlternateIndVowels(Strng):
+    # use alt /y/
+    Strng = Strng.replace("\U00011925", "\U00011926")
+
+    # replace ind. vow with /y/
+
+    vow = "𑤀 𑤁 𑤂 𑤃 𑤄 𑤅 𑤆 𑤆𑤵 𑤉".split(" ")
+    vowy = "𑤥 𑤥𑤰 𑤥𑤱 𑤥𑤲 𑤥𑤳 𑤥𑤴 𑤥𑤵 𑤥𑤷 𑤥𑤸".split(" ")
+
+    for v, vy in zip(vow, vowy):
+        Strng = Strng.replace(v, vy)
+
+    return Strng
+
+def UseAlternateYA(Strng):
+    Strng = Strng.replace("\U00011925", "\U00011926")
+
+    return Strng
+
+def KawiMoveRepha(Strng):
+    tgt = 'Kawi'
+    repha = '\U00011F02'
+
+    cons = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants + GM.Vowels, tgt)) + ')'
+    vows = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, tgt)) + ')'
+    vir = '\U00011F42'
+
+    Strng = re.sub('(('+cons+')' + '('+ vir + cons +')*'+'(' + vows + ')?)' + repha , repha + r'\1', Strng)
+
+    return Strng
+
+def KawiAltAiAU(Strng):
+    #  Alt ai, alt au
+    Strng = Strng.replace('\U00011F3F', '\U00011F3E\U00011F3E')
+
+    return Strng
+
+def KawiDecomposedVowel(Strng):
+    Strng = Strng.replace('\U00011F05', '\U00011F04\U00011F34').replace('\U00011F07', '\U00011F06\U00011F34').replace('\U00011F09', '\U00011F08\U00011F34')
+
+    return Strng
+
+def KawiArchaicJNA(Strng):
+    Strng = Strng.replace('𑼙𑽂𑼛', '\U00011F33')
+    return Strng
+
+def JavaneseArchaicJNA(Strng):
+    Strng = Strng.replace('ꦗ꧀ꦚ', 'ꦘ')
+    return Strng
+
+def JavaneseAvowels(Strng):
+    vowelsA = ['ꦄꦶ', 'ꦄꦷ', 'ꦄꦸ', 'ꦄꦹ', 'ꦄꦽ', 'ꦄ꧀ꦉꦴ', 'ꦄ꧀ꦭꦼ', 'ꦄ꧀ꦭꦼꦴ', 'ꦄꦺ', 'ꦄꦻ', 'ꦄꦺꦴ', 'ꦄꦻꦴ']
+    vowels = ['ꦆ', 'ꦇ', 'ꦈ', 'ꦈꦴ', 'ꦉ', 'ꦉꦴ', 'ꦊ', 'ꦋ', 'ꦌ', 'ꦍ', 'ꦎ', 'ꦎꦴ']
+
+    for v, vA in zip(vowels, vowelsA):
+        Strng = Strng.replace(v, vA)
+
+    return Strng
+
+def TibetanLoCRomanLoCFix(Strng):
+    Strng = re.sub('tʹ(?!s)', 't', Strng)
+    Strng = re.sub('nʹ(?!y)', 'n', Strng)
+
+    return Strng
+
+def BalineseRomanLoCFix(Strng):
+    Strng = Strng.replace('ḧ', 'h').replace('ṅ̈', '‘')
+
+    return Strng
+
+def JavaneseRomanLoCFix(Strng):
+    Strng = Strng.replace('ḧ', 'h').replace('ṅ̈', '‘')
+
+    return Strng
+
+def BalineseArchaicJNA(Strng):
+    Strng = Strng.replace('ᬚ᭄ᬜ', 'ᭌ')
+    return Strng
+
+def BalineseJavaneseMoveRepha(Strng, tgt, reph):
+    repha = '(' + reph + ')'
+
+    cons = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, tgt)) + ')'
+    vows = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, tgt)) + ')'
+    vir = GM.CrunchSymbols(GM.virama, tgt)[0]
+
+    Strng = re.sub(repha+'('+cons+')'+'('+ vir + cons +')*'+'(' + vows + ')?', r'\2\4\6\1', Strng)
+
+    candAnu = '[' + ''.join(GM.CrunchSymbols(GM.CombiningSigns, tgt)[:2]) + ']'
+    Strng = re.sub(repha+'(' + candAnu + ')', r'\2\1', Strng)
+
+    return Strng
+
+def JavaneseMoveRepha(Strng):
+    return BalineseJavaneseMoveRepha(Strng, 'Javanese', 'ꦂ')
+
+def BalineseMoveRepha(Strng):
+    return BalineseJavaneseMoveRepha(Strng, 'Balinese', 'ᬃ')
+
+def BalineseAvowels(Strng):
+    vowelsA = ['ᬅᬶ', 'ᬅᬷ', 'ᬅᬸ', 'ᬅᬹ', 'ᬅᬺ', 'ᬅᬻ', 'ᬅ᭄ᬮᭂ', 'ᬅ᭄ᬮᭃ', 'ᬅᬾ', 'ᬅᬿ', 'ᬅᭀ', 'ᬅᭁ']
+    vowels = ['ᬇ', 'ᬈ', 'ᬉ', 'ᬊ', 'ᬋ', 'ᬌ', 'ᬍ', 'ᬎ', 'ᬏ', 'ᬐ', 'ᬑ', 'ᬒ']
+
+    for v, vA in zip(vowels, vowelsA):
+        Strng = Strng.replace(v, vA)
+
+    return Strng
+
+def GurmukhiRomanLoCFix(Strng):
+    Strng = re.sub('(m̆)(k|g)', 'ṅ' + r'\2', Strng)
+    Strng = re.sub('(m̆)(c|j)', 'ñ' + r'\2', Strng)
+    Strng = re.sub('(m̆)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
+    Strng = re.sub('(m̆)(t|d)', 'n' + r'\2', Strng)
+    Strng = re.sub('(m̆)(p|b)', 'm' + r'\2', Strng)
+
+    return Strng
+
+def DevanagariRomanLoCFix(Strng):
+    Strng = Strng.replace('gḧ', 'g̳h̳').replace('ṭ̈', 't̤').replace('s̈', 's̤')\
+        .replace('ḧ', 'h̤')
+
+    return Strng
+
+def MalayalamRomanLoCFix(Strng):
+    Strng = Strng.replace('ṟṟ', 'ṯṯ')
+    Strng = Strng.replace('ŭ', 'ȧ')
+    return Strng
+
+def MalayalamNTA(Strng):
+    Strng = Strng.replace('nṟ', 'nṯ')
+    return Strng
+
+def MalayalamTTNTA(Strng):
+    Strng = Strng.replace('ṟṟ', 'ṯṯ')
+    Strng = Strng.replace('nṟ', 'nṯ')
+    return Strng
+
+def SinhalaSannakaNasalization(Strng):
+    #Strng = Strng.replace('ṁ', 'ṃ')
+
+    Strng = re.sub('(n̆)(k|g)', 'ṅ' + r'\2', Strng)
+    Strng = re.sub('(n̆)(c|j)', 'ñ' + r'\2', Strng)
+    Strng = re.sub('(n̆)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
+    Strng = re.sub('(n̆)(t|d)', 'n' + r'\2', Strng)
+    Strng = re.sub('(m̆)(p|b)', 'm' + r'\2', Strng)
+
+    return Strng
+
+def RomanLoCChandrabindu(Strng):
+    #Strng = Strng.replace('ṁ', 'ṃ')
+
+    Strng = re.sub('(m̐)(k|g)', 'n̐' + r'\2', Strng)
+    Strng = re.sub('(m̐)(c|j)', 'n̐' + r'\2', Strng)
+    Strng = re.sub('(m̐)(ṭ|ḍ)', 'n̐' + r'\2', Strng)
+    Strng = re.sub('(m̐)(t|d)', 'n̐' + r'\2', Strng)
+    Strng = re.sub('(m̐)(p|b)', 'n̐' + r'\2', Strng)
 
     return Strng
 

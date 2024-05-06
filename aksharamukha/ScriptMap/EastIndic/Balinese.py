@@ -25,12 +25,12 @@ SouthVowelMap = [
                 ]
 
 ModernVowelMap = [
-                 '\u1B33\u1B42\u02BD',
+                 '\u1B05\u1B42',
                  '\u1B06\u02BD',
                  ]
 
 SinhalaVowelMap = [
-                  '\u1B33\u1B43\u02BD'
+                  '\u1B05\u1B43'
                   ]
 
 VowelSignMap =  [
