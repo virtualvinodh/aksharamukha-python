@@ -224,37 +224,34 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     tgtOld = ""
 
     ## ALA-LC Romanizations
-    ## If associated script of LoC is not in Source, convert source into that script. The convert it to the actual target
-    ## Text (non-Burmese) -> Burmese -> LoC
-    ## if tgt == 'BurmeseRomanLoC' and src != 'Burmese':
-    ##    txt = convert(src, "Burmese", txt, nativize, preoptions, postoptions)
-    ##    src = 'Burmese'
-
     ## process as follows, if source is associated with LoC script
     if tgt == 'RomanLoC' and src in GeneralMap.LoCScripts:
     ### swtiches for Source scripts
-        if src == 'Shan':
-            src = 'ShanLoC'
-        if src == 'Khmer':
-            src = 'KhmerLoC'
-
-        if 'Tham' in src:
+        if src in GeneralMap.LoCSrcMap:
+            src = src + 'LoC'
+        elif 'Tham' in src:
             src = 'ThamLoC'
-            tgt = 'ThamLoCRomanLoC'
-        else:
+
+        if src in GeneralMap.LoCTgtMap:
             tgt = src + tgt
+        elif src in GeneralMap.LoCTgtISO:
+            tgt = 'ISO'
 
         # the below order for preoptions is important
-        preoptions = preoptions + [tgt + 'Target']
-        postoptions =  [tgt + 'Target'] + postoptions
-        nativize = False
+        #special for east-asian scripts
+        if src in GeneralMap.LocPostPre:
+            preoptions = preoptions + [tgt + 'Target']
+            postoptions =  [tgt + 'Target'] + postoptions
+            nativize = False
 
-        if src in ['Kannada', 'Tamil']:
-            tgt = 'IASTPali'
-            preoptions = []
-            postoptions = ['AnusvaratoNasalASTISO']
-        elif src in ['KhmerLoC']:
-            preoptions =  preoptions + ['SchwaFinalKhmerLoC']
+            if src in ['KhmerLoC']:
+                preoptions =  preoptions + ['SchwaFinalKhmerLoC']
+        #read from GeneralMap
+        else:
+            if src in GeneralMap.LoCTgtPostOptions.keys():
+                postoptions =  GeneralMap.LoCTgtPostOptions[src] + postoptions
+            if src in GeneralMap.LoCTgtPreOptions.keys():
+                preoptions =  preoptions + GeneralMap.LoCTgtPreOptions[src]
 
     ## if source is not associated with LoC script
     if tgt == 'RomanLoC' and src not in GeneralMap.LoCScripts:
@@ -266,20 +263,26 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     ## Switches for Target scripts
     ## if target is associated with the loc Script
     if src == 'RomanLoC' and tgt in GeneralMap.LoCScripts:
-        if tgt == 'Shan':
-            tgt = 'ShanLoC'
-        if tgt == 'Khmer':
-            tgt = 'KhmerLoC'
-
-        if 'Tham' in tgt:
-            src = 'ThamLoCRomanLoC'
+        if tgt in GeneralMap.LoCSrcMap:
+            tgt = tgt + 'LoC'
+        elif 'Tham' in tgt:
             tgt = 'ThamLoC'
-        else:
-            src = tgt + src
 
-        preoptions = [src + 'Source'] + preoptions
-        postoptions =  [src + 'Source'] + postoptions
-        nativize = False
+        if tgt in GeneralMap.LoCTgtMap:
+            src = tgt + src
+        elif src in GeneralMap.LoCTgtISO:
+            src = 'ISO'
+
+        if tgt in GeneralMap.LocPostPre:
+            preoptions = [src + 'Source'] + preoptions
+            postoptions =  [src + 'Source'] + postoptions
+            nativize = False
+        #read from GeneralMap
+        else:
+            if tgt in GeneralMap.LoCSrcPostOptions.keys():
+                postoptions =  GeneralMap.LoCSrcPostOptions[tgt] + postoptions
+            if src in GeneralMap.LoCSrcPreOptions.keys():
+                preoptions =  preoptions + GeneralMap.LoCSrcPreOptions[tgt]
 
     ## if target is not associated with the loc Script
     if src == 'RomanLoC' and tgt not in GeneralMap.LoCScripts:
