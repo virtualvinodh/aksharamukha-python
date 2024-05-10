@@ -43,7 +43,7 @@ SinhalaVowelSignMap = SinhalaVowelMap[:]
 
 AyogavahaMap = [
                '\u006D\u0310',
-               '\u1E41',
+               'ṃ',
                '\u1E25'
                ]
 
@@ -123,7 +123,7 @@ NuktaMap = [
            ]
 
 OmMap = [
-        '\u014D\u1E41'
+        '\u014Dṃ'
         ]
 
 Aytham =['\u1E35']

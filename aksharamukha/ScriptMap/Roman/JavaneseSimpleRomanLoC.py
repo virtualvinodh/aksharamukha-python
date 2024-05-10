@@ -4,33 +4,33 @@
 
 VowelMap =  [
             '\u0061',
-            '\u0101',
+            'a\u02BD',
             '\u0069',
-            '\u012B',
+            'i\u02BD',
             '\u0075',
-            '\u016B',
-            '\u0072\u0325',
-            '\u0072\u0325\u0304',
-            '\u006C\u0325',
-            '\u006C\u0325\u0304',
-            '\u0065',
-            '\u0061\u0069',
-            '\u006F',
-            '\u0061\u0075'
+            'u\u02BD',
+            'rĕ',
+            'rĕ\u02BD',
+            'lĕ',
+            'lĕ\u02BD',
+            'e',
+            'e\u02BD',
+            'o',
+            'o\u02BD'
             ]
 
 SouthVowelMap = [
-                '\u0115',
-                '\u014F',
+                '\u0065\u02BD',
+                '\u006F\u02BD',
                 ]
 
 ModernVowelMap = [
-                 '\u00E6',
+                 'ĕ',
                  '\u00F4',
                  ]
 
 SinhalaVowelMap = [
-                  '\u01E3'
+                  'ĕ'
                   ]
 
 VowelSignMap =  VowelMap[1:]
@@ -42,9 +42,9 @@ ModernVowelSignMap = ModernVowelMap[:]
 SinhalaVowelSignMap = SinhalaVowelMap[:]
 
 AyogavahaMap = [
-               '\u006D\u0310',
-               'ṃ',
-               '\u1E25'
+               'ng',
+               'ng',
+               'h'
                ]
 
 ViramaMap =  [
@@ -53,33 +53,33 @@ ViramaMap =  [
 
 ConsonantMap =  [
                 '\u006B',
-                '\u006B\u0068',
+                '\u006B\u02BD',
                 '\u0067',
-                '\u0067\u0068',
-                '\u1E45',
+                '\u0067\u02BD',
+                'ng',
 
                 '\u0063',
-                '\u0063\u0068',
+                '\u0063\u02BD',
                 '\u006A',
-                '\u006A\u0068',
-                '\u00F1',
+                '\u006A\u02BD',
+                'ny',
 
-                '\u1E6D',
-                '\u1E6D\u0068',
-                '\u1E0D',
-                '\u1E0D\u0068',
-                '\u1E47',
+                'th',
+                'th\u02BD',
+                'dh',
+                'dh\u02BD',
+                'n',
 
                 '\u0074',
-                '\u0074\u0068',
+                '\u0074\u02BD',
                 '\u0064',
-                '\u0064\u0068',
+                '\u0064\u02BD',
                 '\u006E',
 
                 '\u0070',
-                '\u0070\u0068',
+                '\u0070\u02BD',
                 '\u0062',
-                '\u0062\u0068',
+                '\u0062\u02BD',
                 '\u006D',
 
                 '\u0079',
@@ -87,8 +87,8 @@ ConsonantMap =  [
                 '\u006C',
                 'w',
 
-                '\u015B',
-                'sh',
+                's\u02BD',
+                's\u02BD',
                 '\u0073',
                 '\u0068',
                 ]
@@ -101,9 +101,9 @@ SouthConsonantMap = [
                     ]
 
 NuktaConsonantMap =  [
-                     '\u0071',
+                     'kh\u02BD',
                      '\u006B\u035F\u0068',
-                     '\u0121',
+                     'gh\u02BD',
                      '\u007A',
                      '\u1E5B',
                      '\u1E5B\u0068',
@@ -123,7 +123,7 @@ NuktaMap = [
            ]
 
 OmMap = [
-        'oṃ'
+        '\u014D\u1E41'
         ]
 
 Aytham =['\u1E35']
