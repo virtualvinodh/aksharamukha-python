@@ -581,7 +581,7 @@ def convert_default(src, tgt, txt, nativize = True, post_options = [], pre_optio
     pre_options = [option_id for option in pre_options for option_id in preOptionList if option.lower() == option_id.lower()]
 
     # font hack warning
-    font_hack_warning = tgt + ' uses an hacked font to display the script. In the absence of this font, you text may appear different. \n See: https://aksharamukha.appspot.com/describe/' + tgt + ' for the font used'
+    font_hack_warning = tgt + ' uses an hacked font to display the script. In the absence of this font, you text may appear different. \n See: https://www.aksharamukha.com/describe/' + tgt + ' for the font used'
 
     if tgt in data_loaded and 'font_hack' in data_loaded[tgt]:
         warnings.warn(font_hack_warning)
@@ -595,11 +595,11 @@ def convert_default(src, tgt, txt, nativize = True, post_options = [], pre_optio
         warnings.warn(script_not_found)
 
     if (tgt == 'RomanLoC' and src not in GeneralMap.LoCScripts):
-        script_not_found = 'The LoC romanization of' + tgt + ' is not yet supported. The output text will be rendered using ISO 233 if Semitic else ISO 15919. See: https://aksharamukha.com/loc'
+        script_not_found = 'The LoC romanization of ' + src + ' is not yet supported. The output text will be rendered using ISO 233 if Semitic else ISO 15919. See: https://www.aksharamukha.com/loc'
         warnings.warn(script_not_found)
 
     if (src == 'RomanLoC' and tgt not in GeneralMap.LoCScripts):
-        script_not_found = 'The LoC romanization of' + src + ' is not yet supported. The input text will be treated as if it was ISO 233 if Semitic else ISO 15919.. See: https://aksharamukha.com/loc'
+        script_not_found = 'The LoC romanization of ' + tgt + ' is not yet supported. The input text will be treated as if it was ISO 233 if Semitic else ISO 15919.. See: https://www.aksharamukha.com/loc'
         warnings.warn(script_not_found)
 
     return convert(src, tgt, txt, nativize, pre_options, post_options)
