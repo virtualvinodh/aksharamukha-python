@@ -39,6 +39,7 @@ print(transliterate.process('hi-Deva', 'cyrl', 'धर्म भारत की
 print(transliterate.process('sa-Deva', 'ru', 'धर्म भारत की ', param="lang_code"))
 
 
-
+print(transliterate.process('Kawi', 'RomanLoC', 'vinodh'))
+print(transliterate.process('Devanagari', 'RomanLoC', 'धर्म भारत की'))
 ## multiple orthographies associated with script example
 
