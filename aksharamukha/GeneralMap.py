@@ -302,6 +302,8 @@ InterAdd = {'VowelMap': '\U000F0000', 'VowelSignMap': '\U000F0000', 'ConsonantMa
 def add_additional_chars(script_char_map, file_script):
     for charlist in CharmapLists:
         mapping_char = getattr(fb, charlist)
+        #print('vinodh')
+        #print(file_script)
         ModScript = importlib.import_module(ScriptPath(file_script))
         InterAddIndex = ord(InterAdd[charlist])
         for num, mapng in enumerate(mapping_char.items()):
