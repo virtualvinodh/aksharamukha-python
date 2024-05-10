@@ -13,15 +13,15 @@ VowelMap =  [
             '\u0072\u0325\u0304',
             '\u006C\u0325',
             '\u006C\u0325\u0304',
-            '\u0113',
+            'e',
             '\u0061\u0069',
-            '\u014D',
+            'o',
             '\u0061\u0075'
             ]
 
 SouthVowelMap = [
-                '\u0065',
-                '\u006F',
+                'ĕ',
+                'ŏ',
                 ]
 
 ModernVowelMap = [
@@ -43,7 +43,7 @@ SinhalaVowelSignMap = SinhalaVowelMap[:]
 
 AyogavahaMap = [
                '\u006D\u0310',
-               '\u1E41',
+               'ṃ',
                '\u1E25'
                ]
 
@@ -87,7 +87,7 @@ ConsonantMap =  [
                 '\u006C',
                 'w',
 
-                '\u015B',
+                'sh',
                 '\u1E63',
                 '\u0073',
                 '\u0068',
@@ -102,12 +102,12 @@ SouthConsonantMap = [
 
 NuktaConsonantMap =  [
                      'ts',
-                     'tsha',
+                     'tsh',
                      'dz',
                      'dzh',
                      '’',
                      'zh',
-                     '\u0066',
+                     'z',
                      '\u1E8F'
                      ]
 
@@ -123,7 +123,7 @@ NuktaMap = [
            ]
 
 OmMap = [
-        '\u014D\u1E41'
+        'oṃ'
         ]
 
 Aytham =['\u1E35']

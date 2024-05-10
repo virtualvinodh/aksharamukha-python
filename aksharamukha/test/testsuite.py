@@ -83,7 +83,6 @@ class TestSanity:
     @pytest.mark.parametrize("target_scripts", target_scripts)
     def test_sanity_default(self, target_scripts):
         import json
-        print('here')
         with open('test_texts/test_sanity_default.json', 'r', encoding= 'utf8') as f:
             texts = json.load(f)
         try:
