@@ -64,7 +64,7 @@ virama = ['ViramaMap']
 MainIndic = ['GurmukhiLoC', 'LimbuLoC', 'BengaliRaBa', 'Nandinagari','Shahmukhi', 'TamilExtended','MasaramGondi','GunjalaGondi','Dogra', 'Ranjana', 'Khojki','GranthaGrantamil', 'Multani', 'Ahom', 'Mahajani','SiddhamDevanagari', 'Vatteluttu', 'GranthaPandya', 'Khudawadi', 'Bhaiksuki', 'Sharada', 'Newa', 'SylotiNagri', 'Takri', 'Tirhuta', 'Modi', 'Kaithi', 'Kharoshthi','Lepcha','Chakma','Brahmi','MeeteiMayek','Limbu','Assamese','Bengali','Devanagari','Grantha','Gujarati','Gurmukhi','Kannada','Malayalam','Oriya','Saurashtra','Sinhala','Tamil','TamilBrahmi','TamilGrantha','Telugu','Urdu']
 EastIndic =['DivesAkuru', 'TibetanLoC', 'BatakLoC', 'ThamLoC', 'KhmerLoC', 'ShanLoC', 'Makasar', 'Kawi', 'Pallava', 'LaoTham', 'LueTham', 'KhuenTham', 'Marchen', 'Soyombo', 'KhomThai', 'KhamtiShan', 'TaiLaing', 'Mon', 'Shan', 'ZanabazarSquare','Rejang', 'Lao2','Buhid', 'Hanunoo', 'Siddham', 'Tibetan','Lao','TaiTham','Cham','BatakKaro','BatakPakpak','BatakSima','BatakToba','BatakManda','LaoPali','PhagsPa','Buginese','Tagbanwa','Tagalog','Sundanese','Balinese','Burmese','Javanese','Khmer','Siddham','Ranjana','Thaana','Thai', 'BurmeseALALC']
 NonIndic = ['OldPersian', 'Hebrew']
-Roman =['BatakLoCRomanLoC','GurmukhiLoCRomanLoC','TibetanLoCRomanLoC', 'LimbuLoCRomanLoC', 'BalineseRomanLoC', 'JavaneseRomanLoC', 'BatakKaroRomanLoC', 'BatakMandaRomanLoC','BatakPakpakRomanLoC','BatakSimaRomanLoC','BatakTobaRomanLoC', 'GurmukhiRomanLoC', 'TibetanRomanLoC', 'LimbuRomanLoC', 'KannadaRomanLoC', 'TeluguRomanLoC', 'SinhalaRomanLoC', 'OriyaRomanLoC', 'AssameseRomanLoC', 'BengaliRomanLoC', 'GujaratiRomanLoC', 'DevanagariRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'RomanLoC', 'ShanLoCRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'ShanLoCRomanLoC', 'BurmeseRomanLoC', 'RomanSemitic', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya', 'Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng',"WX-kok",'Avestan','HK','IAST','ISO','Itrans','Titus','Titus','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
+Roman =['BatakLoCRomanLoC','GurmukhiLoCRomanLoC','TibetanLoCRomanLoC', 'LimbuLoCRomanLoC', 'BalineseSimpleRomanLoC', 'BalineseRomanLoC', 'JavaneseSimpleRomanLoC', 'JavaneseRomanLoC', 'BatakKaroRomanLoC', 'BatakMandaRomanLoC','BatakPakpakRomanLoC','BatakSimaRomanLoC','BatakTobaRomanLoC', 'GurmukhiRomanLoC', 'TibetanRomanLoC', 'LimbuRomanLoC', 'KannadaRomanLoC', 'TeluguRomanLoC', 'SinhalaRomanLoC', 'OriyaRomanLoC', 'AssameseRomanLoC', 'BengaliRomanLoC', 'GujaratiRomanLoC', 'DevanagariRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'RomanLoC', 'ShanLoCRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'ShanLoCRomanLoC', 'BurmeseRomanLoC', 'RomanSemitic', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya', 'Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng',"WX-kok",'Avestan','HK','IAST','ISO','Itrans','Titus','Titus','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
 RomanDiacritic = ['IAST','Titus','ISO','IPA', 'IASTPali', 'ISOPali', 'BurmeseRomanLoC', 'ISOLOC', 'RomanSemitic', 'ShanLoCRomanLoC', 'KhmerLoCRomanLoC']
 
 ScriptCategory = {}
@@ -92,7 +92,7 @@ ScriptAll = ['Aytham', 'Signs', 'CombiningSigns', 'VowelSigns', 'Vowels', 'Conso
 IndicScripts = [
                'DivesAkuru',
                'TibetanLoC',
-               'BatakLoC',
+               #'BatakLoC',
                'GurmukhiLoC',
                'LimbuLoC',
                'ThamLoC',
@@ -188,7 +188,8 @@ IndicScripts = [
 
 SiddhamRanjana = ['Ranjana']
 
-LatinScripts = ['BatakLoCRomanLoC', 'GurmukhiLoCRomanLoC', 'TibetanLoCRomanLoC', 'LimbuLoCRomanLoC', 'BalineseRomanLoC', 'JavaneseRomanLoC', 'BatakKaroRomanLoC', 'BatakMandaRomanLoC','BatakPakpakRomanLoC','BatakSimaRomanLoC','BatakTobaRomanLoC', 'GurmukhiRomanLoC', 'TibetanRomanLoC', 'LimbuRomanLoC', 'KannadaRomanLoC', 'TeluguRomanLoC', 'SinhalaRomanLoC', 'OriyaRomanLoC', 'AssameseRomanLoC', 'BengaliRomanLoC', 'GujaratiRomanLoC', 'DevanagariRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'RomanLoC', 'ShanLoCRomanLoC', 'BurmeseRomanLoC', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya','Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng','WX-kok','Avestan','ISO','IAST','HK','Titus','Itrans','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
+LatinScripts = [#'BatakLoCRomanLoC', 'BatakKaroRomanLoC', 'BatakMandaRomanLoC','BatakPakpakRomanLoC','BatakSimaRomanLoC','BatakTobaRomanLoC', 'GurmukhiRomanLoC' \
+                'GurmukhiLoCRomanLoC', 'TibetanLoCRomanLoC', 'LimbuLoCRomanLoC', 'BalineseSimpleRomanLoC', 'BalineseRomanLoC', 'JavaneseSimpleRomanLoC', 'JavaneseRomanLoC', 'KannadaRomanLoC', 'TeluguRomanLoC', 'SinhalaRomanLoC', 'OriyaRomanLoC', 'AssameseRomanLoC', 'BengaliRomanLoC', 'GujaratiRomanLoC', 'DevanagariRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'RomanLoC', 'ShanLoCRomanLoC', 'BurmeseRomanLoC', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya','Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng','WX-kok','Avestan','ISO','IAST','HK','Titus','Itrans','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
 
 Gemination =  {
                'Gurmukhi' : '\u0A71',
@@ -204,7 +205,14 @@ Gemination =  {
                'Makasar': ''
               }
 
-Transliteration = ['IASTPali', 'RomanReadable', 'Aksharaa', 'ISO', 'IAST', 'HK','Titus','Itrans','Velthuis','WX', 'IPA', 'RussianCyrillic']
+pipeScripts = ["HK", "IASTPali", "IAST", "ISO", "Itrans", "ISOPali"]
+
+Transliteration = ['IASTPali', 'RomanReadable', 'Aksharaa', 'ISO', 'IAST', 'HK','Titus','Itrans','Velthuis', 'WX', 'IPA', 'RussianCyrillic', 'IASTPali', 'ISOPali', 'RomanLoC']
+
+## Indic scripts that use roman numerals
+romanNumeralScripts = ['Tamil', 'Gurmukhi', 'Malayalam', 'Telugu']
+## Indic scripts that use periods
+romanPunctscripts = ['Tamil', 'Kannada', 'Malayalam', 'Telugu', 'Gujarati']
 
 ## List of supported LoC scripts
 LoCScripts = ['Burmese', 'Shan', 'Khmer', 'KhuenTham', 'TaiTham', 'LaoTham', 'LueTham', 'Kannada', 'Tamil', 'Malayalam', 'Sinhala', 'Telugu', 'Kannada', 'Oriya', 'Assamese', 'Bengali', 'Gujarati', 'Devanagari', 'Balinese', 'Javanese', 'BatakKaro', 'BatakManda','BatakPakpak','BatakSima','BatakToba','Gurmukhi', 'Tibetan', 'Limbu']
@@ -224,13 +232,14 @@ LoCTgtISO = ['Tamil', 'Malayalam']
 LoCTgtPostOptions = {
     'Telugu': ['AnusvaratoNasalASTISO', 'RomanLoCChandrabindu'],
     'Kannada': ['AnusvaratoNasalASTISO', 'RomanLoCChandrabindu'],
-    'Malayalam': ['AnusvaratoNasalASTISO', 'RomanLoCChandrabindu', 'MalayalamTTA', 'MalayalamHalfA'],
+    'Malayalam': ['AnusvaratoNasalASTISO', 'RomanLoCChandrabindu', 'MalayalamRomanLoCFix', 'mDotBelowToAbove'],
     'Sinhala': ['AnusvaratoNasalASTISO',  'SinhalaSannakaNasalization', 'RomanLoCChandrabindu'],
     'Oriya': ['AnusvaratoNasalASTISO', 'RomanLoCChandrabindu'],
     'Assamese': ['RomanLoCChandrabindu'],
+    'GurmukhiLoC': ['GurmukhiRomanLoCFix'],
     'Bengali': ['RomanLoCChandrabindu'],
     'Gujarati': ['AnusvaratoNasalASTISO', 'RomanLoCChandrabindu'],
-    'Devanagari': ['AnusvaratoNasalASTISO', 'RomanLoCChandrabindu'],
+    'Devanagari': ['AnusvaratoNasalASTISO', 'RomanLoCChandrabindu', 'DevanagariRomanLoCFix'],
     'Balinese': ['BalineseRomanLoCFix'],
     'Javanese': ['JavaneseRomanLoCFix'],
     'TibetanLoC': ['TibetanLoCRomanLoCFix']
@@ -239,26 +248,27 @@ LoCTgtPostOptions = {
 ##
 LoCTgtPreOptions = {
     'Assamese': ['KhandaTaRomanLoC'],
-    'Bengali': ['KhandaTaRomanLoC'],
+    'Bengali': ['KhandaTaRomanLoC', 'BengaliSubojinedVa'],
 }
 
 ##
 LoCSrcPostOptions = {
     'Assamese': ['KhandaTaRomanLoC'],
     'Bengali': ['KhandaTaRomanLoC'],
+    'Telugu':['TeluguArasunnaChandrabindu']
 }
 
 ##
 LoCSrcPreOptions = {
     'Telugu': ['RomanLoCChandrabindu'],
     'Kannada': ['RomanLoCChandrabindu'],
-    'Malayalam': ['RomanLoCChandrabindu', 'MalayalamTTA', 'MalayalamHalfA'],
+    'Malayalam': ['RomanLoCChandrabindu', 'MalayalamRomanLoCFix'],
     'Sinhala': ['RomanLoCChandrabindu'],
     'Oriya': ['RomanLoCChandrabindu'],
     'Assamese': ['RomanLoCChandrabindu'],
     'Bengali': ['RomanLoCChandrabindu'],
     'Gujarati': [ 'RomanLoCChandrabindu'],
-    'Devanagari': ['RomanLoCChandrabindu'],
+    'Devanagari': ['RomanLoCChandrabindu', 'DevanagariRomanLoCFix'],
     'Balinese': ['BalineseRomanLoCFix'],
     'Javanese': ['JavaneseRomanLoCFix'],
     'TibetanLoC': ['TibetanLoCRomanLoCFix']

@@ -125,6 +125,8 @@ def auto_detect(text, plugin = False):
 
     elif inputScript == 'Meetei':
         inputScript = 'MeeteiMayek'
+    elif inputScript == 'Dives':
+        inputScript = 'DivesAkuru'
     elif inputScript == 'Persian':
         inputScript = 'OldPersian'
     elif inputScript == 'Phags-pa':
@@ -270,7 +272,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
         if tgt in GeneralMap.LoCTgtMap:
             src = tgt + src
-        elif src in GeneralMap.LoCTgtISO:
+        elif tgt in GeneralMap.LoCTgtISO:
             src = 'ISO'
 
         if tgt in GeneralMap.LocPostPre:
@@ -281,7 +283,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         else:
             if tgt in GeneralMap.LoCSrcPostOptions.keys():
                 postoptions =  GeneralMap.LoCSrcPostOptions[tgt] + postoptions
-            if src in GeneralMap.LoCSrcPreOptions.keys():
+            if tgt in GeneralMap.LoCSrcPreOptions.keys():
                 preoptions =  preoptions + GeneralMap.LoCSrcPreOptions[tgt]
 
     ## if target is not associated with the loc Script
@@ -291,6 +293,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         else:
             src = 'ISO'
 
+    ## LoC Romanizattion ends here
     ## else convert the Loc input into the associated script and then convert it into Loc
     ## Text (Loc) -> Burmese -> non-Burmese
     #if src == 'BurmeseRomanLoC' and tgt != 'Burmese':
@@ -401,7 +404,19 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         tgtOld = tgt
         tgt = "Devanagari"
 
-    txt = PreProcess.PreProcess(txt,src,tgt)
+    ## this has to be before preprocess.preprocess
+    if 'indicDandas' in postoptions:
+        if src in GeneralMap.pipeScripts and '|' in txt:
+            txt = PreProcess.RetainPipeDanda(txt)
+        elif GeneralMap.CrunchList('SignMap', src)[1] == '।':
+            preoptions = preoptions + ['RetainDevangariDanda']
+        else:
+            if tgt not in GeneralMap.Transliteration:
+                postoptions = postoptions + ['Dot2Dandas']
+            else:
+                postoptions = postoptions + ['Dot2Pipes']
+
+    txt = PreProcess.PreProcess(txt,src,tgt,postoptions,preoptions)
 
     if 'siddhammukta' in postoptions and tgt == 'Siddham':
         tgt = 'SiddhamDevanagari'
@@ -428,6 +443,11 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         nativize = False
     if 'SoyomboFinals' in postoptions and tgt == 'Soyombo':
         txt = '\u02BE' + txt
+    if  'BalineseSimplified' in postoptions and src == 'Balinese':
+        tgt = 'BalineseSimpleRomanLoC'
+    if  'JavaneseSimplified' in postoptions and src == 'Javanese':
+        tgt = 'JavaneseSimpleRomanLoC'
+
     #if src not in GeneralMap.SemiticScripts and tgt == 'Arab' and not nativize:
         #postoptions.append('arabicRemoveAdditionsPhonetic')
 
@@ -519,9 +539,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     ## DefaultPostProcess ##
 
-    transliteration = PostProcess.defaultPost(transliteration)
-
-    #print(transliteration)
+    transliteration = PostProcess.defaultPost(src, tgt, transliteration, nativize, preoptions, postoptions)
 
     return transliteration
 
@@ -574,6 +592,14 @@ def convert_default(src, tgt, txt, nativize = True, post_options = [], pre_optio
 
     if tgt not in scriptList:
         script_not_found = 'Target script: ' + tgt + ' not found in the list of scripts supported. The text will not be transliterated.'
+        warnings.warn(script_not_found)
+
+    if (tgt == 'RomanLoc' and src not in GeneralMap.LoCScripts):
+        script_not_found = 'The LoC romanization of' + tgt + ' is not yet supported. The output text will be rendered using ISO 233 if Semitic else ISO 15919. See: https://aksharamukha.com/loc'
+        warnings.warn(script_not_found)
+
+    if (src == 'RomanLoc' and tgt not in GeneralMap.LoCScripts):
+        script_not_found = 'The LoC romanization of' + src + ' is not yet supported. The input text will be treated as if it was ISO 233 if Semitic else ISO 15919.. See: https://aksharamukha.com/loc'
         warnings.warn(script_not_found)
 
     return convert(src, tgt, txt, nativize, pre_options, post_options)

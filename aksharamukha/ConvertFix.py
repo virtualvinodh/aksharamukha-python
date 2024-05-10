@@ -340,8 +340,8 @@ def PostFixRomanOutput(Strng,Source,Target):
         Strng = FixMongolian(Strng)
 
     if Target == "Itrans":
-        Strng = re.sub('([aAiIuUeo])(RRi)', r'\1'+'R_Ri', Strng)
-        Strng = re.sub('([aAiIuUeo])(LLi)', r'\1'+'L_Li', Strng)
+        Strng = re.sub('([aAiIuUeo])(RR)(i|I)', r'\1'+'R_L' + r'\3', Strng)
+        Strng = re.sub('([aAiIuUeo])(LL)(i|I)', r'\1'+'L_L'+ r'\3', Strng)
 
     if Source == "RomanSemitic":
         pass
@@ -621,7 +621,9 @@ def FixMongolian(Strng, reverse=False):
 
     else:
         ## add variation seelct one
-        Strng = re.sub('(ᠠ)(?<!\u180B)', r'\1' + '\u180B', Strng)
+        #print(Strng)
+        Strng = re.sub('(ᠠ)(?!\u180B)', r'\1' + '\u180B', Strng)
+        #print(Strng)
 
     return Strng
 
@@ -1453,6 +1455,14 @@ def FixDivesAkuru(Strng,reverse=False):
         Strng = Strng.replace(combVir, vir)
         # replace alter. ya
         Strng = Strng.replace("\U00011926", "\U00011925")
+        # Reverse : Replace Explicit Virama + Cons -> Subjoining Virama + Cons
+        Strng = re.sub(combVir, vir, Strng)
+        # Reverse : Replace Explicit Virama + Cons -> Subjoining Virama + Cons
+        Strng = re.sub('\U00011942', vir +ra, Strng)
+        # Reverse : Replace Explicit Virama + Cons -> Subjoining Virama + Cons
+        Strng = re.sub('\U00011940', vir +ya, Strng)
+        # Reverse : Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
+        Strng = re.sub('\U00011941', vir +ra, Strng)
 
 
     return Strng
@@ -1508,6 +1518,10 @@ def FixJavanese(Strng,reverse=False):
         # Introduce subjoining Ra & Ya
         Strng = Strng.replace(vir+ra,SubRa).replace(vir+ya,SubYa)
     else:
+        #Fix Archaic Jna
+        Strng = Strng.replace('ꦘ', 'ꦗ꧀ꦚ')
+        # Fix ra agang
+        Strng = Strng.replace('ꦬ', ra)
         # Replace Subjoining forms with cons+vir
         Strng = Strng.replace(SubRa,vir+ra).replace(SubYa,vir+ya)
         # reversing archaic jna
@@ -1518,6 +1532,7 @@ def FixJavanese(Strng,reverse=False):
 
         for v, vA in zip(vowels, vowelsA):
             Strng = Strng.replace(vA, v)
+
 
     return Strng
 
@@ -1858,10 +1873,10 @@ def FixSaurashtra(Strng, reverse = False):
     return Strng
 
 def FixTibetanLoC(Strng,reverse=False):
-    return FixTibetan(Strng,reverse)
+    return FixTibetan(Strng,reverse, swapNative=False)
 
 # Tibetan Subjoining Consnants
-def FixTibetan(Strng,reverse=False):
+def FixTibetan(Strng,reverse=False, swapNative = True):
     ListC = [Tibetan.ViramaMap[0]+chr(x) for x in range(0x0F40,0x0F68)] # Consonants
     ListSubC = [chr(x+80) for x in range(0x0F40,0x0F68)] # Subjoined Consonants
 
@@ -1890,8 +1905,6 @@ def FixTibetan(Strng,reverse=False):
         AspirateDecom= ["གྷ", "ཌྷ", "དྷ", "བྷ", "ཛྷ", "ྒྷ", "ྜྷ", "ྡྷ", "ྦྷ", "ྫྷ"]
         AspirateAtomic = ["གྷ", "ཌྷ", "དྷ", "བྷ", "ཛྷ", "ྒྷ", "ྜྷ", "ྡྷ", "ྦྷ", "ྫྷ"]
 
-        Strng = Strng.replace('ཇྷ', 'ཛྷ') ## JHA -> DZHA
-
         for x, y in zip(AspirateDecom, AspirateAtomic):
             Strng = Strng.replace(x, y)
 
@@ -1914,10 +1927,13 @@ def FixTibetan(Strng,reverse=False):
         Strng = Strng.replace("༼", "{")
         Strng = Strng.replace("༽", "}")
 
-        Strng = Strng.replace("འ", "ཨ")
-        Strng = Strng.replace("ཇ", "ཛ")
-
-        Strng = Strng.replace("ཞ", "ཛྷ༹")
+        if swapNative:
+            Strng = Strng.replace('ཇྷ', 'ཛྷ') ## JHA -> DZHA
+            Strng = Strng.replace("ཇ", "ཛ")
+            Strng = Strng.replace('ཅ', 'ཙ')
+            Strng = Strng.replace('ཆ', 'ཚ')
+            Strng = Strng.replace("ཞ", "ཛྷ༹")
+            Strng = Strng.replace("འ", "ཨ")
 
     return Strng
 
@@ -2328,11 +2344,15 @@ def FixSinhala(Strng,reverse=False):
     Strng = PostProcess.SinhalaDefaultConjuncts(Strng)
 
     if not reverse:
+        #sinhala numerals
+        Strng = PostProcess.RetainIndicNumerals(Strng, 'Sinhala', True)
         #Sinhala JNA
         Strng = Strng.replace("\u0DA2\u0DCA\u0DA4","\u0DA5")
         #sinhala
         Strng = Strng.replace("(අ)(අ)","(ආ)")
     else:
+        #sinhala numerals
+        Strng = PostProcess.RetainIndicNumerals(Strng, 'Sinhala')
         Strng = Strng.replace("\u0DA5","\u0DA2\u0DCA\u0DA4")
         ## Remove joiners
         Strng = Strng.replace("‍","")
@@ -2497,6 +2517,7 @@ def FixLimbuLoC(Strng, reverse=False):
     Strng = FixLimbu(Strng, reverse)
     if reverse:
         Strng = Strng.replace('ʔ', '᤹')
+        Strng = Strng.replace('꞉', '’')
 
     return Strng
 
@@ -2558,6 +2579,8 @@ def FixDevanagari(Strng, reverse=False):
     Sindhi = ['ॻ','ॼ','ॾ','ॿ']
     SindhiApprox = ['ˍग','ˍज','ˍड','ˍब']
     if not reverse:
+        #print(Strng)
+
         Strng = Strng.replace('ʔ', 'ॽ')
 
         for x, y in zip(Sindhi, SindhiApprox):
@@ -3086,6 +3109,13 @@ def FixMalayalam(Strng, reverse=False):
         Strng = PostProcess.RetainIndicNumerals(Strng, 'Malayalam')
         Strng = PostProcess.RetainDandasIndic(Strng, 'Malayalam')
 
+        #Fix Arachaic chillus
+        chilluArch = ['\u0D54', '\u0D55', '\u0D56', '\u0D7F']
+        chilluArchhVir = ['മ്', 'യ്', 'ഴ്', 'ക്']
+
+        for ch, chvir in zip(chilluArch, chilluArchhVir):
+            Strng = Strng.replace(ch, chvir)
+
     Chillus=['\u0D7A','\u0D7B','\u0D7C','\u0D7D','\u0D7E', 'ഩ‍്']
 
     Anu = GM.CrunchSymbols(GM.CombiningSigns,'Malayalam')[1]
@@ -3407,6 +3437,7 @@ def FixSharada(Strng,reverse=False):
 
 def FixKannada(Strng,reverse=False):
     if not reverse:
+        #print(Strng)
         Strng = PostProcess.RetainDandasIndic(Strng, 'Kannada', True)
         #Strng = PostProcess.RetainIndicNumerals(Strng, 'Kannada', True)
 

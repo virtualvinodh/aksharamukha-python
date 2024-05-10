@@ -13,15 +13,15 @@ VowelMap =  [
             'rĕ\u02BD',
             'lĕ',
             'lĕ\u02BD',
-            '\u0113',
+            'e',
             'e\u02BD',
-            '\u014D',
+            'o',
             'o\u02BD'
             ]
 
 SouthVowelMap = [
-                '\u0065',
-                '\u006F',
+                '\u0065\u02BD',
+                '\u006F\u02BD',
                 ]
 
 ModernVowelMap = [
@@ -30,7 +30,7 @@ ModernVowelMap = [
                  ]
 
 SinhalaVowelMap = [
-                  'ö'
+                  'ĕ'
                   ]
 
 VowelSignMap =  VowelMap[1:]
