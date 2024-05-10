@@ -156,4 +156,4 @@ from ... import GeneralMap as GM
 
 import os
 GM.add_additional_chars(dict([(charlist, globals()[charlist]) for charlist in GM.CharmapLists]),
-                        __file__.split('.')[0].split(os.path.sep)[-1])
+                        os.path.splitext(__file__)[0].split(os.path.sep)[-1])

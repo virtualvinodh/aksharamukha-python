@@ -594,11 +594,11 @@ def convert_default(src, tgt, txt, nativize = True, post_options = [], pre_optio
         script_not_found = 'Target script: ' + tgt + ' not found in the list of scripts supported. The text will not be transliterated.'
         warnings.warn(script_not_found)
 
-    if (tgt == 'RomanLoc' and src not in GeneralMap.LoCScripts):
+    if (tgt == 'RomanLoC' and src not in GeneralMap.LoCScripts):
         script_not_found = 'The LoC romanization of' + tgt + ' is not yet supported. The output text will be rendered using ISO 233 if Semitic else ISO 15919. See: https://aksharamukha.com/loc'
         warnings.warn(script_not_found)
 
-    if (src == 'RomanLoc' and tgt not in GeneralMap.LoCScripts):
+    if (src == 'RomanLoC' and tgt not in GeneralMap.LoCScripts):
         script_not_found = 'The LoC romanization of' + src + ' is not yet supported. The input text will be treated as if it was ISO 233 if Semitic else ISO 15919.. See: https://aksharamukha.com/loc'
         warnings.warn(script_not_found)
 
