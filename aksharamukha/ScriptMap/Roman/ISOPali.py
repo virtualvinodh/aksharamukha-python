@@ -123,7 +123,7 @@ NuktaMap = [
            ]
 
 OmMap = [
-        '\u014D\u1E41'
+        '\u006F\u1E41'
         ]
 
 Aytham =['\u1E35']

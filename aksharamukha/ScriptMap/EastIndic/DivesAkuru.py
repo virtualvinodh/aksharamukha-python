@@ -65,7 +65,7 @@ SinhalaVowelSignMap = [
 AyogavahaMap = [
                '\U0001193C',
                '\U0001193B',
-               '\U0001192D\U0001193D'
+               '\U0001192D\U0001193D\u02BD'
                ]
 
 ViramaMap =  [

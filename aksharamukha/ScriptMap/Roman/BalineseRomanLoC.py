@@ -13,15 +13,15 @@ VowelMap =  [
             'rö',
             'lĕ',
             'lö',
-            '\u0113',
+            'e',
             '\u0061\u0069',
-            '\u014D',
+            'o',
             '\u0061\u0075'
             ]
 
 SouthVowelMap = [
-                '\u0065',
-                '\u006F',
+                'ĕ\u02BD',
+                'ŏ\u02BD',
                 ]
 
 ModernVowelMap = [

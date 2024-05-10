@@ -21,6 +21,12 @@ def ApplyScriptDefaults(Strng,Source,Target, PostOptions=[]):
     elif Target == 'Kannada':
         Options += ['NasalToAnusvara','MToAnusvara']
 
+    elif Target == 'Sinhala':
+        Options += ['SinhalaChandrbinduAnusvara']
+
+    elif Target == 'Khojki':
+        Options += ['KhojkiRRI']
+
     elif Target == 'Nandinagari':
         Options += ['NasalToAnusvara']
 

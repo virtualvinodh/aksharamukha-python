@@ -63,7 +63,7 @@ SinhalaVowelSignMap = [
                       ]
 
 AyogavahaMap = [
-               '\u0D82\u02BC',
+               '\u0D81',
                '\u0D82',
                '\u0D83'
                ]
@@ -157,16 +157,16 @@ SignMap =[
 Aytham =[AyogavahaMap[2]+'\u02BC']
 
 NumeralMap = [
-             '\u0030',
-             '\u0031',
-             '\u0032',
-             '\u0033',
-             '\u0034',
-             '\u0035',
-             '\u0036',
-             '\u0037',
-             '\u0038',
-             '\u0039',
+             '\u0DE6',
+             '\u0DE7',
+             '\u0DE8',
+             '\u0DE9',
+             '\u0DEA',
+             '\u0DEB',
+             '\u0DEC',
+             '\u0DED',
+             '\u0DEE',
+             '\u0DEF',
              ]
 
 from ... import GeneralMap as GM

@@ -12,6 +12,8 @@ from aksharamukha.ScriptMap.EastIndic import PhagsPa, Burmese, Khmer
 from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 ### Use escape char in all functions
 
+def ItransLL(Strng):
+    return Strng
 
 def RomanLoCChandrabindu(Strng):
     Strng = re.sub('n̐', 'm̐', Strng)
@@ -19,12 +21,12 @@ def RomanLoCChandrabindu(Strng):
     return Strng
 
 def BalineseRomanLoCFix(Strng):
-    Strng = Strng.replace('‘', 'ṅ̈')
+    Strng = Strng.replace('‘', 'ng̈')
 
     return Strng
 
 def JavaneseRomanLoCFix(Strng):
-    Strng = Strng.replace('‘', 'ṅ̈')
+    Strng = Strng.replace('‘', 'ng̈')
 
     return Strng
 
@@ -85,8 +87,8 @@ def KhandaTaRomanLoC(Strng):
     return Strng
 
 def TibetanLoCRomanLoCFix(Strng):
-    Strng = re.sub('t(?!ʹh)', 'tʹ', Strng)
-    Strng = re.sub('n(?!ʹ)', 'nʹ', Strng)
+    Strng = re.sub('t(?![ʹhs])', 'tʹ', Strng)
+    Strng = re.sub('n(?![ʹy])', 'nʹ', Strng)
 
     return Strng
 
@@ -158,6 +160,13 @@ def OriyaTargetVa(Strng):
 
 def RetainDevangariDanda(Strng):
     Strng = Strng.replace('।', '│').replace('॥', '┃')
+
+    return Strng
+
+def RetainPipeDanda(Strng):
+    Strng = Strng.replace("।", "|").replace("॥", "||")
+    Strng = Strng.replace(".", "●")
+    Strng = Strng.replace("||", "┃").replace("|", "│")
 
     return Strng
 
@@ -594,9 +603,7 @@ def ShowChillus(Strng):
     return PostProcess.MalayalamChillu(Strng, True, True)
 
 def ShowKhandaTa(Strng):
-    print(Strng)
     Strng = Strng.replace('ৎ', 'ত্ˍ')
-    print(Strng)
 
     return Strng
 
@@ -1242,15 +1249,15 @@ def joinVowelConsIAST(Strng):
 def joinVowelConsISO(Strng):
     return joinVowelCons(Strng, 'ISO')
 
-def PreProcess(Strng,Source,Target):
+def PreProcess(Strng,Source,Target,postoptions,preoptions):
     if Source in GM.RomanDiacritic or Source == 'Latn':
         Strng = Strng.lower()
 
-
-    pipeScripts = ["HK", "IASTPali", "IAST", "ISO"]
-
-    if Source in pipeScripts:
-        Strng = Strng.replace("|", ".").replace("||", "..")
+    if Source in GM.pipeScripts:
+        if '|' in Strng:
+            Strng = Strng.replace(".", "●")
+            Strng = Strng.replace("।", "|").replace("॥", "||")
+            Strng = Strng.replace("|", ".").replace("||", "..")
 
     if 'Arab' in Source:
         Strng = re.sub('([وي])(?=[\u064E\u0650\u064F\u0651\u064B\u064C\u064D])', '\u02DE' + r'\1', Strng)
@@ -1280,6 +1287,10 @@ def PreProcess(Strng,Source,Target):
         Strng = re.sub('^' + sOm + '$', tOm, Strng)
 
 
+        # kaRRi -> katri etc. not kaVoc.R
+        Strng = re.sub('([aAiuUeoEO])([R]){2}([iI])', r'\1'+r'\2'+'_'+r'\2'+r'\3', Strng)
+        Strng = re.sub('([aAiuUeoEO])([L]){2}([iI])', r'\1'+r'\2'+'_'+r'\2'+r'\3', Strng)
+
         AltForm = ['O', 'aa','ii','uu','RRi','RRI','LLi','LLI','N^','JN','chh','shh','x','GY','.n','.m','.h', 'AUM', 'E', 'J', 'c.o', 'c.e']
         NormForm = ['^o', 'A','I','U','R^i','R^I','L^i','L^I','~N','~n','Ch','Sh','kSh','j~n','M','M','','oM', '^e', 'z', 'A.c', 'e.c']
 
@@ -1293,36 +1304,18 @@ def PreProcess(Strng,Source,Target):
 
         Strng = Strng.replace('OM', 'oM')
 
+
     if Source == 'BarahaNorth' or Source == 'BarahaSouth':
         # alternate representations
 
-        Strng = Strng.replace('A', 'aa')
-        Strng = Strng.replace('I', 'ee')
-        Strng = Strng.replace('U', 'oo')
-        Strng = Strng.replace('~loo', '~lU') # Fix vocalic vowels
-        Strng = Strng.replace('Roo', 'RU') # Fix vocalic vowels
+        alt_baraha = [('A', 'aa'), ('I', 'ee'), ('U', 'oo'), ('~loo', '~lU'), ('Roo', 'RU'), ('ou', 'au'), ('K', 'kh'), ('G','gh'), ('ch', 'c'), ('Ch', 'C'), ('J','jh'), ('P', 'ph'), ('B', 'bh'), ('w', 'v'), ('sh', 'S'), ('~h', '_h'), ('Y', 'yx'), ('^^', '{}'), ('^', '()'), ('tx', 'rx'), ('zh', 'Lx'), ('~e', '~a'), ('q', '\_'), ('#', "\\'"), ('$', '\\"')]
 
-        Strng = Strng.replace('ou', 'au')
-        Strng = Strng.replace('K', 'kh')
-        Strng = Strng.replace('G','gh')
-        Strng = Strng.replace('ch', 'c')
-        Strng = Strng.replace('Ch', 'C')
-        Strng = Strng.replace('J','jh')
-        Strng = Strng.replace('P', 'ph')
-        Strng = Strng.replace('B', 'bh')
-        Strng = Strng.replace('w', 'v')
-        Strng = Strng.replace('sh', 'S')
-        Strng = Strng.replace('~h', '_h')
-        Strng = Strng.replace('^', '()')
-        Strng = Strng.replace('^^', '{}')
+        for alt, norm in alt_baraha:
+            Strng = Strng.replace(alt, norm)
 
-        Strng = Strng.replace('tx', 'rx')
-        Strng = Strng.replace('zh', 'Lx')
-
-        Strng = Strng.replace('q', '\_')
-        Strng = Strng.replace('#', "\\'")
-        Strng = Strng.replace('$', '\\"')
-
+        if Target == 'Tamil':
+            Strng = Strng.replace('n', 'nx').replace('~nx', 'n')
+            print(Strng)
 
     if 'IAST' in Source:
         Strng = Strng.replace("aï", "a_i")
@@ -1333,6 +1326,8 @@ def PreProcess(Strng,Source,Target):
         Strng = Strng.replace('a:i', 'a_i')
         Strng = Strng.replace('a:u', 'a_u')
         Strng = Strng.replace('\u0303', 'ṁ')
+        ## People use the wrong convention sometimes
+        Strng = Strng.replace('ṃ', 'ṁ')
 
     if Source == "Titus":
         Strng = Strng
@@ -1368,6 +1363,16 @@ def PreProcess(Strng,Source,Target):
     Strng = normalize(Strng,Source)
 
     ## Remove unsupported letters and replace with supported ones
+
+    #Fix Udata + Avagraha combination
+    # नमो॑ऽयम् --> namo̍​'yam
+    if Source in GM.IndicScripts and Target in GM.Transliteration:
+        udatta = '\u0951'
+        avagrahaSrc = GM.CrunchList('SignMap', Source)[0]
+        avagrahaTgt = GM.CrunchList('SignMap', Target)[0]
+
+        if avagrahaTgt == "'":
+            Strng = Strng.replace(udatta + avagrahaSrc, udatta + '\u200B' + avagrahaSrc)
 
     return Strng
 
@@ -1554,11 +1559,6 @@ def normalize(Strng,Source):
 
     for x,y in zip(oldVow,newVow):
         Strng = Strng.replace(x,y)
-
-    ## Tibetan ca, ja
-
-    Strng = Strng.replace('ཅ', 'ཙ')
-    Strng = Strng.replace('ཆ', 'ཚ')
 
     # Decomposed to Precomposed Roman Characters
 

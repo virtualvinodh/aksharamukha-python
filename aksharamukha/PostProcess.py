@@ -9,25 +9,74 @@ from . import ConvertFix as CF
 import re
 import functools
 
-### Write Lotsssss of Comments
-### Rewrite all ListC, ListV as sorted(List,key=len,reverse=True). Then Correctrulu may be unnecessary
-
+### Rewrite all ListC, ListV as sorted(List,key=len,reverse=True).
 ### Consider Adding Options to ignore Nukta etc for Gujarati bengali by default
 
-## Todo
-## Fix Font links and names in description
+## order the functions by script ##
 
+## This is the processing that's done immediately after calling the convert() function
+## But before the post-processing steps
+## removes extranous/artificial diacritics introduced
 def default(Strng, langage=""):
     Strng = Strng.replace("\uF001", "").replace("\u05CC", "").\
         replace("ʻʻ", "").replace('\u05CD', '').replace('\u02C2', '') ## remove token characters for specialized processing
 
+    return Strng
+
+## This is processing that's done after the post-processing steps
+## It's catch all function for all misc stuff
+def defaultPost(src, tgt, Strng, nativize, preoptions, postoptions):
+    Strng = Strng.replace('\u034F', '') ## remove token characters for specialized processing
+
+    ## Fix Dandas & Numerals
+    if 'romanNumerals' in postoptions:
+        Strng = RetainIndicNumerals(Strng,tgt,reverse=True)
+    if 'indicNumerals' in postoptions:
+        Strng = RetainIndicNumerals(Strng,tgt,reverse=False)
+    if 'romanFullStop' in postoptions:
+        Strng = RetainDandasIndic(Strng, tgt, reverse=True)
+
     #Devanagari Dandas
-    Strng = Strng.replace( '│', '।',).replace('┃', '॥')
+    if tgt not in GM.Transliteration:
+        Strng = Strng.replace( '│', '।',).replace('┃', '॥')
+    else:
+        Strng = Strng.replace( '│', '|',).replace('┃', '||')
+    #Pipe scripts as source
+    Strng = Strng.replace( "●", ".",)
 
     return Strng
 
-def defaultPost(Strng):
-    Strng = Strng.replace('\u034F', '') ## remove token characters for specialized processing
+## Ahom ##
+
+## Arabic ##
+
+## Assamese ##
+
+## Avestan ##
+
+def KhojkiRRI(Strng):
+    Strng = Strng.replace('\U00011241', '\U00011235\U00011226\U0001122D')
+    Strng = Strng.replace('\U00011240', '\U00011202')
+
+    return Strng
+
+def KhojkiQa(Strng):
+    Strng = Strng.replace('𑈈𑈶', '\U0001123F')
+
+    return Strng
+
+def removePaliAhom(Strng):
+    pali = "𑝁 𑝂 𑝃 𑝄 𑝅 𑝆".split(" ")
+    nonPali ="𑜄 𑜌 𑜓 𑜔 𑜃 𑜎".split(" ")
+
+    for p, np in zip(pali, nonPali):
+        Strng = Strng.replace(p, np)
+
+    return Strng
+
+def SinhalaChandrbinduAnusvara(Strng):
+    Strng = Strng.replace('\u0D81', '\u0D82')
+
     return Strng
 
 def LoCMarc8(Strng):
@@ -1018,8 +1067,15 @@ def GurmukhiCandrabindu(Strng):
 
     return Strng
 
+#misnomer
 def mDotAboveToBelow(Strng):
     Strng = Strng.replace('ṃ', 'ṁ')
+
+    return Strng
+
+#misnomer
+def mDotBelowToAbove(Strng):
+    Strng = Strng.replace('ṁ', 'ṃ')
 
     return Strng
 
@@ -1525,6 +1581,12 @@ def Dot2Dandas(Strng):
 
     return Strng
 
+def Dot2Pipes(Strng):
+    Strng = Strng.replace('..', '||')
+    Strng = Strng.replace('.', '|')
+
+    return Strng
+
 def SaurastraHaaruColon(Strng):
     vir = Tamil.ViramaMap[0]
     ha = Tamil.ConsonantMap[-1]
@@ -1831,16 +1893,24 @@ def JavaneseAvowels(Strng):
 def TibetanLoCRomanLoCFix(Strng):
     Strng = re.sub('tʹ(?!s)', 't', Strng)
     Strng = re.sub('nʹ(?!y)', 'n', Strng)
+    Strng = re.sub('j_h', 'jh', Strng)
 
     return Strng
 
+def JavaneseSimplified(Strng):
+    Strng = Strng.replace('jny', 'ny')
+    return Strng
+
+def BalineseSimplified(Strng):
+    return Strng
+
 def BalineseRomanLoCFix(Strng):
-    Strng = Strng.replace('ḧ', 'h').replace('ṅ̈', '‘')
+    Strng = Strng.replace('ḧ', 'h').replace('ng̈', '‘')
 
     return Strng
 
 def JavaneseRomanLoCFix(Strng):
-    Strng = Strng.replace('ḧ', 'h').replace('ṅ̈', '‘')
+    Strng = Strng.replace('ḧ', 'h').replace('ng̈', '‘')
 
     return Strng
 
@@ -1878,11 +1948,11 @@ def BalineseAvowels(Strng):
     return Strng
 
 def GurmukhiRomanLoCFix(Strng):
-    Strng = re.sub('(m̆)(k|g)', 'ṅ' + r'\2', Strng)
-    Strng = re.sub('(m̆)(c|j)', 'ñ' + r'\2', Strng)
-    Strng = re.sub('(m̆)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
-    Strng = re.sub('(m̆)(t|d)', 'n' + r'\2', Strng)
-    Strng = re.sub('(m̆)(p|b)', 'm' + r'\2', Strng)
+    Strng = re.sub('(m̆|ṃ)(k|g)', 'ṅ' + r'\2', Strng)
+    Strng = re.sub('(m̆|ṃ)(c|j)', 'ñ' + r'\2', Strng)
+    Strng = re.sub('(m̆|ṃ)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
+    Strng = re.sub('(m̆|ṃ)(t|d)', 'n' + r'\2', Strng)
+    Strng = re.sub('(m̆|ṃ)(p|b)', 'm' + r'\2', Strng)
 
     return Strng
 
@@ -2442,7 +2512,6 @@ def MalayalamChillu(Strng, reverse=False, preserve=False):
             Strng = re.sub(ListC + GM.VedicSvaras + '('+ConVir[i]+')'+'(?!['+''.join(CList[i])+'])',r'\1\2' + Chillus[i],Strng)
             Strng = re.sub(ListC + GM.VedicSvaras + '('+ConVir[i]+')'+'(?=(['+''.join(CList[i])+'])' + vir + r'\4' + ')',r'\1\2' + Chillus[i],Strng)
 
-
         ## remove _ appearing due to the preserve chillu option
         Strng = re.sub('(?<!ത്)ˍ', '', Strng)
 
@@ -2453,6 +2522,29 @@ def MalayalamChillu(Strng, reverse=False, preserve=False):
         else:
             for x,y in zip(Chillus, ConVir):
                 Strng = Strng.replace(x, y) ## Fix the reversal of characters of this
+
+    return Strng
+
+def historicChillu(Strng):
+    chilluArch = ['\u0D54', '\u0D55', '\u0D56', '\u0D7F']
+    chilluArchhVir = ['മ്', 'യ്', 'ഴ്', 'ക്']
+
+    ListC = '(' + '|'.join(GM.CrunchSymbols(GM.CharactersNV,'Malayalam') + ['ഽ']) + ')'
+
+    vir = Malayalam.ViramaMap[0]
+
+    for ch, chvir in zip(chilluArch, chilluArchhVir):
+        Strng = re.sub('(?<!' + vir + ')' + chvir + '(?!' + ListC + ')', ch, Strng)
+
+    return Strng
+
+def MalayalamLineVirama(Strng):
+    Strng = Strng.replace('\u0D4D', '\u0D3B')
+
+    return Strng
+
+def MalayalamCircVirama(Strng):
+    Strng = Strng.replace('\u0D4D', '\u0D3C')
 
     return Strng
 
@@ -2507,7 +2599,7 @@ def ReverseGeminationSign(Strng,Target): #Fix this
 def GurmukhiTippiBindu(Strng): # Check this Function
     Bindi = Gurmukhi.AyogavahaMap[1];
     Tippi = '\u0A70'
-    ListTippi = '|'.join(GM.CrunchSymbols(GM.Consonants, 'Gurmukhi')+[Gurmukhi.VowelMap[x] for x in [0,2,3,4]]
+    ListTippi = '|'.join(GM.CrunchSymbols(GM.Consonants, 'Gurmukhi')+[Gurmukhi.VowelMap[x] for x in [0,2,4]]
         +[Gurmukhi.VowelSignMap[1]]+[Gurmukhi.VowelSignMap[3]]+[Gurmukhi.VowelSignMap[4]])
 
     Char = '|'.join(GM.CrunchSymbols(GM.Consonants, 'Gurmukhi') + GM.CrunchSymbols(GM.Vowels, 'Gurmukhi'))
@@ -2829,6 +2921,18 @@ def RetainRomanNumerals(Strng,Target, reverse=False):
 
     return Strng
 
+def indicNumerals(Strng):
+    return Strng
+
+def romanFullStop(Strng):
+    return Strng
+
+def indicDandas(Strng):
+    return Strng
+
+def romanNumerals(Strng):
+    return Strng
+
 def RetainTeluguDanda(Strng):
     return RetainDandasIndic(Strng, 'Telugu')
 
@@ -2900,14 +3004,16 @@ def TamilSubScript(Strng):
     return Strng
 
 def TamilAddFirstVarga(Strng):
-
-    ## Re-order rules correct stuff
-
     CM = GM.CrunchList('ConsonantMap','Tamil')
     ConUnVoiced = '|'.join([CM[x] for x in [0,5,10,15,20]])
-    SuperScript = '|'.join(['\u00B2', '\u00B3','\u2074'])
+    SuperSubScript = '|'.join(['\u00B2', '\u00B3','\u2074', '₂', '₃', '₄'])
 
-    Strng = re.sub('('+ConUnVoiced+')'+'(?!'+SuperScript+')',r'\1'+'\u00B9',Strng)
+    Strng = re.sub('('+ConUnVoiced+')'+'(?!'+SuperSubScript+')',r'\1'+'\u00B9',Strng)
+
+    from . import ConvertFix
+    Strng = ConvertFix.ShiftDiacritics(Strng,'Tamil')
+    #remove spurios one
+    Strng = re.sub('\u00B9'+'(?='+SuperSubScript+')', '', Strng)
 
     return Strng
 
@@ -3358,8 +3464,6 @@ def TaiThamHighNga(Strng):
 # not used
 def TaiThamMoveNnga(Strng):
     Strng = re.sub('(.)(\u1A58)',r'\2\1',Strng) # Probably its u1A59
-    print(Strng)
-    print('here')
 
     return "Vinodh"
 
@@ -3469,7 +3573,7 @@ def TamilRemoveApostrophe(Strng):
     return Strng
 
 def TamilRemoveNumbers(Strng):
-    numerals = ['²', '³', '⁴', '₂', '₃', '₄']
+    numerals = ['²', '³', '⁴', '₂', '₃', '₄', '¹', '₁']
 
     for num in numerals:
         Strng = Strng.replace(num, '')
