@@ -1884,6 +1884,9 @@ def FixTibetan(Strng,reverse=False, swapNative = True):
     SubMinC = ["ཝྺ","ཡྻ","ཪྻ","ཪྺ", "ྺྺ"]
 
     if not reverse:
+        #introduce virama for Jihva/Upadh
+        Strng = re.sub('([ྈྉ])', r'\1' + '\u0f84',  Strng)
+
         for x,y in zip(ListC,ListSubC):
             Strng = Strng.replace(x,y)
 
@@ -1926,6 +1929,9 @@ def FixTibetan(Strng,reverse=False, swapNative = True):
 
         Strng = Strng.replace("༼", "{")
         Strng = Strng.replace("༽", "}")
+
+        #remove virama from Jihva/Upadh
+        Strng = re.sub('([ྈྉ])(\u0f84)', r'\1',  Strng)
 
         if swapNative:
             Strng = Strng.replace('ཇྷ', 'ཛྷ') ## JHA -> DZHA

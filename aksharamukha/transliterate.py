@@ -869,4 +869,9 @@ def get_semitic_json():
 
     return data
 
+@functools.lru_cache(maxsize=None)
+def getOptions(script):
+    #json.load('')
+    return
+
 ## add the new libraries to requiesments.txt in both folders

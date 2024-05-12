@@ -2539,6 +2539,8 @@ def historicChillu(Strng):
     return Strng
 
 def MalayalamLineVirama(Strng):
+    #ListC = '(' + '|'.join(GM.CrunchSymbols(GM.CharactersNV,'Malayalam') + ['ഽ']) + ')'
+    #Strng = re.sub('\u0D4D'+'(?!'+ListC +')', '\u0D3B', Strng)
     Strng = Strng.replace('\u0D4D', '\u0D3B')
 
     return Strng
