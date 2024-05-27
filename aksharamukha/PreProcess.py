@@ -200,7 +200,7 @@ def ThamLoCRomanLoCSource(Strng):
     ListV ='|'.join(GM.CrunchSymbols(GM.Vowels,'ThamLoCRomanLoC'))
 
     #a
-    Strng = re.sub('(a|ǫḥ|ǫ|œ|au)(?=(' + ListC + '))', r'\1''\u02BD', Strng)
+    Strng = re.sub('(a|ǫḥ|ǫ|œ|ò)(?=(' + ListC + '))', r'\1''\u02BD', Strng)
 
     return Strng
 
