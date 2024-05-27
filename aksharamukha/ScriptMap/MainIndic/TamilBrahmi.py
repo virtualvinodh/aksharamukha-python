@@ -20,7 +20,9 @@ VowelMap =  [
             ]
 
 SouthVowelMap = [
+                #'𑁱',
                 '\U0001100F\U00011046',
+                #'𑁲',
                 '\U00011011\U00011046',
                 ]
 
@@ -50,7 +52,9 @@ VowelSignMap =  [
                 ]
 
 SouthVowelSignMap = [
+                   # '𑁳',
                     '\U00011042\U00011046',
+                   # '𑁴',
                     '\U00011044\U00011046',
                     ]
 
@@ -70,6 +74,7 @@ AyogavahaMap = [
                ]
 
 ViramaMap =  [
+             #'𑁰'
              '\U00011046'
              ]
 
@@ -116,6 +121,7 @@ ConsonantMap =  [
                 ]
 
 SouthConsonantMap = [
+                    #'𑁵',
                     '\U00011034',
                     '\U00011035',
                     '\U00011036',

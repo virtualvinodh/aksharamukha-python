@@ -1479,6 +1479,8 @@ def FixKawi(Strng,reverse=False):
     vir = Kawi.ViramaMap[0]
     aVS = '\U00011F34'
     aVSAlt = '\U00011F35'
+    E = '\U00011F3E'
+    AA = '\U00011F34'
 
     if not reverse:
         # Replace Explicit Virama + Cons -> Subjoining Virama + Cons
@@ -1486,9 +1488,19 @@ def FixKawi(Strng,reverse=False):
         # Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
         Strng = re.sub('(?<!\U00011F42)'+ra+'\U00011F42'+'('+ListC+')','\U00011F02'+r'\1',Strng)
         #special AA
-        consA = ['\U00011F26', '\U00011F16', '\U00011F1C']
-        for cons in consA:
-            Strng = Strng.replace(cons + aVS, cons + aVSAlt)
+        TallACons = '|'.join(['\U00011F26', '\U00011F16', '\U00011F1C'])
+
+        Strng = re.sub('(?<!\U00011F42)('+TallACons+')'+'('+E+'?)'+AA,r'\1\2'+'\U00011F35',Strng)
+
+         ## buddho --> Tall A
+        Strng = re.sub('('+TallACons+')(\U00011F42)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4'+'\U00011F35',Strng)
+        Strng = re.sub('('+TallACons+')(\U00011F42)('+ListC +')'+'(\U00011F42)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4\5\6'+'\U00011F35',Strng)
+
+        ## post-base consonant signs do not need disambiguating AA
+        postBaseCons = '|'.join(['\U00011F1A', '\U00011F26', '\U00011F27', '\U00011F2B', '\U00011F31'])
+        Strng = re.sub('(\U00011F42)('+postBaseCons+')'+'(\U00011F35)', r'\1\2' + AA, Strng)
+
+
     else:
         # Replace Subjoining Virama with Explicit Virama
         Strng = Strng.replace('\U00011F42',vir)
