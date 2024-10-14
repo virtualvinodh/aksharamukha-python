@@ -160,10 +160,9 @@ def OriyaTargetVa(Strng):
 
 def RetainDevangariDanda(Strng):
     Strng = Strng.replace('।', '│').replace('॥', '┃')
-
     return Strng
 
-def RetainPipeDanda(Strng):
+def RetainPipeDanda(Strng, src):
     Strng = Strng.replace("।", "|").replace("॥", "||")
     Strng = Strng.replace(".", "●")
     Strng = Strng.replace("||", "┃").replace("|", "│")
@@ -1258,6 +1257,11 @@ def PreProcess(Strng,Source,Target,postoptions,preoptions):
             Strng = Strng.replace(".", "●")
             Strng = Strng.replace("।", "|").replace("॥", "||")
             Strng = Strng.replace("|", ".").replace("||", "..")
+        if Source == "Itrans":
+            Strng = re.sub("●([acCDN])", "."+r'\1', Strng)
+        elif Source == "Velthuis":
+            Strng = re.sub("●([rRlLmhtdnTDsyg])", "."+r'\1', Strng)
+            Strng = re.sub("●●([lr])", "."+r'\1', Strng)
 
     if 'Arab' in Source:
         Strng = re.sub('([وي])(?=[\u064E\u0650\u064F\u0651\u064B\u064C\u064D])', '\u02DE' + r'\1', Strng)

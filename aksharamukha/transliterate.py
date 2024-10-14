@@ -407,7 +407,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     ## this has to be before preprocess.preprocess
     if 'indicDandas' in postoptions:
         if src in GeneralMap.pipeScripts and '|' in txt:
-            txt = PreProcess.RetainPipeDanda(txt)
+            txt = PreProcess.RetainPipeDanda(txt, src)
         elif GeneralMap.CrunchList('SignMap', src)[1] == '।':
             preoptions = preoptions + ['RetainDevangariDanda']
         else:
