@@ -191,6 +191,11 @@ def ThamLoCRomanLoCTarget(Strng):
     #close e/au
     Strng = re.sub('(᩠)(ᨿ|ᩅ)(?=(' + ListC + '))', '\u1A7F'+r'\2', Strng)
 
+    # replace lue-karan with ra-haam
+    Strng = Strng.replace('᩼', '᩺')
+
+    #Mark Vowel Killer
+    Strng = Strng.replace('᩺', '᩺''ʻ')
 
     return Strng
 
@@ -200,6 +205,8 @@ def ThamLoCRomanLoCSource(Strng):
 
     #a
     Strng = re.sub('(a|ǫḥ|ǫ|œ|ò)(?=(' + ListC + '))', r'\1''\u02BD', Strng)
+
+    Strng = Strng.replace('ʻ', 'a''᩺')
 
     return Strng
 
@@ -283,6 +290,20 @@ def ShanLoCRomanLoCTarget(Strng):
 
     # mark a as glottalstop
     Strng = Strng.replace('ဢ','’ဢ')
+
+    # changes for old shan
+    Strng = Strng.replace('\u1039', '\u103A')
+
+    # changes
+
+    return Strng
+
+def KhuenRaHaamKaren(Strng):
+    # replace ra ham with r+ra-haam ->
+    Strng = Strng.replace('᩺', 'ᩁ\u1A60')
+
+    # replace lue-karan with ra-haam
+    Strng = Strng.replace('᩼', '᩺')
 
     return Strng
 
