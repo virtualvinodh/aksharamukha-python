@@ -233,7 +233,6 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
             src = src + 'LoC'
         elif 'Tham' in src:
             src = 'ThamLoC'
-
         if src in GeneralMap.LoCTgtMap:
             tgt = src + tgt
         elif src in GeneralMap.LoCTgtISO:
@@ -268,8 +267,9 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         if tgt in GeneralMap.LoCSrcMap:
             tgt = tgt + 'LoC'
         elif 'Tham' in tgt:
+            if 'Khuen' in tgt:
+                txt = txt+'\u02BE' # indicator for Khuen text
             tgt = 'ThamLoC'
-
         if tgt in GeneralMap.LoCTgtMap:
             src = tgt + src
         elif tgt in GeneralMap.LoCTgtISO:

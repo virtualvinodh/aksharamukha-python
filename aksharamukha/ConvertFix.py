@@ -1187,6 +1187,9 @@ def FixShan(Strng, reverse=False):
         Strng = Strng.replace('\u1082', '်ဝ')
         Strng = Strng.replace('ှ', '်ႁ')
 
+        #for old shan in case it appears
+        Strng = Strng.replace('\u1039', '\u103A')
+
     return Strng
 
 def FixMon(Strng, reverse=False):
@@ -3322,8 +3325,13 @@ def FixThamLoC(Strng, reverse=False):
         TallACons = '|'.join(['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ', 'ᨷ']) ## va da dha ga
         Strng = re.sub('('+TallACons+')(᩠)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4'+'ᩤ',Strng)
         Strng = re.sub('('+TallACons+')(᩠)('+ListC +')'+'(᩠)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4\5\6'+'ᩤ',Strng)
+
+        if '\u02BE' in Strng:
+            Strng = Strng.replace('᩺', '᩼').replace('\u02BE', '')
     else:
-        pass
+        #sub consonants
+        Strng = Strng.replace('ᩜ', '\u1A7A''ᨾ')
+        Strng = Strng.replace('ᩛ', '\u1A7A''ᨻ')
 
     return Strng
 
@@ -3352,8 +3360,12 @@ def FixKhuenTham(Strng, reverse=False):
         TallACons = '|'.join(['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ']) ## va da dha ga
         Strng = re.sub('('+TallACons+')(᩠)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4'+'ᩤ',Strng)
         Strng = re.sub('('+TallACons+')(᩠)('+ListC +')'+'(᩠)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4\5\6'+'ᩤ',Strng)
+
+        # ra-haam with lue-karan
+        Strng = Strng.replace('᩺', '᩼')
     else:
-        pass
+        # replace lue-karan with ra-haam
+        Strng = Strng.replace('᩼', '᩺')
 
     return Strng
 
