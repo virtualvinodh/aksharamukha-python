@@ -6,7 +6,7 @@ Apart from the simple mapping of characters, Askharamukha also attempts to imple
 
 ## Usage and Examples
 
-Please use `pip aksharamukha` to install the Python package.
+Please use `pip install aksharamukha` to install the Python package.
 
 Please find the usage instructions and relevant documentation [here](https://www.aksharamukha.com/python).
 
