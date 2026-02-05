@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from ast import Str
-from asyncio import constants
 from . import GeneralMap as GM
 import re
 import string
 import unicodedata
 from . import PostProcess
 from . import ConvertFix as CF
-from aksharamukha.ScriptMap.EastIndic import PhagsPa, Burmese, Khmer
+from aksharamukha.ScriptMap.EastIndic import Burmese, Khmer
 from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 ### Use escape char in all functions
 
@@ -37,6 +35,7 @@ def HindiMarathiRomanLoCFix(Strng):
 
     return Strng
 
+# FIXME: Redefined later
 def RomanLoCLaUnderscoreDoubleDot(Strng):
     Strng = Strng.replace('ḻ', 'l̤')
 
