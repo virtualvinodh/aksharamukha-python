@@ -455,12 +455,12 @@ def BengaliSwitchYaYYa(Strng):
 def removeFinalSchwaArab(Strng):
     #print('here', Strng)
     diacrtics = ["\u0652", "\u064E", "\u0650", "\u064F"]
-    Strng = re.sub('([\u0628-\u0647])(?![\u0652\u064E\u0650\u064F\u0651\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
-    Strng = re.sub('([\u0628-\u0647]\u0651)(?![\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
-    Strng = re.sub('(?<!\u0650)([\u064A])(?![\u0651\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
-    Strng = re.sub('(?<!\u0650)([\u064A]\u0651)(?![\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
-    Strng = re.sub('(?<!\u064F)([\u0648])(?![\u0651\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
-    Strng = re.sub('(?<!\u064F)([\u0648]\u0651)(?![\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
+    Strng = re.sub('([\u0628-\u0647])(?![\u0652\u064E\u0650\u064F\u0651\u064B\u064C\u064D\u0649])(?=(\\W|$))', r'\1' + '\u0652', Strng)
+    Strng = re.sub('([\u0628-\u0647]\u0651)(?![\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\\W|$))', r'\1' + '\u0652', Strng)
+    Strng = re.sub('(?<!\u0650)([\u064A])(?![\u0651\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\\W|$))', r'\1' + '\u0652', Strng)
+    Strng = re.sub('(?<!\u0650)([\u064A]\u0651)(?![\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\\W|$))', r'\1' + '\u0652', Strng)
+    Strng = re.sub('(?<!\u064F)([\u0648])(?![\u0651\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\\W|$))', r'\1' + '\u0652', Strng)
+    Strng = re.sub('(?<!\u064F)([\u0648]\u0651)(?![\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\\W|$))', r'\1' + '\u0652', Strng)
 
     #print(Strng)
     #print('here2', Strng)
@@ -532,7 +532,7 @@ def FixSemiticRoman(Strng, Source):
             Strng = Strng.replace('ī', 'i').replace('ū', 'u').replace('ō', 'o')
 
             for vow1, vow2 in zip(vowelsInDepSyrc1, vowelsInDepSyrc2):
-                Strng = re.sub('(?<!\w)' + vow1, vow2, Strng)
+                Strng = re.sub(r'(?<!\w)' + vow1, vow2, Strng)
 
             Strng = Strng.replace('̂̂', '̂').replace('ô̂', 'ô') # [oi]^^ -> i^
 
@@ -1083,7 +1083,7 @@ def RemoveFinal(Strng, Target):
         ra = Khmer.ConsonantMap[26]
         Strng = re.sub('('+ListC+')'+'\u17CC',ra+'\u17D2'+r'\1',Strng)
 
-        Strng = re.sub(ISyl + '('+ListC +')' + '(((\u17D2)' + '('+ListC +'))*)([៍៎៏]?)(?=[\s\n])', r'\1\8\9' + vir + r'\13', Strng) # kama -> kam
+        Strng = re.sub(ISyl + '('+ListC +')' + '(((\u17D2)' + '('+ListC +'))*)([៍៎៏]?)(?=[\\s\n])', r'\1\8\9' + vir + r'\13', Strng) # kama -> kam
         Strng = re.sub(ISyl + '('+ListC +')' + '(((\u17D2)' + '('+ListC +'))*)([៍៎៏]?)$', r'\1\8\9' + vir + r'\13', Strng) # kama -> kam
     else:
         Strng = re.sub(ISyl + Cons2+"(?!" + Char + ")", r'\1\8' + vir, Strng) # kama -> kam
@@ -1295,15 +1295,15 @@ def PreProcess(Strng,Source,Target,postoptions,preoptions):
         sOm = 'OM'
         tOm = 'oM'
 
-        punc =  '(' + '|'.join(["\u005C"+x for x in list(string.punctuation)]+ ['\s']
-                    + [x.replace('.', '\.') for x in GM.CrunchSymbols(GM.Signs,Source)[1:3]]) + ')'
+        punc =  '(' + '|'.join(["\u005C"+x for x in list(string.punctuation)]+ [r'\s']
+                    + [x.replace('.', r'\.') for x in GM.CrunchSymbols(GM.Signs,Source)[1:3]]) + ')'
 
         Strng = re.sub(punc + sOm + punc, r'\1' + tOm + r'\2', Strng)
         Strng = re.sub('^' + sOm + punc, tOm + r'\1', Strng)
         Strng = re.sub(punc + sOm + '$', r'\1' + tOm, Strng)
         Strng = re.sub('^' + sOm + '$', tOm, Strng)
 
-        punc = '(\s)'
+        punc = r'(\s)'
 
         Strng = re.sub(punc + sOm + punc, r'\1' + tOm + r'\2', Strng)
         Strng = re.sub('^' + sOm + punc, tOm + r'\1', Strng)
@@ -1332,7 +1332,7 @@ def PreProcess(Strng,Source,Target,postoptions,preoptions):
     if Source == 'BarahaNorth' or Source == 'BarahaSouth':
         # alternate representations
 
-        alt_baraha = [('A', 'aa'), ('I', 'ee'), ('U', 'oo'), ('~loo', '~lU'), ('Roo', 'RU'), ('ou', 'au'), ('K', 'kh'), ('G','gh'), ('ch', 'c'), ('Ch', 'C'), ('J','jh'), ('P', 'ph'), ('B', 'bh'), ('w', 'v'), ('sh', 'S'), ('~h', '_h'), ('Y', 'yx'), ('^^', '{}'), ('^', '()'), ('tx', 'rx'), ('zh', 'Lx'), ('~e', '~a'), ('q', '\_'), ('#', "\\'"), ('$', '\\"')]
+        alt_baraha = [('A', 'aa'), ('I', 'ee'), ('U', 'oo'), ('~loo', '~lU'), ('Roo', 'RU'), ('ou', 'au'), ('K', 'kh'), ('G','gh'), ('ch', 'c'), ('Ch', 'C'), ('J','jh'), ('P', 'ph'), ('B', 'bh'), ('w', 'v'), ('sh', 'S'), ('~h', '_h'), ('Y', 'yx'), ('^^', '{}'), ('^', '()'), ('tx', 'rx'), ('zh', 'Lx'), ('~e', '~a'), ('q', r'\_'), ('#', "\\'"), ('$', '\\"')]
 
         for alt, norm in alt_baraha:
             Strng = Strng.replace(alt, norm)
@@ -1682,7 +1682,7 @@ def PhagsPaArrange(Strng,Source):
         yrv = "|".join([GM.CrunchSymbols(GM.Consonants, Source)[i] for i in [25,26,28]])
 
         Strng = re.sub("("+ListC+")"+"("+vir+")"+"("+yrv+")"+"("+"("+ListVS+")?"+"("+ListCS+")?"+")",r' \1\2\3\4',Strng)
-        Strng = re.sub("("+ListC+ListV+")"+"("+"("+ListVS+")?"+"("+ListCS+")?"+")"+"("+ListC+")"+"("+vir+")"+"(?!\s)",r"\1\2\5\6 ",Strng)
+        Strng = re.sub("("+ListC+ListV+")"+"("+"("+ListVS+")?"+"("+ListCS+")?"+")"+"("+ListC+")"+"("+vir+")"+r"(?!\s)",r"\1\2\5\6 ",Strng)
         Strng = re.sub("("+ListC+ListV+")"+"("+"("+ListVS+")?"+"("+ListCS+")?"+")"+"("+ListC+")"+'(?!'+vir+')',r"\1\2 \5",Strng)
         Strng = re.sub("("+ListC+ListV+")"+"("+"("+ListVS+")?"+"("+ListCS+")?"+")"+"("+ListC+")"+'(?!'+vir+')',r"\1\2 \5",Strng)
 
@@ -1740,7 +1740,7 @@ def TamilTranscribeCommon(Strng, c = 31):
 
     import string
 
-    punct = "|".join(['\\'+x for x in list(string.punctuation.replace(".","").replace("?",""))])+"|\s"
+    punct = "|".join(['\\'+x for x in list(string.punctuation.replace(".","").replace("?",""))])+r"|\s"
 
     # CA + Spac | Punct + SA -> CCA
     Strng = re.sub('('+ListC[5]+vir+')'+'(('+punct+')+)'+'('+ListC[c]+')',r'\1\2'+ListC[5],Strng)
@@ -1767,7 +1767,7 @@ def TamilTranscribeCommon(Strng, c = 31):
     Strng = re.sub(ListSC[2]+vir+ListSC[2],ListC[10]+vir+ListC[26],Strng)
 
     # RR | TT + /s + SA -> RR + /s + CA
-    Strng = re.sub("("+'['+ListC[10]+ListSC[2]+']'+vir+')'+'(\s)'+'('+ListC[c]+')',r'\1\2'+ListC[5],Strng)
+    Strng = re.sub("("+'['+ListC[10]+ListSC[2]+']'+vir+')'+r'(\s)'+'('+ListC[c]+')',r'\1\2'+ListC[5],Strng)
 
     ## NNN to N, RR to R
 
