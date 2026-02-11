@@ -95,6 +95,10 @@ setup(
   install_requires=['Requests>=2.20.1', 'pykakasi>=2.0.6', 'pyyaml>=5.4.1', 'langcodes>=3.1.0' , 'language_data', \
     'langcodes>=3.1.0', 'language_data', 'regex>=2021.8.3', 'fonttools[unicode]>=4.27', 'lxml'],
 
+  extras_require={
+      'transliterate_file': ['beautifulsoup4'],
+  },
+
   # List additional groups of dependencies here (e.g. development
   # dependencies). You can install these using the following syntax,
   # for example:
@@ -115,9 +119,9 @@ setup(
   # To provide executable scripts, use entry points in preference to the
   # "scripts" keyword. Entry points provide cross-platform support and allow
   # pip to create the appropriate form of executable for the target platform.
-  # entry_points={
-  #     'console_scripts': [
-  #         'sample=sample:main',
-  #     ],
-  # },
+  entry_points={
+      'console_scripts': [
+          'akshara=aksharamukha.cli:main',
+      ],
+  },
 )

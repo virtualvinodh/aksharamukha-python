@@ -10,6 +10,8 @@ Please use `pip aksharamukha` to install the Python package.
 
 Please find the usage instructions and relevant documentation [here](https://www.aksharamukha.com/python).
 
+Look for `aksha --help` for CLI.
+
 ## Online Version
 
 The package as an online tool with a pretty web interface is available [here](https://www.aksharamukha.com).
