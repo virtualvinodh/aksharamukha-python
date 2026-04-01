@@ -64,8 +64,8 @@ virama = ['ViramaMap']
 MainIndic = ['GurmukhiLoC', 'LimbuLoC', 'BengaliRaBa', 'Nandinagari','Shahmukhi', 'TamilExtended','MasaramGondi','GunjalaGondi','Dogra', 'Ranjana', 'Khojki','GranthaGrantamil', 'Multani', 'Ahom', 'Mahajani','SiddhamDevanagari', 'Vatteluttu', 'GranthaPandya', 'Khudawadi', 'Bhaiksuki', 'Sharada', 'Newa', 'SylotiNagri', 'Takri', 'Tirhuta', 'Modi', 'Kaithi', 'Kharoshthi','Lepcha','Chakma','Brahmi','MeeteiMayek','Limbu','Assamese','Bengali','Devanagari','Grantha','Gujarati','Gurmukhi','Kannada','Malayalam','Oriya','Saurashtra','Sinhala','Tamil','TamilBrahmi','TamilGrantha','Telugu','Urdu']
 EastIndic =['DivesAkuru', 'TibetanLoC', 'BatakLoC', 'ThamLoC', 'KhmerLoC', 'ShanLoC', 'Makasar', 'Kawi', 'Pallava', 'LaoTham', 'LueTham', 'KhuenTham', 'Marchen', 'Soyombo', 'KhomThai', 'KhamtiShan', 'TaiLaing', 'Mon', 'Shan', 'ZanabazarSquare','Rejang', 'Lao2','Buhid', 'Hanunoo', 'Siddham', 'Tibetan','Lao','TaiTham','Cham','BatakKaro','BatakPakpak','BatakSima','BatakToba','BatakManda','LaoPali','PhagsPa','Buginese','Tagbanwa','Tagalog','Sundanese','Balinese','Burmese','Javanese','Khmer','Siddham','Ranjana','Thaana','Thai', 'BurmeseALALC']
 NonIndic = ['OldPersian', 'Hebrew']
-Roman =['BatakLoCRomanLoC','GurmukhiLoCRomanLoC','TibetanLoCRomanLoC', 'LimbuLoCRomanLoC', 'BalineseSimpleRomanLoC', 'BalineseRomanLoC', 'JavaneseSimpleRomanLoC', 'JavaneseRomanLoC', 'BatakKaroRomanLoC', 'BatakMandaRomanLoC','BatakPakpakRomanLoC','BatakSimaRomanLoC','BatakTobaRomanLoC', 'GurmukhiRomanLoC', 'TibetanRomanLoC', 'LimbuRomanLoC', 'KannadaRomanLoC', 'TeluguRomanLoC', 'SinhalaRomanLoC', 'OriyaRomanLoC', 'AssameseRomanLoC', 'BengaliRomanLoC', 'GujaratiRomanLoC', 'DevanagariRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'RomanLoC', 'ShanLoCRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'ShanLoCRomanLoC', 'BurmeseRomanLoC', 'RomanSemitic', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya', 'Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng',"WX-kok",'Avestan','HK','IAST','ISO','Itrans','Titus','Titus','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
-RomanDiacritic = ['IAST','Titus','ISO','IPA', 'IASTPali', 'ISOPali', 'BurmeseRomanLoC', 'ISOLOC', 'RomanSemitic', 'ShanLoCRomanLoC', 'KhmerLoCRomanLoC']
+Roman =['BatakLoCRomanLoC','GurmukhiLoCRomanLoC','TibetanLoCRomanLoC', 'LimbuLoCRomanLoC', 'BalineseSimpleRomanLoC', 'BalineseRomanLoC', 'JavaneseSimpleRomanLoC', 'JavaneseRomanLoC', 'BatakKaroRomanLoC', 'BatakMandaRomanLoC','BatakPakpakRomanLoC','BatakSimaRomanLoC','BatakTobaRomanLoC', 'GurmukhiRomanLoC', 'TibetanRomanLoC', 'LimbuRomanLoC', 'KannadaRomanLoC', 'TeluguRomanLoC', 'SinhalaRomanLoC', 'OriyaRomanLoC', 'AssameseRomanLoC', 'BengaliRomanLoC', 'GujaratiRomanLoC', 'DevanagariRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'RomanLoC', 'ShanLoCRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'ShanLoCRomanLoC', 'BurmeseRomanLoC', 'RomanSemitic', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya', 'Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng',"WX-kok",'Avestan','HK','IAST','ISO','ISO7','Itrans','Titus','Titus','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
+RomanDiacritic = ['IAST','Titus','ISO','ISO7','IPA', 'IASTPali', 'ISOPali', 'BurmeseRomanLoC', 'ISOLOC', 'RomanSemitic', 'ShanLoCRomanLoC', 'KhmerLoCRomanLoC']
 
 ScriptCategory = {}
 
@@ -74,7 +74,7 @@ ScriptCategory['IndianMinority'] = ['Brahmi','Chakma','Grantha','Lepcha','Limbu'
 ScriptCategory['EastAsianPaliSans'] = ['Balinese','Burmese','Cham','Javanese','Khmer','LaoPali','Lao','PhagsPa','TaiTham','Thaana','Thai','Tibetan']
 ScriptCategory['EastAsianIndFili'] = ['BatakKaro','BatakManda','BatakPakpak','BatakSima','BatakToba','Buginese','Sundanese','Tagalog','Tagbanwa']
 ScriptCategory['IndianAlpha'] = ['Santali','TolongSiki']
-ScriptCategory['RomanDiacritic'] = ['IAST','IPA','ISO','Titus', 'IASTPali']
+ScriptCategory['RomanDiacritic'] = ['IAST','IPA','ISO','ISO7','Titus', 'IASTPali']
 ScriptCategory['RomanNonDiacritic'] = ['HK','Itrans','RussianCyrillic','Velthuis','WX']
 ScriptCategory['NonIndic'] = ['Avestan','OldPersian']
 
@@ -189,7 +189,7 @@ IndicScripts = [
 SiddhamRanjana = ['Ranjana']
 
 LatinScripts = [#'BatakLoCRomanLoC', 'BatakKaroRomanLoC', 'BatakMandaRomanLoC','BatakPakpakRomanLoC','BatakSimaRomanLoC','BatakTobaRomanLoC', 'GurmukhiRomanLoC' \
-                'GurmukhiLoCRomanLoC', 'TibetanLoCRomanLoC', 'LimbuLoCRomanLoC', 'BalineseSimpleRomanLoC', 'BalineseRomanLoC', 'JavaneseSimpleRomanLoC', 'JavaneseRomanLoC', 'KannadaRomanLoC', 'TeluguRomanLoC', 'SinhalaRomanLoC', 'OriyaRomanLoC', 'AssameseRomanLoC', 'BengaliRomanLoC', 'GujaratiRomanLoC', 'DevanagariRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'RomanLoC', 'ShanLoCRomanLoC', 'BurmeseRomanLoC', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya','Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng','WX-kok','Avestan','ISO','IAST','HK','Titus','Itrans','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
+                'GurmukhiLoCRomanLoC', 'TibetanLoCRomanLoC', 'LimbuLoCRomanLoC', 'BalineseSimpleRomanLoC', 'BalineseRomanLoC', 'JavaneseSimpleRomanLoC', 'JavaneseRomanLoC', 'KannadaRomanLoC', 'TeluguRomanLoC', 'SinhalaRomanLoC', 'OriyaRomanLoC', 'AssameseRomanLoC', 'BengaliRomanLoC', 'GujaratiRomanLoC', 'DevanagariRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'RomanLoC', 'ShanLoCRomanLoC', 'BurmeseRomanLoC', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya','Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng','WX-kok','Avestan','ISO','ISO7','IAST','HK','Titus','Itrans','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
 
 Gemination =  {
                'Gurmukhi' : '\u0A71',
@@ -205,9 +205,9 @@ Gemination =  {
                'Makasar': ''
               }
 
-pipeScripts = ["HK", "IASTPali", "IAST", "ISO", "Itrans", "ISOPali"]
+pipeScripts = ["HK", "IASTPali", "IAST", "ISO", "ISO7", "Itrans", "ISOPali"]
 
-Transliteration = ['IASTPali', 'RomanReadable', 'Aksharaa', 'ISO', 'IAST', 'HK','Titus','Itrans','Velthuis', 'WX', 'IPA', 'RussianCyrillic', 'IASTPali', 'ISOPali', 'RomanLoC']
+Transliteration = ['IASTPali', 'RomanReadable', 'Aksharaa', 'ISO', 'ISO7', 'IAST', 'HK','Titus','Itrans','Velthuis', 'WX', 'IPA', 'RussianCyrillic', 'IASTPali', 'ISOPali', 'RomanLoC']
 
 ## Indic scripts that use roman numerals
 romanNumeralScripts = ['Tamil', 'Gurmukhi', 'Malayalam', 'Telugu']
@@ -294,7 +294,7 @@ semiticISO = {
 
 ReversibleScripts = ['Devanagari', 'Tamil', 'Telugu', 'Kannada', 'Sinhala', 'Oriya', 'Gujarati', 'Bengali', 'Assamese', 'Malayalam', 'Gurmukhi']
 
-RomanReversible = ['IAST', 'HK', 'Itrans', 'Velthuis', 'Titus', 'WX', 'RussianCyrillic', 'ISO']
+RomanReversible = ['IAST', 'HK', 'Itrans', 'Velthuis', 'Titus', 'WX', 'RussianCyrillic', 'ISO', 'ISO7']
 
 CharmapLists = ['VowelMap', 'VowelSignMap', 'ConsonantMap', 'SignMap', 'AyogavahaMap', 'ModernVowelMap', 'ModernVowelSignMap']
 InterAdd = {'VowelMap': '\U000F0000', 'VowelSignMap': '\U000F0000', 'ConsonantMap':'\U000F2000', 'SignMap':'\U000F3000', 'AyogavahaMap':'\U000F4000', 'ModernVowelMap': '\U000F5000', 'ModernVowelSignMap':'\U000F5000'}

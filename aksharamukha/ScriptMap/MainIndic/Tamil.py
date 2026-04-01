@@ -64,7 +64,7 @@ SinhalaVowelSignMap = [
 
 AyogavahaMap = [
                '\u0BAE\u0BCD\u02EE',
-               '\u0BAE\u0BCD\u02BC',
+               '\u0B82',
                '꞉' # Modifying letter colon for Visarga
                ]
 
