@@ -671,7 +671,7 @@ ConsonantMap = {
      'OthersRev': [0, '\u02C2'],
      'OthersNonRev': [0, '\u02C2'],
 },
-'khuenfa': {
+'khuenhfa': {
     'ThamLoC': 'ᨺ',
     'TaiTham': 'ᨺ',
     'LueTham': 'ᨺ',
@@ -679,6 +679,17 @@ ConsonantMap = {
     'LaoTham': 'ᨺ',
     'KhuenTham': 'ᨺ',
     'ThamLoCRomanLoC': 'f\u0308',
+     'OthersRev': [21, '\u02C2'],
+     'OthersNonRev': [21, '\u02C2'],
+},
+'khuenlfa': {
+    'ThamLoC': 'ᨼ',
+    'TaiTham': 'ᨼ',
+    'LueTham': 'ᨼ',
+    'TaiTham': 'ᨼ',
+    'LaoTham': 'ᨼ',
+    'KhuenTham': 'ᨼ',
+    'ThamLoCRomanLoC': 'f\u0324',
      'OthersRev': [21, '\u02C2'],
      'OthersNonRev': [21, '\u02C2'],
 },
