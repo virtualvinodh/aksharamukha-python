@@ -79,6 +79,24 @@ class TestPostOptions:
         except KeyError:
             assert 1 == 1
 
+pre_options = (d for d in dir(PreProcess) if '__' not in d)
+
+class TestPreOptions:
+    @pytest.mark.parametrize("pre_options", pre_options)
+    def test_preoptions(self, pre_options):
+        import json
+
+        with open('test_texts/test_preoptions.json', 'r', encoding= 'utf8') as f:
+            texts = json.load(f)
+        try:
+            testcases = texts[pre_options]
+
+            for testcase in testcases:
+                for case in testcase["cases"]:
+                    assert transliterate.process(testcase["source"], testcase["target"], case[0], pre_options=[pre_options]) == case[1]
+        except KeyError:
+            assert 1 == 1
+
 class TestSanity:
     @pytest.mark.parametrize("target_scripts", target_scripts)
     def test_sanity_default(self, target_scripts):

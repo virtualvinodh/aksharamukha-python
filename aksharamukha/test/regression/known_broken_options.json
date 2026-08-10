@@ -1,0 +1,34 @@
+{
+ "pre::IPAIndic": {
+  "kind": "pre",
+  "name": "IPAIndic",
+  "source": "IAST",
+  "target": "Devanagari",
+  "error_type": "AttributeError",
+  "error": "'NoneType' object has no attribute 'replace'"
+ },
+ "pre::KhmerWordSplit": {
+  "kind": "pre",
+  "name": "KhmerWordSplit",
+  "source": "Khmer",
+  "target": "Devanagari",
+  "error_type": "ModuleNotFoundError",
+  "error": "No module named 'khmernltk'"
+ },
+ "pre::OriyaSubojinedVa": {
+  "kind": "pre",
+  "name": "OriyaSubojinedVa",
+  "source": "Oriya",
+  "target": "Devanagari",
+  "error_type": "error",
+  "error": "unknown extension ?? at position 1"
+ },
+ "pre::removeZW": {
+  "kind": "pre",
+  "name": "removeZW",
+  "source": "IAST",
+  "target": "Devanagari",
+  "error_type": "TypeError",
+  "error": "replace expected at least 2 arguments, got 1"
+ }
+}

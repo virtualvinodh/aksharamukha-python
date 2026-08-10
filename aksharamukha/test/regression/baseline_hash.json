@@ -1,0 +1,3082 @@
+[
+ {
+  "file": "test_Devanagari_Ahom_heart.txt",
+  "sha256": "7759dc022e1d37d85d7ea016aa9923ca8f007aafee4b9aeb35693fd189dec2c1",
+  "bytes": 4744
+ },
+ {
+  "file": "test_Devanagari_Ahom_lalitavistara.txt",
+  "sha256": "8cf253dd0887054b71820bf04ded217a2796f2a041202c2d700fa1363ef079a0",
+  "bytes": 22471
+ },
+ {
+  "file": "test_Devanagari_Aksharaa_heart.txt",
+  "sha256": "3cef7b0aed2cb5926fc48f53c9c93151fba3cbaa192fc7df927cc353e05f49d6",
+  "bytes": 1693
+ },
+ {
+  "file": "test_Devanagari_Aksharaa_lalitavistara.txt",
+  "sha256": "7ef9d11a802cb598b81fb378c06d395b510cd59d2a4b1b44aeb41ecac1852991",
+  "bytes": 7990
+ },
+ {
+  "file": "test_Devanagari_Arab-Fa_heart.txt",
+  "sha256": "9ef88a3a3fff2fd75dd7d92deab53499c96bee08b99710a86e721d5426b83b1a",
+  "bytes": 3319
+ },
+ {
+  "file": "test_Devanagari_Arab-Fa_lalitavistara.txt",
+  "sha256": "c9663e5cf0f5b60cee99cd7a7bf3e53a9734b5c8c8c07758e542c8fbeb78cdf9",
+  "bytes": 15261
+ },
+ {
+  "file": "test_Devanagari_Arab-Pa_heart.txt",
+  "sha256": "7039d75fb9eecca0b3feecfa945b3ba77ebd8cfa3f35fc919c4755e9665e4ff0",
+  "bytes": 3228
+ },
+ {
+  "file": "test_Devanagari_Arab-Pa_lalitavistara.txt",
+  "sha256": "8a84eb104864f8184f5cd88ce8902ceed73c2e84e1fed71d8601c94fa40577aa",
+  "bytes": 14701
+ },
+ {
+  "file": "test_Devanagari_Arab-Ur_heart.txt",
+  "sha256": "6bda238fa563bedb71f0851cfa58f85c5ae4b9e24f09e375a61f2e231b4e9fac",
+  "bytes": 3271
+ },
+ {
+  "file": "test_Devanagari_Arab-Ur_lalitavistara.txt",
+  "sha256": "aea2267956e5ddab782bbcd03af9c7a7429a6123cb25c0ca72ec25da0fdd0ad6",
+  "bytes": 14837
+ },
+ {
+  "file": "test_Devanagari_Arab_heart.txt",
+  "sha256": "3c2f9780c73b63e7cedf1e77e7ea043188c81082964115f3e9249b76939620ed",
+  "bytes": 3337
+ },
+ {
+  "file": "test_Devanagari_Arab_lalitavistara.txt",
+  "sha256": "d86cc7b2ee74f9bbcc1f5919f66e3f2e48c4fa102ac6a963d89587561c1e76bc",
+  "bytes": 15381
+ },
+ {
+  "file": "test_Devanagari_Ariyaka_heart.txt",
+  "sha256": "f9dcc40befd0fdeccf00b12e6d3a12d494917ad509acca85d39b9a62fff63dc5",
+  "bytes": 1351
+ },
+ {
+  "file": "test_Devanagari_Ariyaka_lalitavistara.txt",
+  "sha256": "eccf3e99aa58792daab96b2086cd77c8e3fc155974ea23aadedd38277b5a4267",
+  "bytes": 6353
+ },
+ {
+  "file": "test_Devanagari_Armi_heart.txt",
+  "sha256": "f9d6ac86603301b903527e880d981a5ab7c9a4f408ecb9162b5b1e3a845305f9",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Armi_lalitavistara.txt",
+  "sha256": "90b677d08c724cd98631c9ecac4701cee0dba5fcdc99d34ebabeb0d6a57c1aad",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Assamese_heart.txt",
+  "sha256": "56d07b4cd4f4887d82daa9a7786365f9ab138b38cec3d76ec0a94758cb1b8f4d",
+  "bytes": 3521
+ },
+ {
+  "file": "test_Devanagari_Assamese_lalitavistara.txt",
+  "sha256": "d502cc6620a097c6aa04f6bc0a08915578710beaab5bac6529f9c50573781793",
+  "bytes": 16187
+ },
+ {
+  "file": "test_Devanagari_Avestan_heart.txt",
+  "sha256": "aac295b52302a9c90e8a7916f21a8c085c334db461b18e7faef3a6f8a06fd4f5",
+  "bytes": 5236
+ },
+ {
+  "file": "test_Devanagari_Avestan_lalitavistara.txt",
+  "sha256": "abe984910c385d9adddc1aa442b2d673bc9e407878bdf4743f833f250ca52251",
+  "bytes": 24849
+ },
+ {
+  "file": "test_Devanagari_Balinese_heart.txt",
+  "sha256": "1c1f4fffaca8a806b2b893f952de269107049ce63d14cf6427ebfcb6baa7e962",
+  "bytes": 3460
+ },
+ {
+  "file": "test_Devanagari_Balinese_lalitavistara.txt",
+  "sha256": "ace2ee7fbaa2573a28985641f93d5d26e822f3f564dfb01045798909ad5d1c01",
+  "bytes": 15915
+ },
+ {
+  "file": "test_Devanagari_BarahaNorth_heart.txt",
+  "sha256": "b56a8b50337da2768d1bfc098a7368fe7422f9f77d99749eef9f3a644ae64960",
+  "bytes": 1548
+ },
+ {
+  "file": "test_Devanagari_BarahaNorth_lalitavistara.txt",
+  "sha256": "79142793cf864ac8eebec2a06c536bdb595a96c190884e3c25127cc1d100cfcc",
+  "bytes": 7084
+ },
+ {
+  "file": "test_Devanagari_BarahaSouth_heart.txt",
+  "sha256": "4e5ed55bb21ec1e97a1a7c62130d8786b013f188da9241a5d471eec8f36ad2e8",
+  "bytes": 1548
+ },
+ {
+  "file": "test_Devanagari_BarahaSouth_lalitavistara.txt",
+  "sha256": "851838a2df80e56d60a6a7e26122d1184763a922ecbe6e7d597899106febfc44",
+  "bytes": 7084
+ },
+ {
+  "file": "test_Devanagari_BatakKaro_heart.txt",
+  "sha256": "a6ee5f9f6f9a89dbaf66b88a6ec1cc008d4a44b6f1513427fd47120af692a125",
+  "bytes": 3119
+ },
+ {
+  "file": "test_Devanagari_BatakKaro_lalitavistara.txt",
+  "sha256": "8d372f456eb1e42d8e3a2c58531c0adec484d3dbb9a2ef8728f5157e1603d3bf",
+  "bytes": 14880
+ },
+ {
+  "file": "test_Devanagari_BatakManda_heart.txt",
+  "sha256": "a74e197288ff5e2a25502e4ba3386522c39b0304fc755a218eb343442e37e3f1",
+  "bytes": 3266
+ },
+ {
+  "file": "test_Devanagari_BatakManda_lalitavistara.txt",
+  "sha256": "43dd5e5239ee7aba83021f26e630c6651527a34f507013b2ec9a191ef18cd1cf",
+  "bytes": 15852
+ },
+ {
+  "file": "test_Devanagari_BatakPakpak_heart.txt",
+  "sha256": "965751a1205e7cf0ec1c9421d46dbc235c8c6afa6f506fc01268916846ae02f6",
+  "bytes": 3119
+ },
+ {
+  "file": "test_Devanagari_BatakPakpak_lalitavistara.txt",
+  "sha256": "049214007282251470fadd2493f430fd8fda48086985300135bfe1c3223b8b03",
+  "bytes": 14880
+ },
+ {
+  "file": "test_Devanagari_BatakSima_heart.txt",
+  "sha256": "de891981011566cc935f771388ce8cad31b401f683220b7adb8922ebd4453079",
+  "bytes": 3119
+ },
+ {
+  "file": "test_Devanagari_BatakSima_lalitavistara.txt",
+  "sha256": "337b3f2e76297a01f707a6a0e385f152621e14595bb8d6bcf7b1d6415eedee52",
+  "bytes": 14880
+ },
+ {
+  "file": "test_Devanagari_BatakToba_heart.txt",
+  "sha256": "c0490ee847ed05345c54d740a78824aa8d73ddbb92d81fa817b527b4e00be074",
+  "bytes": 3176
+ },
+ {
+  "file": "test_Devanagari_BatakToba_lalitavistara.txt",
+  "sha256": "c07f6ce0906e0ee0d722bc2a9e38d9037d5845442477b8673fe35fcedbf61931",
+  "bytes": 15111
+ },
+ {
+  "file": "test_Devanagari_Bengali_heart.txt",
+  "sha256": "dabe9e0667f74bfa192f9f3786a67ef45f17480185e56727186e651815b8a669",
+  "bytes": 3521
+ },
+ {
+  "file": "test_Devanagari_Bengali_lalitavistara.txt",
+  "sha256": "b54d28923d095fad27c0441230d779af4c380e89a4ccf1452c72384bc96ced6e",
+  "bytes": 16187
+ },
+ {
+  "file": "test_Devanagari_Bhaiksuki_heart.txt",
+  "sha256": "d7ae8710461217119587c618e347a26c7e3f92eae85f6fd9fb892a1233941048",
+  "bytes": 4957
+ },
+ {
+  "file": "test_Devanagari_Bhaiksuki_lalitavistara.txt",
+  "sha256": "a452b8bfe1fc33fd39478cd62de473eb203fa3270f53c0ed62acb8fcb4d71906",
+  "bytes": 22754
+ },
+ {
+  "file": "test_Devanagari_Brah_heart.txt",
+  "sha256": "4f51adb44777e24ce2535dff1abdf3f6524f2eacd1f3adb4744e93f1c70d217c",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Brah_lalitavistara.txt",
+  "sha256": "c15aeb7f74185611d845cfe2fe097a3af9ece5b0c5e6849b35918c86332f69ce",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Brahmi_heart.txt",
+  "sha256": "12841ce2a7dc0513a5e76f84146728cdd170e94533b970f187bd0e7c2585f75c",
+  "bytes": 4622
+ },
+ {
+  "file": "test_Devanagari_Brahmi_lalitavistara.txt",
+  "sha256": "8225ca78ff784016f522b395c31e4c0e9f4a418b990972ac45dc96c30e370abb",
+  "bytes": 21340
+ },
+ {
+  "file": "test_Devanagari_Buginese_heart.txt",
+  "sha256": "cb03797744b12ff2695114e24d41fb61351cdf2dec0f12f5e2e7fd11614b29ab",
+  "bytes": 2681
+ },
+ {
+  "file": "test_Devanagari_Buginese_lalitavistara.txt",
+  "sha256": "9d248246e2cdfbec41202e0dbd7283c315faf67671fff481e4275ee53281d598",
+  "bytes": 13389
+ },
+ {
+  "file": "test_Devanagari_Buhid_heart.txt",
+  "sha256": "170cd0648c008382745990def5070c58d7b08bc21560d7a1608886c63d895937",
+  "bytes": 2615
+ },
+ {
+  "file": "test_Devanagari_Buhid_lalitavistara.txt",
+  "sha256": "b87369f1a3fb83ba6ee02ebcc8870f0cc43770dd85c9aee294a825b938c7c89e",
+  "bytes": 13029
+ },
+ {
+  "file": "test_Devanagari_Burmese_heart.txt",
+  "sha256": "20e6618b333a235ea757b953a023ee32a49733a4631343e66c2cad5c4cf3ee23",
+  "bytes": 3418
+ },
+ {
+  "file": "test_Devanagari_Burmese_lalitavistara.txt",
+  "sha256": "6085cd4d7df88bb15029641cffd8a8bbc6ebf636dfca263f6476e3b1047a6d13",
+  "bytes": 16098
+ },
+ {
+  "file": "test_Devanagari_Chakma_heart.txt",
+  "sha256": "fbd279785e22d55db1c7d46936e9d4fd1a111f91e5454168ef14e370a08618a4",
+  "bytes": 5100
+ },
+ {
+  "file": "test_Devanagari_Chakma_lalitavistara.txt",
+  "sha256": "4d71451b31e3c64dec05c6818e837e66b41df7e94d13df254ff1e12c49dab581",
+  "bytes": 24651
+ },
+ {
+  "file": "test_Devanagari_Cham_heart.txt",
+  "sha256": "661acb00dfff333b10a6b7612bfc6e50a618a0c7583e5e442da0adef2f3fc12f",
+  "bytes": 3121
+ },
+ {
+  "file": "test_Devanagari_Cham_lalitavistara.txt",
+  "sha256": "29859f7f43c9169e55dd8e056c5096d175456b873a9d9f0752294a8d0545657c",
+  "bytes": 15002
+ },
+ {
+  "file": "test_Devanagari_Chrs_heart.txt",
+  "sha256": "52d87e9adb410874c7108dad8d9bcb88da82accfe87639dfa64fc36ee78baf4e",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Chrs_lalitavistara.txt",
+  "sha256": "03069bbce3111545c0a2659c541a2ab30060a06b417788ac05db133c40ab783d",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Devanagari_heart.txt",
+  "sha256": "8de4ce9fae2a10382c8b5e6981fc49b7d169c676307bde37555911912d7f6eeb",
+  "bytes": 3506
+ },
+ {
+  "file": "test_Devanagari_Devanagari_lalitavistara.txt",
+  "sha256": "b850ed8b0a02a1f9c2ad6e74042161133ffe13a01612955a8623cd445b9e875e",
+  "bytes": 16157
+ },
+ {
+  "file": "test_Devanagari_DivesAkuru_heart.txt",
+  "sha256": "d080e415c164597a01a789ad744b105c66459ac5c373ffde2a135a3cb0d9eaef",
+  "bytes": 4447
+ },
+ {
+  "file": "test_Devanagari_DivesAkuru_lalitavistara.txt",
+  "sha256": "1525983471eca82ae8b34b1cca06aad072197df5790e310fcab8e74307091745",
+  "bytes": 20760
+ },
+ {
+  "file": "test_Devanagari_Dogra_heart.txt",
+  "sha256": "778d23b5f96c5bfb08789d2bf71e9382db09bb907d198686f3afdd4ef9feb241",
+  "bytes": 4606
+ },
+ {
+  "file": "test_Devanagari_Dogra_lalitavistara.txt",
+  "sha256": "cf7addfe7a2cf96b4a10fed3b322e61d017fd85cc504b25c9d4f1009ef087451",
+  "bytes": 21248
+ },
+ {
+  "file": "test_Devanagari_Egyp_heart.txt",
+  "sha256": "0c032838319e8c49d6672fecfff3fa7a53f39dde450798dd5d2ebe9c5c370d2a",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Egyp_lalitavistara.txt",
+  "sha256": "1fab3dcf6fc2f6d3df25eadf03243afdd86e99517d8bca60ad0457bd50388f49",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Elym_heart.txt",
+  "sha256": "ef3adcf19ab8b59dc0cbffd62471e7bc52f921f7f25625fa0dacd361ed885e3f",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Elym_lalitavistara.txt",
+  "sha256": "6fa08393da2ab70d0fdb879d57ca3fd0e6c1e11c74b287276123ea3527c11d4f",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Ethi_heart.txt",
+  "sha256": "1515e64aefa8d92a4b62b84b78059f18998f4cb725a74180cf9e46a48ee70eaf",
+  "bytes": 2742
+ },
+ {
+  "file": "test_Devanagari_Ethi_lalitavistara.txt",
+  "sha256": "5620eb65a1b53dd16cadc88e25dd621e468e6ef3641f5bf3b4540f9da0173d9f",
+  "bytes": 12451
+ },
+ {
+  "file": "test_Devanagari_GranthaGrantamil_heart.txt",
+  "sha256": "6ac1a85500c6b7ab522e848ba428a166c3411f089af15b5787e0bd0e566afb49",
+  "bytes": 3509
+ },
+ {
+  "file": "test_Devanagari_GranthaGrantamil_lalitavistara.txt",
+  "sha256": "e3e4f11a43322454239c1a4feaf1cc0856cfd6f202463d5669a0a7ba066ab160",
+  "bytes": 16160
+ },
+ {
+  "file": "test_Devanagari_GranthaPandya_heart.txt",
+  "sha256": "f931a7979e4af12fd09df5e2ab18c1e38efb012ce19c6c608956cd66d1fb6e95",
+  "bytes": 3509
+ },
+ {
+  "file": "test_Devanagari_GranthaPandya_lalitavistara.txt",
+  "sha256": "d19a7c20cd11b5e885b6fea3c618111d8822561b956f9b227caf41456f25e83c",
+  "bytes": 16134
+ },
+ {
+  "file": "test_Devanagari_Grantha_heart.txt",
+  "sha256": "f7ad3656bdd425352a54b7fa9598847ecaec727b618522165e16dea17ae580fd",
+  "bytes": 4604
+ },
+ {
+  "file": "test_Devanagari_Grantha_lalitavistara.txt",
+  "sha256": "55c141378a9e24abb4cbd997920b158d9db2a9511344a05bf8b86e28e6caa510",
+  "bytes": 21247
+ },
+ {
+  "file": "test_Devanagari_Grek_heart.txt",
+  "sha256": "49282ce834781bca6e205da2d0f4b31106a1cfcd5a67c6d22f052c58f1f59c87",
+  "bytes": 1906
+ },
+ {
+  "file": "test_Devanagari_Grek_lalitavistara.txt",
+  "sha256": "3d298482b344259de16c062235f92f45098ed493c5373e0baeed3f43a5a79242",
+  "bytes": 8648
+ },
+ {
+  "file": "test_Devanagari_Gujarati_heart.txt",
+  "sha256": "91ce9a12f4e838ff93d572968d67515f6df512c79c399094edbfdd7efee05adf",
+  "bytes": 3474
+ },
+ {
+  "file": "test_Devanagari_Gujarati_lalitavistara.txt",
+  "sha256": "22707f69d97735f4dc2cb3abf2d4e4429fa99d11d7feea885b42b4bc0ed95bb8",
+  "bytes": 15978
+ },
+ {
+  "file": "test_Devanagari_GunjalaGondi_heart.txt",
+  "sha256": "d1dcac90e8776e1c13cf4dc780447ac8681f8651629a8988ac44162025957c1d",
+  "bytes": 4560
+ },
+ {
+  "file": "test_Devanagari_GunjalaGondi_lalitavistara.txt",
+  "sha256": "e98f02d6506c19d6dc20a266ede54117c060f9f730e11168adf3e9ed91c327d7",
+  "bytes": 21121
+ },
+ {
+  "file": "test_Devanagari_Gurmukhi_heart.txt",
+  "sha256": "a60a84c4ca5b56b388fc41ba822ca24b595d786fe272a2d0730a38d022582590",
+  "bytes": 3522
+ },
+ {
+  "file": "test_Devanagari_Gurmukhi_lalitavistara.txt",
+  "sha256": "8e4fc40b47bde066d398207129a5becd2bb655e1f6c481ee95e49a946ca1f232",
+  "bytes": 16343
+ },
+ {
+  "file": "test_Devanagari_HK_heart.txt",
+  "sha256": "a750e27c0a3b04902aa74206a70f12df714a8d17b183d287243757f106ddb76a",
+  "bytes": 1375
+ },
+ {
+  "file": "test_Devanagari_HK_lalitavistara.txt",
+  "sha256": "dcb2ddf50ddaee53fb527fb22512e43d5e52536a686df0add35e30aae01c0a8e",
+  "bytes": 6527
+ },
+ {
+  "file": "test_Devanagari_HanifiRohingya_heart.txt",
+  "sha256": "8225eb467ec8ece14d12a509704197202243204c86e8739308d85a2331c35c3d",
+  "bytes": 5647
+ },
+ {
+  "file": "test_Devanagari_HanifiRohingya_lalitavistara.txt",
+  "sha256": "7cab91673111fc2b0a17893e6199a9d55b51a164943af2c0f54703a0e50745ea",
+  "bytes": 26569
+ },
+ {
+  "file": "test_Devanagari_Hanunoo_heart.txt",
+  "sha256": "912d27ac1efad03f9407587fd38f86600cfa19d3dba7c8ee76afc19aaef04c2f",
+  "bytes": 3281
+ },
+ {
+  "file": "test_Devanagari_Hanunoo_lalitavistara.txt",
+  "sha256": "ca2e7552d7775765ca4d0fbb2d6eb8c738eaf5c7f5effc14fb7eb8dbd4543a83",
+  "bytes": 15750
+ },
+ {
+  "file": "test_Devanagari_Hatr_heart.txt",
+  "sha256": "44bb1d8329472943d77bceffe775b29833dd07c3c061b9ed5add3673e2a441e0",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Hatr_lalitavistara.txt",
+  "sha256": "b05c84ebb91702cf149b097a888fa251870e80cb8a45ac453b34b331c9f0fc4e",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Hebr-Ar_heart.txt",
+  "sha256": "c8dd2dfa1064e370443ad95d530af109ad3287f9fc54c6a8dd3d8edab76fff37",
+  "bytes": 2082
+ },
+ {
+  "file": "test_Devanagari_Hebr-Ar_lalitavistara.txt",
+  "sha256": "31201badac8f1e1f97a95a16724fd6bdf603907222a02c7f8cd13609004db173",
+  "bytes": 9432
+ },
+ {
+  "file": "test_Devanagari_Hebr_heart.txt",
+  "sha256": "c16a42eec9112de06eaeb4087a864ec55e3c88d8e56531284b614860e5bce97b",
+  "bytes": 3258
+ },
+ {
+  "file": "test_Devanagari_Hebr_lalitavistara.txt",
+  "sha256": "a344cf6c88ba57c00d9e465fdef7ef51cedb120899c09cd25f3cae0f82de7bc9",
+  "bytes": 15434
+ },
+ {
+  "file": "test_Devanagari_Hebrew_heart.txt",
+  "sha256": "13263e9b6bb0b9a641800266c084a9922e87337d55aaa8506e85312bd813117e",
+  "bytes": 3368
+ },
+ {
+  "file": "test_Devanagari_Hebrew_lalitavistara.txt",
+  "sha256": "9a7d7a31bc08d2498d1795572a45fd158afe7618c40ed1d2a687156304d3c348",
+  "bytes": 15989
+ },
+ {
+  "file": "test_Devanagari_IASTLOC_heart.txt",
+  "sha256": "a889070de802b31c7b70d689e6cf45fe865657ffc5388c1f0da78702ae5c5227",
+  "bytes": 1694
+ },
+ {
+  "file": "test_Devanagari_IASTLOC_lalitavistara.txt",
+  "sha256": "df5dc8ac6e7138edc435ee1f298b8ad8f27e802c1c5e165c1f2e91d1a689cfe6",
+  "bytes": 8002
+ },
+ {
+  "file": "test_Devanagari_IASTPali_heart.txt",
+  "sha256": "0c97cb7dade0dfa2339df5b0920ee8c511b38576df5d0ca47cea587e3010ba8d",
+  "bytes": 1685
+ },
+ {
+  "file": "test_Devanagari_IASTPali_lalitavistara.txt",
+  "sha256": "87aa7c639e50b04b8e71b297eab00429889d15758859c3b2af3c5c5de58b0f81",
+  "bytes": 7956
+ },
+ {
+  "file": "test_Devanagari_IAST_heart.txt",
+  "sha256": "0c97cb7dade0dfa2339df5b0920ee8c511b38576df5d0ca47cea587e3010ba8d",
+  "bytes": 1685
+ },
+ {
+  "file": "test_Devanagari_IAST_lalitavistara.txt",
+  "sha256": "87aa7c639e50b04b8e71b297eab00429889d15758859c3b2af3c5c5de58b0f81",
+  "bytes": 7956
+ },
+ {
+  "file": "test_Devanagari_IPA_heart.txt",
+  "sha256": "01ff64562705149603fd8dd4d3ec1de7aefb3be97d01bee3dbaede636f6b7e20",
+  "bytes": 3034
+ },
+ {
+  "file": "test_Devanagari_IPA_lalitavistara.txt",
+  "sha256": "f583c11dd5737aed8367257a53a42f63c8d2318933b9a49d8c2fcb947b7b3933",
+  "bytes": 13713
+ },
+ {
+  "file": "test_Devanagari_ISOPali_heart.txt",
+  "sha256": "c3452fbe2923f86ed9de643f60db7c2a7de742b2af6c66416ab503dae673785f",
+  "bytes": 1689
+ },
+ {
+  "file": "test_Devanagari_ISOPali_lalitavistara.txt",
+  "sha256": "2d645b577e67b4b1a8e8999ecd4e1f3d846905ba8c38ae2c0f0c40f4340625bd",
+  "bytes": 7970
+ },
+ {
+  "file": "test_Devanagari_ISO_heart.txt",
+  "sha256": "f34a1a6e3e1a5e12176f088e9eecd7e627a585af866a9db47f43acc91e715b4d",
+  "bytes": 1721
+ },
+ {
+  "file": "test_Devanagari_ISO_lalitavistara.txt",
+  "sha256": "1b689f00c77fa7500575e7890fe53b3cb765c42e92fb3645068a858126b78955",
+  "bytes": 8226
+ },
+ {
+  "file": "test_Devanagari_Inter_heart.txt",
+  "sha256": "ff2fd664733bc790883963e03db7b9697bbddeabe85af87904377663c7063c1c",
+  "bytes": 3698
+ },
+ {
+  "file": "test_Devanagari_Inter_lalitavistara.txt",
+  "sha256": "40e752365aedfc43353440f82ac7cf80e106a38f5aefbaf4471c6664e7d79bcf",
+  "bytes": 17768
+ },
+ {
+  "file": "test_Devanagari_Itrans_heart.txt",
+  "sha256": "1b6d2383085e477448735cfce3943902300df3e1ac292085aa5d62f13d74dd45",
+  "bytes": 1440
+ },
+ {
+  "file": "test_Devanagari_Itrans_lalitavistara.txt",
+  "sha256": "950d76413ee6f5db2402faaa1d41f955bdee317e189bcd39a6ed56b48a9f99b3",
+  "bytes": 6873
+ },
+ {
+  "file": "test_Devanagari_Javanese_heart.txt",
+  "sha256": "afd8500d22d1b801642a4dbf2b9f0c43fb84e9e246368faaf1450cf87a51fb88",
+  "bytes": 3355
+ },
+ {
+  "file": "test_Devanagari_Javanese_lalitavistara.txt",
+  "sha256": "3ec25f13ef8f4ae485b8bea6c321b0bed474797008dc76825da902d6dc93d309",
+  "bytes": 15714
+ },
+ {
+  "file": "test_Devanagari_Kaithi_heart.txt",
+  "sha256": "8b2adc466fe6557a81cffc2e564d3e5a31fca23330638081276f3bf3906a581a",
+  "bytes": 4846
+ },
+ {
+  "file": "test_Devanagari_Kaithi_lalitavistara.txt",
+  "sha256": "e6f4a8501c0d7d968533632d8b5fa8c5a17b9c1051a87be30d8bbc044ad07d88",
+  "bytes": 22276
+ },
+ {
+  "file": "test_Devanagari_Kannada_heart.txt",
+  "sha256": "e7703207231bdd6e8fe4c35fb54b63bb0a029e891c7e9047981b58454d59d2d0",
+  "bytes": 3426
+ },
+ {
+  "file": "test_Devanagari_Kannada_lalitavistara.txt",
+  "sha256": "543c330a92a854950f7e6215a86991e4bbdefb16f9597029b227e95f05d65ce4",
+  "bytes": 15840
+ },
+ {
+  "file": "test_Devanagari_Kawi_heart.txt",
+  "sha256": "134e77f650fbf885da48fde7fd6f1a86c340784cb22806802e71dd326af1e220",
+  "bytes": 4650
+ },
+ {
+  "file": "test_Devanagari_Kawi_lalitavistara.txt",
+  "sha256": "157144b2479d4120deb67a55af118483be58912eace179cac2dc3261bed457c3",
+  "bytes": 21460
+ },
+ {
+  "file": "test_Devanagari_KhamtiShan_heart.txt",
+  "sha256": "5e7dffb9ade79b5afb545827d7db10f609ac2bfdeaaf49c80a250c8d7e433672",
+  "bytes": 3373
+ },
+ {
+  "file": "test_Devanagari_KhamtiShan_lalitavistara.txt",
+  "sha256": "bc55b7b9ebcc290b2183e702d14953fb9227935055b038926f8838c9f15569cb",
+  "bytes": 15888
+ },
+ {
+  "file": "test_Devanagari_Kharoshthi_heart.txt",
+  "sha256": "aa3b9fd119086fe65c0d7caa85f4ea5e9db054119e7ef5b42c55da501b4f6349",
+  "bytes": 4746
+ },
+ {
+  "file": "test_Devanagari_Kharoshthi_lalitavistara.txt",
+  "sha256": "3a4b603f488532e4ea05a322860ef32f35e4addbdb9628a2e3cbe5f103ee761d",
+  "bytes": 21884
+ },
+ {
+  "file": "test_Devanagari_Khmer_heart.txt",
+  "sha256": "88a1a6c0e20cef9356ee5911bb3e924df799be3a53831719aa2ea99329dfd0ad",
+  "bytes": 3485
+ },
+ {
+  "file": "test_Devanagari_Khmer_lalitavistara.txt",
+  "sha256": "91d1bc8d6ab72b3fc7a36267d60f66033511b4029379b05d54b0f27ecf463bbe",
+  "bytes": 15797
+ },
+ {
+  "file": "test_Devanagari_Khojki_heart.txt",
+  "sha256": "9e51f2de01a9e4971579f889844730f8051652c15a6df9d5ff0df70599b27e1e",
+  "bytes": 5117
+ },
+ {
+  "file": "test_Devanagari_Khojki_lalitavistara.txt",
+  "sha256": "4ed3a4cd38769a5261ef34547fc534275c3e7b7d41b680eedd5c9025f58a8023",
+  "bytes": 23829
+ },
+ {
+  "file": "test_Devanagari_KhomThai_heart.txt",
+  "sha256": "fa8b8458ab845c7ad1d623f5092e40ef6518c37c668ddfbd70af2b9195fce4e1",
+  "bytes": 3641
+ },
+ {
+  "file": "test_Devanagari_KhomThai_lalitavistara.txt",
+  "sha256": "9ddad6ee6bf5f5cfef60fef7ab27aa5e236fb6f9718171bcbea68c2aa3a32eff",
+  "bytes": 16601
+ },
+ {
+  "file": "test_Devanagari_Khudawadi_heart.txt",
+  "sha256": "d0a89be7d98f69360e7f08052515914888b1c25c895524bb457ab8f59e38a1db",
+  "bytes": 4758
+ },
+ {
+  "file": "test_Devanagari_Khudawadi_lalitavistara.txt",
+  "sha256": "e4161351fd22ce29f61f4d9c56f07c3ed06643740ad7c433dafbf972535a5cb6",
+  "bytes": 22069
+ },
+ {
+  "file": "test_Devanagari_KhuenTham_heart.txt",
+  "sha256": "5425f621592c44a1dca55480e157028a1a282972c9cb3cabde243154e4cdf675",
+  "bytes": 3499
+ },
+ {
+  "file": "test_Devanagari_KhuenTham_lalitavistara.txt",
+  "sha256": "777ddade930e9d139a5141554b6afbe6f42c8fdb9656d051c6b22cd2b9791097",
+  "bytes": 16257
+ },
+ {
+  "file": "test_Devanagari_Lao2_heart.txt",
+  "sha256": "1ea7b67ac9002d38590f5f6997f58b6b33a0f264d4b222987c85c46681d950e7",
+  "bytes": 3781
+ },
+ {
+  "file": "test_Devanagari_Lao2_lalitavistara.txt",
+  "sha256": "0b9fcda6cbfd0bb21899c7fe567311dda8123321d53dca42705ccaa20664f515",
+  "bytes": 18162
+ },
+ {
+  "file": "test_Devanagari_LaoPali_heart.txt",
+  "sha256": "0ba0307ef93961e568aed434f0fbcdda00b5ee49c4317245d551fa9e65e28309",
+  "bytes": 3628
+ },
+ {
+  "file": "test_Devanagari_LaoPali_lalitavistara.txt",
+  "sha256": "ba5ed48b31f4e200b1000c2943055da6841c035d9cbd1e79835fa79fe418513a",
+  "bytes": 16653
+ },
+ {
+  "file": "test_Devanagari_LaoTham_heart.txt",
+  "sha256": "60067cb038d18e3ae9934b948469ad5758dd21f06384641d71caf2a505d64d7d",
+  "bytes": 3499
+ },
+ {
+  "file": "test_Devanagari_LaoTham_lalitavistara.txt",
+  "sha256": "4175697ccd4c375145f04d3479dc95d913a3869370bd65e2eb08d55b740683ac",
+  "bytes": 16257
+ },
+ {
+  "file": "test_Devanagari_Lao_heart.txt",
+  "sha256": "fb011954c2877b85a2f07e4a00179093272eb759d2ee071c81794a5e3cabb014",
+  "bytes": 3781
+ },
+ {
+  "file": "test_Devanagari_Lao_lalitavistara.txt",
+  "sha256": "cd8e1bb423782fbf76b66da1f8eae44caa3b09ef1c7eda16b16c520943119563",
+  "bytes": 18162
+ },
+ {
+  "file": "test_Devanagari_Latn_heart.txt",
+  "sha256": "c28bc48980bcce6d42407df995c24527983cbeae933e8af85ea301089367a076",
+  "bytes": 1856
+ },
+ {
+  "file": "test_Devanagari_Latn_lalitavistara.txt",
+  "sha256": "fc8a1e124b9753167a7c81c77f0562270b73c4765082cdd1a0b4ffd7d5cd9bef",
+  "bytes": 8451
+ },
+ {
+  "file": "test_Devanagari_Lepcha_heart.txt",
+  "sha256": "fd114a201b1b10ab793b04965fa0c07601b72c9024b5609577a27f3adedd7106",
+  "bytes": 3073
+ },
+ {
+  "file": "test_Devanagari_Lepcha_lalitavistara.txt",
+  "sha256": "95743b814a925fd72e6bc4c4f23e7658fd20d07ed70915769ce22f14b455b1dc",
+  "bytes": 14877
+ },
+ {
+  "file": "test_Devanagari_Limbu_heart.txt",
+  "sha256": "7739ab30f453487835aba4b990c22d1f4ee6fe73fab71962f196667825ed6413",
+  "bytes": 3295
+ },
+ {
+  "file": "test_Devanagari_Limbu_lalitavistara.txt",
+  "sha256": "99105c8c66be082711e82f185016e641e39e5218b73e4bea294df147b485bbf4",
+  "bytes": 15446
+ },
+ {
+  "file": "test_Devanagari_LueTham_heart.txt",
+  "sha256": "5425f621592c44a1dca55480e157028a1a282972c9cb3cabde243154e4cdf675",
+  "bytes": 3499
+ },
+ {
+  "file": "test_Devanagari_LueTham_lalitavistara.txt",
+  "sha256": "777ddade930e9d139a5141554b6afbe6f42c8fdb9656d051c6b22cd2b9791097",
+  "bytes": 16257
+ },
+ {
+  "file": "test_Devanagari_Mahajani_heart.txt",
+  "sha256": "c30bddc4a17cd8b68f49a4cb0ffe343c930d4ca6b94f1e6c7cc8fb06ebb2be07",
+  "bytes": 4080
+ },
+ {
+  "file": "test_Devanagari_Mahajani_lalitavistara.txt",
+  "sha256": "4cec5a852cd590da7c9c6951a1562cfb27282dfb8289c551f98f7b0990fca3a8",
+  "bytes": 19835
+ },
+ {
+  "file": "test_Devanagari_Makasar_heart.txt",
+  "sha256": "479b54a5d1a1358cfb23c34cb02652879b6548dedbc25bec62d5b54480d7494e",
+  "bytes": 3454
+ },
+ {
+  "file": "test_Devanagari_Makasar_lalitavistara.txt",
+  "sha256": "3b45f9babfe1ed778d86d0785f12b30106fd97aaf24c174fe9b1d15b9156f06b",
+  "bytes": 17374
+ },
+ {
+  "file": "test_Devanagari_Malayalam_heart.txt",
+  "sha256": "d19db9e4cd5ee2fa864488f1ca19d56fa1654a47bb96bfbb01809ee783f5853f",
+  "bytes": 3429
+ },
+ {
+  "file": "test_Devanagari_Malayalam_lalitavistara.txt",
+  "sha256": "28d13f68b1af7c674a62d82aa61c9ac68fc7755a9b2ec213727199dd22056fee",
+  "bytes": 15733
+ },
+ {
+  "file": "test_Devanagari_Mani_heart.txt",
+  "sha256": "57c900c41bb46abc17e7da9f99f0a4b073888e520e741ed0d0c4a9bfb7d3d728",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Mani_lalitavistara.txt",
+  "sha256": "7333546eda2f6bcc4c72e407e9e4b2b3b7f60895ebceaef584aec9e86bba90a4",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Marchen_heart.txt",
+  "sha256": "ef3fb023850a6f9e0b2721e9bff361244d261bffd58c353bd77d234301bc8b78",
+  "bytes": 4242
+ },
+ {
+  "file": "test_Devanagari_Marchen_lalitavistara.txt",
+  "sha256": "e643430ea8bbbac567c033f70968fa71d3ec003b3d2264c9f9a56c49bd159b29",
+  "bytes": 20159
+ },
+ {
+  "file": "test_Devanagari_MasaramGondi_heart.txt",
+  "sha256": "84c426383c448939f8e0288f4f7cc5db7705001e111aa1aed5a8029078a90240",
+  "bytes": 4188
+ },
+ {
+  "file": "test_Devanagari_MasaramGondi_lalitavistara.txt",
+  "sha256": "71fdbf6f216f4cd5e2828c38f31afa7ae276043e58d1779d4fe31eeae7bbeffc",
+  "bytes": 20120
+ },
+ {
+  "file": "test_Devanagari_MeeteiMayek_heart.txt",
+  "sha256": "61562155ea068400d5915bf931df44fd1a987df906d82b006d63d1333779b43a",
+  "bytes": 3373
+ },
+ {
+  "file": "test_Devanagari_MeeteiMayek_lalitavistara.txt",
+  "sha256": "692020e1eab6a1a0dc48569c9d6f4c91e54da734e3bbcd74bb57e89501e07e26",
+  "bytes": 15780
+ },
+ {
+  "file": "test_Devanagari_Modi_heart.txt",
+  "sha256": "623ade683d6eeb5afa08d7847e1ab7bd3da333cc9a42906a4e587f960380fd90",
+  "bytes": 4668
+ },
+ {
+  "file": "test_Devanagari_Modi_lalitavistara.txt",
+  "sha256": "880791d81ec8b84ac5d56ab33d71c374834387476e5f414522a826534c38a48c",
+  "bytes": 21485
+ },
+ {
+  "file": "test_Devanagari_Mon_heart.txt",
+  "sha256": "308583b7dc52a741d070625b612e9ff821050ce35a7b4f1fc3433f994866bb31",
+  "bytes": 3394
+ },
+ {
+  "file": "test_Devanagari_Mon_lalitavistara.txt",
+  "sha256": "e323c5d1d5df53196a83bec00c2075fe734ad71a8c299ca99348bc41fb82d790",
+  "bytes": 16017
+ },
+ {
+  "file": "test_Devanagari_Mongolian_heart.txt",
+  "sha256": "ad7acd18bf83d0522c1541292fd12d03ab5811c62806638e597ba6484358a68e",
+  "bytes": 5288
+ },
+ {
+  "file": "test_Devanagari_Mongolian_lalitavistara.txt",
+  "sha256": "caa6227badfe592ea41e2581cb670810a454da7656d413e18ad7bab68c351355",
+  "bytes": 23234
+ },
+ {
+  "file": "test_Devanagari_Mro_heart.txt",
+  "sha256": "1496fd98c6782a7fcc955b8b9cd60daf5eba3fe177a55337d7a14e258a0328a0",
+  "bytes": 4910
+ },
+ {
+  "file": "test_Devanagari_Mro_lalitavistara.txt",
+  "sha256": "48d6047f7478abdffae8211f1d43af6d2e7801b1aecbbcb5cf5ded4a29d53d99",
+  "bytes": 23628
+ },
+ {
+  "file": "test_Devanagari_Multani_heart.txt",
+  "sha256": "2e27cb852bef627b5c2781d8cd1a31f8bdbdb13fc0fa1b20332a53407f850c58",
+  "bytes": 3004
+ },
+ {
+  "file": "test_Devanagari_Multani_lalitavistara.txt",
+  "sha256": "ac8f1fd6f4949eb8c17ec7af0a7ef3ad31f2ee52eb0769401e3ffe3263bbade6",
+  "bytes": 14055
+ },
+ {
+  "file": "test_Devanagari_Nandinagari_heart.txt",
+  "sha256": "6dc9d12e8f9106e95e826f2dd172dc98ae63fc1adbdd252485d83c4ae4cbb9df",
+  "bytes": 4568
+ },
+ {
+  "file": "test_Devanagari_Nandinagari_lalitavistara.txt",
+  "sha256": "5412ba921cce5ad959cc9f327c92b4e86254ae7d08f9226eaf466ea412faac7a",
+  "bytes": 21095
+ },
+ {
+  "file": "test_Devanagari_Narb_heart.txt",
+  "sha256": "8bd3ff77c5e2d418b2079a27278fe1d3eb4b6cc2df486c7b9c19d3e7af57e5af",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Narb_lalitavistara.txt",
+  "sha256": "84e54c3d007f5d160b4f4c584cf74673497965ce51ff22aa0e7a84e2fbe390b5",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Nbat_heart.txt",
+  "sha256": "501d341b5064d513870c488c91ecb8f787a3366861b63b17e80c9de7041cb4c7",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Nbat_lalitavistara.txt",
+  "sha256": "94c5208a4f8bc96843793cc24d4e967282c251ca78c81fbf15efa0ef4073fe71",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Newa_heart.txt",
+  "sha256": "5451c0fe4e72fcd2a36e731eb12d61fd423280ada95edfca4c86bf8600ff8878",
+  "bytes": 4626
+ },
+ {
+  "file": "test_Devanagari_Newa_lalitavistara.txt",
+  "sha256": "85e1444cc878457fddac03300eee136607e84f8420dc6ed41a490f77c5eb0bc7",
+  "bytes": 21364
+ },
+ {
+  "file": "test_Devanagari_OldPersian_heart.txt",
+  "sha256": "2d05e96481c36c6ca35a1f24f025e78890cf726aa6fdc0eba5273c031dc117e5",
+  "bytes": 4501
+ },
+ {
+  "file": "test_Devanagari_OldPersian_lalitavistara.txt",
+  "sha256": "d251b3d7b58ec4fc41e2cad61ae1b5db2ae98d089973b129f90a70e6f7a4dc79",
+  "bytes": 21246
+ },
+ {
+  "file": "test_Devanagari_Oriya_heart.txt",
+  "sha256": "d31004924ab1d04561a7dbc042f1f2ef0b4aeac6addfcdb6e0b06d27c8c65d78",
+  "bytes": 3527
+ },
+ {
+  "file": "test_Devanagari_Oriya_lalitavistara.txt",
+  "sha256": "b11105efd31efc107a01ec12850ff079a5972ce827c4c2647b4a211726eef272",
+  "bytes": 16217
+ },
+ {
+  "file": "test_Devanagari_Pallava_heart.txt",
+  "sha256": "3e5eee6f2c669d9a961e796a53c100f7feb1088cafdde6f3142db6d159936247",
+  "bytes": 3575
+ },
+ {
+  "file": "test_Devanagari_Pallava_lalitavistara.txt",
+  "sha256": "9d27f1c36a275155fbc7d628d632547063a0d027374cf95a225bc31959219b23",
+  "bytes": 16376
+ },
+ {
+  "file": "test_Devanagari_Palm_heart.txt",
+  "sha256": "74341ee525631af005490c42b56ae0aa9e724bbc90e20c18b9d962263e2c8211",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Palm_lalitavistara.txt",
+  "sha256": "269346bd7f9525068c10a14502709c17b0259af6b1e6b3f332b8922c3a8dbf38",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_PhagsPa_heart.txt",
+  "sha256": "2046deda9208f521731973628fb152aceefda6c5f99dba7f2919232db30103fb",
+  "bytes": 3969
+ },
+ {
+  "file": "test_Devanagari_PhagsPa_lalitavistara.txt",
+  "sha256": "1e4238515cdec0286c77cd71b3c36baa030c375ce29df640249f3aa8960835a0",
+  "bytes": 18830
+ },
+ {
+  "file": "test_Devanagari_Phli_heart.txt",
+  "sha256": "9018b7aacdb6e4cf9bf0f959ad1b32c56f4d49989f90d263be779e3cf0d044c9",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Phli_lalitavistara.txt",
+  "sha256": "c777909cb5722be083a9605a650e879af20ed4c1b910c306a3dab754f9ea5f01",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Phlp_heart.txt",
+  "sha256": "64e4ca851fda3c793e75b81a01994ef22c1687ae7cbbdf82ecd2a1e930f92bf8",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Phlp_lalitavistara.txt",
+  "sha256": "a0da611f330f65a1325e21ffbd09ec5cc55c70d031590ff4a1f5a2260fffd14d",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Phnx_heart.txt",
+  "sha256": "592c37c4a9010ac577f25b0c67db1433893ddfdfb6db91706240c297ce91b8d7",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Phnx_lalitavistara.txt",
+  "sha256": "7eee7ca4806438f33ca8210b1a250117be493f30d3c061428da2f0b9c3a5cf2e",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Prti_heart.txt",
+  "sha256": "5ab18176fa2a02db862c3c287730ea0eee0f8688b531f1f0138db9184452688d",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Prti_lalitavistara.txt",
+  "sha256": "7d35c2b9994d0c2339e7279667cd3758378995a76532186a936fca2b56c6d66b",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Ranjana_heart.txt",
+  "sha256": "8de4ce9fae2a10382c8b5e6981fc49b7d169c676307bde37555911912d7f6eeb",
+  "bytes": 3506
+ },
+ {
+  "file": "test_Devanagari_Ranjana_lalitavistara.txt",
+  "sha256": "b850ed8b0a02a1f9c2ad6e74042161133ffe13a01612955a8623cd445b9e875e",
+  "bytes": 16157
+ },
+ {
+  "file": "test_Devanagari_Rejang_heart.txt",
+  "sha256": "b0a37f9a37eae9cea06c51ff2421bcdcfa969a9f8adeb7bf3f0549d5e09ab877",
+  "bytes": 3047
+ },
+ {
+  "file": "test_Devanagari_Rejang_lalitavistara.txt",
+  "sha256": "3aca42178cc6c38cbbaf65a48697d36b8604f9065cfb6b9ccc1b08f2ed81f173",
+  "bytes": 14675
+ },
+ {
+  "file": "test_Devanagari_RomanColloquial_heart.txt",
+  "sha256": "0764e27c9b186b4b82b332fec0bf9844d272102529e1597715cf8018b576ab3b",
+  "bytes": 1431
+ },
+ {
+  "file": "test_Devanagari_RomanColloquial_lalitavistara.txt",
+  "sha256": "8e8973cd420ca8f3c026d1486166437a783f9e3afec852f59d3b6e6df44247f1",
+  "bytes": 6844
+ },
+ {
+  "file": "test_Devanagari_RomanKana_heart.txt",
+  "sha256": "add294fd86e64c9b4c0eb3bca69dbce5d36e6291a195064d5673be6568053427",
+  "bytes": 1637
+ },
+ {
+  "file": "test_Devanagari_RomanKana_lalitavistara.txt",
+  "sha256": "b96ae6f589b21c6377ced3de7fa9a692116ae730736d74437c630bbf1805a19b",
+  "bytes": 7981
+ },
+ {
+  "file": "test_Devanagari_RomanReadable_heart.txt",
+  "sha256": "9c7225d1dd3e647af20882f75464a9e5772e8d46abb72b8e4dc0bc99055409c8",
+  "bytes": 1617
+ },
+ {
+  "file": "test_Devanagari_RomanReadable_lalitavistara.txt",
+  "sha256": "c4956450aeece63fa6d7dc004edd5c5f9a4bb9d1d76261eb0b71bda9eae12cdb",
+  "bytes": 7534
+ },
+ {
+  "file": "test_Devanagari_RomanSemitic_heart.txt",
+  "sha256": "c28bc48980bcce6d42407df995c24527983cbeae933e8af85ea301089367a076",
+  "bytes": 1856
+ },
+ {
+  "file": "test_Devanagari_RomanSemitic_lalitavistara.txt",
+  "sha256": "fc8a1e124b9753167a7c81c77f0562270b73c4765082cdd1a0b4ffd7d5cd9bef",
+  "bytes": 8451
+ },
+ {
+  "file": "test_Devanagari_RussianCyrillic_heart.txt",
+  "sha256": "2057917a197be1a33d9df84af3db10770266152e0d5786903a893ee9ce6acfb5",
+  "bytes": 3034
+ },
+ {
+  "file": "test_Devanagari_RussianCyrillic_lalitavistara.txt",
+  "sha256": "e14d6f54f7bc3ae678854db9fc038ddbf4d609769010c3826b20b3e595cfd8ac",
+  "bytes": 14117
+ },
+ {
+  "file": "test_Devanagari_SLP1_heart.txt",
+  "sha256": "b58f7d618b267a9936ec1e3c6e430b4f00413c9029220cd2992bb36b98837dad",
+  "bytes": 1343
+ },
+ {
+  "file": "test_Devanagari_SLP1_lalitavistara.txt",
+  "sha256": "14474253f067ac7630d9d6ad45f49c380c29513a50963a501ed3b17c9702a61f",
+  "bytes": 6310
+ },
+ {
+  "file": "test_Devanagari_Samr_heart.txt",
+  "sha256": "ac12774135d618b99e9d61d371ce9a46ab2c34c834d4bd5340e1114389c4b11f",
+  "bytes": 2769
+ },
+ {
+  "file": "test_Devanagari_Samr_lalitavistara.txt",
+  "sha256": "205fd4d77e4d008e05d9ac32b6af31bbaab2b0d521fcccd8f706ef4f5578260d",
+  "bytes": 12631
+ },
+ {
+  "file": "test_Devanagari_Santali_heart.txt",
+  "sha256": "60a74a71e0efd1c7bb512bfddcca868a9c1d57dad9969519f393bba95e5d3eba",
+  "bytes": 3871
+ },
+ {
+  "file": "test_Devanagari_Santali_lalitavistara.txt",
+  "sha256": "d997adee71d3a71a29c77718a94468eab018e1538ed4f5835e5fddcb130ebd86",
+  "bytes": 18648
+ },
+ {
+  "file": "test_Devanagari_Sarb_heart.txt",
+  "sha256": "678fffa01b95f52939ac56bd2190ce252bb08a1f8824878e546446cdaaf8916b",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Sarb_lalitavistara.txt",
+  "sha256": "d1bbfcaeb4275948d60493d92d9901eb936bd19edd76c4217d867b2ce99db998",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Saurashtra_heart.txt",
+  "sha256": "56046f35e17af740f9ef67b26178fb28a5464de8f0a443a5c6c3b0bcfb871070",
+  "bytes": 3530
+ },
+ {
+  "file": "test_Devanagari_Saurashtra_lalitavistara.txt",
+  "sha256": "a67829fef7354b4f17358db11178dc4cc21300a6c6787fabb38f468a502b6ece",
+  "bytes": 16262
+ },
+ {
+  "file": "test_Devanagari_Shahmukhi_heart.txt",
+  "sha256": "bd4d86f658524f11a5eab14e0c9ef4e4d6a95db3c89844fed31657f2982bf9f0",
+  "bytes": 3247
+ },
+ {
+  "file": "test_Devanagari_Shahmukhi_lalitavistara.txt",
+  "sha256": "8975bc91ebcb7b9ffd41d7e75a3ac7d5b4e0e167e3d37cbf681c820e492881ea",
+  "bytes": 14681
+ },
+ {
+  "file": "test_Devanagari_Shan_heart.txt",
+  "sha256": "d0b2d157db423d9a90883509b72c7264e6cc79c27e7dab9215be9dd03f72b18e",
+  "bytes": 3460
+ },
+ {
+  "file": "test_Devanagari_Shan_lalitavistara.txt",
+  "sha256": "b307c6baf33115f0fcb716d4e1b1a60985c7e6f911eb4e5258aac3eb08acce94",
+  "bytes": 16632
+ },
+ {
+  "file": "test_Devanagari_Sharada_heart.txt",
+  "sha256": "e7a3206b766ae4b9f3005bcdb4b9f09da5b85e3c289b1b2dd7b7f42e0cfaac49",
+  "bytes": 4630
+ },
+ {
+  "file": "test_Devanagari_Sharada_lalitavistara.txt",
+  "sha256": "d1602429adb4f59124841a56902150842a558e8d21b7b40140d373e0ca620b51",
+  "bytes": 21368
+ },
+ {
+  "file": "test_Devanagari_SiddhamDevanagari_heart.txt",
+  "sha256": "8de4ce9fae2a10382c8b5e6981fc49b7d169c676307bde37555911912d7f6eeb",
+  "bytes": 3506
+ },
+ {
+  "file": "test_Devanagari_SiddhamDevanagari_lalitavistara.txt",
+  "sha256": "b850ed8b0a02a1f9c2ad6e74042161133ffe13a01612955a8623cd445b9e875e",
+  "bytes": 16157
+ },
+ {
+  "file": "test_Devanagari_Siddham_heart.txt",
+  "sha256": "41ed80c1dd415e7d98aabe0aa3586e588c5873c0d536365d1f28f8572ef92e4b",
+  "bytes": 4622
+ },
+ {
+  "file": "test_Devanagari_Siddham_lalitavistara.txt",
+  "sha256": "cbcaa77ff742922bd0f746d0b70467e22d9658f6be4596ae877f37d196521d99",
+  "bytes": 21301
+ },
+ {
+  "file": "test_Devanagari_Sinhala_heart.txt",
+  "sha256": "c4230dca619373284112dd07091b09494010103424f5eb2b85955a54d5947080",
+  "bytes": 3586
+ },
+ {
+  "file": "test_Devanagari_Sinhala_lalitavistara.txt",
+  "sha256": "bd3c790f92e171322a42dcad1dedf1c1da0723304e9be5f795652618c8e416ff",
+  "bytes": 16554
+ },
+ {
+  "file": "test_Devanagari_Sogd_heart.txt",
+  "sha256": "e42e7873fa0811eb571b54067a0ac243e3678205436cf0b30a03c5ab4b0acc52",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Sogd_lalitavistara.txt",
+  "sha256": "94f87ede14a23816bb0f699ba6fbb4e9521d9282bfc6f592eb428b783bb5b5c6",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_Sogo_heart.txt",
+  "sha256": "7790608d404be0e2fea3811079a56a451d540d5930ebe920b851a59a24a2b807",
+  "bytes": 3632
+ },
+ {
+  "file": "test_Devanagari_Sogo_lalitavistara.txt",
+  "sha256": "114de9ca64ad1aa4e90f575674a1aac8ceb430bb3f8261328a8f5c53f6dae00d",
+  "bytes": 16614
+ },
+ {
+  "file": "test_Devanagari_SoraSompeng_heart.txt",
+  "sha256": "2d2df47f3301d57e4142255162ae8eb742d18c315857979c52a9755c1d5ad686",
+  "bytes": 4366
+ },
+ {
+  "file": "test_Devanagari_SoraSompeng_lalitavistara.txt",
+  "sha256": "4ecc376d980ce3d76f272167e34f5266cd9ad2ce3564559220f976671e75f359",
+  "bytes": 21752
+ },
+ {
+  "file": "test_Devanagari_Soyombo_heart.txt",
+  "sha256": "5174d85940ef9521c1525d3b2642add47d750da47f17eb2fb16ab992cf8ad145",
+  "bytes": 4566
+ },
+ {
+  "file": "test_Devanagari_Soyombo_lalitavistara.txt",
+  "sha256": "9fe8b49ddca5f13068b2a9ce73092f634e68e140c7696176a2b7164a0d99a397",
+  "bytes": 21101
+ },
+ {
+  "file": "test_Devanagari_Sundanese_heart.txt",
+  "sha256": "15b5fe4d58a9db7e7806b57129099a8fc4f974f9c096de23a8ffb15a49794042",
+  "bytes": 2910
+ },
+ {
+  "file": "test_Devanagari_Sundanese_lalitavistara.txt",
+  "sha256": "3d68e8e8d7d3ec47cecb393df24ebf889b0582340164ea6b70dd3f46ef29ad0c",
+  "bytes": 14166
+ },
+ {
+  "file": "test_Devanagari_SylotiNagri_heart.txt",
+  "sha256": "c020845fa0805ea2d878a30a539ad7158fb2da6421e1e135e8950811fd255b7f",
+  "bytes": 3596
+ },
+ {
+  "file": "test_Devanagari_SylotiNagri_lalitavistara.txt",
+  "sha256": "54537aa48abecc8fdea644aed49bb8ed6cb99fd9fdbdd80968d2cb60b3561cb5",
+  "bytes": 16496
+ },
+ {
+  "file": "test_Devanagari_Syre_heart.txt",
+  "sha256": "84c368f1d6185d51e2bbc8fbd89b91168394021c70bfc740fe7d416e5b35aded",
+  "bytes": 2080
+ },
+ {
+  "file": "test_Devanagari_Syre_lalitavistara.txt",
+  "sha256": "504409d4d1b1714963c706122c2957f5a7f88a9cc926c03f33ec3331b1867311",
+  "bytes": 9428
+ },
+ {
+  "file": "test_Devanagari_Syrj_heart.txt",
+  "sha256": "e51cbcbf054872afadc5eaaac68c344bcd3c254d6035477ceea421b33134d6ba",
+  "bytes": 3038
+ },
+ {
+  "file": "test_Devanagari_Syrj_lalitavistara.txt",
+  "sha256": "f44db6b8c82e81f3416bc08e6b8f97953b3ce622c7af4da71bad779d105d40d1",
+  "bytes": 14824
+ },
+ {
+  "file": "test_Devanagari_Syrn_heart.txt",
+  "sha256": "a78bdebcbc839d5e94f0e0e24f892eaef04ea430462f0468c9e0e3da5edb0503",
+  "bytes": 3268
+ },
+ {
+  "file": "test_Devanagari_Syrn_lalitavistara.txt",
+  "sha256": "8029d51c82a26ea47ebd258d8b5067eff264f2c13844d386874b334cd00d792c",
+  "bytes": 16224
+ },
+ {
+  "file": "test_Devanagari_Tagalog_heart.txt",
+  "sha256": "3a3ec74c2cafbd87b9c8a30911cdb69c8e942f408e03a5f36a870d8553128dd4",
+  "bytes": 3296
+ },
+ {
+  "file": "test_Devanagari_Tagalog_lalitavistara.txt",
+  "sha256": "4042bbcc493d07911393c84e861fbedcbf272fe8bb2b423bf1d784c909a888d4",
+  "bytes": 15795
+ },
+ {
+  "file": "test_Devanagari_Tagbanwa_heart.txt",
+  "sha256": "b59177e9812d56c758d43d34db145595d7c598676007f7802a22eacf01513444",
+  "bytes": 2615
+ },
+ {
+  "file": "test_Devanagari_Tagbanwa_lalitavistara.txt",
+  "sha256": "bb9040a02fcb1249ac52134856b4abc97e8a0b2f41770c2973f4d89538225cfd",
+  "bytes": 13029
+ },
+ {
+  "file": "test_Devanagari_TaiLaing_heart.txt",
+  "sha256": "b9aa9606d4864a76162561447659fda7566267887a5ac54368551d10e179ab28",
+  "bytes": 3373
+ },
+ {
+  "file": "test_Devanagari_TaiLaing_lalitavistara.txt",
+  "sha256": "5b0d57fe831ce743f2cd2a8178f1b7579ad3b5cc40de492795bc8110707d4353",
+  "bytes": 15888
+ },
+ {
+  "file": "test_Devanagari_TaiTham_heart.txt",
+  "sha256": "60067cb038d18e3ae9934b948469ad5758dd21f06384641d71caf2a505d64d7d",
+  "bytes": 3499
+ },
+ {
+  "file": "test_Devanagari_TaiTham_lalitavistara.txt",
+  "sha256": "4175697ccd4c375145f04d3479dc95d913a3869370bd65e2eb08d55b740683ac",
+  "bytes": 16257
+ },
+ {
+  "file": "test_Devanagari_Takri_heart.txt",
+  "sha256": "1d52d968c5a7cc2a7fc64b7948617d31dfb20417a63e65060a35d3e3c85e05cf",
+  "bytes": 4646
+ },
+ {
+  "file": "test_Devanagari_Takri_lalitavistara.txt",
+  "sha256": "4a146b2fa778383d44a3bdac1d793e8498d15b729acdd3639b81ac68aeab3fa2",
+  "bytes": 21381
+ },
+ {
+  "file": "test_Devanagari_TamilBrahmi_heart.txt",
+  "sha256": "0fa118c6b866bc1c185e197c9356adfec04a19bf2c92f5d42895102f7d6047a7",
+  "bytes": 4698
+ },
+ {
+  "file": "test_Devanagari_TamilBrahmi_lalitavistara.txt",
+  "sha256": "bbe03574e745742f57d16e3c6b4bc4f3561106dd8902c46da04b969fd74bec04",
+  "bytes": 21737
+ },
+ {
+  "file": "test_Devanagari_TamilExtended_heart.txt",
+  "sha256": "5c1bfb24f857dfc76500431ec8b2b78e8795563050d0adf8c35d2307a300d935",
+  "bytes": 3942
+ },
+ {
+  "file": "test_Devanagari_TamilExtended_lalitavistara.txt",
+  "sha256": "eb9c3d85e23a0163293924043777b6dc4f80095d1c5ef66090e38abfdce993b9",
+  "bytes": 17620
+ },
+ {
+  "file": "test_Devanagari_TamilGrantha_heart.txt",
+  "sha256": "6b53496458dca912edbcd1827ceccaba461d94a970ddfb38a438b8c4d01e5337",
+  "bytes": 3968
+ },
+ {
+  "file": "test_Devanagari_TamilGrantha_lalitavistara.txt",
+  "sha256": "e655fa42ab1edfaf03c274a864acc3b6414c8c8ee7aa4e3d61f56d4915362d63",
+  "bytes": 19748
+ },
+ {
+  "file": "test_Devanagari_Tamil_heart.txt",
+  "sha256": "601ab00cd4daf1eb49a68bbbd26064bfd692b474d89ac4f71970a6a948df7f84",
+  "bytes": 3761
+ },
+ {
+  "file": "test_Devanagari_Tamil_lalitavistara.txt",
+  "sha256": "29dc63ea9ab64426294afe76f821cbc0bf0a2d4c7bf7aaf93a1891f35e8d50e6",
+  "bytes": 17864
+ },
+ {
+  "file": "test_Devanagari_Telugu_heart.txt",
+  "sha256": "441bd87b098b2e4e65caff839c0e5f7544b734b2741b954028baaa1c8a0d1e96",
+  "bytes": 3426
+ },
+ {
+  "file": "test_Devanagari_Telugu_lalitavistara.txt",
+  "sha256": "930f7509ce075fe1d8b8b651086be869ff2e1bbed7b01876cde120beabe17131",
+  "bytes": 15814
+ },
+ {
+  "file": "test_Devanagari_Thaa_heart.txt",
+  "sha256": "185877001ec46a683ef950b90cc1c2d6da0d142ea6ba9f794969d3aaf6813620",
+  "bytes": 2947
+ },
+ {
+  "file": "test_Devanagari_Thaa_lalitavistara.txt",
+  "sha256": "670e08526820c647c2dbfd6a338a4ad05bc7088fc08324a1aaacec3a2f3f25ee",
+  "bytes": 13770
+ },
+ {
+  "file": "test_Devanagari_Thaana_heart.txt",
+  "sha256": "2889fb0a9aff30760b02412de5ce7fde0303defc9b493efedeb43f7391898c6a",
+  "bytes": 3007
+ },
+ {
+  "file": "test_Devanagari_Thaana_lalitavistara.txt",
+  "sha256": "1e06591f6987b50dc07c8958f3520a58dff8bcfa4457089fea2fa351389f632f",
+  "bytes": 14006
+ },
+ {
+  "file": "test_Devanagari_Thai_heart.txt",
+  "sha256": "d3ad29936605a735f406efa6a7d5d82bc87cf5d2e8435e86f31060cc5fd83b37",
+  "bytes": 3577
+ },
+ {
+  "file": "test_Devanagari_Thai_lalitavistara.txt",
+  "sha256": "d9402046410c289ebec1f9bef54fce6462e7b06309f6b72fef64efde7ab42b72",
+  "bytes": 16302
+ },
+ {
+  "file": "test_Devanagari_Tibetan_heart.txt",
+  "sha256": "d099defb0c43726e3eca79d43c390789da3913c012b6cef3f7bae516bd214bb9",
+  "bytes": 3331
+ },
+ {
+  "file": "test_Devanagari_Tibetan_lalitavistara.txt",
+  "sha256": "6e66f21de7ed9487f22dc52640e9828ba6e94881d1c43804be723ce77b151252",
+  "bytes": 15665
+ },
+ {
+  "file": "test_Devanagari_Tirhuta_heart.txt",
+  "sha256": "2ac24c405a6cb06e6d79e8082a13e86b0847ea9f7a33eae873125f5e9b563a2a",
+  "bytes": 4604
+ },
+ {
+  "file": "test_Devanagari_Tirhuta_lalitavistara.txt",
+  "sha256": "419081608e3257e3deee8bd21d9149c8820b213f1748b0874fdc60ed2f6a1747",
+  "bytes": 21260
+ },
+ {
+  "file": "test_Devanagari_Titus_heart.txt",
+  "sha256": "4967a76c037ebd4cec999da270e2288ec4d407d503f41cb8648034c8453b722f",
+  "bytes": 1714
+ },
+ {
+  "file": "test_Devanagari_Titus_lalitavistara.txt",
+  "sha256": "aa75bcc645f20acd34faa216a3ec7f8dcbc26fdfa493eb344b7cb3843c93f56d",
+  "bytes": 8146
+ },
+ {
+  "file": "test_Devanagari_TolongSiki_heart.txt",
+  "sha256": "aa31eb329f9f70e938ba56a73efbead5052d3432f892e3d2303eb4712d73940a",
+  "bytes": 1351
+ },
+ {
+  "file": "test_Devanagari_TolongSiki_lalitavistara.txt",
+  "sha256": "c31bfd8839be5d05cae37b2e2aa78f8eeea8b9cb461b5757bf116fa8c101b61a",
+  "bytes": 6364
+ },
+ {
+  "file": "test_Devanagari_Type_heart.txt",
+  "sha256": "ac3927746a84d7675a51b37eef2cb1b6e635c689d886393d7d1d59692d04d4c0",
+  "bytes": 1428
+ },
+ {
+  "file": "test_Devanagari_Type_lalitavistara.txt",
+  "sha256": "e009390fd908f0641493c35e016093f70f9a7cf5ec4601edeb9c84ac813f9542",
+  "bytes": 6731
+ },
+ {
+  "file": "test_Devanagari_Ugar_heart.txt",
+  "sha256": "d59d5e48d5b8447763ad214d5d3eb20726afdd2c4eca8d6ec136cde0721e7c3d",
+  "bytes": 3959
+ },
+ {
+  "file": "test_Devanagari_Ugar_lalitavistara.txt",
+  "sha256": "aee5dcd312fe24a9dc153252e889731742af83a8c666bedf32a264510b600d0f",
+  "bytes": 18000
+ },
+ {
+  "file": "test_Devanagari_Urdu_heart.txt",
+  "sha256": "070b6ce932c31e79a136be36fbff35ad789f72a5e776aa587c600b4e62b6edb7",
+  "bytes": 3247
+ },
+ {
+  "file": "test_Devanagari_Urdu_lalitavistara.txt",
+  "sha256": "7fb872fcf291b05f826726e1a7a3b1bdfe2effeecdaf3b8cebc975521e0bb344",
+  "bytes": 14683
+ },
+ {
+  "file": "test_Devanagari_Vatteluttu_heart.txt",
+  "sha256": "536b6e713a59df88badd55f80c8c60ee10076c13a7ef10a3da3729c10330b09e",
+  "bytes": 3567
+ },
+ {
+  "file": "test_Devanagari_Vatteluttu_lalitavistara.txt",
+  "sha256": "802fc55e187562c34d5c0d5d71ee714566eaf9986fdf004fc60e1954614f8e5f",
+  "bytes": 16468
+ },
+ {
+  "file": "test_Devanagari_Velthuis_heart.txt",
+  "sha256": "8b2be28fcc7a881f8ed26bec6d9d0a92bb0fe9ed2dbef384e4f9dfd34ffc0747",
+  "bytes": 1621
+ },
+ {
+  "file": "test_Devanagari_Velthuis_lalitavistara.txt",
+  "sha256": "d6a3b5947d0f105151c831f78bf8bc46e90b235be72124e4e6340b1ffdd9c61f",
+  "bytes": 7539
+ },
+ {
+  "file": "test_Devanagari_WX-kok_heart.txt",
+  "sha256": "34433717a9ddf834799f28af530f449dd60d4f19c04ef059bedb34578d030c52",
+  "bytes": 1368
+ },
+ {
+  "file": "test_Devanagari_WX-kok_lalitavistara.txt",
+  "sha256": "970c2c5bb005569ab13c00d9aff0e3ed382939b09b2c221b97a1ac01a340caf8",
+  "bytes": 6422
+ },
+ {
+  "file": "test_Devanagari_WX_heart.txt",
+  "sha256": "f1c2ebce65baae0248e399fc9ba62a0a84edd879b46983fe1462b1cb65b469b0",
+  "bytes": 1343
+ },
+ {
+  "file": "test_Devanagari_WX_lalitavistara.txt",
+  "sha256": "f6a6bb7bd4655bd6defca0bcaa178530a3a5f129bc9e4eaead4062b72355bc87",
+  "bytes": 6310
+ },
+ {
+  "file": "test_Devanagari_Wancho_heart.txt",
+  "sha256": "9370003b31b9aa21957963458b6b3638bd16e9314186529fcdd68de894b5d1bf",
+  "bytes": 4712
+ },
+ {
+  "file": "test_Devanagari_Wancho_lalitavistara.txt",
+  "sha256": "28a68866e5a8dbffb097765ff67cc3f8c4fbcd6368221afd4cfa0eeeefc188b1",
+  "bytes": 22661
+ },
+ {
+  "file": "test_Devanagari_WarangCiti_heart.txt",
+  "sha256": "e31afa44c8a3a81e63d28c4c95eb845353359c0e64b202a0dd2a6f7dfc1fd328",
+  "bytes": 3942
+ },
+ {
+  "file": "test_Devanagari_WarangCiti_lalitavistara.txt",
+  "sha256": "d09a8d5723023dfec122a95fe6f8df4f4f22ca4d2adedcdf5d43cf441bca704b",
+  "bytes": 18780
+ },
+ {
+  "file": "test_Devanagari_ZanabazarSquare_heart.txt",
+  "sha256": "95c5d41e34ad441a9b17e4a1256df2e2177a8e83f167ec526ff5c0b8929fa6b6",
+  "bytes": 4730
+ },
+ {
+  "file": "test_Devanagari_ZanabazarSquare_lalitavistara.txt",
+  "sha256": "26fa7bc21a5459c8aa4ad2799b1b2b134eed4ef2dd1f061560ec089960731b71",
+  "bytes": 21669
+ },
+ {
+  "file": "test_IAST_Ahom_heart.txt",
+  "sha256": "fb099b423ea7661f9eca796ea507e216d1d929490ce07968816710b841582be6",
+  "bytes": 6894
+ },
+ {
+  "file": "test_IAST_Ahom_lalitavistara.txt",
+  "sha256": "8cf253dd0887054b71820bf04ded217a2796f2a041202c2d700fa1363ef079a0",
+  "bytes": 22471
+ },
+ {
+  "file": "test_IAST_Aksharaa_heart.txt",
+  "sha256": "c2c7cba3ccda6af6007f50485bc4cab8ad4e00b8d2603172d1b4729fc7148ee9",
+  "bytes": 2371
+ },
+ {
+  "file": "test_IAST_Aksharaa_lalitavistara.txt",
+  "sha256": "7ef9d11a802cb598b81fb378c06d395b510cd59d2a4b1b44aeb41ecac1852991",
+  "bytes": 7990
+ },
+ {
+  "file": "test_IAST_Arab-Fa_heart.txt",
+  "sha256": "6ff011ae2070194c246327de058263bce79c091d1d20792033305a2a782574e6",
+  "bytes": 4610
+ },
+ {
+  "file": "test_IAST_Arab-Fa_lalitavistara.txt",
+  "sha256": "c9663e5cf0f5b60cee99cd7a7bf3e53a9734b5c8c8c07758e542c8fbeb78cdf9",
+  "bytes": 15261
+ },
+ {
+  "file": "test_IAST_Arab-Pa_heart.txt",
+  "sha256": "87b902772477d979ff2235b03406b2591a2b2fed3dcd5c5cdf3b60187ad91eee",
+  "bytes": 4515
+ },
+ {
+  "file": "test_IAST_Arab-Pa_lalitavistara.txt",
+  "sha256": "8a84eb104864f8184f5cd88ce8902ceed73c2e84e1fed71d8601c94fa40577aa",
+  "bytes": 14701
+ },
+ {
+  "file": "test_IAST_Arab-Ur_heart.txt",
+  "sha256": "d4f768edf170d8134f7c61f80b3c92a343f13d0be5da78a52eebc089ec7bcd8a",
+  "bytes": 4584
+ },
+ {
+  "file": "test_IAST_Arab-Ur_lalitavistara.txt",
+  "sha256": "aea2267956e5ddab782bbcd03af9c7a7429a6123cb25c0ca72ec25da0fdd0ad6",
+  "bytes": 14837
+ },
+ {
+  "file": "test_IAST_Arab_heart.txt",
+  "sha256": "9bad8660cf50056c24df0383e6ef07c88512022d7253c4c850057c1bdc92ac24",
+  "bytes": 4630
+ },
+ {
+  "file": "test_IAST_Arab_lalitavistara.txt",
+  "sha256": "d86cc7b2ee74f9bbcc1f5919f66e3f2e48c4fa102ac6a963d89587561c1e76bc",
+  "bytes": 15381
+ },
+ {
+  "file": "test_IAST_Ariyaka_heart.txt",
+  "sha256": "d07abd224867899dafbd292673184ca96e356bd0edd5b7e2d3928e0f7bb5b619",
+  "bytes": 1874
+ },
+ {
+  "file": "test_IAST_Ariyaka_lalitavistara.txt",
+  "sha256": "eccf3e99aa58792daab96b2086cd77c8e3fc155974ea23aadedd38277b5a4267",
+  "bytes": 6353
+ },
+ {
+  "file": "test_IAST_Armi_heart.txt",
+  "sha256": "33af1c96c691ab0a2ac3e64f9df95d7af75e34dccbcb9484b50425ae32ada3c4",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Armi_lalitavistara.txt",
+  "sha256": "90b677d08c724cd98631c9ecac4701cee0dba5fcdc99d34ebabeb0d6a57c1aad",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Assamese_heart.txt",
+  "sha256": "b87e8028d8ee2f0fa878a8293a2a482cf8102ad77492ceacfb1a0da1276c31f3",
+  "bytes": 4860
+ },
+ {
+  "file": "test_IAST_Assamese_lalitavistara.txt",
+  "sha256": "d502cc6620a097c6aa04f6bc0a08915578710beaab5bac6529f9c50573781793",
+  "bytes": 16187
+ },
+ {
+  "file": "test_IAST_Avestan_heart.txt",
+  "sha256": "78cffb50acdc1532e8169452aa8bb9e41a2a6ce231a0fd122e97e35ad40e33d0",
+  "bytes": 7133
+ },
+ {
+  "file": "test_IAST_Avestan_lalitavistara.txt",
+  "sha256": "b7bd66989a2738871e245685be79e08febd5e58011821a92130e2ac5c2025f79",
+  "bytes": 24849
+ },
+ {
+  "file": "test_IAST_Balinese_heart.txt",
+  "sha256": "68f9c9daf395b88382b91ce6a2b5d82e356d76367ddac88096c1ce47bcd5066f",
+  "bytes": 4767
+ },
+ {
+  "file": "test_IAST_Balinese_lalitavistara.txt",
+  "sha256": "ace2ee7fbaa2573a28985641f93d5d26e822f3f564dfb01045798909ad5d1c01",
+  "bytes": 15915
+ },
+ {
+  "file": "test_IAST_BarahaNorth_heart.txt",
+  "sha256": "7f85641e7bca207aeb5b037cecfd5599a91d7a30dc9768d3268f706f86b5873f",
+  "bytes": 2114
+ },
+ {
+  "file": "test_IAST_BarahaNorth_lalitavistara.txt",
+  "sha256": "95148ca282ac9643e1217400c4370bd63bbdabc4c719351f19d4572140b0a8f2",
+  "bytes": 7083
+ },
+ {
+  "file": "test_IAST_BarahaSouth_heart.txt",
+  "sha256": "ca8d72cf44ff98c98a733263105ef7b286f8b38790972d846ed549c9c72c2016",
+  "bytes": 2114
+ },
+ {
+  "file": "test_IAST_BarahaSouth_lalitavistara.txt",
+  "sha256": "4dfc926c6bbe31b50677a6e15d79aa4f314b60ab0ae95c33277c901481c4c5de",
+  "bytes": 7083
+ },
+ {
+  "file": "test_IAST_BatakKaro_heart.txt",
+  "sha256": "7d1c3294a60cdde0b3649954b52a6391637e4600812d4f77a79ef10864256aa8",
+  "bytes": 4563
+ },
+ {
+  "file": "test_IAST_BatakKaro_lalitavistara.txt",
+  "sha256": "8d372f456eb1e42d8e3a2c58531c0adec484d3dbb9a2ef8728f5157e1603d3bf",
+  "bytes": 14880
+ },
+ {
+  "file": "test_IAST_BatakManda_heart.txt",
+  "sha256": "2875df34293980858d7c443f6d86fb0f887a272cf246aca1fc4a424ece40f530",
+  "bytes": 4935
+ },
+ {
+  "file": "test_IAST_BatakManda_lalitavistara.txt",
+  "sha256": "43dd5e5239ee7aba83021f26e630c6651527a34f507013b2ec9a191ef18cd1cf",
+  "bytes": 15852
+ },
+ {
+  "file": "test_IAST_BatakPakpak_heart.txt",
+  "sha256": "d054db7922fd32f952664818135af25bcdfca9099e95526f69188b1e431190d3",
+  "bytes": 4563
+ },
+ {
+  "file": "test_IAST_BatakPakpak_lalitavistara.txt",
+  "sha256": "049214007282251470fadd2493f430fd8fda48086985300135bfe1c3223b8b03",
+  "bytes": 14880
+ },
+ {
+  "file": "test_IAST_BatakSima_heart.txt",
+  "sha256": "34136bf370dbcdbf18dbfb7a18d1b44cdc9f2e924c8c7ee793bf4ccacc55eb89",
+  "bytes": 4563
+ },
+ {
+  "file": "test_IAST_BatakSima_lalitavistara.txt",
+  "sha256": "337b3f2e76297a01f707a6a0e385f152621e14595bb8d6bcf7b1d6415eedee52",
+  "bytes": 14880
+ },
+ {
+  "file": "test_IAST_BatakToba_heart.txt",
+  "sha256": "b5a7a8ab0eba8815f9e401c37ff3373e1fc49d4fbe332178689b25ab592a8713",
+  "bytes": 4779
+ },
+ {
+  "file": "test_IAST_BatakToba_lalitavistara.txt",
+  "sha256": "c07f6ce0906e0ee0d722bc2a9e38d9037d5845442477b8673fe35fcedbf61931",
+  "bytes": 15111
+ },
+ {
+  "file": "test_IAST_Bengali_heart.txt",
+  "sha256": "2817460b4cb0b0053ef4106c26204bf581930e3c111278c7ceaa6caddaa71f9c",
+  "bytes": 4860
+ },
+ {
+  "file": "test_IAST_Bengali_lalitavistara.txt",
+  "sha256": "b54d28923d095fad27c0441230d779af4c380e89a4ccf1452c72384bc96ced6e",
+  "bytes": 16187
+ },
+ {
+  "file": "test_IAST_Bhaiksuki_heart.txt",
+  "sha256": "0cb85d2e241cf6628f3a001cbed8e196c921e257595955e69e71875681e4b0af",
+  "bytes": 6798
+ },
+ {
+  "file": "test_IAST_Bhaiksuki_lalitavistara.txt",
+  "sha256": "a452b8bfe1fc33fd39478cd62de473eb203fa3270f53c0ed62acb8fcb4d71906",
+  "bytes": 22754
+ },
+ {
+  "file": "test_IAST_Brah_heart.txt",
+  "sha256": "ac3398c357263c67dd47d451ac9236bddb2975b2564ad8a83e31fc199c4adfeb",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Brah_lalitavistara.txt",
+  "sha256": "c15aeb7f74185611d845cfe2fe097a3af9ece5b0c5e6849b35918c86332f69ce",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Brahmi_heart.txt",
+  "sha256": "20e7fade442bb6d8036be5263e5e6d899b5d948162da253c7ed23847feae306f",
+  "bytes": 6375
+ },
+ {
+  "file": "test_IAST_Brahmi_lalitavistara.txt",
+  "sha256": "8225ca78ff784016f522b395c31e4c0e9f4a418b990972ac45dc96c30e370abb",
+  "bytes": 21340
+ },
+ {
+  "file": "test_IAST_Buginese_heart.txt",
+  "sha256": "9d2690766858705a89f1bdac829e7d6fd9bacd11655b6704f34378ada43e54f3",
+  "bytes": 3894
+ },
+ {
+  "file": "test_IAST_Buginese_lalitavistara.txt",
+  "sha256": "9d248246e2cdfbec41202e0dbd7283c315faf67671fff481e4275ee53281d598",
+  "bytes": 13389
+ },
+ {
+  "file": "test_IAST_Buhid_heart.txt",
+  "sha256": "5530b5e50cdd1071e3c266d4810f7f1948203c97a3d05243d365aaaf64321ecb",
+  "bytes": 3822
+ },
+ {
+  "file": "test_IAST_Buhid_lalitavistara.txt",
+  "sha256": "b87369f1a3fb83ba6ee02ebcc8870f0cc43770dd85c9aee294a825b938c7c89e",
+  "bytes": 13029
+ },
+ {
+  "file": "test_IAST_Burmese_heart.txt",
+  "sha256": "cc55cfc0e8530871a9c803c47cfa995fb8352e528b6477533ce44d31dc50f361",
+  "bytes": 4881
+ },
+ {
+  "file": "test_IAST_Burmese_lalitavistara.txt",
+  "sha256": "6085cd4d7df88bb15029641cffd8a8bbc6ebf636dfca263f6476e3b1047a6d13",
+  "bytes": 16098
+ },
+ {
+  "file": "test_IAST_Chakma_heart.txt",
+  "sha256": "2807235e6c186f207d684185e3f43f846f8621364cb99998c7ba8a6926b571af",
+  "bytes": 7202
+ },
+ {
+  "file": "test_IAST_Chakma_lalitavistara.txt",
+  "sha256": "4d71451b31e3c64dec05c6818e837e66b41df7e94d13df254ff1e12c49dab581",
+  "bytes": 24651
+ },
+ {
+  "file": "test_IAST_Cham_heart.txt",
+  "sha256": "c7d3fd59589f45b0821b7733dee233840b774b32040d0c04d6f528786ffd90f1",
+  "bytes": 4410
+ },
+ {
+  "file": "test_IAST_Cham_lalitavistara.txt",
+  "sha256": "29859f7f43c9169e55dd8e056c5096d175456b873a9d9f0752294a8d0545657c",
+  "bytes": 15002
+ },
+ {
+  "file": "test_IAST_Chrs_heart.txt",
+  "sha256": "b908983ffc6269cee079fdf98c9e5eef21ea8d2d075ff2a3490391cee4e4185b",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Chrs_lalitavistara.txt",
+  "sha256": "03069bbce3111545c0a2659c541a2ab30060a06b417788ac05db133c40ab783d",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Devanagari_heart.txt",
+  "sha256": "38a91b90a32fe3513b0620d2343e40046bfba5f6c0ab058337badb47154f2ece",
+  "bytes": 4851
+ },
+ {
+  "file": "test_IAST_Devanagari_lalitavistara.txt",
+  "sha256": "b850ed8b0a02a1f9c2ad6e74042161133ffe13a01612955a8623cd445b9e875e",
+  "bytes": 16157
+ },
+ {
+  "file": "test_IAST_DivesAkuru_heart.txt",
+  "sha256": "80db51b18daa0f4a6ea363913942ec16aa2ed11e4a5b60b4d7b7cc0ba379c5c9",
+  "bytes": 6391
+ },
+ {
+  "file": "test_IAST_DivesAkuru_lalitavistara.txt",
+  "sha256": "1525983471eca82ae8b34b1cca06aad072197df5790e310fcab8e74307091745",
+  "bytes": 20760
+ },
+ {
+  "file": "test_IAST_Dogra_heart.txt",
+  "sha256": "da1135f5c3af185d8d05ed2f21f183ccda8ac16cd81055d905ff88efac6d4afd",
+  "bytes": 6382
+ },
+ {
+  "file": "test_IAST_Dogra_lalitavistara.txt",
+  "sha256": "cf7addfe7a2cf96b4a10fed3b322e61d017fd85cc504b25c9d4f1009ef087451",
+  "bytes": 21248
+ },
+ {
+  "file": "test_IAST_Egyp_heart.txt",
+  "sha256": "53e6e73cfd54f3ed37dc5b34fd9cb4e0b53f9512ded58f2498de1b10e0d7c801",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Egyp_lalitavistara.txt",
+  "sha256": "1fab3dcf6fc2f6d3df25eadf03243afdd86e99517d8bca60ad0457bd50388f49",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Elym_heart.txt",
+  "sha256": "6c9bfed20724ad98ccad01a4a9f06f899699a04f22ceb2416d5e18fd79b2916f",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Elym_lalitavistara.txt",
+  "sha256": "6fa08393da2ab70d0fdb879d57ca3fd0e6c1e11c74b287276123ea3527c11d4f",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Ethi_heart.txt",
+  "sha256": "ed0d6f588aa13966d785c79e651ea9232eaf8bc3143e8d3d0a366efe2baf633e",
+  "bytes": 3749
+ },
+ {
+  "file": "test_IAST_Ethi_lalitavistara.txt",
+  "sha256": "5620eb65a1b53dd16cadc88e25dd621e468e6ef3641f5bf3b4540f9da0173d9f",
+  "bytes": 12451
+ },
+ {
+  "file": "test_IAST_GranthaGrantamil_heart.txt",
+  "sha256": "a94ffdccf58e5c3e4832d306dbd9af821f2bb4900e0c37098ebc4f4326277b6d",
+  "bytes": 4851
+ },
+ {
+  "file": "test_IAST_GranthaGrantamil_lalitavistara.txt",
+  "sha256": "e3e4f11a43322454239c1a4feaf1cc0856cfd6f202463d5669a0a7ba066ab160",
+  "bytes": 16160
+ },
+ {
+  "file": "test_IAST_GranthaPandya_heart.txt",
+  "sha256": "e1e886d07d669505f40cd2b684316e6eb5098599268ba16e25264fed3969e376",
+  "bytes": 4851
+ },
+ {
+  "file": "test_IAST_GranthaPandya_lalitavistara.txt",
+  "sha256": "d19a7c20cd11b5e885b6fea3c618111d8822561b956f9b227caf41456f25e83c",
+  "bytes": 16134
+ },
+ {
+  "file": "test_IAST_Grantha_heart.txt",
+  "sha256": "9c7c59ae8b0c5d9c9f081362333d2e30aec7fcbb5464d7ed0cb57c5d9e92a349",
+  "bytes": 6381
+ },
+ {
+  "file": "test_IAST_Grantha_lalitavistara.txt",
+  "sha256": "55c141378a9e24abb4cbd997920b158d9db2a9511344a05bf8b86e28e6caa510",
+  "bytes": 21247
+ },
+ {
+  "file": "test_IAST_Grek_heart.txt",
+  "sha256": "6285dc8775c9cb74ab800ab1037804e59ac336d6844d8a8341b7622b1508f63e",
+  "bytes": 2603
+ },
+ {
+  "file": "test_IAST_Grek_lalitavistara.txt",
+  "sha256": "3d298482b344259de16c062235f92f45098ed493c5373e0baeed3f43a5a79242",
+  "bytes": 8648
+ },
+ {
+  "file": "test_IAST_Gujarati_heart.txt",
+  "sha256": "1b7912b1be1ce3eb3d43beba9ab88e2e8d282b9921a30ca5fecd54d09f95b15a",
+  "bytes": 4841
+ },
+ {
+  "file": "test_IAST_Gujarati_lalitavistara.txt",
+  "sha256": "22707f69d97735f4dc2cb3abf2d4e4429fa99d11d7feea885b42b4bc0ed95bb8",
+  "bytes": 15978
+ },
+ {
+  "file": "test_IAST_GunjalaGondi_heart.txt",
+  "sha256": "79b7b57d5c1b2aca580f2a7303da9b74324f07f3cc36a3309d808da9ba70d864",
+  "bytes": 6371
+ },
+ {
+  "file": "test_IAST_GunjalaGondi_lalitavistara.txt",
+  "sha256": "e98f02d6506c19d6dc20a266ede54117c060f9f730e11168adf3e9ed91c327d7",
+  "bytes": 21121
+ },
+ {
+  "file": "test_IAST_Gurmukhi_heart.txt",
+  "sha256": "859bb357660182e4796ca2a32ccb96f0ed71ddcab1e0e0ba9fe37e89bace54f7",
+  "bytes": 4896
+ },
+ {
+  "file": "test_IAST_Gurmukhi_lalitavistara.txt",
+  "sha256": "8e4fc40b47bde066d398207129a5becd2bb655e1f6c481ee95e49a946ca1f232",
+  "bytes": 16343
+ },
+ {
+  "file": "test_IAST_HK_heart.txt",
+  "sha256": "7c0950a1d9773d85ccef2bf11e8ec10a930da97fcd795349a81f06facba21026",
+  "bytes": 1929
+ },
+ {
+  "file": "test_IAST_HK_lalitavistara.txt",
+  "sha256": "dcb2ddf50ddaee53fb527fb22512e43d5e52536a686df0add35e30aae01c0a8e",
+  "bytes": 6527
+ },
+ {
+  "file": "test_IAST_HanifiRohingya_heart.txt",
+  "sha256": "7af26dadc9199be8dbb6e1a2a59aba82349fbc7a2377b6412a0d567f9e242094",
+  "bytes": 7792
+ },
+ {
+  "file": "test_IAST_HanifiRohingya_lalitavistara.txt",
+  "sha256": "3a315eee626a59dfea8fd7fb5f50731a99ea157d5e5dc1e86d56696a9c8a6b96",
+  "bytes": 26565
+ },
+ {
+  "file": "test_IAST_Hanunoo_heart.txt",
+  "sha256": "da272fd5aa59ea88a462439431ec82cf253870ea76ea2f214c3df7d0265a34b8",
+  "bytes": 4836
+ },
+ {
+  "file": "test_IAST_Hanunoo_lalitavistara.txt",
+  "sha256": "ca2e7552d7775765ca4d0fbb2d6eb8c738eaf5c7f5effc14fb7eb8dbd4543a83",
+  "bytes": 15750
+ },
+ {
+  "file": "test_IAST_Hatr_heart.txt",
+  "sha256": "091afa5e94e7959ba9483fdd0284a2a9053bca74b3bcdc97690259412ee759a7",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Hatr_lalitavistara.txt",
+  "sha256": "b05c84ebb91702cf149b097a888fa251870e80cb8a45ac453b34b331c9f0fc4e",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Hebr-Ar_heart.txt",
+  "sha256": "8a6c7a20b56f1f80546a1848857ba0e408bcb3720c660e541105bd81162a97c4",
+  "bytes": 2861
+ },
+ {
+  "file": "test_IAST_Hebr-Ar_lalitavistara.txt",
+  "sha256": "31201badac8f1e1f97a95a16724fd6bdf603907222a02c7f8cd13609004db173",
+  "bytes": 9432
+ },
+ {
+  "file": "test_IAST_Hebr_heart.txt",
+  "sha256": "44a86dad4b880688027af381bec7903e9a53162a5f00726bc8f96ae3c71d573f",
+  "bytes": 4671
+ },
+ {
+  "file": "test_IAST_Hebr_lalitavistara.txt",
+  "sha256": "a344cf6c88ba57c00d9e465fdef7ef51cedb120899c09cd25f3cae0f82de7bc9",
+  "bytes": 15434
+ },
+ {
+  "file": "test_IAST_Hebrew_heart.txt",
+  "sha256": "61c0f6fcf5462b82ef43680f55d659b7b36215355ae54e1e161b89f4f4bf3837",
+  "bytes": 4678
+ },
+ {
+  "file": "test_IAST_Hebrew_lalitavistara.txt",
+  "sha256": "9a7d7a31bc08d2498d1795572a45fd158afe7618c40ed1d2a687156304d3c348",
+  "bytes": 15989
+ },
+ {
+  "file": "test_IAST_IASTLOC_heart.txt",
+  "sha256": "99cf26f3336dd081f008fce7c3c81c9ebcdd0bfd154588ec6d870c2e41f140d9",
+  "bytes": 2465
+ },
+ {
+  "file": "test_IAST_IASTLOC_lalitavistara.txt",
+  "sha256": "df5dc8ac6e7138edc435ee1f298b8ad8f27e802c1c5e165c1f2e91d1a689cfe6",
+  "bytes": 8002
+ },
+ {
+  "file": "test_IAST_IASTPali_heart.txt",
+  "sha256": "16b411dfc747959c1826f31febad723536241c951f76578c0c772e3208908379",
+  "bytes": 2405
+ },
+ {
+  "file": "test_IAST_IASTPali_lalitavistara.txt",
+  "sha256": "87aa7c639e50b04b8e71b297eab00429889d15758859c3b2af3c5c5de58b0f81",
+  "bytes": 7956
+ },
+ {
+  "file": "test_IAST_IAST_heart.txt",
+  "sha256": "16b411dfc747959c1826f31febad723536241c951f76578c0c772e3208908379",
+  "bytes": 2405
+ },
+ {
+  "file": "test_IAST_IAST_lalitavistara.txt",
+  "sha256": "87aa7c639e50b04b8e71b297eab00429889d15758859c3b2af3c5c5de58b0f81",
+  "bytes": 7956
+ },
+ {
+  "file": "test_IAST_IPA_heart.txt",
+  "sha256": "22a29ef258e7e3439c9391881941e326fc5f872ae008908fc838db2f08c7dee1",
+  "bytes": 4241
+ },
+ {
+  "file": "test_IAST_IPA_lalitavistara.txt",
+  "sha256": "bf8ef66fae7ad6eb99c1868cb67e86ec60235b3b8b48326a01b7bb549356107a",
+  "bytes": 13714
+ },
+ {
+  "file": "test_IAST_ISOPali_heart.txt",
+  "sha256": "639137f04502a89135b19a1808dd1aaedf52b2c956f495873f1bcaaa16bec6bd",
+  "bytes": 2411
+ },
+ {
+  "file": "test_IAST_ISOPali_lalitavistara.txt",
+  "sha256": "2d645b577e67b4b1a8e8999ecd4e1f3d846905ba8c38ae2c0f0c40f4340625bd",
+  "bytes": 7970
+ },
+ {
+  "file": "test_IAST_ISO_heart.txt",
+  "sha256": "9285f23a43390d32bf9b42f24f24b075304d6c013df9f1469cff315e19b5581d",
+  "bytes": 2476
+ },
+ {
+  "file": "test_IAST_ISO_lalitavistara.txt",
+  "sha256": "1b689f00c77fa7500575e7890fe53b3cb765c42e92fb3645068a858126b78955",
+  "bytes": 8226
+ },
+ {
+  "file": "test_IAST_Inter_heart.txt",
+  "sha256": "3cd711ea90b0c6da00cf92884d5541cc7685bb3136377c7afbf830ec60aef0c8",
+  "bytes": 5046
+ },
+ {
+  "file": "test_IAST_Inter_lalitavistara.txt",
+  "sha256": "c42fa013ec022cb8fac882ccb1f8d6d5f8dcadf1799a4536f42ad6887d712bbe",
+  "bytes": 17771
+ },
+ {
+  "file": "test_IAST_Itrans_heart.txt",
+  "sha256": "04dd2bfed75b084d032492bf97dee8af184ce378789ba9a2b6fc6e239a33de96",
+  "bytes": 2006
+ },
+ {
+  "file": "test_IAST_Itrans_lalitavistara.txt",
+  "sha256": "950d76413ee6f5db2402faaa1d41f955bdee317e189bcd39a6ed56b48a9f99b3",
+  "bytes": 6873
+ },
+ {
+  "file": "test_IAST_Javanese_heart.txt",
+  "sha256": "a7487448ac8a106d364bd635f19fe905ec017c519bdff247bafb402312d503dc",
+  "bytes": 4743
+ },
+ {
+  "file": "test_IAST_Javanese_lalitavistara.txt",
+  "sha256": "3ec25f13ef8f4ae485b8bea6c321b0bed474797008dc76825da902d6dc93d309",
+  "bytes": 15714
+ },
+ {
+  "file": "test_IAST_Kaithi_heart.txt",
+  "sha256": "d925e29445ede37625668d0d1ce14f2a72e04c09bb8ba4e1bbb8f8e68f17f95d",
+  "bytes": 6662
+ },
+ {
+  "file": "test_IAST_Kaithi_lalitavistara.txt",
+  "sha256": "e6f4a8501c0d7d968533632d8b5fa8c5a17b9c1051a87be30d8bbc044ad07d88",
+  "bytes": 22276
+ },
+ {
+  "file": "test_IAST_Kannada_heart.txt",
+  "sha256": "5a040a1f8eeaffbcd91d3d5da9fac750179690838fc413ae52b0e3c2a21a9e50",
+  "bytes": 4757
+ },
+ {
+  "file": "test_IAST_Kannada_lalitavistara.txt",
+  "sha256": "543c330a92a854950f7e6215a86991e4bbdefb16f9597029b227e95f05d65ce4",
+  "bytes": 15840
+ },
+ {
+  "file": "test_IAST_Kawi_heart.txt",
+  "sha256": "caf9502006b4008189f200b6d2ccc7c78296e179831232738ee46ea15f9b32e4",
+  "bytes": 6435
+ },
+ {
+  "file": "test_IAST_Kawi_lalitavistara.txt",
+  "sha256": "157144b2479d4120deb67a55af118483be58912eace179cac2dc3261bed457c3",
+  "bytes": 21460
+ },
+ {
+  "file": "test_IAST_KhamtiShan_heart.txt",
+  "sha256": "4d1d2f3adc1d4d3c54726e0c6ea17ad1465ff32398a49d1b95f60dd73cffd803",
+  "bytes": 4806
+ },
+ {
+  "file": "test_IAST_KhamtiShan_lalitavistara.txt",
+  "sha256": "bc55b7b9ebcc290b2183e702d14953fb9227935055b038926f8838c9f15569cb",
+  "bytes": 15888
+ },
+ {
+  "file": "test_IAST_Kharoshthi_heart.txt",
+  "sha256": "1183c10c711e241fa31fdeefa0959a0a3eeeaab45a6da6a1ddd0f21fd6343835",
+  "bytes": 6639
+ },
+ {
+  "file": "test_IAST_Kharoshthi_lalitavistara.txt",
+  "sha256": "3a4b603f488532e4ea05a322860ef32f35e4addbdb9628a2e3cbe5f103ee761d",
+  "bytes": 21884
+ },
+ {
+  "file": "test_IAST_Khmer_heart.txt",
+  "sha256": "891e74830ede04fb45991edb204f8e39ccfe38a68081f940f66ff55b59fbf739",
+  "bytes": 4842
+ },
+ {
+  "file": "test_IAST_Khmer_lalitavistara.txt",
+  "sha256": "91d1bc8d6ab72b3fc7a36267d60f66033511b4029379b05d54b0f27ecf463bbe",
+  "bytes": 15797
+ },
+ {
+  "file": "test_IAST_Khojki_heart.txt",
+  "sha256": "ca482948294b94ba590ebb506b0fa30329b73559600cd52264383dfb69e2a9bc",
+  "bytes": 7182
+ },
+ {
+  "file": "test_IAST_Khojki_lalitavistara.txt",
+  "sha256": "4ed3a4cd38769a5261ef34547fc534275c3e7b7d41b680eedd5c9025f58a8023",
+  "bytes": 23829
+ },
+ {
+  "file": "test_IAST_KhomThai_heart.txt",
+  "sha256": "1bf72bc0bab952984baab3626991d763baad019c2d165e43f4c78c25a2e4315d",
+  "bytes": 5256
+ },
+ {
+  "file": "test_IAST_KhomThai_lalitavistara.txt",
+  "sha256": "9ddad6ee6bf5f5cfef60fef7ab27aa5e236fb6f9718171bcbea68c2aa3a32eff",
+  "bytes": 16601
+ },
+ {
+  "file": "test_IAST_Khudawadi_heart.txt",
+  "sha256": "15bfc2abb44e5548599aec4a086f1e3df7d6d78ab2b2a76be6cc7049187ea175",
+  "bytes": 6830
+ },
+ {
+  "file": "test_IAST_Khudawadi_lalitavistara.txt",
+  "sha256": "e4161351fd22ce29f61f4d9c56f07c3ed06643740ad7c433dafbf972535a5cb6",
+  "bytes": 22069
+ },
+ {
+  "file": "test_IAST_KhuenTham_heart.txt",
+  "sha256": "b05b134c79e8782109fc3b260033fd8d1644b4195818c650ed58b716fb65b0fa",
+  "bytes": 4947
+ },
+ {
+  "file": "test_IAST_KhuenTham_lalitavistara.txt",
+  "sha256": "777ddade930e9d139a5141554b6afbe6f42c8fdb9656d051c6b22cd2b9791097",
+  "bytes": 16257
+ },
+ {
+  "file": "test_IAST_Lao2_heart.txt",
+  "sha256": "08a2ae957601a7911a56592318aedeb6ccebe54d1160c796846f5b853df81cdf",
+  "bytes": 5202
+ },
+ {
+  "file": "test_IAST_Lao2_lalitavistara.txt",
+  "sha256": "0b9fcda6cbfd0bb21899c7fe567311dda8123321d53dca42705ccaa20664f515",
+  "bytes": 18162
+ },
+ {
+  "file": "test_IAST_LaoPali_heart.txt",
+  "sha256": "0e4b3c1b91f2b59ed91f14cc533d263e27c0e9149249fb472ac1ad2850ebea30",
+  "bytes": 5190
+ },
+ {
+  "file": "test_IAST_LaoPali_lalitavistara.txt",
+  "sha256": "ba5ed48b31f4e200b1000c2943055da6841c035d9cbd1e79835fa79fe418513a",
+  "bytes": 16653
+ },
+ {
+  "file": "test_IAST_LaoTham_heart.txt",
+  "sha256": "7d893c95a673aa63ec57ba25cae5f24ea44836f10c98ff3dd3334d841d30a81d",
+  "bytes": 4947
+ },
+ {
+  "file": "test_IAST_LaoTham_lalitavistara.txt",
+  "sha256": "4175697ccd4c375145f04d3479dc95d913a3869370bd65e2eb08d55b740683ac",
+  "bytes": 16257
+ },
+ {
+  "file": "test_IAST_Lao_heart.txt",
+  "sha256": "62ca7ef52c040e781bd86b49e4caf621a965b1b4a8b80f67fd2216469b43d377",
+  "bytes": 5202
+ },
+ {
+  "file": "test_IAST_Lao_lalitavistara.txt",
+  "sha256": "cd8e1bb423782fbf76b66da1f8eae44caa3b09ef1c7eda16b16c520943119563",
+  "bytes": 18162
+ },
+ {
+  "file": "test_IAST_Latn_heart.txt",
+  "sha256": "8bafe82c410dadbbb7c0fd920fc6d64e5c43c508f5244f9be828a4b3342eb60f",
+  "bytes": 2716
+ },
+ {
+  "file": "test_IAST_Latn_lalitavistara.txt",
+  "sha256": "fc8a1e124b9753167a7c81c77f0562270b73c4765082cdd1a0b4ffd7d5cd9bef",
+  "bytes": 8451
+ },
+ {
+  "file": "test_IAST_Lepcha_heart.txt",
+  "sha256": "6079c1f33a2388fe6a2ce3f2e015ef72fb9e31268a7baee2a306b82509864466",
+  "bytes": 4377
+ },
+ {
+  "file": "test_IAST_Lepcha_lalitavistara.txt",
+  "sha256": "95743b814a925fd72e6bc4c4f23e7658fd20d07ed70915769ce22f14b455b1dc",
+  "bytes": 14877
+ },
+ {
+  "file": "test_IAST_Limbu_heart.txt",
+  "sha256": "9f36e9cede1f319ff2fa7e275eeeeb544c597ac9dfc8eeac504037694242c6fe",
+  "bytes": 4794
+ },
+ {
+  "file": "test_IAST_Limbu_lalitavistara.txt",
+  "sha256": "99105c8c66be082711e82f185016e641e39e5218b73e4bea294df147b485bbf4",
+  "bytes": 15446
+ },
+ {
+  "file": "test_IAST_LueTham_heart.txt",
+  "sha256": "b05b134c79e8782109fc3b260033fd8d1644b4195818c650ed58b716fb65b0fa",
+  "bytes": 4947
+ },
+ {
+  "file": "test_IAST_LueTham_lalitavistara.txt",
+  "sha256": "777ddade930e9d139a5141554b6afbe6f42c8fdb9656d051c6b22cd2b9791097",
+  "bytes": 16257
+ },
+ {
+  "file": "test_IAST_Mahajani_heart.txt",
+  "sha256": "72d57658f278715abb8e4c67334632879244fe1e8c8df8bc05e66ae434e70720",
+  "bytes": 5673
+ },
+ {
+  "file": "test_IAST_Mahajani_lalitavistara.txt",
+  "sha256": "4cec5a852cd590da7c9c6951a1562cfb27282dfb8289c551f98f7b0990fca3a8",
+  "bytes": 19835
+ },
+ {
+  "file": "test_IAST_Makasar_heart.txt",
+  "sha256": "c64142f7095bf908e25fed9b395096db2af6ed864ad0756a5faa03812dcb4694",
+  "bytes": 4839
+ },
+ {
+  "file": "test_IAST_Makasar_lalitavistara.txt",
+  "sha256": "3b45f9babfe1ed778d86d0785f12b30106fd97aaf24c174fe9b1d15b9156f06b",
+  "bytes": 17374
+ },
+ {
+  "file": "test_IAST_Malayalam_heart.txt",
+  "sha256": "b0a2f50770ae6edf8a61948f7dd37f7d917d2f3d9743b7e9aade93471d525dff",
+  "bytes": 4730
+ },
+ {
+  "file": "test_IAST_Malayalam_lalitavistara.txt",
+  "sha256": "28d13f68b1af7c674a62d82aa61c9ac68fc7755a9b2ec213727199dd22056fee",
+  "bytes": 15733
+ },
+ {
+  "file": "test_IAST_Mani_heart.txt",
+  "sha256": "f46d547f81d4a874beed17aecfa6cdc5ae6bfeb3764d3916350a936b427d1b34",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Mani_lalitavistara.txt",
+  "sha256": "7333546eda2f6bcc4c72e407e9e4b2b3b7f60895ebceaef584aec9e86bba90a4",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Marchen_heart.txt",
+  "sha256": "63dd7adef21d9a45bee1dc8b9f5be2f8baf08f3c2fd510a4305cd09044556dab",
+  "bytes": 6031
+ },
+ {
+  "file": "test_IAST_Marchen_lalitavistara.txt",
+  "sha256": "e643430ea8bbbac567c033f70968fa71d3ec003b3d2264c9f9a56c49bd159b29",
+  "bytes": 20159
+ },
+ {
+  "file": "test_IAST_MasaramGondi_heart.txt",
+  "sha256": "aca8495ba61f308f01315b639f06062f31f5258aaca3ee98adc5ffb8ebed55b2",
+  "bytes": 6025
+ },
+ {
+  "file": "test_IAST_MasaramGondi_lalitavistara.txt",
+  "sha256": "71fdbf6f216f4cd5e2828c38f31afa7ae276043e58d1779d4fe31eeae7bbeffc",
+  "bytes": 20120
+ },
+ {
+  "file": "test_IAST_MeeteiMayek_heart.txt",
+  "sha256": "b1231f727d004daee47ec6b8cfc71ddf70def8033a52585561c337353cc95343",
+  "bytes": 4827
+ },
+ {
+  "file": "test_IAST_MeeteiMayek_lalitavistara.txt",
+  "sha256": "692020e1eab6a1a0dc48569c9d6f4c91e54da734e3bbcd74bb57e89501e07e26",
+  "bytes": 15780
+ },
+ {
+  "file": "test_IAST_Modi_heart.txt",
+  "sha256": "cc1885c34869c7f277b1c4b7539cfd67db855616a40c77887b4a745668d3c1c3",
+  "bytes": 6484
+ },
+ {
+  "file": "test_IAST_Modi_lalitavistara.txt",
+  "sha256": "880791d81ec8b84ac5d56ab33d71c374834387476e5f414522a826534c38a48c",
+  "bytes": 21485
+ },
+ {
+  "file": "test_IAST_Mon_heart.txt",
+  "sha256": "a27901a342354651736660ba0581d4480ee4aa49511e811a5781e803cadbe65a",
+  "bytes": 4818
+ },
+ {
+  "file": "test_IAST_Mon_lalitavistara.txt",
+  "sha256": "e323c5d1d5df53196a83bec00c2075fe734ad71a8c299ca99348bc41fb82d790",
+  "bytes": 16017
+ },
+ {
+  "file": "test_IAST_Mongolian_heart.txt",
+  "sha256": "4b46654dbfd015e39da7727700b046b0d5c3968bd9b584bc99d8a7ae4406021b",
+  "bytes": 6954
+ },
+ {
+  "file": "test_IAST_Mongolian_lalitavistara.txt",
+  "sha256": "caa6227badfe592ea41e2581cb670810a454da7656d413e18ad7bab68c351355",
+  "bytes": 23234
+ },
+ {
+  "file": "test_IAST_Mro_heart.txt",
+  "sha256": "1c2a9653a5668c1b3f66db6b657809a429f853abd739cf5ac89830befd3361b1",
+  "bytes": 6735
+ },
+ {
+  "file": "test_IAST_Mro_lalitavistara.txt",
+  "sha256": "48d6047f7478abdffae8211f1d43af6d2e7801b1aecbbcb5cf5ded4a29d53d99",
+  "bytes": 23628
+ },
+ {
+  "file": "test_IAST_Multani_heart.txt",
+  "sha256": "957325d049252717b5f23f1beb21be7071b7cdfa04e4e27fa9a4e512f4191725",
+  "bytes": 4189
+ },
+ {
+  "file": "test_IAST_Multani_lalitavistara.txt",
+  "sha256": "ac8f1fd6f4949eb8c17ec7af0a7ef3ad31f2ee52eb0769401e3ffe3263bbade6",
+  "bytes": 14055
+ },
+ {
+  "file": "test_IAST_Nandinagari_heart.txt",
+  "sha256": "498119882cbaf33250cc97b3b778900bc8e854795d08db4d3864430f6c334a34",
+  "bytes": 6329
+ },
+ {
+  "file": "test_IAST_Nandinagari_lalitavistara.txt",
+  "sha256": "5412ba921cce5ad959cc9f327c92b4e86254ae7d08f9226eaf466ea412faac7a",
+  "bytes": 21095
+ },
+ {
+  "file": "test_IAST_Narb_heart.txt",
+  "sha256": "856df387b1b80514881d0bf5771ca1cb6855e844a8f8aad079ca12aa6a12dddd",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Narb_lalitavistara.txt",
+  "sha256": "84e54c3d007f5d160b4f4c584cf74673497965ce51ff22aa0e7a84e2fbe390b5",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Nbat_heart.txt",
+  "sha256": "2de3412da33a9b66e081c4763d74c896d26622e01e21542e407ba8d989067c0b",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Nbat_lalitavistara.txt",
+  "sha256": "94c5208a4f8bc96843793cc24d4e967282c251ca78c81fbf15efa0ef4073fe71",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Newa_heart.txt",
+  "sha256": "c45465acb4d456be0ceac398f528fe9a2eeaec1ed5fb4113313e0064a558534e",
+  "bytes": 6387
+ },
+ {
+  "file": "test_IAST_Newa_lalitavistara.txt",
+  "sha256": "85e1444cc878457fddac03300eee136607e84f8420dc6ed41a490f77c5eb0bc7",
+  "bytes": 21364
+ },
+ {
+  "file": "test_IAST_OldPersian_heart.txt",
+  "sha256": "d478363aca91002da459c764b79d627c433010d2c7629434c34990cd114c3dbd",
+  "bytes": 6198
+ },
+ {
+  "file": "test_IAST_OldPersian_lalitavistara.txt",
+  "sha256": "d251b3d7b58ec4fc41e2cad61ae1b5db2ae98d089973b129f90a70e6f7a4dc79",
+  "bytes": 21246
+ },
+ {
+  "file": "test_IAST_Oriya_heart.txt",
+  "sha256": "4b36233a134ad74f00430dbfa85f6eeb84358c8efacaca785ed7005d29ac7760",
+  "bytes": 4863
+ },
+ {
+  "file": "test_IAST_Oriya_lalitavistara.txt",
+  "sha256": "b11105efd31efc107a01ec12850ff079a5972ce827c4c2647b4a211726eef272",
+  "bytes": 16217
+ },
+ {
+  "file": "test_IAST_Pallava_heart.txt",
+  "sha256": "6ff6b8f748ebb755bac52c0f14e82e3232492b482a3a034ccd299fdfd4a34a11",
+  "bytes": 5072
+ },
+ {
+  "file": "test_IAST_Pallava_lalitavistara.txt",
+  "sha256": "9d27f1c36a275155fbc7d628d632547063a0d027374cf95a225bc31959219b23",
+  "bytes": 16376
+ },
+ {
+  "file": "test_IAST_Palm_heart.txt",
+  "sha256": "641f6e46369862b15875dae3fa31fd3326e41a4968e573a315122fba1887ad9a",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Palm_lalitavistara.txt",
+  "sha256": "269346bd7f9525068c10a14502709c17b0259af6b1e6b3f332b8922c3a8dbf38",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_PhagsPa_heart.txt",
+  "sha256": "539f696875f54ce6c716bed3fed620e24ca5f5dbf045a70abbef3b9848622205",
+  "bytes": 5615
+ },
+ {
+  "file": "test_IAST_PhagsPa_lalitavistara.txt",
+  "sha256": "1e4238515cdec0286c77cd71b3c36baa030c375ce29df640249f3aa8960835a0",
+  "bytes": 18830
+ },
+ {
+  "file": "test_IAST_Phli_heart.txt",
+  "sha256": "a86af93b84fe2731ba7484f731cdd2aabebdbf40597eea4ca11ce0aea68a21b7",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Phli_lalitavistara.txt",
+  "sha256": "c777909cb5722be083a9605a650e879af20ed4c1b910c306a3dab754f9ea5f01",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Phlp_heart.txt",
+  "sha256": "af8971e68bd81d8ffea319c6a3624c1cf8e3b2ae9989ae097c6fef096e185ee2",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Phlp_lalitavistara.txt",
+  "sha256": "a0da611f330f65a1325e21ffbd09ec5cc55c70d031590ff4a1f5a2260fffd14d",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Phnx_heart.txt",
+  "sha256": "df1b8542a6f834b1e99c4dd33ec8f49d4306e40f9fb0c5756976fc4e2e8d2341",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Phnx_lalitavistara.txt",
+  "sha256": "7eee7ca4806438f33ca8210b1a250117be493f30d3c061428da2f0b9c3a5cf2e",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Prti_heart.txt",
+  "sha256": "31adc6149d39330b3ce0782d6ffaa5ad7efe3e23afed4694d287c98245477189",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Prti_lalitavistara.txt",
+  "sha256": "7d35c2b9994d0c2339e7279667cd3758378995a76532186a936fca2b56c6d66b",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Ranjana_heart.txt",
+  "sha256": "38a91b90a32fe3513b0620d2343e40046bfba5f6c0ab058337badb47154f2ece",
+  "bytes": 4851
+ },
+ {
+  "file": "test_IAST_Ranjana_lalitavistara.txt",
+  "sha256": "b850ed8b0a02a1f9c2ad6e74042161133ffe13a01612955a8623cd445b9e875e",
+  "bytes": 16157
+ },
+ {
+  "file": "test_IAST_Rejang_heart.txt",
+  "sha256": "f0c8ff1f73e61a0186d4ba386a5a03aa1cc56f23b1ed8bcd8b020d82433de5eb",
+  "bytes": 4478
+ },
+ {
+  "file": "test_IAST_Rejang_lalitavistara.txt",
+  "sha256": "3aca42178cc6c38cbbaf65a48697d36b8604f9065cfb6b9ccc1b08f2ed81f173",
+  "bytes": 14675
+ },
+ {
+  "file": "test_IAST_RomanColloquial_heart.txt",
+  "sha256": "489f3792340f644e11aa3c1f207bf30f2176d23d489221a24453b9b15bcaf56d",
+  "bytes": 1986
+ },
+ {
+  "file": "test_IAST_RomanColloquial_lalitavistara.txt",
+  "sha256": "11aaf8589b5d39c92c9ff375a918e608f9b2c9022decddc8ae8939ffbab5b9e3",
+  "bytes": 6844
+ },
+ {
+  "file": "test_IAST_RomanKana_heart.txt",
+  "sha256": "dc8c5cdbac41d8848387ff3a669ec58dad9938e907f8056d6891b174fefd3a72",
+  "bytes": 2195
+ },
+ {
+  "file": "test_IAST_RomanKana_lalitavistara.txt",
+  "sha256": "b96ae6f589b21c6377ced3de7fa9a692116ae730736d74437c630bbf1805a19b",
+  "bytes": 7981
+ },
+ {
+  "file": "test_IAST_RomanReadable_heart.txt",
+  "sha256": "efd14b125c983a5146016ef49fb058a3ff035bd6f3d39671c6513dba612542ed",
+  "bytes": 2244
+ },
+ {
+  "file": "test_IAST_RomanReadable_lalitavistara.txt",
+  "sha256": "ea1045bc3d2db8a997ba66eaa8158a086cf8eea00acc415ec9d13cfafe406ab2",
+  "bytes": 7535
+ },
+ {
+  "file": "test_IAST_RomanSemitic_heart.txt",
+  "sha256": "8bafe82c410dadbbb7c0fd920fc6d64e5c43c508f5244f9be828a4b3342eb60f",
+  "bytes": 2716
+ },
+ {
+  "file": "test_IAST_RomanSemitic_lalitavistara.txt",
+  "sha256": "6d84b85b32743a95b423f5756b40842fb6cda6408405c940e83220231fa85e30",
+  "bytes": 8453
+ },
+ {
+  "file": "test_IAST_RussianCyrillic_heart.txt",
+  "sha256": "4c30a8ac097a71bc9a0c845f9c51fca2a002b1bb24bbf3a3c9e5245811e21664",
+  "bytes": 4178
+ },
+ {
+  "file": "test_IAST_RussianCyrillic_lalitavistara.txt",
+  "sha256": "e14d6f54f7bc3ae678854db9fc038ddbf4d609769010c3826b20b3e595cfd8ac",
+  "bytes": 14117
+ },
+ {
+  "file": "test_IAST_SLP1_heart.txt",
+  "sha256": "761100d9e923a88750a74cc8899820787893be705e706b4dd473c4581776813c",
+  "bytes": 1846
+ },
+ {
+  "file": "test_IAST_SLP1_lalitavistara.txt",
+  "sha256": "14474253f067ac7630d9d6ad45f49c380c29513a50963a501ed3b17c9702a61f",
+  "bytes": 6310
+ },
+ {
+  "file": "test_IAST_Samr_heart.txt",
+  "sha256": "e89912066d81ea6659544ecf95c50a64bfefb0f6c214f00f819fb6631bbd1628",
+  "bytes": 3779
+ },
+ {
+  "file": "test_IAST_Samr_lalitavistara.txt",
+  "sha256": "205fd4d77e4d008e05d9ac32b6af31bbaab2b0d521fcccd8f706ef4f5578260d",
+  "bytes": 12631
+ },
+ {
+  "file": "test_IAST_Santali_heart.txt",
+  "sha256": "601a50a0313e0745056b348d498002f630e5b794282b21cf5c0323cea99f0223",
+  "bytes": 5427
+ },
+ {
+  "file": "test_IAST_Santali_lalitavistara.txt",
+  "sha256": "e1a73c73d3c333568ad20265d0330a1ac251f432db87f74d4b775d838cafd741",
+  "bytes": 18648
+ },
+ {
+  "file": "test_IAST_Sarb_heart.txt",
+  "sha256": "f67ff945d240d83223889f1357cadf905217c9e9f393ec367354f77c62147cd3",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Sarb_lalitavistara.txt",
+  "sha256": "d1bbfcaeb4275948d60493d92d9901eb936bd19edd76c4217d867b2ce99db998",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Saurashtra_heart.txt",
+  "sha256": "84c8d8abb38d04a8af24e51cf2382a5e9a86bb7d70229d5fac5bfb8c2d614dd8",
+  "bytes": 4860
+ },
+ {
+  "file": "test_IAST_Saurashtra_lalitavistara.txt",
+  "sha256": "a67829fef7354b4f17358db11178dc4cc21300a6c6787fabb38f468a502b6ece",
+  "bytes": 16262
+ },
+ {
+  "file": "test_IAST_Shahmukhi_heart.txt",
+  "sha256": "d5c96090739dcacaa082892c0c2792dfbd6fe9beefe1d752bcae726b45e998ce",
+  "bytes": 4426
+ },
+ {
+  "file": "test_IAST_Shahmukhi_lalitavistara.txt",
+  "sha256": "8975bc91ebcb7b9ffd41d7e75a3ac7d5b4e0e167e3d37cbf681c820e492881ea",
+  "bytes": 14681
+ },
+ {
+  "file": "test_IAST_Shan_heart.txt",
+  "sha256": "2ce20eed8a0a56652aa03fbabf974b207ff88190d0d0d748daff3876eb6c7094",
+  "bytes": 4905
+ },
+ {
+  "file": "test_IAST_Shan_lalitavistara.txt",
+  "sha256": "b307c6baf33115f0fcb716d4e1b1a60985c7e6f911eb4e5258aac3eb08acce94",
+  "bytes": 16632
+ },
+ {
+  "file": "test_IAST_Sharada_heart.txt",
+  "sha256": "7a99fcdb9649d3179cade86dd1e09c801ee9c26e688fa8e0c7b230c103063953",
+  "bytes": 6387
+ },
+ {
+  "file": "test_IAST_Sharada_lalitavistara.txt",
+  "sha256": "d1602429adb4f59124841a56902150842a558e8d21b7b40140d373e0ca620b51",
+  "bytes": 21368
+ },
+ {
+  "file": "test_IAST_SiddhamDevanagari_heart.txt",
+  "sha256": "38a91b90a32fe3513b0620d2343e40046bfba5f6c0ab058337badb47154f2ece",
+  "bytes": 4851
+ },
+ {
+  "file": "test_IAST_SiddhamDevanagari_lalitavistara.txt",
+  "sha256": "b850ed8b0a02a1f9c2ad6e74042161133ffe13a01612955a8623cd445b9e875e",
+  "bytes": 16157
+ },
+ {
+  "file": "test_IAST_Siddham_heart.txt",
+  "sha256": "9221fc12e65f95c3d866790e4cf43ee5feb21bbd1550a80ccf3677ac836442b1",
+  "bytes": 6375
+ },
+ {
+  "file": "test_IAST_Siddham_lalitavistara.txt",
+  "sha256": "cbcaa77ff742922bd0f746d0b70467e22d9658f6be4596ae877f37d196521d99",
+  "bytes": 21301
+ },
+ {
+  "file": "test_IAST_Sinhala_heart.txt",
+  "sha256": "1a7d240a287e26187772d59f2d75ab94255aac5baf591eebaefbcaa2028c4bdf",
+  "bytes": 5015
+ },
+ {
+  "file": "test_IAST_Sinhala_lalitavistara.txt",
+  "sha256": "bd3c790f92e171322a42dcad1dedf1c1da0723304e9be5f795652618c8e416ff",
+  "bytes": 16554
+ },
+ {
+  "file": "test_IAST_Sogd_heart.txt",
+  "sha256": "57fbb4c33fb048b2b300f03e169340b68c342e8610c01afd3bfea3c451d0380f",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Sogd_lalitavistara.txt",
+  "sha256": "94f87ede14a23816bb0f699ba6fbb4e9521d9282bfc6f592eb428b783bb5b5c6",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_Sogo_heart.txt",
+  "sha256": "6ce11133840d749b3b0b6f6729f437b3c6252558e0c7f1c337466298d527e702",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Sogo_lalitavistara.txt",
+  "sha256": "114de9ca64ad1aa4e90f575674a1aac8ceb430bb3f8261328a8f5c53f6dae00d",
+  "bytes": 16614
+ },
+ {
+  "file": "test_IAST_SoraSompeng_heart.txt",
+  "sha256": "5f88c62c44df17a33c7a43a8edfc86a2ecebba2733841abb45ced0839e8e221d",
+  "bytes": 6370
+ },
+ {
+  "file": "test_IAST_SoraSompeng_lalitavistara.txt",
+  "sha256": "4ecc376d980ce3d76f272167e34f5266cd9ad2ce3564559220f976671e75f359",
+  "bytes": 21752
+ },
+ {
+  "file": "test_IAST_Soyombo_heart.txt",
+  "sha256": "5fd63ea73bdb766c48d74c1ba4ca93b9a8ced541d4aa2b37e43be5eae15499f5",
+  "bytes": 6387
+ },
+ {
+  "file": "test_IAST_Soyombo_lalitavistara.txt",
+  "sha256": "9fe8b49ddca5f13068b2a9ce73092f634e68e140c7696176a2b7164a0d99a397",
+  "bytes": 21101
+ },
+ {
+  "file": "test_IAST_Sundanese_heart.txt",
+  "sha256": "96410df1f9de596a1db703b8cd7bbe10ee87759f0c545fbcc7c269d7311e7428",
+  "bytes": 4304
+ },
+ {
+  "file": "test_IAST_Sundanese_lalitavistara.txt",
+  "sha256": "3d68e8e8d7d3ec47cecb393df24ebf889b0582340164ea6b70dd3f46ef29ad0c",
+  "bytes": 14166
+ },
+ {
+  "file": "test_IAST_SylotiNagri_heart.txt",
+  "sha256": "4291190582ac34af8c890e2b7160555c2cee16e5ce7e0c4285634af0fd5e3d57",
+  "bytes": 5148
+ },
+ {
+  "file": "test_IAST_SylotiNagri_lalitavistara.txt",
+  "sha256": "54537aa48abecc8fdea644aed49bb8ed6cb99fd9fdbdd80968d2cb60b3561cb5",
+  "bytes": 16496
+ },
+ {
+  "file": "test_IAST_Syre_heart.txt",
+  "sha256": "713067b3dcff9537a2285494cbcbd5a521826b2a3c75ec906b30c0a0ca9a5836",
+  "bytes": 2841
+ },
+ {
+  "file": "test_IAST_Syre_lalitavistara.txt",
+  "sha256": "504409d4d1b1714963c706122c2957f5a7f88a9cc926c03f33ec3331b1867311",
+  "bytes": 9428
+ },
+ {
+  "file": "test_IAST_Syrj_heart.txt",
+  "sha256": "dad6076aa83c167a424172b628b016c9ca821345f595635ba2b749f81e1116a3",
+  "bytes": 4253
+ },
+ {
+  "file": "test_IAST_Syrj_lalitavistara.txt",
+  "sha256": "f44db6b8c82e81f3416bc08e6b8f97953b3ce622c7af4da71bad779d105d40d1",
+  "bytes": 14824
+ },
+ {
+  "file": "test_IAST_Syrn_heart.txt",
+  "sha256": "a4090d11f95807027e2d23615d65806b7fd4167dd875016cdacb4f7d32afbdc9",
+  "bytes": 4667
+ },
+ {
+  "file": "test_IAST_Syrn_lalitavistara.txt",
+  "sha256": "8029d51c82a26ea47ebd258d8b5067eff264f2c13844d386874b334cd00d792c",
+  "bytes": 16224
+ },
+ {
+  "file": "test_IAST_Tagalog_heart.txt",
+  "sha256": "ae7070f264f864e1179d148b07a16aa9cebc21e2b3d717375699ccf585bb24d8",
+  "bytes": 4872
+ },
+ {
+  "file": "test_IAST_Tagalog_lalitavistara.txt",
+  "sha256": "4042bbcc493d07911393c84e861fbedcbf272fe8bb2b423bf1d784c909a888d4",
+  "bytes": 15795
+ },
+ {
+  "file": "test_IAST_Tagbanwa_heart.txt",
+  "sha256": "a6fc3efa7663f6d70af758e2895310b6e2658079d1f4a1889e58208ef2707a27",
+  "bytes": 3822
+ },
+ {
+  "file": "test_IAST_Tagbanwa_lalitavistara.txt",
+  "sha256": "bb9040a02fcb1249ac52134856b4abc97e8a0b2f41770c2973f4d89538225cfd",
+  "bytes": 13029
+ },
+ {
+  "file": "test_IAST_TaiLaing_heart.txt",
+  "sha256": "12ac71feaecce698b39a42ea7190ee9e16b4d50d242edf72de509c52c1a3fbd3",
+  "bytes": 4806
+ },
+ {
+  "file": "test_IAST_TaiLaing_lalitavistara.txt",
+  "sha256": "5b0d57fe831ce743f2cd2a8178f1b7579ad3b5cc40de492795bc8110707d4353",
+  "bytes": 15888
+ },
+ {
+  "file": "test_IAST_TaiTham_heart.txt",
+  "sha256": "7d893c95a673aa63ec57ba25cae5f24ea44836f10c98ff3dd3334d841d30a81d",
+  "bytes": 4947
+ },
+ {
+  "file": "test_IAST_TaiTham_lalitavistara.txt",
+  "sha256": "4175697ccd4c375145f04d3479dc95d913a3869370bd65e2eb08d55b740683ac",
+  "bytes": 16257
+ },
+ {
+  "file": "test_IAST_Takri_heart.txt",
+  "sha256": "664ce1617008040ae1355ac02eff3afa2af1f37695f52d93b92b4b20e09d7434",
+  "bytes": 6478
+ },
+ {
+  "file": "test_IAST_Takri_lalitavistara.txt",
+  "sha256": "4a146b2fa778383d44a3bdac1d793e8498d15b729acdd3639b81ac68aeab3fa2",
+  "bytes": 21381
+ },
+ {
+  "file": "test_IAST_TamilBrahmi_heart.txt",
+  "sha256": "235e14d3ab30dd689d69f6c262410dcc523d709026a906af83dcbd0c479c49dd",
+  "bytes": 6526
+ },
+ {
+  "file": "test_IAST_TamilBrahmi_lalitavistara.txt",
+  "sha256": "bbe03574e745742f57d16e3c6b4bc4f3561106dd8902c46da04b969fd74bec04",
+  "bytes": 21737
+ },
+ {
+  "file": "test_IAST_TamilExtended_heart.txt",
+  "sha256": "60d2d677b9f9ee3b7cb68f55a7eb3b9a071700badf2c8975e747aa16ccdb618d",
+  "bytes": 5471
+ },
+ {
+  "file": "test_IAST_TamilExtended_lalitavistara.txt",
+  "sha256": "eb9c3d85e23a0163293924043777b6dc4f80095d1c5ef66090e38abfdce993b9",
+  "bytes": 17620
+ },
+ {
+  "file": "test_IAST_TamilGrantha_heart.txt",
+  "sha256": "721d48fe42b0a23bf43c4fde7091a8d519e21af7654781d70a69a1e168b923e2",
+  "bytes": 5898
+ },
+ {
+  "file": "test_IAST_TamilGrantha_lalitavistara.txt",
+  "sha256": "e655fa42ab1edfaf03c274a864acc3b6414c8c8ee7aa4e3d61f56d4915362d63",
+  "bytes": 19748
+ },
+ {
+  "file": "test_IAST_Tamil_heart.txt",
+  "sha256": "ee735df3933a185a015cfd248e3bc9edb73843d63d9a8116db5e866964738db8",
+  "bytes": 5328
+ },
+ {
+  "file": "test_IAST_Tamil_lalitavistara.txt",
+  "sha256": "29dc63ea9ab64426294afe76f821cbc0bf0a2d4c7bf7aaf93a1891f35e8d50e6",
+  "bytes": 17864
+ },
+ {
+  "file": "test_IAST_Telugu_heart.txt",
+  "sha256": "c605fb45c31d94d8ea1b230849374891e84c55752c845c46457e1867f19241ac",
+  "bytes": 4757
+ },
+ {
+  "file": "test_IAST_Telugu_lalitavistara.txt",
+  "sha256": "930f7509ce075fe1d8b8b651086be869ff2e1bbed7b01876cde120beabe17131",
+  "bytes": 15814
+ },
+ {
+  "file": "test_IAST_Thaa_heart.txt",
+  "sha256": "ed0d19dae011b66806700fa03fc664a9deaaacaa0cf996a36baa2492664692fd",
+  "bytes": 4172
+ },
+ {
+  "file": "test_IAST_Thaa_lalitavistara.txt",
+  "sha256": "670e08526820c647c2dbfd6a338a4ad05bc7088fc08324a1aaacec3a2f3f25ee",
+  "bytes": 13770
+ },
+ {
+  "file": "test_IAST_Thaana_heart.txt",
+  "sha256": "3dfd74c290eb7329accdc42d6a79ccda2c5d7c8679870289f0c3a9ecfabf027c",
+  "bytes": 4284
+ },
+ {
+  "file": "test_IAST_Thaana_lalitavistara.txt",
+  "sha256": "1e06591f6987b50dc07c8958f3520a58dff8bcfa4457089fea2fa351389f632f",
+  "bytes": 14006
+ },
+ {
+  "file": "test_IAST_Thai_heart.txt",
+  "sha256": "8575047bc4aa66a1838848b8b7c58d9a8db59d863e31b2449aefb0299c7da904",
+  "bytes": 5136
+ },
+ {
+  "file": "test_IAST_Thai_lalitavistara.txt",
+  "sha256": "d9402046410c289ebec1f9bef54fce6462e7b06309f6b72fef64efde7ab42b72",
+  "bytes": 16302
+ },
+ {
+  "file": "test_IAST_Tibetan_heart.txt",
+  "sha256": "413c1ceb83be5028140d0a49f06d62dbba216c47702250f7dd461ccda9f3b59f",
+  "bytes": 4692
+ },
+ {
+  "file": "test_IAST_Tibetan_lalitavistara.txt",
+  "sha256": "6e66f21de7ed9487f22dc52640e9828ba6e94881d1c43804be723ce77b151252",
+  "bytes": 15665
+ },
+ {
+  "file": "test_IAST_Tirhuta_heart.txt",
+  "sha256": "efd41e3f91f1c9d3bd1a668bb0a26f9ca19a52e11d436f985950f97d94c3c39a",
+  "bytes": 6381
+ },
+ {
+  "file": "test_IAST_Tirhuta_lalitavistara.txt",
+  "sha256": "419081608e3257e3deee8bd21d9149c8820b213f1748b0874fdc60ed2f6a1747",
+  "bytes": 21260
+ },
+ {
+  "file": "test_IAST_Titus_heart.txt",
+  "sha256": "002968f2422c963d91086fd54fbbe836dd9d00a9621e01e5d6dc89700beb631a",
+  "bytes": 2473
+ },
+ {
+  "file": "test_IAST_Titus_lalitavistara.txt",
+  "sha256": "aa75bcc645f20acd34faa216a3ec7f8dcbc26fdfa493eb344b7cb3843c93f56d",
+  "bytes": 8146
+ },
+ {
+  "file": "test_IAST_TolongSiki_heart.txt",
+  "sha256": "4b157c76fd924c1531098ea24f18ddbec5540676545020da51b0023ffee15cc6",
+  "bytes": 1874
+ },
+ {
+  "file": "test_IAST_TolongSiki_lalitavistara.txt",
+  "sha256": "c31bfd8839be5d05cae37b2e2aa78f8eeea8b9cb461b5757bf116fa8c101b61a",
+  "bytes": 6364
+ },
+ {
+  "file": "test_IAST_Type_heart.txt",
+  "sha256": "75987dad378287cf2e68171fb7a7ca2f7be9c439c8e4cdd4a00f14283545873c",
+  "bytes": 2106
+ },
+ {
+  "file": "test_IAST_Type_lalitavistara.txt",
+  "sha256": "e009390fd908f0641493c35e016093f70f9a7cf5ec4601edeb9c84ac813f9542",
+  "bytes": 6731
+ },
+ {
+  "file": "test_IAST_Ugar_heart.txt",
+  "sha256": "b2f655f924bc1c4b9d40560528cb5878067ac8978eec1eb2a2a5a1d37057ea02",
+  "bytes": 5366
+ },
+ {
+  "file": "test_IAST_Ugar_lalitavistara.txt",
+  "sha256": "aee5dcd312fe24a9dc153252e889731742af83a8c666bedf32a264510b600d0f",
+  "bytes": 18000
+ },
+ {
+  "file": "test_IAST_Urdu_heart.txt",
+  "sha256": "be7f728540a774ba8acac9c331ab3a5ba53cdb390377bc4f765522a2f37b9235",
+  "bytes": 4428
+ },
+ {
+  "file": "test_IAST_Urdu_lalitavistara.txt",
+  "sha256": "7fb872fcf291b05f826726e1a7a3b1bdfe2effeecdaf3b8cebc975521e0bb344",
+  "bytes": 14683
+ },
+ {
+  "file": "test_IAST_Vatteluttu_heart.txt",
+  "sha256": "4c5375039529d8a7eddd3e181db6ee5dcde3093e4e84cc70cef677774ddfe4e8",
+  "bytes": 4955
+ },
+ {
+  "file": "test_IAST_Vatteluttu_lalitavistara.txt",
+  "sha256": "802fc55e187562c34d5c0d5d71ee714566eaf9986fdf004fc60e1954614f8e5f",
+  "bytes": 16468
+ },
+ {
+  "file": "test_IAST_Velthuis_heart.txt",
+  "sha256": "662b8c8e728e17ae7e6f96714c4ac29a38e0fcc13815002bec7bf5dcde92c38c",
+  "bytes": 2256
+ },
+ {
+  "file": "test_IAST_Velthuis_lalitavistara.txt",
+  "sha256": "d6a3b5947d0f105151c831f78bf8bc46e90b235be72124e4e6340b1ffdd9c61f",
+  "bytes": 7539
+ },
+ {
+  "file": "test_IAST_WX-kok_heart.txt",
+  "sha256": "84c19796c7143228c3c658be38931a8080fdaea4eeeb429df2295a0aec85f1c4",
+  "bytes": 1855
+ },
+ {
+  "file": "test_IAST_WX-kok_lalitavistara.txt",
+  "sha256": "f8de1b686bdf23055df07446d0c982563a8ef1c7b5c12aef8d6bf7c6bb7ccbd0",
+  "bytes": 6421
+ },
+ {
+  "file": "test_IAST_WX_heart.txt",
+  "sha256": "14164384898e4da84c2a1eead2c9ef1f710e3532067ba67a9147d91e16633ebb",
+  "bytes": 1846
+ },
+ {
+  "file": "test_IAST_WX_lalitavistara.txt",
+  "sha256": "f6a6bb7bd4655bd6defca0bcaa178530a3a5f129bc9e4eaead4062b72355bc87",
+  "bytes": 6310
+ },
+ {
+  "file": "test_IAST_Wancho_heart.txt",
+  "sha256": "5f9913a9891b246dbbd6817f1cf1d9e15888e767a2bf0961d0df7cbb08ed7931",
+  "bytes": 6619
+ },
+ {
+  "file": "test_IAST_Wancho_lalitavistara.txt",
+  "sha256": "87b0b00c64e34cec1612b8700bb66b49a377eb256eccf94378ea619b8baa9f1d",
+  "bytes": 22661
+ },
+ {
+  "file": "test_IAST_WarangCiti_heart.txt",
+  "sha256": "3707099de93a38c294bb04b25c4ea1b35504affe07391f420e78d70c535fac60",
+  "bytes": 5606
+ },
+ {
+  "file": "test_IAST_WarangCiti_lalitavistara.txt",
+  "sha256": "1310911a6aa5be0dc629891794d41f7def7b6b7de33089a9203f11467f00b54b",
+  "bytes": 18784
+ },
+ {
+  "file": "test_IAST_ZanabazarSquare_heart.txt",
+  "sha256": "2dc6cf43949b6edd9eae8e8ac5456ba4af0a9098759b0897d3f5f96fde9881de",
+  "bytes": 6703
+ },
+ {
+  "file": "test_IAST_ZanabazarSquare_lalitavistara.txt",
+  "sha256": "26fa7bc21a5459c8aa4ad2799b1b2b134eed4ef2dd1f061560ec089960731b71",
+  "bytes": 21669
+ }
+]

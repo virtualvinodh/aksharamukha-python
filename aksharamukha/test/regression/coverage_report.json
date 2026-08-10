@@ -1,0 +1,37 @@
+{
+ "post": {
+  "preserved": 305,
+  "added_working": 0,
+  "added_meaningful": 0,
+  "added_not_meaningful": 0,
+  "broken": 21
+ },
+ "pre": {
+  "added_working": 114,
+  "added_meaningful": 56,
+  "added_not_meaningful": 58,
+  "broken": 15
+ },
+ "totals": {
+  "post_options_total": 326,
+  "pre_options_total": 129,
+  "post_with_test_case": 305,
+  "pre_with_test_case": 114,
+  "known_broken": 36,
+  "grand_total_options": 455,
+  "grand_total_with_case_or_tracked_break": 455
+ },
+ "direct_call_promoted": {
+  "post": 21,
+  "pre": 11,
+  "total": 32
+ },
+ "final": {
+  "post_total": 326,
+  "post_with_real_case": 326,
+  "pre_total": 129,
+  "pre_with_real_case": 125,
+  "genuinely_broken": 4,
+  "grand_total": 455
+ }
+}
