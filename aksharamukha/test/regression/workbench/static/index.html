@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Aksharamukha Workbench</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Aksharamukha Workbench</h1>
+</header>
+
+<nav id="tabs">
+  <button class="tab-btn active" data-tab="rev-indic">Reversible (Indic)</button>
+  <button class="tab-btn" data-tab="irrev-indic">Irreversible (Indic)</button>
+  <button class="tab-btn" data-tab="rom-rev">Roman Reversible</button>
+  <button class="tab-btn" data-tab="rom-irrev">Roman Irreversible</button>
+  <button class="tab-btn" data-tab="semitic">Semitic</button>
+  <span class="tab-divider">options</span>
+  <button class="tab-btn" data-tab="postopts">Post-options</button>
+  <button class="tab-btn" data-tab="preopts">Pre-options</button>
+  <button class="tab-btn" data-tab="directopts">Direct Options</button>
+  <button class="tab-btn" data-tab="customcases">Custom Cases</button>
+  <span class="tab-divider">reference</span>
+  <button class="tab-btn" data-tab="texts">Source Texts</button>
+  <button class="tab-btn" data-tab="catalog">Options Catalog</button>
+</nav>
+
+<div id="workbench-log" class="log-panel hidden"></div>
+
+<main>
+  <!-- ===================== 5 conversion-sample tabs ===================== -->
+  <section id="tab-rev-indic" class="tab-panel active" data-conv-category="reversible_indic">
+    <div class="panel-head">
+      <h2>Reversible (Indic) <span class="muted">- baseline conversions, no options</span></h2>
+      <div class="conv-actions">
+        <input type="text" class="conv-filter" placeholder="Filter...">
+        <button class="btn btn-primary" data-save-conv>Save changes</button>
+      </div>
+    </div>
+    <p class="hint">Viewer only - use the <b>all-fanout</b> / <b>reverse</b> buttons on a row in the <b>Source Texts</b> tab to generate more. All-fanout always makes 2 rows per script (nativize true &amp; false); reverse round-trip only runs against reversible scripts, nativize=false only (reversibility is a property of the raw mapping, not the nativized one), 1 row per script. Only <b>output</b> is directly editable here.</p>
+    <div class="table-wrap"><table class="table-conv" data-category="reversible_indic"></table></div>
+  </section>
+
+  <section id="tab-irrev-indic" class="tab-panel" data-conv-category="irreversible_indic">
+    <div class="panel-head">
+      <h2>Irreversible (Indic) <span class="muted">- baseline conversions, no options</span></h2>
+      <div class="conv-actions">
+        <input type="text" class="conv-filter" placeholder="Filter...">
+        <button class="btn btn-primary" data-save-conv>Save changes</button>
+      </div>
+    </div>
+    <p class="hint">Viewer only - use the <b>all-fanout</b> button on a row in the <b>Source Texts</b> tab to generate more. No reverse round-trip here - these scripts aren't in <code>GeneralMap.ReversibleScripts</code>, so a round trip isn't expected to return the original text.</p>
+    <div class="table-wrap"><table class="table-conv" data-category="irreversible_indic"></table></div>
+  </section>
+
+  <section id="tab-rom-rev" class="tab-panel" data-conv-category="roman_reversible">
+    <div class="panel-head">
+      <h2>Roman Reversible <span class="muted">- baseline conversions, no options</span></h2>
+      <div class="conv-actions">
+        <input type="text" class="conv-filter" placeholder="Filter...">
+        <button class="btn btn-primary" data-save-conv>Save changes</button>
+      </div>
+    </div>
+    <p class="hint">Viewer only - use the <b>all-fanout</b> / <b>reverse</b> buttons on a row in the <b>Source Texts</b> tab to generate more. Scripts in <code>GeneralMap.RomanReversible</code> (IAST, HK, Itrans, Velthuis, Titus, WX, RussianCyrillic, ISO).</p>
+    <div class="table-wrap"><table class="table-conv" data-category="roman_reversible"></table></div>
+  </section>
+
+  <section id="tab-rom-irrev" class="tab-panel" data-conv-category="roman_irreversible">
+    <div class="panel-head">
+      <h2>Roman Irreversible <span class="muted">- baseline conversions, no options</span></h2>
+      <div class="conv-actions">
+        <input type="text" class="conv-filter" placeholder="Filter...">
+        <button class="btn btn-primary" data-save-conv>Save changes</button>
+      </div>
+    </div>
+    <p class="hint">Viewer only - use the <b>all-fanout</b> button on a row in the <b>Source Texts</b> tab to generate more.</p>
+    <div class="table-wrap"><table class="table-conv" data-category="roman_irreversible"></table></div>
+  </section>
+
+  <section id="tab-semitic" class="tab-panel" data-conv-category="semitic">
+    <div class="panel-head">
+      <h2>Semitic <span class="muted">- baseline conversions, no options</span></h2>
+      <div class="conv-actions">
+        <input type="text" class="conv-filter" placeholder="Filter...">
+        <button class="btn btn-primary" data-save-conv>Save changes</button>
+      </div>
+    </div>
+    <p class="hint">Viewer only - use the <b>all-fanout</b> button on a row in the <b>Source Texts</b> tab to generate more.</p>
+    <div class="table-wrap"><table class="table-conv" data-category="semitic"></table></div>
+  </section>
+
+  <!-- ===================== options tabs ===================== -->
+  <section id="tab-postopts" class="tab-panel" data-opt-kind="post">
+    <div class="panel-head">
+      <h2>Post-options <span class="muted">- grouped by script</span></h2>
+      <div>
+        <input type="text" id="postopts-filter" placeholder="Filter...">
+        <button class="btn" data-add-case="post">+ Add case</button>
+        <button class="btn btn-primary" data-save-cases="post">Save changes</button>
+      </div>
+    </div>
+    <p class="hint">One section per target script. Use the <b>post-opts</b> button on a Devanagari row in the <b>Source Texts</b> tab to generate full coverage - it expands every already-working option to every script it applies to, always at nativize=true (the only mode this test harness ever exercises). Doesn't touch the 32 multi-arg or 4 broken options, see the Direct Options tab for those.</p>
+    <div class="table-wrap"><table id="table-postopts"></table></div>
+  </section>
+
+  <section id="tab-preopts" class="tab-panel" data-opt-kind="pre">
+    <div class="panel-head">
+      <h2>Pre-options <span class="muted">- grouped by script</span></h2>
+      <div>
+        <input type="text" id="preopts-filter" placeholder="Filter...">
+        <button class="btn" data-add-case="pre">+ Add case</button>
+        <button class="btn btn-primary" data-save-cases="pre">Save changes</button>
+      </div>
+    </div>
+    <p class="hint">One section per source script. Use the <b>pre-opts</b> button on a Devanagari row in the <b>Source Texts</b> tab to generate full coverage.</p>
+    <div class="table-wrap"><table id="table-preopts"></table></div>
+  </section>
+
+  <section id="tab-directopts" class="tab-panel">
+    <div class="panel-head">
+      <h2>Direct Options <span class="muted">- the ~32 multi-argument options</span></h2>
+      <div>
+        <input type="text" id="directopts-filter" placeholder="Filter...">
+        <button class="btn btn-primary" data-save-cases="direct">Save changes</button>
+      </div>
+    </div>
+    <p class="hint">Options that need more than the text itself (a target script, a reverse flag, ...) to call correctly - see <code>args</code>. Viewer/editor only, no bulk generation here: each one's calling convention was individually discovered, not a uniform script × nativize grid.</p>
+    <div class="table-wrap"><table id="table-directopts"></table></div>
+  </section>
+
+  <section id="tab-customcases" class="tab-panel">
+    <div class="panel-head">
+      <h2>Custom Cases <span class="muted">- one full transliterate.process() call, hand-written</span></h2>
+      <div>
+        <input type="text" id="customcases-filter" placeholder="Filter...">
+        <button class="btn" id="add-customcase">+ Add case</button>
+        <button class="btn btn-primary" data-save-cases="custom">Save changes</button>
+      </div>
+    </div>
+    <p class="hint">For cases the option tabs can't express: a specific source/target/nativize with any combination of pre-options AND post-options applied together. Backed by <code>test_custom_cases.json</code>, checked for real by <code>TestCustomCases</code> in <code>testsuite.py</code>.</p>
+    <div class="table-wrap"><table id="table-customcases"></table></div>
+  </section>
+
+  <div id="add-customcase-form" class="add-case-form hidden">
+    <div class="add-case-grid">
+      <label>Source script
+        <input type="text" id="cc-source" placeholder="Devanagari">
+      </label>
+      <label>Target script
+        <input type="text" id="cc-target" placeholder="Telugu">
+      </label>
+      <label class="check-label" style="align-self:end;padding-bottom:6px">
+        <input type="checkbox" id="cc-nativize" checked> nativize
+      </label>
+      <label>Label <span class="muted">(optional)</span>
+        <input type="text" id="cc-label" placeholder="e.g. nukta + anusvara together">
+      </label>
+      <label>Pre-options <span class="muted">(semicolon-separated, any order)</span>
+        <input type="text" id="cc-pre-options" list="pre-option-name-list" placeholder="e.g. OptionA;OptionB">
+        <datalist id="pre-option-name-list"></datalist>
+      </label>
+      <label>Post-options <span class="muted">(semicolon-separated, any order)</span>
+        <input type="text" id="cc-post-options" list="post-option-name-list" placeholder="e.g. OptionC;OptionD">
+        <datalist id="post-option-name-list"></datalist>
+      </label>
+    </div>
+    <div class="add-case-grid">
+      <label class="add-case-textarea-label">Input
+        <textarea id="cc-input" rows="3"></textarea>
+      </label>
+      <label class="add-case-textarea-label">Output
+        <textarea id="cc-output" rows="3"></textarea>
+        <button class="btn btn-small" id="cc-autogen" type="button">Autogenerate</button>
+      </label>
+    </div>
+    <p class="hint">Type the input yourself, then either type the expected output by hand or click <b>Autogenerate</b> to run the real pipeline (source → target, nativize, pre-options then post-options) and fill it in - review before saving.</p>
+    <div class="add-case-actions">
+      <button class="btn" id="cc-cancel">Cancel</button>
+      <button class="btn btn-primary" id="cc-submit">Add case</button>
+    </div>
+  </div>
+
+  <div id="add-case-form" class="add-case-form hidden">
+    <div class="add-case-grid">
+      <label>Kind
+        <select id="add-case-kind">
+          <option value="post">post</option>
+          <option value="pre">pre</option>
+        </select>
+      </label>
+      <label>Option name
+        <input type="text" id="add-case-name" list="option-name-list" placeholder="e.g. TeluguRemoveNukta">
+        <datalist id="option-name-list"></datalist>
+      </label>
+      <label>Source script
+        <input type="text" id="add-case-source" placeholder="Devanagari">
+      </label>
+      <label>Target script
+        <input type="text" id="add-case-target" placeholder="Telugu">
+      </label>
+      <label class="check-label" style="align-self:end;padding-bottom:6px">
+        <input type="checkbox" id="add-case-nativize" checked> nativize
+      </label>
+    </div>
+    <div class="add-case-grid">
+      <label class="add-case-textarea-label">Input
+        <textarea id="add-case-input" rows="3"></textarea>
+      </label>
+      <label class="add-case-textarea-label">Output
+        <textarea id="add-case-output" rows="3"></textarea>
+        <button class="btn btn-small" id="add-case-autogen" type="button">Autogenerate</button>
+      </label>
+    </div>
+    <p class="hint">Type the input yourself, then either type the expected output by hand or click <b>Autogenerate</b> to run the option for real and fill it in - review it before saving, it's a starting point, not a guarantee of correctness. For the ~32 options that need more than a source/target script, add/edit them directly on the Direct Options tab instead.</p>
+    <div class="add-case-actions">
+      <button class="btn" id="add-case-cancel">Cancel</button>
+      <button class="btn btn-primary" id="add-case-submit">Add case</button>
+    </div>
+  </div>
+
+  <div id="add-pair-form" class="add-case-form hidden">
+    <div class="add-case-grid">
+      <label>Source
+        <input type="text" id="pair-source-label" readonly>
+      </label>
+      <label>Target script
+        <input type="text" id="add-pair-target" placeholder="Hebrew">
+      </label>
+      <label>Mode
+        <select id="add-pair-mode">
+          <option value="all_fanout">all-fanout (one direction, nativize true &amp; false)</option>
+          <option value="reverse">reverse (round trip, nativize false only)</option>
+        </select>
+      </label>
+    </div>
+    <p class="hint">Generates just this one source → target pair instead of fanning out to every script.</p>
+    <div class="add-case-actions">
+      <button class="btn" id="add-pair-cancel">Cancel</button>
+      <button class="btn btn-primary" id="add-pair-submit">Generate</button>
+    </div>
+  </div>
+
+  <div id="add-sourcetext-form" class="add-case-form hidden">
+    <div class="add-case-grid">
+      <label>Script
+        <input type="text" id="st-script" placeholder="Devanagari">
+      </label>
+      <label>Label <span class="muted">(optional)</span>
+        <input type="text" id="st-label" placeholder="e.g. heart">
+      </label>
+    </div>
+    <div class="add-case-grid">
+      <label class="add-case-textarea-label" style="grid-column:1 / -1">Text
+        <textarea id="st-text" rows="6"></textarea>
+      </label>
+    </div>
+    <p class="hint">The row's <code>id</code> is assigned automatically - just fill in the script and text.</p>
+    <div class="add-case-actions">
+      <button class="btn" id="st-cancel">Cancel</button>
+      <button class="btn btn-primary" id="st-submit">Add row</button>
+    </div>
+  </div>
+
+  <!-- ===================== reference tabs ===================== -->
+  <section id="tab-texts" class="tab-panel">
+    <p class="hint">Add or edit a row, save it, then use its row buttons: <b>all-fanout</b> / <b>reverse</b> generate baseline conversion samples (shown on the 5 conversion tabs); <b>post-opts</b> / <b>pre-opts</b> (Devanagari rows only) generate full option coverage (shown on the Post-options/Pre-options tabs). Those tabs are viewers - all generation happens from here, against that row's own text.</p>
+    <div class="panel-head">
+      <h2>Source Texts</h2>
+      <div>
+        <button class="btn" id="add-sourcetext">+ Add row</button>
+        <button class="btn btn-primary" data-save="source_texts">Save</button>
+      </div>
+    </div>
+    <div class="table-wrap"><table id="table-source_texts"></table></div>
+  </section>
+
+  <section id="tab-catalog" class="tab-panel">
+    <div class="panel-head">
+      <h2>Options Catalog <span class="muted">(read-only)</span></h2>
+      <div>
+        <input type="text" id="catalog-filter" placeholder="Filter by name, script, status...">
+        <label class="check-label"><input type="checkbox" id="catalog-group-toggle"> Group by script</label>
+        <label class="check-label"><input type="checkbox" id="catalog-missing-toggle"> Missing test data only</label>
+        <button class="btn" data-regen-catalog>Regenerate from manifest</button>
+      </div>
+    </div>
+    <p class="hint">Click a column header to sort. Rows with existing test data are shaded green - click <b>cases</b> to preview them, or edit them directly on the Post-options/Pre-options/Direct Options tabs. Click <b>+ test</b> to add a case for an option via the add-case form.</p>
+    <div class="table-wrap"><table id="table-options_catalog"></table></div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

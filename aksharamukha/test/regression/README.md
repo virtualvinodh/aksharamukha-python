@@ -156,3 +156,45 @@ changes and re-running: the failures are identical with or without them) -
 `test_texts/test_Devanagari_{Kawi,KhuenTham}_*.txt` fixtures, and one
 `TestSanity` Malayalam case fails. Worth investigating separately; not
 caused by and not fixed by anything in this directory.
+
+## Frontend/backend manifest
+
+- `dump_backend_script_lists.py` + `build_frontend_backend_manifest.js` -
+  generate `frontend_backend_manifest.json`, which merges the frontend's
+  hand-curated script/option metadata (`aksharamukha-front/src/mixins/ScriptMixin.js`
+  - labels, descriptions, per-script option groupings, font info) with this
+  suite's authoritative backend option list. Regenerate with:
+  ```
+  python dump_backend_script_lists.py
+  node build_frontend_backend_manifest.js
+  ```
+  Requires a sibling checkout of the frontend repo (path hardcoded as
+  `FRONTEND_ROOT` at the top of the `.js` file - adjust if yours lives
+  elsewhere) and Node (no npm packages needed).
+
+- `frontend_backend_manifest.json` - one file with three sections:
+  - `scripts`: every script from any of the frontend's five script-category
+    arrays (Indic/Semitic/Latin/Romanization/IME), deduplicated, with its
+    label/description/region/status/language/font/codes, plus a
+    `backend` block showing which `GeneralMap.py` categories recognize it.
+  - `pre_options` / `post_options`: every option name from either side
+    (frontend option groups ∪ backend's working+broken sets), each tagged
+    `backend_status` (`working` / `working-multi-arg` / `broken` /
+    `unknown-to-backend`) and `in_frontend` (bool), with the frontend's
+    label(s) and which scripts it's wired to there, where available.
+  - `summary`: the interesting part. As of this run:
+    - **`qafTwodot`** is referenced in the frontend's `Hebr-Ar` post-option
+      group but doesn't exist anywhere in the backend - a dead UI option.
+    - **Hiragana/Katakana** are the only frontend scripts absent from the
+      backend's raw script-category lists - not a gap, they're routed
+      through the separate `JapanesePostProcess` path instead of the usual
+      `IndicScripts`/`LatinScripts` categorization.
+    - **40 backend scripts the frontend never lists as selectable** - mostly
+      the `*LoC`/`*RomanLoC` family (the backend implements each LoC
+      romanization as its own literal script; the frontend instead exposes
+      "LoC" as a per-target option toggle) and internal-only pivots
+      (`Inter`, `RomanSemitic`) that were never meant to be user-facing.
+      Worth a manual pass to confirm which of the rest are genuine missing
+      UI coverage vs. intentionally internal.
+    - **144 of 326 post-options and 60 of 129 pre-options** are real,
+      working backend features with no frontend UI at all.

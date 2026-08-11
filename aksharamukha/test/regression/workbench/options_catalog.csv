@@ -1,0 +1,457 @@
+kind,name,backend_status,in_frontend,applies_to_scripts,label
+post,AhomClosed,working,False,,
+post,AlephMaterLectionis,working,True,Latn,Aleph as mater lectionis<br/><small> kʾ → kā</small>
+post,AmbigousTamilOrthography,working,False,,
+post,AnusvaraAsN,working,True,RomanReadable; RomanColloquial,Anusvara as n <br/><small>m' → n'</small> | Anusvara as n <br/><small>maim → main</small>
+post,AnusvaraToNasal,working-multi-arg,False,,
+post,AnusvaraToNasalIPA,working,False,,
+post,AnusvaratoNasalASTISO,working,True,IAST; IASTPali; ISO,Anusvara to nasal<br/><small>gaṃgā → gaṅgā</small> | Anusvara to nasal<br/><small>gaṁgā → gaṅgā</small>
+post,ArabAtoAleph,working,True,Arab,أ/a/ to Alif /ا/<br/><small>ا → أ</small>
+post,ArabRemoveAdditions,working,False,,
+post,ArabicGimelGaGha,working,False,,
+post,ArabicGimelPaBa,working,False,,
+post,AvestanConventions,working,False,,
+post,BalineseArchaicJNA,working,True,Balinese,"Arachaic jña<br/><small><span class=""balinese"">ᬚ᭄ᬜ → ᭌ</span></small>"
+post,BalineseAvowels,working,True,Balinese,"Use a-based vowels<br/><small><span class=""balinese"">ᬇ ᬈ ᬉ ᬊ → ᬅᬶ ᬅᬷ ᬅᬸ ᬅᬹ</span></small>"
+post,BalineseJavaneseMoveRepha,working-multi-arg,False,,
+post,BalineseMoveRepha,working,True,Balinese,"Move repha<br/><small><span class=""balinese"">ᬥᬃᬫ → ᬥᬫᬃ</span></small>"
+post,BalineseRomanLoCFix,working,False,,
+post,BalineseSimplified,working,True,RomanLoCBalinese,"Use simplified Mapping<small><br/><span class=""balinese"">ᬡ ᬙ ᬣ → na ca ta</span>"
+post,BengaliConjunctVB,working,False,,
+post,BengaliIntervocalicDDA,working,True,Bengali,দৃঢ আষাঢ → দৃঢ় আষাঢ়
+post,BengaliOldRA,working,True,Bengali,Old Bengali /ra/ <br/><small>র → ৰ</small>
+post,BengaliRaBa,working,True,Bengali,ৰ as /b/ & ব as /v/ <br/>
+post,BengaliSwitchYaYYa,working,True,Bengali,ẏa → য & ya → য়  
+post,BengaliYYA,working,True,Bengali; Assamese,য় everywhere<br/><small>যয়াতি যজ্ঞ → য়য়াতি য়জ্ঞ</small>
+post,BhaiksukiRetainSpace,working,True,Bhaiksuki,Retain spaces
+post,BurmeseRomanLoCSource,working,False,,
+post,BurmeseRomanLoCTarget,working,False,,
+post,ChakmaAVowels,working,False,,
+post,ChakmaEnableAllConjuncts,working,True,Chakma,"Enable all conjuncts<br/><small><span class=""chakma"">𑄇𑄴𑄈𑄧 𑄉𑄴𑄊𑄧 𑄚𑄴𑄖𑄧 → 𑄇𑄳𑄈𑄧 𑄉𑄳𑄊𑄧 𑄚𑄳𑄖𑄧</span></small>"
+post,ChakmaGemination,working,False,,
+post,ChakmaPali,working,True,Chakma,"Pali orthography<br/><small><span class=""chakma"">𑄖𑄧𑄗𑄉𑄧𑄖𑄧 → 𑄖𑄗𑄂𑄉𑄖</span></small>"
+post,ChakmaVowelsIndependent,working,True,Chakma,"Enable independent i, u and e<br/><small><span class=""chakma"">𑄃𑄨 𑄃𑄪 𑄃𑄬 → 𑄄 𑄅 𑄆</span></small>"
+post,ContextualLLa,working,True,Tamil,"Contextual <span class=""tamil"">ள</><br/><small>(Experimental)</small><br/><small><span class=""tamil"">ப்ரலய → ப்ரளய</span></small>"
+post,CyrillicPali,working,True,RussianCyrillic,Pali Text
+post,DevanagariACandra,working,True,Devanagari,ऍ → ॲ
+post,DevanagariAVowels,working,False,,
+post,DevanagariAnusvara,working,True,Devanagari,Use Anusvara to nasalize<br/><small>पञ्चगङ्गा → पंचगंगा</small>
+post,DevanagariPrishtamatra,working,True,Devanagari,Prishthamatra orthography<br/><small>के कै को कौ → कॎ कॎे कॎा कॎो</small>
+post,DevanagariRomanLoCFix,working,False,,
+post,DivesAkuruAlternateIndVowels,working,True,DivesAkuru,"/y/ as vowel carrier<br/><small><span class=""divesakuru"">𑤀 𑤁 𑤂 𑤃 → 𑤥 𑤥𑤰 𑤥𑤱 𑤥𑤲</span></small>"
+post,DivesAkuruHomoOrganNasal,working,True,DivesAkuru,"Use nasal sign<br/><small><span class=""divesakuru"">𑤐𑤾𑤎 𑤤𑤾𑤢 𑤚𑤾𑤘 𑤟𑤾𑤞 → 𑤿𑤎 𑤿𑤢 𑤿𑤘 𑤿𑤞</span></small>"
+post,DograShaKha,working,True,Dogra,"<span class=""dogra"">𑠨</span> → <span class=""dogra"">𑠋</span>"
+post,Dot2Dandas,working,False,,
+post,Dot2Pipes,working,False,,
+post,FinalNNa,working,True,Tamil,"Only word-final <span class=""tamil"">ன</><br/><small><span class=""tamil"">ஆனனன் → ஆநநன்</span></small>"
+post,FixSemiticRoman,working-multi-arg,False,,
+post,FixTallA,working-multi-arg,False,,
+post,GranthaOldau,working,True,Grantha,"Grantha old AU vowel sign <br/><small><span class=""grantha"">𑌕𑍗 → 𑌕𑍌</span></small>"
+post,GranthaPrakrit,working,True,Grantha,"Prakrit orthography <br/><small><span class=""grantha"">𑌬𑍁𑌦𑍍𑌧𑌂 → 𑌬𑍁𑌂𑌧𑌀</span></small>"
+post,GurmukhiCandrabindu,working,False,,
+post,GurmukhiRomanLoCFix,working,False,,
+post,GurmukhiTippiBindu,working,False,,
+post,GurmukhiTippiGemination,working,False,,
+post,GurmukhiYakaash,working,True,Gurmukhi,Yakaash<br/><small>ਕ੍ਯ → ਕੵ</small>
+post,HeberewQoph,working,True,Hebrew,Use Qof<br/><small>כּ ← ק</small>
+post,HebewShortO,working,True,Hebrew,Use Kamats Katan for Short /o/<br/><small>לֹ ← לׇ</small>
+post,HebrewKatevMalei,working,False,,
+post,HebrewSBLSource,working,False,,
+post,HebrewSBLTarget,working,False,,
+post,HebrewVetVav,working,False,,
+post,HebrewnonFinalShort,working,False,,
+post,HindiMarathiRomanLoCFix,working,True,RomanLoCDevanagari,Use Hindi/Marathi Mapping
+post,HiraganaaunotDipthong,working,False,,
+post,IASTISONasalTilde,working,False,,
+post,IASTPali,working,False,,
+post,IPARemoveCross,working,False,,
+post,ISO233Source,working,False,,
+post,ISO233Target,working,False,,
+post,ISO259Source,working,False,,
+post,ISO259Target,working,False,,
+post,InsertGeminationSign,working-multi-arg,False,,
+post,JapanesePostProcess,working-multi-arg,False,,
+post,JavaneseArchaicJNA,working,True,Javanese,"Arachaic jña<br/><small><span class=""javanese"">ꦗ꧀ꦚ → ꦘ</span></small>"
+post,JavaneseAvowels,working,True,Javanese,"Use a-based indendent vowels<br/><small><span class=""javanese"">ꦆ ꦇ ꦈ ꦈꦴ → ꦄꦶ ꦄꦷ ꦄꦸ ꦄꦹ</span></small>"
+post,JavaneseMoveRepha,working,True,Javanese,"Move repha<br/><small><span class=""javanese"">ꦣꦂꦩ → ꦣꦩꦂ</span></small>"
+post,JavaneseRomanLoCFix,working,False,,
+post,JavaneseSimplified,working,True,RomanLoCJavanese,"Use simplified Mapping<small><br/><span class=""javanese"">ꦟ ꦖ ꦡ → na ca ta</span>"
+post,KaithiRetainSpace,working,True,Kaithi,Retain spaces
+post,KannadaNakaraPollu,working,True,Kannada,"Kannada Nakaara Pollu <br/><small><span class=""kannadapollu"">ಭಗವನ್ → ಭಗವೝ</span></small>"
+post,KannadaNotRepha,working,True,Kannada,"Avoid Repha <br/><small><span class=""kannada"">ಧರ್ಮ → ಧರ‍್ಮ</span></small>"
+post,KannadaSpacingCandrabindu,working,True,Kannada,"Use spacing Chandrabindu <br/><small><span class=""kannadapollu"">ಯಹಾಁ → ಯಹಾಀ</span></small>"
+post,KawiAltAiAU,working,True,Kawi,"Use Alt. AI/AU<br/><small><span class=""kawi"">𑼒𑼿 𑼒𑼿𑼴 → 𑼒𑼾𑼾 𑼒𑼾𑼾𑼴</span></small>"
+post,KawiArchaicJNA,working,True,Kawi,"Arachaic jña<br/><small><span class=""kawi"">𑼙𑽂𑼛 → 𑼳</span></small>"
+post,KawiDecomposedVowel,working,True,Kawi,"Use decomposed vowels<br/><small><span class=""kawi"">𑼅 𑼇 𑼉 → 𑼄𑼴 𑼆𑼴 𑼈𑼴</span></small>"
+post,KawiMoveRepha,working,True,Kawi,"Move Repha<br/><small><span class=""kawi"">𑼤𑼂𑼪 → 𑼂𑼤𑼪</span></small>"
+post,KhamiShanMyanmarNumerals,working,True,KhamtiShan,"Myanmar numerals<br/><small><span class=""khamtishan"">႑႒႓</span> → <span class=""khamtishan"">၁၂၃</span></small>"
+post,KhamtiShanRa,working,True,KhamtiShan,"Use ꩳ<br/><small><span class=""khamtishan"">ရ</span> → <span class=""khamtishan"">ꩳ</span></small>"
+post,KhandaTa,working-multi-arg,False,,
+post,KhandaTaRomanLoC,working,False,,
+post,KhmerLoCRomanLoCSource,working,False,,
+post,KhmerLoCRomanLoCTarget,working,False,,
+post,KhojkiQa,working,True,Khojki,"Khojki QA<br/><small><span class=""sundanese"">𑈈𑈶</span> → <span class=""khojki"">𑈿</span></small>"
+post,KhojkiRRI,working,False,,
+post,KhojkiRetainSpace,working,True,Khojki,Retain spaces
+post,LaoNative,working,True,Lao,"Lao Nativization<br/><small><span class=""lao"">ພຸທທັງ ຄັຈຈາມິ ສັພພັງ → ພຸດທັງ ຄັຈສາມິ ສັບພັງ</span></small>"
+post,LaoPhonetic,working,True,LaoPali,"Lao phonetic<br/><small><div  class=""laopali"">ພຸທ຺ຘ → ບຸດຘະ</div></small>"
+post,LaoSajjhaya,working,True,LaoPali,"Sajjhāya orthography<br/><small><div class=""laopali"">ພຸທ຺ຘ → ພຸທ໌ຘ</div></small>"
+post,LaoSajjhayawithA,working,True,LaoPali,"Nativized sajjhāya<br/><small><div  class=""laopali"">ພຸທ຺ຘໍ → ພຸທ໌ຘັງ</div></small>"
+post,LaoTranscription,working,True,LaoPali,"Lao orthography<br/><small><span class=""laopali"">ພຸທ຺ຘ → ພຸທຘະ</span></small>"
+post,LatinPipes,working,False,,
+post,LatnInitialVowels,working,False,,
+post,LimbuDevanagariConvention,working,True,DevanagariLimbu,"Limbu Devanagari conventions<small><br/><span class=""limbu"">ᤀᤧ ᤀᤨ ᤀᤧ᤺ ᤁᤧ ᤁᤨ ᤁᤧ᤺</span> → <span class=""limbudev"">ए़ ओ़ ए़ः के़ को़ के़ः</span></small>"
+post,LimbuSpellingSaI,working,True,Limbu,"SA-I for vowel length<small><br/><span class=""limbu"">ᤁ᤺ᤢᤰ → ᤁᤢᤁ᤻</span></small>"
+post,LimburemoveHistorical,working,False,,
+post,LoCMarc8,working,True,RomanLoC,MARC-8 decomposed diacritics
+post,MToAnusvara,working-multi-arg,False,,
+post,MalayalamAnusvaraNasal,working,False,,
+post,MalayalamChillu,working,False,,
+post,MalayalamCircVirama,working,True,Malayalam,"Circle virama<br/><small><span class=""malayalam"">ക്</span> → <span class=""malayalamold"">ക഼</span></small>"
+post,MalayalamLineVirama,working,True,Malayalam,"Bar virama<br/><small><span class=""malayalam"">ക്</span> → <span class=""malayalamold"">ക഻</span></small>"
+post,MalayalamNTA,working,False,,
+post,MalayalamPrakrit,working,True,Malayalam,"Prakrit orthography<br/><small><span class=""malayalam"">ബുദ്ധ → ബുംധ</span></small>"
+post,MalayalamRomanLoCFix,working,False,,
+post,MalayalamTTNTA,working,True,IASTMalayalam; ISOMalayalam,റ്റ (ṟṟ) ന്റ (nṟa) → ṯṯ nṯ
+post,MalayalamremoveHistorical,working,False,,
+post,MarchenSanskritPalatals,working,True,Marchen,"Sanskrit palatals<br/><small><span class=""marchen"">𑲂 𑲃 𑲄 𑲄𑲮 → 𑱶 𑱷 𑱸 𑱸𑲮</span></small>"
+post,MedievalTamilOrthography,working,False,,
+post,MeeteiMayekremoveHistorical,working,False,,
+post,ModiRemoveLong,working,False,,
+post,MongolianSyllabize,working,True,Mongolian,"Syllabize input<br/><small><span class=""mongolian"">ᠮᠠᢏᢈ → ᠮᠠ᠋ ᢏᢈ</span></small>"
+post,MultaniAbjad,working,False,,
+post,NandinagariPrishtamatra,working,True,Nandinagari,"Use Prishtamatra orthography<br/><small><span class=""nandinagari""> 𑦮𑧚 𑦮𑧜 𑦮𑧛 𑦮𑧝 → 𑦮𑧤 𑦮𑧤𑧑 𑦮𑧤𑧚 𑦮𑧤𑧜</span></small>"
+post,NasalTilde,working,True,IAST; ISO,Use tilde for nasalization<br/><small>kaM ka~ kaMka ka~ka → kã kã kaṅka kãka</smal
+post,NasalToAnusvara,working-multi-arg,False,,
+post,NewaDisableRepha,working,True,Newa,"Disable repha<br/><small><span class=""newa"">𑐢𑐬𑑂𑐩 → 𑐢𑐬𑑂‍𑐩</span></small>"
+post,NewaMurmurConsonants,working,True,Newa,Enable murmured consonants
+post,NewaSpecialTa,working,True,Newa,"Special /ta/ conjunct<br/><small><span class=""newa"">𑐟𑑂𑐥𑐟𑑂𑐩𑐟𑑂𑐰 → 𑐟𑑂‍𑐥𑐟𑑂‍𑐩𑐟𑑂‍𑐰</span></small>"
+post,OriyaVa,working,False,,
+post,OriyaVaAlt,working,True,Oriya,ଵ instead of ୱ<br/><small>ଭୱତି → ଭଵତି <br/>(Enable preserve source)</small>
+post,OriyaYYA,working,True,Oriya,ୟ everywhere<br/><small>ଯୟାତି ଯଜ୍ଞ → ୟୟାତି ୟଜ୍ଞ</small>
+post,PersianDMGSBLSource,working,False,,
+post,PersianDMGTarget,working,False,,
+post,PhagsPaRearrange,working-multi-arg,False,,
+post,PhagsPaSeal,working,True,PhagsPa,"Seal style   <br/><small><span class=""phagspa"">ꡳꡛ ᠂ ꡂꡜ</span> → <span class=""phagspaseal"">ꡳꡛ ᠂ ꡂꡜ</span></span></small>"
+post,PhagsPaTib,working,True,PhagsPa,"Tibetan style<br/><small><span class=""phagspa"">ꡳꡛ ᠂ ꡂꡜ</span> → <span class=""phagspatib"">ꡳꡛ ᠂ ꡂꡜ</span></small>"
+post,PhoneticMapping,working,False,,
+post,RemoveDiacritics,working,False,,
+post,RemoveDiacriticsTamil,working,False,,
+post,RemoveSchwa,working-multi-arg,False,,
+post,RephaDoubleMalayalam,working,True,Malayalam,"Double consonants after reph<br/><small><span class=""malayalam"">ധർമ → ധർമ്മ</span></small>"
+post,RetainDandasIndic,working-multi-arg,False,,
+post,RetainGujaratiDanda,working,False,,
+post,RetainGurmukhiNumerals,working,False,,
+post,RetainIndicNumerals,working-multi-arg,False,,
+post,RetainKannadaDanda,working,False,,
+post,RetainKannadaNumerals,working,False,,
+post,RetainMalayalamDanda,working,False,,
+post,RetainMalayalamNumerals,working,False,,
+post,RetainRomanNumerals,working-multi-arg,False,,
+post,RetainTamilDanda,working,False,,
+post,RetainTamilNumerals,working,False,,
+post,RetainTeluguDanda,working,False,,
+post,RetainTeluguNumerals,working,False,,
+post,ReverseGeminationSign,working-multi-arg,False,,
+post,RomanLoCChandrabindu,working,False,,
+post,RomanLoCLaUnderscoreDoubleDot,working,False,,
+post,RomanLoCSLaDotLaUnderscore,working,True,IAST,"Vedic retroflex /l/ <br/><small><span class=""iast"">agnimīl̤e → agnimīḻe</span>"
+post,RomanLoCSasha,working,False,,
+post,RomanLoCVaWa,working,False,,
+post,RomanReadableLongEO,working,True,RomanReadable,Alternate long/short e/o <br/><small>e' e o' o → e ae o oa</small>
+post,SaurashtraHaru,working,False,,
+post,SaurastraHaaruColon,working,True,TamilSaurashtra,"Convert Saurashtra Haaru as :<small><br/><span class=""saurashtra"">ꢥꢴꢷ</span> → <span class=""tamil"">நீ:</span></small>"
+post,ShanLoCRomanLoCSource,working,False,,
+post,ShanLoCRomanLoCTarget,working,False,,
+post,ShowSchwaHindi,working,True,Devanagari,"Show explicit schwa (Hindi) <small><div class=""q-mt-sm"">rāma → राम॔, viracita → विर॔॔चित॔</div></small>"
+post,SinhalaChandrbinduAnusvara,working,False,,
+post,SinhalaConjuncts,working,True,Sinhala,"Enable all conjuncts<span><br/><small><span class=""sinhala"">බුද්ධස්ස → බුද්‍ධස‍්ස</span></small>"
+post,SinhalaDefaultConjuncts,working,False,,
+post,SinhalaPali,working,True,Sinhala,"Sanskrit/Pali Orthography<br/><small><span class=""sinhala"">නමෝ භගවතේ → නමො භගවතෙ</span></small>"
+post,SinhalaSannakaNasalization,working,False,,
+post,SogdReshAyin,working,True,Sogd,"Use <span class=""sogd"">𐽀</span> <i>(Resh-Ayin)</i> for Ayin"
+post,SogoReshAyinDaleth,working,True,Sogo,"Use <span class=""sogo"">𐼘</span> <i>(Resh-Ayin-Dalesh)</i> for Ayin"
+post,SoyomboFinals,working,True,Soyombo,"Mongolian finals<br/><small><span class=""soyombo"">ak ag ad → 𑩐𑪋 𑩐𑪊 𑩐𑪍</span></small>"
+post,SoyomboInitials,working,True,Soyombo,"Initial-form /ra/, /la/, /sa/<br/><small><span class=""soyombo"">𑩼𑪙𑩫 𑩽𑪙𑩫 𑪁𑪙𑩫 → 𑪆𑩫 𑪇𑩫 𑪉𑩫</span></small>"
+post,SoyomboSanskritPalatals,working,True,Soyombo,"Sanskrit palatals<br/><small><span class=""soyombo"">𑩵 𑩶 𑩷 → 𑩡 𑩢 𑩣</span></small>"
+post,SoyomboSpaceTscheg,working,True,Soyombo,"Use Tsheg<br/><small><span class=""soyombo"">𑩯 𑩴𑩖 → 𑩯𑪚𑩴𑩖</span></small>"
+post,SoyomboSyllabize,working,True,Soyombo,"Syllabize input<br/><small><span class=""soyombo → "">𑩲𑩖𑩮𑩑𑪁𑩫𑪘𑪙𑩾 → 𑩲𑩖 𑩮𑩑 𑪁 𑩫𑪘𑪙𑩾</span></small>"
+post,SundaneseHistoricConjuncts,working,True,Sundanese,"Archaic conjuncts<br/><small><span class=""sundanese"">ᮊ᮪ᮙ ᮊ᮪ᮝ ᮃᮊ᮪ ᮃᮙ᮪ → ᮊᮬ ᮊᮭ ᮃᮾ ᮃᮿ</span></small>"
+post,SundaneseRemoveHistoric,working,False,,
+post,TaiKuen,working,False,,
+post,TaiThamHighNga,working,False,,
+post,TaiThamLao,working,False,,
+post,TaiThamMoveNnga,working,False,,
+post,TaiThamO,working,False,,
+post,TakriArchaicKha,working,True,Takri,"Medieval Takri orthography <br/><small><span class=""takri"">𑚋</span> represents both /kha/ and /ṣa/</small>"
+post,TakriRemoveGemination,working,True,Takri,"Avoid duplicated consonants<br/><small>Convert <span class=""takri"">𑚄𑚙𑚶𑚙𑚤</span> → <span class=""takri"">𑚄𑚙𑚤</span></small>"
+post,TamilAddFirstVarga,working,True,Tamil,"Mark the first varga<br/><small><span class=""tamil"">தீ³பம் → தீ³ப¹ம்</span></small>"
+post,TamilDisableSHA,working,True,Tamil,"Disable <span class=""tamil"">ஶ</span><br/><small><span class=""tamil"">ஶ → ஷ²</span></small>"
+post,TamilExtendedAnusvara,working,True,TamilExtended,"Avoid Anusvara <br/><small><span class=""tamilextended"">സംഘം → സങ്‌ഘമ്</span></small>"
+post,TamilExtendedNNA,working,True,TamilExtended,"Contextual <span class=""tamil"">ன</span> <br/><small><span class=""tamilextended"">ഗജാനനന്‌ → ഗജാഩഩഩ്‌</span></small>"
+post,TamilGranthaVisarga,working,True,Tamil,"Grantha Visarga<br/><small><span class=""tamil"">நம꞉ → நம𑌃</span></small>"
+post,TamilNaToNNa,working,False,,
+post,TamilOmDisable,working,True,Tamil,"Disable ௐ<br/><small><span class=""tamil"">ௐ → ஓம்</span></small>"
+post,TamilRemoveApostrophe,working,True,Tamil,"Remove apostrophe<br/><small><span class=""tamil"">ருʼம்ʼ → ரும்</span></small>"
+post,TamilRemoveNumbers,working,True,Tamil,"Remove diacritic numerals<br/><small><span class=""tamil"">க²க³க⁴ → ககக</span></small>"
+post,TamilSHADisable,working,False,,
+post,TamilStyleUUCore,working,True,TamilExtended,"Tamil Style -u -ū <br/><small>(Core Grantha)</small><br/><small><span class=""tamilextended"">ഗുബൂഫുഭൂ → ഗ‍ുബ‍ൂഫ‍ുഭ‍ൂ</span></small>"
+post,TamilStyleUUOther,working,True,TamilExtended,"Tamil Style -u -ū <br/><small>(Tamilized Grantha)</small><br/><small><span class=""tamilextended"">ജൂസുഷുഹൂ → ജ‍ൂസ‍ുഷ‍ുഹ‍ൂ</span></small>"
+post,TamilSubScript,working,True,Tamil,"Subscript numerals<br/><small><span class=""tamil"">க²க³க⁴ → க₂க₃க₄</span></small>"
+post,TamilpredictDentaNa,working,False,,
+post,TamilpredictDentaNaExtended,working,False,,
+post,TeluguArasunnaChandrabindu,working,True,Telugu,"Arasunna as Chandrabindu<br/><small><span class=""telugu""> హూఀ → హూఁ</span></small>"
+post,TeluguNakaraPollu,working,True,Telugu,"Telugu Nakaara Pollu <br/><small><span class=""telugunukta"">భగవన్ → భగవౝ</span></small>"
+post,TeluguRemoveAeAo,working,False,,
+post,TeluguRemoveNukta,working,False,,
+post,TeluguReph,working,True,Telugu,"Telugu repha <br/><small><i>(Valapala Gilaka)</i></small> <br/><small><span class=""telugu"">ధర్మ → ధర్‍మ</span></small>"
+post,TeluguTamilRra,working,True,Telugu,"Tamil-Style Rra <br/><small><span class=""telugu"">ఆఱ్ఱు</span> → <span class=""teluguzha"">ఆౘ్ౘు</span></small>"
+post,TeluguTamilZha,working,True,Telugu,"Tamil-Style Zha <br/><small><span class=""telugu"">ఆఴ్వార్</span> → <span class=""teluguzha"">ఆఴ్వార్</span></span></small>"
+post,ThaanaRemoveHistorical,working,False,,
+post,ThaiLaoTranscription,working-multi-arg,False,,
+post,ThaiNativeConsonants,working,True,Thai,"Thai phonetic<br/><small><div>พุทฺธตฺว → <span class=""thainative"">บุดธะต͜วะ</span></div></small>"
+post,ThaiSajjhayaOrthography,working,True,Thai,Sajjhāya orthography<br/><small><div>พุทฺธ → พุท์ธ</div></small>
+post,ThaiSajjhayawithA,working,True,Thai,Nativized sajjhaya<br/><small><div>พุทฺธํ → พุท์ธัง</div></small>
+post,ThaiTranscription,working,True,Thai,Thai orthography<br/><small><div>พุทฺธ → พุทธะ</div></small>
+post,ThaiVisargaSaraA,working,True,Thai,Sara a ะ as Visarga<br/><small><div>นมัห์ → นมะ</div></small>
+post,ThamLoCRomanLoCSource,working,False,,
+post,ThamLoCRomanLoCTarget,working,False,,
+post,ThamShiftMaiKangLai,working,True,TaiTham; LueTham; LaoTham; KhuenTham,"Shift Mai Kang Lai<br/><small><span class=""taitham"">ᩈᩘᨥ</span> → <span class=""taitham"">ᩈᨥᩘ</span></small> | Shift Mai Kang Lai<br/><small><span class=""luetham"">ᩈᩘᨥ</span> → <span class=""luetham"">ᩈᨥᩘ</"
+post,ThamTallADisable,working,True,TaiTham; LueTham; LaoTham; KhuenTham,Disable explicit Tall -ā <br/><small>Font chooses the right form</small>
+post,ThamTallAOthers,working,True,TaiTham; LueTham; LaoTham; KhuenTham,"Tall -ā with ca/ba/ra/bha<br/><small><span class=""taitham"">ᨣᨧ᩠ᨨᩣᨾᩥ</span> → <span class=""taitham"">ᨣᨧ᩠ᨨᩤᨾᩥ</span></small> | Tall -ā with ca/ba/ra/bha<br/><small><span class=""luetham"">ᨣᨧ᩠ᨨᩣᨾᩥ</span> → <"
+post,TibetanLoCRomanLoCFix,working,False,,
+post,TibetanNada,working,True,Tibetan,"Bindu with nada<br/><small><span class=""tibetan"">ཨྃ → ཨྂ</span></small>"
+post,TibetanRemoveBa,working,False,,
+post,TibetanRemoveVirama,working,False,,
+post,TibetanSanskritPalatals,working,True,Tibetan,"Sanskrit palatals<br/><small><span class=""tibetan"">ཙ ཚ ཛ ཛྷ → ཅ ཆ ཇ ཇྷ</span></small>"
+post,TibetanSyllabize,working,True,Tibetan,"Syllabize input<br/><small><span class=""tibetan → "">བོདྷིསཏྟྭ → བོ་དྷི་ས་ཏྟྭ</span></small>"
+post,TibetanTsheg,working,True,Tibetan,"Use space<br/><small><span class=""tibetan"">ན་མོ → ན མོ</span></small>"
+post,UrduAlternateUU,working,False,,
+post,UrduRemoveShortVowels,working,True,Urdu; Shahmukhi,"Remove short vowels<br/><small><span class=""urdu"">ہِنْدُوسْتانْ ← ہندوستان</span></small>"
+post,UseAlternateI1,working,True,Siddham,"Variant I 1 <br/><small><span class=""siddham"">𑖂 → 𑗘</span></small>"
+post,UseAlternateI2,working,True,Siddham,"Variant I 2 <br/><small><span class=""siddham"">𑖂 → 𑗙</span></small>"
+post,UseAlternateII,working,True,Siddham,"Variant II <br/><small><span class=""siddham"">𑖃 → 𑗚</span></small>"
+post,UseAlternateU,working,True,Siddham,"Variant U <br/><small><span class=""siddham"">𑖄 → 𑗛</span></small>"
+post,UseAlternateVSU,working,True,Siddham,"Variant vowel sign U <span class=""siddham"">𑗜</span><br/><small> <span class=""siddham"">𑖎𑖲𑖚𑖲𑖦𑖲 → 𑖎𑗜𑖚𑗜𑖦𑗜</span></small>"
+post,UseAlternateVSUU,working,True,Siddham,"Variant vowel sign UU <span class=""siddham"">𑗝</span><br/><small> <span class=""siddham"">𑖎𑖳𑖚𑖳𑖦𑖳 → 𑖎𑗝𑖚𑗝𑖦𑗝</span></small>"
+post,UseAlternateYA,working,True,DivesAkuru,"Use Alt. /y/<br/><small><span class=""divesakuru"">𑤥 → 𑤦</span></small>"
+post,UseAlternateo1,working,True,TaiTham; LueTham; LaoTham; KhuenTham,"<span class=""taitham"">ᨠᩮᩣ</span> → <span class=""taitham"">ᨠᩰ</span></small> | <span class=""luetham"">ᨠᩮᩣ</span> → <span class=""luetham"">ᨠᩰ</span></small> | <span class=""laotham"">ᨠᩮᩣ</span> → <span class"
+post,UseAlternateo2,working,True,TaiThamRomanLoC; RomanLoCLaoTham; RomanLoCKhuenTham,"Pali /o/ <br/><small><span class=""taitham"">ᨠᩰ</span> → <span class=""taitham"">ᨠᩮᩣ</span></small> | Pali /o/ <br/><small><span class=""laotham"">ᨠᩰ</span> → <span class=""laotham"">ᨠᩮᩣ</span></small> | Pali"
+post,VaToBa,working-multi-arg,False,,
+post,WarangCitiModernOrthogaphy,working,False,,
+post,YYAEverywhere,working-multi-arg,False,,
+post,YaToYYa,working-multi-arg,False,,
+post,ZanabazarSanskritPalatals,working,True,ZanabazarSquare,"Sanskrit palatals<br/><small><span class=""zanabazarsquare"">𑨣 𑨤 𑨥 → 𑨐 𑨑 𑨒</span></small>"
+post,ZanabazarSquareAiAu,working,True,ZanabazarSquare,"Alternate ai/au<br/><small><span class=""zanabazarsquare"">𑨀𑨄𑨊 𑨀𑨆𑨊 → 𑨀𑨇 𑨀𑨈</span></small>"
+post,ZanabazarSquareContextual,working,True,ZanabazarSquare,"Contextual ya/ra/la/va & Repha<br/><small><span class=""zanabazarsquare"">𑨋𑩇𑨪 𑨋𑩇𑨫 𑨋𑩇𑨬 𑨋𑩇𑨭 𑨫𑩇𑨋 → 𑨋𑨻 𑨋𑨼 𑨋𑨽 𑨋𑨾 𑨺𑨋</span></small>"
+post,ZanabazarSquareMongolianFinal,working,True,ZanabazarSquare,"Mongolian final-mark<br/><small><span class=""zanabazarsquare"">𑨀𑨋𑨴 → 𑨀𑨋𑨳</span></small>"
+post,ZanzabarSpaceTsheg,working,True,ZanabazarSquare,"Tsheg<br/><small><span class=""zanabazarsquare"">𑨝 𑨢𑨆 → 𑨝𑩁𑨢𑨆</span></small>"
+post,alephAyinLatnAlternate,working,True,Latn,ʾ ʿ → ʼ ʽ
+post,alephAyinLatnAlternate2,working,True,Latn,ʾ ʿ → ʔ ʕ
+post,arabChaSa,working,False,,
+post,arabPaFa,working,False,,
+post,arabicRemoveAdditionsPhonetic,working,True,Arab,Phonetic Mapping <br/><small>/g j p b/ → /غ ج ب ب/ not /ج ج ف ب/</small>
+post,arabizeLatn,working,False,,
+post,archaicAIAU,working,True,Malayalam,"Archaic II & AU<br/><small><span class=""malayalam"">ഈ കൗ → ൟ കൌ</span></small>"
+post,capitalizeSentence,working,True,IAST; IASTPali; RussianCyrillic; ISO; RomanReadable; RomanColloquial; WarangCiti,Capitalize sentences
+post,default,working,False,,
+post,defaultPost,working-multi-arg,False,,
+post,devanagaribalbodh,working,True,Devanagari,"Balbodh Style<br/><small><span class=""devanagaribalbodh"">अऋणझक्ष</span></small>"
+post,devanagarijain,working,True,Devanagari,"Jain Style<br/><small><span class=""devanagarijain"">णमो सिद्धाणं</span></small>"
+post,devanagarinepali,working,True,Devanagari,"Nepali Style<br/><small><span class=""devanagarinepali"">अऋणझक्ष</span></small>"
+post,devanagariuttara,working,True,Devanagari,"Uttara Style<br/><small><span class=""devanagariuttara"">अऋणझक्ष</span></small>"
+post,dotReph,working,True,Malayalam,"Dot reph<br/><small><span class=""malayalam"">ധർമ → ധൎമ</span></small>"
+post,easternsyriac,working,False,,
+post,egrantamil,working,True,Grantha,E-Grantamil encoding
+post,estrangelasyriac,working,False,,
+post,gainGimel,working,True,Hebr-Ar,"<span class="""">עׄ</span> ← <span class="""">ג</span>"
+post,granthafinal,working,True,Grantha,"Other final forms <br/><small><span class=""grantha"">𑌦𑌿𑌕𑍍</span> → <span class=""granthalig"">𑌦𑌿𑌕𑍍</span></small>"
+post,granthaserif,working,True,Grantha,"Noto Serif Grantha <br/><small><span class=""grantha"">𑌬𑍁𑌦𑍍𑌧𑌂</span> → <span class=""granthaserif"">𑌬𑍁𑌦𑍍𑌧𑌂</span></small>"
+post,hebraizeLatn,working,False,,
+post,historicChillu,working,True,Malayalam,"Archaic chillus<br/><small><span class=""malayalam"">ൿ ൔ ൕ ൖ</small>"
+post,indicDandas,working,False,,
+post,indicNumerals,working,False,,
+post,inherentAO,working,True,IASTBengali; ISOBengali; IASTOriya; ISOOriya,inherent /a/ as /ô/
+post,insertARomanSemitic,working,False,,
+post,jainomDevangari,working,True,Devanagari,Use Jain OM<br/><small>ॐ → ꣽ</small>
+post,kawitan,working,True,Pallava,"Kawitan font<br/><span class=""kawitan"">ꦥꦭ꧀ꦭꦮ ꦒ꧀ꦫꦤ꧀ꦡ"
+post,khandatabatova,working,True,Bengali; Assamese,ৎব → ত্ৱ
+post,mDotAboveToBelow,working,True,IAST; IASTPali,ṃ → ṁ
+post,mDotBelowToAbove,working,False,,
+post,nepaldevafont,working,True,Newa,"Devanagari-based Newa font<br/><small><span class=""newa"">𑐧𑐸𑐡𑑂𑐢𑑅</span> →<span class=""nepaldevafont"">बुद्धः</span></small>"
+post,noLongEO,working,True,ISO,ē/ō → e/o
+post,olddogra,working,True,Dogra,"Use Old Dogra forms<br/><small><span class=""dogra"">𑠂 𑠄 𑠈 𑠘 𑠧</span> → <span class=""olddogra"">𑠂 𑠄 𑠈 𑠘 𑠧</span> </small>"
+post,oldtamilortho,working,True,Tamil,"Old orthography<br/><small><span class=""tamil"">லை னா</span> → <span class=""tamilold"">லை னா</span></small>"
+post,persianPaGaFaJa,working,True,Arab-Fa,/p g/ پ گ → /f j/ ف ج
+post,qafTwodot,unknown-to-backend,True,Hebr-Ar,"<span class="""">ק</span> ← <span class="""">ק̈</span>"
+post,ranjanalantsa,working,True,Ranjana,"Lantsa Style (Tibetan)<br/><small><span class=""ranjana"">बुद्धः</span> → <span class=""ranjanalantsa"">བུདྡྷཿ</span></small>"
+post,ranjanawartu,working,True,Ranjana,"Wartu Style (Tibetan)<br/><small><span class=""ranjana"">बुद्धः</span> → <span class=""ranjanawartu"">བུདྡྷཿ</span></small>"
+post,readableItrans,working,True,Itrans,Readable Itrans<br/><small>gR^ihalakShmI → gRRihalaxmii</small>
+post,removeDiacritics,working,True,RussianCyrillic,"Remove diacritics<br/><small><span class=""russiancyrillic"">сам̣кр̣там̣ → самкртам</span></small>"
+post,removeDiacriticsArabic,working,True,Arab; Arab-Fa,Remove Harakat <br/><small>غَانْدِي ← غاندي</small> | Remove vowel diacritics <!--<br/><small>غَانْدِي ← غاندي</small> -->
+post,removeDiacriticsPersian,working,False,,
+post,removeDiacriticsSyriac,working,False,,
+post,removeMajliyana,working,True,Syrj; Syrn,"Remove Majlīyānā<br/><small><span class=""syrj"">ܟ ܓ ܙ</span> → <span class=""syrj"">ܟ̰ ܓ̰ ܙ̰</span></small> | Remove Majlīyānā<br/><small><span class=""syrn"">ܟ ܓ ܙ</span> → <span class=""syrn"">ܟ̰ ܓ̰ ܙ̰</sp"
+post,removeNikkud,working,True,Hebrew,Remove all Niqquds<br/><small>ב פ כ מ → בּ פּ כּ מֶּ</small>
+post,removePaliAhom,working,True,Ahom,"Remove Pali characters<br/><small><span class=""ahom"">𑝀 𑝁 𑝂 𑝃 𑝄 𑝅 𑝆 → 𑜋 𑜄 𑜌 𑜓 𑜔 𑜃 𑜎</span></small>"
+post,removeQussaya,working,True,Syrj; Syrn,"Remove Quššāyā <br/><small><span class=""syrj"">ܒ</span> → <span class=""syrj"">ܒ݂</span></small> | Remove Quššāyā <br/><small><span class=""syrn"">ܒ</span> → <span class=""syrn"">ܒ݂</span></small>"
+post,removeRukkaka,working,True,Syrj; Syrn,"Remove Rūkkāḵā <br/><small><span class=""syrj"">ܒ</span> → <span class=""syrj"">ܒ݁</span></small> | Remove Rūkkāḵā <br/><small><span class=""syrn"">ܒ</span> → <span class=""syrn"">ܒ݁</span></small>"
+post,removeSegmentSpacesBurmese,working,True,BurmeseRomanLoC; ShanRomanLoC,"Join syllables<small><br/><span>le thai pyo‘ </span> → <span class=""burmese"">လေထဲပျော်</span></small> | Join syllables<small><br/><span>lèṅʻʺ munʻʺ mài̢</span> → <span class=""burmese"">လႅင်းမုၼ်းမႂ်ႇ</"
+post,removeSemiticLetters,working,False,,
+post,removeSukunEnd,working,True,Arab; Arab-Fa,Remove Sukun at end of words <br/><small>هِنْدْ ← هِنْد</small> | Remove Jazm at end of words <br/><small>هِنْدْ ← هِنْد</small>
+post,removeVowelsSyriac,working,True,Syrj; Syrn,"Remove Vowel Diacritics <br/><small><span class=""syrj"">ܠ ܠ ܠ ܠ ܠ ܠ</span> → <span class=""syrj"">ܠܰ ܠܳ ܠܺ ܠܽ ܠܶ ܠّ</span></small> | Remove Vowel Diacritics <br/><small><span class=""syrn"">ܠ ܠ ܠܝ ܠܘ ܠ ܠ ܠ"
+post,removetddash,working,True,HebrewSBL,ḏ ṯ ḡ → d t g & d t g → d꞉ t꞉ g꞉
+post,romanFullStop,working,False,,
+post,romanNumerals,working,False,,
+post,siddhamBija,working,False,,
+post,siddhamap,working,False,,
+post,siddhammukta,working,True,Siddham,MuktamSiddham font
+post,sundapura,working,True,Pallava,"Sundapura font<br/><span class=""sundapura"">ꦥꦭ꧀ꦭꦮ ꦒ꧀ꦫꦤ꧀"
+post,swapEe,working,True,HK; Velthuis,"E/O for long, e/o for short"
+post,swapEeItrans,working,True,Itrans,"E/O for long, e/o for short"
+post,syriacRoman,working,True,LatnSyrj; LatnSyrn,Syriac convention <small><br/> v ġ ḫ f → ḇ ḡ ḵ p̄
+post,syriacVowelsBelow,working,False,,
+post,syriacWesternOToU,working,False,,
+post,syricizeLatn,working,False,,
+post,tavThreedot,working,True,Hebr-Ar,"<span class="""">תׄ</span> ← <span class="""">ת֒</span>"
+post,tavTwodot,working,True,Hebr-Ar,"<span class="""">ת</span> ← <span class="""">ת̈</span>"
+post,tbadiff,working-multi-arg,False,,
+post,tibetandbumed,working,True,Tibetan,"Dbu Med (Ume) style<br/><small><span class=""tibetan"">བུདྡྷཿ</span> → <span class=""tibetandbumed"">བུདྡྷཿ</span></small>"
+post,tokushuon,working,False,,
+post,tradOrtho,working,True,Malayalam,"Traditional orthography<br/><small><span class=""malayalam"">തു തൂ</span> → <span class=""malayalamold"">തു തൂ</span></small>"
+post,urduRemoveInherent,working,True,IASTUrdu; ISOUrdu; IASTShahmukhi; ISOShahmukhi,"Remove all inherent /a/ <small><br/><span class=""urdu"">ہندوستان</span> → /hndvstān/ not /hanadavasatāna/"
+post,urduizeLatn,working,False,,
+post,useKtivMale,working,False,,
+post,verticalKana,working,True,Hiragana; Katakana,Vertical text
+post,verticalSiddham,working,False,,
+post,vtobJapanese,working,True,Hiragana; Katakana,/v/ → /b/ <br/<small>ゔぃのお → びの</small> | /v/ → /b/ <br/<small>ヴィノー → ビノ</small>
+post,westernsyriac,working,False,,
+pre,AlephMaterLectionis,working,True,Armi; Elym; Ethi; Hatr; Phli; Prti; Mani; Nbat; Narb; Sogo; Sarb; Palm; Phnx; Phlp; Samr; Sogd; Syre; Ugar; (all semitic->indic),Aleph as mater lectionis<br/><small> kʾ → kā</small>
+pre,AnuChandraEq,working-multi-arg,False,,
+pre,AnuChandraEqDeva,working,True,Devanagari,Anusvara and Chandrabindu equivalent
+pre,ArabicGimelJa,working,True,Arab,/ج/ as /g/
+pre,ArabizePersian,working,False,,
+pre,ArchaicJnaSimplifyRomanLOC,working,False,,
+pre,BalineseJavaneseMoveRepha,working-multi-arg,False,,
+pre,BalineseMoveRepha,working,True,Balinese,"Moved repha<br/><small><span class=""balinese"">ᬥᬫᬃ → dharma </span></small>"
+pre,BalineseRomanLoCFix,working,False,,
+pre,BengaliSubojinedVa,working,True,Bengali,স্ব দ্ব → sva dva
+pre,BengaliSwitchYaYYa,working,True,Assamese; Bengali,য → ẏa & য় → ya
+pre,BengaliTargetVa,working,True,Bengali,ব → va
+pre,BurmeseRomanLoCSource,working,False,,
+pre,BurmeseRomanLoCTarget,working,False,,
+pre,ChakmaPali,working,True,Chakma,"Pali orthography text<br/><small> e.g. <span class=""chakma"">𑄖𑄗𑄂𑄉𑄖</span></small>"
+pre,CyrillicPali,working,True,RussianCyrillic,Pali Text
+pre,DevanagariRomanLoCFix,working,False,,
+pre,DivesAkuruAlternateIndVowels,working,True,DivesAkuru,"/y/ as vowel carrier<br/><small><span class=""divesakuru"">𑤀 𑤁 𑤂 𑤃 → 𑤥 𑤥𑤰 𑤥𑤱 𑤥𑤲</span></small>"
+pre,FixSemiticRoman,working-multi-arg,False,,
+pre,GranthaPrakrit,working,False,,
+pre,HatrDalethResh,working,True,Hatr,"Disambiguate <span class=""hatr"">𐣣</span> (Daleth-Resh) as [d-r]"
+pre,HebrewSBLSource,working,False,,
+pre,HebrewSBLTarget,working,False,,
+pre,HindiMarathiRomanLoCFix,working,True,RomanLoCDevanagari,Use Hindi/Marathi Mapping
+pre,IASTLDotRetroflex,working,False,,
+pre,IASTPali,working,False,,
+pre,IPAIndic,broken,False,,
+pre,ISO233Source,working,False,,
+pre,ISO233Target,working,False,,
+pre,ISO259Source,working,False,,
+pre,ISO259Target,working,False,,
+pre,ItransLL,working,False,,
+pre,JapanesePreProcess,working-multi-arg,False,,
+pre,JavaneseMoveRepha,working,True,Javanese,"Moved repha<br/><small><span class=""javanese"">ꦣꦩꦂ → dharma </span></small>"
+pre,JavaneseRomanLoCFix,working,False,,
+pre,KawiMoveRepha,working,True,Kawi,"Repha as word-final /r/<br/><small><span class=""kawi"">𑼂𑼤𑼪 → dharma </span></small>"
+pre,KhandaTaRomanLoC,working,False,,
+pre,KhmerLoCRomanLoCSource,working,False,,
+pre,KhmerLoCRomanLoCTarget,working,False,,
+pre,KhmerWordSplit,broken,True,Khmer,"Segment Khmer Words <br/><small><span class=""burmese"">មនុស្សទាំងអស់ → មនុស្ស ទាំងអស់</span>"
+pre,KhuenRaHaamKaren,working,True,KhuenTham,"Ra-Haam as consontal sign /r/ <small><div class=""q-mt-sm""><span class=""khuentham"">ᨠ᩺ ᨠ᩼</span>→kar k</div></small>"
+pre,LaoPhonetic,working,True,LaoPali,"Lao Phonetic text<br/><small><div class=""laopali"">e.g. ບຸດຘະຕ͜ວະ</div></small>"
+pre,LaoSajhayaOrthography,working,True,LaoPali,"Sajjhāya orthography text <br/><small><div class=""laopali"">e.g. ພຸທ໌ຘ</div></small>"
+pre,LaoSajhayaOrthographywithA,working,True,LaoPali,"Nativized Sajjhāya text <br/><small><div class=""laopali"">e.g. ພຸທ໌ຘະ</div></small>"
+pre,LaoTranscription,working,True,LaoPali,"Lao orthography text<small><div class=""laopali"">e.g. ພຸທຘະ</div></small>"
+pre,LimbuDevanagariConvention,working,True,DevanagariLimbu,"Limbu Devanagari conventions<br/><small><span class=""limbudev"">e.g. ए़ ओ़ ए़ः के़ को़ के़ः</span></small>"
+pre,LimbuSpellingSaI,working,True,Limbu,SA-I for vowel length
+pre,MalayalamHalfu,working,True,Malayalam,"Transcribe <i>Samvrutokara</i> (extra-short-u)<br/><small><div> e.g. <span class=""malayalam"">അവൻ അവന്</span>‌ → <span class=""iast"">avan avanŭ</span></div></small>"
+pre,MalayalamPrakrit,working,True,Malayalam,"Prakrit orthography text<br/><small><div>e.g.<span class=""malayalam"">ബുംധഀ</span></div></small>"
+pre,MalayalamRomanLoCFix,working,False,,
+pre,MalayalamTranscribe,working,True,Malayalam,"Transcribe Malayalam<div><small> e.g. <span class=""malayalam""> കൊടുങ്കാട്</span> → kŏḍuṅgāḍŭ</div></small>"
+pre,OriyaSubojinedVa,broken,True,Oriya,ସ୍ବ ଦ୍ବ → sva dva
+pre,OriyaTargetVa,working,True,Oriya,ବ → va
+pre,PersianDMGTarget,working,False,,
+pre,PhagsPaArrange,working-multi-arg,False,,
+pre,PhliWawAyinResh,working,True,Phli,"Disambiguate <span class=""phli"">𐭥</span> (Waw-Ayin-Resh) as [w-ʿ-r]"
+pre,PhlpMemQoph,working,True,Phlp,"Disambiguate <span class=""phlp"">𐮋</span> (Mem-Quoph) as [m-q]"
+pre,PhlpWawAyinResh,working,True,Phlp,"Disambiguate <span class=""phlp"">𐮅</span> (Waw-Ayin-Resh) as [w-ʿ-r]"
+pre,PreProcess,working-multi-arg,False,,
+pre,RemoveFinal,working-multi-arg,False,,
+pre,RemoveJoiners,working,False,,
+pre,RemoveSchwaHindi,working,True,Devanagari,"Schwa deletion (Hindi) <small><div class=""q-mt-sm"">राम → rām, सबसे → sabse</div></small>"
+pre,RetainDevangariDanda,working,False,,
+pre,RetainPipeDanda,working-multi-arg,False,,
+pre,RomanLoCChandrabindu,working,False,,
+pre,RomanLoCLaUnderscoreDoubleDot,working,False,,
+pre,RomanLoCSLaDotLaUnderscore,working,True,IAST,"Vedic retroflex /l/ <br/><small><span class=""iast"">agnimīḻe → agnimīl̤e </span>"
+pre,RomanLoCSasha,working,False,,
+pre,RomanLoCVaWa,working,False,,
+pre,RomanPreFix,working-multi-arg,False,,
+pre,SanskritLexicaizeHK,working,False,,
+pre,SaurastraHaaruColonTamil,working,True,TamilSaurashtra,"Convert : as Haaru <small><br/><span class=""tamil"">நீ:</span> → </small><span class=""saurashtra"">ꢥꢴꢷ</span>"
+pre,SchwaFinalBengali,working,True,Assamese; Bengali,"Schwa deletion (Only word-final) <br/><small><div class=""q-mt-sm"">রাম → rām</div></small>"
+pre,SchwaFinalGujarati,working,True,Gujarati,"Schwa deletion (Only word-final) <br/><small><div class=""q-mt-sm"">राम → rām</div></small>"
+pre,SchwaFinalGurmukhi,working,True,Gurmukhi,"Schwa deletion (Only word-final) <br/><small><div class=""q-mt-sm"">ਰਾਮ → rām</div</small>>"
+pre,SchwaFinalKhmer,working,False,,
+pre,SchwaFinalKhmerLoC,working,False,,
+pre,SchwaFinalWarangCiti,working,True,WarangCiti,"Schwa deletion (Only word-final) <br/><small><div class=""q-mt-sm""><span class=""warangciti"">𑣜𑣁𑣖</span> → rām</div></small>"
+pre,ShanLoCRomanLoCSource,working,False,,
+pre,ShanLoCRomanLoCTarget,working,False,,
+pre,ShowChillus,working,True,Malayalam,"Show Chillus <br/><small><span class=""malayalam"">ധർമൻ</span> → <span class=""iast"">/dharˍmanˍ/ not /dharman/</span></small>"
+pre,ShowKhandaTa,working,True,Assamese; Bengali,"Show Khanda TA <br/><small><div class=""q-mt-sm"">উৎকল → utˍkala</div></small>"
+pre,SinhalaPali,working,True,Sinhala,"Sanskrit/Pali orthography text<br/><small><span class=""sinhala"">e.g. නමො භගවතෙ</span></small>"
+pre,SogdReshAyin,working,True,Sogd,"Disambiguate <span class=""sogd"">𐽀</span> (Resh-Ayin) as [r-ʿ]"
+pre,SogoReshAyinDaleth,working,True,Sogo,"Disambiguate <span class=""sogo"">𐼘</span> (Resh-Ayin-Daleth) as [r-ʿ-d]"
+pre,TaiKuen,working,False,,
+pre,TaiThamLao,working,False,,
+pre,TakriArchaicKha,working,True,Takri,"Medieval Takri orthography text<br/><small>Convert <span class=""takri"">𑚋</span> as /kha/</small>"
+pre,TamilNumeralSub,working,True,Tamil,"<span class=""tamil"">க2 க3 க4 → க² க³ க⁴</span>"
+pre,TamilTranscribe,working,True,Tamil,"Transcribe Tamil (Standard)<br/><small><span class=""tamil"">மதம், பேசு</span> → madam, pēsu</small>"
+pre,TamilTranscribeCommon,working,False,,
+pre,TamilTranscribeDialect,working,True,Tamil,"Transcribe Tamil (Dialectal)<br/><small><span class=""tamil"">மதம், பேசு</span> → madam, pēśu</small>"
+pre,ThaiOrthography,working,True,Thai,Thai orthography text <br/><small><div>e.g. พุทธะ</div></small>
+pre,ThaiPhonetic,working,True,Thai,Thai Phonetic text<br/><small><div>e.g. ตะต͜ระ ราจ̥ะ</div></small>
+pre,ThaiSajjhayaOrthography,working,True,Thai,Sajjhāya orthography text <br/><small><div>e.g. พุท์ธ</div></small>
+pre,ThaiSajjhayawithA,working,True,Thai,Nativized Sajjhāya text <br/><small><div>e.g. พุท์ธะ</div></small>
+pre,ThamLoCRomanLoCSource,working,False,,
+pre,ThamLoCRomanLoCTarget,working,False,,
+pre,TibetanLoCRomanLoCFix,working,False,,
+pre,UnSupThaana,working,False,,
+pre,UrduShortNotShown,working,True,Urdu; Shahmukhi,Short vowels not shown
+pre,default,working,False,,
+pre,egrantamil,working,True,Grantha,E-Grantamil encoding
+pre,eiaudipthongs,working,True,Hiragana; Katakana,/ou/ and /ei/ dipthongs not /ē/ and /ō/
+pre,holamlong,working,True,Hebrew,<i>Holam</i> denotes long /o/
+pre,insertViramaSyriac,working,True,Syrj; Syrn,"Lack of vowel signs as pure consonant <br/> <small> lâylēyn  ←  <span class=""syrj"">ܠܐܲܝܠܹܝܢ</span> | Lack of vowel signs as pure consonant <br/> <small> lâylēyn  ←  <span class=""syrn"">ܠܐܲܝܠܹܝܢ</span>"
+pre,joinVowelCons,working-multi-arg,False,,
+pre,joinVowelConsIAST,working,True,IAST,<i>tat tvam asi</i> → <i>tattvamasi</i>
+pre,joinVowelConsISO,working,True,ISO,<i>tat tvam asi</i> → <i>tattvamasi</i>
+pre,longEOISO,working,True,ISO,Treat e/o as long
+pre,normalize,working-multi-arg,False,,
+pre,novowelshebrewIndic,working,True,Hebrew,Vowels are not marked<br/><small></small>
+pre,novowelshebrewSemitic,working,True,Hebrew,Nikkuds not shown<br/><small>ב פ כ → k p b not v f ḵ</small>
+pre,paliTham,working,False,,
+pre,perisanizeArab,working,False,,
+pre,removeChillus,working,False,,
+pre,removeFinalSchwaArab,working,True,Arab; Arab-Fa,Assume /Sukun/ at end of word <br/> <small>ʾl×muḥīṭ ʾl×hin×diy×꞉ ← الْمُحِيط الْهِنْدِيّ | Assume /Jazm/ at end of word <br/> <small>ʾbut̽ ←  بُت
+pre,removeZW,broken,False,,
+pre,retainLatin,working,False,,
+pre,segmentBurmeseSyllables,working,True,Burmese,"Segment Burmese Syllables <br/><small><span class=""burmese"">လေထဲပျော် → လေ ထဲ ပျော်</span>"
+pre,segmentShanSyllables,working,True,Shan,"Segment Shan Syllables <br/><small><span class=""burmese"">လႅင်းမုၼ်းမႂ်ႇ → လႅင်း မုၼ်း မႂ်ႇ</span>"
+pre,segmentThamSyllabes,working,True,TaiTham; KhuenTham; LaoTham; LueTham,"Segment Tham Syllables <small><div class=""q-mt-sm""></div></small>"
+pre,semiticizeUrdu,working,False,,
+pre,shvanakhall,working,True,Hebrew,Treat all shvas as <i>shva nakh</i>
+pre,siddhamUnicode,working,False,,
+pre,siddhammukta,working,True,Siddham,Devanagari-based Siddham font
+pre,swapEe,working,True,HK; Velthuis,"E/O for long, e/o for short"
+pre,swapEeItrans,working,True,Itrans,"E/O for long, e/o for short"
+pre,wasvnukta,working,True,Hiragana; Katakana,/w/ as /v̈/

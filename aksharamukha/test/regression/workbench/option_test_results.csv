@@ -1,0 +1,3 @@
+kind,option_name,source_script,target_script,input,output,baseline_output,meaningful,how_called,error,approve
+post,TeluguRemoveNukta,Devanagari,Telugu,राम गच्छति,రామ గచ్ఛతి,రామ గచ్ఛతి,False,post_options=[]/pre_options=[],,
+pre,RemoveFinal,IAST,Devanagari,rāma gacchati,rāma gacchati,rāma gacchati,False,direct-call (user extra_args),,

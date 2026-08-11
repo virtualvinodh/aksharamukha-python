@@ -1,0 +1,3 @@
+source_text_id,mode,target_script,nativize
+1,all_scripts,,true
+3,round_trip,Kawi,false
