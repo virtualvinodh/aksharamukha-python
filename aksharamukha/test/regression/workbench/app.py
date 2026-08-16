@@ -363,6 +363,7 @@ def _script_categories():
         'indic': set(GM.IndicScripts),
         'latin': set(GM.LatinScripts),
         'semitic': set(GM.SemiticScripts),
+        'semitic_iso': set(GM.semiticISO.keys()),
     }, GM
 
 
@@ -375,7 +376,11 @@ def _categorize_script(script, cats):
         return 'roman_reversible'
     if script in cats['latin']:
         return 'roman_irreversible'
-    if script in cats['semitic']:
+    if script in cats['semitic'] or script in cats['semitic_iso']:
+        # semitic_iso (ISO259/ISO233/HebrewSBL/PersianDMG) aren't members of
+        # any GeneralMap script-category list at all - without this they'd
+        # fall through to 'other', which has no tab in the UI, making every
+        # row generated for them permanently invisible.
         return 'semitic'
     return 'other'
 
@@ -423,6 +428,12 @@ def api_generate_conversion_samples():
     swaps, ...) that are never guaranteed to round-trip, matching how
     testsuite.py's other reversibility checks (text_compare_reversible /
     text_compare_reversible_2) already work.
+
+    For IRREVERSIBLE targets, this also generates a reverse pair (target ->
+    source) using the just-produced forward output as input - not a
+    round-trip claim, just coverage for the direction that would otherwise
+    never be tested (nobody hand-types source text in an irreversible
+    script, and pytest never round-trip-checks these).
 
     Optional 'target': restricts generation to that ONE script instead of
     looping the whole list - the "generate just this pair" control on the
@@ -490,11 +501,17 @@ def api_generate_conversion_samples():
         except Exception as e:  # noqa: BLE001
             return {'ok': False, 'error': '%s: %s' % (type(e).__name__, str(e)[:200])}
 
-    def add_record(src, tgt, nativize, txt_in):
+    def add_record(src, tgt, nativize, txt_in, category_script=None):
+        # category_script overrides which script the row is filed under -
+        # needed for the irreversible reverse pairs below, where tgt is the
+        # ORIGINAL trusted source (often Devanagari, which IS reversible)
+        # and src is the actually-interesting exotic script being tested;
+        # categorizing by tgt there would misfile e.g. Sarb -> Devanagari
+        # under "Reversible (Indic)" just because Devanagari is reversible.
         res = safe_convert(src, tgt, txt_in, nativize)
         record = {
             'source': src, 'target': tgt, 'nativize': nativize, 'label': label,
-            'mode': 'fanout', 'category': _categorize_script(tgt, cats), 'auto': True,
+            'mode': 'fanout', 'category': _categorize_script(category_script or tgt, cats), 'auto': True,
             'input': txt_in, 'output': res.get('output', ''), 'error': res.get('error', ''),
         }
         key = (src, tgt, nativize, 'fanout', label)
@@ -503,6 +520,7 @@ def api_generate_conversion_samples():
         else:
             index[key] = len(existing)
             existing.append(record)
+        return res
 
     all_scripts = [s for s in set(GM.IndicScripts + GM.LatinScripts + GM.SemiticScripts + GM.NonIndic)
                    if s != 'IPA' and (s == 'RomanLoC' or 'LoC' not in s)]
@@ -510,14 +528,33 @@ def api_generate_conversion_samples():
     if single_target:
         all_scripts = [single_target]
 
+    reversible = set(GM.ReversibleScripts) | set(GM.RomanReversible)
+    loc_and_semitic_pseudo = set(GM.semiticISO.keys()) | {'RomanLoC'}
+
     new_or_updated = 0
 
     for target in all_scripts:
         if target == source:
             continue
         for nativize in (True, False):
-            add_record(source, target, nativize, text)
+            res = add_record(source, target, nativize, text)
             new_or_updated += 1
+
+            # Irreversible scripts get no round-trip check from pytest (only
+            # reversible ones do), and are never themselves a Source Texts
+            # row someone types by hand - without this, half the matrix
+            # (every irreversible script AS A source) has zero coverage.
+            # Not a real round-trip claim - the input is machine-converted
+            # text, not authentic native content, and won't necessarily
+            # reproduce the original - just SOME sanity coverage that the
+            # reverse direction doesn't crash and produces plausible output.
+            # Reversible/LoC/semiticISO targets are skipped: they already
+            # get a real reverse pair from dedicated logic below (or, for
+            # plain reversible scripts, from the round-trip check itself).
+            if (not single_target and res['ok']
+                    and target not in reversible and target not in loc_and_semitic_pseudo):
+                add_record(target, source, nativize, res['output'], category_script=target)
+                new_or_updated += 1
 
     if not single_target and source in GM.LoCScripts:
         for nativize in (True, False):
@@ -527,7 +564,7 @@ def api_generate_conversion_samples():
             # the same forward dispatch used above.
             fwd = safe_convert(source, 'RomanLoC', text, nativize)
             if fwd['ok']:
-                add_record('RomanLoC', source, nativize, fwd['output'])
+                add_record('RomanLoC', source, nativize, fwd['output'], category_script='RomanLoC')
                 new_or_updated += 1
 
     if not single_target:
@@ -537,7 +574,7 @@ def api_generate_conversion_samples():
             for nativize in (True, False):
                 fwd = safe_convert(source, pseudo_name, text, nativize)
                 if fwd['ok']:
-                    add_record(pseudo_name, source, nativize, fwd['output'])
+                    add_record(pseudo_name, source, nativize, fwd['output'], category_script=pseudo_name)
                     new_or_updated += 1
 
     _save_conversion_samples(existing)

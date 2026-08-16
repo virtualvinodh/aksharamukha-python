@@ -17,6 +17,14 @@ reversible_scripts = GeneralMap.ReversibleScripts + GeneralMap.RomanReversible
 # pure duplication (verified: 100% overlap before this was removed). Read
 # fresh here so pytest is the actual authority on whether a round trip still
 # holds, not a boolean cached at generation time that never gets re-checked.
+#
+# BOTH source and target must be reversible, not just target: the workbench
+# also generates a reverse pair for IRREVERSIBLE targets (e.g. Urdu ->
+# Devanagari, using Urdu output as input) purely for one-directional sanity
+# coverage, explicitly not a round-trip claim. Since Devanagari (the target
+# there) is reversible, filtering on target alone wrongly swept those in as
+# round-trip candidates - real regression, caught by a sudden jump from the
+# usual 9 known failures to 30.
 def _load_roundtrip_samples():
     import json
     import os
@@ -27,7 +35,8 @@ def _load_roundtrip_samples():
         samples = json.load(f)
     reversible = set(reversible_scripts)
     return [r for r in samples
-            if r.get('mode') == 'fanout' and r.get('nativize') is False and r.get('target') in reversible]
+            if r.get('mode') == 'fanout' and r.get('nativize') is False
+            and r.get('target') in reversible and r.get('source') in reversible]
 
 roundtrip_samples = _load_roundtrip_samples()
 roundtrip_sample_ids = ['%s-%s-%s' % (r.get('label'), r.get('source'), r.get('target')) for r in roundtrip_samples]
