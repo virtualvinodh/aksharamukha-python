@@ -11,6 +11,7 @@ async function api(path, opts) {
 async function loadTable(name) {
   const data = await api('/api/table/' + name);
   state.tables[name] = data;
+  if (name === 'source_texts') sourceTextsSelected.clear();
   if (name === 'options_catalog') renderCatalog();
   else renderTable(name);
 }
@@ -47,6 +48,11 @@ function escapeHtml (s) {
 // generation buttons + direct viewer/editor tabs below, and no longer
 // surfaced in the UI; their backend routes/files are untouched, just unused).
 // ---------------------------------------------------------------------------
+// Selection is keyed by row.id (a string), not object reference or index -
+// collectRowsFromDOM() rebuilds a brand new row object on every call (reads
+// straight from the DOM), so neither survives across it, but id is stable.
+let sourceTextsSelected = new Set();
+
 function renderTable (name) {
   const { columns, rows } = state.tables[name];
   const el = document.getElementById('table-' + name);
@@ -54,6 +60,10 @@ function renderTable (name) {
   const isSourceTexts = name === 'source_texts';
 
   let thead = '<thead><tr>';
+  if (isSourceTexts) {
+    const allChecked = rows.length > 0 && rows.every(r => sourceTextsSelected.has(r.id));
+    thead += `<th><input type="checkbox" class="st-select-all" ${allChecked ? 'checked' : ''}></th>`;
+  }
   for (const c of columns) thead += `<th>${c}</th>`;
   if (isSourceTexts) thead += '<th>generate</th>';
   if (editable) thead += '<th></th>';
@@ -62,6 +72,9 @@ function renderTable (name) {
   let tbody = '<tbody>';
   rows.forEach((row, i) => {
     tbody += `<tr data-idx="${i}">`;
+    if (isSourceTexts) {
+      tbody += `<td><input type="checkbox" class="row-select st-row-select" data-st-select-i="${i}" ${sourceTextsSelected.has(row.id) ? 'checked' : ''}></td>`;
+    }
     for (const c of columns) {
       const val = row[c] !== undefined ? row[c] : '';
       const cls = cellClass(name, c, val, row);
@@ -80,6 +93,22 @@ function renderTable (name) {
   tbody += '</tbody>';
 
   el.innerHTML = thead + tbody;
+  if (isSourceTexts) updateSourceTextsSelectionUI();
+}
+
+function updateSourceTextsSelectionUI () {
+  document.querySelectorAll('[data-st-delete-selected]').forEach(btn => {
+    btn.textContent = `Delete selected (${sourceTextsSelected.size})`;
+    btn.disabled = sourceTextsSelected.size === 0;
+  });
+}
+
+function deleteSelectedSourceTexts () {
+  if (sourceTextsSelected.size === 0) return;
+  collectRowsFromDOM('source_texts');
+  state.tables.source_texts.rows = state.tables.source_texts.rows.filter(r => !sourceTextsSelected.has(r.id));
+  sourceTextsSelected.clear();
+  renderTable('source_texts');
 }
 
 // Generation is triggered per-row from here, against that row's own
@@ -89,7 +118,6 @@ function renderTable (name) {
 function sourceTextActionsHtml (row, i) {
   let html = '<td class="row-actions">';
   html += `<button class="btn btn-small" data-src-gen="all_fanout" data-row-idx="${i}" title="Generate baseline conversions to every script, nativize true &amp; false">all-fanout</button> `;
-  html += `<button class="btn btn-small" data-src-gen="reverse" data-row-idx="${i}" title="Generate + verify round-trip through every reversible script">reverse</button> `;
   html += `<button class="btn btn-small" data-src-pair data-row-idx="${i}" title="Generate just one source → target pair">pair</button>`;
   if ((row.script || '').trim() === 'Devanagari') {
     html += ` <button class="btn btn-small" data-src-gen-opts="post" data-row-idx="${i}" title="Generate full post-option coverage from this text">post-opts</button>`;
@@ -196,10 +224,21 @@ function switchTab (tabName) {
 // ---------------------------------------------------------------------------
 // Options Catalog: sortable / groupable / filterable.
 // ---------------------------------------------------------------------------
-const catalogState = { sortCol: 'name', sortDir: 'asc', groupByScript: false, missingOnly: false, query: '' };
+const catalogState = { sortCol: 'name', sortDir: 'asc', groupByScript: false, missingOnly: false, frontendOnly: false, internalOnly: false, query: '' };
 
+// backend_status is a static snapshot (only refreshed by "Regenerate from
+// manifest") and even then only checks whether the option's name exists as
+// a KEY in test_postoptions.json/test_preoptions.json - not whether it has
+// any actual non-empty cases. So it never reflects cases added/removed
+// through this workbench. Check the live data directly instead.
 function hasTestData (row) {
-  return row.backend_status === 'working' || row.backend_status === 'working-multi-arg';
+  if (row.backend_status === 'working-multi-arg') {
+    const key = row.kind + '::' + row.name;
+    const entry = rawCases.direct && rawCases.direct[key];
+    return !!(entry && (entry.cases || []).length > 0);
+  }
+  const blocks = (rawCases[row.kind] && rawCases[row.kind][row.name]) || [];
+  return blocks.some(b => (b.cases || []).length > 0);
 }
 
 function catalogSortValue (row, col) {
@@ -286,6 +325,8 @@ function renderCatalog () {
   const q = catalogState.query.trim().toLowerCase();
   let filtered = rows.filter(r => {
     if (catalogState.missingOnly && hasTestData(r)) return false;
+    if (catalogState.frontendOnly && r.in_frontend !== 'True') return false;
+    if (catalogState.internalOnly && (r.in_frontend === 'True' || !internalOptionNeedsReview(r))) return false;
     if (!q) return true;
     return columns.some(c => String(r[c] || '').toLowerCase().includes(q));
   });
@@ -320,6 +361,21 @@ function renderCatalog () {
   el.innerHTML = thead + tbody;
 }
 
+// An internal (in_frontend=False) option only belongs on the "needs review"
+// filter if there's actually something to review: no real cases at all, or
+// every case it does have still sits on the crude 'IAST' fallback the old
+// generator used when it couldn't infer a real script from the option's
+// name. An internal option that already has real, non-fallback cases (e.g.
+// AhomClosed -> Ahom) is already correctly represented on the
+// Post-options/Pre-options tab grouped under its real script - surfacing it
+// here too would just be a duplicate listing.
+function internalOptionNeedsReview (row) {
+  const blocks = (rawCases[row.kind] && rawCases[row.kind][row.name]) || [];
+  const scriptField = row.kind === 'post' ? 'target' : 'source';
+  const hasConfirmedCase = blocks.some(b => (b.cases || []).length > 0 && b[scriptField] !== 'IAST');
+  return !hasConfirmedCase;
+}
+
 // ---------------------------------------------------------------------------
 // Option cases: direct browse/edit view over test_postoptions.json /
 // test_preoptions.json / test_direct_options.json, split across three tabs
@@ -337,7 +393,7 @@ function renderCatalog () {
 // ---------------------------------------------------------------------------
 let rawCases = { post: {}, pre: {}, direct: {} };
 let currentCaseView = [];
-const ALL_CASES_COLUMNS = ['kind', 'option_name', 'source_script', 'target_script', 'nativize', 'args', 'input', 'output'];
+const ALL_CASES_COLUMNS = ['kind', 'option_name', 'source_script', 'target_script', 'nativize', 'auto', 'args', 'input', 'output'];
 
 let originalValues = new WeakMap();
 
@@ -346,10 +402,18 @@ let originalValues = new WeakMap();
 // conversion samples - option cases are grouped by individual script name
 // instead, computed directly from source_script/target_script per row.
 
+// Keyed by the live [input, output] _casePair array reference, not the
+// wrapper row object - buildCaseViewRows() builds a FRESH wrapper object on
+// every render call, but the underlying _casePair array is mutated in place
+// (per the same "never reconstruct" principle as the rest of this section),
+// so it's the only stable identity to track selection across re-renders.
+let optionCasesSelected = new Set();
+
 async function loadAllCases () {
   rawCases = await api('/api/all_cases');
   originalValues = new WeakMap();
   snapshotOriginals();
+  optionCasesSelected.clear();
   renderOptionsGrouped('post');
   renderOptionsGrouped('pre');
   renderDirectOptions();
@@ -367,6 +431,12 @@ function blockNativizeStr (block) {
   return String(block.nativize !== undefined ? block.nativize : true);
 }
 
+// Unlike nativize, missing 'auto' is genuinely unknown (predates this flag),
+// not a safe default - so it's '' (blank), never the literal string 'false'.
+function blockAutoStr (block) {
+  return block.auto === true ? 'true' : '';
+}
+
 function snapshotOriginals () {
   for (const kind of ['post', 'pre']) {
     for (const name of Object.keys(rawCases[kind] || {})) {
@@ -374,7 +444,7 @@ function snapshotOriginals () {
         (block.cases || []).forEach(pair => originalValues.set(pair, {
           input: pair[0], output: pair[1], kind, option_name: name,
           source_script: block.source || '', target_script: block.target || '',
-          nativize: blockNativizeStr(block), args: '',
+          nativize: blockNativizeStr(block), auto: blockAutoStr(block), args: '',
         }));
       });
     }
@@ -383,7 +453,7 @@ function snapshotOriginals () {
     const entry = rawCases.direct[key];
     (entry.cases || []).forEach(pair => originalValues.set(pair, {
       input: pair[0], output: pair[1], kind: entry.kind, option_name: entry.name,
-      source_script: '', target_script: '', nativize: '', args: JSON.stringify(entry.args || []),
+      source_script: '', target_script: '', nativize: '', auto: '', args: JSON.stringify(entry.args || []),
     }));
   }
 }
@@ -397,7 +467,7 @@ function buildCaseViewRows () {
         (block.cases || []).forEach((casePair) => {
           rows.push(finishRow({
             shape: 'working', kind, option_name: name, source_script: block.source || '', target_script: block.target || '',
-            nativize: blockNativizeStr(block), args: '', input: casePair[0], output: casePair[1],
+            nativize: blockNativizeStr(block), auto: blockAutoStr(block), args: '', input: casePair[0], output: casePair[1],
             _casePair: casePair, _container: block.cases, _block: block,
           }));
         });
@@ -409,7 +479,7 @@ function buildCaseViewRows () {
     const entry = direct[key];
     (entry.cases || []).forEach((casePair) => {
       rows.push(finishRow({
-        shape: 'direct', kind: entry.kind, option_name: entry.name, source_script: '', target_script: '', nativize: '',
+        shape: 'direct', kind: entry.kind, option_name: entry.name, source_script: '', target_script: '', nativize: '', auto: '',
         args: JSON.stringify(entry.args || []), input: casePair[0], output: casePair[1],
         _casePair: casePair, _container: entry.cases, _entry: entry,
       }));
@@ -422,7 +492,7 @@ const MOVE_FIELDS = new Set(['kind', 'option_name', 'source_script', 'target_scr
 
 function columnApplies (row, col) {
   if (col === 'args') return row.shape === 'direct';
-  if (col === 'source_script' || col === 'target_script' || col === 'nativize') return row.shape === 'working';
+  if (col === 'source_script' || col === 'target_script' || col === 'nativize' || col === 'auto') return row.shape === 'working';
   return true;
 }
 
@@ -476,6 +546,14 @@ function updateCaseField (row, field, newValue) {
     return;
   }
 
+  // 'auto' isn't part of a block's identity (unlike nativize), so editing it
+  // - e.g. clearing it once you've reviewed a case - just mutates the block
+  // directly, no detach/reattach needed.
+  if (field === 'auto') {
+    if (row.shape === 'working') row._block.auto = (newValue.trim() === 'true');
+    return;
+  }
+
   if (!MOVE_FIELDS.has(field)) return;
   const next = {
     kind: field === 'kind' ? newValue : row.kind,
@@ -495,8 +573,8 @@ function updateCaseField (row, field, newValue) {
 function finishRow (row) {
   const orig = originalValues.get(row._casePair);
   row._isNew = !orig;
-  row._original = orig || { input: '', output: '', kind: '', option_name: '', source_script: '', target_script: '', nativize: '', args: '' };
-  row._changed = row._isNew || ['input', 'output', 'kind', 'option_name', 'source_script', 'target_script', 'nativize', 'args']
+  row._original = orig || { input: '', output: '', kind: '', option_name: '', source_script: '', target_script: '', nativize: '', auto: '', args: '' };
+  row._changed = row._isNew || ['input', 'output', 'kind', 'option_name', 'source_script', 'target_script', 'nativize', 'auto', 'args']
     .some(f => row._original[f] !== row[f]);
   return row;
 }
@@ -605,11 +683,11 @@ function diffHtml (oldStr, newStr) {
 function toggleDiffRow (tr, row) {
   const next = tr.nextElementSibling;
   if (next && next.classList.contains('diff-row')) { next.remove(); return; }
-  const colCount = ALL_CASES_COLUMNS.length + 1;
+  const colCount = ALL_CASES_COLUMNS.length + 3;
   const detailTr = document.createElement('tr');
   detailTr.className = 'diff-row';
   let body = row._isNew ? '<div class="diff-field-label" style="margin-bottom:8px">new case - nothing to diff against</div>' : '';
-  for (const field of ['kind', 'option_name', 'source_script', 'target_script', 'nativize', 'args', 'input', 'output']) {
+  for (const field of ['kind', 'option_name', 'source_script', 'target_script', 'nativize', 'auto', 'args', 'input', 'output']) {
     if (row._original[field] === row[field]) continue;
     body += `<div class="diff-field"><div class="diff-field-label">${field}</div><div class="diff-text">${diffHtml(row._original[field], row[field])}</div></div>`;
   }
@@ -623,6 +701,8 @@ function toggleDiffRow (tr, row) {
 // ---------------------------------------------------------------------------
 function optionRowHtml (row, i) {
   let tr = `<tr data-vidx="${i}" class="${row._changed ? 'row-changed' : ''}">`;
+  tr += `<td><input type="checkbox" class="row-select option-row-select" data-option-vidx="${i}" ${optionCasesSelected.has(row._casePair) ? 'checked' : ''}></td>`;
+  tr += optionStatusCellHtml(row, i);
   for (const c of ALL_CASES_COLUMNS) {
     const val = row[c] !== undefined ? row[c] : '';
     const badge = (c === 'option_name' && row._changed)
@@ -640,11 +720,29 @@ function optionRowHtml (row, i) {
   return tr;
 }
 
-function optionsTheadHtml (rowCount) {
-  let thead = '<thead><tr>';
+function optionsTheadHtml (view) {
+  const allChecked = view.length > 0 && view.every(row => optionCasesSelected.has(row._casePair));
+  let thead = `<thead><tr><th><input type="checkbox" class="option-select-all" ${allChecked ? 'checked' : ''}></th><th></th>`;
   for (const c of ALL_CASES_COLUMNS) thead += `<th>${c}</th>`;
-  thead += `<th>${rowCount} case${rowCount === 1 ? '' : 's'}</th></tr></thead>`;
+  thead += `<th>${view.length} case${view.length === 1 ? '' : 's'}</th></tr></thead>`;
   return thead;
+}
+
+function updateOptionSelectionUI () {
+  document.querySelectorAll('[data-option-delete-selected]').forEach(btn => {
+    btn.textContent = `Delete selected (${optionCasesSelected.size})`;
+    btn.disabled = optionCasesSelected.size === 0;
+  });
+}
+
+function deleteSelectedOptionCases () {
+  if (optionCasesSelected.size === 0) return;
+  const toDelete = buildCaseViewRows().filter(r => optionCasesSelected.has(r._casePair));
+  toDelete.forEach(row => detachCase(row));
+  optionCasesSelected.clear();
+  renderOptionsGrouped('post');
+  renderOptionsGrouped('pre');
+  renderDirectOptions();
 }
 
 function renderOptionsGrouped (kind) {
@@ -655,7 +753,13 @@ function renderOptionsGrouped (kind) {
 
   const q = (filterEl && filterEl.value || '').trim().toLowerCase();
   const allRows = buildCaseViewRows().filter(r => r.kind === kind && r.shape === 'working');
-  const filtered = allRows.filter(r => !q || ALL_CASES_COLUMNS.some(c => String(r[c] || '').toLowerCase().includes(q)));
+  const filtered = allRows
+    .filter(r => !q || ALL_CASES_COLUMNS.some(c => String(r[c] || '').toLowerCase().includes(q)))
+    .filter(r => {
+      if (!showOnlyFailed || !runResultIndex) return true;
+      const result = lookupOptionRunResult(r);
+      return result && !result.ok;
+    });
 
   const groupKeyCol = kind === 'post' ? 'target_script' : 'source_script';
   const groups = {};
@@ -668,7 +772,7 @@ function renderOptionsGrouped (kind) {
   const view = [];
   let tbody = '<tbody>';
   for (const g of groupNames) {
-    tbody += `<tr class="group-header"><td colspan="${ALL_CASES_COLUMNS.length + 1}">${escapeHtml(g)} (${groups[g].length})</td></tr>`;
+    tbody += `<tr class="group-header"><td colspan="${ALL_CASES_COLUMNS.length + 3}">${escapeHtml(g)} (${groups[g].length})</td></tr>`;
     for (const row of groups[g]) {
       const i = view.length;
       view.push(row);
@@ -678,7 +782,8 @@ function renderOptionsGrouped (kind) {
   tbody += '</tbody>';
 
   currentCaseView = view;
-  el.innerHTML = optionsTheadHtml(filtered.length) + tbody;
+  el.innerHTML = optionsTheadHtml(view) + tbody;
+  updateOptionSelectionUI();
 }
 
 function renderDirectOptions () {
@@ -694,7 +799,8 @@ function renderDirectOptions () {
   let tbody = '<tbody>';
   filtered.forEach((row, i) => { tbody += optionRowHtml(row, i); });
   tbody += '</tbody>';
-  el.innerHTML = optionsTheadHtml(filtered.length) + tbody;
+  el.innerHTML = optionsTheadHtml(filtered) + tbody;
+  updateOptionSelectionUI();
 }
 
 function toggleAddCaseForm (show) {
@@ -811,13 +917,17 @@ async function generateOptionCoverageFromRow (kind, idx) {
 // ---------------------------------------------------------------------------
 let conversionSamples = [];
 let convOriginal = new WeakMap();
-const CONV_COLUMNS = ['source', 'target', 'nativize', 'mode', 'label', 'input', 'output', 'roundtrip_output', 'matches_original', 'error'];
+const CONV_COLUMNS = ['source', 'target', 'nativize', 'mode', 'label', 'auto', 'input', 'output'];
+// Row objects are stable between renders (mutated in place, never recreated)
+// EXCEPT when the whole array is replaced by a fresh load - cleared there.
+let convSelected = new Set();
 
 async function loadConversionSamples () {
   const res = await api('/api/conversion_samples');
   conversionSamples = res.rows;
   convOriginal = new WeakMap();
   for (const r of conversionSamples) convOriginal.set(r, { output: r.output });
+  convSelected.clear();
   renderAllConvTables();
 }
 
@@ -827,28 +937,53 @@ function renderAllConvTables () {
 
 function convCellHtml (col, val) {
   if (col === 'output') return `<td data-conv-col="output">${cellPreviewHtml(val)}</td>`;
-  if (col === 'input' || col === 'roundtrip_output') return `<td class="readonly">${textPreviewOnly(val)}</td>`;
-  if (col === 'nativize' || col === 'matches_original') {
+  if (col === 'input') return `<td class="readonly">${textPreviewOnly(val)}</td>`;
+  if (col === 'nativize') {
     const boolVal = val === true || val === 'True';
     return `<td class="readonly ${boolVal ? 'col-bool-true' : 'col-bool-false'}">${val === '' || val === undefined ? '' : String(boolVal)}</td>`;
   }
-  if (col === 'error') return `<td class="readonly col-error">${escapeHtml(val)}</td>`;
+  if (col === 'auto') {
+    // undefined predates this flag (e.g. the heart/lalitavistara import) -
+    // shown blank, not "false", since we don't actually know it was manual.
+    if (val !== true) return `<td class="readonly"></td>`;
+    return `<td class="readonly col-bool-true">auto</td>`;
+  }
   return `<td class="readonly">${escapeHtml(val)}</td>`;
+}
+
+function getVisibleConvRows (category) {
+  const el = document.querySelector(`.table-conv[data-category="${category}"]`);
+  const panel = el ? el.closest('.tab-panel') : null;
+  const filterEl = panel ? panel.querySelector('.conv-filter') : null;
+  const q = (filterEl && filterEl.value || '').trim().toLowerCase();
+
+  return conversionSamples
+    .map((r, gi) => ({ r, gi }))
+    .filter(({ r }) => r.category === category)
+    .filter(({ r }) => !q || CONV_COLUMNS.some(c => String(r[c] || '').toLowerCase().includes(q)))
+    .filter(({ r }) => {
+      if (!showOnlyFailed || !runResultIndex) return true;
+      const { fwd, rt } = lookupConvRunResults(r);
+      return (fwd && !fwd.ok) || (rt && !rt.ok);
+    });
+}
+
+function updateConvSelectionUI () {
+  document.querySelectorAll('[data-conv-delete-selected]').forEach(btn => {
+    btn.textContent = `Delete selected (${convSelected.size})`;
+    btn.disabled = convSelected.size === 0;
+  });
 }
 
 function renderConvTable (category) {
   const el = document.querySelector(`.table-conv[data-category="${category}"]`);
   if (!el) return;
-  const panel = el.closest('.tab-panel');
-  const filterEl = panel ? panel.querySelector('.conv-filter') : null;
-  const q = (filterEl && filterEl.value || '').trim().toLowerCase();
 
-  const rows = conversionSamples
-    .map((r, gi) => ({ r, gi }))
-    .filter(({ r }) => r.category === category)
-    .filter(({ r }) => !q || CONV_COLUMNS.some(c => String(r[c] || '').toLowerCase().includes(q)));
+  const rows = getVisibleConvRows(category);
+  const allChecked = rows.length > 0 && rows.every(({ r }) => convSelected.has(r));
 
-  let thead = '<thead><tr>' + CONV_COLUMNS.map(c => `<th>${c}</th>`).join('') +
+  let thead = `<thead><tr><th><input type="checkbox" class="conv-select-all" data-conv-cat="${category}" ${allChecked ? 'checked' : ''}></th><th></th><th title="Round trip (nativize=false, reversible targets only)">↺</th>` +
+    CONV_COLUMNS.map(c => `<th>${c}</th>`).join('') +
     `<th>${rows.length} row${rows.length === 1 ? '' : 's'}</th></tr></thead>`;
 
   let tbody = '<tbody>';
@@ -857,12 +992,23 @@ function renderConvTable (category) {
     const changed = orig && orig.output !== r.output;
     const rowClass = r.error ? 'row-error' : (changed ? 'row-changed' : '');
     tbody += `<tr class="${rowClass}" data-conv-gi="${gi}" data-conv-idx="${i}" data-conv-cat="${category}">`;
+    tbody += `<td><input type="checkbox" class="row-select conv-row-select" data-conv-select-gi="${gi}" ${convSelected.has(r) ? 'checked' : ''}></td>`;
+    tbody += convForwardStatusCellHtml(r, gi);
+    tbody += convRoundtripStatusCellHtml(r, gi);
     for (const c of CONV_COLUMNS) tbody += convCellHtml(c, r[c]);
     tbody += `<td><button class="btn-remove-row" data-conv-remove="${gi}" title="Delete this sample">✕</button></td>`;
     tbody += '</tr>';
   });
   tbody += '</tbody>';
   el.innerHTML = thead + tbody;
+  updateConvSelectionUI();
+}
+
+function deleteSelectedConvSamples () {
+  if (convSelected.size === 0) return;
+  conversionSamples = conversionSamples.filter(r => !convSelected.has(r));
+  convSelected.clear();
+  renderAllConvTables();
 }
 
 function expandConvCellForEdit (td) {
@@ -918,13 +1064,12 @@ async function submitAddPair () {
   const rows = collectRowsFromDOM('source_texts');
   const row = rows[idx];
   const target = document.getElementById('add-pair-target').value.trim();
-  const mode = document.getElementById('add-pair-mode').value;
   if (!row || !target) { flash('Pick a target script.'); return; }
 
-  showLog(`Generating ${row.script} → ${target} (${mode})...`);
+  showLog(`Generating ${row.script} → ${target}...`);
   const res = await api('/api/generate_conversion_samples', {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ mode, script: row.script, text: row.text, label: row.label, target })
+    body: JSON.stringify({ script: row.script, text: row.text, label: row.label, target })
   });
   showLog(res.ok ? `Generated/updated ${res.generated_or_updated} record(s). See the conversion tabs.` : ('Generation failed: ' + (res.error || '')));
   toggleAddPairForm(false);
@@ -959,12 +1104,14 @@ let customCases = [];
 let ccOriginal = new WeakMap();
 const CC_COLUMNS = ['label', 'source', 'target', 'nativize', 'pre_options', 'post_options', 'input', 'output'];
 const CC_MULTILINE = new Set(['input', 'output']);
+let customSelected = new Set();
 
 async function loadCustomCases () {
   const res = await api('/api/custom_cases');
   customCases = res.rows;
   ccOriginal = new WeakMap();
   for (const r of customCases) ccOriginal.set(r, JSON.stringify(r));
+  customSelected.clear();
   renderCustomCases();
 }
 
@@ -978,29 +1125,57 @@ function ccCellHtml (row, col) {
   return `<td data-col="${col}">${cellPreviewHtml(ccFieldText(row, col))}</td>`;
 }
 
-function renderCustomCases () {
-  const el = document.getElementById('table-customcases');
-  if (!el) return;
+function getVisibleCustomCaseRows () {
   const filterEl = document.getElementById('customcases-filter');
   const q = (filterEl && filterEl.value || '').trim().toLowerCase();
 
-  const rows = customCases
+  return customCases
     .map((r, gi) => ({ r, gi }))
-    .filter(({ r }) => !q || CC_COLUMNS.some(c => ccFieldText(r, c).toLowerCase().includes(q)));
+    .filter(({ r }) => !q || CC_COLUMNS.some(c => ccFieldText(r, c).toLowerCase().includes(q)))
+    .filter(({ gi }) => {
+      if (!showOnlyFailed || !runResultIndex) return true;
+      const result = runResultIndex.custom.get(gi);
+      return result && !result.ok;
+    });
+}
 
-  let thead = '<thead><tr>' + CC_COLUMNS.map(c => `<th>${c}</th>`).join('') +
+function renderCustomCases () {
+  const el = document.getElementById('table-customcases');
+  if (!el) return;
+  const rows = getVisibleCustomCaseRows();
+
+  const allChecked = rows.length > 0 && rows.every(({ r }) => customSelected.has(r));
+  let thead = `<thead><tr><th><input type="checkbox" class="cc-select-all" ${allChecked ? 'checked' : ''}></th><th></th>` +
+    CC_COLUMNS.map(c => `<th>${c}</th>`).join('') +
     `<th>${rows.length} case${rows.length === 1 ? '' : 's'}</th></tr></thead>`;
 
   let tbody = '<tbody>';
   rows.forEach(({ r, gi }) => {
     const changed = ccOriginal.get(r) !== JSON.stringify(r);
     tbody += `<tr class="${changed ? 'row-changed' : ''}" data-cc-idx="${gi}">`;
+    tbody += `<td><input type="checkbox" class="row-select cc-row-select" data-cc-select-gi="${gi}" ${customSelected.has(r) ? 'checked' : ''}></td>`;
+    tbody += customStatusCellHtml(gi);
     for (const c of CC_COLUMNS) tbody += ccCellHtml(r, c);
     tbody += `<td><button class="btn-remove-row" data-cc-remove="${gi}" title="Delete this case">✕</button></td>`;
     tbody += '</tr>';
   });
   tbody += '</tbody>';
   el.innerHTML = thead + tbody;
+  updateCustomSelectionUI();
+}
+
+function updateCustomSelectionUI () {
+  document.querySelectorAll('[data-cc-delete-selected]').forEach(btn => {
+    btn.textContent = `Delete selected (${customSelected.size})`;
+    btn.disabled = customSelected.size === 0;
+  });
+}
+
+function deleteSelectedCustomCases () {
+  if (customSelected.size === 0) return;
+  customCases = customCases.filter(r => !customSelected.has(r));
+  customSelected.clear();
+  renderCustomCases();
 }
 
 function expandCcCellForEdit (td) {
@@ -1118,6 +1293,177 @@ function submitAddCustomCase () {
 }
 
 // ---------------------------------------------------------------------------
+// Run All Tests: recomputes every stored case live (post/pre-options,
+// custom cases, conversion samples, round-trips) via /api/run_all_tests.
+// Results are NOT shown as their own separate table - they're matched back
+// onto the existing rows on the tabs where that data already lives (the 5
+// conversion tabs, Post-options, Pre-options, Custom Cases), as a status
+// column with a tick or a click-to-expand cross, using diffHtml (the same
+// word-level diff already built for the option-cases "diff" button). Only
+// the summary counts get their own small panel.
+// ---------------------------------------------------------------------------
+const RUN_CATEGORY_LABELS = { post: 'Post-options', pre: 'Pre-options', custom: 'Custom cases', conversion: 'Conversion samples', roundtrip: 'Round-trips' };
+// null = no run yet (status columns render blank); otherwise
+// { conv: Map<key,result>, roundtrip: Map<key,result>, post: Map<key,result>, pre: Map<key,result>, custom: Map<index,result> }
+let runResultIndex = null;
+// Global "show only failed" toggle - applies across every tab that has a
+// status column (conversion tabs, Post-options, Pre-options, Custom Cases),
+// not per-tab, so switching tabs doesn't lose the filter.
+let showOnlyFailed = false;
+
+function convKey (source, target, nativize, label) { return `${source}|${target}|${nativize}|${label || ''}`; }
+function roundtripKey (source, target, label) { return `${source}|${target}|${label || ''}`; }
+function optionResultKey (kind, name, source, target, nativize, input) { return `${kind}|${name}|${source}|${target}|${nativize}|${input}`; }
+
+function buildRunResultIndex (results) {
+  const idx = { conv: new Map(), roundtrip: new Map(), post: new Map(), pre: new Map(), custom: new Map() };
+  for (const r of results) {
+    if (r.category === 'conversion') idx.conv.set(convKey(r.source, r.target, r.nativize, r.label), r);
+    else if (r.category === 'roundtrip') idx.roundtrip.set(roundtripKey(r.source, r.target, r.label), r);
+    else if (r.category === 'post' || r.category === 'pre') {
+      idx[r.category].set(optionResultKey(r.category, r.option_name, r.source, r.target, r.nativize, r.input), r);
+    } else if (r.category === 'custom') idx.custom.set(r.index, r);
+  }
+  return idx;
+}
+
+function runStatusTick (failed, toggleAttrs) {
+  if (!failed) return '<td class="readonly rr-tick" title="Passed">✓</td>';
+  return `<td><span class="rr-cross" ${toggleAttrs} title="Click to see the diff">✗</span></td>`;
+}
+
+function diffFieldsHtml (result, label) {
+  let body = '';
+  if (result.error) body += `<div class="diff-field"><div class="diff-field-label">error</div><div class="diff-text col-error">${escapeHtml(result.error)}</div></div>`;
+  body += `<div class="diff-field"><div class="diff-field-label">${label}</div><div class="diff-text">${diffHtml(result.expected, result.actual)}</div></div>`;
+  return body;
+}
+
+function toggleDetailRow (tr, colspan, bodyHtml) {
+  const next = tr.nextElementSibling;
+  if (next && next.classList.contains('diff-row')) { next.remove(); return; }
+  const detailTr = document.createElement('tr');
+  detailTr.className = 'diff-row';
+  detailTr.innerHTML = `<td colspan="${colspan}">${bodyHtml}</td>`;
+  tr.after(detailTr);
+}
+
+// --- conversion samples (also covers the derived round-trip check) ---
+function lookupConvRunResults (r) {
+  if (!runResultIndex) return {};
+  const fwd = runResultIndex.conv.get(convKey(r.source, r.target, r.nativize, r.label));
+  const rt = r.nativize === false ? runResultIndex.roundtrip.get(roundtripKey(r.source, r.target, r.label)) : undefined;
+  return { fwd, rt };
+}
+
+// Two separate columns, not one combined tick - a reversible-script row has
+// two independent things that can fail (the forward conversion, and the
+// round trip back), and collapsing them into a single mark hid which one.
+function convForwardStatusCellHtml (r, gi) {
+  if (!runResultIndex) return '<td class="readonly"></td>';
+  const { fwd } = lookupConvRunResults(r);
+  if (!fwd) return '<td class="readonly" title="Not checked in the last run"></td>';
+  return runStatusTick(!fwd.ok, `data-run-status-toggle="conv" data-run-status-gi="${gi}"`);
+}
+
+function convRoundtripStatusCellHtml (r, gi) {
+  if (r.nativize !== false) return '<td class="readonly not-applicable" title="Round trip is only checked at nativize=false">—</td>';
+  if (!runResultIndex) return '<td class="readonly"></td>';
+  const { rt } = lookupConvRunResults(r);
+  if (!rt) return '<td class="readonly" title="Not a reversible target, or not checked in the last run"></td>';
+  return runStatusTick(!rt.ok, `data-run-status-toggle="conv" data-run-status-gi="${gi}"`);
+}
+
+function toggleConvRunStatusDetail (tr, gi) {
+  const r = conversionSamples[gi];
+  if (!r) return;
+  const { fwd, rt } = lookupConvRunResults(r);
+  let body = '';
+  if (fwd && !fwd.ok) body += diffFieldsHtml(fwd, 'expected → actual');
+  if (rt && !rt.ok) body += diffFieldsHtml(rt, 'round trip: original input → what came back');
+  toggleDetailRow(tr, CONV_COLUMNS.length + 3, body);
+}
+
+// --- post/pre options ---
+function lookupOptionRunResult (row) {
+  if (!runResultIndex || row.shape !== 'working') return undefined;
+  return runResultIndex[row.kind].get(optionResultKey(row.kind, row.option_name, row.source_script, row.target_script, row.nativize, row.input));
+}
+
+function optionStatusCellHtml (row, i) {
+  if (row.shape !== 'working' || !runResultIndex) return '<td class="readonly"></td>';
+  const result = lookupOptionRunResult(row);
+  if (!result) return '<td class="readonly" title="Not checked in the last run"></td>';
+  return runStatusTick(!result.ok, `data-run-status-toggle="option" data-run-status-idx="${i}"`);
+}
+
+function toggleOptionRunStatusDetail (tr, row) {
+  const result = lookupOptionRunResult(row);
+  if (!result) return;
+  toggleDetailRow(tr, ALL_CASES_COLUMNS.length + 3, diffFieldsHtml(result, 'expected → actual'));
+}
+
+// --- custom cases ---
+function customStatusCellHtml (gi) {
+  if (!runResultIndex) return '<td class="readonly"></td>';
+  const result = runResultIndex.custom.get(gi);
+  if (!result) return '<td class="readonly" title="Not checked in the last run"></td>';
+  return runStatusTick(!result.ok, `data-run-status-toggle="custom" data-run-status-gi="${gi}"`);
+}
+
+function toggleCustomRunStatusDetail (tr, gi) {
+  const result = runResultIndex && runResultIndex.custom.get(gi);
+  if (!result) return;
+  toggleDetailRow(tr, CC_COLUMNS.length + 2, diffFieldsHtml(result, 'expected → actual'));
+}
+
+function rrPillHtml (label, passed, total, extraClass) {
+  const cls = passed < total ? 'rr-bad' : 'rr-ok';
+  return `<span class="rr-pill ${extraClass || ''}">
+    <span class="rr-pill-label">${escapeHtml(label)}</span>
+    <span class="rr-pill-count ${cls}">${passed}/${total}</span>
+  </span>`;
+}
+
+function renderRunSummary (summary) {
+  const summaryEl = document.getElementById('run-results-summary');
+  let totalChecked = 0;
+  let totalPassed = 0;
+  let pillsHtml = '';
+  for (const key of ['post', 'pre', 'custom', 'conversion', 'roundtrip']) {
+    const s = summary[key];
+    if (!s) continue;
+    const passed = s.total - s.mismatches;
+    totalChecked += s.total;
+    totalPassed += passed;
+    pillsHtml += rrPillHtml(RUN_CATEGORY_LABELS[key], passed, s.total);
+  }
+  summaryEl.innerHTML = rrPillHtml('Overall', totalPassed, totalChecked, 'rr-pill-total') + pillsHtml;
+  document.getElementById('run-results-panel').classList.remove('hidden');
+}
+
+async function runAllTests () {
+  const btn = document.getElementById('run-all-tests');
+  btn.disabled = true;
+  btn.textContent = 'Running…';
+  try {
+    const res = await api('/api/run_all_tests', { method: 'POST' });
+    if (!res.ok) { flash('Run failed.'); return; }
+    runResultIndex = buildRunResultIndex(res.results);
+    renderRunSummary(res.summary);
+    renderAllConvTables();
+    renderOptionsGrouped('post');
+    renderOptionsGrouped('pre');
+    renderCustomCases();
+  } catch (e) {
+    flash('Run failed: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Run All Tests';
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Event delegation
 // ---------------------------------------------------------------------------
 document.addEventListener('click', async (e) => {
@@ -1188,8 +1534,20 @@ document.addEventListener('click', async (e) => {
   } else if (t.hasAttribute('data-save-cases')) {
     await saveAllCases();
   }
+  if (t.hasAttribute('data-option-delete-selected')) {
+    deleteSelectedOptionCases();
+  }
+  if (t.hasAttribute('data-cc-delete-selected')) {
+    deleteSelectedCustomCases();
+  }
+  if (t.hasAttribute('data-st-delete-selected')) {
+    deleteSelectedSourceTexts();
+  }
   if (t.hasAttribute('data-save-conv')) {
     await saveConversionSamples();
+  }
+  if (t.hasAttribute('data-conv-delete-selected')) {
+    deleteSelectedConvSamples();
   }
   if (t.id === 'add-customcase') {
     toggleAddCustomCaseForm(true);
@@ -1203,6 +1561,22 @@ document.addEventListener('click', async (e) => {
   }
   if (t.id === 'cc-autogen') {
     await autogenerateCustomCaseOutput();
+  }
+  if (t.id === 'run-all-tests') {
+    await runAllTests();
+  }
+  if (t.id === 'run-results-close') {
+    document.getElementById('run-results-panel').classList.add('hidden');
+  }
+  if (t.dataset.runStatusToggle === 'conv') {
+    toggleConvRunStatusDetail(t.closest('tr'), parseInt(t.dataset.runStatusGi, 10));
+  }
+  if (t.dataset.runStatusToggle === 'option') {
+    const row = currentCaseView[parseInt(t.dataset.runStatusIdx, 10)];
+    if (row) toggleOptionRunStatusDetail(t.closest('tr'), row);
+  }
+  if (t.dataset.runStatusToggle === 'custom') {
+    toggleCustomRunStatusDetail(t.closest('tr'), parseInt(t.dataset.runStatusGi, 10));
   }
   if (t.dataset.srcGen) {
     await generateConversionSamplesFromRow(t.dataset.srcGen, parseInt(t.dataset.rowIdx, 10));
@@ -1272,12 +1646,86 @@ document.addEventListener('focusout', (e) => {
 });
 
 document.addEventListener('change', (e) => {
+  if (e.target.classList.contains('conv-select-all')) {
+    const category = e.target.dataset.convCat;
+    const checked = e.target.checked;
+    getVisibleConvRows(category).forEach(({ r }) => { if (checked) convSelected.add(r); else convSelected.delete(r); });
+    const table = e.target.closest('table');
+    if (table) table.querySelectorAll('.conv-row-select').forEach(cb => { cb.checked = checked; });
+    updateConvSelectionUI();
+  }
+  if (e.target.classList.contains('conv-row-select')) {
+    const gi = parseInt(e.target.dataset.convSelectGi, 10);
+    const r = conversionSamples[gi];
+    if (r) { if (e.target.checked) convSelected.add(r); else convSelected.delete(r); }
+    updateConvSelectionUI();
+  }
+  if (e.target.classList.contains('option-select-all')) {
+    const checked = e.target.checked;
+    currentCaseView.forEach(row => { if (checked) optionCasesSelected.add(row._casePair); else optionCasesSelected.delete(row._casePair); });
+    const table = e.target.closest('table');
+    if (table) table.querySelectorAll('.option-row-select').forEach(cb => { cb.checked = checked; });
+    updateOptionSelectionUI();
+  }
+  if (e.target.classList.contains('option-row-select')) {
+    const vidx = parseInt(e.target.dataset.optionVidx, 10);
+    const row = currentCaseView[vidx];
+    if (row) { if (e.target.checked) optionCasesSelected.add(row._casePair); else optionCasesSelected.delete(row._casePair); }
+    updateOptionSelectionUI();
+  }
+  if (e.target.classList.contains('cc-select-all')) {
+    const checked = e.target.checked;
+    getVisibleCustomCaseRows().forEach(({ r }) => { if (checked) customSelected.add(r); else customSelected.delete(r); });
+    document.querySelectorAll('.cc-row-select').forEach(cb => { cb.checked = checked; });
+    updateCustomSelectionUI();
+  }
+  if (e.target.classList.contains('cc-row-select')) {
+    const gi = parseInt(e.target.dataset.ccSelectGi, 10);
+    const r = customCases[gi];
+    if (r) { if (e.target.checked) customSelected.add(r); else customSelected.delete(r); }
+    updateCustomSelectionUI();
+  }
+  if (e.target.classList.contains('st-select-all')) {
+    const checked = e.target.checked;
+    (state.tables.source_texts.rows || []).forEach(r => { if (checked) sourceTextsSelected.add(r.id); else sourceTextsSelected.delete(r.id); });
+    document.querySelectorAll('.st-row-select').forEach(cb => { cb.checked = checked; });
+    updateSourceTextsSelectionUI();
+  }
+  if (e.target.classList.contains('st-row-select')) {
+    const i = parseInt(e.target.dataset.stSelectI, 10);
+    const row = (state.tables.source_texts.rows || [])[i];
+    if (row) { if (e.target.checked) sourceTextsSelected.add(row.id); else sourceTextsSelected.delete(row.id); }
+    updateSourceTextsSelectionUI();
+  }
+  if (e.target.id === 'show-only-failed') {
+    showOnlyFailed = e.target.checked;
+    renderAllConvTables();
+    renderOptionsGrouped('post');
+    renderOptionsGrouped('pre');
+    renderCustomCases();
+  }
   if (e.target.id === 'catalog-group-toggle') {
     catalogState.groupByScript = e.target.checked;
     renderCatalog();
   }
   if (e.target.id === 'catalog-missing-toggle') {
     catalogState.missingOnly = e.target.checked;
+    renderCatalog();
+  }
+  if (e.target.id === 'catalog-frontend-toggle') {
+    catalogState.frontendOnly = e.target.checked;
+    if (catalogState.frontendOnly) {
+      catalogState.internalOnly = false;
+      document.getElementById('catalog-internal-toggle').checked = false;
+    }
+    renderCatalog();
+  }
+  if (e.target.id === 'catalog-internal-toggle') {
+    catalogState.internalOnly = e.target.checked;
+    if (catalogState.internalOnly) {
+      catalogState.frontendOnly = false;
+      document.getElementById('catalog-frontend-toggle').checked = false;
+    }
     renderCatalog();
   }
   if (e.target.id === 'add-case-kind') {

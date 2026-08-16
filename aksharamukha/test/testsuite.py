@@ -7,10 +7,16 @@ post_options = (d for d in dir(PostProcess) if '__' not in d)
 
 reversible_scripts = GeneralMap.ReversibleScripts + GeneralMap.RomanReversible
 
-# Workbench-generated round-trip samples (regression/workbench, see the
-# 'reverse' button on the Source Texts tab) - read fresh here so pytest is
-# the actual authority on whether a round trip still holds, not a boolean
-# cached at generation time that never gets re-checked.
+# Workbench-generated conversion samples (regression/workbench/conversion_samples.json,
+# the Source Texts tab's 'all-fanout' button - source -> every script, both
+# nativize=True and nativize=False). Round-trip candidates are derived
+# straight from this, not from a separately-generated "reverse" record: any
+# nativize=False fanout row whose target is a reversible script IS a
+# round-trip check, by definition of what "reversible" means - generating a
+# second, dedicated record for the same (source, target, nativize) pair was
+# pure duplication (verified: 100% overlap before this was removed). Read
+# fresh here so pytest is the actual authority on whether a round trip still
+# holds, not a boolean cached at generation time that never gets re-checked.
 def _load_roundtrip_samples():
     import json
     import os
@@ -19,7 +25,9 @@ def _load_roundtrip_samples():
         return []
     with open(path, 'r', encoding='utf8') as f:
         samples = json.load(f)
-    return [r for r in samples if r.get('mode') == 'roundtrip']
+    reversible = set(reversible_scripts)
+    return [r for r in samples
+            if r.get('mode') == 'fanout' and r.get('nativize') is False and r.get('target') in reversible]
 
 roundtrip_samples = _load_roundtrip_samples()
 roundtrip_sample_ids = ['%s-%s-%s' % (r.get('label'), r.get('source'), r.get('target')) for r in roundtrip_samples]

@@ -7,17 +7,62 @@ replacement. Nothing here talks to the network except your own browser.
 Run:  python app.py
 Then open the URL it prints (defaults to http://127.0.0.1:8848).
 """
+import contextlib
 import csv
 import io
 import json
 import os
 import sys
+import threading
+import time
+import uuid
 import webbrowser
 
 from flask import Flask, jsonify, request, send_from_directory
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+
+
+@contextlib.contextmanager
+def _atomic_writer(path, newline=None):
+    """Write to a private temp file in the same directory, then atomically
+    replace `path` only once the write finishes cleanly. os.replace() is
+    atomic on both POSIX and Windows - it only ever swaps in a COMPLETE
+    file, never a partial one - so neither a killed/restarted server nor two
+    overlapping requests writing the same file (e.g. clicking several
+    generate buttons in quick succession) can leave `path` corrupted. The
+    temp filename is unique per call (pid + thread + a random token), so
+    concurrent writers never collide with each other's temp file either;
+    whichever finishes last simply wins, same as before - the only thing
+    this changes is that every version written is always a complete, valid
+    file, never a splice of two half-written ones.
+
+    On Windows, os.replace() can transiently raise PermissionError when
+    several replaces land on the same destination at almost the same
+    moment (confirmed under a 20-thread stress test: no corruption ever,
+    but a handful of these) - retried a few times with a short backoff
+    before giving up, since it always clears within a few ms in practice."""
+    tmp_path = '%s.tmp-%d-%d-%s' % (path, os.getpid(), threading.get_ident(), uuid.uuid4().hex[:8])
+    f = open(tmp_path, 'w', encoding='utf-8', newline=newline)
+    try:
+        yield f
+        f.close()
+        for attempt in range(5):
+            try:
+                os.replace(tmp_path, path)
+                break
+            except PermissionError:
+                if attempt == 4:
+                    raise
+                time.sleep(0.05 * (attempt + 1))
+    except BaseException:
+        f.close()
+        try:
+            os.remove(tmp_path)
+        except OSError:
+            pass
+        raise
 
 import run_requests  # noqa: E402
 import import_approved  # noqa: E402
@@ -78,7 +123,7 @@ def read_table(name):
 def write_table(name, rows):
     columns = TABLES[name]['columns']
     path = table_path(name)
-    with open(path, 'w', encoding='utf-8', newline='') as f:
+    with _atomic_writer(path, newline='') as f:
         writer = csv.DictWriter(f, fieldnames=columns)
         writer.writeheader()
         for row in rows:
@@ -247,11 +292,11 @@ def api_save_all_cases():
     returned and only mutated it in place."""
     body = request.get_json(force=True)
     paths = _fixture_paths()
-    with open(paths['post_path'], 'w', encoding='utf-8') as f:
+    with _atomic_writer(paths['post_path']) as f:
         json.dump(body.get('post', {}), f, ensure_ascii=False, indent=4)
-    with open(paths['pre_path'], 'w', encoding='utf-8') as f:
+    with _atomic_writer(paths['pre_path']) as f:
         json.dump(body.get('pre', {}), f, ensure_ascii=False, indent=4)
-    with open(paths['direct_path'], 'w', encoding='utf-8') as f:
+    with _atomic_writer(paths['direct_path']) as f:
         json.dump(body.get('direct', {}), f, ensure_ascii=False, indent=1)
     return jsonify({'ok': True})
 
@@ -274,7 +319,7 @@ def api_custom_cases():
 def api_save_custom_cases():
     rows = request.get_json(force=True).get('rows', [])
     paths = _fixture_paths()
-    with open(paths['custom_path'], 'w', encoding='utf-8') as f:
+    with _atomic_writer(paths['custom_path']) as f:
         json.dump(rows, f, ensure_ascii=False, indent=4)
     return jsonify({'ok': True, 'count': len(rows)})
 
@@ -342,7 +387,7 @@ def _load_conversion_samples():
 
 
 def _save_conversion_samples(records):
-    with open(CONVERSION_SAMPLES_PATH, 'w', encoding='utf-8') as f:
+    with _atomic_writer(CONVERSION_SAMPLES_PATH) as f:
         json.dump(records, f, ensure_ascii=False, indent=1)
 
 
@@ -364,20 +409,57 @@ def api_generate_conversion_samples():
     the (script, text, label) sent directly by the caller, i.e. a single row's
     button on the Source Texts tab, not a scan of the whole source_texts.csv.
 
-    mode='all_fanout': the source text -> every script, one direction,
-      ALWAYS both nativize=True and nativize=False (2 records per script,
-      regardless of whether that script is documented reversible - the
-      variant count is a property of which button generated it, not of the
-      individual script).
-    mode='reverse': the source text -> every REVERSIBLE script only
-      (GeneralMap.ReversibleScripts / RomanReversible) -> back, checking the
-      round trip, nativize=False only (1 record per script) - reversibility
-      is a property of the raw mapping, not the nativized/stylized one.
+    Always: the source text -> every script, one direction, ALWAYS both
+    nativize=True and nativize=False (2 records per script). There used to
+    be a second 'reverse' mode that additionally converted back and stored a
+    dedicated round-trip record for reversible scripts - removed, because it
+    was pure duplication: a nativize=False fanout record for a reversible
+    target already contains everything a round-trip check needs, and
+    testsuite.py's TestConversionSampleRoundtrips now derives its round-trip
+    candidates directly from fanout records (filtered by GeneralMap's
+    reversible-script lists) instead of requiring a separately-generated
+    record. Reversibility is checked at nativize=False, not nativize=True -
+    nativize=True applies lossy per-script defaults (nukta removal, va/ba
+    swaps, ...) that are never guaranteed to round-trip, matching how
+    testsuite.py's other reversibility checks (text_compare_reversible /
+    text_compare_reversible_2) already work.
 
-    Optional 'target': restricts either mode to that ONE script instead of
+    Optional 'target': restricts generation to that ONE script instead of
     looping the whole list - the "generate just this pair" control on the
     Source Texts tab uses this so a single Arabic->Hebrew style pair doesn't
     require a full fanout.
+
+    LoC (Library of Congress) romanization: the frontend never lets a user
+    pick a concrete script like 'DevanagariRomanLoC' or an intermediate like
+    'GurmukhiLoC' - it only ever sends the literal target 'RomanLoC', and
+    transliterate.convert() resolves that to the right concrete script
+    internally based on the source. Fanning out to every concrete/
+    intermediate *LoC* script directly (they're still plain entries in
+    GeneralMap's script lists) tested implementation details no real user
+    or frontend request ever reaches - and for Gurmukhi/Limbu/Tibetan, some
+    of those concrete names (GurmukhiRomanLoC etc., as opposed to the
+    LoC-infixed GurmukhiLoCRomanLoC the dispatcher actually produces) are
+    dead code the dispatcher can never even produce. So: excluded from the
+    general fanout entirely, in favour of exercising the real 'RomanLoC'
+    entry point the same way a user does - which was already implicitly
+    covered going forward (source -> RomanLoC, since 'RomanLoC' is a normal
+    LatinScripts entry), but never going backward. When the source is one of
+    the 27 GeneralMap.LoCScripts, this now also generates that missing
+    reverse pair (RomanLoC -> source, both nativize values) explicitly.
+
+    Semitic ISO romanizations (ISO259/Hebrew, HebrewSBL/Hebrew, ISO233/Arab,
+    PersianDMG/Arab-Fa) work the same way as RomanLoC but are a step further
+    hidden: GeneralMap.semiticISO's 4 pseudo-scripts aren't members of
+    IndicScripts/LatinScripts/SemiticScripts/NonIndic at all (unlike
+    RomanLoC, which at least sits in LatinScripts), so the generic fanout
+    never included them to begin with. transliterate.convert() dispatches
+    them via GeneralMap.semiticISO (pivoting through the associated real
+    script when the source doesn't directly match, e.g. Devanagari->ISO259
+    pivots through Hebrew first) - confirmed working and round-tripping
+    correctly. Added explicitly to the fanout list, plus the reverse pair
+    whenever the row's source IS one of the associated real scripts
+    (Hebrew -> both ISO259 and HebrewSBL; Arab -> ISO233; Arab-Fa ->
+    PersianDMG).
 
     Existing records are keyed by (source, target, nativize, mode, label); a
     matching key gets replaced with the freshly-generated result, anything
@@ -387,7 +469,6 @@ def api_generate_conversion_samples():
     from aksharamukha import transliterate, GeneralMap as GM  # noqa: E402
 
     body = request.get_json(force=True)
-    mode = body.get('mode', 'all_fanout')
     source = (body.get('script') or '').strip()
     text = body.get('text') or ''
     label = body.get('label') or ''
@@ -409,62 +490,55 @@ def api_generate_conversion_samples():
         except Exception as e:  # noqa: BLE001
             return {'ok': False, 'error': '%s: %s' % (type(e).__name__, str(e)[:200])}
 
-    all_scripts = [s for s in set(GM.IndicScripts + GM.LatinScripts + GM.SemiticScripts + GM.NonIndic) if s != 'IPA']
-    reversible_scripts = sorted(set(GM.ReversibleScripts) | set(GM.RomanReversible))
+    def add_record(src, tgt, nativize, txt_in):
+        res = safe_convert(src, tgt, txt_in, nativize)
+        record = {
+            'source': src, 'target': tgt, 'nativize': nativize, 'label': label,
+            'mode': 'fanout', 'category': _categorize_script(tgt, cats), 'auto': True,
+            'input': txt_in, 'output': res.get('output', ''), 'error': res.get('error', ''),
+        }
+        key = (src, tgt, nativize, 'fanout', label)
+        if key in index:
+            existing[index[key]] = record
+        else:
+            index[key] = len(existing)
+            existing.append(record)
+
+    all_scripts = [s for s in set(GM.IndicScripts + GM.LatinScripts + GM.SemiticScripts + GM.NonIndic)
+                   if s != 'IPA' and (s == 'RomanLoC' or 'LoC' not in s)]
+    all_scripts += list(GM.semiticISO.keys())
     if single_target:
         all_scripts = [single_target]
-        reversible_scripts = [single_target]
 
     new_or_updated = 0
 
-    if mode == 'all_fanout':
-        for target in all_scripts:
-            if target == source:
-                continue
-            for nativize in (True, False):
-                res = safe_convert(source, target, text, nativize)
-                record = {
-                    'source': source, 'target': target, 'nativize': nativize, 'label': label,
-                    'mode': 'fanout', 'category': _categorize_script(target, cats),
-                    'input': text, 'output': res.get('output', ''), 'error': res.get('error', ''),
-                }
-                key = (source, target, nativize, 'fanout', label)
-                if key in index:
-                    existing[index[key]] = record
-                else:
-                    index[key] = len(existing)
-                    existing.append(record)
+    for target in all_scripts:
+        if target == source:
+            continue
+        for nativize in (True, False):
+            add_record(source, target, nativize, text)
+            new_or_updated += 1
+
+    if not single_target and source in GM.LoCScripts:
+        for nativize in (True, False):
+            # The reverse pair's input must actually BE LoC-romanized text -
+            # using the original source-script text as if it were already
+            # RomanLoC would silently test nonsense. Derive it for real via
+            # the same forward dispatch used above.
+            fwd = safe_convert(source, 'RomanLoC', text, nativize)
+            if fwd['ok']:
+                add_record('RomanLoC', source, nativize, fwd['output'])
                 new_or_updated += 1
 
-    elif mode == 'reverse':
-        for target in reversible_scripts:
-            if target == source:
+    if not single_target:
+        for pseudo_name, real_script in GM.semiticISO.items():
+            if real_script != source:
                 continue
-            # Reversibility is a property of the raw/ISO-style mapping, not
-            # the nativized (script-stylized) one - nativize=True applies
-            # lossy per-script defaults (nukta removal, va/ba swaps, ...)
-            # that are never guaranteed to round-trip. This matches how the
-            # pytest suite itself checks reversibility (text_compare_reversible
-            # / text_compare_reversible_2 in testsuite.py both use
-            # nativize=False), so a round trip generated here with
-            # nativize=True would fail for reasons that have nothing to do
-            # with whether the script is actually reversible.
-            fwd = safe_convert(source, target, text, False)
-            rev = safe_convert(target, source, fwd.get('output', ''), False) if fwd['ok'] else {'ok': False, 'output': '', 'error': 'forward conversion failed'}
-            record = {
-                'source': source, 'target': target, 'nativize': False, 'label': label,
-                'mode': 'roundtrip', 'category': _categorize_script(target, cats),
-                'input': text, 'output': fwd.get('output', ''), 'error': fwd.get('error', '') or rev.get('error', ''),
-                'roundtrip_output': rev.get('output', ''),
-                'matches_original': bool(fwd['ok'] and rev['ok'] and rev.get('output', '') == text),
-            }
-            key = (source, target, False, 'roundtrip', label)
-            if key in index:
-                existing[index[key]] = record
-            else:
-                index[key] = len(existing)
-                existing.append(record)
-            new_or_updated += 1
+            for nativize in (True, False):
+                fwd = safe_convert(source, pseudo_name, text, nativize)
+                if fwd['ok']:
+                    add_record(pseudo_name, source, nativize, fwd['output'])
+                    new_or_updated += 1
 
     _save_conversion_samples(existing)
     return jsonify({'ok': True, 'generated_or_updated': new_or_updated, 'total': len(existing)})
@@ -539,13 +613,19 @@ def api_generate_option_cases():
             block = next((b for b in blocks if b.get('source') == source and b.get('target') == target
                           and b.get('nativize', True) is True), None)
             if block is None:
-                block = {'source': source, 'target': target, 'nativize': True, 'cases': []}
+                # 'auto': True marks this block as bulk-generated, not
+                # hand-reviewed - shown as a badge in the workbench so it's
+                # clear which cases still want a human look. Only set on
+                # blocks THIS pass creates; a block a human already made
+                # manually (via Add Case) keeps no 'auto' key at all, even if
+                # this pass later appends a case to it.
+                block = {'source': source, 'target': target, 'nativize': True, 'auto': True, 'cases': []}
                 blocks.append(block)
             if [text, output] not in block['cases']:
                 block['cases'].append([text, output])
                 added += 1
 
-    with open(working_path, 'w', encoding='utf-8') as f:
+    with _atomic_writer(working_path) as f:
         json.dump(working, f, ensure_ascii=False, indent=4)
     return jsonify({'ok': True, 'added': added})
 
@@ -579,6 +659,132 @@ def api_preview_option_case():
     except Exception as e:  # noqa: BLE001
         return jsonify({'ok': False, 'error': '%s: %s' % (type(e).__name__, str(e)[:300])})
     return jsonify({'ok': True, 'output': output})
+
+
+@app.route('/api/run_all_tests', methods=['POST'])
+def api_run_all_tests():
+    """Recomputes every stored case fresh via the real library and reports
+    a pass/fail per case - a "did this drift" check you can run from the
+    browser instead of a terminal. Covers:
+      - post/pre-options (test_postoptions.json / test_preoptions.json)
+      - custom cases (test_custom_cases.json)
+      - conversion samples (conversion_samples.json), fanout mode: recompute
+        the forward conversion
+      - conversion samples, round-trip check: for nativize=False fanout rows
+        whose target is a reversible script, also convert back and check it
+        returns the original input (mirrors testsuite.py's
+        TestConversionSampleRoundtrips, minus the Bengali exclusion, which is
+        applied here too)
+    Deliberately NOT covered: the 32 multi-arg Direct Options - each has its
+    own hand-discovered calling convention (extra positional args beyond
+    text), same reason they're excluded from every other bulk feature in
+    this workbench.
+
+    Every case checked comes back as one entry in `results` (so the UI can
+    show a tick/cross per row) - but a passing entry only carries its
+    identity (category/name/scripts/ok:true), not input/expected/actual,
+    since there's nothing to diff and this runs into the thousands of cases;
+    a failing entry carries the full detail needed to render a diff."""
+    sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..')))
+    from aksharamukha import transliterate, GeneralMap as GM  # noqa: E402
+
+    reversible = set(GM.ReversibleScripts) | set(GM.RomanReversible)
+    summary = {}
+    results = []
+
+    def safe_process(*args, **kwargs):
+        try:
+            return {'ok': True, 'value': transliterate.process(*args, **kwargs)}
+        except Exception as e:  # noqa: BLE001
+            return {'ok': False, 'error': '%s: %s' % (type(e).__name__, str(e)[:200])}
+
+    def record(passed, identity, detail=None):
+        entry = dict(identity)
+        entry['ok'] = passed
+        if not passed and detail:
+            entry.update(detail)
+        results.append(entry)
+        return passed
+
+    # --- post/pre options ---
+    paths = _fixture_paths()
+    for kind, path_key, kwarg_name in (('post', 'post_path', 'post_options'), ('pre', 'pre_path', 'pre_options')):
+        data = _load_json(paths[path_key])
+        total = 0
+        bad = 0
+        for name, blocks in data.items():
+            for block in blocks:
+                nativize = block.get('nativize', True)
+                source, target = block.get('source'), block.get('target')
+                for case in block.get('cases', []):
+                    total += 1
+                    input_text, expected = case[0], case[1]
+                    res = safe_process(source, target, input_text, nativize=nativize, **{kwarg_name: [name]})
+                    actual = res.get('value', '')
+                    passed = res['ok'] and actual == expected
+                    if not passed:
+                        bad += 1
+                    record(passed,
+                           {'category': kind, 'option_name': name, 'source': source, 'target': target,
+                            'nativize': nativize, 'input': input_text},
+                           {'expected': expected, 'actual': actual, 'error': res.get('error', '')})
+        summary[kind] = {'total': total, 'mismatches': bad}
+
+    # --- custom cases ---
+    custom = _load_json(paths['custom_path']) if os.path.exists(paths['custom_path']) else []
+    total = 0
+    bad = 0
+    for i, case in enumerate(custom):
+        total += 1
+        res = safe_process(case['source'], case['target'], case['input'],
+                            nativize=case.get('nativize', True),
+                            pre_options=case.get('pre_options', []),
+                            post_options=case.get('post_options', []))
+        actual = res.get('value', '')
+        passed = res['ok'] and actual == case['output']
+        if not passed:
+            bad += 1
+        record(passed,
+               {'category': 'custom', 'index': i, 'label': case.get('label', ''),
+                'source': case['source'], 'target': case['target'], 'nativize': case.get('nativize', True),
+                'input': case['input']},
+               {'expected': case['output'], 'actual': actual, 'error': res.get('error', '')})
+    summary['custom'] = {'total': total, 'mismatches': bad}
+
+    # --- conversion samples: fanout + derived round-trip ---
+    samples = _load_conversion_samples()
+    fanout_total = 0
+    fanout_bad = 0
+    rt_total = 0
+    rt_bad = 0
+    for r in samples:
+        if r.get('mode') != 'fanout':
+            continue
+        fanout_total += 1
+        res = safe_process(r['source'], r['target'], r['input'], nativize=r['nativize'])
+        actual = res.get('value', '')
+        fwd_passed = res['ok'] and actual == r.get('output', '')
+        if not fwd_passed:
+            fanout_bad += 1
+        record(fwd_passed,
+               {'category': 'conversion', 'source': r['source'], 'target': r['target'], 'label': r.get('label', ''), 'nativize': r['nativize']},
+               {'input': r['input'], 'expected': r.get('output', ''), 'actual': actual, 'error': res.get('error', '')})
+
+        if r['nativize'] is False and r['target'] in reversible and not (r['source'] == 'Bengali' or r['target'] == 'Bengali'):
+            rt_total += 1
+            back = safe_process(r['target'], r['source'], actual, nativize=False) if res['ok'] else {'ok': False, 'value': ''}
+            back_value = back.get('value', '')
+            rt_passed = res['ok'] and back['ok'] and back_value == r['input']
+            if not rt_passed:
+                rt_bad += 1
+            record(rt_passed,
+                   {'category': 'roundtrip', 'source': r['source'], 'target': r['target'], 'label': r.get('label', '')},
+                   {'input': r['input'], 'expected': r['input'], 'actual': back_value,
+                    'error': res.get('error', '') or back.get('error', '')})
+    summary['conversion'] = {'total': fanout_total, 'mismatches': fanout_bad}
+    summary['roundtrip'] = {'total': rt_total, 'mismatches': rt_bad}
+
+    return jsonify({'ok': True, 'summary': summary, 'results': results})
 
 
 @app.route('/api/import', methods=['POST'])

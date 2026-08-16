@@ -8,7 +8,19 @@
 <body>
 <header>
   <h1>Aksharamukha Workbench</h1>
+  <div class="header-actions">
+    <label class="check-label"><input type="checkbox" id="show-only-failed"> Show only failed</label>
+    <button class="btn btn-primary" id="run-all-tests">Run All Tests</button>
+  </div>
 </header>
+
+<div id="run-results-panel" class="run-results hidden">
+  <div class="run-results-head">
+    <div id="run-results-summary"></div>
+    <button class="btn btn-small" id="run-results-close">Close</button>
+  </div>
+  <p class="hint" style="margin:6px 0 0">Pass/fail now shows inline on each tab's own table (a ✓/✗ column) - click a ✗ to see the diff.</p>
+</div>
 
 <nav id="tabs">
   <button class="tab-btn active" data-tab="rev-indic">Reversible (Indic)</button>
@@ -35,10 +47,11 @@
       <h2>Reversible (Indic) <span class="muted">- baseline conversions, no options</span></h2>
       <div class="conv-actions">
         <input type="text" class="conv-filter" placeholder="Filter...">
+        <button class="btn" data-conv-delete-selected disabled>Delete selected (0)</button>
         <button class="btn btn-primary" data-save-conv>Save changes</button>
       </div>
     </div>
-    <p class="hint">Viewer only - use the <b>all-fanout</b> / <b>reverse</b> buttons on a row in the <b>Source Texts</b> tab to generate more. All-fanout always makes 2 rows per script (nativize true &amp; false); reverse round-trip only runs against reversible scripts, nativize=false only (reversibility is a property of the raw mapping, not the nativized one), 1 row per script. Only <b>output</b> is directly editable here.</p>
+    <p class="hint">Viewer only - use the <b>all-fanout</b> button on a row in the <b>Source Texts</b> tab to generate more (2 rows per script: nativize true &amp; false). Reversibility itself isn't generated separately here - <code>pytest</code>'s <code>TestConversionSampleRoundtrips</code> checks every nativize=false row against a reversible target directly, so there's nothing to click for that. Only <b>output</b> is directly editable here.</p>
     <div class="table-wrap"><table class="table-conv" data-category="reversible_indic"></table></div>
   </section>
 
@@ -47,6 +60,7 @@
       <h2>Irreversible (Indic) <span class="muted">- baseline conversions, no options</span></h2>
       <div class="conv-actions">
         <input type="text" class="conv-filter" placeholder="Filter...">
+        <button class="btn" data-conv-delete-selected disabled>Delete selected (0)</button>
         <button class="btn btn-primary" data-save-conv>Save changes</button>
       </div>
     </div>
@@ -59,10 +73,11 @@
       <h2>Roman Reversible <span class="muted">- baseline conversions, no options</span></h2>
       <div class="conv-actions">
         <input type="text" class="conv-filter" placeholder="Filter...">
+        <button class="btn" data-conv-delete-selected disabled>Delete selected (0)</button>
         <button class="btn btn-primary" data-save-conv>Save changes</button>
       </div>
     </div>
-    <p class="hint">Viewer only - use the <b>all-fanout</b> / <b>reverse</b> buttons on a row in the <b>Source Texts</b> tab to generate more. Scripts in <code>GeneralMap.RomanReversible</code> (IAST, HK, Itrans, Velthuis, Titus, WX, RussianCyrillic, ISO).</p>
+    <p class="hint">Viewer only - use the <b>all-fanout</b> button on a row in the <b>Source Texts</b> tab to generate more. Scripts in <code>GeneralMap.RomanReversible</code> (IAST, HK, Itrans, Velthuis, Titus, WX, RussianCyrillic, ISO) - <code>pytest</code> checks round-trips for these directly from the fanout data.</p>
     <div class="table-wrap"><table class="table-conv" data-category="roman_reversible"></table></div>
   </section>
 
@@ -71,6 +86,7 @@
       <h2>Roman Irreversible <span class="muted">- baseline conversions, no options</span></h2>
       <div class="conv-actions">
         <input type="text" class="conv-filter" placeholder="Filter...">
+        <button class="btn" data-conv-delete-selected disabled>Delete selected (0)</button>
         <button class="btn btn-primary" data-save-conv>Save changes</button>
       </div>
     </div>
@@ -83,6 +99,7 @@
       <h2>Semitic <span class="muted">- baseline conversions, no options</span></h2>
       <div class="conv-actions">
         <input type="text" class="conv-filter" placeholder="Filter...">
+        <button class="btn" data-conv-delete-selected disabled>Delete selected (0)</button>
         <button class="btn btn-primary" data-save-conv>Save changes</button>
       </div>
     </div>
@@ -97,6 +114,7 @@
       <div>
         <input type="text" id="postopts-filter" placeholder="Filter...">
         <button class="btn" data-add-case="post">+ Add case</button>
+        <button class="btn" data-option-delete-selected disabled>Delete selected (0)</button>
         <button class="btn btn-primary" data-save-cases="post">Save changes</button>
       </div>
     </div>
@@ -110,6 +128,7 @@
       <div>
         <input type="text" id="preopts-filter" placeholder="Filter...">
         <button class="btn" data-add-case="pre">+ Add case</button>
+        <button class="btn" data-option-delete-selected disabled>Delete selected (0)</button>
         <button class="btn btn-primary" data-save-cases="pre">Save changes</button>
       </div>
     </div>
@@ -122,6 +141,7 @@
       <h2>Direct Options <span class="muted">- the ~32 multi-argument options</span></h2>
       <div>
         <input type="text" id="directopts-filter" placeholder="Filter...">
+        <button class="btn" data-option-delete-selected disabled>Delete selected (0)</button>
         <button class="btn btn-primary" data-save-cases="direct">Save changes</button>
       </div>
     </div>
@@ -135,6 +155,7 @@
       <div>
         <input type="text" id="customcases-filter" placeholder="Filter...">
         <button class="btn" id="add-customcase">+ Add case</button>
+        <button class="btn" data-cc-delete-selected disabled>Delete selected (0)</button>
         <button class="btn btn-primary" data-save-cases="custom">Save changes</button>
       </div>
     </div>
@@ -227,14 +248,8 @@
       <label>Target script
         <input type="text" id="add-pair-target" placeholder="Hebrew">
       </label>
-      <label>Mode
-        <select id="add-pair-mode">
-          <option value="all_fanout">all-fanout (one direction, nativize true &amp; false)</option>
-          <option value="reverse">reverse (round trip, nativize false only)</option>
-        </select>
-      </label>
     </div>
-    <p class="hint">Generates just this one source → target pair instead of fanning out to every script.</p>
+    <p class="hint">Generates just this one source → target pair (nativize true &amp; false) instead of fanning out to every script.</p>
     <div class="add-case-actions">
       <button class="btn" id="add-pair-cancel">Cancel</button>
       <button class="btn btn-primary" id="add-pair-submit">Generate</button>
@@ -264,11 +279,12 @@
 
   <!-- ===================== reference tabs ===================== -->
   <section id="tab-texts" class="tab-panel">
-    <p class="hint">Add or edit a row, save it, then use its row buttons: <b>all-fanout</b> / <b>reverse</b> generate baseline conversion samples (shown on the 5 conversion tabs); <b>post-opts</b> / <b>pre-opts</b> (Devanagari rows only) generate full option coverage (shown on the Post-options/Pre-options tabs). Those tabs are viewers - all generation happens from here, against that row's own text.</p>
+    <p class="hint">Add or edit a row, save it, then use its row buttons: <b>all-fanout</b> generates baseline conversion samples (shown on the 5 conversion tabs, nativize true &amp; false); <b>pair</b> does just one target script; <b>post-opts</b> / <b>pre-opts</b> (Devanagari rows only) generate full option coverage (shown on the Post-options/Pre-options tabs). Those tabs are viewers - all generation happens from here, against that row's own text. Round-trip checking isn't a separate step - <code>pytest</code> derives it straight from the nativize=false fanout rows for scripts flagged reversible in <code>GeneralMap</code>.</p>
     <div class="panel-head">
       <h2>Source Texts</h2>
       <div>
         <button class="btn" id="add-sourcetext">+ Add row</button>
+        <button class="btn" data-st-delete-selected disabled>Delete selected (0)</button>
         <button class="btn btn-primary" data-save="source_texts">Save</button>
       </div>
     </div>
@@ -282,10 +298,12 @@
         <input type="text" id="catalog-filter" placeholder="Filter by name, script, status...">
         <label class="check-label"><input type="checkbox" id="catalog-group-toggle"> Group by script</label>
         <label class="check-label"><input type="checkbox" id="catalog-missing-toggle"> Missing test data only</label>
+        <label class="check-label"><input type="checkbox" id="catalog-frontend-toggle"> Frontend options only</label>
+        <label class="check-label"><input type="checkbox" id="catalog-internal-toggle"> Internal, needs review</label>
         <button class="btn" data-regen-catalog>Regenerate from manifest</button>
       </div>
     </div>
-    <p class="hint">Click a column header to sort. Rows with existing test data are shaded green - click <b>cases</b> to preview them, or edit them directly on the Post-options/Pre-options/Direct Options tabs. Click <b>+ test</b> to add a case for an option via the add-case form.</p>
+    <p class="hint">Click a column header to sort. Rows with existing test data are shaded green - click <b>cases</b> to preview them, or edit them directly on the Post-options/Pre-options/Direct Options tabs. Click <b>+ test</b> to add a case for an option via the add-case form. <b>Internal, needs review</b> narrows to options with <code>in_frontend = False</code> that still lack confirmed data - zero cases, or every case still sitting on the old generator's crude 'IAST' fallback; internal options that already have real, correctly-targeted cases (e.g. <code>AhomClosed</code> -&gt; Ahom) are left out since they're already shown correctly here grouped by their real script.</p>
     <div class="table-wrap"><table id="table-options_catalog"></table></div>
   </section>
 </main>
