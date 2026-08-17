@@ -533,5 +533,4433 @@
             ],
             "auto": false
         }
+    ],
+    "AlephMaterLectionis": [
+        {
+            "source": "Latn",
+            "target": "Latn",
+            "cases": [
+                [
+                    "kʾ",
+                    "kā"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "AnusvaratoNasalASTISO": [
+        {
+            "source": "IAST",
+            "target": "IAST",
+            "cases": [
+                [
+                    "gaṃgā",
+                    "gaṅgā"
+                ],
+                [
+                    "gaṃgā",
+                    "gaṅgā"
+                ],
+                [
+                    "gaṃgā",
+                    "gaṅgā"
+                ],
+                [
+                    "gaṁgā",
+                    "gaṅgā"
+                ],
+                [
+                    "gaṁgā",
+                    "gaṅgā"
+                ],
+                [
+                    "gaṁgā",
+                    "gaṅgā"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "BalineseArchaicJNA": [
+        {
+            "source": "Balinese",
+            "target": "Balinese",
+            "cases": [
+                [
+                    "ᬚ᭄ᬜ",
+                    "ᭌ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "BalineseAvowels": [
+        {
+            "source": "Balinese",
+            "target": "Balinese",
+            "cases": [
+                [
+                    "ᬇ",
+                    "ᬅᬶ"
+                ],
+                [
+                    "ᬈ",
+                    "ᬅᬷ"
+                ],
+                [
+                    "ᬉ",
+                    "ᬅᬸ"
+                ],
+                [
+                    "ᬊ",
+                    "ᬅᬹ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "BalineseMoveRepha": [
+        {
+            "source": "Balinese",
+            "target": "Balinese",
+            "cases": [
+                [
+                    "ᬥᬃᬫ",
+                    "ᬥᬫᬃ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "BengaliIntervocalicDDA": [
+        {
+            "source": "Bengali",
+            "target": "Bengali",
+            "cases": [
+                [
+                    "দৃঢ",
+                    "দৃঢ়"
+                ],
+                [
+                    "আষাঢ",
+                    "আষাঢ়"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "BengaliYYA": [
+        {
+            "source": "Bengali",
+            "target": "Bengali",
+            "cases": [
+                [
+                    "যয়াতি",
+                    "য়য়াতি"
+                ],
+                [
+                    "যজ্ঞ",
+                    "য়জ্ঞ"
+                ],
+                [
+                    "যয়াতি",
+                    "য়য়াতি"
+                ],
+                [
+                    "যজ্ঞ",
+                    "য়জ্ঞ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ChakmaEnableAllConjuncts": [
+        {
+            "source": "Chakma",
+            "target": "Chakma",
+            "cases": [
+                [
+                    "𑄇𑄴𑄈𑄧",
+                    "𑄇𑄳𑄈𑄧"
+                ],
+                [
+                    "𑄉𑄴𑄊𑄧",
+                    "𑄉𑄳𑄊𑄧"
+                ],
+                [
+                    "𑄚𑄴𑄖𑄧",
+                    "𑄚𑄳𑄖𑄧"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ChakmaPali": [
+        {
+            "source": "Chakma",
+            "target": "Chakma",
+            "cases": [
+                [
+                    "𑄖𑄧𑄗𑄉𑄧𑄖𑄧",
+                    "𑄖𑄗𑄂𑄉𑄖"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ChakmaVowelsIndependent": [
+        {
+            "source": "Chakma",
+            "target": "Chakma",
+            "cases": [
+                [
+                    "𑄃𑄨",
+                    "𑄄"
+                ],
+                [
+                    "𑄃𑄪",
+                    "𑄅"
+                ],
+                [
+                    "𑄃𑄬",
+                    "𑄆"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "DevanagariACandra": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "ऍ",
+                    "ॲ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "DevanagariPrishtamatra": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "के",
+                    "कॎ"
+                ],
+                [
+                    "कै",
+                    "कॎे"
+                ],
+                [
+                    "को",
+                    "कॎा"
+                ],
+                [
+                    "कौ",
+                    "कॎो"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "DivesAkuruAlternateIndVowels": [
+        {
+            "source": "DivesAkuru",
+            "target": "DivesAkuru",
+            "cases": [
+                [
+                    "𑤀",
+                    "𑤥"
+                ],
+                [
+                    "𑤁",
+                    "𑤥𑤰"
+                ],
+                [
+                    "𑤂",
+                    "𑤥𑤱"
+                ],
+                [
+                    "𑤃",
+                    "𑤥𑤲"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "DivesAkuruHomoOrganNasal": [
+        {
+            "source": "DivesAkuru",
+            "target": "DivesAkuru",
+            "cases": [
+                [
+                    "𑤐𑤾𑤎",
+                    "𑤿𑤎"
+                ],
+                [
+                    "𑤤𑤾𑤢",
+                    "𑤿𑤢"
+                ],
+                [
+                    "𑤚𑤾𑤘",
+                    "𑤿𑤘"
+                ],
+                [
+                    "𑤟𑤾𑤞",
+                    "𑤿𑤞"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "FinalNNa": [
+        {
+            "source": "Tamil",
+            "target": "Tamil",
+            "cases": [
+                [
+                    "ஆனனன்",
+                    "ஆநநன்"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "GranthaOldau": [
+        {
+            "source": "Grantha",
+            "target": "Grantha",
+            "cases": [
+                [
+                    "𑌕𑍗",
+                    "𑌕𑍌"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "GranthaPrakrit": [
+        {
+            "source": "Grantha",
+            "target": "Grantha",
+            "cases": [
+                [
+                    "𑌬𑍁𑌦𑍍𑌧𑌂",
+                    "𑌬𑍁𑌂𑌧𑌀"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "GurmukhiYakaash": [
+        {
+            "source": "Gurmukhi",
+            "target": "Gurmukhi",
+            "cases": [
+                [
+                    "ਕ੍ਯ",
+                    "ਕੵ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "JavaneseArchaicJNA": [
+        {
+            "source": "Javanese",
+            "target": "Javanese",
+            "cases": [
+                [
+                    "ꦗ꧀ꦚ",
+                    "ꦘ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "JavaneseAvowels": [
+        {
+            "source": "Javanese",
+            "target": "Javanese",
+            "cases": [
+                [
+                    "ꦆ",
+                    "ꦄꦶ"
+                ],
+                [
+                    "ꦇ",
+                    "ꦄꦷ"
+                ],
+                [
+                    "ꦈ",
+                    "ꦄꦸ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "JavaneseMoveRepha": [
+        {
+            "source": "Javanese",
+            "target": "Javanese",
+            "cases": [
+                [
+                    "ꦣꦂꦩ",
+                    "ꦣꦩꦂ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "KannadaNakaraPollu": [
+        {
+            "source": "Kannada",
+            "target": "Kannada",
+            "cases": [
+                [
+                    "ಭಗವನ್",
+                    "ಭಗವೝ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "KawiAltAiAU": [
+        {
+            "source": "Kawi",
+            "target": "Kawi",
+            "cases": [
+                [
+                    "𑼒𑼿",
+                    "𑼒𑼾𑼾"
+                ],
+                [
+                    "𑼒𑼿𑼴",
+                    "𑼒𑼾𑼾𑼴"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "KawiArchaicJNA": [
+        {
+            "source": "Kawi",
+            "target": "Kawi",
+            "cases": [
+                [
+                    "𑼙𑽂𑼛",
+                    "𑼳"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "KawiDecomposedVowel": [
+        {
+            "source": "Kawi",
+            "target": "Kawi",
+            "cases": [
+                [
+                    "𑼅",
+                    "𑼄𑼴"
+                ],
+                [
+                    "𑼇",
+                    "𑼆𑼴"
+                ],
+                [
+                    "𑼉",
+                    "𑼈𑼴"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "KawiMoveRepha": [
+        {
+            "source": "Kawi",
+            "target": "Kawi",
+            "cases": [
+                [
+                    "𑼤𑼂𑼪",
+                    "𑼂𑼤𑼪"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "KhamiShanMyanmarNumerals": [
+        {
+            "source": "KhamtiShan",
+            "target": "KhamtiShan",
+            "cases": [
+                [
+                    "႑႒႓",
+                    "၁၂၃"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "KhamtiShanRa": [
+        {
+            "source": "KhamtiShan",
+            "target": "KhamtiShan",
+            "cases": [
+                [
+                    "ရ",
+                    "ꩳ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "KhojkiQa": [
+        {
+            "source": "Khojki",
+            "target": "Khojki",
+            "cases": [
+                [
+                    "𑈈𑈶",
+                    "𑈿"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "LaoNative": [
+        {
+            "source": "Lao",
+            "target": "Lao",
+            "cases": [
+                [
+                    "ພຸທທັງ",
+                    "ພຸດທັງ"
+                ],
+                [
+                    "ສັພພັງ",
+                    "ສັບພັງ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "LaoPhonetic": [
+        {
+            "source": "LaoPali",
+            "target": "LaoPali",
+            "cases": [
+                [
+                    "ພຸທ຺ຘ",
+                    "ບຸດຘະ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "LaoSajjhaya": [
+        {
+            "source": "LaoPali",
+            "target": "LaoPali",
+            "cases": [
+                [
+                    "ພຸທ຺ຘ",
+                    "ພຸທ໌ຘ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "LaoSajjhayawithA": [
+        {
+            "source": "LaoPali",
+            "target": "LaoPali",
+            "cases": [
+                [
+                    "ພຸທ຺ຘໍ",
+                    "ພຸທ໌ຘັງ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "LaoTranscription": [
+        {
+            "source": "LaoPali",
+            "target": "LaoPali",
+            "cases": [
+                [
+                    "ພຸທ຺ຘ",
+                    "ພຸທຘະ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "LimbuSpellingSaI": [
+        {
+            "source": "Limbu",
+            "target": "Limbu",
+            "cases": [
+                [
+                    "ᤁ᤺ᤢᤰ",
+                    "ᤁᤢᤁ᤻"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "MalayalamCircVirama": [
+        {
+            "source": "Malayalam",
+            "target": "Malayalam",
+            "cases": [
+                [
+                    "ക്",
+                    "ക഼"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "MalayalamLineVirama": [
+        {
+            "source": "Malayalam",
+            "target": "Malayalam",
+            "cases": [
+                [
+                    "ക്",
+                    "ക഻"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "MalayalamPrakrit": [
+        {
+            "source": "Malayalam",
+            "target": "Malayalam",
+            "cases": [
+                [
+                    "ബുദ്ധ",
+                    "ബുംധ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "MarchenSanskritPalatals": [
+        {
+            "source": "Marchen",
+            "target": "Marchen",
+            "cases": [
+                [
+                    "𑲂",
+                    "𑱶"
+                ],
+                [
+                    "𑲃",
+                    "𑱷"
+                ],
+                [
+                    "𑲄",
+                    "𑱸"
+                ],
+                [
+                    "𑲄𑲮",
+                    "𑱸𑲮"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "NandinagariPrishtamatra": [
+        {
+            "source": "Nandinagari",
+            "target": "Nandinagari",
+            "cases": [
+                [
+                    "𑦮𑧚",
+                    "𑦮𑧤"
+                ],
+                [
+                    "𑦮𑧜",
+                    "𑦮𑧤𑧑"
+                ],
+                [
+                    "𑦮𑧛",
+                    "𑦮𑧤𑧚"
+                ],
+                [
+                    "𑦮𑧝",
+                    "𑦮𑧤𑧜"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "OriyaYYA": [
+        {
+            "source": "Oriya",
+            "target": "Oriya",
+            "cases": [
+                [
+                    "ଯୟାତି",
+                    "ୟୟାତି"
+                ],
+                [
+                    "ଯଜ୍ଞ",
+                    "ୟଜ୍ଞ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "PhagsPaSeal": [
+        {
+            "source": "PhagsPa",
+            "target": "PhagsPa",
+            "cases": [
+                [
+                    "᠂",
+                    " ᠂ "
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "PhagsPaTib": [
+        {
+            "source": "PhagsPa",
+            "target": "PhagsPa",
+            "cases": [
+                [
+                    "᠂",
+                    " ᠂ "
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "RomanLoCSLaDotLaUnderscore": [
+        {
+            "source": "IAST",
+            "target": "IAST",
+            "cases": [
+                [
+                    "agnimīl̤e",
+                    "agnimīḻe"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "RomanReadableLongEO": [
+        {
+            "source": "RomanReadable",
+            "target": "RomanReadable",
+            "cases": [
+                [
+                    "e'",
+                    "e"
+                ],
+                [
+                    "e",
+                    "ae"
+                ],
+                [
+                    "o'",
+                    "o"
+                ],
+                [
+                    "o",
+                    "oa"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SinhalaConjuncts": [
+        {
+            "source": "Sinhala",
+            "target": "Sinhala",
+            "cases": [
+                [
+                    "බුද්ධස්ස",
+                    "බුද්‍ධස‍්ස"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SinhalaPali": [
+        {
+            "source": "Sinhala",
+            "target": "Sinhala",
+            "cases": [
+                [
+                    "නමෝ",
+                    "නමො"
+                ],
+                [
+                    "භගවතේ",
+                    "භගවතෙ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SoyomboInitials": [
+        {
+            "source": "Soyombo",
+            "target": "Soyombo",
+            "cases": [
+                [
+                    "𑩼𑪙𑩫",
+                    "𑪆𑩫"
+                ],
+                [
+                    "𑩽𑪙𑩫",
+                    "𑪇𑩫"
+                ],
+                [
+                    "𑪁𑪙𑩫",
+                    "𑪉𑩫"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SoyomboSanskritPalatals": [
+        {
+            "source": "Soyombo",
+            "target": "Soyombo",
+            "cases": [
+                [
+                    "𑩵",
+                    "𑩡"
+                ],
+                [
+                    "𑩶",
+                    "𑩢"
+                ],
+                [
+                    "𑩷",
+                    "𑩣"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SoyomboSpaceTscheg": [
+        {
+            "source": "Soyombo",
+            "target": "Soyombo",
+            "cases": [
+                [
+                    "𑩯 𑩴𑩖",
+                    "𑩯𑪚𑩴𑩖"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SundaneseHistoricConjuncts": [
+        {
+            "source": "Sundanese",
+            "target": "Sundanese",
+            "cases": [
+                [
+                    "ᮊ᮪ᮙ",
+                    "ᮊᮬ"
+                ],
+                [
+                    "ᮊ᮪ᮝ",
+                    "ᮊᮭ"
+                ],
+                [
+                    "ᮃᮊ᮪",
+                    "ᮃᮾ"
+                ],
+                [
+                    "ᮃᮙ᮪",
+                    "ᮃᮿ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TamilAddFirstVarga": [
+        {
+            "source": "Tamil",
+            "target": "Tamil",
+            "cases": [
+                [
+                    "தீ³பம்",
+                    "தீ³ப¹ம்"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TamilExtendedNNA": [
+        {
+            "source": "TamilExtended",
+            "target": "TamilExtended",
+            "cases": [
+                [
+                    "ഗജാനനന്‌",
+                    "ഗജാഩഩഩ്‌"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TamilGranthaVisarga": [
+        {
+            "source": "Tamil",
+            "target": "Tamil",
+            "cases": [
+                [
+                    "நம꞉",
+                    "நம𑌃"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TamilOmDisable": [
+        {
+            "source": "Tamil",
+            "target": "Tamil",
+            "cases": [
+                [
+                    "ௐ",
+                    "ஓம்"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TamilSubScript": [
+        {
+            "source": "Tamil",
+            "target": "Tamil",
+            "cases": [
+                [
+                    "க²க³க⁴",
+                    "க₂க₃க₄"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TeluguArasunnaChandrabindu": [
+        {
+            "source": "Telugu",
+            "target": "Telugu",
+            "cases": [
+                [
+                    "హూఀ",
+                    "హూఁ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TeluguTamilRra": [
+        {
+            "source": "Telugu",
+            "target": "Telugu",
+            "cases": [
+                [
+                    "ఆఱ్ఱు",
+                    "ఆౘ్ౘు"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ThaiNativeConsonants": [
+        {
+            "source": "Thai",
+            "target": "Thai",
+            "cases": [
+                [
+                    "พุทฺธตฺว",
+                    "บุดธะต͜วะ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ThaiSajjhayawithA": [
+        {
+            "source": "Thai",
+            "target": "Thai",
+            "cases": [
+                [
+                    "พุทฺธํ",
+                    "พุท์ธัง"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ThamTallAOthers": [
+        {
+            "source": "TaiTham",
+            "target": "TaiTham",
+            "cases": [
+                [
+                    "ᨣᨧ᩠ᨨᩣᨾᩥ",
+                    "ᨣᨧ᩠ᨨᩤᨾᩥ"
+                ],
+                [
+                    "ᨣᨧ᩠ᨨᩣᨾᩥ",
+                    "ᨣᨧ᩠ᨨᩤᨾᩥ"
+                ],
+                [
+                    "ᨣᨧ᩠ᨨᩣᨾᩥ",
+                    "ᨣᨧ᩠ᨨᩤᨾᩥ"
+                ],
+                [
+                    "ᨣᨧ᩠ᨨᩣᨾᩥ",
+                    "ᨣᨧ᩠ᨨᩤᨾᩥ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TibetanNada": [
+        {
+            "source": "Tibetan",
+            "target": "Tibetan",
+            "cases": [
+                [
+                    "ཨྃ",
+                    "ཨྂ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TibetanSanskritPalatals": [
+        {
+            "source": "Tibetan",
+            "target": "Tibetan",
+            "cases": [
+                [
+                    "ཙ",
+                    "ཅ"
+                ],
+                [
+                    "ཚ",
+                    "ཆ"
+                ],
+                [
+                    "ཛ",
+                    "ཇ"
+                ],
+                [
+                    "ཛྷ",
+                    "ཇྷ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TibetanTsheg": [
+        {
+            "source": "Tibetan",
+            "target": "Tibetan",
+            "cases": [
+                [
+                    "ན་མོ",
+                    "ན མོ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "UseAlternateI2": [
+        {
+            "source": "Siddham",
+            "target": "Siddham",
+            "cases": [
+                [
+                    "𑖂",
+                    "𑗙"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "UseAlternateII": [
+        {
+            "source": "Siddham",
+            "target": "Siddham",
+            "cases": [
+                [
+                    "𑖃",
+                    "𑗚"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "UseAlternateU": [
+        {
+            "source": "Siddham",
+            "target": "Siddham",
+            "cases": [
+                [
+                    "𑖄",
+                    "𑗛"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "UseAlternateVSU": [
+        {
+            "source": "Siddham",
+            "target": "Siddham",
+            "cases": [
+                [
+                    "𑖎𑖲𑖚𑖲𑖦𑖲",
+                    "𑖎𑗜𑖚𑗜𑖦𑗜"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "UseAlternateVSUU": [
+        {
+            "source": "Siddham",
+            "target": "Siddham",
+            "cases": [
+                [
+                    "𑖎𑖳𑖚𑖳𑖦𑖳",
+                    "𑖎𑗝𑖚𑗝𑖦𑗝"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "UseAlternateYA": [
+        {
+            "source": "DivesAkuru",
+            "target": "DivesAkuru",
+            "cases": [
+                [
+                    "𑤥",
+                    "𑤦"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "UseAlternateo1": [
+        {
+            "source": "TaiTham",
+            "target": "TaiTham",
+            "cases": [
+                [
+                    "ᨠᩮᩣ",
+                    "ᨠᩰ"
+                ],
+                [
+                    "ᨠᩮᩣ",
+                    "ᨠᩰ"
+                ],
+                [
+                    "ᨠᩮᩣ",
+                    "ᨠᩰ"
+                ],
+                [
+                    "ᨠᩮᩣ",
+                    "ᨠᩰ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "UseAlternateo2": [
+        {
+            "source": "TaiThamRomanLoC",
+            "target": "TaiThamRomanLoC",
+            "cases": [
+                [
+                    "ᨠᩰ",
+                    "ᨠᩮᩣ"
+                ],
+                [
+                    "ᨠᩰ",
+                    "ᨠᩮᩣ"
+                ],
+                [
+                    "ᨠᩰ",
+                    "ᨠᩮᩣ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ZanabazarSanskritPalatals": [
+        {
+            "source": "ZanabazarSquare",
+            "target": "ZanabazarSquare",
+            "cases": [
+                [
+                    "𑨣",
+                    "𑨐"
+                ],
+                [
+                    "𑨤",
+                    "𑨑"
+                ],
+                [
+                    "𑨥",
+                    "𑨒"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ZanzabarSpaceTsheg": [
+        {
+            "source": "ZanabazarSquare",
+            "target": "ZanabazarSquare",
+            "cases": [
+                [
+                    "𑨝 𑨢𑨆",
+                    "𑨝𑩁𑨢𑨆"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "alephAyinLatnAlternate": [
+        {
+            "source": "Latn",
+            "target": "Latn",
+            "cases": [
+                [
+                    "ʾ",
+                    "ʼ"
+                ],
+                [
+                    "ʿ",
+                    "ʽ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "alephAyinLatnAlternate2": [
+        {
+            "source": "Latn",
+            "target": "Latn",
+            "cases": [
+                [
+                    "ʾ",
+                    "ʔ"
+                ],
+                [
+                    "ʿ",
+                    "ʕ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "archaicAIAU": [
+        {
+            "source": "Malayalam",
+            "target": "Malayalam",
+            "cases": [
+                [
+                    "ഈ",
+                    "ൟ"
+                ],
+                [
+                    "കൗ",
+                    "കൌ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "dotReph": [
+        {
+            "source": "Malayalam",
+            "target": "Malayalam",
+            "cases": [
+                [
+                    "ധർമ",
+                    "ധൎമ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "persianPaGaFaJa": [
+        {
+            "source": "Arab-Fa",
+            "target": "Arab-Fa",
+            "cases": [
+                [
+                    "پ",
+                    "ف"
+                ],
+                [
+                    "گ",
+                    "ج"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "removeDiacritics": [
+        {
+            "source": "RussianCyrillic",
+            "target": "RussianCyrillic",
+            "cases": [
+                [
+                    "сам̣кр̣там̣",
+                    "самкртам"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "removePaliAhom": [
+        {
+            "source": "Ahom",
+            "target": "Ahom",
+            "cases": [
+                [
+                    "𑝁",
+                    "𑜄"
+                ],
+                [
+                    "𑝂",
+                    "𑜌"
+                ],
+                [
+                    "𑝃",
+                    "𑜓"
+                ],
+                [
+                    "𑝄",
+                    "𑜔"
+                ],
+                [
+                    "𑝅",
+                    "𑜃"
+                ],
+                [
+                    "𑝆",
+                    "𑜎"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "removetddash": [
+        {
+            "source": "HebrewSBL",
+            "target": "HebrewSBL",
+            "cases": [
+                [
+                    "ḏ",
+                    "d"
+                ],
+                [
+                    "ṯ",
+                    "t"
+                ],
+                [
+                    "ḡ",
+                    "g"
+                ],
+                [
+                    "d",
+                    "d꞉"
+                ],
+                [
+                    "t",
+                    "t꞉"
+                ],
+                [
+                    "g",
+                    "g꞉"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "syriacRoman": [
+        {
+            "source": "LatnSyrj",
+            "target": "LatnSyrj",
+            "cases": [
+                [
+                    "v",
+                    "ḇ"
+                ],
+                [
+                    "ġ",
+                    "ḡ"
+                ],
+                [
+                    "ḫ",
+                    "ḵ"
+                ],
+                [
+                    "f",
+                    "p̄"
+                ],
+                [
+                    "v",
+                    "ḇ"
+                ],
+                [
+                    "ġ",
+                    "ḡ"
+                ],
+                [
+                    "ḫ",
+                    "ḵ"
+                ],
+                [
+                    "f",
+                    "p̄"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "AhomClosed": [
+        {
+            "source": "Ahom",
+            "target": "Ahom",
+            "cases": [
+                [
+                    "𑜢",
+                    "𑜣"
+                ],
+                [
+                    "𑜣x𑜫",
+                    "𑜢x𑜫"
+                ],
+                [
+                    "𑜪𑜣",
+                    "𑜪𑜢"
+                ],
+                [
+                    "𑜤",
+                    "𑜥"
+                ],
+                [
+                    "𑜥x𑜫",
+                    "𑜤x𑜫"
+                ],
+                [
+                    "𑜪𑜥",
+                    "𑜪𑜤"
+                ],
+                [
+                    "𑜦𑜧x𑜫",
+                    "𑜦x𑜫"
+                ],
+                [
+                    "𑜦𑜪𑜧",
+                    "𑜪𑜧"
+                ],
+                [
+                    "𑜦𑜡x𑜫",
+                    "𑜨x𑜫"
+                ],
+                [
+                    "𑜦𑜪𑜡",
+                    "𑜪𑜨"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "AnusvaraToNasalIPA": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "̃k",
+                    "ŋk"
+                ],
+                [
+                    "̃g",
+                    "ŋg"
+                ],
+                [
+                    "̃c",
+                    "ɲc"
+                ],
+                [
+                    "̃j",
+                    "ɲj"
+                ],
+                [
+                    "̃t̪",
+                    "n̪t̪"
+                ],
+                [
+                    "̃d̪",
+                    "n̪d̪"
+                ],
+                [
+                    "̃ɖ",
+                    "ɳɖ"
+                ],
+                [
+                    "̃ʈ",
+                    "ɳʈ"
+                ],
+                [
+                    "̃ːk",
+                    "ːŋk"
+                ],
+                [
+                    "̃ːg",
+                    "ːŋg"
+                ],
+                [
+                    "̃ːc",
+                    "ːɲc"
+                ],
+                [
+                    "̃ːj",
+                    "ːɲj"
+                ],
+                [
+                    "̃ːt̪",
+                    "ːn̪t̪"
+                ],
+                [
+                    "̃ːd̪",
+                    "ːn̪d̪"
+                ],
+                [
+                    "̃ːɖ",
+                    "ːɳɖ"
+                ],
+                [
+                    "̃ːʈ",
+                    "ːɳʈ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ArabAtoAleph": [
+        {
+            "source": "Arab",
+            "target": "Arab",
+            "cases": [
+                [
+                    "أ",
+                    "ا"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ArabRemoveAdditions": [
+        {
+            "source": "Arab",
+            "target": "Arab",
+            "cases": [
+                [
+                    "پ",
+                    "ف"
+                ],
+                [
+                    "ڤ",
+                    "ف"
+                ],
+                [
+                    "ڨ",
+                    "ج"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ArabicGimelGaGha": [
+        {
+            "source": "Arab",
+            "target": "Arab",
+            "cases": [
+                [
+                    "ج",
+                    "غ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ArabicGimelPaBa": [
+        {
+            "source": "Arab",
+            "target": "Arab",
+            "cases": [
+                [
+                    "ف",
+                    "ب"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "AvestanConventions": [
+        {
+            "source": "Avestan",
+            "target": "Avestan",
+            "cases": [
+                [
+                    "𐬢𐬌",
+                    "𐬣𐬌"
+                ],
+                [
+                    "𐬀𐬥",
+                    "𐬆𐬥"
+                ],
+                [
+                    "𐬥𐬐",
+                    "𐬧𐬐"
+                ],
+                [
+                    "𐬑𐬌𐬌",
+                    "𐬒𐬌𐬌"
+                ],
+                [
+                    "𐬱𐬌𐬌",
+                    "𐬳𐬌𐬌"
+                ],
+                [
+                    "𐬚𐬎𐬎",
+                    "𐬚𐬡"
+                ],
+                [
+                    "𐬙",
+                    "𐬝"
+                ],
+                [
+                    "𐬙𐬐",
+                    "𐬝𐬐"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "BalineseRomanLoCFix": [
+        {
+            "source": "BalineseRomanLoC",
+            "target": "BalineseRomanLoC",
+            "cases": [
+                [
+                    "ng̈",
+                    "‘"
+                ],
+                [
+                    "ḧ",
+                    "h"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "BengaliConjunctVB": [
+        {
+            "source": "Bengali",
+            "target": "Bengali",
+            "cases": [
+                [
+                    "্‌ব",
+                    "্ব"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "BengaliRaBa": [
+        {
+            "source": "Bengali",
+            "target": "Bengali",
+            "cases": [
+                [
+                    "ৰূ",
+                    "ৰ‌ূ"
+                ],
+                [
+                    "ৰু",
+                    "ৰ‌ু"
+                ],
+                [
+                    "্ৰ",
+                    "্‌ৰ"
+                ],
+                [
+                    "ৰ্র",
+                    "ৰ‍্র"
+                ],
+                [
+                    "ৰ্",
+                    "ৰ্‌"
+                ],
+                [
+                    "র্‌ৰ",
+                    "ৰ্ৰ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "BengaliSwitchYaYYa": [
+        {
+            "source": "Bengali",
+            "target": "Bengali",
+            "cases": [
+                [
+                    "য",
+                    "য়"
+                ],
+                [
+                    "য়",
+                    "য"
+                ],
+                [
+                    "@#$",
+                    "য়"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "BhaiksukiRetainSpace": [
+        {
+            "source": "Bhaiksuki",
+            "target": "Bhaiksuki",
+            "cases": [
+                [
+                    "𑱃",
+                    " "
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "BurmeseRomanLoCSource": [
+        {
+            "source": "BurmeseRomanLoC",
+            "target": "BurmeseRomanLoC",
+            "cases": [
+                [
+                    "ʻ",
+                    ""
+                ],
+                [
+                    "်္ယ",
+                    "ျ"
+                ],
+                [
+                    "္ယ",
+                    "ျ"
+                ],
+                [
+                    "္ရ",
+                    "ြ"
+                ],
+                [
+                    "္ဝ",
+                    "ွ"
+                ],
+                [
+                    "္ဟ",
+                    "ှ"
+                ],
+                [
+                    "ʼ",
+                    ""
+                ],
+                [
+                    "’ဪ",
+                    "အော်"
+                ],
+                [
+                    "’ဩ",
+                    "အော"
+                ],
+                [
+                    "’ဣ",
+                    "အိ"
+                ],
+                [
+                    "’ဤ",
+                    "အီ"
+                ],
+                [
+                    "’ဥ",
+                    "အု"
+                ],
+                [
+                    "ုဣ",
+                    "ို"
+                ],
+                [
+                    "’အ",
+                    "အ"
+                ],
+                [
+                    "့်",
+                    "့်"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "BurmeseRomanLoCTarget": [
+        {
+            "source": "BurmeseRomanLoC",
+            "target": "BurmeseRomanLoC",
+            "cases": [
+                [
+                    "˳",
+                    "ʹ"
+                ],
+                [
+                    "auʻ",
+                    "oʻ"
+                ],
+                [
+                    "ḥ",
+                    "ʺ"
+                ],
+                [
+                    "၏",
+                    "e*"
+                ],
+                [
+                    "၌",
+                    "n*"
+                ],
+                [
+                    "၍",
+                    "r*"
+                ],
+                [
+                    "၎",
+                    "l*"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ChakmaGemination": [
+        {
+            "source": "Chakma",
+            "target": "Chakma",
+            "cases": [
+                [
+                    "𑄇𑄴𑄇𑄳𑄢𑄨ʽ",
+                    "𑄇𑄴𑄳𑄢𑄨"
+                ],
+                [
+                    "𑄇𑄴𑄇𑄳𑄇",
+                    "𑄇𑄴𑄇𑄴𑄇"
+                ],
+                [
+                    "𑄇𑄳𑄇𑄳𑄇",
+                    "𑄇𑄴𑄇𑄴𑄇"
+                ],
+                [
+                    "𑄳𑄇𑄴𑄳𑄢𑄨ʽ",
+                    "𑄴𑄇𑄴𑄳𑄢𑄨"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ContextualLLa": [
+        {
+            "source": "Tamil",
+            "target": "Tamil",
+            "cases": [
+                [
+                    "ாவல",
+                    "ாவள"
+                ],
+                [
+                    "ரல",
+                    "ரள"
+                ],
+                [
+                    "யால",
+                    "யாள"
+                ],
+                [
+                    "மௌல",
+                    "மௌள"
+                ],
+                [
+                    " நல",
+                    " ள"
+                ],
+                [
+                    "கலத்ர",
+                    "களத்ர"
+                ],
+                [
+                    "ஶீதல",
+                    "ஶீதள"
+                ],
+                [
+                    "ஸுதல",
+                    "ஸுதள"
+                ],
+                [
+                    "காலி",
+                    "காளி"
+                ],
+                [
+                    "காலீ",
+                    "காளீ"
+                ],
+                [
+                    "கலேவர",
+                    "களேவர"
+                ],
+                [
+                    "ப³ஹுல",
+                    "ப³ஹுள"
+                ],
+                [
+                    "கஶ்மல",
+                    "கஶ்மள"
+                ],
+                [
+                    "க³ல",
+                    "க³ள"
+                ],
+                [
+                    "ஜுல",
+                    "ஜுள"
+                ],
+                [
+                    "துலசி",
+                    "துளசி"
+                ],
+                [
+                    "ரிமல",
+                    "ரிமள"
+                ],
+                [
+                    "ள்ய",
+                    "ல்ய"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "CyrillicPali": [
+        {
+            "source": "RussianCyrillic",
+            "target": "RussianCyrillic",
+            "cases": [
+                [
+                    "л̤",
+                    "л̣"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "DevanagariAVowels": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "इ",
+                    "अि"
+                ],
+                [
+                    "ई",
+                    "अी"
+                ],
+                [
+                    "उ",
+                    "अु"
+                ],
+                [
+                    "ऊ",
+                    "अू"
+                ],
+                [
+                    "ऋ",
+                    "अृ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "DevanagariRomanLoCFix": [
+        {
+            "source": "DevanagariRomanLoC",
+            "target": "DevanagariRomanLoC",
+            "cases": [
+                [
+                    "ḧ",
+                    "h̤"
+                ],
+                [
+                    "s̈",
+                    "s̤"
+                ],
+                [
+                    "ṭ̈",
+                    "t̤"
+                ],
+                [
+                    "gḧ",
+                    "g̳h̳"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "Dot2Dandas": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "..",
+                    "॥"
+                ],
+                [
+                    ".",
+                    "।"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "Dot2Pipes": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "..",
+                    "||"
+                ],
+                [
+                    ".",
+                    "|"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "GurmukhiRomanLoCFix": [
+        {
+            "source": "GurmukhiRomanLoC",
+            "target": "GurmukhiRomanLoC",
+            "cases": [
+                [
+                    "m̆k",
+                    "ṅk"
+                ],
+                [
+                    "m̆c",
+                    "ñc"
+                ],
+                [
+                    "m̆ṭ",
+                    "ṇṭ"
+                ],
+                [
+                    "m̆t",
+                    "nt"
+                ],
+                [
+                    "m̆p",
+                    "mp"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "GurmukhiTippiBindu": [
+        {
+            "source": "Gurmukhi",
+            "target": "Gurmukhi",
+            "cases": [
+                [
+                    "ੂਂ",
+                    "ੂੰ"
+                ],
+                [
+                    "ਕਂ",
+                    "ਕੰ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "GurmukhiTippiGemination": [
+        {
+            "source": "Gurmukhi",
+            "target": "Gurmukhi",
+            "cases": [
+                [
+                    "ੱਮ",
+                    "ੰਮ"
+                ],
+                [
+                    "ੱਨ",
+                    "ੰਨ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "HeberewQoph": [
+        {
+            "source": "Hebrew",
+            "target": "Hebrew",
+            "cases": [
+                [
+                    "ךּ",
+                    "ק"
+                ],
+                [
+                    "כּ",
+                    "ק"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "HebewShortO": [
+        {
+            "source": "Hebrew",
+            "target": "Hebrew",
+            "cases": [
+                [
+                    "ֹ",
+                    "ׇ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "HebrewKatevMalei": [
+        {
+            "source": "Hebrew",
+            "target": "Hebrew",
+            "cases": [
+                [
+                    "ָ",
+                    "א"
+                ],
+                [
+                    "ַ",
+                    "א"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "HebrewSBLTarget": [
+        {
+            "source": "Hebrew",
+            "target": "Hebrew",
+            "cases": [
+                [
+                    "ḏ꞉",
+                    "d"
+                ],
+                [
+                    "ĕ꞉",
+                    "꞉ĕ"
+                ],
+                [
+                    "׎",
+                    ""
+                ],
+                [
+                    "°̇",
+                    "̇°"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "HebrewVetVav": [
+        {
+            "source": "Hebrew",
+            "target": "Hebrew",
+            "cases": [
+                [
+                    "ַו",
+                    "ַב"
+                ],
+                [
+                    "בֺ",
+                    "בֹ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "HebrewnonFinalShort": [
+        {
+            "source": "Hebrew",
+            "target": "Hebrew",
+            "cases": [
+                [
+                    "ַ",
+                    "ַה"
+                ],
+                [
+                    "ָ",
+                    "ָה"
+                ],
+                [
+                    "ִ",
+                    "ִה"
+                ],
+                [
+                    "ֻ",
+                    "ֻה"
+                ],
+                [
+                    "ֵ",
+                    "ֵה"
+                ],
+                [
+                    "ךְ",
+                    "ך"
+                ],
+                [
+                    "םְ",
+                    "ם"
+                ],
+                [
+                    "ןְ",
+                    "ן"
+                ],
+                [
+                    "ףְ",
+                    "ף"
+                ],
+                [
+                    "ץְ",
+                    "ץ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "HindiMarathiRomanLoCFix": [
+        {
+            "source": "RomanLoCDevanagari",
+            "target": "RomanLoCDevanagari",
+            "cases": [
+                [
+                    "ṣ",
+                    "sh"
+                ],
+                [
+                    "ḻ",
+                    "ḷ"
+                ],
+                [
+                    "l̳",
+                    "l̤"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "IASTPali": [
+        {
+            "source": "IASTPali",
+            "target": "IASTPali",
+            "cases": [
+                [
+                    "l̤",
+                    "ḷ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "IPARemoveCross": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "×",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ISO233Target": [
+        {
+            "source": "ISO",
+            "target": "ISO",
+            "cases": [
+                [
+                    "j",
+                    "ǧ"
+                ],
+                [
+                    "g",
+                    "ǧ"
+                ],
+                [
+                    "ḧ",
+                    "ẗ"
+                ],
+                [
+                    "ḫ",
+                    "ẖ"
+                ],
+                [
+                    "a̮",
+                    "ỳ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ISO259Target": [
+        {
+            "source": "ISO",
+            "target": "ISO",
+            "cases": [
+                [
+                    "b",
+                    "ḃ"
+                ],
+                [
+                    "p",
+                    "ṗ"
+                ],
+                [
+                    "k",
+                    "k̇"
+                ],
+                [
+                    "ḵ",
+                    "k"
+                ],
+                [
+                    "v",
+                    "b"
+                ],
+                [
+                    "°̇",
+                    "̇°"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "JavaneseRomanLoCFix": [
+        {
+            "source": "JavaneseRomanLoC",
+            "target": "JavaneseRomanLoC",
+            "cases": [
+                [
+                    "ng̈",
+                    "‘"
+                ],
+                [
+                    "ḧ",
+                    "h"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "JavaneseSimplified": [
+        {
+            "source": "RomanLoCJavanese",
+            "target": "RomanLoCJavanese",
+            "cases": [
+                [
+                    "jny",
+                    "ny"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "KaithiRetainSpace": [
+        {
+            "source": "Kaithi",
+            "target": "Kaithi",
+            "cases": [
+                [
+                    "⸱",
+                    " "
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "KhandaTaRomanLoC": [
+        {
+            "source": "RomanLoC",
+            "target": "RomanLoC",
+            "cases": [
+                [
+                    "ṯ",
+                    "ৎ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "KhmerLoCRomanLoCSource": [
+        {
+            "source": "KhmerLoCRomanLoC",
+            "target": "KhmerLoCRomanLoC",
+            "cases": [
+                [
+                    "់x",
+                    "x់"
+                ],
+                [
+                    "ក៑៎",
+                    "ក៎"
+                ],
+                [
+                    "ង៉ិ",
+                    "ងុិ"
+                ],
+                [
+                    "ស៊ិ",
+                    "សុិ"
+                ],
+                [
+                    "៑",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "KhmerLoCRomanLoCTarget": [
+        {
+            "source": "KhmerLoCRomanLoC",
+            "target": "KhmerLoCRomanLoC",
+            "cases": [
+                [
+                    "ʹa",
+                    "a"
+                ],
+                [
+                    "oḥ",
+                    "oaḥ"
+                ],
+                [
+                    "  ",
+                    " "
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "KhojkiRRI": [
+        {
+            "source": "Khojki",
+            "target": "Khojki",
+            "cases": [
+                [
+                    "𑉁",
+                    "𑈵𑈦𑈭"
+                ],
+                [
+                    "𑉀",
+                    "𑈂"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "KhojkiRetainSpace": [
+        {
+            "source": "Khojki",
+            "target": "Khojki",
+            "cases": [
+                [
+                    "𑈺",
+                    " "
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "LatnInitialVowels": [
+        {
+            "source": "Latn",
+            "target": "Latn",
+            "cases": [
+                [
+                    "â",
+                    "a"
+                ],
+                [
+                    "ā̂",
+                    "ā"
+                ],
+                [
+                    "î",
+                    "i"
+                ],
+                [
+                    "ī̂",
+                    "ī"
+                ],
+                [
+                    "û",
+                    "u"
+                ],
+                [
+                    "̂",
+                    ""
+                ],
+                [
+                    "̽",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "LimbuDevanagariConvention": [
+        {
+            "source": "DevanagariLimbu",
+            "target": "DevanagariLimbu",
+            "cases": [
+                [
+                    "ऎ",
+                    "ए़"
+                ],
+                [
+                    "ऒ",
+                    "ओ़"
+                ],
+                [
+                    "ॆ",
+                    "े़"
+                ],
+                [
+                    "ॊ",
+                    "ो़"
+                ],
+                [
+                    "꞉",
+                    "ः"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "LimburemoveHistorical": [
+        {
+            "source": "Limbu",
+            "target": "Limbu",
+            "cases": [
+                [
+                    "ᤉ",
+                    "ᤈ"
+                ],
+                [
+                    "ᤊ",
+                    "ᤏ"
+                ],
+                [
+                    "ᤚ",
+                    "ᤙ"
+                ],
+                [
+                    "ᤲ",
+                    "ᤱ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "LoCMarc8": [
+        {
+            "source": "RomanLoC",
+            "target": "RomanLoC",
+            "cases": [
+                [
+                    "˚",
+                    "˙"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "MalayalamAnusvaraNasal": [
+        {
+            "source": "Malayalam",
+            "target": "Malayalam",
+            "cases": [
+                [
+                    "ംക",
+                    "ങ്ക"
+                ],
+                [
+                    "ംച",
+                    "ഞ്ച"
+                ],
+                [
+                    "ംട",
+                    "ണ്ട"
+                ],
+                [
+                    "ംത",
+                    "ന്ത"
+                ],
+                [
+                    "ംപ",
+                    "മ്പ"
+                ],
+                [
+                    "അങ്ഖ",
+                    "അംഖ"
+                ],
+                [
+                    "അമ്ഫ",
+                    "അംഫ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "MalayalamChillu": [
+        {
+            "source": "Malayalam",
+            "target": "Malayalam",
+            "cases": [
+                [
+                    "അണ്",
+                    "അൺ"
+                ],
+                [
+                    "അന്",
+                    "അൻ"
+                ],
+                [
+                    "അര്",
+                    "അർ"
+                ],
+                [
+                    "അല്",
+                    "അൽ"
+                ],
+                [
+                    "അള്",
+                    "അൾ"
+                ],
+                [
+                    "അണ്ട്ട",
+                    "അൺട്ട"
+                ],
+                [
+                    "അന്ത്ത",
+                    "അൻത്ത"
+                ],
+                [
+                    "അര്യ്യ",
+                    "അർയ്യ"
+                ],
+                [
+                    "അല്പ്പ",
+                    "അൽപ്പ"
+                ],
+                [
+                    "അള്ള്ള",
+                    "അൾള്ള"
+                ],
+                [
+                    "ˍ",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "MalayalamNTA": [
+        {
+            "source": "Malayalam",
+            "target": "Malayalam",
+            "cases": [
+                [
+                    "nṟ",
+                    "nṯ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "MalayalamRomanLoCFix": [
+        {
+            "source": "Malayalam",
+            "target": "Malayalam",
+            "cases": [
+                [
+                    "ṟṟ",
+                    "ṯṯ"
+                ],
+                [
+                    "ŭ",
+                    "ȧ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "MalayalamTTNTA": [
+        {
+            "source": "IASTMalayalam",
+            "target": "IASTMalayalam",
+            "cases": [
+                [
+                    "ṟṟ",
+                    "ṯṯ"
+                ],
+                [
+                    "nṟ",
+                    "nṯ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "MalayalamremoveHistorical": [
+        {
+            "source": "Malayalam",
+            "target": "Malayalam",
+            "cases": [
+                [
+                    "ഩ",
+                    "ന"
+                ],
+                [
+                    "ന‍്",
+                    "ന്"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "MedievalTamilOrthography": [
+        {
+            "source": "Tamil",
+            "target": "Tamil",
+            "cases": [
+                [
+                    "எ",
+                    "எ்"
+                ],
+                [
+                    "ெ",
+                    "ெ்"
+                ],
+                [
+                    "ஒ",
+                    "ஒ்"
+                ],
+                [
+                    "ொ",
+                    "ெ்ா"
+                ],
+                [
+                    "ஏ",
+                    "எ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "MeeteiMayekremoveHistorical": [
+        {
+            "source": "MeeteiMayek",
+            "target": "MeeteiMayek",
+            "cases": [
+                [
+                    "ꫢ",
+                    "ꯆ"
+                ],
+                [
+                    "ꫣ",
+                    "ꯅ"
+                ],
+                [
+                    "ꫤ",
+                    "ꯇ"
+                ],
+                [
+                    "ꫥ",
+                    "ꯊ"
+                ],
+                [
+                    "ꫦ",
+                    "ꯗ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ModiRemoveLong": [
+        {
+            "source": "Modi",
+            "target": "Modi",
+            "cases": [
+                [
+                    "𑘂",
+                    "𑘃"
+                ],
+                [
+                    "𑘅",
+                    "𑘄"
+                ],
+                [
+                    "𑘱",
+                    "𑘲"
+                ],
+                [
+                    "𑘴",
+                    "𑘳"
+                ],
+                [
+                    "𑘆",
+                    "𑘨𑘲"
+                ],
+                [
+                    "𑘇",
+                    "𑘨𑘲"
+                ],
+                [
+                    "𑘈",
+                    "𑘩𑘲"
+                ],
+                [
+                    "𑘉",
+                    "𑘩𑘲"
+                ],
+                [
+                    "𑘵",
+                    "𑘿𑘨𑘲"
+                ],
+                [
+                    "𑘶",
+                    "𑘿𑘨𑘲"
+                ],
+                [
+                    "𑘷",
+                    "𑘿𑘩𑘲"
+                ],
+                [
+                    "𑘸",
+                    "𑘿𑘩𑘲"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "MongolianSyllabize": [
+        {
+            "source": "Mongolian",
+            "target": "Mongolian",
+            "cases": [
+                [
+                    "ᠷᠠ",
+                    "ᠷᠠ᠋ "
+                ],
+                [
+                    "᠎ᠠᢒ",
+                    "᠎ᠠ᠋ ᢒ"
+                ],
+                [
+                    "ᠠ ",
+                    "ᠠ᠋  "
+                ],
+                [
+                    "ᠣᠸᠠ᠋",
+                    "ᠣᠸᠠ ᠋"
+                ],
+                [
+                    "ᠣᠸᠸᠠ᠋",
+                    "ᠣᠸᠸᠠ ᠋"
+                ],
+                [
+                    " ᠎",
+                    "᠎"
+                ],
+                [
+                    " ​",
+                    ""
+                ],
+                [
+                    " ᢁ",
+                    "ᢁ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "MultaniAbjad": [
+        {
+            "source": "Multani",
+            "target": "Multani",
+            "cases": [
+                [
+                    "𑊄𑊀𑊄",
+                    "𑊄𑊄"
+                ],
+                [
+                    "𑊢𑊡𑊛𑊢𑊌𑊏𑊛𑊢𑊠𑊖𑊡𑊃",
+                    "𑊢𑊡𑊛𑊢𑊌𑊏𑊛𑊢𑊠𑊖𑊡"
+                ],
+                [
+                    "𑊀𑊄𑊀",
+                    "𑊀𑊄"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "NewaMurmurConsonants": [
+        {
+            "source": "Newa",
+            "target": "Newa",
+            "cases": [
+                [
+                    "𑐴𑑂𑐒",
+                    "𑐓"
+                ],
+                [
+                    "𑐴𑑂𑐘",
+                    "𑐙"
+                ],
+                [
+                    "𑐴𑑂𑐣",
+                    "𑐤"
+                ],
+                [
+                    "𑐴𑑂𑐩",
+                    "𑐪"
+                ],
+                [
+                    "𑐴𑑂𑐬",
+                    "𑐭"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "OriyaVa": [
+        {
+            "source": "Oriya",
+            "target": "Oriya",
+            "cases": [
+                [
+                    "ୱ",
+                    "ବ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "OriyaVaAlt": [
+        {
+            "source": "Oriya",
+            "target": "Oriya",
+            "cases": [
+                [
+                    "ୱ",
+                    "ବ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "PersianDMGTarget": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "ḏ",
+                    "ẕ"
+                ],
+                [
+                    "ḍ",
+                    "ż"
+                ],
+                [
+                    "ṯ",
+                    "s̱"
+                ],
+                [
+                    "j",
+                    "ǧ"
+                ],
+                [
+                    "ˀ",
+                    "ʼ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "RemoveDiacritics": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "ʼ",
+                    ""
+                ],
+                [
+                    "ˇ",
+                    ""
+                ],
+                [
+                    "ˆ",
+                    ""
+                ],
+                [
+                    "˘",
+                    ""
+                ],
+                [
+                    "·",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "RemoveDiacriticsTamil": [
+        {
+            "source": "Tamil",
+            "target": "Tamil",
+            "cases": [
+                [
+                    "ˇ",
+                    ""
+                ],
+                [
+                    "ˆ",
+                    ""
+                ],
+                [
+                    "˘",
+                    ""
+                ],
+                [
+                    "·",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "RetainGujaratiDanda": [
+        {
+            "source": "Gujarati",
+            "target": "Gujarati",
+            "cases": [
+                [
+                    "..",
+                    "॥"
+                ],
+                [
+                    ".",
+                    "।"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "RetainKannadaDanda": [
+        {
+            "source": "Kannada",
+            "target": "Kannada",
+            "cases": [
+                [
+                    "..",
+                    "॥"
+                ],
+                [
+                    ".",
+                    "।"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "RetainMalayalamDanda": [
+        {
+            "source": "Malayalam",
+            "target": "Malayalam",
+            "cases": [
+                [
+                    "..",
+                    "॥"
+                ],
+                [
+                    ".",
+                    "।"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "RetainTamilDanda": [
+        {
+            "source": "Tamil",
+            "target": "Tamil",
+            "cases": [
+                [
+                    "..",
+                    "॥"
+                ],
+                [
+                    ".",
+                    "।"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "RetainTeluguDanda": [
+        {
+            "source": "Telugu",
+            "target": "Telugu",
+            "cases": [
+                [
+                    "..",
+                    "॥"
+                ],
+                [
+                    ".",
+                    "।"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "RomanLoCChandrabindu": [
+        {
+            "source": "RomanLoC",
+            "target": "RomanLoC",
+            "cases": [
+                [
+                    "m̐k",
+                    "n̐k"
+                ],
+                [
+                    "m̐c",
+                    "n̐c"
+                ],
+                [
+                    "m̐ṭ",
+                    "n̐ṭ"
+                ],
+                [
+                    "m̐t",
+                    "n̐t"
+                ],
+                [
+                    "m̐p",
+                    "n̐p"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "RomanLoCLaUnderscoreDoubleDot": [
+        {
+            "source": "RomanLoC",
+            "target": "RomanLoC",
+            "cases": [
+                [
+                    "ḻ",
+                    "l̤"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "RomanLoCSasha": [
+        {
+            "source": "RomanLoC",
+            "target": "RomanLoC",
+            "cases": [
+                [
+                    "ṣ",
+                    "sh"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "RomanLoCVaWa": [
+        {
+            "source": "RomanLoC",
+            "target": "RomanLoC",
+            "cases": [
+                [
+                    "v",
+                    "w"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SaurashtraHaru": [
+        {
+            "source": "Saurashtra",
+            "target": "Saurashtra",
+            "cases": [
+                [
+                    "ꢥ꣄ꢲ",
+                    "ꢥꢴ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SaurastraHaaruColon": [
+        {
+            "source": "TamilSaurashtra",
+            "target": "TamilSaurashtra",
+            "cases": [
+                [
+                    "்ஞ˂",
+                    "்ஞ"
+                ],
+                [
+                    ":்",
+                    "்:"
+                ],
+                [
+                    " ன",
+                    " ந"
+                ],
+                [
+                    "ன",
+                    "ந"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ShanLoCRomanLoCSource": [
+        {
+            "source": "ShanLoCRomanLoC",
+            "target": "ShanLoCRomanLoC",
+            "cases": [
+                [
+                    "်ယ",
+                    "ျ"
+                ],
+                [
+                    "်ရ",
+                    "ြ"
+                ],
+                [
+                    "်ဝ",
+                    "ႂ"
+                ],
+                [
+                    "ʼ",
+                    ""
+                ],
+                [
+                    "’",
+                    ""
+                ],
+                [
+                    "ʻ",
+                    ""
+                ],
+                [
+                    "ͮ",
+                    "ႂ်"
+                ],
+                [
+                    "ၵႃၵ",
+                    "ၵၢၵ"
+                ],
+                [
+                    "ၵႄၵ",
+                    "ၵႅၵ"
+                ],
+                [
+                    "ၵေၵ",
+                    "ၵဵၵ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ShanLoCRomanLoCTarget": [
+        {
+            "source": "ShanLoCRomanLoC",
+            "target": "ShanLoCRomanLoC",
+            "cases": [
+                [
+                    "ʻ̐",
+                    "ʻ"
+                ],
+                [
+                    "ōʻ",
+                    "oʻ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SinhalaChandrbinduAnusvara": [
+        {
+            "source": "Sinhala",
+            "target": "Sinhala",
+            "cases": [
+                [
+                    "ඁ",
+                    "ං"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SinhalaDefaultConjuncts": [
+        {
+            "source": "Sinhala",
+            "target": "Sinhala",
+            "cases": [
+                [
+                    "්ය",
+                    "්‍ය"
+                ],
+                [
+                    "ර්‍ය",
+                    "ර්ය"
+                ],
+                [
+                    "ජ්ඤ",
+                    "ඥ"
+                ],
+                [
+                    "ක්ෂ",
+                    "ක්‍ෂ"
+                ],
+                [
+                    "ර‍්‍ය",
+                    "ර්ය"
+                ],
+                [
+                    "ර්‍ර",
+                    "ර්ර"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SinhalaSannakaNasalization": [
+        {
+            "source": "Sinhala",
+            "target": "Sinhala",
+            "cases": [
+                [
+                    "n̆k",
+                    "ṅk"
+                ],
+                [
+                    "n̆c",
+                    "ñc"
+                ],
+                [
+                    "n̆ṭ",
+                    "ṇṭ"
+                ],
+                [
+                    "n̆t",
+                    "nt"
+                ],
+                [
+                    "m̆p",
+                    "mp"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SogdReshAyin": [
+        {
+            "source": "Sogd",
+            "target": "Sogd",
+            "cases": [
+                [
+                    "𐼽",
+                    "𐽀"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SogoReshAyinDaleth": [
+        {
+            "source": "Sogo",
+            "target": "Sogo",
+            "cases": [
+                [
+                    "𐼓",
+                    "𐼘"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SoyomboSyllabize": [
+        {
+            "source": "Soyombo",
+            "target": "Soyombo",
+            "cases": [
+                [
+                    "𑩰",
+                    "𑩰 "
+                ],
+                [
+                    " 𑪙",
+                    " "
+                ],
+                [
+                    " 𑪖ʽ",
+                    "𑪖 "
+                ],
+                [
+                    "𑪖",
+                    "𑪖 "
+                ],
+                [
+                    " 𑪘",
+                    "𑪘"
+                ],
+                [
+                    "𑪊",
+                    "𑩞 "
+                ],
+                [
+                    " 𑪊",
+                    " 𑩞 "
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "SundaneseRemoveHistoric": [
+        {
+            "source": "Sundanese",
+            "target": "Sundanese",
+            "cases": [
+                [
+                    "᮪ᮻ",
+                    "ᮢᮩ"
+                ],
+                [
+                    "᮪ᮼ",
+                    "ᮣᮩ"
+                ],
+                [
+                    "ᮻ",
+                    "ᮛᮩ"
+                ],
+                [
+                    "ᮼ",
+                    "ᮜᮩ"
+                ],
+                [
+                    "ᮽ",
+                    "ᮘ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TaiThamHighNga": [
+        {
+            "source": "TaiTham",
+            "target": "TaiTham",
+            "cases": [
+                [
+                    "ᩘ",
+                    "ᩙ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TaiThamO": [
+        {
+            "source": "TaiTham",
+            "target": "TaiTham",
+            "cases": [
+                [
+                    "ᩮᩣ",
+                    "ᩰ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TakriArchaicKha": [
+        {
+            "source": "Takri",
+            "target": "Takri",
+            "cases": [
+                [
+                    "𑚸",
+                    "𑚋"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TakriRemoveGemination": [
+        {
+            "source": "Takri",
+            "target": "Takri",
+            "cases": [
+                [
+                    "𑚙𑚶𑚙",
+                    "𑚙"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TamilExtendedAnusvara": [
+        {
+            "source": "TamilExtended",
+            "target": "TamilExtended",
+            "cases": [
+                [
+                    "ം",
+                    "മ്‌"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TamilNaToNNa": [
+        {
+            "source": "Tamil",
+            "target": "Tamil",
+            "cases": [
+                [
+                    "அந",
+                    "அன"
+                ],
+                [
+                    "²ந",
+                    "²ன"
+                ],
+                [
+                    "ஶ்ரீன",
+                    "ஶ்ரீந"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TamilSHADisable": [
+        {
+            "source": "Tamil",
+            "target": "Tamil",
+            "cases": [
+                [
+                    "ஶ",
+                    "ஸ²"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TamilpredictDentaNa": [
+        {
+            "source": "Tamil",
+            "target": "Tamil",
+            "cases": [
+                [
+                    "னக்²",
+                    "நக்²"
+                ],
+                [
+                    "னகா²",
+                    "நகா²"
+                ],
+                [
+                    "னகி²",
+                    "நகி²"
+                ],
+                [
+                    "னகீ²",
+                    "நகீ²"
+                ],
+                [
+                    "னகு²",
+                    "நகு²"
+                ],
+                [
+                    "னக²",
+                    "நக²"
+                ],
+                [
+                    "னக³ர",
+                    "நக³ர"
+                ],
+                [
+                    "னகுல",
+                    "நகுல"
+                ],
+                [
+                    "னக்³ன",
+                    "நக்³ன"
+                ],
+                [
+                    "னக்ஷத்ர",
+                    "நக்ஷத்ர"
+                ],
+                [
+                    "²நாம்",
+                    "²னாம்"
+                ],
+                [
+                    "ன்ந",
+                    "ன்ன"
+                ],
+                [
+                    "னாம்ன",
+                    "நாம்ன"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TamilpredictDentaNaExtended": [
+        {
+            "source": "Tamil",
+            "target": "Tamil",
+            "cases": [
+                [
+                    "ഩഖ",
+                    "നഖ"
+                ],
+                [
+                    "ഩഗര",
+                    "നഗര"
+                ],
+                [
+                    "ഩകുല",
+                    "നകുല"
+                ],
+                [
+                    "ഩഗ്‌ഩ",
+                    "ഩഗ്ഩ"
+                ],
+                [
+                    "ഩക്ഷത്‌ര",
+                    "ഩക്ഷത്ര"
+                ],
+                [
+                    "നാമ்",
+                    "ഩാമ்"
+                ],
+                [
+                    "ഩ്‌ന",
+                    "ഩ്ന"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TeluguReph": [
+        {
+            "source": "Telugu",
+            "target": "Telugu",
+            "cases": [
+                [
+                    "ర్వ",
+                    "ర్‍వ"
+                ],
+                [
+                    "్ర్‍",
+                    "్ర్"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ThaanaRemoveHistorical": [
+        {
+            "source": "Thaana",
+            "target": "Thaana",
+            "cases": [
+                [
+                    "ޱ",
+                    "ނ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ThaiVisargaSaraA": [
+        {
+            "source": "Thai",
+            "target": "Thai",
+            "cases": [
+                [
+                    "ห์",
+                    "ะ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ThamLoCRomanLoCSource": [
+        {
+            "source": "ThamLoCRomanLoC",
+            "target": "ThamLoCRomanLoC",
+            "cases": [
+                [
+                    "᩿",
+                    "᩠"
+                ],
+                [
+                    "ᩱᨿ᩺",
+                    "ᩱ᩠ᨿ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ThamTallADisable": [
+        {
+            "source": "TaiTham",
+            "target": "TaiTham",
+            "cases": [
+                [
+                    "ᩤ",
+                    "ᩣ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TibetanLoCRomanLoCFix": [
+        {
+            "source": "TibetanLoCRomanLoC",
+            "target": "TibetanLoCRomanLoC",
+            "cases": [
+                [
+                    "tʹ",
+                    "t"
+                ],
+                [
+                    "nʹ",
+                    "n"
+                ],
+                [
+                    "j_h",
+                    "jh"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TibetanRemoveBa": [
+        {
+            "source": "Tibetan",
+            "target": "Tibetan",
+            "cases": [
+                [
+                    "ཪྺ",
+                    "རྦ"
+                ],
+                [
+                    "བྺ",
+                    "བྦ"
+                ],
+                [
+                    "ྦྺ",
+                    "ྦྦ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TibetanRemoveVirama": [
+        {
+            "source": "Tibetan",
+            "target": "Tibetan",
+            "cases": [
+                [
+                    "྄",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "TibetanSyllabize": [
+        {
+            "source": "Tibetan",
+            "target": "Tibetan",
+            "cases": [
+                [
+                    "ཱ",
+                    "ཱ་"
+                ],
+                [
+                    "པ",
+                    "པ་"
+                ],
+                [
+                    "ྲ",
+                    "ྲ་"
+                ],
+                [
+                    "་྄",
+                    "་"
+                ],
+                [
+                    "་ྐ",
+                    "ྐ་"
+                ],
+                [
+                    "་ྃ",
+                    "ྃ་"
+                ],
+                [
+                    "ཾ",
+                    "ཾ་"
+                ],
+                [
+                    "་་",
+                    "་"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "WarangCitiModernOrthogaphy": [
+        {
+            "source": "WarangCiti",
+            "target": "WarangCiti",
+            "cases": [
+                [
+                    "𑣔‍𑣙",
+                    "𑣔"
+                ],
+                [
+                    "𑣝",
+                    "𑣞"
+                ],
+                [
+                    "‍",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "arabChaSa": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "چ",
+                    "س"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "arabPaFa": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "پ",
+                    "ف"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "arabicRemoveAdditionsPhonetic": [
+        {
+            "source": "Arab",
+            "target": "Arab",
+            "cases": [
+                [
+                    "پ",
+                    "ب"
+                ],
+                [
+                    "ڤ",
+                    "ف"
+                ],
+                [
+                    "ڨ",
+                    "غ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "arabizeLatn": [
+        {
+            "source": "Latn",
+            "target": "Latn",
+            "cases": [
+                [
+                    "ʾʾ",
+                    "aā"
+                ],
+                [
+                    "ʾā",
+                    "aā"
+                ],
+                [
+                    "ʾ",
+                    "a"
+                ],
+                [
+                    "a̮",
+                    "ā"
+                ],
+                [
+                    "ā̮̂",
+                    "ʼā"
+                ],
+                [
+                    "ˀ",
+                    "ʼ"
+                ],
+                [
+                    "ˀ",
+                    "ʼ"
+                ],
+                [
+                    "ʼʾ",
+                    "ʼa"
+                ],
+                [
+                    "̽",
+                    ""
+                ],
+                [
+                    "āiⁿ",
+                    "iⁿ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "default": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "˂",
+                    ""
+                ],
+                [
+                    "׍",
+                    ""
+                ],
+                [
+                    "ʻʻ",
+                    ""
+                ],
+                [
+                    "׌",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "gainGimel": [
+        {
+            "source": "Hebr-Ar",
+            "target": "Hebr-Ar",
+            "cases": [
+                [
+                    "ק",
+                    "ק̈"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "historicChillu": [
+        {
+            "source": "Malayalam",
+            "target": "Malayalam",
+            "cases": [
+                [
+                    "മ്",
+                    "ൔ"
+                ],
+                [
+                    "യ്",
+                    "ൕ"
+                ],
+                [
+                    "ഴ്",
+                    "ൖ"
+                ],
+                [
+                    "ക്",
+                    "ൿ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "inherentAO": [
+        {
+            "source": "IASTBengali",
+            "target": "IASTBengali",
+            "cases": [
+                [
+                    "a",
+                    "ô"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "khandatabatova": [
+        {
+            "source": "Bengali",
+            "target": "Bengali",
+            "cases": [
+                [
+                    "ৎব",
+                    "ত্ব"
+                ],
+                [
+                    "ৎ‌ব",
+                    "ত্ব"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "mDotBelowToAbove": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "ṁ",
+                    "ṃ"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ranjanalantsa": [
+        {
+            "source": "Ranjana",
+            "target": "Ranjana",
+            "cases": [
+                [
+                    "་",
+                    " "
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "ranjanawartu": [
+        {
+            "source": "Ranjana",
+            "target": "Ranjana",
+            "cases": [
+                [
+                    "་",
+                    "࿎ "
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "removeDiacriticsArabic": [
+        {
+            "source": "Arab",
+            "target": "Arab",
+            "cases": [
+                [
+                    "ْ",
+                    ""
+                ],
+                [
+                    "َ",
+                    ""
+                ],
+                [
+                    "ِ",
+                    ""
+                ],
+                [
+                    "ُ",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "removeMajliyana": [
+        {
+            "source": "Syrj",
+            "target": "Syrj",
+            "cases": [
+                [
+                    "̰",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "removeNikkud": [
+        {
+            "source": "Hebrew",
+            "target": "Hebrew",
+            "cases": [
+                [
+                    "ַ",
+                    ""
+                ],
+                [
+                    "ָ",
+                    ""
+                ],
+                [
+                    "ִ",
+                    ""
+                ],
+                [
+                    "ִי",
+                    "י"
+                ],
+                [
+                    "ֻ",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "removeQussaya": [
+        {
+            "source": "Syrj",
+            "target": "Syrj",
+            "cases": [
+                [
+                    "݂",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "removeRukkaka": [
+        {
+            "source": "Syrj",
+            "target": "Syrj",
+            "cases": [
+                [
+                    "݁",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "removeSemiticLetters": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "ṣ",
+                    "s"
+                ],
+                [
+                    "ʿ",
+                    "ʾ"
+                ],
+                [
+                    "w",
+                    "v"
+                ],
+                [
+                    "ẓ",
+                    "z"
+                ],
+                [
+                    "ḏ",
+                    "z"
+                ],
+                [
+                    "ḍ",
+                    "z"
+                ],
+                [
+                    "ḥ",
+                    "h"
+                ],
+                [
+                    "ṭ",
+                    "t"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "removeSukunEnd": [
+        {
+            "source": "Arab",
+            "target": "Arab",
+            "cases": [
+                [
+                    "ْ۔",
+                    "۔"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "removeVowelsSyriac": [
+        {
+            "source": "Syrj",
+            "target": "Syrj",
+            "cases": [
+                [
+                    "ܲ",
+                    ""
+                ],
+                [
+                    "ܰ",
+                    ""
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "swapEeItrans": [
+        {
+            "source": "Itrans",
+            "target": "Itrans",
+            "cases": [
+                [
+                    "^e",
+                    "e"
+                ],
+                [
+                    "e",
+                    "E"
+                ],
+                [
+                    "X@X@",
+                    "e"
+                ],
+                [
+                    "^o",
+                    "o"
+                ],
+                [
+                    "o",
+                    "O"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "syricizeLatn": [
+        {
+            "source": "Latn",
+            "target": "Latn",
+            "cases": [
+                [
+                    "â",
+                    "ʾa"
+                ],
+                [
+                    "ā̂",
+                    "ʾā"
+                ],
+                [
+                    "ê",
+                    "ʾe"
+                ],
+                [
+                    "ē̂",
+                    "ʾē"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "tavThreedot": [
+        {
+            "source": "Hebr-Ar",
+            "target": "Hebr-Ar",
+            "cases": [
+                [
+                    "תׄ",
+                    "ת֒"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "tavTwodot": [
+        {
+            "source": "Hebr-Ar",
+            "target": "Hebr-Ar",
+            "cases": [
+                [
+                    "ת",
+                    "ת̈"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "tokushuon": [
+        {
+            "source": "Devanagari",
+            "target": "Devanagari",
+            "cases": [
+                [
+                    "zi",
+                    "zuxi"
+                ],
+                [
+                    "si",
+                    "suxi"
+                ],
+                [
+                    "yi",
+                    "ixi"
+                ],
+                [
+                    "fy",
+                    "fux"
+                ],
+                [
+                    "nye",
+                    "nixe"
+                ],
+                [
+                    "hu",
+                    "hoxu"
+                ],
+                [
+                    "hye",
+                    "hixe"
+                ]
+            ],
+            "auto": true
+        }
+    ],
+    "urduizeLatn": [
+        {
+            "source": "Latn",
+            "target": "Latn",
+            "cases": [
+                [
+                    "ʾʾ",
+                    "aā"
+                ],
+                [
+                    "ʾā",
+                    "aā"
+                ],
+                [
+                    "ʾ",
+                    "a"
+                ],
+                [
+                    "ˀ",
+                    "ʾ"
+                ],
+                [
+                    "a̮",
+                    "ā"
+                ],
+                [
+                    "ā̮̂",
+                    "ʼā"
+                ],
+                [
+                    "̽",
+                    ""
+                ],
+                [
+                    "āiⁿ",
+                    "iⁿ"
+                ]
+            ],
+            "auto": true
+        }
     ]
 }
