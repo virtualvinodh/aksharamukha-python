@@ -712,10 +712,17 @@ def api_run_all_tests():
         returns the original input (mirrors testsuite.py's
         TestConversionSampleRoundtrips, minus the Bengali exclusion, which is
         applied here too)
-    Deliberately NOT covered: the 32 multi-arg Direct Options - each has its
-    own hand-discovered calling convention (extra positional args beyond
-    text), same reason they're excluded from every other bulk feature in
-    this workbench.
+      - direct options (test_direct_options.json): calls the bare
+        PostProcess/PreProcess function directly with its recorded args -
+        same call shape test_direct_calls.py asserts, and (for the 3
+        custom_call entries whose first parameter isn't the text to
+        transform) the same CUSTOM_CALLS lambda promote_direct_call_options.py
+        already defines. This used to be skipped entirely with the reasoning
+        "each has its own hand-discovered calling convention" - true when
+        the file only held ~32 genuinely multi-arg entries, no longer true
+        now that it holds 361 (most single-arg or one-extra-arg, args
+        already recorded per entry) - skipping all of them left the button
+        blind to ~330 real options.
 
     Every case checked comes back as one entry in `results` (so the UI can
     show a tick/cross per row) - but a passing entry only carries its
@@ -723,7 +730,9 @@ def api_run_all_tests():
     since there's nothing to diff and this runs into the thousands of cases;
     a failing entry carries the full detail needed to render a diff."""
     sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..')))
-    from aksharamukha import transliterate, GeneralMap as GM  # noqa: E402
+    from aksharamukha import transliterate, GeneralMap as GM, PostProcess, PreProcess  # noqa: E402
+    sys.path.insert(0, os.path.dirname(HERE))
+    import promote_direct_call_options as pdc  # noqa: E402
 
     reversible = set(GM.ReversibleScripts) | set(GM.RomanReversible)
     summary = {}
@@ -820,6 +829,34 @@ def api_run_all_tests():
                     'error': res.get('error', '') or back.get('error', '')})
     summary['conversion'] = {'total': fanout_total, 'mismatches': fanout_bad}
     summary['roundtrip'] = {'total': rt_total, 'mismatches': rt_bad}
+
+    # --- direct options: bare PostProcess/PreProcess function call ---
+    direct = _load_json(paths['direct_path'])
+    total = 0
+    bad = 0
+    for key, entry in direct.items():
+        kind = entry['kind']
+        module = PostProcess if kind == 'post' else PreProcess
+        args_str = json.dumps(entry.get('args', []), ensure_ascii=False)
+        for input_text, expected in entry.get('cases', []):
+            total += 1
+            try:
+                if entry.get('custom_call'):
+                    fn = pdc.CUSTOM_CALLS[(kind, entry['name'])]
+                    actual = fn(input_text)
+                else:
+                    fn = getattr(module, entry['name'])
+                    actual = fn(input_text, *entry.get('args', []))
+                ok, err = True, ''
+            except Exception as e:  # noqa: BLE001
+                actual, ok, err = '', False, '%s: %s' % (type(e).__name__, str(e)[:200])
+            passed = ok and actual == expected
+            if not passed:
+                bad += 1
+            record(passed,
+                   {'category': 'direct', 'option_name': entry['name'], 'args': args_str, 'input': input_text},
+                   {'expected': expected, 'actual': actual, 'error': err})
+    summary['direct'] = {'total': total, 'mismatches': bad}
 
     return jsonify({'ok': True, 'summary': summary, 'results': results})
 
