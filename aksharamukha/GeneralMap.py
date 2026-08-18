@@ -4,7 +4,7 @@
 
 import importlib, string
 import re
-from functools import reduce
+from functools import reduce, lru_cache
 from . import FallBack as fb
 
 # Crunch Symbols
@@ -22,11 +22,18 @@ def ScriptPath(Script):
 def retCharList(charList):
     return globals()[charList]
 
-def CrunchSymbols(Part,Script):
+@lru_cache(maxsize=None)
+def _crunchSymbolsCached(Part,Script):
     ModScript = importlib.import_module(ScriptPath(Script))
     return reduce(lambda x,y : x+y,[getattr(ModScript,Var) for Var in Part])
 
-def CrunchList(List,Script):
+def CrunchSymbols(Part,Script):
+    # Part is a list (unhashable), so the cache key is built from a tuple;
+    # a copy is returned so callers can't mutate the cached result.
+    return list(_crunchSymbolsCached(tuple(Part),Script))
+
+@lru_cache(maxsize=None)
+def _crunchListCached(List,Script):
     try:
       ModScript = importlib.import_module(ScriptPath(Script))
     except:
@@ -35,6 +42,11 @@ def CrunchList(List,Script):
       return ''
 
     return getattr(ModScript,List)
+
+def CrunchList(List,Script):
+    result = _crunchListCached(List,Script)
+    # copy on the way out for the same reason as CrunchSymbols above
+    return list(result) if isinstance(result, list) else result
 
 #Introduce in all Latin Conversions
 def EscapeChar(Strng):
