@@ -317,18 +317,7 @@ def _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize):
 
     return src, tgt, txt, preoptions, postoptions, nativize
 
-def convert(src, tgt, txt, nativize, preoptions, postoptions):
-    tgtOld = ""
-
-    src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize)
-
-    ## LoC Romanizattion ends here
-    ## else convert the Loc input into the associated script and then convert it into Loc
-    ## Text (Loc) -> Burmese -> non-Burmese
-    #if src == 'BurmeseRomanLoC' and tgt != 'Burmese':
-    #    txt = convert(src, "Burmese", txt, nativize, preoptions, postoptions)
-    #    src = 'Burmese'
-
+def _resolve_semitic_iso_pivot(src, tgt, txt, preoptions, postoptions, nativize):
     ## Semitic ISO Standards
     ### same as below use intermediates to convert non-associated input/output
     if tgt in GeneralMap.semiticISO.keys():
@@ -352,6 +341,22 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
             #print('here2')
             txt = convert(src, GeneralMap.semiticISO[src], txt, nativize, preoptions, postoptions)
             src = GeneralMap.semiticISO[src]
+
+    return src, tgt, txt, preoptions, postoptions, nativize
+
+def convert(src, tgt, txt, nativize, preoptions, postoptions):
+    tgtOld = ""
+
+    src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize)
+
+    ## LoC Romanizattion ends here
+    ## else convert the Loc input into the associated script and then convert it into Loc
+    ## Text (Loc) -> Burmese -> non-Burmese
+    #if src == 'BurmeseRomanLoC' and tgt != 'Burmese':
+    #    txt = convert(src, "Burmese", txt, nativize, preoptions, postoptions)
+    #    src = 'Burmese'
+
+    src, tgt, txt, preoptions, postoptions, nativize = _resolve_semitic_iso_pivot(src, tgt, txt, preoptions, postoptions, nativize)
 
     '''if src == "Itrans" and '##' in txt:
         textNew = [[i,word] for i, word in enumerate(txt.split("##")) if (i%2 == 0)]
