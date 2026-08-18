@@ -2411,7 +2411,10 @@ def FixSoraSompeng(Strng, reverse = False):
     return Strng
 
 
-def FixRomanReadable(Strng, reverse = False):
+# FixRomanReadable and FixRomanColloquial share the same nasal-assimilation
+# algorithm; Colloquial differs only in dropping the apostrophe marker that
+# Readable keeps, and stripping underscores at the end.
+def _FixRomanReadableColloquial(Strng, reverse, colloquial):
     if not reverse:
         Strng = Strng.replace('\\n', '\uE001')
         Strng = re.sub('([aiueo])nj([aeiou])', r'\1' + 'ny' + r'\2', Strng)
@@ -2429,7 +2432,7 @@ def FixRomanReadable(Strng, reverse = False):
         Strng = Strng.replace("Mb", "mb")
         Strng = Strng.replace("Mp", "mp")
 
-        Strng = Strng.replace("M", 'm\u034F\'')
+        Strng = Strng.replace("M", 'm\u034F' if colloquial else 'm\u034F\'')
 
         Strng = Strng.replace("ngk", "nk")
         Strng = Strng.replace("ngg", "ng")
@@ -2439,45 +2442,19 @@ def FixRomanReadable(Strng, reverse = False):
         Strng = Strng.replace("jnj", "jny")
 
         Strng = Strng.replace('\uE001', '\\n')
+
+        if colloquial:
+            Strng = Strng.replace('\'', '').replace("_", "")
     else:
         pass
 
     return Strng
+
+def FixRomanReadable(Strng, reverse = False):
+    return _FixRomanReadableColloquial(Strng, reverse, colloquial=False)
 
 def FixRomanColloquial(Strng, reverse = False):
-    if not reverse:
-        Strng = Strng.replace('\\n', '\uE001')
-        Strng = re.sub('([aiueo])nj([aeiou])', r'\1' + 'ny' + r'\2', Strng)
-        Strng = re.sub('(\W)nj([aeiou])', r'\1' + 'ny' + r'\2', Strng)
-        Strng = re.sub('^nj([aeiou])', 'ny' + r'\1', Strng)
-
-        Strng = Strng.replace("njnj", "nny")
-
-        Strng = Strng.replace("Mk", "ngk")
-        Strng = Strng.replace("Mg", "ngg")
-        Strng = Strng.replace("Mc", "njc")
-        Strng = Strng.replace("Mj", "njj")
-        Strng = Strng.replace("Md", "nd")
-        Strng = Strng.replace("Mt", "nt")
-        Strng = Strng.replace("Mb", "mb")
-        Strng = Strng.replace("Mp", "mp")
-
-        Strng = Strng.replace("M", 'm\u034F')
-
-        Strng = Strng.replace("ngk", "nk")
-        Strng = Strng.replace("ngg", "ng")
-        Strng = Strng.replace("njc", "nc")
-        Strng = Strng.replace("njj", "nj")
-
-        Strng = Strng.replace("jnj", "jny")
-
-        Strng = Strng.replace('\uE001', '\\n')
-
-        Strng = Strng.replace('\'', '').replace("_", "")
-    else:
-        pass
-
-    return Strng
+    return _FixRomanReadableColloquial(Strng, reverse, colloquial=True)
 
 
 def FixWarangCiti(Strng, reverse = False):
