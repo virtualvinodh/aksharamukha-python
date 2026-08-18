@@ -2,7 +2,7 @@
 
 from . import GeneralMap as GM, PreProcess as PrP, ConvertFix as CF
 from . import PostProcess as PP
-import aksharamukha.ScriptMap.EastIndic.SiddhamRanjana as SR
+from . import ScriptRegistry as SR
 import aksharamukha.FallBack as FB
 import string
 import re
@@ -58,7 +58,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False):
 
     ## Itrans Comments ##
 
-    if Source in GM.LatinScripts and Target in GM.IndicScripts:
+    if SR.get(Source).is_latin and SR.get(Target).is_indic:
         Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True)
 
        #short u
@@ -145,7 +145,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False):
 
         #print(Strng)
 
-    elif Source in GM.LatinScripts and Target in GM.LatinScripts:
+    elif SR.get(Source).is_latin and SR.get(Target).is_latin:
         Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True)
 
         ScriptAll = GM.Vowels+GM.Consonants+GM.CombiningSigns+GM.Numerals+GM.Signs+GM.Aytham
@@ -161,7 +161,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False):
 
         Strng = CF.PostFixRomanOutput(Strng,Source,Target)
 
-    elif Source in GM.IndicScripts and Target in GM.IndicScripts:
+    elif SR.get(Source).is_indic and SR.get(Target).is_indic:
         Strng = PrP.RemoveJoiners(Strng)
 
         Strng = CF.ShiftDiacritics(Strng,Source,reverse=True)
@@ -214,7 +214,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False):
 
         Strng = CF.FixIndicOutput(Strng, Source, Target, transcription_mode=transcription_mode)
 
-    elif Source in GM.IndicScripts and Target in GM.LatinScripts:
+    elif SR.get(Source).is_indic and SR.get(Target).is_latin:
         #print(Strng)
         Strng = PrP.RemoveJoiners(Strng)
         Strng = CF.ShiftDiacritics(Strng, Source, reverse=True)
@@ -274,7 +274,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False):
 
         # Convert Syllabic lR -> l_R Important !!!
 
-    elif Source in GM.SemiticScripts and Target in GM.SemiticScripts:
+    elif SR.get(Source).is_semitic and SR.get(Target).is_semitic:
         Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,Source,reverse=True,optional=True)
 
         tr = gimeltra.Transliterator()
@@ -289,7 +289,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False):
         # Apply Fixes on the Output based on the Script
         Strng = CF.FixSemiticOutput(Strng, Source, Target)
 
-    elif Source in (GM.IndicScripts + GM.LatinScripts) and Target in GM.SemiticScripts:
+    elif (SR.get(Source).is_indic or SR.get(Source).is_latin) and SR.get(Target).is_semitic:
         tr = gimeltra.Transliterator()
 
         Strng = convertScript(Strng, Source, "RomanSemitic")
@@ -323,7 +323,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False):
         # Apply Fixes on the Output based on the Script
         Strng = CF.FixSemiticOutput(Strng, Source, Target)
 
-    elif Source in GM.SemiticScripts and Target in (GM.IndicScripts + GM.LatinScripts):
+    elif SR.get(Source).is_semitic and (SR.get(Target).is_indic or SR.get(Target).is_latin):
         Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,Source,reverse=True,optional=True)
 
         tr = gimeltra.Transliterator()

@@ -3,11 +3,12 @@
 from aksharamukha import Convert as cn
 import xml.etree.ElementTree as ET
 from aksharamukha import GeneralMap as GM
+from aksharamukha import ScriptRegistry as SR
 import re
 
 def GetSyllables(Strng,Script):
 
-    if Script not in GM.IndicScripts:
+    if not SR.get(Script).is_indic:
 
         ListV = '|'.join(sorted(GM.CrunchSymbols(GM.Vowels,Script),key=len,reverse=True))
         ListC = '|'.join(sorted(GM.CrunchSymbols(GM.Consonants,Script),key=len,reverse=True))

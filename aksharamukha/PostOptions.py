@@ -6,13 +6,14 @@
 
 from . import PostProcess as PP
 from . import GeneralMap as GM
+from . import ScriptRegistry as SR
 
 def ApplyScriptDefaults(Strng,Source,Target, PostOptions=[]):
     Options = []
 
     #print('Target is ' + Target)
 
-    if Target in GM.IndicScripts:
+    if SR.get(Target).is_indic:
         Options += []#['RemoveDiacritics'] #Sometimes you may wanna keep it. Adjust options
 
     if Target == 'Telugu':

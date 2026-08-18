@@ -187,7 +187,7 @@ def auto_detect(text, plugin = False):
             inputScript = 'Itrans'
         else:
             inputScript = 'HK'
-    elif inputScript in GeneralMap.IndicScripts or inputScript in GeneralMap.LatinScripts or inputScript in ['Hiragana', 'Katakana']:
+    elif SR.get(inputScript).is_indic or SR.get(inputScript).is_latin or inputScript in ['Hiragana', 'Katakana']:
         pass
     else:
         from . import gimeltra
@@ -339,9 +339,9 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     ## Semitic Switches - Add Shahmukhi/Sindhi later
     IndicSemiticMapping = { 'Hebrew': 'Hebr', 'Thaana': 'Thaa', 'Urdu': 'Arab-Ur', 'Shahmukhi': 'Arab-Pa'}
 
-    if (tgt in GeneralMap.SemiticScripts or tgt in GeneralMap.semiticISO.keys()) and src in IndicSemiticMapping.keys():
+    if (SR.get(tgt).is_semitic or tgt in GeneralMap.semiticISO.keys()) and src in IndicSemiticMapping.keys():
         src = IndicSemiticMapping[src]
-    if (src in GeneralMap.SemiticScripts or src in GeneralMap.semiticISO.keys()) and tgt in IndicSemiticMapping.keys():
+    if (SR.get(src).is_semitic or src in GeneralMap.semiticISO.keys()) and tgt in IndicSemiticMapping.keys():
         tgt = IndicSemiticMapping[tgt]
     if src in IndicSemiticMapping.keys() and tgt in IndicSemiticMapping.keys():
         src = IndicSemiticMapping[src]
@@ -357,7 +357,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     if not nativize and src == 'Thaana':
         src = 'Thaa'
 
-    if src in ['Arab-Ur', 'Arab-Pa'] and tgt in GeneralMap.IndicScripts:
+    if src in ['Arab-Ur', 'Arab-Pa'] and SR.get(tgt).is_indic:
         txt += '\u05CD'
 
     ## Semitic to Urdu this is not needed
@@ -398,10 +398,10 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     ## Semitic Naivization : remove pesky Nuktas
     if nativize:
-        if src in GeneralMap.SemiticScripts and tgt in GeneralMap.IndicScripts:
+        if SR.get(src).is_semitic and SR.get(tgt).is_indic:
             txt += "\u05CC"
 
-    if src == tgt and (src != 'Hiragana' and src != 'Katakana') and src not in GeneralMap.SemiticScripts:
+    if src == tgt and (src != 'Hiragana' and src != 'Katakana') and not SR.get(src).is_semitic:
         tgtOld = tgt
         tgt = "Devanagari"
 
@@ -473,8 +473,8 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     srcOld = ""
 
     ### retain Latin ###
-    if (src != 'Latn'and src != 'Type' and src in GeneralMap.SemiticScripts) or \
-        (src in GeneralMap.IndicScripts and tgt in GeneralMap.SemiticScripts and src not in GeneralMap.LatinScripts) or \
+    if (src != 'Latn'and src != 'Type' and SR.get(src).is_semitic) or \
+        (SR.get(src).is_indic and SR.get(tgt).is_semitic and not SR.get(src).is_latin) or \
             (src in ['Hiragana', 'Katakana']):
         txt = PreProcess.retainLatin(txt)
 
@@ -511,7 +511,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         transliteration = Convert.convertScript(transliteration, "Devanagari", tgt)
 
     ## apply phonetic mapping for Arabic beforehand if not semitic source
-    if (src not in GeneralMap.SemiticScripts and tgt == 'Arab' and nativize) or 'arabicRemoveAdditionsPhonetic' in postoptions:
+    if (not SR.get(src).is_semitic and tgt == 'Arab' and nativize) or 'arabicRemoveAdditionsPhonetic' in postoptions:
         transliteration = GeneralMap.resolve(PostProcess, 'arabicRemoveAdditionsPhonetic', transliteration)
 
     #print(transliteration)
@@ -581,7 +581,7 @@ def _load_data(file_path):
 def convert_default(src, tgt, txt, nativize = True, post_options = [], pre_options = []):
     data_loaded = _load_data("/yaml/aksharamukha-scripts.yaml")
 
-    scriptList = GeneralMap.IndicScripts + GeneralMap.LatinScripts + GeneralMap.SemiticScripts
+    scriptList = list(SR.SCRIPTS.keys())
 
     preOptionList = list(map(lambda x: x[0], getmembers(PreProcess, isfunction)))
     preOptionListLower = list(map(lambda x: x.lower(), preOptionList))
@@ -606,18 +606,18 @@ def convert_default(src, tgt, txt, nativize = True, post_options = [], pre_optio
         script_not_found = 'Target script: ' + tgt + ' not found in the list of scripts supported. The text will not be transliterated.'
         warnings.warn(script_not_found)
 
-    if (tgt == 'RomanLoC' and src not in GeneralMap.LoCScripts):
+    if (tgt == 'RomanLoC' and not SR.get(src).is_loc_script):
         script_not_found = 'The LoC romanization of ' + src + ' is not yet supported. The output text will be rendered using ISO 233 if Semitic else ISO 15919. See: https://www.aksharamukha.com/loc'
         warnings.warn(script_not_found)
 
-    if (src == 'RomanLoC' and tgt not in GeneralMap.LoCScripts):
+    if (src == 'RomanLoC' and not SR.get(tgt).is_loc_script):
         script_not_found = 'The LoC romanization of ' + tgt + ' is not yet supported. The input text will be treated as if it was ISO 233 if Semitic else ISO 15919.. See: https://www.aksharamukha.com/loc'
         warnings.warn(script_not_found)
 
     return convert(src, tgt, txt, nativize, pre_options, post_options)
 
 def process_default(src, tgt, txt, nativize, post_options, pre_options):
-    scriptList = GeneralMap.IndicScripts + GeneralMap.LatinScripts
+    scriptList = [name for name, d in SR.SCRIPTS.items() if d.is_indic or d.is_latin]
     scriptListLower = list(map(lambda x: x.lower(), scriptList))
 
     if src == 'autodetect':
@@ -717,14 +717,14 @@ def process_script_tag(src_tag, tgt_tag, txt, nativize, post_options, pre_option
 
     if len(src) > 0:
         src_pop = sorted(src, reverse=True)[0][1]
-    elif src_tag in GeneralMap.SemiticScripts:
+    elif SR.get(src_tag).is_semitic:
             src_pop = src_tag
     else:
         raise Exception('Source script code: ' + src_tag + ' not found')
 
     if len(tgt) > 0:
         tgt_pop = sorted(tgt, reverse=True)[0][1]
-    elif tgt_tag in GeneralMap.SemiticScripts:
+    elif SR.get(tgt_tag).is_semitic:
         tgt_pop = tgt_tag
     else:
         raise Exception('Target script code: ' + tgt_tag + ' not found')

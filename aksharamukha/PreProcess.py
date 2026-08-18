@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from . import GeneralMap as GM
+from . import ScriptRegistry as SR
 import re
 import string
 import unicodedata
@@ -1262,10 +1263,10 @@ def joinVowelConsISO(Strng):
     return joinVowelCons(Strng, 'ISO')
 
 def PreProcess(Strng,Source,Target,postoptions,preoptions):
-    if Source in GM.RomanDiacritic or Source == 'Latn':
+    if SR.get(Source).is_roman_diacritic or Source == 'Latn':
         Strng = Strng.lower()
 
-    if Source in GM.pipeScripts:
+    if SR.get(Source).is_pipe_script:
         if '|' in Strng:
             Strng = Strng.replace(".", "●")
             Strng = Strng.replace("।", "|").replace("॥", "||")
@@ -1354,12 +1355,12 @@ def PreProcess(Strng,Source,Target,postoptions,preoptions):
     if Source == "Latn" and 'Syr' in Target:
         Strng = Strng.replace('ḇ', 'v').replace('ḡ', 'ḡ').replace('ḵ', 'ḫ').replace('p̄', 'f')
 
-    if ('↓' in Strng or '↑' in Strng) and Target in GM.IndicScripts :
+    if ('↓' in Strng or '↑' in Strng) and SR.get(Target).is_indic :
         Strng = Strng.replace('↓', '॒')
         Strng = Strng.replace('↑↑', '᳚')
         Strng = Strng.replace('↑', '॑')
 
-    if ('↓' in Strng or '↑' in Strng) and Target in GM.LatinScripts :
+    if ('↓' in Strng or '↑' in Strng) and SR.get(Target).is_latin :
         Strng = Strng.replace('↓', '\\_')
         Strng = Strng.replace('↑↑', '\\"')
         Strng = Strng.replace('↑', '\\\'')
@@ -1382,7 +1383,7 @@ def PreProcess(Strng,Source,Target,postoptions,preoptions):
 
     #Fix Udata + Avagraha combination
     # नमो॑ऽयम् --> namo̍​'yam
-    if Source in GM.IndicScripts and Target in GM.Transliteration:
+    if SR.get(Source).is_indic and SR.get(Target).is_transliteration:
         udatta = '\u0951'
         avagrahaSrc = GM.CrunchList('SignMap', Source)[0]
         avagrahaTgt = GM.CrunchList('SignMap', Target)[0]
@@ -1663,7 +1664,7 @@ def removeZW(Strng):
     return Strng
 
 def PhagsPaArrange(Strng,Source):
-    if Source in GM.IndicScripts:
+    if SR.get(Source).is_indic:
         ListC = "|".join(sorted(GM.CrunchSymbols(GM.Consonants, Source),key=len,reverse=True)) #Do this for all
         ListV = "|".join(sorted(GM.CrunchSymbols(GM.Vowels, Source),key=len,reverse=True))
         ListVS = "|".join(sorted(GM.CrunchSymbols(GM.VowelSignsNV, Source),key=len,reverse=True))
@@ -1678,7 +1679,7 @@ def PhagsPaArrange(Strng,Source):
         Strng = re.sub("("+ListC+ListV+")"+"("+"("+ListVS+")?"+"("+ListCS+")?"+")"+"("+ListC+")"+'(?!'+vir+')',r"\1\2 \5",Strng)
         Strng = re.sub("("+ListC+ListV+")"+"("+"("+ListVS+")?"+"("+ListCS+")?"+")"+"("+ListC+")"+'(?!'+vir+')',r"\1\2 \5",Strng)
 
-    elif Source in GM.LatinScripts:
+    elif SR.get(Source).is_latin:
         pass
 
     return Strng

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from . import GeneralMap as GM
+from . import ScriptRegistry as SR
 from . import ScriptMap
 from aksharamukha.ScriptMap.Roman import Avestan
 from aksharamukha.ScriptMap.MainIndic import Ahom, Tamil,Malayalam,Gurmukhi,Oriya,Saurashtra,Sinhala,Urdu,Devanagari, Chakma, Limbu, Takri, TamilExtended, Kannada
@@ -37,7 +38,7 @@ def defaultPost(src, tgt, Strng, nativize, preoptions, postoptions):
         Strng = RetainDandasIndic(Strng, tgt, reverse=True)
 
     #Devanagari Dandas
-    if tgt not in GM.Transliteration:
+    if not SR.get(tgt).is_transliteration:
         Strng = Strng.replace( '│', '।',).replace('┃', '॥')
     else:
         Strng = Strng.replace( '│', '|',).replace('┃', '||')
