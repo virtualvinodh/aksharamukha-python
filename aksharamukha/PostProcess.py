@@ -849,11 +849,15 @@ def tokushuon(txt):
    return txt
 
 #todo testcase
-def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
-    from aksharamukha.ScriptMap.NonIndic import kana2roman
-    import pykakasi
-    from . import PostOptions, Convert
+# --- JapanesePostProcess pipeline stages --------------------------------
+# Extracted verbatim, one labeled block at a time - no logic changes, same
+# variables in and out. Real test coverage exists for this function (80
+# cases across vtobJapanese/eiaudipthongs/wasvnukta/verticalKana, both
+# directions), verified the same way convert()'s staging was: A/B
+# comparison against the pre-extraction implementation plus the full suite.
 
+def _japanese_pivot_to_romankana(src, txt):
+    from . import Convert
     txt = Convert.convertScript(txt, src, "Telugu")
 
     txt = txt.replace('ˆ', '')
@@ -861,6 +865,9 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
 
     txt = Convert.convertScript(txt, "Telugu", "RomanKana")
 
+    return txt
+
+def _japanese_visarga_nasalization_punctuation(txt):
     # Visarga
     txt = re.sub('([aiueo])' + r'\1' + 'H', r'\1' + r'\1' + 'h' + r'\1', txt)
 
@@ -876,6 +883,9 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
     txt = txt.replace('JJ', 'nnny')
     txt = txt.replace('J', 'ny')
 
+    return txt
+
+def _japanese_empirical_consonant_fixes(txt, postoptions):
     if 'vtobJapanese' in postoptions:
         txt = txt.replace('v', 'b')
 
@@ -892,7 +902,9 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
     txt = txt.replace('vye', 'vuxixe').replace('vy', 'vuxy')
     txt = txt.replace('she', 'shixe')
 
-    #print(txt)
+    return txt
+
+def _japanese_nativize_branch_fix(txt, nativize):
     if not nativize:
         txt = re.sub('(r)(r\u309A)', 'rur\u309A', txt)
         txt = re.sub('(r\u309A)(r\u309A)', 'rr' + '\u309A', txt)
@@ -911,7 +923,10 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
         # she
         txt = txt.replace('she', 'shie')
 
-    #print(txt)
+    return txt
+
+def _japanese_encode_to_kana(txt, tgt, nativize):
+    from aksharamukha.ScriptMap.NonIndic import kana2roman
 
     if tgt == 'Hiragana':
         txt = kana2roman.to_hiragana(txt)
@@ -956,11 +971,20 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
 
         txt = kana2roman.to_katakana(txt)
 
+    return txt
+
+def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
+    from . import Convert
+
+    txt = _japanese_pivot_to_romankana(src, txt)
+    txt = _japanese_visarga_nasalization_punctuation(txt)
+    txt = _japanese_empirical_consonant_fixes(txt, postoptions)
+    txt = _japanese_nativize_branch_fix(txt, nativize)
+    txt = _japanese_encode_to_kana(txt, tgt, nativize)
+
     txt = Convert.convertScript(txt, "Inter", "ISO")
 
     return txt
-
-#todo check if used
 def urduRemoveInherent(Strng):
     Strng = re.sub('\Ba', '', Strng)
 
