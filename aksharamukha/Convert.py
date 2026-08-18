@@ -48,7 +48,7 @@ def convertInter(Strng,Source):
     return Strng
 
 # Conversion Module
-def convertScript(Strng,Source,Target,transcription_mode=False):
+def convertScript(Strng,Source,Target,transcription_mode=False,ctx=None):
     #print("I am here")
 
     charPairs=[];

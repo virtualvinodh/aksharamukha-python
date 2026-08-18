@@ -4,6 +4,7 @@ from . import Convert,PostOptions,PostProcess,PreProcess
 from . import ConvertFix
 from . import ScriptRegistry as SR
 from . import Options
+from . import Context
 import json
 import requests
 import html
@@ -314,7 +315,7 @@ def _resolve_loc_when_source_is_loc_script(src, tgt, txt, preoptions, postoption
 
     return src, tgt, txt, preoptions, postoptions, nativize
 
-def _resolve_loc_when_target_is_loc_script(src, tgt, txt, preoptions, postoptions, nativize):
+def _resolve_loc_when_target_is_loc_script(src, tgt, txt, preoptions, postoptions, nativize, ctx):
     if 'Khuen' in tgt:
         txt = txt+'\u02BE' # indicator for Khuen text
     tgt = SR.get(tgt).loc_pivot_name
@@ -337,7 +338,7 @@ def _resolve_loc_when_target_is_loc_script(src, tgt, txt, preoptions, postoption
 
     return src, tgt, txt, preoptions, postoptions, nativize
 
-def _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize):
+def _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize, ctx):
     ## ALA-LC Romanizations
     ## process as follows, if source is associated with LoC script
     if tgt == 'RomanLoC' and SR.get(src).is_loc_script:
@@ -350,7 +351,7 @@ def _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize):
     ## Switches for Target scripts
     ## if target is associated with the loc Script
     if src == 'RomanLoC' and SR.get(tgt).is_loc_script:
-        src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_when_target_is_loc_script(src, tgt, txt, preoptions, postoptions, nativize)
+        src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_when_target_is_loc_script(src, tgt, txt, preoptions, postoptions, nativize, ctx)
 
     ## if target is not associated with the loc Script
     if src == 'RomanLoC' and not SR.get(tgt).is_loc_script:
@@ -531,17 +532,17 @@ def _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativiz
 
     return src, tgt, txt, srcOld, transcription_mode
 
-def _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, transcription_mode):
+def _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, transcription_mode, ctx):
     if src == "Itrans" and '##' in txt:
         #print('I am here tyring to do things')
         transliteration = ''
         for i, word in enumerate(txt.split("##")):
             if (i%2 == 0):
-                transliteration += Convert.convertScript(word, src, tgt, transcription_mode=transcription_mode)
+                transliteration += Convert.convertScript(word, src, tgt, transcription_mode=transcription_mode, ctx=ctx)
             else:
                 transliteration += word
     else:
-        transliteration = Convert.convertScript(txt, src, tgt, transcription_mode=transcription_mode)
+        transliteration = Convert.convertScript(txt, src, tgt, transcription_mode=transcription_mode, ctx=ctx)
 
     #print(transliteration)
 
@@ -597,7 +598,9 @@ def _apply_final_postprocessing(src, tgt, txt, transliteration, nativize, preopt
     return transliteration
 
 def convert(src, tgt, txt, nativize, preoptions, postoptions):
-    src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize)
+    ctx = Context.ConversionContext()
+
+    src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize, ctx)
 
     ## LoC Romanizattion ends here
     ## else convert the Loc input into the associated script and then convert it into Loc
@@ -632,7 +635,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     src, tgt, txt, srcOld, transcription_mode = _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativize)
 
-    tgt, transliteration = _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, transcription_mode)
+    tgt, transliteration = _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, transcription_mode, ctx)
 
     '''if src == "Itrans" and '##' in txt:
         textConv = {**dict(list(json.loads(transliteration.replace("\n", "\\n")))), ** dict(textRest)}
