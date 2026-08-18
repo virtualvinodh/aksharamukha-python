@@ -996,8 +996,8 @@ def FixKhudawadi(Strng, reverse=False):
     return _FixKhudawadiDecode(Strng) if reverse else _FixKhudawadiEncode(Strng)
 
 # Correct Ru2, Lu2 -> R, lR
-def FixTamil(Strng,reverse=False):
-    Strng = CorrectRuLu(Strng,"Tamil",reverse)
+def _FixTamilEncode(Strng):
+    Strng = CorrectRuLu(Strng,"Tamil",False)
 
     ava = Tamil.SignMap[0]
     avaA = '\u0028\u0B86\u0029'
@@ -1005,27 +1005,40 @@ def FixTamil(Strng,reverse=False):
     VedicSign = ['॑', '॒', '᳚']
     TamilDiacritic = ['ʼ', 'ˮ', '꞉']#, '²', '³', '⁴', '₂', '₃', '₄']
 
-    if not reverse:
-        Strng = Strng.replace(ava+ava,avaA)
-        Strng = PostProcess.RetainDandasIndic(Strng, 'Tamil', True)
-        Strng = PostProcess.RetainIndicNumerals(Strng, 'Tamil', True)
+    Strng = Strng.replace(ava+ava,avaA)
+    Strng = PostProcess.RetainDandasIndic(Strng, 'Tamil', True)
+    Strng = PostProcess.RetainIndicNumerals(Strng, 'Tamil', True)
 
-        for x in TamilDiacritic:
-            for y in VedicSign:
-                Strng = Strng.replace(x + y, y + x)
-    else:
-        Strng = PostProcess.RetainDandasIndic(Strng, 'Tamil')
-        Strng = PostProcess.RetainIndicNumerals(Strng, 'Tamil')
-        Strng = Strng.replace(avaA,ava+ava)
-        Strng = Strng.replace('ஷ²', 'ஶ')
-
-        Strng = Strng.replace('𑌃', '꞉')
-
-        for x in TamilDiacritic:
-            for y in VedicSign:
-                Strng = Strng.replace(y + x, x + y)
+    for x in TamilDiacritic:
+        for y in VedicSign:
+            Strng = Strng.replace(x + y, y + x)
 
     return Strng
+
+def _FixTamilDecode(Strng):
+    Strng = CorrectRuLu(Strng,"Tamil",True)
+
+    ava = Tamil.SignMap[0]
+    avaA = '\u0028\u0B86\u0029'
+
+    VedicSign = ['॑', '॒', '᳚']
+    TamilDiacritic = ['ʼ', 'ˮ', '꞉']#, '²', '³', '⁴', '₂', '₃', '₄']
+
+    Strng = PostProcess.RetainDandasIndic(Strng, 'Tamil')
+    Strng = PostProcess.RetainIndicNumerals(Strng, 'Tamil')
+    Strng = Strng.replace(avaA,ava+ava)
+    Strng = Strng.replace('ஷ²', 'ஶ')
+
+    Strng = Strng.replace('𑌃', '꞉')
+
+    for x in TamilDiacritic:
+        for y in VedicSign:
+            Strng = Strng.replace(y + x, x + y)
+
+    return Strng
+
+def FixTamil(Strng,reverse=False):
+    return _FixTamilDecode(Strng) if reverse else _FixTamilEncode(Strng)
 
 def _FixOriyaEncode(Strng):
     pass
@@ -1040,64 +1053,88 @@ def _FixOriyaDecode(Strng):
 def FixOriya(Strng, reverse=False):
     return _FixOriyaDecode(Strng) if reverse else _FixOriyaEncode(Strng)
 
-def FixGurmukhiLoC(Strng,reverse=False):
-    Strng = CorrectRuLu(Strng,"Gurmukhi",reverse)
+def _FixGurmukhiLoCEncode(Strng):
+    Strng = CorrectRuLu(Strng,"Gurmukhi",False)
 
     ava = Gurmukhi.SignMap[0]
     avaA = '\u0028\u0A06\u0029'
 
     # Tippi/Bindu conversion options are optional. Look into PostProcess
 
-    if not reverse:
-        Strng = Strng.replace(ava+ava,avaA)
-        Strng = PostProcess.InsertGeminationSign(Strng, 'Gurmukhi')
-        Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi', True)
+    Strng = Strng.replace(ava+ava,avaA)
+    Strng = PostProcess.InsertGeminationSign(Strng, 'Gurmukhi')
+    Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi', True)
 
-        Vedicomp = '([' + ''.join(GM.VedicSvarasList) + '])'
+    Vedicomp = '([' + ''.join(GM.VedicSvarasList) + '])'
 
-        Strng = re.sub(Vedicomp + '\u0A71' + '(.)', r'\1' + r'\2' + Gurmukhi.ViramaMap[0] + r'\2' , Strng)
+    Strng = re.sub(Vedicomp + '\u0A71' + '(.)', r'\1' + r'\2' + Gurmukhi.ViramaMap[0] + r'\2' , Strng)
 
-    else:
-        Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi')
-        Strng = Strng.replace(avaA,ava+ava)
-        Strng = PostProcess.ReverseGeminationSign(Strng, 'Gurmukhi')
-        #Strng = Strng.replace('ੰਨ','ਨ੍ਨ')
-        #Strng = Strng.replace('ੰਮ','ਮ੍ਮ')
-        # Replace Tippi by Bindu
-        #Strng = PostProcess.GurmukhiYakaash(Strng, True)
 
     return Strng
+
+def _FixGurmukhiLoCDecode(Strng):
+    Strng = CorrectRuLu(Strng,"Gurmukhi",True)
+
+    ava = Gurmukhi.SignMap[0]
+    avaA = '\u0028\u0A06\u0029'
+
+    # Tippi/Bindu conversion options are optional. Look into PostProcess
+
+    Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi')
+    Strng = Strng.replace(avaA,ava+ava)
+    Strng = PostProcess.ReverseGeminationSign(Strng, 'Gurmukhi')
+    #Strng = Strng.replace('ੰਨ','ਨ੍ਨ')
+    #Strng = Strng.replace('ੰਮ','ਮ੍ਮ')
+    # Replace Tippi by Bindu
+    #Strng = PostProcess.GurmukhiYakaash(Strng, True)
+
+    return Strng
+
+def FixGurmukhiLoC(Strng,reverse=False):
+    return _FixGurmukhiLoCDecode(Strng) if reverse else _FixGurmukhiLoCEncode(Strng)
 
 # Correct Ru'', Lu'' -> R, lR
 # Tippi/Bindu
-def FixGurmukhi(Strng,reverse=False):
-    Strng = CorrectRuLu(Strng,"Gurmukhi",reverse)
+def _FixGurmukhiEncode(Strng):
+    Strng = CorrectRuLu(Strng,"Gurmukhi",False)
 
     ava = Gurmukhi.SignMap[0]
     avaA = '\u0028\u0A06\u0029'
 
     # Tippi/Bindu conversion options are optional. Look into PostProcess
 
-    if not reverse:
-        Strng = Strng.replace(ava+ava,avaA)
-        Strng = PostProcess.InsertGeminationSign(Strng, 'Gurmukhi')
-        Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi', True)
+    Strng = Strng.replace(ava+ava,avaA)
+    Strng = PostProcess.InsertGeminationSign(Strng, 'Gurmukhi')
+    Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi', True)
 
-        Vedicomp = '([' + ''.join(GM.VedicSvarasList) + '])'
+    Vedicomp = '([' + ''.join(GM.VedicSvarasList) + '])'
 
-        Strng = re.sub(Vedicomp + '\u0A71' + '(.)', r'\1' + r'\2' + Gurmukhi.ViramaMap[0] + r'\2' , Strng)
+    Strng = re.sub(Vedicomp + '\u0A71' + '(.)', r'\1' + r'\2' + Gurmukhi.ViramaMap[0] + r'\2' , Strng)
 
-    else:
-        Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi')
-        Strng = Strng.replace(avaA,ava+ava)
-        Strng = PostProcess.ReverseGeminationSign(Strng, 'Gurmukhi')
-        Strng = Strng.replace('ੰਨ','ਨ੍ਨ')
-        Strng = Strng.replace('ੰਮ','ਮ੍ਮ')
-        # Replace Tippi by Bindu
-        Strng = Strng.replace('\u0A70','\u0A02')
-        Strng = PostProcess.GurmukhiYakaash(Strng, True)
 
     return Strng
+
+def _FixGurmukhiDecode(Strng):
+    Strng = CorrectRuLu(Strng,"Gurmukhi",True)
+
+    ava = Gurmukhi.SignMap[0]
+    avaA = '\u0028\u0A06\u0029'
+
+    # Tippi/Bindu conversion options are optional. Look into PostProcess
+
+    Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi')
+    Strng = Strng.replace(avaA,ava+ava)
+    Strng = PostProcess.ReverseGeminationSign(Strng, 'Gurmukhi')
+    Strng = Strng.replace('ੰਨ','ਨ੍ਨ')
+    Strng = Strng.replace('ੰਮ','ਮ੍ਮ')
+    # Replace Tippi by Bindu
+    Strng = Strng.replace('\u0A70','\u0A02')
+    Strng = PostProcess.GurmukhiYakaash(Strng, True)
+
+    return Strng
+
+def FixGurmukhi(Strng,reverse=False):
+    return _FixGurmukhiDecode(Strng) if reverse else _FixGurmukhiEncode(Strng)
 
 # Fix ru', ru'',lu',lu'' in Tamil & Gurmukhi
 # रुʼ -> ऋ, रूʼ -> ॠ, लुʼ -> ऌ, लूʼ -> ॡ
@@ -1332,13 +1369,13 @@ def _FixShanDecode(Strng):
 def FixShan(Strng, reverse=False):
     return _FixShanDecode(Strng) if reverse else _FixShanEncode(Strng)
 
-def FixMon(Strng, reverse=False):
+def _FixMonEncode(Strng):
     pairs = [('င', 'ၚ'),('ဉ', 'ည'), ('ဈ', 'ၛ')]
 
     for x, y in pairs:
         Strng = Strng.replace(y, x)
 
-    Strng = FixBurmese(Strng, reverse)
+    Strng = FixBurmese(Strng, False)
 
     Strng = Strng.replace('ည', '\uE001') #
 
@@ -1350,35 +1387,57 @@ def FixMon(Strng, reverse=False):
     medials_cons_mon = ['\u1039န', '\u1039မ', '\u1039လ']
     medials_mon = ['ၞ', 'ၟ', 'ၠ']
 
-    if not reverse:
-        for x, y in zip(medials_cons_mon, medials_mon):
-            Strng = Strng.replace(x, y)
+    for x, y in zip(medials_cons_mon, medials_mon):
+        Strng = Strng.replace(x, y)
 
-        Strng = Strng.replace('ၠြ', 'ြၠ')
+    Strng = Strng.replace('ၠြ', 'ြၠ')
 
-        # Contigous Mon Medials
-        for i, med1 in enumerate(medials_mon):
-            for j, med2 in enumerate(medials_mon):
-                Strng = Strng.replace(med1 + med2, medials_cons_mon[i] + medials_cons_mon[j])
+    # Contigous Mon Medials
+    for i, med1 in enumerate(medials_mon):
+        for j, med2 in enumerate(medials_mon):
+            Strng = Strng.replace(med1 + med2, medials_cons_mon[i] + medials_cons_mon[j])
 
-        # Contiguous Medials + ya, ra and va
-        for i, med in enumerate(medials_mon):
-            Strng = Strng.replace(med + 'ျ', medials_cons_mon[i] + 'ျ')
+    # Contiguous Medials + ya, ra and va
+    for i, med in enumerate(medials_mon):
+        Strng = Strng.replace(med + 'ျ', medials_cons_mon[i] + 'ျ')
 
-            Strng = Strng.replace('ရ်' + med,  'ရ်' + medials_cons_mon[i])
-            Strng = Strng.replace('ၚ်' + med,  'ၚ်' + medials_cons_mon[i])
+        Strng = Strng.replace('ရ်' + med,  'ရ်' + medials_cons_mon[i])
+        Strng = Strng.replace('ၚ်' + med,  'ၚ်' + medials_cons_mon[i])
 
 
-        # RA + Medial
-    else:
-        Strng = Strng.replace('်ရၠ', 'ၠ်ရ')
-
-        for x, y in zip(medials_cons_mon, medials_mon):
-            Strng = Strng.replace(y, x)
-
-        Strng = Strng.replace('\u1039', '်')
+    # RA + Medial
 
     return Strng
+
+def _FixMonDecode(Strng):
+    pairs = [('င', 'ၚ'),('ဉ', 'ည'), ('ဈ', 'ၛ')]
+
+    for x, y in pairs:
+        Strng = Strng.replace(y, x)
+
+    Strng = FixBurmese(Strng, True)
+
+    Strng = Strng.replace('ည', '\uE001') #
+
+    for x, y in pairs:
+        Strng = Strng.replace(x, y)
+
+    Strng = Strng.replace('\uE001', 'ည\u1039ည')
+
+    medials_cons_mon = ['\u1039န', '\u1039မ', '\u1039လ']
+    medials_mon = ['ၞ', 'ၟ', 'ၠ']
+
+    Strng = Strng.replace('်ရၠ', 'ၠ်ရ')
+
+    for x, y in zip(medials_cons_mon, medials_mon):
+        Strng = Strng.replace(y, x)
+
+    Strng = Strng.replace('\u1039', '်')
+
+    return Strng
+
+def FixMon(Strng, reverse=False):
+    return _FixMonDecode(Strng) if reverse else _FixMonEncode(Strng)
 
 # Burmese - Tall A + Subjoning Consonants
 def _FixBurmeseEncode(Strng):
@@ -1573,24 +1632,33 @@ def FixBuginese(Strng, reverse=False):
 
 
 # Balinese Repha
-def FixBalinese(Strng,reverse=False):
+def _FixBalineseEncode(Strng):
     Repha = '\u1B03'
 
-    Strng = AddRepha(Strng,"Balinese",Repha,reverse)
+    Strng = AddRepha(Strng,"Balinese",Repha,False)
 
-    if not reverse:
-        pass
-    else:
-        # reversing archaic jna
-        Strng = Strng.replace('ᭌ', 'ᬚ᭄ᬜ')
-        # Fix a-based vowels
-        vowelsA = ['ᬅᬶ', 'ᬅᬷ', 'ᬅᬸ', 'ᬅᬹ', 'ᬅᬺ', 'ᬅᬻ', 'ᬅ᭄ᬮᭂ', 'ᬅ᭄ᬮᭃ', 'ᬅᬾ', 'ᬅᬿ', 'ᬅᭀ', 'ᬅᭁ']
-        vowels = ['ᬇ', 'ᬈ', 'ᬉ', 'ᬊ', 'ᬋ', 'ᬌ', 'ᬍ', 'ᬎ', 'ᬏ', 'ᬐ', 'ᬑ', 'ᬒ']
-
-        for v, vA in zip(vowels, vowelsA):
-            Strng = Strng.replace(vA, v)
+    pass
 
     return Strng
+
+def _FixBalineseDecode(Strng):
+    Repha = '\u1B03'
+
+    Strng = AddRepha(Strng,"Balinese",Repha,True)
+
+    # reversing archaic jna
+    Strng = Strng.replace('ᭌ', 'ᬚ᭄ᬜ')
+    # Fix a-based vowels
+    vowelsA = ['ᬅᬶ', 'ᬅᬷ', 'ᬅᬸ', 'ᬅᬹ', 'ᬅᬺ', 'ᬅᬻ', 'ᬅ᭄ᬮᭂ', 'ᬅ᭄ᬮᭃ', 'ᬅᬾ', 'ᬅᬿ', 'ᬅᭀ', 'ᬅᭁ']
+    vowels = ['ᬇ', 'ᬈ', 'ᬉ', 'ᬊ', 'ᬋ', 'ᬌ', 'ᬍ', 'ᬎ', 'ᬏ', 'ᬐ', 'ᬑ', 'ᬒ']
+
+    for v, vA in zip(vowels, vowelsA):
+        Strng = Strng.replace(vA, v)
+
+    return Strng
+
+def FixBalinese(Strng,reverse=False):
+    return _FixBalineseDecode(Strng) if reverse else _FixBalineseEncode(Strng)
 
 # Javanese - Reppha & Subjoining ra & ya
 def _FixDivesAkuruEncode(Strng):
@@ -1726,35 +1794,47 @@ def FixKawi(Strng, reverse=False):
     return _FixKawiDecode(Strng) if reverse else _FixKawiEncode(Strng)
 
 # Javanese - Reppha & Subjoining ra & ya
-def FixJavanese(Strng,reverse=False):
+def _FixJavaneseEncode(Strng):
     Repha = '\uA982'
     vir = Javanese.ViramaMap[0]
     ra, ya = Javanese.ConsonantMap[26], Javanese.ConsonantMap[25]
     SubRa, SubYa = '\uA9BF','\uA9BE'
 
-    Strng = AddRepha(Strng,"Javanese",Repha,reverse)
+    Strng = AddRepha(Strng,"Javanese",Repha,False)
 
-    if not reverse:
-        # Introduce subjoining Ra & Ya
-        Strng = Strng.replace(vir+ra,SubRa).replace(vir+ya,SubYa)
-    else:
-        #Fix Archaic Jna
-        Strng = Strng.replace('ꦘ', 'ꦗ꧀ꦚ')
-        # Fix ra agang
-        Strng = Strng.replace('ꦬ', ra)
-        # Replace Subjoining forms with cons+vir
-        Strng = Strng.replace(SubRa,vir+ra).replace(SubYa,vir+ya)
-        # reversing archaic jna
-        Strng = Strng.replace('ᭌ', 'ᬚ᭄ᬜ')
-        # reverse a-based vowels
-        vowelsA = ['ꦄꦶ', 'ꦄꦷ', 'ꦄꦸ', 'ꦄꦹ', 'ꦄꦽ', 'ꦄ꧀ꦉꦴ', 'ꦄ꧀ꦭꦼ', 'ꦄ꧀ꦭꦼꦴ', 'ꦄꦺ', 'ꦄꦻ', 'ꦄꦺꦴ', 'ꦄꦻꦴ']
-        vowels = ['ꦆ', 'ꦇ', 'ꦈ', 'ꦈꦴ', 'ꦉ', 'ꦉꦴ', 'ꦊ', 'ꦋ', 'ꦌ', 'ꦍ', 'ꦎ', 'ꦎꦴ']
-
-        for v, vA in zip(vowels, vowelsA):
-            Strng = Strng.replace(vA, v)
+    Strng = Strng.replace(vir+ra,SubRa).replace(vir+ya,SubYa)
 
 
     return Strng
+
+def _FixJavaneseDecode(Strng):
+    Repha = '\uA982'
+    vir = Javanese.ViramaMap[0]
+    ra, ya = Javanese.ConsonantMap[26], Javanese.ConsonantMap[25]
+    SubRa, SubYa = '\uA9BF','\uA9BE'
+
+    Strng = AddRepha(Strng,"Javanese",Repha,True)
+
+    #Fix Archaic Jna
+    Strng = Strng.replace('ꦘ', 'ꦗ꧀ꦚ')
+    # Fix ra agang
+    Strng = Strng.replace('ꦬ', ra)
+    # Replace Subjoining forms with cons+vir
+    Strng = Strng.replace(SubRa,vir+ra).replace(SubYa,vir+ya)
+    # reversing archaic jna
+    Strng = Strng.replace('ᭌ', 'ᬚ᭄ᬜ')
+    # reverse a-based vowels
+    vowelsA = ['ꦄꦶ', 'ꦄꦷ', 'ꦄꦸ', 'ꦄꦹ', 'ꦄꦽ', 'ꦄ꧀ꦉꦴ', 'ꦄ꧀ꦭꦼ', 'ꦄ꧀ꦭꦼꦴ', 'ꦄꦺ', 'ꦄꦻ', 'ꦄꦺꦴ', 'ꦄꦻꦴ']
+    vowels = ['ꦆ', 'ꦇ', 'ꦈ', 'ꦈꦴ', 'ꦉ', 'ꦉꦴ', 'ꦊ', 'ꦋ', 'ꦌ', 'ꦍ', 'ꦎ', 'ꦎꦴ']
+
+    for v, vA in zip(vowels, vowelsA):
+        Strng = Strng.replace(vA, v)
+
+
+    return Strng
+
+def FixJavanese(Strng,reverse=False):
+    return _FixJavaneseDecode(Strng) if reverse else _FixJavaneseEncode(Strng)
 
 
 def FixUrdu(Strng, reverse=False):
@@ -2212,30 +2292,34 @@ def ReverseVowelSigns(Strng,Script,reverse=False):
 
     return Strng
 
-def FixKhomThai(Strng, reverse=False):
+def _FixKhomThaiEncode(Strng):
+    Strng = Strng.replace('โ','เา')
+    Strng = ThaiReverseVowelSigns(Strng,False)
+    Strng = re.sub('(.\u0E3A)(.\u0E3A)(ใ)', r'\3\1\2', Strng) # reversed
+    Strng = re.sub('(.\u0E3A)(ใ)', r'\2\1', Strng) # reversed
 
-    if not reverse:
-        Strng = Strng.replace('โ','เา')
-        Strng = ThaiReverseVowelSigns(Strng,reverse)
-        Strng = re.sub('(.\u0E3A)(.\u0E3A)(ใ)', r'\3\1\2', Strng) # reversed
-        Strng = re.sub('(.\u0E3A)(ใ)', r'\2\1', Strng) # reversed
+    Strng = re.sub('((.\u0E3A)+)(เ)', r'\3\1', Strng) # reversed
+    Strng = re.sub('(.\u0E3A)?(.)(ฺร)', r'\3\1\2', Strng) # reversed
+    Strng = Strng.replace('เอา', 'โอ')
 
-        Strng = re.sub('((.\u0E3A)+)(เ)', r'\3\1', Strng) # reversed
-        Strng = re.sub('(.\u0E3A)?(.)(ฺร)', r'\3\1\2', Strng) # reversed
-        Strng = Strng.replace('เอา', 'โอ')
-
-        Strng = Strng.replace("เอำ", 'เาอํ')
-        Strng = Strng.replace('เาอํ', 'โอํ')
-    else:
-        Strng = re.sub('(ใ)(.\u0E3A)(.\u0E3A)', r'\2\3\1', Strng)
-        Strng = re.sub('(ใ)(.\u0E3A)', r'\2\1', Strng)
-
-        Strng = re.sub('(ฺร)(.\u0E3A)?(.)', r'\2\3\1', Strng)
-        Strng = re.sub('(เ)((.\u0E3A)+)', r'\2\1', Strng)
-        Strng = ThaiReverseVowelSigns(Strng,reverse)
-        Strng = Strng.replace('เา', 'โ')
+    Strng = Strng.replace("เอำ", 'เาอํ')
+    Strng = Strng.replace('เาอํ', 'โอํ')
 
     return Strng
+
+def _FixKhomThaiDecode(Strng):
+    Strng = re.sub('(ใ)(.\u0E3A)(.\u0E3A)', r'\2\3\1', Strng)
+    Strng = re.sub('(ใ)(.\u0E3A)', r'\2\1', Strng)
+
+    Strng = re.sub('(ฺร)(.\u0E3A)?(.)', r'\2\3\1', Strng)
+    Strng = re.sub('(เ)((.\u0E3A)+)', r'\2\1', Strng)
+    Strng = ThaiReverseVowelSigns(Strng,True)
+    Strng = Strng.replace('เา', 'โ')
+
+    return Strng
+
+def FixKhomThai(Strng, reverse=False):
+    return _FixKhomThaiDecode(Strng) if reverse else _FixKhomThaiEncode(Strng)
 
 def FixThai(Strng,reverse=False,transcription_mode=False):
     Strng = ThaiReverseVowelSigns(Strng,reverse)
@@ -2265,24 +2349,33 @@ def ThaiReverseVowelSigns(Strng,reverse=False):
 
     return Strng
 
-def FixLaoPali(Strng,reverse=False,transcription_mode=False):
-    ## Check AU in Lao in THN file pdf in Lao-Pali text
-
-    Strng = ReverseVowelSigns(Strng,"LaoPali",reverse)
+def _FixLaoPaliEncode(Strng, transcription_mode):
+    Strng = ReverseVowelSigns(Strng,"LaoPali",False)
 
     if transcription_mode:
         Strng = LaoPaliTranscribe(Strng, True)
 
         Strng = Strng.replace("ຫ຺໌","ຫ໌")
 
-    if not reverse:
-        # VS AA + Anusvara -> VS AM (Ligature)
-        Strng = Strng.replace("\u0EB2\u0ECD","\u0EB3")
-    else:
-        # VS AA + Anusvara <- VS AM (Ligature)
-        Strng= Strng.replace("\u0EB3","\u0EB2\u0ECD")
+    Strng = Strng.replace("\u0EB2\u0ECD","\u0EB3")
 
     return Strng
+
+def _FixLaoPaliDecode(Strng, transcription_mode):
+    Strng = ReverseVowelSigns(Strng,"LaoPali",True)
+
+    if transcription_mode:
+        Strng = LaoPaliTranscribe(Strng, True)
+
+        Strng = Strng.replace("ຫ຺໌","ຫ໌")
+
+    # VS AA + Anusvara <- VS AM (Ligature)
+    Strng= Strng.replace("\u0EB3","\u0EB2\u0ECD")
+
+    return Strng
+
+def FixLaoPali(Strng,reverse=False,transcription_mode=False):
+    return _FixLaoPaliDecode(Strng, transcription_mode) if reverse else _FixLaoPaliEncode(Strng, transcription_mode)
 
 def _FixMakasarEncode(Strng):
     ListC = "|".join(Makasar.ConsonantMap)
@@ -2380,45 +2473,52 @@ def _FixAvestanDecode(Strng):
 def FixAvestan(Strng, reverse=False):
     return _FixAvestanDecode(Strng) if reverse else _FixAvestanEncode(Strng)
 
-def FixLao(Strng,reverse=False):
-    if reverse:
-        Strng = Strng.replace("ດ", "ທ\uEB0A")
-        Strng = Strng.replace('ບ', "ປ\uEB0A")
-        Strng = Strng.replace('ຟ', "ພ\uEB0A")
-        Strng = Strng.replace('ັ','ະ')
+def _FixLaoEncode(Strng):
 
-    if not reverse:
-        Strng = Strng.replace("ທ\uEB0A", "ດ")
-        Strng = Strng.replace("ປ\uEB0A", 'ບ')
-        Strng = Strng.replace("ພ\uEB0A",'ຟ')
+    Strng = Strng.replace("ທ\uEB0A", "ດ")
+    Strng = Strng.replace("ປ\uEB0A", 'ບ')
+    Strng = Strng.replace("ພ\uEB0A",'ຟ')
 
-        Strng = re.sub("(?<!ດ)(?<!ບ)(?<!ຟ)\uEB0A", "", Strng)
+    Strng = re.sub("(?<!ດ)(?<!ບ)(?<!ຟ)\uEB0A", "", Strng)
 
-    Strng = ReverseVowelSigns(Strng,"Lao",reverse)
-    Strng = LaoTranscribe(Strng,reverse)
+    Strng = ReverseVowelSigns(Strng,"Lao",False)
+    Strng = LaoTranscribe(Strng,False)
 
-    if not reverse:
-        # VS AA + Anusvara -> VS AM (Ligature)
-        Strng = Strng.replace("\u0EB2\u0ECD","\u0EB3")
+    Strng = Strng.replace("\u0EB2\u0ECD","\u0EB3")
 
-        # Remove the Pseduo Nukta
-        Strng = Strng.replace("\uEB0A", "")
+    # Remove the Pseduo Nukta
+    Strng = Strng.replace("\uEB0A", "")
 
-    else:
-        # VS AA + Anusvara <- VS AM (Ligature)
-        Strng= Strng.replace("\u0EB3","\u0EB2\u0ECD")
-
-        # Swap Nukta
-        Strng = Strng.replace("\u0EBA\uEB0A","\uEB0A\u0EBA")
-
-        ## Fix NHukt and vowe a short a
-
-        Strng = Strng.replace('຺ະ', '')
-        #Strng = Strng.replace('຺', '')
-
-        Strng = Strng.replace('ອ\u0EBAົ','ອົ')
 
     return Strng
+
+def _FixLaoDecode(Strng):
+    Strng = Strng.replace("ດ", "ທ\uEB0A")
+    Strng = Strng.replace('ບ', "ປ\uEB0A")
+    Strng = Strng.replace('ຟ', "ພ\uEB0A")
+    Strng = Strng.replace('ັ','ະ')
+
+
+    Strng = ReverseVowelSigns(Strng,"Lao",True)
+    Strng = LaoTranscribe(Strng,True)
+
+    # VS AA + Anusvara <- VS AM (Ligature)
+    Strng= Strng.replace("\u0EB3","\u0EB2\u0ECD")
+
+    # Swap Nukta
+    Strng = Strng.replace("\u0EBA\uEB0A","\uEB0A\u0EBA")
+
+    ## Fix NHukt and vowe a short a
+
+    Strng = Strng.replace('຺ະ', '')
+    #Strng = Strng.replace('຺', '')
+
+    Strng = Strng.replace('ອ\u0EBAົ','ອົ')
+
+    return Strng
+
+def FixLao(Strng,reverse=False):
+    return _FixLaoDecode(Strng) if reverse else _FixLaoEncode(Strng)
 
 # Re-arrange Vowels Signs /E/, /AI/, /O/ for digraph <dv>, <mh> etc
 # e.g dve -> เทฺว instead of ทฺเว
@@ -2792,13 +2892,20 @@ def _FixWarangCitiDecode(Strng):
 def FixWarangCiti(Strng, reverse=False):
     return _FixWarangCitiDecode(Strng) if reverse else _FixWarangCitiEncode(Strng)
 
-def FixLimbuLoC(Strng, reverse=False):
-    Strng = FixLimbu(Strng, reverse)
-    if reverse:
-        Strng = Strng.replace('ʔ', '᤹')
-        Strng = Strng.replace('꞉', '’')
+def _FixLimbuLoCEncode(Strng):
+    Strng = FixLimbu(Strng, False)
 
     return Strng
+
+def _FixLimbuLoCDecode(Strng):
+    Strng = FixLimbu(Strng, True)
+    Strng = Strng.replace('ʔ', '᤹')
+    Strng = Strng.replace('꞉', '’')
+
+    return Strng
+
+def FixLimbuLoC(Strng, reverse=False):
+    return _FixLimbuLoCDecode(Strng) if reverse else _FixLimbuLoCEncode(Strng)
 
 #Subojined & Final
 def FixLimbu(Strng,reverse=False):
@@ -3374,29 +3481,39 @@ def _FixLatnDecode(Strng, Source):
 def FixLatn(Strng, Source, reverse=False):
     return _FixLatnDecode(Strng, Source) if reverse else _FixLatnEncode(Strng, Source)
 
+def _FixArabEncode(Strng, Source):
+    Strng = PersoArabicPuntuation(Strng, False)
+    pass
+    #Strng = Strng.replace('â', 'ʾ')
+
+    return Strng
+
+def _FixArabDecode(Strng, Source):
+    Strng = PersoArabicPuntuation(Strng, True)
+    Strng = Strng.replace('آ', 'آ').replace('ـ', '')
+    ## reverse shadda kasra
+    Strng = Strng.replace('\u064E\u0651', '\u0651\u064E')
+
+    return Strng
+
 def FixArab(Strng, Source, reverse=False):
-    #print("I am here " + str(reverse))
-    Strng = PersoArabicPuntuation(Strng, reverse)
-    if not reverse:
-        pass
-        #Strng = Strng.replace('â', 'ʾ')
-    else:
-        Strng = Strng.replace('آ', 'آ').replace('ـ', '')
-        ## reverse shadda kasra
-        Strng = Strng.replace('\u064E\u0651', '\u0651\u064E')
+    return _FixArabDecode(Strng, Source) if reverse else _FixArabEncode(Strng, Source)
+
+def _FixThaaEncode(Strng, Source):
+    Strng = PersoArabicPuntuation(Strng, False)
+    pass
+    #Strng = Strng.replace('â', 'ʾ')
+
+    return Strng
+
+def _FixThaaDecode(Strng, Source):
+    Strng = PersoArabicPuntuation(Strng, True)
+    pass
 
     return Strng
 
 def FixThaa(Strng, Source, reverse=False):
-    #print("I am here " + str(reverse))
-    Strng = PersoArabicPuntuation(Strng, reverse)
-    if not reverse:
-        pass
-        #Strng = Strng.replace('â', 'ʾ')
-    else:
-        pass
-
-    return Strng
+    return _FixThaaDecode(Strng, Source) if reverse else _FixThaaEncode(Strng, Source)
 
 def FixArab_Ph(Strng, Source, reverse=False):
     return FixArab(Strng, Source, reverse)
@@ -3406,17 +3523,24 @@ def FixArab_Fa(Strng, Source, reverse=False):
 
     return Strng
 
-def FixArab_Ur(Strng, Source, reverse=False):
-    Strng = FixArab(Strng, Source, reverse)
+def _FixArab_UrEncode(Strng, Source):
+    Strng = FixArab(Strng, Source, False)
 
-    if not reverse:
-        if Source != 'Type':
-            ## introduce hamza
-            pass
-    else:
+    if Source != 'Type':
+        ## introduce hamza
         pass
 
     return Strng
+
+def _FixArab_UrDecode(Strng, Source):
+    Strng = FixArab(Strng, Source, True)
+
+    pass
+
+    return Strng
+
+def FixArab_Ur(Strng, Source, reverse=False):
+    return _FixArab_UrDecode(Strng, Source) if reverse else _FixArab_UrEncode(Strng, Source)
 
 def _FixUgarEncode(Strng, Source):
     Strng = Strng.replace("𐎒²","𐎝")
@@ -3445,25 +3569,14 @@ def _FixSogdDecode(Strng, Source):
 def FixSogd(Strng, Source, reverse=False):
     return _FixSogdDecode(Strng, Source) if reverse else _FixSogdEncode(Strng, Source)
 
-def FixMalayalam(Strng, reverse=False):
-    Strng = PostProcess.MalayalamChillu(Strng, reverse)
+def _FixMalayalamEncode(Strng):
+    Strng = PostProcess.MalayalamChillu(Strng, False)
 
-    if not reverse:
-        Strng = PostProcess.RetainDandasIndic(Strng, 'Malayalam', True)
-        Strng = PostProcess.RetainIndicNumerals(Strng, 'Malayalam', True)
+    Strng = PostProcess.RetainDandasIndic(Strng, 'Malayalam', True)
+    Strng = PostProcess.RetainIndicNumerals(Strng, 'Malayalam', True)
 
-        # fix n2ra
-        #Strng = Strng.replace('ன்ற')
-    else:
-        Strng = PostProcess.RetainIndicNumerals(Strng, 'Malayalam')
-        Strng = PostProcess.RetainDandasIndic(Strng, 'Malayalam')
-
-        #Fix Arachaic chillus
-        chilluArch = ['\u0D54', '\u0D55', '\u0D56', '\u0D7F']
-        chilluArchhVir = ['മ്', 'യ്', 'ഴ്', 'ക്']
-
-        for ch, chvir in zip(chilluArch, chilluArchhVir):
-            Strng = Strng.replace(ch, chvir)
+    # fix n2ra
+    #Strng = Strng.replace('ன்ற')
 
     Chillus=['\u0D7A','\u0D7B','\u0D7C','\u0D7D','\u0D7E', 'ഩ‍്']
 
@@ -3471,6 +3584,29 @@ def FixMalayalam(Strng, reverse=False):
 
 
     return Strng
+
+def _FixMalayalamDecode(Strng):
+    Strng = PostProcess.MalayalamChillu(Strng, True)
+
+    Strng = PostProcess.RetainIndicNumerals(Strng, 'Malayalam')
+    Strng = PostProcess.RetainDandasIndic(Strng, 'Malayalam')
+
+    #Fix Arachaic chillus
+    chilluArch = ['\u0D54', '\u0D55', '\u0D56', '\u0D7F']
+    chilluArchhVir = ['മ്', 'യ്', 'ഴ്', 'ക്']
+
+    for ch, chvir in zip(chilluArch, chilluArchhVir):
+        Strng = Strng.replace(ch, chvir)
+
+    Chillus=['\u0D7A','\u0D7B','\u0D7C','\u0D7D','\u0D7E', 'ഩ‍്']
+
+    Anu = GM.CrunchSymbols(GM.CombiningSigns,'Malayalam')[1]
+
+
+    return Strng
+
+def FixMalayalam(Strng, reverse=False):
+    return _FixMalayalamDecode(Strng) if reverse else _FixMalayalamEncode(Strng)
 
 def _FixTeluguEncode(Strng):
     Strng = PostProcess.RetainDandasIndic(Strng, 'Telugu', True)
@@ -3721,74 +3857,109 @@ def LaoPaliTranscribe(Strng,reverse=False, anusvaraChange = True):
 
 # Assamese and Bengali have the same mapping file duplicated
 # Replace Bengali /ra/ with Assamese /ra/
-def FixBengali(Strng, reverse=False):
+def _FixBengaliEncode(Strng):
     Virama = ''.join(GM.CrunchSymbols(['ViramaMap'], 'Bengali'))
     ba = 'ব'
 
-    if not reverse:
-        Strng = re.sub('(?<![রবম])' + Virama + ba,  Virama + '\u200C' + ba, Strng)
-        #print(Strng)
-        ## Fix স্ভ়ারা  -> স্বারা ; subjoined ba is by default pronounced as /va/ in Bengali
-        Strng = re.sub('(?<![রবমভ়])' + '(\u09CD\u09AD\u09BC)', '\u09CD\u09AC', Strng)
-        #print(Strng)
-    else:
-        pass
+    Strng = re.sub('(?<![রবম])' + Virama + ba,  Virama + '\u200C' + ba, Strng)
+    #print(Strng)
+    ## Fix স্ভ়ারা  -> স্বারা ; subjoined ba is by default pronounced as /va/ in Bengali
+    Strng = re.sub('(?<![রবমভ়])' + '(\u09CD\u09AD\u09BC)', '\u09CD\u09AC', Strng)
+    #print(Strng)
 
-    Strng = PostProcess.KhandaTa(Strng, 'Bengali', reverse)
+    Strng = PostProcess.KhandaTa(Strng, 'Bengali', False)
     #print(Strng)
 
     return Strng
 
-def FixAssamese(Strng,reverse=False):
-    Ra = "\u09B0"
-    AssRa = "\u09F0"
+def _FixBengaliDecode(Strng):
+    Virama = ''.join(GM.CrunchSymbols(['ViramaMap'], 'Bengali'))
+    ba = 'ব'
 
-    Strng = PostProcess.KhandaTa(Strng, 'Assamese', reverse)
+    pass
 
-    if not reverse:
-        Strng = Strng.replace(Ra,AssRa)
-    else:
-        Strng = Strng.replace(AssRa,Ra)
+    Strng = PostProcess.KhandaTa(Strng, 'Bengali', True)
+    #print(Strng)
 
     return Strng
 
-def FixSharada(Strng,reverse=False):
-    Strng = PostProcess.KhandaTa(Strng, 'Assamese', reverse)
+def FixBengali(Strng, reverse=False):
+    return _FixBengaliDecode(Strng) if reverse else _FixBengaliEncode(Strng)
+
+def _FixAssameseEncode(Strng):
+    Ra = "\u09B0"
+    AssRa = "\u09F0"
+
+    Strng = PostProcess.KhandaTa(Strng, 'Assamese', False)
+
+    Strng = Strng.replace(Ra,AssRa)
+
+    return Strng
+
+def _FixAssameseDecode(Strng):
+    Ra = "\u09B0"
+    AssRa = "\u09F0"
+
+    Strng = PostProcess.KhandaTa(Strng, 'Assamese', True)
+
+    Strng = Strng.replace(AssRa,Ra)
+
+    return Strng
+
+def FixAssamese(Strng,reverse=False):
+    return _FixAssameseDecode(Strng) if reverse else _FixAssameseEncode(Strng)
+
+def _FixSharadaEncode(Strng):
+    Strng = PostProcess.KhandaTa(Strng, 'Assamese', False)
 
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Sharada'))
     Nukta = '|'.join(GM.CrunchSymbols(GM.CombiningSigns,'Sharada')[-1])
     Virama = ''.join(GM.CrunchSymbols(['ViramaMap'], 'Sharada'))
 
-    if not reverse:
-        Strng = Strng.replace( Nukta + Virama, Nukta + Virama + '\u200C')
-        Strng = re.sub('(' + Virama + ')' + '(' + ListC + ')' + '(' + Nukta + ')', r'\1' + '\u200C' + r'\2\3', Strng)
+    Strng = Strng.replace( Nukta + Virama, Nukta + Virama + '\u200C')
+    Strng = re.sub('(' + Virama + ')' + '(' + ListC + ')' + '(' + Nukta + ')', r'\1' + '\u200C' + r'\2\3', Strng)
 
-        '''Strng = Strng.replace('𑆇ʼ','\U00011183\U000111CB\U000111B6').replace('𑆈ʼ','\U00011183\U000111CB\U000111B7')\
-            .replace('𑆶ʼ','\U000111CB\U000111B6').replace('𑆷ʼ','\U000111CB\U000111B7')
+    '''Strng = Strng.replace('𑆇ʼ','\U00011183\U000111CB\U000111B6').replace('𑆈ʼ','\U00011183\U000111CB\U000111B7')\
+        .replace('𑆶ʼ','\U000111CB\U000111B6').replace('𑆷ʼ','\U000111CB\U000111B7')
 
-        Strng = Strng.replace('\U00011184ʼ', '𑆃𑇋𑆳')
-        Strng = re.sub('(?<!\U000111BE)\U000111B3ʼ', '\U000111CB\U000111B3', Strng)
+    Strng = Strng.replace('\U00011184ʼ', '𑆃𑇋𑆳')
+    Strng = re.sub('(?<!\U000111BE)\U000111B3ʼ', '\U000111CB\U000111B3', Strng)
 
-        Strng = Strng.replace('𑆃ʼ', '𑆃𑇋', )
-        Strng = re.sub('(' + ListC + ')'+ 'ʼ', r'\1' + '\U000111CB', Strng)'''
+    Strng = Strng.replace('𑆃ʼ', '𑆃𑇋', )
+    Strng = re.sub('(' + ListC + ')'+ 'ʼ', r'\1' + '\U000111CB', Strng)'''
 
 
-    else:
-        pass
-        # u^ u^^ to vriaama
-        # Fix Devanagari as well u^ u^^ to devanagri vowels
 
-        # half-u and half-long-u
-        #Strng = Strng.replace('\U00011183\U000111CB\U000111B6', '𑆇ʼ').replace('\U00011183\U000111CB\U000111B7', '𑆈ʼ').\
-        #    replace('\U000111CB\U000111B6', '𑆶ʼ').replace('\U000111CB\U000111B7', '𑆷ʼ')
 
-        #Strng = Strng.replace('𑆃𑇋𑆳', '\U00011184ʼ')
-        #Strng = re.sub('(?<!\U000111BE)\U000111CB\U000111B3', '\U000111B3ʼ', Strng)
 
-        #Strng = Strng.replace('𑆃𑇋', '𑆃ʼ')
-        #Strng = re.sub('(' + ListC + ')'+ '\U000111CB', r'\1' +  'ʼ', Strng)
 
     return Strng
+
+def _FixSharadaDecode(Strng):
+    Strng = PostProcess.KhandaTa(Strng, 'Assamese', True)
+
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Sharada'))
+    Nukta = '|'.join(GM.CrunchSymbols(GM.CombiningSigns,'Sharada')[-1])
+    Virama = ''.join(GM.CrunchSymbols(['ViramaMap'], 'Sharada'))
+
+    pass
+    # u^ u^^ to vriaama
+    # Fix Devanagari as well u^ u^^ to devanagri vowels
+
+    # half-u and half-long-u
+    #Strng = Strng.replace('\U00011183\U000111CB\U000111B6', '𑆇ʼ').replace('\U00011183\U000111CB\U000111B7', '𑆈ʼ').\
+    #    replace('\U000111CB\U000111B6', '𑆶ʼ').replace('\U000111CB\U000111B7', '𑆷ʼ')
+
+    #Strng = Strng.replace('𑆃𑇋𑆳', '\U00011184ʼ')
+    #Strng = re.sub('(?<!\U000111BE)\U000111CB\U000111B3', '\U000111B3ʼ', Strng)
+
+    #Strng = Strng.replace('𑆃𑇋', '𑆃ʼ')
+    #Strng = re.sub('(' + ListC + ')'+ '\U000111CB', r'\1' +  'ʼ', Strng)
+
+    return Strng
+
+def FixSharada(Strng,reverse=False):
+    return _FixSharadaDecode(Strng) if reverse else _FixSharadaEncode(Strng)
 
 def _FixKannadaEncode(Strng):
     Strng = PostProcess.RetainDandasIndic(Strng, 'Kannada', True)
