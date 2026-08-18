@@ -4,9 +4,10 @@
 
 ## Generate without Short Vowels - Only include for preserver "Source"
 
-from . import PostProcess as PP
-from . import GeneralMap as GM
 from . import ScriptRegistry as SR
+# Aliased: this module's ApplyScriptDefaults already uses the local name
+# "Options" for its own resolved-option-name list.
+from . import Options as OptionsModule
 
 # Target -> default postoptions applied unconditionally for that target.
 # Targets with conditional logic (Bengali: depends on PostOptions; Latn:
@@ -50,7 +51,7 @@ _LATN_SOURCE_DEFAULT_OPTIONS = {
     'Hebr': ['hebraizeLatn'],
 }
 
-def ApplyScriptDefaults(Strng,Source,Target, PostOptions=[]):
+def ApplyScriptDefaults(Strng,Source,Target, PostOptions=[], ctx=None):
     Options = []
 
     #print('Target is ' + Target)
@@ -72,8 +73,8 @@ def ApplyScriptDefaults(Strng,Source,Target, PostOptions=[]):
 
     for Option in Options:
         if Option.find(Target) != -1:
-            Strng = GM.resolve(PP,Option,Strng)
+            Strng = OptionsModule.call_post_option(Option,Strng,ctx=ctx)
         else:
-            Strng = GM.resolve(PP,Option,Strng,Target)
+            Strng = OptionsModule.call_post_option(Option,Strng,Target,ctx=ctx)
 
     return Strng

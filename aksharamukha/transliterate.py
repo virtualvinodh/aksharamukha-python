@@ -492,7 +492,7 @@ def _apply_target_renaming_postoptions(src, tgt, txt, preoptions, postoptions, n
 
     return src, tgt, txt, preoptions, postoptions, nativize
 
-def _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativize):
+def _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativize, ctx):
     # Thai/Lao "short vowels not shown" transcription mode - previously
     # signalled by splicing a private-use marker into txt itself and having
     # ConvertFix.FixThai/FixLaoPali check for it; now a real parameter
@@ -505,7 +505,7 @@ def _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativiz
                            or 'ThaiOrthography' in preoptions or 'LaoTranscription' in preoptions)
 
     for options in preoptions:
-      txt = GeneralMap.resolve(PreProcess, options, txt)
+      txt = Options.call_pre_option(options, txt, ctx=ctx)
 
     ### Semitic Switches
     if 'novowelshebrew' in preoptions and src == 'Hebr':
@@ -556,15 +556,15 @@ def _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, transcripti
 
     return tgt, transliteration
 
-def _apply_final_postprocessing(src, tgt, txt, transliteration, nativize, preoptions, postoptions):
+def _apply_final_postprocessing(src, tgt, txt, transliteration, nativize, preoptions, postoptions, ctx):
     ## apply phonetic mapping for Arabic beforehand if not semitic source
     if (not SR.get(src).is_semitic and tgt == 'Arab' and nativize) or 'arabicRemoveAdditionsPhonetic' in postoptions:
-        transliteration = GeneralMap.resolve(PostProcess, 'arabicRemoveAdditionsPhonetic', transliteration)
+        transliteration = Options.call_post_option('arabicRemoveAdditionsPhonetic', transliteration, ctx=ctx)
 
     #print(transliteration)
 
     if nativize:
-      transliteration =  PostOptions.ApplyScriptDefaults(transliteration, src, tgt, postoptions)
+      transliteration =  PostOptions.ApplyScriptDefaults(transliteration, src, tgt, postoptions, ctx)
       if tgt != 'Latn':
         if tgt != 'Tamil':
             transliteration = PostProcess.RemoveDiacritics(transliteration)
@@ -578,7 +578,7 @@ def _apply_final_postprocessing(src, tgt, txt, transliteration, nativize, preopt
         postoptions = map(lambda x: 'RemoveDiacriticsTamil' if x == 'RemoveDiacritics' else x, postoptions)
 
     for options in postoptions:
-      transliteration = GeneralMap.resolve(PostProcess, options, transliteration)
+      transliteration = Options.call_post_option(options, transliteration, ctx=ctx)
 
     if src == "Tamil" and tgt == "IPA":
         r = requests.get("http://anunaadam.appspot.com/api?text=" + txt + "&method=2")
@@ -633,7 +633,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     #if src not in GeneralMap.SemiticScripts and tgt == 'Arab' and not nativize:
         #postoptions.append('arabicRemoveAdditionsPhonetic')
 
-    src, tgt, txt, srcOld, transcription_mode = _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativize)
+    src, tgt, txt, srcOld, transcription_mode = _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativize, ctx)
 
     tgt, transliteration = _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, transcription_mode, ctx)
 
@@ -642,7 +642,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         textConv = collections.OrderedDict(sorted(textConv.items()))
         transliteration = "".join(textConv.values())'''
 
-    return _apply_final_postprocessing(src, tgt, txt, transliteration, nativize, preoptions, postoptions)
+    return _apply_final_postprocessing(src, tgt, txt, transliteration, nativize, preoptions, postoptions, ctx)
 
 def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [], param="default"):
     if param == "default":

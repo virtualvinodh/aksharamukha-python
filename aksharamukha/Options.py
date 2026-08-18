@@ -20,12 +20,22 @@ transliterate.convert_default(), run on every single conversion call:
    now warn on any unrecognized name instead of ignoring it.
 """
 
+import functools
+import inspect
 import warnings
 from inspect import getmembers, isfunction
 from . import PreProcess, PostProcess
 
-PRE_OPTIONS = frozenset(name for name, _ in getmembers(PreProcess, isfunction))
-POST_OPTIONS = frozenset(name for name, _ in getmembers(PostProcess, isfunction))
+# Real function references, resolved once at import time, instead of a bare
+# name string re-resolved via getattr() on every single dispatch call (the
+# "stringly-typed options" pattern - see MARKERS.md/the code audit, pattern
+# 05). PRE_OPTIONS/POST_OPTIONS are derived from these dicts' keys so the
+# two can never drift apart.
+_PRE_OPTION_FUNCS = dict(getmembers(PreProcess, isfunction))
+_POST_OPTION_FUNCS = dict(getmembers(PostProcess, isfunction))
+
+PRE_OPTIONS = frozenset(_PRE_OPTION_FUNCS)
+POST_OPTIONS = frozenset(_POST_OPTION_FUNCS)
 
 _PRE_OPTIONS_LOWER = {name.lower(): name for name in PRE_OPTIONS}
 _POST_OPTIONS_LOWER = {name.lower(): name for name in POST_OPTIONS}
@@ -51,3 +61,33 @@ def normalize_pre_options(options):
 
 def normalize_post_options(options):
     return _normalize(options, _POST_OPTIONS_LOWER, 'Post')
+
+
+@functools.lru_cache(maxsize=None)
+def _accepts_ctx(fn):
+    try:
+        return 'ctx' in inspect.signature(fn).parameters
+    except (TypeError, ValueError):
+        return False
+
+
+def call_pre_option(name, txt, ctx=None):
+    # Unknown name -> AttributeError, matching the getattr() failure mode
+    # this replaces (a typo'd pre_options entry should fail loudly, not
+    # silently no-op - see GeneralMap.resolve's optional=False default,
+    # which this mirrors for the same reason).
+    fn = _PRE_OPTION_FUNCS.get(name)
+    if fn is None:
+        raise AttributeError("module 'aksharamukha.PreProcess' has no attribute '" + name + "'")
+    if ctx is not None and _accepts_ctx(fn):
+        return fn(txt, ctx=ctx)
+    return fn(txt)
+
+
+def call_post_option(name, txt, *extra, ctx=None):
+    fn = _POST_OPTION_FUNCS.get(name)
+    if fn is None:
+        raise AttributeError("module 'aksharamukha.PostProcess' has no attribute '" + name + "'")
+    if ctx is not None and _accepts_ctx(fn):
+        return fn(txt, *extra, ctx=ctx)
+    return fn(txt, *extra)
