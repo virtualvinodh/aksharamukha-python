@@ -417,6 +417,39 @@ def _resolve_semitic_indic_naming(src, tgt, txt, preoptions, postoptions, nativi
 
     return src, tgt, txt, preoptions, postoptions, nativize, tgtOld
 
+def _apply_target_renaming_postoptions(src, tgt, txt, preoptions, postoptions, nativize):
+    if 'siddhammukta' in postoptions and tgt == 'Siddham':
+        tgt = 'SiddhamDevanagari'
+    if 'siddhamap' in postoptions and tgt == 'Siddham':
+        tgt = 'SiddhamDevanagari'
+    if 'siddhammukta' in preoptions and src == 'Siddham':
+        src = 'SiddhamDevanagari'
+    if 'LaoNative' in postoptions and tgt == 'Lao':
+        tgt = 'Lao2'
+    if 'egrantamil' in preoptions and src == 'Grantha':
+        src = 'GranthaGrantamil'
+    if 'egrantamil' in postoptions and tgt == 'Grantha':
+        tgt = 'GranthaGrantamil'
+    if 'nepaldevafont' in postoptions and tgt == 'Newa':
+        tgt = 'Devanagari'
+    if 'ranjanalantsa' in postoptions and tgt == 'Ranjana':
+        tgt = 'Tibetan'
+        nativize = False
+    if 'ranjanawartu' in postoptions and tgt == 'Ranjana':
+        tgt = 'Tibetan'
+        nativize = False
+    if 'BengaliRaBa' in postoptions and tgt == 'Bengali':
+        tgt = 'BengaliRaBa'
+        nativize = False
+    if 'SoyomboFinals' in postoptions and tgt == 'Soyombo':
+        txt = 'ʾ' + txt
+    if  'BalineseSimplified' in postoptions and src == 'Balinese':
+        tgt = 'BalineseSimpleRomanLoC'
+    if  'JavaneseSimplified' in postoptions and src == 'Javanese':
+        tgt = 'JavaneseSimpleRomanLoC'
+
+    return src, tgt, txt, preoptions, postoptions, nativize
+
 def convert(src, tgt, txt, nativize, preoptions, postoptions):
     src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize)
 
@@ -446,35 +479,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     txt = PreProcess.PreProcess(txt,src,tgt,postoptions,preoptions)
 
-    if 'siddhammukta' in postoptions and tgt == 'Siddham':
-        tgt = 'SiddhamDevanagari'
-    if 'siddhamap' in postoptions and tgt == 'Siddham':
-        tgt = 'SiddhamDevanagari'
-    if 'siddhammukta' in preoptions and src == 'Siddham':
-        src = 'SiddhamDevanagari'
-    if 'LaoNative' in postoptions and tgt == 'Lao':
-        tgt = 'Lao2'
-    if 'egrantamil' in preoptions and src == 'Grantha':
-        src = 'GranthaGrantamil'
-    if 'egrantamil' in postoptions and tgt == 'Grantha':
-        tgt = 'GranthaGrantamil'
-    if 'nepaldevafont' in postoptions and tgt == 'Newa':
-        tgt = 'Devanagari'
-    if 'ranjanalantsa' in postoptions and tgt == 'Ranjana':
-        tgt = 'Tibetan'
-        nativize = False
-    if 'ranjanawartu' in postoptions and tgt == 'Ranjana':
-        tgt = 'Tibetan'
-        nativize = False
-    if 'BengaliRaBa' in postoptions and tgt == 'Bengali':
-        tgt = 'BengaliRaBa'
-        nativize = False
-    if 'SoyomboFinals' in postoptions and tgt == 'Soyombo':
-        txt = '\u02BE' + txt
-    if  'BalineseSimplified' in postoptions and src == 'Balinese':
-        tgt = 'BalineseSimpleRomanLoC'
-    if  'JavaneseSimplified' in postoptions and src == 'Javanese':
-        tgt = 'JavaneseSimpleRomanLoC'
+    src, tgt, txt, preoptions, postoptions, nativize = _apply_target_renaming_postoptions(src, tgt, txt, preoptions, postoptions, nativize)
 
     #if src not in GeneralMap.SemiticScripts and tgt == 'Arab' and not nativize:
         #postoptions.append('arabicRemoveAdditionsPhonetic')
