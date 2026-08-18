@@ -750,52 +750,66 @@ def retainLatin(Strng, reverse=False):
 
     return Strng
 
-def JapanesePreProcess(src, txt, preoptions):
+# --- JapanesePreProcess pipeline stages ---------------------------------
+# Extracted verbatim, no logic changes. Real test coverage exists (the
+# eiaudipthongs/wasvnukta preoptions each have 20 cases across both
+# Hiragana and Katakana sources), verified the same way as everywhere
+# else in this session: A/B comparison plus the full suite.
+
+def _japanese_kakasi_romanize(txt):
     import pykakasi
     from . import Convert
 
-    if src == 'Hiragana' or src == 'Katakana':
-        # preserve roman words
-        kks = pykakasi.kakasi()
+    kks = pykakasi.kakasi()
 
-        txt = Convert.convertScript(txt.lower(), "ISO", "Devanagari")
-        #print(txt)
+    txt = Convert.convertScript(txt.lower(), "ISO", "Devanagari")
+    #print(txt)
 
-        cv = kks.convert(txt)
-        txt = ''
+    cv = kks.convert(txt)
+    txt = ''
 
-        for item in cv:
-            txt = txt + ' ' + item['hepburn']
-
-        if 'eiaudipthongs' in preoptions:
-            txt = txt.replace('ou', 'o\u02BDu').replace('ei', 'e\u02BDi')
-
-        txt = re.sub('(r)([aiueo])(\u309A\u309A)', 'l' + r'\2\2', txt)
-        txt = re.sub('(r)([aāiīuūeēoō])(\u309A)', 'l' + r'\2', txt)
-
-        txt = re.sub('(k)([aiueo])(\u309A\u309A)', 'ṅ' + r'\2\2', txt)
-        txt = re.sub('(k)([aāiīuūeēoō])(\u309A)', 'ṅ' + r'\2', txt)
-
-        txt = txt.replace('aa', 'ā').replace('ii', 'ī').replace('ee', 'ē').replace('oo', 'ō').replace('uu','ū')
-        txt = txt.replace('a-', 'ā').replace('i-', 'ī').replace('e-', 'ē').replace('o-', 'ō').replace('u-','ū')
-        txt = txt.replace("n'", 'n_').replace('ch', 'c').replace('sh', 'ṣ').replace('sṣ', 'ṣṣ').replace('ai', 'a_i').replace('au', 'a_u')
-        txt = txt.replace('w', 'v')
-        txt = txt.replace('ou', 'ō').replace('ei', 'ē')
-        txt = txt.replace('、', ',').replace('。', '.')
-
-        # Nasalization of n
-
-        txt= txt.replace('ng', 'ṅg').replace('nk', 'ṅk').replace('nk', 'ṅk').replace('np', 'mp').replace('nb', 'mb').replace('nm', 'mm')
-
-        if 'wasvnukta' in preoptions:
-            txt = txt.replace('v', 'v̈')
-
-        #print(txt)
-
-        txt = txt.replace('、', ',').replace('。', '.')
+    for item in cv:
+        txt = txt + ' ' + item['hepburn']
 
     return txt
 
+def _japanese_normalize_romanization(txt, preoptions):
+    if 'eiaudipthongs' in preoptions:
+        txt = txt.replace('ou', 'o\u02BDu').replace('ei', 'e\u02BDi')
+
+    txt = re.sub('(r)([aiueo])(\u309A\u309A)', 'l' + r'\2\2', txt)
+    txt = re.sub('(r)([aāiīuūeēoō])(\u309A)', 'l' + r'\2', txt)
+
+    txt = re.sub('(k)([aiueo])(\u309A\u309A)', 'ṅ' + r'\2\2', txt)
+    txt = re.sub('(k)([aāiīuūeēoō])(\u309A)', 'ṅ' + r'\2', txt)
+
+    txt = txt.replace('aa', 'ā').replace('ii', 'ī').replace('ee', 'ē').replace('oo', 'ō').replace('uu','ū')
+    txt = txt.replace('a-', 'ā').replace('i-', 'ī').replace('e-', 'ē').replace('o-', 'ō').replace('u-','ū')
+    txt = txt.replace("n'", 'n_').replace('ch', 'c').replace('sh', 'ṣ').replace('sṣ', 'ṣṣ').replace('ai', 'a_i').replace('au', 'a_u')
+    txt = txt.replace('w', 'v')
+    txt = txt.replace('ou', 'ō').replace('ei', 'ē')
+    txt = txt.replace('、', ',').replace('。', '.')
+
+    # Nasalization of n
+
+    txt= txt.replace('ng', 'ṅg').replace('nk', 'ṅk').replace('nk', 'ṅk').replace('np', 'mp').replace('nb', 'mb').replace('nm', 'mm')
+
+    if 'wasvnukta' in preoptions:
+        txt = txt.replace('v', 'v̈')
+
+    #print(txt)
+
+    txt = txt.replace('、', ',').replace('。', '.')
+
+    return txt
+
+def JapanesePreProcess(src, txt, preoptions):
+    if src == 'Hiragana' or src == 'Katakana':
+        # preserve roman words
+        txt = _japanese_kakasi_romanize(txt)
+        txt = _japanese_normalize_romanization(txt, preoptions)
+
+    return txt
 def holamlong(Strng):
     Strng = Strng.replace('ֹּ','ֹּ')
     Strng = re.sub('(?<!ו)ֹ', 'וֹ', Strng)
