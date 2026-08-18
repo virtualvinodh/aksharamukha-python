@@ -490,6 +490,30 @@ def _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativiz
 
     return src, tgt, txt, srcOld, transcription_mode
 
+def _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, transcription_mode):
+    if src == "Itrans" and '##' in txt:
+        #print('I am here tyring to do things')
+        transliteration = ''
+        for i, word in enumerate(txt.split("##")):
+            if (i%2 == 0):
+                transliteration += Convert.convertScript(word, src, tgt, transcription_mode=transcription_mode)
+            else:
+                transliteration += word
+    else:
+        transliteration = Convert.convertScript(txt, src, tgt, transcription_mode=transcription_mode)
+
+    #print(transliteration)
+
+    if srcOld == 'Japanese' and tgt != 'Devanagari' and 'siddhammukta' not in postoptions:
+        transliteration = Convert.convertScript(transliteration, "Devanagari", "ISO")
+        # print(transliteration)
+
+    if src == tgtOld:
+        tgt = tgtOld
+        transliteration = Convert.convertScript(transliteration, "Devanagari", tgt)
+
+    return tgt, transliteration
+
 def convert(src, tgt, txt, nativize, preoptions, postoptions):
     src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize)
 
@@ -526,26 +550,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     src, tgt, txt, srcOld, transcription_mode = _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativize)
 
-    if src == "Itrans" and '##' in txt:
-        #print('I am here tyring to do things')
-        transliteration = ''
-        for i, word in enumerate(txt.split("##")):
-            if (i%2 == 0):
-                transliteration += Convert.convertScript(word, src, tgt, transcription_mode=transcription_mode)
-            else:
-                transliteration += word
-    else:
-        transliteration = Convert.convertScript(txt, src, tgt, transcription_mode=transcription_mode)
-
-    #print(transliteration)
-
-    if srcOld == 'Japanese' and tgt != 'Devanagari' and 'siddhammukta' not in postoptions:
-        transliteration = Convert.convertScript(transliteration, "Devanagari", "ISO")
-        # print(transliteration)
-
-    if src == tgtOld:
-        tgt = tgtOld
-        transliteration = Convert.convertScript(transliteration, "Devanagari", tgt)
+    tgt, transliteration = _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, transcription_mode)
 
     ## apply phonetic mapping for Arabic beforehand if not semitic source
     if (not SR.get(src).is_semitic and tgt == 'Arab' and nativize) or 'arabicRemoveAdditionsPhonetic' in postoptions:
