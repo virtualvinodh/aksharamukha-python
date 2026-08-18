@@ -246,74 +246,96 @@ def _apply_indic_dandas_preoption(src, tgt, txt, preoptions, postoptions):
 
     return txt, preoptions, postoptions
 
+# The two "not LoC-associated" cases (src-side and tgt-side) really are
+# clean mirrors of each other - unified here.
+def _resolve_loc_fallback_target(script):
+    if SR.get(script).is_semitic:
+        return 'ISO233'
+    else:
+        return 'ISO'
+
+# The two "is LoC-associated" cases (below) are NOT clean mirrors of each
+# other, despite looking like they should be - kept as two separate named
+# functions rather than one merged behind an is_source flag, which would
+# just be the reverse=-fusion anti-pattern in a new shape. Real differences,
+# not just renamed variables:
+#  - target-side alone injects the Khuen-text u02BE marker
+#  - source-side alone adds the extra 'SchwaFinalKhmerLoC' preoption
+#  - source-side appends to preoptions but prepends to postoptions;
+#    target-side prepends to both
+#  - they read different ScriptRegistry fields (loc_tgt_* vs loc_src_*)
+def _resolve_loc_when_source_is_loc_script(src, tgt, txt, preoptions, postoptions, nativize):
+    ### swtiches for Source scripts
+    if SR.get(src).loc_src_map:
+        src = src + 'LoC'
+    elif 'Tham' in src:
+        src = 'ThamLoC'
+    if SR.get(src).loc_tgt_map:
+        tgt = src + tgt
+    elif SR.get(src).loc_tgt_iso:
+        tgt = 'ISO'
+
+    # the below order for preoptions is important
+    #special for east-asian scripts
+    if SR.get(src).loc_post_pre:
+        preoptions = preoptions + [tgt + 'Target']
+        postoptions =  [tgt + 'Target'] + postoptions
+        nativize = False
+
+        if src in ['KhmerLoC']:
+            preoptions =  preoptions + ['SchwaFinalKhmerLoC']
+    #read from ScriptRegistry
+    else:
+        if SR.get(src).loc_tgt_post_options:
+            postoptions =  list(SR.get(src).loc_tgt_post_options) + postoptions
+        if SR.get(src).loc_tgt_pre_options:
+            preoptions =  preoptions + list(SR.get(src).loc_tgt_pre_options)
+
+    return src, tgt, txt, preoptions, postoptions, nativize
+
+def _resolve_loc_when_target_is_loc_script(src, tgt, txt, preoptions, postoptions, nativize):
+    if SR.get(tgt).loc_src_map:
+        tgt = tgt + 'LoC'
+    elif 'Tham' in tgt:
+        if 'Khuen' in tgt:
+            txt = txt+'\u02BE' # indicator for Khuen text
+        tgt = 'ThamLoC'
+    if SR.get(tgt).loc_tgt_map:
+        src = tgt + src
+    elif SR.get(tgt).loc_tgt_iso:
+        src = 'ISO'
+
+    if SR.get(tgt).loc_post_pre:
+        preoptions = [src + 'Source'] + preoptions
+        postoptions =  [src + 'Source'] + postoptions
+        nativize = False
+    #read from ScriptRegistry
+    else:
+        if SR.get(tgt).loc_src_post_options:
+            postoptions =  list(SR.get(tgt).loc_src_post_options) + postoptions
+        if SR.get(tgt).loc_src_pre_options:
+            preoptions =  preoptions + list(SR.get(tgt).loc_src_pre_options)
+
+    return src, tgt, txt, preoptions, postoptions, nativize
+
 def _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize):
     ## ALA-LC Romanizations
     ## process as follows, if source is associated with LoC script
     if tgt == 'RomanLoC' and SR.get(src).is_loc_script:
-    ### swtiches for Source scripts
-        if SR.get(src).loc_src_map:
-            src = src + 'LoC'
-        elif 'Tham' in src:
-            src = 'ThamLoC'
-        if SR.get(src).loc_tgt_map:
-            tgt = src + tgt
-        elif SR.get(src).loc_tgt_iso:
-            tgt = 'ISO'
-
-        # the below order for preoptions is important
-        #special for east-asian scripts
-        if SR.get(src).loc_post_pre:
-            preoptions = preoptions + [tgt + 'Target']
-            postoptions =  [tgt + 'Target'] + postoptions
-            nativize = False
-
-            if src in ['KhmerLoC']:
-                preoptions =  preoptions + ['SchwaFinalKhmerLoC']
-        #read from ScriptRegistry
-        else:
-            if SR.get(src).loc_tgt_post_options:
-                postoptions =  list(SR.get(src).loc_tgt_post_options) + postoptions
-            if SR.get(src).loc_tgt_pre_options:
-                preoptions =  preoptions + list(SR.get(src).loc_tgt_pre_options)
+        src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_when_source_is_loc_script(src, tgt, txt, preoptions, postoptions, nativize)
 
     ## if source is not associated with LoC script
     if tgt == 'RomanLoC' and not SR.get(src).is_loc_script:
-        if SR.get(src).is_semitic:
-            tgt = 'ISO233'
-        else:
-            tgt = 'ISO'
+        tgt = _resolve_loc_fallback_target(src)
 
     ## Switches for Target scripts
     ## if target is associated with the loc Script
     if src == 'RomanLoC' and SR.get(tgt).is_loc_script:
-        if SR.get(tgt).loc_src_map:
-            tgt = tgt + 'LoC'
-        elif 'Tham' in tgt:
-            if 'Khuen' in tgt:
-                txt = txt+'\u02BE' # indicator for Khuen text
-            tgt = 'ThamLoC'
-        if SR.get(tgt).loc_tgt_map:
-            src = tgt + src
-        elif SR.get(tgt).loc_tgt_iso:
-            src = 'ISO'
-
-        if SR.get(tgt).loc_post_pre:
-            preoptions = [src + 'Source'] + preoptions
-            postoptions =  [src + 'Source'] + postoptions
-            nativize = False
-        #read from ScriptRegistry
-        else:
-            if SR.get(tgt).loc_src_post_options:
-                postoptions =  list(SR.get(tgt).loc_src_post_options) + postoptions
-            if SR.get(tgt).loc_src_pre_options:
-                preoptions =  preoptions + list(SR.get(tgt).loc_src_pre_options)
+        src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_when_target_is_loc_script(src, tgt, txt, preoptions, postoptions, nativize)
 
     ## if target is not associated with the loc Script
     if src == 'RomanLoC' and not SR.get(tgt).is_loc_script:
-        if SR.get(tgt).is_semitic:
-            src = 'ISO233'
-        else:
-            src = 'ISO'
+        src = _resolve_loc_fallback_target(tgt)
 
     return src, tgt, txt, preoptions, postoptions, nativize
 
