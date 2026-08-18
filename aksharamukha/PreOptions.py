@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from . import PreProcess as PP
+from . import GeneralMap as GM
 
 def ApplyPreProcessing(Strng,Source,Target):
     if Target == "PhagsPa":
@@ -12,10 +13,10 @@ def ApplyPreProcessing(Strng,Source,Target):
 
     for Option in Options:
         if Option.find(Target) != -1:
-            Strng = getattr(PP,Option)(Strng,Source)
+            Strng = GM.resolve(PP,Option,Strng,Source)
             #print (Strng)
         else:
-            Strng = getattr(PP,Option)(Strng,Target)
+            Strng = GM.resolve(PP,Option,Strng,Target)
             #print(Strng)
 
     return Strng

@@ -109,8 +109,8 @@ def ApplyScriptDefaults(Strng,Source,Target, PostOptions=[]):
 
     for Option in Options:
         if Option.find(Target) != -1:
-            Strng = getattr(PP,Option)(Strng)
+            Strng = GM.resolve(PP,Option,Strng)
         else:
-            Strng = getattr(PP,Option)(Strng,Target)
+            Strng = GM.resolve(PP,Option,Strng,Target)
 
     return Strng
