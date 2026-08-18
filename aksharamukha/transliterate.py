@@ -223,6 +223,29 @@ def detect_preoptions(text, inputScript):
 
     return preoptions
 
+# --- convert() pipeline stages -----------------------------------------
+# Extracted verbatim from convert() below, one labeled block at a time -
+# no logic changes, same variables in and out. See the refactor plan:
+# convert() is 330 lines of ~14 sequentially-interleaved concerns sharing
+# the same handful of mutable variables (src, tgt, preoptions,
+# postoptions, nativize); breaking it into named stages is being done
+# incrementally, lowest-risk stages first, each independently verified.
+
+def _apply_indic_dandas_preoption(src, tgt, txt, preoptions, postoptions):
+    ## this has to be before preprocess.preprocess
+    if 'indicDandas' in postoptions:
+        if SR.get(src).is_pipe_script and '|' in txt:
+            txt = PreProcess.RetainPipeDanda(txt, src)
+        elif GeneralMap.CrunchList('SignMap', src)[1] == '।':
+            preoptions = preoptions + ['RetainDevangariDanda']
+        else:
+            if not SR.get(tgt).is_transliteration:
+                postoptions = postoptions + ['Dot2Dandas']
+            else:
+                postoptions = postoptions + ['Dot2Pipes']
+
+    return txt, preoptions, postoptions
+
 def convert(src, tgt, txt, nativize, preoptions, postoptions):
     tgtOld = ""
 
@@ -405,17 +428,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         tgtOld = tgt
         tgt = "Devanagari"
 
-    ## this has to be before preprocess.preprocess
-    if 'indicDandas' in postoptions:
-        if src in GeneralMap.pipeScripts and '|' in txt:
-            txt = PreProcess.RetainPipeDanda(txt, src)
-        elif GeneralMap.CrunchList('SignMap', src)[1] == '।':
-            preoptions = preoptions + ['RetainDevangariDanda']
-        else:
-            if tgt not in GeneralMap.Transliteration:
-                postoptions = postoptions + ['Dot2Dandas']
-            else:
-                postoptions = postoptions + ['Dot2Pipes']
+    txt, preoptions, postoptions = _apply_indic_dandas_preoption(src, tgt, txt, preoptions, postoptions)
 
     txt = PreProcess.PreProcess(txt,src,tgt,postoptions,preoptions)
 
