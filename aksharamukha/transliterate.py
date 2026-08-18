@@ -266,10 +266,7 @@ def _resolve_loc_fallback_target(script):
 #  - they read different ScriptRegistry fields (loc_tgt_* vs loc_src_*)
 def _resolve_loc_when_source_is_loc_script(src, tgt, txt, preoptions, postoptions, nativize):
     ### swtiches for Source scripts
-    if SR.get(src).loc_src_map:
-        src = src + 'LoC'
-    elif 'Tham' in src:
-        src = 'ThamLoC'
+    src = SR.get(src).loc_pivot_name
     if SR.get(src).loc_tgt_map:
         tgt = src + tgt
     elif SR.get(src).loc_tgt_iso:
@@ -294,12 +291,9 @@ def _resolve_loc_when_source_is_loc_script(src, tgt, txt, preoptions, postoption
     return src, tgt, txt, preoptions, postoptions, nativize
 
 def _resolve_loc_when_target_is_loc_script(src, tgt, txt, preoptions, postoptions, nativize):
-    if SR.get(tgt).loc_src_map:
-        tgt = tgt + 'LoC'
-    elif 'Tham' in tgt:
-        if 'Khuen' in tgt:
-            txt = txt+'\u02BE' # indicator for Khuen text
-        tgt = 'ThamLoC'
+    if 'Khuen' in tgt:
+        txt = txt+'\u02BE' # indicator for Khuen text
+    tgt = SR.get(tgt).loc_pivot_name
     if SR.get(tgt).loc_tgt_map:
         src = tgt + src
     elif SR.get(tgt).loc_tgt_iso:

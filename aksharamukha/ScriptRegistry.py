@@ -67,6 +67,25 @@ class ScriptDescriptor:
     loc_src_post_options: Tuple[str, ...] = field(default_factory=tuple)
     loc_src_pre_options: Tuple[str, ...] = field(default_factory=tuple)
 
+    # What this script's name becomes when routing through the LoC<->RomanLoC
+    # pivot (e.g. 'Gurmukhi' -> 'GurmukhiLoC', any Tham-family script ->
+    # 'ThamLoC'). Equal to the script's own name when there's no distinct
+    # pivot form. Replaces the "src = src + 'LoC'" string-concatenation
+    # previously inline in transliterate.py's LoC dispatch, which assumed
+    # (correctly, but silently) that the concatenation always produces a
+    # real registered script name. _verify_consistency() below checks that
+    # assumption explicitly instead of leaving it implicit.
+    loc_pivot_name: str = ''
+
+
+def _loc_pivot_name_for(name):
+    if name in GM.LoCSrcMap:
+        return name + 'LoC'
+    elif 'Tham' in name:
+        return 'ThamLoC'
+    else:
+        return name
+
 
 def _category_for(name):
     for cat, members in GM.ScriptCategory.items():
@@ -115,6 +134,7 @@ def _build_registry():
             loc_tgt_pre_options=tuple(GM.LoCTgtPreOptions.get(name, [])),
             loc_src_post_options=tuple(GM.LoCSrcPostOptions.get(name, [])),
             loc_src_pre_options=tuple(GM.LoCSrcPreOptions.get(name, [])),
+            loc_pivot_name=_loc_pivot_name_for(name),
         )
 
     return registry
@@ -129,6 +149,7 @@ _MISSING = ScriptDescriptor(
     is_reversible=False, has_roman_numerals=False, has_roman_punct=False,
     gemination_mark=None, is_loc_script=False, loc_post_pre=False,
     loc_src_map=False, loc_tgt_map=False, loc_tgt_iso=False,
+    loc_pivot_name='',
 )
 
 
@@ -176,6 +197,16 @@ def _verify_consistency():
         assert d.loc_tgt_pre_options == tuple(GM.LoCTgtPreOptions.get(name, [])), name
         assert d.loc_src_post_options == tuple(GM.LoCSrcPostOptions.get(name, [])), name
         assert d.loc_src_pre_options == tuple(GM.LoCSrcPreOptions.get(name, [])), name
+        assert d.loc_pivot_name == _loc_pivot_name_for(name), name
+        # The pivot name must always be either the script's own identity or
+        # an actually-registered script - catches exactly the kind of silent
+        # "X + 'LoC' isn't a real script" gap this field exists to prevent.
+        # (Not required for every one of the 180 registered scripts, only
+        # the ones actually reachable via is_loc_script - LoCTgtMap has one
+        # unreachable stale entry, bare 'Batak', that fails this check and
+        # is expected to.)
+        if d.is_loc_script:
+            assert d.loc_pivot_name == name or d.loc_pivot_name in SCRIPTS, (name, d.loc_pivot_name)
 
 
 _verify_consistency()
