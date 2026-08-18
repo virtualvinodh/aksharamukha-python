@@ -246,6 +246,29 @@ def _apply_indic_dandas_preoption(src, tgt, txt, preoptions, postoptions):
 
     return txt, preoptions, postoptions
 
+# The 4 "east-Asian LoC" pivot scripts (Burmese, Shan, Khmer, and the
+# Tham-family) get an extra preoption/postoption injected by name, e.g.
+# 'BurmeseRomanLoCTarget' - previously built by raw string concatenation
+# (tgt + 'Target' / src + 'Source') with no check that the constructed name
+# actually corresponds to a real function. Audited: all 8 names below have
+# a real consumer in both PreProcess.py and PostProcess.py (confirmed via
+# grep, 2026-08). Made explicit here instead of computed blindly - can't
+# verify this the way ScriptRegistry verifies its other fields, since
+# PreProcess.py/PostProcess.py already import ScriptRegistry, so importing
+# them back from here would be circular.
+_LOC_POST_PRE_TARGET_OPTION = {
+    'Burmese': 'BurmeseRomanLoCTarget',
+    'ShanLoC': 'ShanLoCRomanLoCTarget',
+    'KhmerLoC': 'KhmerLoCRomanLoCTarget',
+    'ThamLoC': 'ThamLoCRomanLoCTarget',
+}
+_LOC_POST_PRE_SOURCE_OPTION = {
+    'Burmese': 'BurmeseRomanLoCSource',
+    'ShanLoC': 'ShanLoCRomanLoCSource',
+    'KhmerLoC': 'KhmerLoCRomanLoCSource',
+    'ThamLoC': 'ThamLoCRomanLoCSource',
+}
+
 # The two "not LoC-associated" cases (src-side and tgt-side) really are
 # clean mirrors of each other - unified here.
 def _resolve_loc_fallback_target(script):
@@ -275,8 +298,9 @@ def _resolve_loc_when_source_is_loc_script(src, tgt, txt, preoptions, postoption
     # the below order for preoptions is important
     #special for east-asian scripts
     if SR.get(src).loc_post_pre:
-        preoptions = preoptions + [tgt + 'Target']
-        postoptions =  [tgt + 'Target'] + postoptions
+        target_option = _LOC_POST_PRE_TARGET_OPTION[src]
+        preoptions = preoptions + [target_option]
+        postoptions =  [target_option] + postoptions
         nativize = False
 
         if src in ['KhmerLoC']:
@@ -300,8 +324,9 @@ def _resolve_loc_when_target_is_loc_script(src, tgt, txt, preoptions, postoption
         src = 'ISO'
 
     if SR.get(tgt).loc_post_pre:
-        preoptions = [src + 'Source'] + preoptions
-        postoptions =  [src + 'Source'] + postoptions
+        source_option = _LOC_POST_PRE_SOURCE_OPTION[tgt]
+        preoptions = [source_option] + preoptions
+        postoptions =  [source_option] + postoptions
         nativize = False
     #read from ScriptRegistry
     else:
