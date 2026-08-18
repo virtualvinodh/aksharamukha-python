@@ -1,0 +1,2424 @@
+[
+    {
+        "label": "loc-indic-Assamese",
+        "source": "Assamese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "কৎ",
+        "output": "kaṯ"
+    },
+    {
+        "label": "loc-indic-Assamese-rev",
+        "source": "RomanLoC",
+        "target": "Assamese",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "kaṯ",
+        "output": "কৎ"
+    },
+    {
+        "label": "loc-indic-Assamese",
+        "source": "Assamese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "কৱ কষ",
+        "output": "kawa kasha"
+    },
+    {
+        "label": "loc-indic-Assamese-rev",
+        "source": "RomanLoC",
+        "target": "Assamese",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "kawa kasha",
+        "output": "কৱ কষ"
+    },
+    {
+        "label": "loc-indic-Assamese",
+        "source": "Assamese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "কঽ কে কো কৃ কং ওঁ",
+        "output": "ka’ ke ko kr̥ kaṃ ōṃ"
+    },
+    {
+        "label": "loc-indic-Assamese-rev",
+        "source": "RomanLoC",
+        "target": "Assamese",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "ka’ ke ko kr̥ kaṃ ōṃ",
+        "output": "কঽ কে কো কৃ কং ওঁ"
+    },
+    {
+        "label": "loc-indic-Assamese",
+        "source": "Assamese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "কঁদ কঁপ কাঁ কাঁশ",
+        "output": "kan̐da kan̐pa kām̐ kām̐śa"
+    },
+    {
+        "label": "loc-indic-Assamese-rev",
+        "source": "RomanLoC",
+        "target": "Assamese",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "kan̐da kan̐pa kām̐ kām̐śa",
+        "output": "কঁদ কঁপ কাঁ কাঁশ"
+    },
+    {
+        "label": "loc-indic-Assamese",
+        "source": "Assamese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "কংদ কংপ",
+        "output": "kaṃda kaṃpa"
+    },
+    {
+        "label": "loc-indic-Assamese-rev",
+        "source": "RomanLoC",
+        "target": "Assamese",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "kaṃda kaṃpa",
+        "output": "কংদ কংপ"
+    },
+    {
+        "label": "loc-indic-Balinese",
+        "source": "Balinese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ᬅᬜ ᬅᬗ ᬅᬯ ᬗ᬴ ᬗ᬴ᬷ ᬧ᬴ᭀ ᬚ᬴ᬾ",
+        "output": "aña anga awa ‘a ‘ī fo ze"
+    },
+    {
+        "label": "loc-indic-Balinese-rev",
+        "source": "RomanLoC",
+        "target": "Balinese",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "aña anga awa ‘a ‘ī fo ze",
+        "output": "ᬅᬜ ᬅᬗ ᬅᬯ ᬗ᬴ ᬗ᬴ᬷ ᬧ᬴ᭀ ᬚ᬴ᬾ"
+    },
+    {
+        "label": "loc-indic-Balinese",
+        "source": "Balinese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ᬅᭂ ᬅᭃ ᬓᭂ ᬓᭃ ᬋ ᬌ ᬍ ᬎ ᬓᬼ ᬓᬽ",
+        "output": "ĕ ö kĕ kö rĕ rö lĕ lö klĕ klö"
+    },
+    {
+        "label": "loc-indic-Balinese-rev",
+        "source": "RomanLoC",
+        "target": "Balinese",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "ĕ ö kĕ kö rĕ rö lĕ lö klĕ klö",
+        "output": "ᬅᭂ ᬅᭃ ᬓᭂ ᬓᭃ ᬋ ᬌ ᬍ ᬎ ᬓᬼ ᬓᬽ"
+    },
+    {
+        "label": "loc-indic-Balinese",
+        "source": "Balinese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ᬓᬃᬧ ᬓᬧ᭄ᬭ ᬓᬧ᭄ᬬ ᬓᬵᬃᬬ",
+        "output": "karpa kapra kapya kārya"
+    },
+    {
+        "label": "loc-indic-Balinese-rev",
+        "source": "RomanLoC",
+        "target": "Balinese",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "karpa kapra kapya kārya",
+        "output": "ᬓᬃᬧ ᬓᬧ᭄ᬭ ᬓᬧ᭄ᬬ ᬓᬵᬃᬬ"
+    },
+    {
+        "label": "loc-indic-Balinese",
+        "source": "Balinese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ᬓᬾ ᬓᭀ",
+        "output": "ke ko"
+    },
+    {
+        "label": "loc-indic-Balinese-rev",
+        "source": "RomanLoC",
+        "target": "Balinese",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "ke ko",
+        "output": "ᬓᬾ ᬓᭀ"
+    },
+    {
+        "label": "loc-indic-Bengali",
+        "source": "Bengali",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "কৎ",
+        "output": "kaṯ"
+    },
+    {
+        "label": "loc-indic-Bengali-rev",
+        "source": "RomanLoC",
+        "target": "Bengali",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "kaṯ",
+        "output": "কৎ"
+    },
+    {
+        "label": "loc-indic-Bengali",
+        "source": "Bengali",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "কষ",
+        "output": "kasha"
+    },
+    {
+        "label": "loc-indic-Bengali-rev",
+        "source": "RomanLoC",
+        "target": "Bengali",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "kasha",
+        "output": "কষ"
+    },
+    {
+        "label": "loc-indic-Bengali",
+        "source": "Bengali",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "কঽ কে কো কৃ কং ওঁ",
+        "output": "ka’ ke ko kr̥ kaṃ ōṃ"
+    },
+    {
+        "label": "loc-indic-Bengali-rev",
+        "source": "RomanLoC",
+        "target": "Bengali",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "ka’ ke ko kr̥ kaṃ ōṃ",
+        "output": "কঽ কে কো কৃ কং ওঁ"
+    },
+    {
+        "label": "loc-indic-Bengali",
+        "source": "Bengali",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "কঁদ কঁপ কাঁ কাঁশ",
+        "output": "kan̐da kan̐pa kām̐ kām̐śa"
+    },
+    {
+        "label": "loc-indic-Bengali-rev",
+        "source": "RomanLoC",
+        "target": "Bengali",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "kan̐da kan̐pa kām̐ kām̐śa",
+        "output": "কঁদ কঁপ কাঁ কাঁশ"
+    },
+    {
+        "label": "loc-indic-Bengali",
+        "source": "Bengali",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "কংদ কংপ",
+        "output": "kaṃda kaṃpa"
+    },
+    {
+        "label": "loc-indic-Bengali-rev",
+        "source": "RomanLoC",
+        "target": "Bengali",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "kaṃda kaṃpa",
+        "output": "কংদ কংপ"
+    },
+    {
+        "label": "loc-indic-Gujarati",
+        "source": "Gujarati",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ષિષી કં કળત્ર કંય કં ઍ કૅ ઑ કૉ",
+        "output": "shishī kaṃ kaḷatra kaṃya kaṃ ê kê ô kô"
+    },
+    {
+        "label": "loc-indic-Gujarati-rev",
+        "source": "RomanLoC",
+        "target": "Gujarati",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "shishī kaṃ kaḷatra kaṃya kaṃ ê kê ô kô",
+        "output": "ષિષી કં કળત્ર કંય કં ઍ કૅ ઑ કૉ"
+    },
+    {
+        "label": "loc-indic-Gujarati",
+        "source": "Gujarati",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "કે કો કૃ કં ૐ",
+        "output": "ke ko kr̥ kaṃ oṃ"
+    },
+    {
+        "label": "loc-indic-Gujarati-rev",
+        "source": "RomanLoC",
+        "target": "Gujarati",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "ke ko kr̥ kaṃ oṃ",
+        "output": "કે કો કૃ કં ૐ"
+    },
+    {
+        "label": "loc-indic-Kannada",
+        "source": "Kannada",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ಕಳ ಕಱೀ ಕೞ",
+        "output": "kaḷa kaṟī kal̤a"
+    },
+    {
+        "label": "loc-indic-Kannada-rev",
+        "source": "RomanLoC",
+        "target": "Kannada",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "kaḷa kaṟī kal̤a",
+        "output": "ಕಳ ಕಱೀ ಕೞ"
+    },
+    {
+        "label": "loc-indic-Limbu",
+        "source": "Limbu",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ᤀᤣ ᤀᤧ ᤀᤥ ᤀᤨ ᤁ᤹ᤕᤥ ᤕᤢ᤺ᤔᤠ ᤌᤠ᤺ᤒᤧ ᤁᤩ ᤁᤪ ᤁᤫ ᤁᤰ ᤁᤴ ᤁᤵ",
+        "output": "e ĕ o ŏ kaḥyo yu’mā thā’bĕ kya kra kva kak kan kap"
+    },
+    {
+        "label": "loc-indic-Limbu-rev",
+        "source": "RomanLoC",
+        "target": "Limbu",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "e ĕ o ŏ kaḥyo yu’mā thā’bĕ kya kra kva kak kan kap",
+        "output": "ᤀᤣ ᤀᤧ ᤀᤥ ᤀᤨ ᤁ᤹ᤕᤥ ᤕᤢ᤺ᤔᤠ ᤌᤠ᤺ᤒᤧ ᤁᤩ ᤁᤪ ᤁᤫ ᤁᤰ ᤁᤴ ᤁᤵ"
+    },
+    {
+        "label": "loc-indic-Malayalam",
+        "source": "Malayalam",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "കു് കറ്റ കള കഴ",
+        "output": "kȧ kaṯṯa kaḷa kaḻa"
+    },
+    {
+        "label": "loc-indic-Malayalam-rev",
+        "source": "RomanLoC",
+        "target": "Malayalam",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "kȧ kaṯṯa kaḷa kaḻa",
+        "output": "കു് കറ്റ കള കഴ"
+    },
+    {
+        "label": "loc-indic-Oriya",
+        "source": "Oriya",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "କେ କୋ ୱ ଷ କଁପ କଁଝ କଁ କଁଯ",
+        "output": "ke ko wa sha kan̐pa kan̐jha kam̐ kam̐ya"
+    },
+    {
+        "label": "loc-indic-Oriya-rev",
+        "source": "RomanLoC",
+        "target": "Oriya",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "ke ko wa sha kan̐pa kan̐jha kam̐ kam̐ya",
+        "output": "କେ କୋ ୱ ଷ କଁପ କଁଝ କଁ କଁଯ"
+    },
+    {
+        "label": "loc-indic-Oriya",
+        "source": "Oriya",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "କେ କୋ କୃ କଂ ଓଁ",
+        "output": "ke ko kr̥ kaṃ oṃ"
+    },
+    {
+        "label": "loc-indic-Oriya-rev",
+        "source": "RomanLoC",
+        "target": "Oriya",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "ke ko kr̥ kaṃ oṃ",
+        "output": "କେ କୋ କୃ କଂ ଓଁ"
+    },
+    {
+        "label": "loc-indic-Devanagari",
+        "source": "Devanagari",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "के को कृ कँय कँद कँड",
+        "output": "ke ko kr̥ kam̐ya kan̐da kan̐ḍa"
+    },
+    {
+        "label": "loc-indic-Devanagari-rev",
+        "source": "RomanLoC",
+        "target": "Devanagari",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "ke ko kr̥ kam̐ya kan̐da kan̐ḍa",
+        "output": "के को कृ कँय कँद कँड"
+    },
+    {
+        "label": "loc-indic-Devanagari",
+        "source": "Devanagari",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "के को कृ कं ॐ",
+        "output": "ke ko kr̥ kaṃ oṃ"
+    },
+    {
+        "label": "loc-indic-Devanagari-rev",
+        "source": "RomanLoC",
+        "target": "Devanagari",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "ke ko kr̥ kaṃ oṃ",
+        "output": "के को कृ कं ॐ"
+    },
+    {
+        "label": "loc-indic-Gurmukhi",
+        "source": "Gurmukhi",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ਕਲੵ ਸ਼ ਖ਼ ਗ਼ ਵ ਅੱਧਕ ਅੱਦਕ",
+        "output": "kaḷa sha k͟ha g͟ha wa addhaka addaka"
+    },
+    {
+        "label": "loc-indic-Gurmukhi-rev",
+        "source": "RomanLoC",
+        "target": "Gurmukhi",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "kaḷa sha k͟ha g͟ha wa addhaka addaka",
+        "output": "ਕਲੵ ਸ਼ ਖ਼ ਗ਼ ਵ ਅੱਧਕ ਅੱਦਕ"
+    },
+    {
+        "label": "loc-indic-Gurmukhi",
+        "source": "Gurmukhi",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ਅੰਯ ਅੰ ਅੰਨ ਅੰ ਕੀਂ",
+        "output": "am̆ya am̆ am̆na am̆ kīṃ"
+    },
+    {
+        "label": "loc-indic-Gurmukhi-rev",
+        "source": "RomanLoC",
+        "target": "Gurmukhi",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "am̆ya am̆ am̆na am̆ kīṃ",
+        "output": "ਅੰਯ ਅੰ ਅੰਨ ਅੰ ਕੀਂ"
+    },
+    {
+        "label": "loc-indic-Gurmukhi",
+        "source": "Gurmukhi",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ਕੇ ਕੋ ਕ੍ਰੁ ਕੰ ੴ",
+        "output": "ke ko kru kam̆ oṁ"
+    },
+    {
+        "label": "loc-indic-Gurmukhi-rev",
+        "source": "RomanLoC",
+        "target": "Gurmukhi",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "ke ko kru kam̆ oṁ",
+        "output": "ਕੇ ਕੋ ਕ੍ਰੁ ਕੰ ੴ"
+    },
+    {
+        "label": "loc-indic-Sinhala",
+        "source": "Sinhala",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ඇ ඈ කැ කෑ කළ කං කංශ",
+        "output": "ă â kă kâ kaḷa kaṃ kaṃśa"
+    },
+    {
+        "label": "loc-indic-Sinhala-rev",
+        "source": "RomanLoC",
+        "target": "Sinhala",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "ă â kă kâ kaḷa kaṃ kaṃśa",
+        "output": "ඇ ඈ කැ කෑ කළ කං කංශ"
+    },
+    {
+        "label": "loc-indic-Sinhala",
+        "source": "Sinhala",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "කේ කෝ කෘ කං ඕං",
+        "output": "kē kō kr̥ kaṃ ōṃ"
+    },
+    {
+        "label": "loc-indic-Sinhala-rev",
+        "source": "RomanLoC",
+        "target": "Sinhala",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "kē kō kr̥ kaṃ ōṃ",
+        "output": "කේ කෝ කෘ කං ඕං"
+    },
+    {
+        "label": "loc-indic-Telugu",
+        "source": "Telugu",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "కే కో కృ కం కంశ కఁ కఁశ",
+        "output": "kē kō kr̥ kaṃ kaṃśa kam̐ kam̐śa"
+    },
+    {
+        "label": "loc-indic-Telugu-rev",
+        "source": "RomanLoC",
+        "target": "Telugu",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "kē kō kr̥ kaṃ kaṃśa kam̐ kam̐śa",
+        "output": "కే కో కృ కం కంశ కఁ కఁశ"
+    },
+    {
+        "label": "loc-indic-Telugu",
+        "source": "Telugu",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "అఁగ అఁద అఁడ అఁబ అఁజ",
+        "output": "an̐ga an̐da an̐ḍa an̐ba an̐ja"
+    },
+    {
+        "label": "loc-indic-Telugu-rev",
+        "source": "RomanLoC",
+        "target": "Telugu",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "an̐ga an̐da an̐ḍa an̐ba an̐ja",
+        "output": "అఁగ అఁద అఁడ అఁబ అఁజ"
+    },
+    {
+        "label": "loc-indic-Telugu",
+        "source": "Telugu",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "కే కో కృ కం ఓం",
+        "output": "kē kō kr̥ kaṃ ōṃ"
+    },
+    {
+        "label": "loc-indic-Telugu-rev",
+        "source": "RomanLoC",
+        "target": "Telugu",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "kē kō kr̥ kaṃ ōṃ",
+        "output": "కే కో కృ కం ఓం"
+    },
+    {
+        "label": "loc-indic-Tibetan",
+        "source": "Tibetan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ཅ ཆ ཇ ཇྷ ཙ ཚ ཛ ཛྷ ཤ ཉ ནྒ ཝ",
+        "output": "ca cha ja jha tsa tsha dza dzha sha nya nga wa"
+    },
+    {
+        "label": "loc-indic-Tibetan-rev",
+        "source": "RomanLoC",
+        "target": "Tibetan",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "ca cha ja jha tsa tsha dza dzha sha nya nga wa",
+        "output": "ཅ ཆ ཇ ཇྷ ཙ ཚ ཛ ཛྷ ཤ ཉ ནྒ ཝ"
+    },
+    {
+        "label": "loc-indic-Tibetan",
+        "source": "Tibetan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ཞ ཟ འ ྅",
+        "output": "zha za ’a `"
+    },
+    {
+        "label": "loc-indic-Tibetan-rev",
+        "source": "RomanLoC",
+        "target": "Tibetan",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "zha za ’a `",
+        "output": "ཞ ཟ འ ྅"
+    },
+    {
+        "label": "loc-indic-Tibetan",
+        "source": "Tibetan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ཏྶ ནྱ ནྒ ནྟ ཏྭ ཏྐ",
+        "output": "tʹsa nʹya nga nta twa tka"
+    },
+    {
+        "label": "loc-indic-Tibetan-rev",
+        "source": "RomanLoC",
+        "target": "Tibetan",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "tʹsa nʹya nga nta twa tka",
+        "output": "ཏྶ ནྱ ནྒ ནྟ ཏྭ ཏྐ"
+    },
+    {
+        "label": "loc-indic-Tibetan",
+        "source": "Tibetan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ཀེ ཀོ ཀྲྀ ཀཾ ༀ",
+        "output": "ke ko kr̥ kaṃ oṃ"
+    },
+    {
+        "label": "loc-indic-Tibetan-rev",
+        "source": "RomanLoC",
+        "target": "Tibetan",
+        "nativize": false,
+        "pre_options": [],
+        "post_options": [
+            "TibetanTsheg"
+        ],
+        "input": "ke ko kr̥ kaṃ oṃ",
+        "output": "ཀེ ཀོ ཀྲྀ ཀཾ ༀ"
+    },
+    {
+        "label": "loc-indic-Balinese-irrev",
+        "source": "Balinese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ᬓ᬴ ᬳ᬴ᬷ ᬕ᬴᭄ᬯ",
+        "output": "kha hī ghwa"
+    },
+    {
+        "label": "loc-indic-Balinese-irrev",
+        "source": "Balinese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ᬓᬄ ᬓᬂ ᬓᬁ",
+        "output": "kah kang kang"
+    },
+    {
+        "label": "loc-indic-Bengali-irrev",
+        "source": "Bengali",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "উদ্বেগ উক্বর উব্ব ভ়ুদ",
+        "output": "udvega ukvara ubba vuda"
+    },
+    {
+        "label": "loc-indic-Gujarati-irrev",
+        "source": "Gujarati",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "કંભિ કંઘ",
+        "output": "kambhi kaṅgha"
+    },
+    {
+        "label": "loc-indic-Javanese-irrev",
+        "source": "Javanese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ꦮ ꦝ ꦄꦝ꧀ꦝ ꦄꦚꦹ ꦡ ꦛ ꦄꦛ꧀ꦛ ꦄꦔ ꦬ",
+        "output": "wa dha adhdha anyu tha tha aththa anga ra"
+    },
+    {
+        "label": "loc-indic-Javanese-irrev",
+        "source": "Javanese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ꦲ꦳ ꦏ꦳ ꦥ꦳ ꦗ꦳ ꦒ꦳ ꦔ꦳",
+        "output": "ha kha fa za gha ‘a"
+    },
+    {
+        "label": "loc-indic-Javanese-irrev",
+        "source": "Javanese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ꦏꦴ ꦏꦷ ꦏꦹ ꦏꦼ ꦏꦼꦴ ꦏꦺ ꦏꦻ ꦏꦺꦴ ꦏꦻꦴ ꦏꦸ ꦏꦹ ꦏꦁ ꦏꦀ ꦏꦃ ꦄꦏꦿ  ꦄꦂꦏ ꦄꦏ꧀ꦭ ꦄꦏꦽ ꦄꦏ꧀ꦊ ꦄꦏꦾ",
+        "output": "ka ki ku kĕ kĕ ke ke ko ko ku ku kang kang kah akra  arka akla akrĕ aklĕ akya"
+    },
+    {
+        "label": "loc-indic-Kannada-irrev",
+        "source": "Kannada",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ಕಂ ಕಂಯ ಕಂಬ ಕಂಟ",
+        "output": "kaṃ kaṃya kamba kaṇṭa"
+    },
+    {
+        "label": "loc-indic-Malayalam-irrev",
+        "source": "Malayalam",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "കം കംശ കംബ കംധി",
+        "output": "kaṃ kaṃśa kamba kandhi"
+    },
+    {
+        "label": "loc-indic-Oriya-irrev",
+        "source": "Oriya",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "କଂପ କଂଯ",
+        "output": "kampa kaṃya"
+    },
+    {
+        "label": "loc-indic-Devanagari-irrev",
+        "source": "Devanagari",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "कं कंय कंप",
+        "output": "kaṃ kaṃya kampa"
+    },
+    {
+        "label": "loc-indic-Gurmukhi-irrev",
+        "source": "Gurmukhi",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ਅੰਪ ਕੀਂਪ",
+        "output": "ampa kīmpa"
+    },
+    {
+        "label": "loc-indic-Sinhala-irrev",
+        "source": "Sinhala",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "අඟ අඳ අඬ අඹ අඦ",
+        "output": "aṅga anda aṇḍa amba añja"
+    },
+    {
+        "label": "loc-indic-Sinhala-irrev",
+        "source": "Sinhala",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "අංබ අංග",
+        "output": "amba aṅga"
+    },
+    {
+        "label": "loc-indic-Telugu-irrev",
+        "source": "Telugu",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "అంబ అంగ",
+        "output": "amba aṅga"
+    },
+    {
+        "label": "loc-test_balinese_simple",
+        "source": "Balinese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [
+            "BalineseSimplified"
+        ],
+        "input": "ᬡ ᬙ ᬣ ᬰ ᬱ ᬨ ᬖ ᬪ",
+        "output": "na ca ta sa sa pa gha ba"
+    },
+    {
+        "label": "loc-test_javanese_simple",
+        "source": "Javanese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [
+            "JavaneseSimplified"
+        ],
+        "input": "ꦑ ꦡ ꦯ ꦰꦴ ꦥ ꦘ ꦓ ꦨ",
+        "output": "ka ta sa sa pa nya ga ba"
+    },
+    {
+        "label": "loc-test_hindi_marathi",
+        "source": "Devanagari",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [
+            "HindiMarathiRomanLoCFix"
+        ],
+        "input": "ऎ कॆ ऍ कॅ कॉ ऑ क़ ख़ ग़ घ़ श ट़ फ़ ष स़ कळ",
+        "output": "ĕ kĕ ê kê kô ô qa k͟ha g͟ha g̳h̳a śa t̤a fa sha s̤a kaḷa"
+    },
+    {
+        "label": "loc-test_hindi_marathi-rev",
+        "source": "RomanLoC",
+        "target": "Devanagari",
+        "nativize": true,
+        "pre_options": [
+            "HindiMarathiRomanLoCFix"
+        ],
+        "post_options": [],
+        "input": "ĕ kĕ ê kê kô ô qa k͟ha g͟ha g̳h̳a śa t̤a fa sha s̤a kaḷa",
+        "output": "ऎ कॆ ऍ कॅ कॉ ऑ क़ ख़ ग़ घ़ श ट़ फ़ ष स़ कळ"
+    },
+    {
+        "label": "loc-burmese-test_a",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "အ",
+        "output": "’a"
+    },
+    {
+        "label": "loc-burmese-test_au",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ဩ ဪ ကော ကော်",
+        "output": "o oʻ ko koʻ"
+    },
+    {
+        "label": "loc-burmese-test_anusvara",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ကံ ကာံ အံ အိုံ",
+        "output": "kaṃ kāṃ ’aṃ ’uiṃ"
+    },
+    {
+        "label": "loc-burmese-test_vowels",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "အ အာ အိ အီ အု အူ အေ အဲ အော အော် အို",
+        "output": "’a ’ā ’i ’ī ’u ’ū ’e ’ai ’o ’oʻ ’ui"
+    },
+    {
+        "label": "loc-burmese-test_subjoined",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "မျှ ကြွ လွှ မြွှင်း",
+        "output": "myha krva lvha mrvhaṅʻʺ"
+    },
+    {
+        "label": "loc-burmese-test_virama_final",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "တက္ကသိုလ် တိရစ္ဆာန်",
+        "output": "takkasuilʻ tiracchānʻ"
+    },
+    {
+        "label": "loc-burmese-test_superscript",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "သင်္ဃ ဓရ်္မ",
+        "output": "saṅgha dharma"
+    },
+    {
+        "label": "loc-burmese-test_ui",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "အို တို ကို",
+        "output": "’ui tui kui"
+    },
+    {
+        "label": "loc-burmese-test_tone_1",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ပို့ ပိုး",
+        "output": "puiʹ puiʺ"
+    },
+    {
+        "label": "loc-burmese-test_tone_2",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ပင့်",
+        "output": "paṅʻʹ"
+    },
+    {
+        "label": "loc-burmese-test_great_ssa_nna",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "တဿ ပညာ",
+        "output": "tassa paññā"
+    },
+    {
+        "label": "loc-burmese-test_abbr",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "၏ ၍ ၌ ၎",
+        "output": "e* r* n* l*"
+    },
+    {
+        "label": "loc-burmese-test_punct",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "၊ ။",
+        "output": ", ."
+    },
+    {
+        "label": "loc-burmese-test_ll",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ပါဠိ",
+        "output": "pāḷi"
+    },
+    {
+        "label": "loc-burmese-test_example_1",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ကော်မီတီ ဥပုသ် ပန်းကန် ကော်ပြန့်",
+        "output": "koʻmītī upusʻ panʻʺkanʻ koʻpranʻʹ"
+    },
+    {
+        "label": "loc-burmese-test_example_2",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [
+            "segmentBurmeseSyllables"
+        ],
+        "post_options": [],
+        "input": "မောင်မောင်စိုးတင့် စောစိုင်မောင် ချန်ရီစိန် ကဲနက်ဘစိန် မြသီတာ ပဒေသရာဇာ",
+        "output": " moṅʻ moṅʻ cuiʺ taṅʻʹ   co cuiṅʻ moṅʻ   khyanʻ rī cinʻ   kai nakʻ bha cinʻ   mra sī tā   pa de sa rā jā"
+    },
+    {
+        "label": "loc-burmese-test_example_3",
+        "source": "Burmese",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "မဟာသမိုင်းတော်ကြီးညွန့်ပေါင်း\nယောအတွင်းဝန်ဦးဖိုးလှိုင်\nဒုဋ္ဌဂါမဏိမင်းကြီးဝတ္ထု",
+        "output": "mahāsamuiṅʻʺtoʻkrīʺññvanʻʹpoṅʻʺ\nyo’atvaṅʻʺvanʻūʺphuiʺlhuiṅʻ\nduṭṭhagāmaṇimaṅʻʺkrīʺvatthu"
+    },
+    {
+        "label": "loc-burmese-test_a_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "’a",
+        "output": "အ"
+    },
+    {
+        "label": "loc-burmese-test_au_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "o oʻ ko koʻ",
+        "output": "ဩ ဪ ကော ကော်"
+    },
+    {
+        "label": "loc-burmese-test_anusvara_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "kaṃ kāṃ ’aṃ ’uiṃ",
+        "output": "ကံ ကာံ အံ အိုံ"
+    },
+    {
+        "label": "loc-burmese-test_anusvara_rev-1",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "kaṁ kāṁ ’aṁ ’uiṁ",
+        "output": "ကံ ကာံ အံ အိုံ"
+    },
+    {
+        "label": "loc-burmese-test_vowels_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "’a ’ā ’i ’ī ’u ’ū ’e ’ai ’o ’oʻ ’ui",
+        "output": "အ အာ အိ အီ အု အူ အေ အဲ အော အော် အို"
+    },
+    {
+        "label": "loc-burmese-test_vowels_rev-1",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ʼa ʼā ʼi ʼī ʼu ʼū ʼe ʼai ʼo ʼoʻ ʼui",
+        "output": "အ အာ အိ အီ အု အူ အေ အဲ အော အော် အို"
+    },
+    {
+        "label": "loc-burmese-test_subjoined_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "myha krva lvha mrvhaṅʻʺ",
+        "output": "မျှ ကြွ လွှ မြွှင်း"
+    },
+    {
+        "label": "loc-burmese-test_virama_final_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "takkasuilʻ tiracchānʻ",
+        "output": "တက္ကသိုလ် တိရစ္ဆာန်"
+    },
+    {
+        "label": "loc-burmese-test_superscript_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "saṅgha dharma",
+        "output": "သင်္ဃ ဓရ်္မ"
+    },
+    {
+        "label": "loc-burmese-test_ui_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "’ui tui kui",
+        "output": "အို တို ကို"
+    },
+    {
+        "label": "loc-burmese-test_ui_rev-1",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ʼui tui kui",
+        "output": "အို တို ကို"
+    },
+    {
+        "label": "loc-burmese-test_tone_1_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "puiʹ puiʺ",
+        "output": "ပို့ ပိုး"
+    },
+    {
+        "label": "loc-burmese-test_tone_1_rev-1",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "pui´ pui˝",
+        "output": "ပို့ ပိုး"
+    },
+    {
+        "label": "loc-burmese-test_tone_2_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "paṅʻʹ",
+        "output": "ပင့်"
+    },
+    {
+        "label": "loc-burmese-test_tone_2_rev-1",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "paṅʻ´",
+        "output": "ပင့်"
+    },
+    {
+        "label": "loc-burmese-test_great_ssa_nna_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "tassa paññā",
+        "output": "တဿ ပညာ"
+    },
+    {
+        "label": "loc-burmese-test_abbr_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "e* r* n* l*",
+        "output": "၏ ၍ ၌ ၎"
+    },
+    {
+        "label": "loc-burmese-test_punct_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": ", .",
+        "output": "၊ ။"
+    },
+    {
+        "label": "loc-burmese-test_ll_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "pāḷi",
+        "output": "ပါဠိ"
+    },
+    {
+        "label": "loc-burmese-test_example_1_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "koʻmītī upusʻ panʻʺkanʻ koʻpranʻʹ",
+        "output": "ကော်မီတီ ဥပုသ် ပန်းကန် ကော်ပြန့်"
+    },
+    {
+        "label": "loc-burmese-test_example_2_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [
+            "removeSegmentSpacesBurmese"
+        ],
+        "input": "moṅʻ moṅʻ cuiʺ taṅʻʹ co cuiṅʻ moṅʻ khyanʻ rī cinʻ kai nakʻ bha cinʻ mra sī tā pa de sa rā jā",
+        "output": "မောင်မောင်စိုးတင့်စောစိုင်မောင်ချန်ရီစိန်ကဲနက်ဘစိန်မြသီတာပဒေသရာဇာ"
+    },
+    {
+        "label": "loc-burmese-test_example_3_rev",
+        "source": "RomanLoC",
+        "target": "Burmese",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "mahāsamuiṅʻʺtoʻkrīʺññvanʻʹpoṅʻʺ\nyo’atvaṅʻʺvanʻūʺphuiʺlhuiṅʻ\nduṭṭhagāmaṇimaṅʻʺkrīʺvatthu",
+        "output": "မဟာသမိုင်းတော်ကြီးညွန့်ပေါင်း\nယောအတွင်းဝန်ဦးဖိုးလှိုင်\nဒုဋ္ဌဂါမဏိမင်းကြီးဝတ္ထု"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "អ អា អិ អី អុ អូ អេ អោ អៃ អៅ អំ អះ",
+        "output": "‛a ‛ā ‛i ‛ī ‛u ‛ū ‛e ‛o ‛ai ‛au ‛aṃ ‛aḥ"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "អឹ អឺ អែ អៀ អឿ អើ",
+        "output": "‛ẏ ‛ȳ ‛ae ‛ia ‛ẏa ‛oe"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "អ័ អ៍ អ៎ ខ័អ",
+        "output": "‛ă ‛a˚ ‛a’ khă‛ʹ"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ជ្អ ផ្អា ខ្អេ ជជ្អ",
+        "output": "j‛a ph‛ā kh‛e jaj‛ʹ"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "អ៊ អ៊ា អ៊ូ",
+        "output": "‛′a ‛′ā ‛′ū"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ឥ ឦ ឧ ឩ ឬ ឫ ឮ ឯ ឰ ឱ ឳ ឪ",
+        "output": "i ī u ū ṝ ṛ ḹ ae ai o au ýu"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "គ គា គិ គី គុ គូ គេ គៃ គោ គៅ កំ គះ",
+        "output": "ga gā gi gī gu gū ge gai go gau kaṃ gaḥ"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "កឹ គឺ គែ គៀ គឿ ឈើ",
+        "output": "kẏ gȳ gae gia gẏa jhoe"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "គ័ គ័ខ",
+        "output": "gă găkh"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "គគ៍ ខខ៎ ខខ៏ គ៍គ ខ៎ ខ៏ គខ៏ អ្នករ៉ូ",
+        "output": "gag˚ khakh’ khakhʻ ga˚g kha’ khaʻ gakhʻ ‛ʹnakar″ū"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ជោះ",
+        "output": "joaḥ"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "អាឃ់ខ អៈឃ អខ់",
+        "output": "‛âghakh ‛àgh ‛ákh"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "គ គខ ឋ៎ សទ្រ",
+        "output": "ga gakh ṭha’ sadr"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ពឋ៎ឋ ពឋ៎ ឋ៎ព ឋ៎ឋ៎ ពឋ៏ឋ ពឋ៏ ឋ៏ព ឋ៏ឋ៏ ជក៌ឋ ជខ៌",
+        "output": "baṭha’ṭh baṭh’ ṭha’b ṭha’ṭh’ baṭhaʻṭh baṭhʻ ṭhaʻb ṭhaʻṭhʻ jarkaṭh jarkh"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ទឆ៍ ឆឈ៎ វ៉វ៉",
+        "output": "dach˚ chajh’ v″av″"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ឋវ៉ឋ ឋវ៉ ង៉ង៉ ង៉",
+        "output": "ṭhav″aṭh ṭhav″ ṅ″aṅ″ ṅ″a"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ដល់ អធិបតេយ្យ",
+        "output": "ṭál ‛adhipateyy"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ឆយ៍ តត់ កិក់ គគ់្ខ",
+        "output": "chay˚ tát kík gágkh"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "តត់ កិក់ សាគ់",
+        "output": "tát kík sâg"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "អាឃ់ខ អៈឃ អខ់",
+        "output": "‛âghakh ‛àgh ‛ákh"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ហអ្ន អ្នា ហខ្អ ហខ្អេ",
+        "output": "ha‛ʹn ‛ʹnā hakh‛ʹ hakh‛e"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ក្រខ្វាក់ ក្សត្រិយ៍ សុី បុឹ អាត្ម័ន តត់ កាគ់",
+        "output": "krakhvâk ksatriy˚ s′ī p″ẏ ‛ātmăn tát kâg"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "តត់ កិក់ គគ់្ខ គក្ខ់ សាគ់",
+        "output": "tát kík gágkh gákkh sâg"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "៖ ៕ ។",
+        "output": ": . ."
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ឲ្យ ឱ្យ",
+        "output": "oy oy"
+    },
+    {
+        "label": "loc-khmer",
+        "source": "Khmer",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ឭ",
+        "output": "ḷ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "‛a ‛ā ‛i ‛ī ‛u ‛ū ‛e ‛o ‛ai ‛au ‛aṃ ‛aḥ",
+        "output": "អ អា អិ អី អុ អូ អេ អោ អៃ អៅ អំ អះ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "‛ẏ ‛ȳ ‛ae ‛ia ‛ẏa ‛oe",
+        "output": "អឹ អឺ អែ អៀ អឿ អើ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "‛ă ‛a˚ ‛a’ khă‛ʹ",
+        "output": "អ័ អ៍ អ៎ ខ័អ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "j‛a ph‛ā kh‛e jaj‛ʹ",
+        "output": "ជ្អ ផ្អា ខ្អេ ជជ្អ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "‛′a ‛′ā ‛′ū",
+        "output": "អ៊ អ៊ា អ៊ូ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "i ī u ū ṝ ṛ ḹ ae ai o au ýu",
+        "output": "ឥ ឦ ឧ ឩ ឬ ឫ ឮ ឯ ឰ ឱ ឳ ឪ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ga gā gi gī gu gū ge gai go gau kaṃ gaḥ",
+        "output": "គ គា គិ គី គុ គូ គេ គៃ គោ គៅ កំ គះ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "kẏ gȳ gae gia gẏa jhoe",
+        "output": "កឹ គឺ គែ គៀ គឿ ឈើ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "gă găkh",
+        "output": "គ័ គ័ខ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "gag˚ khakh’ khakhʻ ga˚g kha’ khaʻ gakhʻ ‛ʹnakar″ū",
+        "output": "គគ៍ ខខ៎ ខខ៏ គ៍គ ខ៎ ខ៏ គខ៏ អ្នករ៉ូ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "joaḥ",
+        "output": "ជោះ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "‛âghakh ‛àgh ‛ákh",
+        "output": "អាឃ់ខ អៈឃ អខ់"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ga gakh ṭha’ sadr",
+        "output": "គ គខ ឋ៎ សទ្រ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "baṭha’ṭh baṭh’ ṭha’b ṭha’ṭh’ baṭhaʻṭh baṭhʻ ṭhaʻb ṭhaʻṭhʻ jarkaṭh jarkh",
+        "output": "ពឋ៎ឋ ពឋ៎ ឋ៎ព ឋ៎ឋ៎ ពឋ៏ឋ ពឋ៏ ឋ៏ព ឋ៏ឋ៏ ជក៌ឋ ជខ៌"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "dach˚ chajh’ v″av″",
+        "output": "ទឆ៍ ឆឈ៎ វ៉វ៉"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ṭhav″aṭh ṭhav″ ṅ″aṅ″ ṅ″a",
+        "output": "ឋវ៉ឋ ឋវ៉ ង៉ង៉ ង៉"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ṭál ‛adhipateyy",
+        "output": "ដល់ អធិបតេយ្យ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "chay˚ tát kík gágkh",
+        "output": "ឆយ៍ តត់ កិក់ គគ់្ខ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "tát kík sâg",
+        "output": "តត់ កិក់ សាគ់"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "‛âghakh ‛àgh ‛ákh",
+        "output": "អាឃ់ខ អៈឃ អខ់"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ha‛ʹn ‛ʹnā hakh‛ʹ hakh‛e",
+        "output": "ហអ្ន អ្នា ហខ្អ ហខ្អេ"
+    },
+    {
+        "label": "loc-khmer-rev",
+        "source": "RomanLoC",
+        "target": "Khmer",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "krakhvâk ksatriy˚ s′ī p″ẏ ‛ātmăn tát kâg",
+        "output": "ក្រខ្វាក់ ក្សត្រិយ៍ សុី បុឹ អាត្ម័ន តត់ កាគ់"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ဢ",
+        "output": "’a"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "’a",
+        "output": "ဢ"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ၵႃ ၵိ​ ၵီ​ ၵု ၵူ ၵို ၵိူ ၵေ ၵွ ၵႄ​ ၵွႆ ၵႂ် ၵၢႆ ၵေႃ ၵေႃ် ၵျ ၵြ ၵႂ ၵိူဝ် ၵူဝ် ၵဝ်",
+        "output": "kā ki​ kī​ ku kū kui kūi ke kau kè​ koi kái kāi ko kò kya kra kva kūivʻ kō kavʻ"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "kā ki​ kī​ ku kū kui kūi ke kau kè​ koi kái kāi ko kò kya kra kva kūivʻ kō kavʻ",
+        "output": "ၵႃ ၵိ​ ၵီ​ ၵု ၵူ ၵို ၵိူ ၵေ ၵွ ၵႄ​ ၵွႆ ၵႂ် ၵၢႆ ၵေႃ ၵေႃ် ၵျ ၵြ ၵႂ ၵိူဝ် ၵူဝ် ၵဝ်"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ဢႃ ဢိ​ ဢီ​ ဢု ဢူ ဢို ဢိူ ဢေ ဢွ ဢႄ​ ဢွႆ ဢႂ် ဢၢႆ ဢေႃ ဢေႃ် ဢိူဝ် ဢူဝ် ဢဝ်",
+        "output": "’ā ’i​ ’ī​ ’u ’ū ’ui ’ūi ’e ’au ’è​ ’oi ’ái ’āi ’o ’ò ’ūivʻ ’ō ’avʻ"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "’ā ’i​ ’ī​ ’u ’ū ’ui ’ūi ’e ’au ’è​ ’oi ’ái ’āi ’o ’ò ’ūivʻ ’ō ’avʻ",
+        "output": "ဢႃ ဢိ​ ဢီ​ ဢု ဢူ ဢို ဢိူ ဢေ ဢွ ဢႄ​ ဢွႆ ဢႂ် ဢၢႆ ဢေႃ ဢေႃ် ဢိူဝ် ဢူဝ် ဢဝ်"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "တြႃးတေႃ်ၸဝ်သုၵ်သီလၶၼ်း​",
+        "output": "trāʺtòcavʻsukʻsīlakhanʻʺ​"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "trāʺtòcavʻsukʻsīlakhanʻʺ​",
+        "output": "တြႃးတေႃ်ၸဝ်သုၵ်သီလၶၼ်း​"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "မွင်းဝၼ်းၶိုၼ်းႁၼ်",
+        "output": "mauṅʻʺvanʻʺkhuinʻʺhanʻ"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "mauṅʻʺvanʻʺkhuinʻʺhanʻ",
+        "output": "မွင်းဝၼ်းၶိုၼ်းႁၼ်"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ဢမ်ႇၶႂ်ႈၼွၼ်းၽၼ်",
+        "output": "’am̢ʻkhái̐naunʻʺphanʻ"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "’am̢ʻkhái̐naunʻʺphanʻ",
+        "output": "ဢမ်ႇၶႂ်ႈၼွၼ်းၽၼ်"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ၸိူင်းပွတ်းၽွမ်ႉႁူမ်ႈ",
+        "output": "cūiṅʻʺpautʻʺphaumʻʹhūm̐ʻ"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "cūiṅʻʺpautʻʺphaumʻʹhūm̐ʻ",
+        "output": "ၸိူင်းပွတ်းၽွမ်ႉႁူမ်ႈ"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "မၢႆၼိုင်ႈ",
+        "output": "māinuiṅ̐ʻ"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "māinuiṅ̐ʻ",
+        "output": "မၢႆၼိုင်ႈ"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ၼင်းၸံးပူးဝွၵ်း",
+        "output": "naṅʻʺcaṃʺpūʺvaukʻʺ"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "naṅʻʺcaṃʺpūʺvaukʻʺ",
+        "output": "ၼင်းၸံးပူးဝွၵ်း"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ပရိတ်တပႃႇလိလႄႈၶေႃႈပွင်ႇၽၢႆႉတႆး",
+        "output": "paritʻtapā̢lilè̐kho̐pauṅ̢ʻphāiʹtaiʺ"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "paritʻtapā̢lilè̐kho̐pauṅ̢ʻphāiʹtaiʺ",
+        "output": "ပရိတ်တပႃႇလိလႄႈၶေႃႈပွင်ႇၽၢႆႉတႆး"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ၼံႉၵႂံးၸဝ်သင်လုင်ဝၼ်ဢႆ",
+        "output": "naṃʹkvaṃʺcavʻsaṅʻluṅʻvanʻ’ai"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "naṃʹkvaṃʺcavʻsaṅʻluṅʻvanʻ’ai",
+        "output": "ၼံႉၵႂံးၸဝ်သင်လုင်ဝၼ်ဢႆ"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "၊ ။",
+        "output": ", ."
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": ", .",
+        "output": "၊ ။"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ၵေးၵဵၸ်ၷႄႉၶႅၺ်ႊပႃႊပၢထ်း",
+        "output": "keʺkecʻgèʹkhèñʻ˝pā˝pāthʻʺ"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "keʺkecʻgèʹkhèñʻ˝pā˝pāthʻʺ",
+        "output": "ၵေးၵဵၸ်ၷႄႉၶႅၺ်ႊပႃႊပၢထ်း"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "မဵတ်ႉတႃႇၸႅတ်ႈ",
+        "output": "metʻʹtā̢cèt̐ʻ"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "metʻʹtā̢cèt̐ʻ",
+        "output": "မဵတ်ႉတႃႇၸႅတ်ႈ"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "လေႃးၵီႇၵတ်းယဵၼ်",
+        "output": "loʺkī̢katʻʺyenʻ"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "loʺkī̢katʻʺyenʻ",
+        "output": "လေႃးၵီႇၵတ်းယဵၼ်"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ယိင်းမူၺ်သႅင်လိူၼ်",
+        "output": "yiṅʻʺmūñʻsèṅʻlūinʻ"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "yiṅʻʺmūñʻsèṅʻlūinʻ",
+        "output": "ယိင်းမူၺ်သႅင်လိူၼ်"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ပိုၼ်းၽြႃးတႃႇလုၵ်ႈႁဵၼ်းပၢၼ်မႂ်ႇ",
+        "output": "puinʻʺphrāʺtā̢luk̐ʻhenʻʺpānʻmái̢"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "puinʻʺphrāʺtā̢luk̐ʻhenʻʺpānʻmái̢",
+        "output": "ပိုၼ်းၽြႃးတႃႇလုၵ်ႈႁဵၼ်းပၢၼ်မႂ်ႇ"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ၸၢတ်ႈၸဝ်ႈသုဝၼ်ႇၼသၢမ်ႇ",
+        "output": "cāt̐ʻcav̐ʻsuvan̢ʻnasām̢ʻ"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "cāt̐ʻcav̐ʻsuvan̢ʻnasām̢ʻ",
+        "output": "ၸၢတ်ႈၸဝ်ႈသုဝၼ်ႇၼသၢမ်ႇ"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "လႅင်းမုၼ်းမႂ်ႇ",
+        "output": "lèṅʻʺmunʻʺmái̢"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "lèṅʻʺmunʻʺmái̢",
+        "output": "လႅင်းမုၼ်းမႂ်ႇ"
+    },
+    {
+        "label": "loc-shan",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ၵေႇၵဵၵ်းၻႄႉၻႅသ်ႊတႃႈႀၢရ်း",
+        "output": "ke̢kekʻʺdèʹdèsʻ˝tā̐xārʻʺ"
+    },
+    {
+        "label": "loc-shan-rev",
+        "source": "RomanLoC",
+        "target": "Shan",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ke̢kekʻʺdèʹdèsʻ˝tā̐xārʻʺ",
+        "output": "ၵေႇၵဵၵ်းၻႄႉၻႅသ်ႊတႃႈႀၢရ်း"
+    },
+    {
+        "label": "loc-shan-irrev",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ပပ်ႉၽိုၵ်းလႃတ်ႈၵႂႃမ်းႁႃႈၽႃႇသႃႇ",
+        "output": "papʻʹphuikʻʺlāt̐ʻkvāmʻʺhā̐phā̢sā̢"
+    },
+    {
+        "label": "loc-shan-irrev",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "တႃႇႁဵတ်းၵႃၼ်ၶိုၼ်ႈယႂ်ႇ",
+        "output": "tā̢hetʻʺkānʻkhuin̐ʻyái̢"
+    },
+    {
+        "label": "loc-shan-irrev",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ၶႅပ်းမႃင်ၸဝ်ႈꩪမ်ႇမၻႃႉၼ",
+        "output": "khèpʻʺmāṅʻcav̐ʻdham̢ʻmadāʹna"
+    },
+    {
+        "label": "loc-shan-irrev",
+        "source": "Shan",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ၿႆၢ ၵၢ ၵႃႆ ၵေေ ၵေါ",
+        "output": "bāi kā kāi kè ko"
+    },
+    {
+        "label": "loc-tham",
+        "source": "TaiTham",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ᨠᩢᨠ ᨠᩡ ᨠᩥ ᨠᩦ ᨠᩩ ᨠᩪ ᨠᩮ ᨠᩮᩡ ᨠᩰᩡ ᨠᩰ ᨠ᩠ᨿᨠ ᨠ᩠ᩅᩫᩡ ᨠ᩠ᩅᩫ ᨠ᩠ᩅᨠ",
+        "output": "kaka kaḥ ki kī ku kū ke keḥ koḥ ko kèka kòḥ kò kòka"
+    },
+    {
+        "label": "loc-tham",
+        "source": "TaiTham",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ᨠᩰᩬᩡ ᨠᩫᨠ ᨠᩳ ᨠᩬᨠ ᨠᩯᩡ ᨠᩯ ᨠᩧ ᨠᩨ ᨠᩮᩨᩬᩡ ᨠᩮᩨᩬ ᨠᩮᩨᨠ ᨠᩱ ᨠᩱ᩠ᨿ ᨠ᩠ᩅᩭ ᨠᩭ ᨠᩴ᩠ᨿ ᨠᩮᩢᩣ",
+        "output": "kǫḥ kǫḥka kǫ kǫka kæḥ kæ kư kư̄ kœḥ kœ kœka kai kaiy koi kǫi keo kao"
+    },
+    {
+        "label": "loc-tham",
+        "source": "TaiTham",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ᩋ ᩋᩣ ᩍ ᩎ ᩏ ᩐ ᩑ ᩋᩡ ᩒᩡ ᩑᩡ",
+        "output": "a ā i ī u ū e aḥ oḥ eḥ"
+    },
+    {
+        "label": "loc-tham",
+        "source": "TaiTham",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ᩔ ᨬᩚ ᩈ",
+        "output": "ssa ñña sa"
+    },
+    {
+        "label": "loc-tham",
+        "source": "TaiTham",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ᩋᩢᨠ ᩋᩡ ᩋ᩠ᨿᨠ ᩋ᩠ᩅᩫᩡ ᩋ᩠ᩅᩫ ᩋ᩠ᩅᨠ",
+        "output": "aka aḥ èka òḥ ò òka"
+    },
+    {
+        "label": "loc-tham",
+        "source": "TaiTham",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ᩋᩰᩬᩡ ᩋᩫᨠ ᩋᩳ ᩋᩬᨠ ᩋᩯᩡ ᩋᩯ ᩋᩧ ᩋᩨ ᩋᩮᩨᩬᩡ ᩋᩮᩨᩬ ᩋᩮᩨᨠ ᩋᩱ ᩋᩱ᩠ᨿ ᩋ᩠ᩅᩭ ᩋᩭ ᩋᩴ᩠ᨿ ᩋᩮᩢᩣ",
+        "output": "ǫḥ ǫḥka ǫ ǫka æḥ æ ư ư̄ œḥ œ œka ai aiy oi ǫi eo ao"
+    },
+    {
+        "label": "loc-tham",
+        "source": "TaiTham",
+        "target": "RomanLoC",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ᩍ᩵ ᩍ᩶ ᩍ᩷ ᩍ᩸ ᩍ᩹",
+        "output": "i′ i″ iˆ iᴶ iʵ"
+    },
+    {
+        "label": "loc-tham-rev",
+        "source": "RomanLoC",
+        "target": "TaiTham",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "kaka kaḥ ki kī ku kū ke keḥ koḥ ko kèka kòḥ kò kòka",
+        "output": "ᨠᩢᨠ ᨠᩡ ᨠᩥ ᨠᩦ ᨠᩩ ᨠᩪ ᨠᩮ ᨠᩮᩡ ᨠᩰᩡ ᨠᩰ ᨠ᩠ᨿᨠ ᨠ᩠ᩅᩫᩡ ᨠ᩠ᩅᩫ ᨠ᩠ᩅᨠ"
+    },
+    {
+        "label": "loc-tham-rev",
+        "source": "RomanLoC",
+        "target": "TaiTham",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "kǫḥ kǫḥka kǫ kǫka kæḥ kæ kư kư̄ kœḥ kœ kœka kai kaiy koi kǫi keo kao",
+        "output": "ᨠᩰᩬᩡ ᨠᩫᨠ ᨠᩳ ᨠᩬᨠ ᨠᩯᩡ ᨠᩯ ᨠᩧ ᨠᩨ ᨠᩮᩨᩬᩡ ᨠᩮᩨᩬ ᨠᩮᩨᨠ ᨠᩱ ᨠᩱ᩠ᨿ ᨠ᩠ᩅᩭ ᨠᩭ ᨠᩴ᩠ᨿ ᨠᩮᩢᩣ"
+    },
+    {
+        "label": "loc-tham-rev",
+        "source": "RomanLoC",
+        "target": "TaiTham",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "a ā i ī u ū e aḥ oḥ eḥ",
+        "output": "ᩋ ᩋᩣ ᩍ ᩎ ᩏ ᩐ ᩑ ᩋᩡ ᩒᩡ ᩑᩡ"
+    },
+    {
+        "label": "loc-tham-rev",
+        "source": "RomanLoC",
+        "target": "TaiTham",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ssa ñña sa",
+        "output": "ᩔ ᨬᩚ ᩈ"
+    },
+    {
+        "label": "loc-tham-rev",
+        "source": "RomanLoC",
+        "target": "TaiTham",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "aka aḥ èka òḥ ò òka",
+        "output": "ᩋᩢᨠ ᩋᩡ ᩋ᩠ᨿᨠ ᩋ᩠ᩅᩫᩡ ᩋ᩠ᩅᩫ ᩋ᩠ᩅᨠ"
+    },
+    {
+        "label": "loc-tham-rev",
+        "source": "RomanLoC",
+        "target": "TaiTham",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "ǫḥ ǫḥka ǫ ǫka æḥ æ ư ư̄ œḥ œ œka ai aiy oi ǫi eo ao",
+        "output": "ᩋᩰᩬᩡ ᩋᩫᨠ ᩋᩳ ᩋᩬᨠ ᩋᩯᩡ ᩋᩯ ᩋᩧ ᩋᩨ ᩋᩮᩨᩬᩡ ᩋᩮᩨᩬ ᩋᩮᩨᨠ ᩋᩱ ᩋᩱ᩠ᨿ ᩋ᩠ᩅᩭ ᩋᩭ ᩋᩴ᩠ᨿ ᩋᩮᩢᩣ"
+    },
+    {
+        "label": "loc-tham-rev",
+        "source": "RomanLoC",
+        "target": "TaiTham",
+        "nativize": true,
+        "pre_options": [],
+        "post_options": [],
+        "input": "i′ i″ iˆ iᴶ iʵ",
+        "output": "ᩍ᩵ ᩍ᩶ ᩍ᩷ ᩍ᩸ ᩍ᩹"
+    }
+]
