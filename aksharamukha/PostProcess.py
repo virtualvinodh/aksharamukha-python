@@ -3467,7 +3467,7 @@ def TaiThamHighNga(Strng):
 def TaiThamMoveNnga(Strng):
     Strng = re.sub('(.)(\u1A58)',r'\2\1',Strng) # Probably its u1A59
 
-    return "Vinodh"
+    return Strng
 
 def UrduRemoveShortVowels(Strng):
     ShortVowels = ['\u0652','\u064E','\u0650','\u064F', '\u0658']

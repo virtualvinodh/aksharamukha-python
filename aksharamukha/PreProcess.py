@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from ast import Str
-from asyncio import constants
 from . import GeneralMap as GM
 import re
 import string
@@ -1340,7 +1338,6 @@ def PreProcess(Strng,Source,Target,postoptions,preoptions):
 
         if Target == 'Tamil':
             Strng = Strng.replace('n', 'nx').replace('~nx', 'n')
-            print(Strng)
 
     if 'IAST' in Source:
         Strng = Strng.replace("aï", "a_i")
@@ -1357,7 +1354,7 @@ def PreProcess(Strng,Source,Target,postoptions,preoptions):
     if Source == "Titus":
         Strng = Strng
 
-    if Source == "ISO" or Source == "IAST" or Source == "Titus" or "RussianCyrillic":
+    if Source == "ISO" or Source == "IAST" or Source == "Titus" or Source == "RussianCyrillic":
         Strng = CF.VedicSvarasNonDiacritic(Strng)
 
     if Source == "Latn" and 'Syr' in Target:
