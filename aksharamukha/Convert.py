@@ -59,11 +59,7 @@ def convertScript(Strng,Source,Target):
     ## Itrans Comments ##
 
     if Source in GM.LatinScripts and Target in GM.IndicScripts:
-        try:
-            Strng = getattr(CF,"Fix"+Source)(Strng,reverse=True)
-        except AttributeError:
-            pass
-            #print #"Fix"+Target+" doesn't exist - Reverse"
+        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True)
 
        #short u
         if Source in ['IAST', 'ISO', 'ISOPali', 'Titus']:
@@ -150,11 +146,7 @@ def convertScript(Strng,Source,Target):
         #print(Strng)
 
     elif Source in GM.LatinScripts and Target in GM.LatinScripts:
-        try:
-            Strng = getattr(CF,"Fix"+Source)(Strng,reverse=True)
-        except AttributeError:
-            pass
-            #print #"Fix"+Target+" doesn't exist - Reverse"
+        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True)
 
         ScriptAll = GM.Vowels+GM.Consonants+GM.CombiningSigns+GM.Numerals+GM.Signs+GM.Aytham
 
@@ -173,11 +165,7 @@ def convertScript(Strng,Source,Target):
         Strng = PrP.RemoveJoiners(Strng)
 
         Strng = CF.ShiftDiacritics(Strng,Source,reverse=True)
-        try:
-            Strng = getattr(CF,"Fix"+Source)(Strng,reverse=True)
-        except AttributeError:
-            pass
-            #print #"Fix"+Target+" doesn't exist - Reverse"
+        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True)
 
         punc =  '(' + '|'.join(["\u005C"+x for x in list(string.punctuation)]+ ['\s']
                     + [x.replace('.', '\.') for x in GM.CrunchSymbols(GM.Signs,Source)[1:3]]) + ')'
@@ -227,11 +215,7 @@ def convertScript(Strng,Source,Target):
         Strng = PrP.RemoveJoiners(Strng)
         Strng = CF.ShiftDiacritics(Strng, Source, reverse=True)
         #print(Strng)
-        try:
-            Strng = getattr(CF,"Fix"+Source)(Strng,reverse=True)
-        except AttributeError:
-            pass
-            #print #"Fix"+Target+" doesn't exist - Reverse"
+        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True)
         #print(Strng)
         sOm, tOm = GM.CrunchList('OmMap', Source)[0],GM.CrunchList('OmMap', Target)[0]
 
@@ -286,10 +270,7 @@ def convertScript(Strng,Source,Target):
         # Convert Syllabic lR -> l_R Important !!!
 
     elif Source in GM.SemiticScripts and Target in GM.SemiticScripts:
-        try:
-            Strng = getattr(CF,"Fix"+Source.replace('-', '_'))(Strng,Source,reverse=True)
-        except AttributeError:
-            pass
+        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,Source,reverse=True,optional=True)
 
         tr = gimeltra.Transliterator()
 
@@ -338,10 +319,7 @@ def convertScript(Strng,Source,Target):
         Strng = CF.FixSemiticOutput(Strng, Source, Target)
 
     elif Source in GM.SemiticScripts and Target in (GM.IndicScripts + GM.LatinScripts):
-        try:
-            Strng = getattr(CF,"Fix"+Source.replace('-', '_'))(Strng,Source,reverse=True)
-        except AttributeError:
-            pass
+        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,Source,reverse=True,optional=True)
 
         tr = gimeltra.Transliterator()
 
