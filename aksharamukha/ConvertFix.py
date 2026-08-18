@@ -3292,61 +3292,48 @@ def FixLaoTham(Strng, reverse=False):
 
     return Strng
 
-def FixThamLoC(Strng, reverse=False):
+# FixThamLoC/FixLueTham/FixKhuenTham share the same "Tall A" regex logic;
+# they differ in the TaiTham consonant list used for the Tall A match
+# (ThamLoC alone includes one extra consonant), and in one extra step
+# each: ThamLoC does a marker cleanup (forward, only when the Khuen-text
+# u02BE marker is present) plus a reverse-direction subconsonant fix;
+# KhuenTham does an unconditional ra-haam/lue-karan swap in both
+# directions; LueTham has neither extra step.
+def _FixTaiThamFamily(Strng, reverse, tall_a_cons, marker_cleanup, ra_haam_swap):
     Strng = FixTaiTham(Strng, reverse)
 
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'TaiTham'))
     if not reverse:
         E = "ᩮ"
         AA = 'ᩣ'
-        TallACons = '|'.join(['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ', 'ᨷ']) ## va da dha ga
+        TallACons = '|'.join(tall_a_cons) ## va da dha ga
         Strng = re.sub('('+TallACons+')(᩠)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4'+'ᩤ',Strng)
         Strng = re.sub('('+TallACons+')(᩠)('+ListC +')'+'(᩠)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4\5\6'+'ᩤ',Strng)
 
-        if '\u02BE' in Strng:
+        if marker_cleanup and '\u02BE' in Strng:
             Strng = Strng.replace('᩺', '᩼').replace('\u02BE', '')
+        elif ra_haam_swap:
+            # ra-haam with lue-karan
+            Strng = Strng.replace('᩺', '᩼')
     else:
-        #sub consonants
-        Strng = Strng.replace('ᩜ', '\u1A7A''ᨾ')
-        Strng = Strng.replace('ᩛ', '\u1A7A''ᨻ')
+        if marker_cleanup:
+            #sub consonants
+            Strng = Strng.replace('ᩜ', '\u1A7A''ᨾ')
+            Strng = Strng.replace('ᩛ', '\u1A7A''ᨻ')
+        elif ra_haam_swap:
+            # replace lue-karan with ra-haam
+            Strng = Strng.replace('᩼', '᩺')
 
     return Strng
+
+def FixThamLoC(Strng, reverse=False):
+    return _FixTaiThamFamily(Strng, reverse, ['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ', 'ᨷ'], marker_cleanup=True, ra_haam_swap=False)
 
 def FixLueTham(Strng, reverse=False):
-    Strng = FixTaiTham(Strng, reverse)
-
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'TaiTham'))
-    if not reverse:
-        E = "ᩮ"
-        AA = 'ᩣ'
-        TallACons = '|'.join(['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ']) ## va da dha ga
-        Strng = re.sub('('+TallACons+')(᩠)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4'+'ᩤ',Strng)
-        Strng = re.sub('('+TallACons+')(᩠)('+ListC +')'+'(᩠)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4\5\6'+'ᩤ',Strng)
-    else:
-        pass
-
-    return Strng
+    return _FixTaiThamFamily(Strng, reverse, ['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ'], marker_cleanup=False, ra_haam_swap=False)
 
 def FixKhuenTham(Strng, reverse=False):
-    Strng = FixTaiTham(Strng, reverse)
-
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'TaiTham'))
-    if not reverse:
-        E = "ᩮ"
-        AA = 'ᩣ'
-        TallACons = '|'.join(['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ']) ## va da dha ga
-        Strng = re.sub('('+TallACons+')(᩠)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4'+'ᩤ',Strng)
-        Strng = re.sub('('+TallACons+')(᩠)('+ListC +')'+'(᩠)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4\5\6'+'ᩤ',Strng)
-
-        # ra-haam with lue-karan
-        Strng = Strng.replace('᩺', '᩼')
-    else:
-        # replace lue-karan with ra-haam
-        Strng = Strng.replace('᩼', '᩺')
-
-    return Strng
-
-# Transcription for Native Lao
+    return _FixTaiThamFamily(Strng, reverse, ['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ'], marker_cleanup=False, ra_haam_swap=True)
 def LaoTranscribe(Strng,reverse=False):
     from . import PostProcess as pp
 
