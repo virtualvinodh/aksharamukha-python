@@ -246,9 +246,7 @@ def _apply_indic_dandas_preoption(src, tgt, txt, preoptions, postoptions):
 
     return txt, preoptions, postoptions
 
-def convert(src, tgt, txt, nativize, preoptions, postoptions):
-    tgtOld = ""
-
+def _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize):
     ## ALA-LC Romanizations
     ## process as follows, if source is associated with LoC script
     if tgt == 'RomanLoC' and SR.get(src).is_loc_script:
@@ -316,6 +314,13 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
             src = 'ISO233'
         else:
             src = 'ISO'
+
+    return src, tgt, txt, preoptions, postoptions, nativize
+
+def convert(src, tgt, txt, nativize, preoptions, postoptions):
+    tgtOld = ""
+
+    src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize)
 
     ## LoC Romanizattion ends here
     ## else convert the Loc input into the associated script and then convert it into Loc
