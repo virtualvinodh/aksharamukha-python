@@ -514,6 +514,47 @@ def _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, transcripti
 
     return tgt, transliteration
 
+def _apply_final_postprocessing(src, tgt, txt, transliteration, nativize, preoptions, postoptions):
+    ## apply phonetic mapping for Arabic beforehand if not semitic source
+    if (not SR.get(src).is_semitic and tgt == 'Arab' and nativize) or 'arabicRemoveAdditionsPhonetic' in postoptions:
+        transliteration = GeneralMap.resolve(PostProcess, 'arabicRemoveAdditionsPhonetic', transliteration)
+
+    #print(transliteration)
+
+    if nativize:
+      transliteration =  PostOptions.ApplyScriptDefaults(transliteration, src, tgt, postoptions)
+      if tgt != 'Latn':
+        if tgt != 'Tamil':
+            transliteration = PostProcess.RemoveDiacritics(transliteration)
+        else:
+            transliteration = PostProcess.RemoveDiacriticsTamil(transliteration)
+
+    #print(transliteration)
+
+    if 'RemoveDiacritics' in postoptions:
+      if tgt == 'Tamil':
+        postoptions = map(lambda x: 'RemoveDiacriticsTamil' if x == 'RemoveDiacritics' else x, postoptions)
+
+    for options in postoptions:
+      transliteration = GeneralMap.resolve(PostProcess, options, transliteration)
+
+    if src == "Tamil" and tgt == "IPA":
+        r = requests.get("http://anunaadam.appspot.com/api?text=" + txt + "&method=2")
+        r.encoding = r.apparent_encoding
+        transliteration = r.text
+
+    if src == "Oriya" and tgt == "IPA":
+        transliteration = ConvertFix.OriyaIPAFix(transliteration)
+
+    ### return Latin ###
+    transliteration = PreProcess.retainLatin(transliteration, reverse=True)
+
+    ## DefaultPostProcess ##
+
+    transliteration = PostProcess.defaultPost(src, tgt, transliteration, nativize, preoptions, postoptions)
+
+    return transliteration
+
 def convert(src, tgt, txt, nativize, preoptions, postoptions):
     src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize)
 
@@ -552,50 +593,12 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     tgt, transliteration = _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, transcription_mode)
 
-    ## apply phonetic mapping for Arabic beforehand if not semitic source
-    if (not SR.get(src).is_semitic and tgt == 'Arab' and nativize) or 'arabicRemoveAdditionsPhonetic' in postoptions:
-        transliteration = GeneralMap.resolve(PostProcess, 'arabicRemoveAdditionsPhonetic', transliteration)
-
-    #print(transliteration)
-
-    if nativize:
-      transliteration =  PostOptions.ApplyScriptDefaults(transliteration, src, tgt, postoptions)
-      if tgt != 'Latn':
-        if tgt != 'Tamil':
-            transliteration = PostProcess.RemoveDiacritics(transliteration)
-        else:
-            transliteration = PostProcess.RemoveDiacriticsTamil(transliteration)
-
-    #print(transliteration)
-
-    if 'RemoveDiacritics' in postoptions:
-      if tgt == 'Tamil':
-        postoptions = map(lambda x: 'RemoveDiacriticsTamil' if x == 'RemoveDiacritics' else x, postoptions)
-
-    for options in postoptions:
-      transliteration = GeneralMap.resolve(PostProcess, options, transliteration)
-
-    if src == "Tamil" and tgt == "IPA":
-        r = requests.get("http://anunaadam.appspot.com/api?text=" + txt + "&method=2")
-        r.encoding = r.apparent_encoding
-        transliteration = r.text
-
-    if src == "Oriya" and tgt == "IPA":
-        transliteration = ConvertFix.OriyaIPAFix(transliteration)
-
     '''if src == "Itrans" and '##' in txt:
         textConv = {**dict(list(json.loads(transliteration.replace("\n", "\\n")))), ** dict(textRest)}
         textConv = collections.OrderedDict(sorted(textConv.items()))
         transliteration = "".join(textConv.values())'''
 
-    ### return Latin ###
-    transliteration = PreProcess.retainLatin(transliteration, reverse=True)
-
-    ## DefaultPostProcess ##
-
-    transliteration = PostProcess.defaultPost(src, tgt, transliteration, nativize, preoptions, postoptions)
-
-    return transliteration
+    return _apply_final_postprocessing(src, tgt, txt, transliteration, nativize, preoptions, postoptions)
 
 def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [], param="default"):
     if param == "default":
