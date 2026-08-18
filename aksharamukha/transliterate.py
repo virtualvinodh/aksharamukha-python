@@ -450,6 +450,46 @@ def _apply_target_renaming_postoptions(src, tgt, txt, preoptions, postoptions, n
 
     return src, tgt, txt, preoptions, postoptions, nativize
 
+def _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativize):
+    # Thai/Lao "short vowels not shown" transcription mode - previously
+    # signalled by splicing a private-use marker into txt itself and having
+    # ConvertFix.FixThai/FixLaoPali check for it; now a real parameter
+    # threaded through Convert.convertScript instead. Four preoptions feed
+    # this same mode (verified by exhaustive grep, not just the two most
+    # obviously-named ones - ThaiOrthography/LaoTranscription looked like
+    # they might be unrelated but turned out to inject the identical
+    # marker for the identical consumer).
+    transcription_mode = ('ThaiPhonetic' in preoptions or 'LaoPhonetic' in preoptions
+                           or 'ThaiOrthography' in preoptions or 'LaoTranscription' in preoptions)
+
+    for options in preoptions:
+      txt = GeneralMap.resolve(PreProcess, options, txt)
+
+    ### Semitic Switches
+    if 'novowelshebrew' in preoptions and src == 'Hebr':
+        txt = txt.replace('ַ', '')
+
+    srcOld = ""
+
+    ### retain Latin ###
+    if (src != 'Latn'and src != 'Type' and SR.get(src).is_semitic) or \
+        (SR.get(src).is_indic and SR.get(tgt).is_semitic and not SR.get(src).is_latin) or \
+            (src in ['Hiragana', 'Katakana']):
+        txt = PreProcess.retainLatin(txt)
+
+    if src == 'Hiragana' or src == 'Katakana':
+        txt = PreProcess.JapanesePreProcess(src, txt, preoptions)
+        srcOld = 'Japanese'
+        src = 'ISO'
+
+    if tgt == 'Hiragana' or tgt == 'Katakana':
+        txt = PostProcess.JapanesePostProcess(src, tgt, txt, nativize, postoptions)
+
+    if src == "Oriya" and tgt == "IPA":
+        txt = ConvertFix.OriyaIPAFixPre(txt)
+
+    return src, tgt, txt, srcOld, transcription_mode
+
 def convert(src, tgt, txt, nativize, preoptions, postoptions):
     src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize)
 
@@ -484,42 +524,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     #if src not in GeneralMap.SemiticScripts and tgt == 'Arab' and not nativize:
         #postoptions.append('arabicRemoveAdditionsPhonetic')
 
-    # Thai/Lao "short vowels not shown" transcription mode - previously
-    # signalled by splicing a private-use marker into txt itself and having
-    # ConvertFix.FixThai/FixLaoPali check for it; now a real parameter
-    # threaded through Convert.convertScript instead. Four preoptions feed
-    # this same mode (verified by exhaustive grep, not just the two most
-    # obviously-named ones - ThaiOrthography/LaoTranscription looked like
-    # they might be unrelated but turned out to inject the identical
-    # marker for the identical consumer).
-    transcription_mode = ('ThaiPhonetic' in preoptions or 'LaoPhonetic' in preoptions
-                           or 'ThaiOrthography' in preoptions or 'LaoTranscription' in preoptions)
-
-    for options in preoptions:
-      txt = GeneralMap.resolve(PreProcess, options, txt)
-
-    ### Semitic Switches
-    if 'novowelshebrew' in preoptions and src == 'Hebr':
-        txt = txt.replace('\u05B7', '')
-
-    srcOld = ""
-
-    ### retain Latin ###
-    if (src != 'Latn'and src != 'Type' and SR.get(src).is_semitic) or \
-        (SR.get(src).is_indic and SR.get(tgt).is_semitic and not SR.get(src).is_latin) or \
-            (src in ['Hiragana', 'Katakana']):
-        txt = PreProcess.retainLatin(txt)
-
-    if src == 'Hiragana' or src == 'Katakana':
-        txt = PreProcess.JapanesePreProcess(src, txt, preoptions)
-        srcOld = 'Japanese'
-        src = 'ISO'
-
-    if tgt == 'Hiragana' or tgt == 'Katakana':
-        txt = PostProcess.JapanesePostProcess(src, tgt, txt, nativize, postoptions)
-
-    if src == "Oriya" and tgt == "IPA":
-        txt = ConvertFix.OriyaIPAFixPre(txt)
+    src, tgt, txt, srcOld, transcription_mode = _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativize)
 
     if src == "Itrans" and '##' in txt:
         #print('I am here tyring to do things')
