@@ -3,6 +3,7 @@ from aksharamukha.gimeltra import Transliterator
 from . import Convert,PostOptions,PostProcess,PreProcess
 from . import ConvertFix
 from . import ScriptRegistry as SR
+from . import Options
 import json
 import requests
 import html
@@ -14,7 +15,6 @@ import yaml
 import warnings
 import langcodes
 import os
-from inspect import getmembers, isfunction
 
 #import sys
 #sys.stdout = None
@@ -583,14 +583,8 @@ def convert_default(src, tgt, txt, nativize = True, post_options = [], pre_optio
 
     scriptList = list(SR.SCRIPTS.keys())
 
-    preOptionList = list(map(lambda x: x[0], getmembers(PreProcess, isfunction)))
-    preOptionListLower = list(map(lambda x: x.lower(), preOptionList))
-
-    postOptionList = list(map(lambda x: x[0], getmembers(PostProcess, isfunction)))
-    postOptionListLower = list(map(lambda x: x.lower(), postOptionList))
-
-    post_options = [option_id for option in post_options for option_id in postOptionList if option.lower() == option_id.lower()]
-    pre_options = [option_id for option in pre_options for option_id in preOptionList if option.lower() == option_id.lower()]
+    post_options = Options.normalize_post_options(post_options)
+    pre_options = Options.normalize_pre_options(pre_options)
 
     # font hack warning
     font_hack_warning = tgt + ' uses an hacked font to display the script. In the absence of this font, you text may appear different. \n See: https://www.aksharamukha.com/describe/' + tgt + ' for the font used'
