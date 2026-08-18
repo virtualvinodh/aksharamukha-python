@@ -452,7 +452,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         #postoptions.append('arabicRemoveAdditionsPhonetic')
 
     for options in preoptions:
-      txt = getattr(PreProcess, options)(txt)
+      txt = GeneralMap.resolve(PreProcess, options, txt)
 
     ### Semitic Switches
     if 'novowelshebrew' in preoptions and src == 'Hebr':
@@ -500,7 +500,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     ## apply phonetic mapping for Arabic beforehand if not semitic source
     if (src not in GeneralMap.SemiticScripts and tgt == 'Arab' and nativize) or 'arabicRemoveAdditionsPhonetic' in postoptions:
-        transliteration = getattr(PostProcess, 'arabicRemoveAdditionsPhonetic')(transliteration)
+        transliteration = GeneralMap.resolve(PostProcess, 'arabicRemoveAdditionsPhonetic', transliteration)
 
     #print(transliteration)
 
@@ -519,7 +519,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         postoptions = map(lambda x: 'RemoveDiacriticsTamil' if x == 'RemoveDiacritics' else x, postoptions)
 
     for options in postoptions:
-      transliteration = getattr(PostProcess, options)(transliteration)
+      transliteration = GeneralMap.resolve(PostProcess, options, transliteration)
 
     if src == "Tamil" and tgt == "IPA":
         r = requests.get("http://anunaadam.appspot.com/api?text=" + txt + "&method=2")
