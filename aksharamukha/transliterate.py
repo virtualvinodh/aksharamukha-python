@@ -344,31 +344,7 @@ def _resolve_semitic_iso_pivot(src, tgt, txt, preoptions, postoptions, nativize)
 
     return src, tgt, txt, preoptions, postoptions, nativize
 
-def convert(src, tgt, txt, nativize, preoptions, postoptions):
-    tgtOld = ""
-
-    src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize)
-
-    ## LoC Romanizattion ends here
-    ## else convert the Loc input into the associated script and then convert it into Loc
-    ## Text (Loc) -> Burmese -> non-Burmese
-    #if src == 'BurmeseRomanLoC' and tgt != 'Burmese':
-    #    txt = convert(src, "Burmese", txt, nativize, preoptions, postoptions)
-    #    src = 'Burmese'
-
-    src, tgt, txt, preoptions, postoptions, nativize = _resolve_semitic_iso_pivot(src, tgt, txt, preoptions, postoptions, nativize)
-
-    '''if src == "Itrans" and '##' in txt:
-        textNew = [[i,word] for i, word in enumerate(txt.split("##")) if (i%2 == 0)]
-        textRest = [(i,word) for i, word in enumerate(txt.split("##")) if (i%2 == 1)]
-
-        txt = json.dumps(textNew).replace("\\n", "\n")'''
-
-    if tgt == "" or tgt == "Ignore":
-        return txt
-    if preoptions == [] and postoptions == [] and nativize == False and src == tgt:
-        return txt
-
+def _resolve_semitic_indic_naming(src, tgt, txt, preoptions, postoptions, nativize):
     ## Semitic Switches - Add Shahmukhi/Sindhi later
     IndicSemiticMapping = { 'Hebrew': 'Hebr', 'Thaana': 'Thaa', 'Urdu': 'Arab-Ur', 'Shahmukhi': 'Arab-Pa'}
 
@@ -391,7 +367,7 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         src = 'Thaa'
 
     if src in ['Arab-Ur', 'Arab-Pa'] and SR.get(tgt).is_indic:
-        txt += '\u05CD'
+        txt += '׍'
 
     ## Semitic to Urdu this is not needed
     #if src in GeneralMap.SemiticScripts and src not in ['Arab-Fa', 'Arab', 'Latn'] and (tgt in ['Urdu', 'Shahmukhi']):
@@ -432,11 +408,39 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     ## Semitic Naivization : remove pesky Nuktas
     if nativize:
         if SR.get(src).is_semitic and SR.get(tgt).is_indic:
-            txt += "\u05CC"
+            txt += "׌"
 
+    tgtOld = ""
     if src == tgt and (src != 'Hiragana' and src != 'Katakana') and not SR.get(src).is_semitic:
         tgtOld = tgt
         tgt = "Devanagari"
+
+    return src, tgt, txt, preoptions, postoptions, nativize, tgtOld
+
+def convert(src, tgt, txt, nativize, preoptions, postoptions):
+    src, tgt, txt, preoptions, postoptions, nativize = _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize)
+
+    ## LoC Romanizattion ends here
+    ## else convert the Loc input into the associated script and then convert it into Loc
+    ## Text (Loc) -> Burmese -> non-Burmese
+    #if src == 'BurmeseRomanLoC' and tgt != 'Burmese':
+    #    txt = convert(src, "Burmese", txt, nativize, preoptions, postoptions)
+    #    src = 'Burmese'
+
+    src, tgt, txt, preoptions, postoptions, nativize = _resolve_semitic_iso_pivot(src, tgt, txt, preoptions, postoptions, nativize)
+
+    '''if src == "Itrans" and '##' in txt:
+        textNew = [[i,word] for i, word in enumerate(txt.split("##")) if (i%2 == 0)]
+        textRest = [(i,word) for i, word in enumerate(txt.split("##")) if (i%2 == 1)]
+
+        txt = json.dumps(textNew).replace("\\n", "\n")'''
+
+    if tgt == "" or tgt == "Ignore":
+        return txt
+    if preoptions == [] and postoptions == [] and nativize == False and src == tgt:
+        return txt
+
+    src, tgt, txt, preoptions, postoptions, nativize, tgtOld = _resolve_semitic_indic_naming(src, tgt, txt, preoptions, postoptions, nativize)
 
     txt, preoptions, postoptions = _apply_indic_dandas_preoption(src, tgt, txt, preoptions, postoptions)
 
