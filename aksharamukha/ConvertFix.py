@@ -609,28 +609,35 @@ def FixHebrew(Strng, reverse = False):
     return Strng
 
 
-def FixMongolian(Strng, reverse=False):
+def _FixMongolianEncode(Strng):
     vowels = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'Mongolian')) + ')'
     consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Mongolian')) + ')'
 
-    if not reverse:
-        #Strng = re.sub(consonants + '?' + vowels + '([\u1880\u1881])?', r'\1\2\3 ', Strng)
-        Strng = re.sub('(\u180B)' + consonants, r'\2', Strng)
-        Strng = re.sub('(\u180B)' + vowels, r'\2', Strng)
+    Strng = re.sub('(\u180B)' + consonants, r'\2', Strng)
+    Strng = re.sub('(\u180B)' + vowels, r'\2', Strng)
 
-        Strng = re.sub(consonants + consonants + consonants + vowels + '(\u1880)', r'\5\1\2\3\4', Strng)
-        Strng = re.sub(consonants + consonants + vowels + '(\u1880)', r'\4\1\2\3', Strng)
-        Strng = re.sub(consonants + '?' + vowels + '(\u1880)', r'\3\1\2', Strng)
-        Strng = Strng.replace(' \u02BC', '\u200B')
-        Strng = Strng.replace('\u02BC', '\u200B')
+    Strng = re.sub(consonants + consonants + consonants + vowels + '(\u1880)', r'\5\1\2\3\4', Strng)
+    Strng = re.sub(consonants + consonants + vowels + '(\u1880)', r'\4\1\2\3', Strng)
+    Strng = re.sub(consonants + '?' + vowels + '(\u1880)', r'\3\1\2', Strng)
+    Strng = Strng.replace(' \u02BC', '\u200B')
+    Strng = Strng.replace('\u02BC', '\u200B')
 
-    else:
-        ## add variation seelct one
-        #print(Strng)
-        Strng = re.sub('(ᠠ)(?!\u180B)', r'\1' + '\u180B', Strng)
-        #print(Strng)
 
     return Strng
+
+def _FixMongolianDecode(Strng):
+    vowels = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'Mongolian')) + ')'
+    consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Mongolian')) + ')'
+
+    ## add variation seelct one
+    #print(Strng)
+    Strng = re.sub('(ᠠ)(?!\u180B)', r'\1' + '\u180B', Strng)
+    #print(Strng)
+
+    return Strng
+
+def FixMongolian(Strng, reverse=False):
+    return _FixMongolianDecode(Strng) if reverse else _FixMongolianEncode(Strng)
 
 def _hanifi_rohingya_lookups():
     consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'HanifiRohingya')+['\U00010D17', '\U00010D19']) + ')'
@@ -691,141 +698,180 @@ def _FixHanifiRohingyaDecode(Strng):
 
 def FixHanifiRohingya(Strng, reverse=False):
     return _FixHanifiRohingyaDecode(Strng) if reverse else _FixHanifiRohingyaEncode(Strng)
-def FixMasaramGondi(Strng, reverse=False):
+def _FixMasaramGondiEncode(Strng):
     consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'MasaramGondi')) + ')'
 
-    if not reverse:
-        Strng = Strng.replace('𑴌𑵅𑴪','\U00011D2E') # KSSA
-        Strng = Strng.replace('𑴓𑵅𑴕','\U00011D2F') # JNYA
-        Strng = Strng.replace('𑴛𑵅𑴦','\U00011D30') # TRA
+    Strng = Strng.replace('𑴌𑵅𑴪','\U00011D2E') # KSSA
+    Strng = Strng.replace('𑴓𑵅𑴕','\U00011D2F') # JNYA
+    Strng = Strng.replace('𑴛𑵅𑴦','\U00011D30') # TRA
 
-        Strng = re.sub(consList + '\U00011D45\U00011D26', r'\1' + '\U00011D47', Strng) # kra
-        Strng = re.sub('\U00011D26\U00011D45' + consList, '\U00011D46' + r'\1', Strng) # rka
+    Strng = re.sub(consList + '\U00011D45\U00011D26', r'\1' + '\U00011D47', Strng) # kra
+    Strng = re.sub('\U00011D26\U00011D45' + consList, '\U00011D46' + r'\1', Strng) # rka
 
-        ## remove final virama when not followed by a consonant
-        Strng = re.sub('\U00011D45(?!' + consList + ')' , '\U00011D44', Strng)
-    else:
-        Strng = Strng.replace('\U00011D2E', '𑴌𑵅𑴪') # KSSA
-        Strng = Strng.replace('\U00011D2F', '𑴓𑵅𑴕') # JNYA
-        Strng = Strng.replace('\U00011D30', '𑴛𑵅𑴦') # TRA
-
-        Strng = Strng.replace('\U00011D47', '\U00011D45\U00011D26',) # kra
-        Strng = Strng.replace('\U00011D46', '\U00011D26\U00011D45') # rka
-
-        Strng = Strng.replace('\U00011D44','\U00011D45')
+    ## remove final virama when not followed by a consonant
+    Strng = re.sub('\U00011D45(?!' + consList + ')' , '\U00011D44', Strng)
 
     return Strng
 
+def _FixMasaramGondiDecode(Strng):
+    consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'MasaramGondi')) + ')'
 
-def FixGunjalaGondi(Strng, reverse=False):
+    Strng = Strng.replace('\U00011D2E', '𑴌𑵅𑴪') # KSSA
+    Strng = Strng.replace('\U00011D2F', '𑴓𑵅𑴕') # JNYA
+    Strng = Strng.replace('\U00011D30', '𑴛𑵅𑴦') # TRA
+
+    Strng = Strng.replace('\U00011D47', '\U00011D45\U00011D26',) # kra
+    Strng = Strng.replace('\U00011D46', '\U00011D26\U00011D45') # rka
+
+    Strng = Strng.replace('\U00011D44','\U00011D45')
+
+    return Strng
+
+def FixMasaramGondi(Strng, reverse=False):
+    return _FixMasaramGondiDecode(Strng) if reverse else _FixMasaramGondiEncode(Strng)
+
+
+def _FixGunjalaGondiEncode(Strng):
     consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'GunjalaGondi')) + ')'
 
-    if not reverse:
-        Strng = re.sub('(\U00011D7A\u02BE)([\U00011D7B\U00011D7C\U00011D80\U00011D81])', '\U00011D95' + r'\1', Strng)
-        Strng = re.sub('(\U00011D7A\u02BF)([\U00011D7D\U00011D7E\U00011D82\U00011D83])', '\U00011D95' + r'\1', Strng)
+    Strng = re.sub('(\U00011D7A\u02BE)([\U00011D7B\U00011D7C\U00011D80\U00011D81])', '\U00011D95' + r'\1', Strng)
+    Strng = re.sub('(\U00011D7A\u02BF)([\U00011D7D\U00011D7E\U00011D82\U00011D83])', '\U00011D95' + r'\1', Strng)
 
-        Strng = Strng.replace('\u02BE', '')
-        Strng = Strng.replace('\u02BF', '')
+    Strng = Strng.replace('\u02BE', '')
+    Strng = Strng.replace('\u02BF', '')
 
-        ## remove final virama when not followed by a consonant
-        Strng = re.sub('\U00011D97(?!' + consList + ')' , '', Strng)
-    else:
-        pass
+    ## remove final virama when not followed by a consonant
+    Strng = re.sub('\U00011D97(?!' + consList + ')' , '', Strng)
 
     return Strng
 
-def FixSoyombo(Strng, reverse=False):
+def _FixGunjalaGondiDecode(Strng):
+    consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'GunjalaGondi')) + ')'
+
+    pass
+
+    return Strng
+
+def FixGunjalaGondi(Strng, reverse=False):
+    return _FixGunjalaGondiDecode(Strng) if reverse else _FixGunjalaGondiEncode(Strng)
+
+def _FixSoyomboEncode(Strng):
     finVir = ['\U00011A5E\U00011A99','\U00011A5C\U00011A99','\U00011A60\U00011A99','\U00011A6D\U00011A99','\U00011A6F\U00011A99','\U00011A72\U00011A99','\U00011A74\U00011A99','\U00011A7C\U00011A99','\U00011A7D\U00011A99','\U00011A7F\U00011A99','\U00011A81\U00011A99']
     fin = ['\U00011A8A','\U00011A8B','\U00011A8C','\U00011A8D','\U00011A8E','\U00011A8F','\U00011A90','\U00011A91','\U00011A92','\U00011A93','\U00011A94']
     consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Soyombo')) + ')'
 
-    if not reverse:
-        Strng = Strng.replace('𑩜𑪙𑪀', '\U00011A83')  #KSSA
-        Strng = re.sub('\U00011A7F\U00011A99' + '(?=' + consList + ')' , '\U00011A88', Strng) # Fix shka
+    Strng = Strng.replace('𑩜𑪙𑪀', '\U00011A83')  #KSSA
+    Strng = re.sub('\U00011A7F\U00011A99' + '(?=' + consList + ')' , '\U00011A88', Strng) # Fix shka
 
-        ## Gemination ##
-        Strng = re.sub('(?<!𑪙)(.)𑪙' + r'\1', r'\1' + '\U00011A98', Strng)
-        # final consonats
-        if '\u02BE' in Strng:
-            for x, y in zip (finVir, fin):
-                Strng = re.sub(x + '(?!' + consList + ')' , y, Strng)
+    ## Gemination ##
+    Strng = re.sub('(?<!𑪙)(.)𑪙' + r'\1', r'\1' + '\U00011A98', Strng)
+    # final consonats
+    if '\u02BE' in Strng:
+        for x, y in zip (finVir, fin):
+            Strng = re.sub(x + '(?!' + consList + ')' , y, Strng)
 
-            Strng = re.sub('𑪈(?!' + consList + ')' , '\U00011A93', Strng)
+        Strng = re.sub('𑪈(?!' + consList + ')' , '\U00011A93', Strng)
 
-            Strng = Strng.replace('\u02BE', '')
+        Strng = Strng.replace('\u02BE', '')
 
-        ## remove final virama when not followed by a consonant
-        Strng = re.sub('\U00011A99(?!' + consList + ')' , '', Strng)
-    else:
-        Strng = Strng.replace('\U00011A9A', ' ') ## Reverse Tsheg
-        Strng = Strng.replace('\U00011A83', '𑩜𑪙𑪀')  #KSSA
-
-        ## Gemination ##
-        Strng = re.sub('(.)\U00011A98', r'\1' + '\U00011A99' + r'\1', Strng)
-
-        viraCon = ['\U00011A7C\U00011A99', '\U00011A7D\U00011A99', '\U00011A81\U00011A99', '\U00011A7F\U00011A99']
-        initial = ['\U00011A86', '\U00011A87', '\U00011A89', '\U00011A88']
-
-        for x, y in zip(viraCon, initial):
-            Strng = Strng.replace(y, x)
-
-        tsaSeries = ['𑩵','𑩶','𑩷']
-        caSeries = ['𑩡','𑩢','𑩣']
-
-        for x, y in zip(tsaSeries,caSeries):
-            Strng = Strng.replace(y, x)
-
-        ## initial ##
-
-        for x, y in zip(finVir, fin):
-            Strng = Strng.replace(y, x)
+    ## remove final virama when not followed by a consonant
+    Strng = re.sub('\U00011A99(?!' + consList + ')' , '', Strng)
 
     return Strng
+
+def _FixSoyomboDecode(Strng):
+    finVir = ['\U00011A5E\U00011A99','\U00011A5C\U00011A99','\U00011A60\U00011A99','\U00011A6D\U00011A99','\U00011A6F\U00011A99','\U00011A72\U00011A99','\U00011A74\U00011A99','\U00011A7C\U00011A99','\U00011A7D\U00011A99','\U00011A7F\U00011A99','\U00011A81\U00011A99']
+    fin = ['\U00011A8A','\U00011A8B','\U00011A8C','\U00011A8D','\U00011A8E','\U00011A8F','\U00011A90','\U00011A91','\U00011A92','\U00011A93','\U00011A94']
+    consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Soyombo')) + ')'
+
+    Strng = Strng.replace('\U00011A9A', ' ') ## Reverse Tsheg
+    Strng = Strng.replace('\U00011A83', '𑩜𑪙𑪀')  #KSSA
+
+    ## Gemination ##
+    Strng = re.sub('(.)\U00011A98', r'\1' + '\U00011A99' + r'\1', Strng)
+
+    viraCon = ['\U00011A7C\U00011A99', '\U00011A7D\U00011A99', '\U00011A81\U00011A99', '\U00011A7F\U00011A99']
+    initial = ['\U00011A86', '\U00011A87', '\U00011A89', '\U00011A88']
+
+    for x, y in zip(viraCon, initial):
+        Strng = Strng.replace(y, x)
+
+    tsaSeries = ['𑩵','𑩶','𑩷']
+    caSeries = ['𑩡','𑩢','𑩣']
+
+    for x, y in zip(tsaSeries,caSeries):
+        Strng = Strng.replace(y, x)
+
+    ## initial ##
+
+    for x, y in zip(finVir, fin):
+        Strng = Strng.replace(y, x)
+
+    return Strng
+
+def FixSoyombo(Strng, reverse=False):
+    return _FixSoyomboDecode(Strng) if reverse else _FixSoyomboEncode(Strng)
 
 def FixKharoshthi(Strng, reverse=False):
     Strng = KharoshthiNumerals(Strng, reverse)
 
     return Strng
 
-def FixMarchen(Strng, reverse=False):
+def _FixMarchenEncode(Strng):
     subjoinCons = '𑱲 𑱳 𑱴 𑱵 𑱶 𑱷 𑱸 𑱹 𑱺 𑱻 𑱼 𑱽 𑱾 𑱿 𑲀 𑲁 𑲂 𑲃 𑲄 𑲅 𑲆 𑲇 𑲉 𑲊 𑲋 𑲌 𑲍 𑲎'.split(' ')
     subjoined = '𑲒 𑲓 𑲔 𑲕 𑲖 𑲗 𑲘 𑲙 𑲚 𑲛 𑲜 𑲝 𑲞 𑲟 𑲠 𑲡 𑲢 𑲣 𑲤 𑲥 𑲦 𑲧 𑲩 𑲪 𑲫 𑲬 𑲭 𑲮'.split(' ')
 
-    if not reverse:
-        for x, y in zip(subjoinCons, subjoined):
-            Strng = Strng.replace('ʾ' + x, y)
+    for x, y in zip(subjoinCons, subjoined):
+        Strng = Strng.replace('ʾ' + x, y)
 
-        Strng = Strng.replace('ʾ', '')
-        Strng = Strng.replace('\u02BF', '')
+    Strng = Strng.replace('ʾ', '')
+    Strng = Strng.replace('\u02BF', '')
 
-    else:
-        tsaSeries = ['\U00011C82', '\U00011C83', '\U00011C84']
-        jaSereis =  ['\U00011C76', '\U00011C77', '\U00011C78']
-
-        for x, y in zip(tsaSeries, jaSereis):
-            Strng = Strng.replace(y, x)
-
-        for x, y in zip(subjoinCons, subjoined):
-            Strng = Strng.replace(y, 'ʾ' + x)
 
     return Strng
 
-def FixMro(Strng, reverse=False):
-    # M2, K2, L2, L3, H2, t2
+def _FixMarchenDecode(Strng):
+    subjoinCons = '𑱲 𑱳 𑱴 𑱵 𑱶 𑱷 𑱸 𑱹 𑱺 𑱻 𑱼 𑱽 𑱾 𑱿 𑲀 𑲁 𑲂 𑲃 𑲄 𑲅 𑲆 𑲇 𑲉 𑲊 𑲋 𑲌 𑲍 𑲎'.split(' ')
+    subjoined = '𑲒 𑲓 𑲔 𑲕 𑲖 𑲗 𑲘 𑲙 𑲚 𑲛 𑲜 𑲝 𑲞 𑲟 𑲠 𑲡 𑲢 𑲣 𑲤 𑲥 𑲦 𑲧 𑲩 𑲪 𑲫 𑲬 𑲭 𑲮'.split(' ')
+
+    tsaSeries = ['\U00011C82', '\U00011C83', '\U00011C84']
+    jaSereis =  ['\U00011C76', '\U00011C77', '\U00011C78']
+
+    for x, y in zip(tsaSeries, jaSereis):
+        Strng = Strng.replace(y, x)
+
+    for x, y in zip(subjoinCons, subjoined):
+        Strng = Strng.replace(y, 'ʾ' + x)
+
+    return Strng
+
+def FixMarchen(Strng, reverse=False):
+    return _FixMarchenDecode(Strng) if reverse else _FixMarchenEncode(Strng)
+
+def _FixMroEncode(Strng):
     extracons = ['\U00016A4E', '\U00016A59', '\U00016A5A', '\U00016A5B', '\U00016A5C', '\U00016A5E']
     consnormaldig = ['𖩃𖩢', '𖩌𖩢', '𖩍𖩢', '𖩍𖩣', '𖩉𖩢', '𖩀𖩢']
     consnormal = ['𖩃', '𖩌', '𖩍', '𖩍', '𖩉', '𖩀']
 
-    if not reverse:
-        for x, y in zip(consnormaldig, extracons):
-            Strng = Strng.replace(x, y)
-    else:
-        for x, y in zip(extracons, consnormal):
-            Strng = Strng.replace(x, y)
+    for x, y in zip(consnormaldig, extracons):
+        Strng = Strng.replace(x, y)
 
     return Strng
 
-def FixWancho(Strng, reverse=False):
+def _FixMroDecode(Strng):
+    extracons = ['\U00016A4E', '\U00016A59', '\U00016A5A', '\U00016A5B', '\U00016A5C', '\U00016A5E']
+    consnormaldig = ['𖩃𖩢', '𖩌𖩢', '𖩍𖩢', '𖩍𖩣', '𖩉𖩢', '𖩀𖩢']
+    consnormal = ['𖩃', '𖩌', '𖩍', '𖩍', '𖩉', '𖩀']
+
+    for x, y in zip(extracons, consnormal):
+        Strng = Strng.replace(x, y)
+
+    return Strng
+
+def FixMro(Strng, reverse=False):
+    return _FixMroDecode(Strng) if reverse else _FixMroEncode(Strng)
+
+def _FixWanchoEncode(Strng):
     tonemarks = ['\U0001E2EC', '\U0001E2ED', '\U0001E2EE', '\U0001E2EF']
     tonewri = ['\\_', '\\-', '\\!', '\\;']
 
@@ -835,78 +881,111 @@ def FixWancho(Strng, reverse=False):
     Anusvaras = ['\U0001E2E2', '\U0001E2E3', '\U0001E2E4', '\U0001E2E5'] # o, aa, a, i
     AnusvaraVowels = ['\U0001E2D5', '\U0001E2C0', '\U0001E2C1', '\U0001E2DC']
 
-    if not reverse:
-        for x, y in zip(tonemarks, tonewri):
-            Strng = Strng.replace(y, x)
+    for x, y in zip(tonemarks, tonewri):
+        Strng = Strng.replace(y, x)
 
-        for x, y in zip(nasvowels, nasalization):
-            Strng = Strng.replace(x + 'ʿ', y)
+    for x, y in zip(nasvowels, nasalization):
+        Strng = Strng.replace(x + 'ʿ', y)
 
-        Strng = Strng.replace('ʿ', '𞋉')
+    Strng = Strng.replace('ʿ', '𞋉')
 
-        for x, y in zip(AnusvaraVowels, Anusvaras):
-            Strng = Strng.replace(x + 'ʾ', y)
+    for x, y in zip(AnusvaraVowels, Anusvaras):
+        Strng = Strng.replace(x + 'ʾ', y)
 
-        Strng = Strng.replace('ʾ', '𞋝')
+    Strng = Strng.replace('ʾ', '𞋝')
 
-        Strng = Strng.replace('𞋋𞋗', '\U0001E2E1')
-        Strng = Strng.replace('𞋋𞋎', '\U0001E2E0')
+    Strng = Strng.replace('𞋋𞋗', '\U0001E2E1')
+    Strng = Strng.replace('𞋋𞋎', '\U0001E2E0')
 
-        Strng = Strng.replace('𞋓Ø', '\U0001E2D2') ## WA
-        Strng = Strng.replace('Ø', '')
+    Strng = Strng.replace('𞋓Ø', '\U0001E2D2') ## WA
+    Strng = Strng.replace('Ø', '')
 
-    else:
-        for x, y in zip(tonemarks, tonewri):
-            Strng = Strng.replace(x, y)
 
-        for x, y in zip(nasvowels, nasalization):
-            Strng = Strng.replace(y, x + 'ʿ')
 
-        for x, y in zip(AnusvaraVowels, Anusvaras):
-            Strng = Strng.replace(y, x + 'ʾ')
+    return Strng
 
-        Strng = Strng.replace('\U0001E2E1', '𞋋𞋗')
-        Strng = Strng.replace('\U0001E2E0', '𞋋𞋎')
+def _FixWanchoDecode(Strng):
+    tonemarks = ['\U0001E2EC', '\U0001E2ED', '\U0001E2EE', '\U0001E2EF']
+    tonewri = ['\\_', '\\-', '\\!', '\\;']
 
-        Strng = Strng.replace('\U0001E2D2', '𞋓Ø') ## WA
+    nasalization = ['\U0001E2E6', '\U0001E2E7', '\U0001E2E8', '\U0001E2EA'] # o, e, aa , u ; nasalization
+    nasvowels = ['\U0001E2D5', '\U0001E2DB', '\U0001E2C0', '\U0001E2DE']
 
+    Anusvaras = ['\U0001E2E2', '\U0001E2E3', '\U0001E2E4', '\U0001E2E5'] # o, aa, a, i
+    AnusvaraVowels = ['\U0001E2D5', '\U0001E2C0', '\U0001E2C1', '\U0001E2DC']
+
+    for x, y in zip(tonemarks, tonewri):
+        Strng = Strng.replace(x, y)
+
+    for x, y in zip(nasvowels, nasalization):
+        Strng = Strng.replace(y, x + 'ʿ')
+
+    for x, y in zip(AnusvaraVowels, Anusvaras):
+        Strng = Strng.replace(y, x + 'ʾ')
+
+    Strng = Strng.replace('\U0001E2E1', '𞋋𞋗')
+    Strng = Strng.replace('\U0001E2E0', '𞋋𞋎')
+
+    Strng = Strng.replace('\U0001E2D2', '𞋓Ø') ## WA
+
+
+    return Strng
+
+def FixWancho(Strng, reverse=False):
+    return _FixWanchoDecode(Strng) if reverse else _FixWanchoEncode(Strng)
+
+def _FixSiddhamEncode(Strng):
+    pass
+
+    return Strng
+
+def _FixSiddhamDecode(Strng):
+    ## reverse the alternate forms
+    Strng = Strng.replace('𑗜', '𑖲') # VS U
+    Strng = Strng.replace('𑗝', '𑖳') # VS UU
+    Strng = Strng.replace('𑗛', '𑖄') # VS U
+    Strng = Strng.replace('𑗘', '𑖂') # VS I1
+    Strng = Strng.replace('𑗙', '𑖂') # VS I2
+    Strng = Strng.replace('𑗚', '𑖃') # VS II
 
     return Strng
 
 def FixSiddham(Strng, reverse=False):
-    if not reverse:
-        pass
-    else:
-        ## reverse the alternate forms
-        Strng = Strng.replace('𑗜', '𑖲') # VS U
-        Strng = Strng.replace('𑗝', '𑖳') # VS UU
-        Strng = Strng.replace('𑗛', '𑖄') # VS U
-        Strng = Strng.replace('𑗘', '𑖂') # VS I1
-        Strng = Strng.replace('𑗙', '𑖂') # VS I2
-        Strng = Strng.replace('𑗚', '𑖃') # VS II
+    return _FixSiddhamDecode(Strng) if reverse else _FixSiddhamEncode(Strng)
+
+def _FixBhaiksukiEncode(Strng):
+    Strng = Strng.replace(' ', '𑱃')
+
+    return Strng
+
+def _FixBhaiksukiDecode(Strng):
+    Strng = Strng.replace('𑱃', ' ')
 
     return Strng
 
 def FixBhaiksuki(Strng, reverse=False):
-    if not reverse:
-        Strng = Strng.replace(' ', '𑱃')
-    else:
-        Strng = Strng.replace('𑱃', ' ')
+    return _FixBhaiksukiDecode(Strng) if reverse else _FixBhaiksukiEncode(Strng)
+
+def _FixKhudawadiEncode(Strng):
+    sindhi = ['𑊽', '𑋃', '𑋉', '𑋕']
+    sindhiapprox = ['ˍ𑊼', 'ˍ𑋂', 'ˍ𑋈', 'ˍ𑋔']
+
+    for x, y in zip(sindhi, sindhiapprox):
+        Strng = Strng.replace(y,x)
+
+    return Strng
+
+def _FixKhudawadiDecode(Strng):
+    sindhi = ['𑊽', '𑋃', '𑋉', '𑋕']
+    sindhiapprox = ['ˍ𑊼', 'ˍ𑋂', 'ˍ𑋈', 'ˍ𑋔']
+
+    for x, y in zip(sindhi, sindhiapprox):
+        Strng = Strng.replace(x,y)
 
     return Strng
 
 def FixKhudawadi(Strng, reverse=False):
-    sindhi = ['𑊽', '𑋃', '𑋉', '𑋕']
-    sindhiapprox = ['ˍ𑊼', 'ˍ𑋂', 'ˍ𑋈', 'ˍ𑋔']
-
-    if not reverse:
-        for x, y in zip(sindhi, sindhiapprox):
-            Strng = Strng.replace(y,x)
-    else:
-        for x, y in zip(sindhi, sindhiapprox):
-            Strng = Strng.replace(x,y)
-
-    return Strng
+    return _FixKhudawadiDecode(Strng) if reverse else _FixKhudawadiEncode(Strng)
 
 # Correct Ru2, Lu2 -> R, lR
 def FixTamil(Strng,reverse=False):
@@ -940,13 +1019,18 @@ def FixTamil(Strng,reverse=False):
 
     return Strng
 
-def FixOriya(Strng, reverse=False):
-    if not reverse:
-        pass
-    else:
-        Strng = Strng.replace('ଵ','ୱ')
+def _FixOriyaEncode(Strng):
+    pass
 
     return Strng
+
+def _FixOriyaDecode(Strng):
+    Strng = Strng.replace('ଵ','ୱ')
+
+    return Strng
+
+def FixOriya(Strng, reverse=False):
+    return _FixOriyaDecode(Strng) if reverse else _FixOriyaEncode(Strng)
 
 def FixGurmukhiLoC(Strng,reverse=False):
     Strng = CorrectRuLu(Strng,"Gurmukhi",reverse)
@@ -1045,49 +1129,62 @@ def ShiftDiacritics(Strng,Target,reverse=False):
     return Strng
 
 
-def FixTamilExtended(Strng, reverse=False):
-    if not reverse:
-        Strng = Strng.replace('ക്‌ഷ', 'ക്ഷ')
-        Strng = Strng.replace('ശ്‌ര', 'ശ്‍ര')
-        Strng = Strng.replace('ൗ', 'ൌ')
+def _FixTamilExtendedEncode(Strng):
+    Strng = Strng.replace('ക്‌ഷ', 'ക്ഷ')
+    Strng = Strng.replace('ശ്‌ര', 'ശ്‍ര')
+    Strng = Strng.replace('ൗ', 'ൌ')
 
-        for svara in GM.VedicSvarasList:
-            Strng = Strng.replace('\u200C' + svara, svara + '\u200C')
-    else:
-        for svara in GM.VedicSvarasList:
-            Strng = Strng.replace(svara + '\u200C', '\u200C' + svara)
-
-        Strng = Strng.replace('\u0D4D', '\u0D4D\u200C')
+    for svara in GM.VedicSvarasList:
+        Strng = Strng.replace('\u200C' + svara, svara + '\u200C')
 
     return Strng
 
+def _FixTamilExtendedDecode(Strng):
+    for svara in GM.VedicSvarasList:
+        Strng = Strng.replace(svara + '\u200C', '\u200C' + svara)
+
+    Strng = Strng.replace('\u0D4D', '\u0D4D\u200C')
+
+    return Strng
+
+def FixTamilExtended(Strng, reverse=False):
+    return _FixTamilExtendedDecode(Strng) if reverse else _FixTamilExtendedEncode(Strng)
+
 # Move Vowel Signs
-def FixTamilGrantha(Strng,reverse=False):
+def _FixTamilGranthaEncode(Strng):
     ListC = '|'.join(GM.CrunchSymbols(GM.Consonants, 'TamilGrantha'))
     ListEAI = '|'.join(TamilGrantha.VowelSignMap[9:11]+TamilGrantha.SouthVowelSignMap[0:1])
     ListOAU = TamilGrantha.VowelSignMap[11:13]+TamilGrantha.SouthVowelSignMap[1:2]
 
-    if not reverse:
-        # k + VS e/E/ai -> Joiners + VS e/E/ai + k
-        Strng = re.sub('('+ListC+')'+'('+ListEAI+')','\u200B\u200C\u200D\u200C'+r'\2\1',Strng)
-        # k + VS o/O/au -> Joiners + VS e/E + k + VS AA/La
-        Strng = re.sub('('+ListC+')'+'('+ListOAU[0]+')','\u200B\u200C\u200D\u200C'+TamilGrantha.VowelSignMap[9]+r'\1'+TamilGrantha.VowelSignMap[0],Strng)
-        Strng = re.sub('('+ListC+')'+'('+ListOAU[2]+')','\u200B\u200C\u200D\u200C'+TamilGrantha.SouthVowelSignMap[0]+r'\1'+TamilGrantha.VowelSignMap[0],Strng)
-        Strng = re.sub('('+ListC+')'+'('+ListOAU[1]+')','\u200B\u200C\u200D\u200C'+TamilGrantha.SouthVowelSignMap[0]+r'\1'+Tamil.SouthConsonantMap[0],Strng)
+    Strng = re.sub('('+ListC+')'+'('+ListEAI+')','\u200B\u200C\u200D\u200C'+r'\2\1',Strng)
+    # k + VS o/O/au -> Joiners + VS e/E + k + VS AA/La
+    Strng = re.sub('('+ListC+')'+'('+ListOAU[0]+')','\u200B\u200C\u200D\u200C'+TamilGrantha.VowelSignMap[9]+r'\1'+TamilGrantha.VowelSignMap[0],Strng)
+    Strng = re.sub('('+ListC+')'+'('+ListOAU[2]+')','\u200B\u200C\u200D\u200C'+TamilGrantha.SouthVowelSignMap[0]+r'\1'+TamilGrantha.VowelSignMap[0],Strng)
+    Strng = re.sub('('+ListC+')'+'('+ListOAU[1]+')','\u200B\u200C\u200D\u200C'+TamilGrantha.SouthVowelSignMap[0]+r'\1'+Tamil.SouthConsonantMap[0],Strng)
 
-        ## Reversing நே்ˆদ
-        Strng = re.sub('(\u200B\u200C\u200D\u200C.)'+'('+ListC+')'+'(்ˆ)',r'\2\3\1',Strng)
+    ## Reversing நே்ˆদ
+    Strng = re.sub('(\u200B\u200C\u200D\u200C.)'+'('+ListC+')'+'(்ˆ)',r'\2\3\1',Strng)
 
-    else:
-        #print('I am here')
-        # k + VS o/O/au <- Joiners + VS e/E + k + VS AA/La
-        Strng = re.sub('\u200B'+TamilGrantha.VowelSignMap[9]+'('+ListC+')'+TamilGrantha.VowelSignMap[0],r'\1'+ListOAU[0],Strng)
-        Strng = re.sub('\u200B'+TamilGrantha.SouthVowelSignMap[0]+'('+ListC+')'+TamilGrantha.VowelSignMap[0],r'\1'+ListOAU[2],Strng)
-        Strng = re.sub('\u200B'+TamilGrantha.SouthVowelSignMap[0]+'('+ListC+')'+Tamil.SouthConsonantMap[0],r'\1'+ListOAU[1],Strng)
-        # k + VS e/E/ai <- Joiners + VS e/E/ai + k
-        Strng = re.sub('\u200B'+'('+ListEAI+')'+'('+ListC+')',r'\2\1',Strng)
 
     return Strng
+
+def _FixTamilGranthaDecode(Strng):
+    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants, 'TamilGrantha'))
+    ListEAI = '|'.join(TamilGrantha.VowelSignMap[9:11]+TamilGrantha.SouthVowelSignMap[0:1])
+    ListOAU = TamilGrantha.VowelSignMap[11:13]+TamilGrantha.SouthVowelSignMap[1:2]
+
+    #print('I am here')
+    # k + VS o/O/au <- Joiners + VS e/E + k + VS AA/La
+    Strng = re.sub('\u200B'+TamilGrantha.VowelSignMap[9]+'('+ListC+')'+TamilGrantha.VowelSignMap[0],r'\1'+ListOAU[0],Strng)
+    Strng = re.sub('\u200B'+TamilGrantha.SouthVowelSignMap[0]+'('+ListC+')'+TamilGrantha.VowelSignMap[0],r'\1'+ListOAU[2],Strng)
+    Strng = re.sub('\u200B'+TamilGrantha.SouthVowelSignMap[0]+'('+ListC+')'+Tamil.SouthConsonantMap[0],r'\1'+ListOAU[1],Strng)
+    # k + VS e/E/ai <- Joiners + VS e/E/ai + k
+    Strng = re.sub('\u200B'+'('+ListEAI+')'+'('+ListC+')',r'\2\1',Strng)
+
+    return Strng
+
+def FixTamilGrantha(Strng, reverse=False):
+    return _FixTamilGranthaDecode(Strng) if reverse else _FixTamilGranthaEncode(Strng)
 
 def FixKhmerLoC(Strng,reverse=False):
     return FixKhmer(Strng, reverse, target="KhmerLoC")
@@ -1120,86 +1217,101 @@ def FixKhmer(Strng,reverse=False, target="Khmer"):
 
     return Strng
 
+def _FixKhamtiShanEncode(Strng):
+    Strng = Strng.replace('်ရ', 'ြ')
+    Strng = Strng.replace('်ယ', 'ျ')
+    Strng = Strng.replace('်ဝ', 'ွ')
+
+    ## Maintain the order of the medials
+    Strng = Strng.replace("\u103C\u103B", "\u103B\u103C")
+    Strng = Strng.replace("\u103D\u103B", "\u103B\u103D")
+    Strng = Strng.replace("ႂ\u103C", "\u103Cွ")
+
+    return Strng
+
+def _FixKhamtiShanDecode(Strng):
+    Strng = Strng.replace('ꩳ', 'ရ')
+    Strng = Strng.replace("\u103B\u103C", "\u103C\u103B")
+    Strng = Strng.replace("\u103B\u103D", "\u103D\u103B")
+    Strng = Strng.replace("\u103Cႂ", "ႂ\u103C")
+
+    Strng = Strng.replace('ြ', '်ꩳ')
+    Strng = Strng.replace('ꩳ', 'ရ')
+    Strng = Strng.replace('ျ', '်ယ')
+    Strng = Strng.replace('ွ', '်ဝ')
+
+    return Strng
+
 def FixKhamtiShan(Strng, reverse=False):
-    if not reverse:
-        Strng = Strng.replace('်ရ', 'ြ')
-        Strng = Strng.replace('်ယ', 'ျ')
-        Strng = Strng.replace('်ဝ', 'ွ')
+    return _FixKhamtiShanDecode(Strng) if reverse else _FixKhamtiShanEncode(Strng)
 
-        ## Maintain the order of the medials
-        Strng = Strng.replace("\u103C\u103B", "\u103B\u103C")
-        Strng = Strng.replace("\u103D\u103B", "\u103B\u103D")
-        Strng = Strng.replace("ႂ\u103C", "\u103Cွ")
-    else:
-        Strng = Strng.replace('ꩳ', 'ရ')
-        Strng = Strng.replace("\u103B\u103C", "\u103C\u103B")
-        Strng = Strng.replace("\u103B\u103D", "\u103D\u103B")
-        Strng = Strng.replace("\u103Cႂ", "ႂ\u103C")
+def _FixTaiLaingEncode(Strng):
+    Strng = Strng.replace('်ꩺ', 'ြ')
+    Strng = Strng.replace('်ယ', 'ျ')
+    Strng = Strng.replace('်ဝ', 'ႂ')
 
-        Strng = Strng.replace('ြ', '်ꩳ')
-        Strng = Strng.replace('ꩳ', 'ရ')
-        Strng = Strng.replace('ျ', '်ယ')
-        Strng = Strng.replace('ွ', '်ဝ')
+    ## Maintain the order of the medials
+    Strng = Strng.replace("\u103C\u103B", "\u103B\u103C")
+    Strng = Strng.replace("\u103D\u103B", "\u103B\u103D")
+    Strng = Strng.replace("ႂ\u103C", "\u103Cႂ")
+
+    Strng = Strng.replace('ႂျ','်၀ျ')
+
+
+    return Strng
+
+def _FixTaiLaingDecode(Strng):
+    Strng = Strng.replace("\u103B\u103C", "\u103C\u103B")
+    Strng = Strng.replace("\u103B\u103D", "\u103D\u103B")
+    Strng = Strng.replace("\u103Cႂ", "ႂ\u103C")
+
+    Strng = Strng.replace('ြ', '်ꩺ')
+    Strng = Strng.replace('ျ', '်ယ')
+    Strng = Strng.replace('ႂ', '်ဝ')
 
     return Strng
 
 def FixTaiLaing(Strng, reverse=False):
-    if not reverse:
-        Strng = Strng.replace('်ꩺ', 'ြ')
-        Strng = Strng.replace('်ယ', 'ျ')
-        Strng = Strng.replace('်ဝ', 'ႂ')
+    return _FixTaiLaingDecode(Strng) if reverse else _FixTaiLaingEncode(Strng)
 
-        ## Maintain the order of the medials
-        Strng = Strng.replace("\u103C\u103B", "\u103B\u103C")
-        Strng = Strng.replace("\u103D\u103B", "\u103B\u103D")
-        Strng = Strng.replace("ႂ\u103C", "\u103Cႂ")
+def _FixShanEncode(Strng):
+    Strng = Strng.replace('်ရ', 'ြ')
+    Strng = Strng.replace('်ယ', 'ျ')
+    Strng = Strng.replace('်ဝ', '\u1082')
+    #Strng = Strng.replace('်ႁ', 'ှ')
 
-        Strng = Strng.replace('ႂျ','်၀ျ')
+    ## Maintain the order of the medials
+    Strng = re.sub('(ှ)' + '([ျြွ])', r'\2\1', Strng)
+    Strng = Strng.replace("\u103C\u103B", "\u103B\u103C")
+    Strng = Strng.replace("\u103D\u103B", "\u103B\u103D")
+    Strng = Strng.replace("ွ\u103C", "\u103Cွ")
 
-    else:
-        Strng = Strng.replace("\u103B\u103C", "\u103C\u103B")
-        Strng = Strng.replace("\u103B\u103D", "\u103D\u103B")
-        Strng = Strng.replace("\u103Cႂ", "ႂ\u103C")
+    ## Fix Shya
+    Strng = re.sub('သျ\u02BD?ျ', 'သျ်ယ', Strng)
 
-        Strng = Strng.replace('ြ', '်ꩺ')
-        Strng = Strng.replace('ျ', '်ယ')
-        Strng = Strng.replace('ႂ', '်ဝ')
+
+    return Strng
+
+def _FixShanDecode(Strng):
+    ## Reverse the order of the medials
+    Strng = re.sub('([ျြွ])' + '(ှ)', r'\2\1', Strng)
+    Strng = Strng.replace("\u103B\u103C", "\u103C\u103B")
+    Strng = Strng.replace("\u103B\u103D", "\u103D\u103B")
+    Strng = Strng.replace("\u103Cွ", "ွ\u103C")
+
+    Strng = Strng.replace('ြ', '်ရ')
+    Strng = Strng.replace('ျ', '်ယ')
+    Strng = Strng.replace('ွ', '်ဝ')
+    Strng = Strng.replace('\u1082', '်ဝ')
+    Strng = Strng.replace('ှ', '်ႁ')
+
+    #for old shan in case it appears
+    Strng = Strng.replace('\u1039', '\u103A')
 
     return Strng
 
 def FixShan(Strng, reverse=False):
-    if not reverse:
-        Strng = Strng.replace('်ရ', 'ြ')
-        Strng = Strng.replace('်ယ', 'ျ')
-        Strng = Strng.replace('်ဝ', '\u1082')
-        #Strng = Strng.replace('်ႁ', 'ှ')
-
-        ## Maintain the order of the medials
-        Strng = re.sub('(ှ)' + '([ျြွ])', r'\2\1', Strng)
-        Strng = Strng.replace("\u103C\u103B", "\u103B\u103C")
-        Strng = Strng.replace("\u103D\u103B", "\u103B\u103D")
-        Strng = Strng.replace("ွ\u103C", "\u103Cွ")
-
-        ## Fix Shya
-        Strng = re.sub('သျ\u02BD?ျ', 'သျ်ယ', Strng)
-
-    else:
-        ## Reverse the order of the medials
-        Strng = re.sub('([ျြွ])' + '(ှ)', r'\2\1', Strng)
-        Strng = Strng.replace("\u103B\u103C", "\u103C\u103B")
-        Strng = Strng.replace("\u103B\u103D", "\u103D\u103B")
-        Strng = Strng.replace("\u103Cွ", "ွ\u103C")
-
-        Strng = Strng.replace('ြ', '်ရ')
-        Strng = Strng.replace('ျ', '်ယ')
-        Strng = Strng.replace('ွ', '်ဝ')
-        Strng = Strng.replace('\u1082', '်ဝ')
-        Strng = Strng.replace('ှ', '်ႁ')
-
-        #for old shan in case it appears
-        Strng = Strng.replace('\u1039', '\u103A')
-
-    return Strng
+    return _FixShanDecode(Strng) if reverse else _FixShanEncode(Strng)
 
 def FixMon(Strng, reverse=False):
     pairs = [('င', 'ၚ'),('ဉ', 'ည'), ('ဈ', 'ၛ')]
@@ -1250,7 +1362,7 @@ def FixMon(Strng, reverse=False):
     return Strng
 
 # Burmese - Tall A + Subjoning Consonants
-def FixBurmese(Strng,reverse=False):
+def _FixBurmeseEncode(Strng):
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Burmese'))
     vir = Burmese.ViramaMap[0]
 
@@ -1264,93 +1376,110 @@ def FixBurmese(Strng,reverse=False):
 
     TallACons = '|'.join([Burmese.ConsonantMap[x] for x in [1,2,4,17,20,28]])
 
-    if not reverse:
-        # Replace Explicit Virama + Cons -> Subjoining Virama + Cons
-        Strng = re.sub('(?<!ာ)' + vir+'('+ListC+')','\u1039'+r'\1',Strng)
+    Strng = re.sub('(?<!ာ)' + vir+'('+ListC+')','\u1039'+r'\1',Strng)
 
-        # Introduce Kinzi: ga + NGA + sub-Virama -> ga + NGA + exp-Virama + sub-Virama
-        Strng = re.sub('('+Burmese.ConsonantMap[4]+')'+'('+'\u1039'+')',r'\1'+vir+r'\2',Strng)
+    # Introduce Kinzi: ga + NGA + sub-Virama -> ga + NGA + exp-Virama + sub-Virama
+    Strng = re.sub('('+Burmese.ConsonantMap[4]+')'+'('+'\u1039'+')',r'\1'+vir+r'\2',Strng)
 
-        # Introduce Repha
-        Strng = re.sub('(ရ)'+'('+'\u1039'+')',r'\1'+vir+r'\2',Strng)
+    # Introduce Repha
+    Strng = re.sub('(ရ)'+'('+'\u1039'+')',r'\1'+vir+r'\2',Strng)
 
-        # Introduce Tall A: ka + AA -> ka + Tall A
-        Strng = re.sub('(?<!\u1039)('+TallACons+')'+'('+E+'?)'+AA,r'\1\2'+'\u102B',Strng)
+    # Introduce Tall A: ka + AA -> ka + Tall A
+    Strng = re.sub('(?<!\u1039)('+TallACons+')'+'('+E+'?)'+AA,r'\1\2'+'\u102B',Strng)
 
-        ## buddho --> Tall A
-        Strng = re.sub('('+TallACons+')(\u1039)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4'+'\u102B',Strng)
-        Strng = re.sub('('+TallACons+')(\u1039)('+ListC +')'+'(\u1039)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4\5\6'+'\u102B',Strng)
+    ## buddho --> Tall A
+    Strng = re.sub('('+TallACons+')(\u1039)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4'+'\u102B',Strng)
+    Strng = re.sub('('+TallACons+')(\u1039)('+ListC +')'+'(\u1039)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4\5\6'+'\u102B',Strng)
 
-        Strng = re.sub('(?<=်္)' + '('+TallACons+')'+'('+E+'?)'+AA,r'\1\2'+'\u102B',Strng)
+    Strng = re.sub('(?<=်္)' + '('+TallACons+')'+'('+E+'?)'+AA,r'\1\2'+'\u102B',Strng)
 
-        # Remove Tall a Kinzi
+    # Remove Tall a Kinzi
 
-        for x,y in zip(yrvh,yrvhsub):
-            # Introduce subjoining forms: sub-virama + y/r/v/h -> subjoining y/r/v/h
-            Strng = re.sub('(?<!်)\u1039'+x,y,Strng)
+    for x,y in zip(yrvh,yrvhsub):
+        # Introduce subjoining forms: sub-virama + y/r/v/h -> subjoining y/r/v/h
+        Strng = re.sub('(?<!်)\u1039'+x,y,Strng)
 
-        Strng = re.sub('ျါ','ျာ', Strng)
+    Strng = re.sub('ျါ','ျာ', Strng)
 
-        Strng = re.sub('(?<!ဂ)ြါ','ြာ', Strng)
+    Strng = re.sub('(?<!ဂ)ြါ','ြာ', Strng)
 
-        Strng = re.sub('ျေါ','ျော', Strng)
+    Strng = re.sub('ျေါ','ျော', Strng)
 
-        Strng = re.sub('(?<!ဂ)ြေါ','ြော', Strng)
+    Strng = re.sub('(?<!ဂ)ြေါ','ြော', Strng)
 
 
-        Strng = Strng.replace("သ္သ", "ဿ")
-        Strng = Strng.replace("ဉ္ဉ", "ည")
+    Strng = Strng.replace("သ္သ", "ဿ")
+    Strng = Strng.replace("ဉ္ဉ", "ည")
 
-        Strng = Strng.replace("\u02F3", "့")
-        Strng = Strng.replace("့်", "့်",)
+    Strng = Strng.replace("\u02F3", "့")
+    Strng = Strng.replace("့်", "့်",)
 
-        Strng = Strng.replace("ာ္", "ာ်")
+    Strng = Strng.replace("ာ္", "ာ်")
 
-        Strng = re.sub("(ရ်္င်္)" + "(" + ListC + ")", "ရ်္င္" + r'\2', Strng)
+    Strng = re.sub("(ရ်္င်္)" + "(" + ListC + ")", "ရ်္င္" + r'\2', Strng)
 
-        Strng = Strng.replace("ါ္", "ါ်")
+    Strng = Strng.replace("ါ္", "ါ်")
 
-        Strng = Strng.replace("\u103A\u1039\u101A", "\u103B")
-        Strng = Strng.replace('\u103C\u103A\u1039ဝ', "\u103Cွ")
+    Strng = Strng.replace("\u103A\u1039\u101A", "\u103B")
+    Strng = Strng.replace('\u103C\u103A\u1039ဝ', "\u103Cွ")
 
-        ## Maintain the order of the medials
-        Strng = re.sub('(ှ)' + '([ျြွ])', r'\2\1', Strng)
-        Strng = Strng.replace("\u103C\u103B", "\u103B\u103C")
-        Strng = Strng.replace("\u103D\u103B", "\u103B\u103D")
-        Strng = Strng.replace("ွ\u103C", "\u103Cွ")
+    ## Maintain the order of the medials
+    Strng = re.sub('(ှ)' + '([ျြွ])', r'\2\1', Strng)
+    Strng = Strng.replace("\u103C\u103B", "\u103B\u103C")
+    Strng = Strng.replace("\u103D\u103B", "\u103B\u103D")
+    Strng = Strng.replace("ွ\u103C", "\u103Cွ")
 
-        ## Introduce repha for ra and ga
-        Strng = Strng.replace('ရျ', 'ရ်္ယ')
-        Strng = Strng.replace('ငျ', 'င်္ယ')
+    ## Introduce repha for ra and ga
+    Strng = Strng.replace('ရျ', 'ရ်္ယ')
+    Strng = Strng.replace('ငျ', 'င်္ယ')
 
-        #Strng = Strng.replace("\u103A\u1039", "\u1039")
-    else:
-        ## Reverse the order of the medials
-        Strng = re.sub('([ျြွ])' + '(ှ)', r'\2\1', Strng)
-        Strng = Strng.replace("\u103B\u103C", "\u103C\u103B")
-        Strng = Strng.replace("\u103B\u103D", "\u103D\u103B")
-        Strng = Strng.replace("\u103Cွ", "ွ\u103C")
-
-        Strng = Strng.replace("ဿ","သ္သ")
-        Strng = Strng.replace("ည", "ဉ္ဉ")
-
-        Strng = Strng.replace("့်", "့်")
-        Strng = Strng.replace("့","\u02F3")
-
-        # Replace sub Virama with explicit Virama
-        Strng = Strng.replace('\u1039',vir)
-        # Replace Tall AA with AA
-        Strng = Strng.replace('\u102B',AA)
-        # Replace Kinzi with NGA + Virama
-        Strng = Strng.replace(Burmese.ConsonantMap[4]+vir+vir,Burmese.ConsonantMap[4]+vir)
-        # Replace Repha
-        Strng = Strng.replace('ရ'+vir+vir,'ရ'+vir)
-
-        for x,y in zip(yrvh,yrvhsub):
-            # Replace subjoining forms: exp-virama + y/r/v/h <- subjoining y/r/v/h
-            Strng = Strng.replace(y,vir+x)
+    #Strng = Strng.replace("\u103A\u1039", "\u1039")
 
     return Strng
+
+def _FixBurmeseDecode(Strng):
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Burmese'))
+    vir = Burmese.ViramaMap[0]
+
+    AA = Burmese.VowelSignMap[0]
+    E = Burmese.VowelSignMap[9]
+
+    ## Check Rendering with Myanmar1 font buddho go gau
+
+    yrvh = Burmese.ConsonantMap[25:27] + Burmese.ConsonantMap[28:29] + Burmese.ConsonantMap[32:33]
+    yrvhsub = ['\u103B','\u103C','\u103D','\u103E']
+
+    TallACons = '|'.join([Burmese.ConsonantMap[x] for x in [1,2,4,17,20,28]])
+
+    ## Reverse the order of the medials
+    Strng = re.sub('([ျြွ])' + '(ှ)', r'\2\1', Strng)
+    Strng = Strng.replace("\u103B\u103C", "\u103C\u103B")
+    Strng = Strng.replace("\u103B\u103D", "\u103D\u103B")
+    Strng = Strng.replace("\u103Cွ", "ွ\u103C")
+
+    Strng = Strng.replace("ဿ","သ္သ")
+    Strng = Strng.replace("ည", "ဉ္ဉ")
+
+    Strng = Strng.replace("့်", "့်")
+    Strng = Strng.replace("့","\u02F3")
+
+    # Replace sub Virama with explicit Virama
+    Strng = Strng.replace('\u1039',vir)
+    # Replace Tall AA with AA
+    Strng = Strng.replace('\u102B',AA)
+    # Replace Kinzi with NGA + Virama
+    Strng = Strng.replace(Burmese.ConsonantMap[4]+vir+vir,Burmese.ConsonantMap[4]+vir)
+    # Replace Repha
+    Strng = Strng.replace('ရ'+vir+vir,'ရ'+vir)
+
+    for x,y in zip(yrvh,yrvhsub):
+        # Replace subjoining forms: exp-virama + y/r/v/h <- subjoining y/r/v/h
+        Strng = Strng.replace(y,vir+x)
+
+    return Strng
+
+def FixBurmese(Strng, reverse=False):
+    return _FixBurmeseDecode(Strng) if reverse else _FixBurmeseEncode(Strng)
 
 # Add Repha (Bali,Java,Sundanese)
 # a + r + ka -> a<repha>ka
@@ -1374,40 +1503,54 @@ def AddRepha(Strng,Script,Repha,reverse=False):
 
     return Strng
 
-def FixTagbanwa(Strng, reverse = False):
-    if not reverse:
-        Strng = PostProcess.InsertGeminationSign(Strng, 'Tagbanwa')
-    else:
-        pass
+def _FixTagbanwaEncode(Strng):
+    Strng = PostProcess.InsertGeminationSign(Strng, 'Tagbanwa')
 
     return Strng
 
-def FixBuhid(Strng, reverse = False):
-    if not reverse:
-        Strng = PostProcess.InsertGeminationSign(Strng, 'Buhid')
-    else:
-        pass
+def _FixTagbanwaDecode(Strng):
+    pass
 
     return Strng
 
-def FixBuginese(Strng, reverse = False):
+def FixTagbanwa(Strng, reverse=False):
+    return _FixTagbanwaDecode(Strng) if reverse else _FixTagbanwaEncode(Strng)
 
-    if not reverse:
-        Strng = Strng.replace("ᨂ\u02BEᨀ","ᨃ")
-        Strng = Strng.replace("ᨆ\u02BEᨄ","ᨇ")
-        Strng = Strng.replace("ᨊ\u02BEᨑ","ᨋ")
-        Strng = Strng.replace("ᨎ\u02BEᨌ","ᨏ")
-
-        Strng = PostProcess.InsertGeminationSign(Strng, 'Buginese')
-
-        Strng = Strng.replace('\u02BE', '')
-    else:
-        Strng = Strng.replace("ᨃ", "ᨂ\u02BEᨀ")
-        Strng = Strng.replace("ᨇ", "ᨆ\u02BEᨄ")
-        Strng = Strng.replace("ᨋ", "ᨊ\u02BEᨑ")
-        Strng = Strng.replace("ᨏ", "ᨎ\u02BEᨌ")
+def _FixBuhidEncode(Strng):
+    Strng = PostProcess.InsertGeminationSign(Strng, 'Buhid')
 
     return Strng
+
+def _FixBuhidDecode(Strng):
+    pass
+
+    return Strng
+
+def FixBuhid(Strng, reverse=False):
+    return _FixBuhidDecode(Strng) if reverse else _FixBuhidEncode(Strng)
+
+def _FixBugineseEncode(Strng):
+    Strng = Strng.replace("ᨂ\u02BEᨀ","ᨃ")
+    Strng = Strng.replace("ᨆ\u02BEᨄ","ᨇ")
+    Strng = Strng.replace("ᨊ\u02BEᨑ","ᨋ")
+    Strng = Strng.replace("ᨎ\u02BEᨌ","ᨏ")
+
+    Strng = PostProcess.InsertGeminationSign(Strng, 'Buginese')
+
+    Strng = Strng.replace('\u02BE', '')
+
+    return Strng
+
+def _FixBugineseDecode(Strng):
+    Strng = Strng.replace("ᨃ", "ᨂ\u02BEᨀ")
+    Strng = Strng.replace("ᨇ", "ᨆ\u02BEᨄ")
+    Strng = Strng.replace("ᨋ", "ᨊ\u02BEᨑ")
+    Strng = Strng.replace("ᨏ", "ᨎ\u02BEᨌ")
+
+    return Strng
+
+def FixBuginese(Strng, reverse=False):
+    return _FixBugineseDecode(Strng) if reverse else _FixBugineseEncode(Strng)
 
 
 # Balinese Repha
@@ -1431,7 +1574,7 @@ def FixBalinese(Strng,reverse=False):
     return Strng
 
 # Javanese - Reppha & Subjoining ra & ya
-def FixDivesAkuru(Strng,reverse=False):
+def _FixDivesAkuruEncode(Strng):
     target = 'DivesAkuru'
 
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target)+['\U00011926'])
@@ -1444,43 +1587,60 @@ def FixDivesAkuru(Strng,reverse=False):
     combVir = '\U0001193E'
     aVS = '\U00011F34'
 
-    if not reverse:
-        # Replace Explicit Virama + Cons -> Subjoining Virama + Cons
-        Strng = re.sub(vir+'('+ListC+')', combVir+r'\1',Strng)
-        # Replace Explicit Virama + Cons -> Subjoining Virama + Cons
-        Strng = re.sub(combVir +ra, '\U00011942',Strng)
-        # Replace Explicit Virama + Cons -> Subjoining Virama + Cons
-        Strng = re.sub(combVir +ya, '\U00011940',Strng)
-        # Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
-        Strng = re.sub('(?<!\U0001193E)'+ra+'\U0001193E'+'('+ListC+')','\U00011941'+r'\1',Strng)
-    else:
-        # reverse homonasal
-        homoNasal = '\U0001193F'
-
-        Strng = re.sub(homoNasal+'(?=[𑤌𑤍𑤎𑤏])', '𑤐\U0001193E', Strng)
-        Strng = re.sub(homoNasal+'(?=[𑤑𑤒𑤓])', '𑤕\U0001193E', Strng)
-        Strng = re.sub(homoNasal+'(?=[𑤖𑤘𑤙])', '𑤚\U0001193E', Strng)
-        Strng = re.sub(homoNasal+'(?=[𑤛𑤜𑤝𑤞])', '𑤟\U0001193E', Strng)
-        Strng = re.sub(homoNasal+'(?=[𑤠𑤡𑤢𑤣])', '𑤤\U0001193E', Strng)
-
-        # reverse the joning virama
-        Strng = Strng.replace(combVir, vir)
-        # replace alter. ya
-        Strng = Strng.replace("\U00011926", "\U00011925")
-        # Reverse : Replace Explicit Virama + Cons -> Subjoining Virama + Cons
-        Strng = re.sub(combVir, vir, Strng)
-        # Reverse : Replace Explicit Virama + Cons -> Subjoining Virama + Cons
-        Strng = re.sub('\U00011942', vir +ra, Strng)
-        # Reverse : Replace Explicit Virama + Cons -> Subjoining Virama + Cons
-        Strng = re.sub('\U00011940', vir +ya, Strng)
-        # Reverse : Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
-        Strng = re.sub('\U00011941', vir +ra, Strng)
+    Strng = re.sub(vir+'('+ListC+')', combVir+r'\1',Strng)
+    # Replace Explicit Virama + Cons -> Subjoining Virama + Cons
+    Strng = re.sub(combVir +ra, '\U00011942',Strng)
+    # Replace Explicit Virama + Cons -> Subjoining Virama + Cons
+    Strng = re.sub(combVir +ya, '\U00011940',Strng)
+    # Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
+    Strng = re.sub('(?<!\U0001193E)'+ra+'\U0001193E'+'('+ListC+')','\U00011941'+r'\1',Strng)
 
 
     return Strng
 
+def _FixDivesAkuruDecode(Strng):
+    target = 'DivesAkuru'
+
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target)+['\U00011926'])
+    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,target))
+    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,target))
+
+    ra = GM.CrunchSymbols(GM.Consonants,target)[26]
+    ya = GM.CrunchSymbols(GM.Consonants,target)[25]
+    vir = GM.CrunchSymbols(GM.virama,target)[0]
+    combVir = '\U0001193E'
+    aVS = '\U00011F34'
+
+    # reverse homonasal
+    homoNasal = '\U0001193F'
+
+    Strng = re.sub(homoNasal+'(?=[𑤌𑤍𑤎𑤏])', '𑤐\U0001193E', Strng)
+    Strng = re.sub(homoNasal+'(?=[𑤑𑤒𑤓])', '𑤕\U0001193E', Strng)
+    Strng = re.sub(homoNasal+'(?=[𑤖𑤘𑤙])', '𑤚\U0001193E', Strng)
+    Strng = re.sub(homoNasal+'(?=[𑤛𑤜𑤝𑤞])', '𑤟\U0001193E', Strng)
+    Strng = re.sub(homoNasal+'(?=[𑤠𑤡𑤢𑤣])', '𑤤\U0001193E', Strng)
+
+    # reverse the joning virama
+    Strng = Strng.replace(combVir, vir)
+    # replace alter. ya
+    Strng = Strng.replace("\U00011926", "\U00011925")
+    # Reverse : Replace Explicit Virama + Cons -> Subjoining Virama + Cons
+    Strng = re.sub(combVir, vir, Strng)
+    # Reverse : Replace Explicit Virama + Cons -> Subjoining Virama + Cons
+    Strng = re.sub('\U00011942', vir +ra, Strng)
+    # Reverse : Replace Explicit Virama + Cons -> Subjoining Virama + Cons
+    Strng = re.sub('\U00011940', vir +ya, Strng)
+    # Reverse : Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
+    Strng = re.sub('\U00011941', vir +ra, Strng)
+
+
+    return Strng
+
+def FixDivesAkuru(Strng, reverse=False):
+    return _FixDivesAkuruDecode(Strng) if reverse else _FixDivesAkuruEncode(Strng)
+
 # Javanese - Reppha & Subjoining ra & ya
-def FixKawi(Strng,reverse=False):
+def _FixKawiEncode(Strng):
     target = 'Kawi'
 
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target))
@@ -1494,40 +1654,57 @@ def FixKawi(Strng,reverse=False):
     E = '\U00011F3E'
     AA = '\U00011F34'
 
-    if not reverse:
-        # Replace Explicit Virama + Cons -> Subjoining Virama + Cons
-        Strng = re.sub(vir+'('+ListC+')','\U00011F42'+r'\1',Strng)
-        # Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
-        Strng = re.sub('(?<!\U00011F42)'+ra+'\U00011F42'+'('+ListC+')','\U00011F02'+r'\1',Strng)
-        #special AA
-        TallACons = '|'.join(['\U00011F26', '\U00011F16', '\U00011F1C'])
+    Strng = re.sub(vir+'('+ListC+')','\U00011F42'+r'\1',Strng)
+    # Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
+    Strng = re.sub('(?<!\U00011F42)'+ra+'\U00011F42'+'('+ListC+')','\U00011F02'+r'\1',Strng)
+    #special AA
+    TallACons = '|'.join(['\U00011F26', '\U00011F16', '\U00011F1C'])
 
-        Strng = re.sub('(?<!\U00011F42)('+TallACons+')'+'('+E+'?)'+AA,r'\1\2'+'\U00011F35',Strng)
+    Strng = re.sub('(?<!\U00011F42)('+TallACons+')'+'('+E+'?)'+AA,r'\1\2'+'\U00011F35',Strng)
 
-         ## buddho --> Tall A
-        Strng = re.sub('('+TallACons+')(\U00011F42)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4'+'\U00011F35',Strng)
-        Strng = re.sub('('+TallACons+')(\U00011F42)('+ListC +')'+'(\U00011F42)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4\5\6'+'\U00011F35',Strng)
+     ## buddho --> Tall A
+    Strng = re.sub('('+TallACons+')(\U00011F42)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4'+'\U00011F35',Strng)
+    Strng = re.sub('('+TallACons+')(\U00011F42)('+ListC +')'+'(\U00011F42)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4\5\6'+'\U00011F35',Strng)
 
-        ## post-base consonant signs do not need disambiguating AA
-        postBaseCons = '|'.join(['\U00011F1A', '\U00011F26', '\U00011F27', '\U00011F2B', '\U00011F31'])
-        Strng = re.sub('(\U00011F42)('+postBaseCons+')'+'(\U00011F35)', r'\1\2' + AA, Strng)
+    ## post-base consonant signs do not need disambiguating AA
+    postBaseCons = '|'.join(['\U00011F1A', '\U00011F26', '\U00011F27', '\U00011F2B', '\U00011F31'])
+    Strng = re.sub('(\U00011F42)('+postBaseCons+')'+'(\U00011F35)', r'\1\2' + AA, Strng)
 
 
-    else:
-        # Replace Subjoining Virama with Explicit Virama
-        Strng = Strng.replace('\U00011F42',vir)
-        # Replace Repha
-        Strng = Strng.replace('\U00011F02', ra + vir)
-        # reverse AltA
-        Strng = Strng.replace(aVSAlt, aVS)
-        # reverse JNA
-        Strng = Strng.replace('\U00011F33', '𑼙𑽂𑼛')
-        # decompose ind.vowels
-        Strng = Strng.replace('\U00011F04\U00011F34', '\U00011F05').replace('\U00011F06\U00011F34', '\U00011F07').replace('\U00011F08\U00011F34', '\U00011F09')
-        # reverse Alt ai, alt au
-        Strng = Strng.replace('\U00011F3E\U00011F3E', '\U00011F3F')
 
     return Strng
+
+def _FixKawiDecode(Strng):
+    target = 'Kawi'
+
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target))
+    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,target))
+    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,target))
+
+    ra = Kawi.ConsonantMap[26]
+    vir = Kawi.ViramaMap[0]
+    aVS = '\U00011F34'
+    aVSAlt = '\U00011F35'
+    E = '\U00011F3E'
+    AA = '\U00011F34'
+
+    # Replace Subjoining Virama with Explicit Virama
+    Strng = Strng.replace('\U00011F42',vir)
+    # Replace Repha
+    Strng = Strng.replace('\U00011F02', ra + vir)
+    # reverse AltA
+    Strng = Strng.replace(aVSAlt, aVS)
+    # reverse JNA
+    Strng = Strng.replace('\U00011F33', '𑼙𑽂𑼛')
+    # decompose ind.vowels
+    Strng = Strng.replace('\U00011F04\U00011F34', '\U00011F05').replace('\U00011F06\U00011F34', '\U00011F07').replace('\U00011F08\U00011F34', '\U00011F09')
+    # reverse Alt ai, alt au
+    Strng = Strng.replace('\U00011F3E\U00011F3E', '\U00011F3F')
+
+    return Strng
+
+def FixKawi(Strng, reverse=False):
+    return _FixKawiDecode(Strng) if reverse else _FixKawiEncode(Strng)
 
 # Javanese - Reppha & Subjoining ra & ya
 def FixJavanese(Strng,reverse=False):
@@ -1844,57 +2021,69 @@ def PersoArabicPuntuation(Strng, reverse=False):
 
 ### Anusvara to Nasal for Thanaa - Consider Add
 # ThaanaVowelSign A
-def FixThaana(Strng,reverse=False):
-    ## Thaana other Arabic based consonants DD££
+def _FixThaanaEncode(Strng):
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Thaana'))
     VowelVS = '|'.join(GM.CrunchSymbols(GM.VowelSigns,'Thaana'))
     aBase = '\u0787'
 
-    if not reverse:
-        # Replace VS-A + Vowel Sign -> Vowel Sign :
-        Strng = PostProcess.InsertGeminationSign(Strng, 'Thaana')
-        Strng = re.sub("(\u07A6)"+"(?=("+VowelVS+"))","",Strng)
-        Strng = Strng.replace("\u02BE","")
+    Strng = PostProcess.InsertGeminationSign(Strng, 'Thaana')
+    Strng = re.sub("(\u07A6)"+"(?=("+VowelVS+"))","",Strng)
+    Strng = Strng.replace("\u02BE","")
 
-        for x,y in zip([',','?',';'],['،','؟','؛']):
-            Strng = Strng.replace(x,y)
+    for x,y in zip([',','?',';'],['،','؟','؛']):
+        Strng = Strng.replace(x,y)
 
-        Strng = Strng.replace('ʔ', 'އް')
+    Strng = Strng.replace('ʔ', 'އް')
 
-    else:
-        # Add VS-A to all VowelSigns
-        # Approximate
-        Strng = Strng.replace('ޢ','އ')
-        Strng = Strng.replace('ޡ','ތ')
-        Strng = Strng.replace('ޥ','ވ') # waav to va
-        Strng = Strng.replace('ޠ','ތ') # To to ta
-        Strng = Strng.replace('ޟ','ސ')
-        Strng = Strng.replace('ޞ','ސ')
-        Strng = Strng.replace('ޜ','ށ')
-        Strng = Strng.replace('ޛ','ދ')
-        Strng = Strng.replace('ޘ','ތ')
-        Strng = Strng.replace('ޛ','ދ')
-        Strng = Strng.replace('ޙ', 'ހ')
-
-        Strng = re.sub('(' + ListC.replace('ަ','') + ')' + '(?!' + VowelVS + '|ަ' + ')', r'\1' + 'ް', Strng)
-
-        Strng = re.sub('(?<!'+aBase+')(?<!'+'\u02BD\u02BD\u02BD'+')('+VowelVS+')',"\u07A6"+r'\1',Strng)
-        Strng = PostProcess.ReverseGeminationSign(Strng, 'Thaana')
-
-        Strng = Strng.replace('އް','ʔ')
-
-        for x,y in zip([',','?',';'],['،','؟','؛']):
-            Strng = Strng.replace(y,x)
 
     return Strng
 
-def FixSaurashtra(Strng, reverse = False):
-    if not reverse:
-        Strng = Strng.replace('ꢒ꣄ꢰ', 'ꢒ꣄‍ꢰ') # Ksha
-    else:
-        Strng = Strng.replace('ꢴ','꣄ꢲ')
+def _FixThaanaDecode(Strng):
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Thaana'))
+    VowelVS = '|'.join(GM.CrunchSymbols(GM.VowelSigns,'Thaana'))
+    aBase = '\u0787'
+
+    # Add VS-A to all VowelSigns
+    # Approximate
+    Strng = Strng.replace('ޢ','އ')
+    Strng = Strng.replace('ޡ','ތ')
+    Strng = Strng.replace('ޥ','ވ') # waav to va
+    Strng = Strng.replace('ޠ','ތ') # To to ta
+    Strng = Strng.replace('ޟ','ސ')
+    Strng = Strng.replace('ޞ','ސ')
+    Strng = Strng.replace('ޜ','ށ')
+    Strng = Strng.replace('ޛ','ދ')
+    Strng = Strng.replace('ޘ','ތ')
+    Strng = Strng.replace('ޛ','ދ')
+    Strng = Strng.replace('ޙ', 'ހ')
+
+    Strng = re.sub('(' + ListC.replace('ަ','') + ')' + '(?!' + VowelVS + '|ަ' + ')', r'\1' + 'ް', Strng)
+
+    Strng = re.sub('(?<!'+aBase+')(?<!'+'\u02BD\u02BD\u02BD'+')('+VowelVS+')',"\u07A6"+r'\1',Strng)
+    Strng = PostProcess.ReverseGeminationSign(Strng, 'Thaana')
+
+    Strng = Strng.replace('އް','ʔ')
+
+    for x,y in zip([',','?',';'],['،','؟','؛']):
+        Strng = Strng.replace(y,x)
 
     return Strng
+
+def FixThaana(Strng, reverse=False):
+    return _FixThaanaDecode(Strng) if reverse else _FixThaanaEncode(Strng)
+
+def _FixSaurashtraEncode(Strng):
+    Strng = Strng.replace('ꢒ꣄ꢰ', 'ꢒ꣄‍ꢰ') # Ksha
+
+    return Strng
+
+def _FixSaurashtraDecode(Strng):
+    Strng = Strng.replace('ꢴ','꣄ꢲ')
+
+    return Strng
+
+def FixSaurashtra(Strng, reverse=False):
+    return _FixSaurashtraDecode(Strng) if reverse else _FixSaurashtraEncode(Strng)
 
 def FixTibetanLoC(Strng,reverse=False):
     return FixTibetan(Strng,reverse, swapNative=False)
@@ -2064,8 +2253,7 @@ def FixLaoPali(Strng,reverse=False,transcription_mode=False):
 
     return Strng
 
-def FixMakasar(Strng, reverse=False):
-
+def _FixMakasarEncode(Strng):
     ListC = "|".join(Makasar.ConsonantMap)
     #ListV = "|".join(Makasar.VowelSignMap)
     #print(ListV)
@@ -2073,16 +2261,28 @@ def FixMakasar(Strng, reverse=False):
     Anka = '\U00011EF2'
     #print(Makasar.VowelSignMap)
 
-    if not reverse:
-        Strng = PostProcess.InsertGeminationSign(Strng, 'Makasar')
-        Strng = Strng.replace('\u02BE', '').replace('\u02BD', '')
-        Strng = re.sub('(' + ListC + ')' + '(' + ListV + ')?' + r'\1', r'\1' + r'\2' + Anka, Strng)
-    else:
-        Strng = re.sub('(' + ListC + ')' + '(' + ListV + ')?' + Anka, r'\1' + r'\2' + r'\1', Strng)
+    Strng = PostProcess.InsertGeminationSign(Strng, 'Makasar')
+    Strng = Strng.replace('\u02BE', '').replace('\u02BD', '')
+    Strng = re.sub('(' + ListC + ')' + '(' + ListV + ')?' + r'\1', r'\1' + r'\2' + Anka, Strng)
 
     return Strng
 
-def FixAvestan(Strng, reverse=False):
+def _FixMakasarDecode(Strng):
+    ListC = "|".join(Makasar.ConsonantMap)
+    #ListV = "|".join(Makasar.VowelSignMap)
+    #print(ListV)
+    ListV = "|".join(['\U00011EF3', '\U00011EF4', '\U00011EF5', '\U00011EF6'])
+    Anka = '\U00011EF2'
+    #print(Makasar.VowelSignMap)
+
+    Strng = re.sub('(' + ListC + ')' + '(' + ListV + ')?' + Anka, r'\1' + r'\2' + r'\1', Strng)
+
+    return Strng
+
+def FixMakasar(Strng, reverse=False):
+    return _FixMakasarDecode(Strng) if reverse else _FixMakasarEncode(Strng)
+
+def _FixAvestanEncode(Strng):
     extraCons = ["\U00010B33","\U00010B32","\U00010B1D","\U00010B12", '𐬣', '𐬝']
     ListC = "|".join(GM.CrunchSymbols(GM.Consonants, "Avestan")+extraCons)
     ListV = "|".join(GM.CrunchSymbols(GM.Vowels,"Avestan"))
@@ -2092,46 +2292,62 @@ def FixAvestan(Strng, reverse=False):
     ii = Avestan.VowelMap[2] * 2
     uu = Avestan.VowelMap[4] * 2
 
-    if not reverse:
-        Strng = Strng.replace('𐬀𐬩', '𐬄') ## aM
-        Strng = Strng.replace('𐬁𐬩', '𐬅') ## AM
+    Strng = Strng.replace('𐬀𐬩', '𐬄') ## aM
+    Strng = Strng.replace('𐬁𐬩', '𐬅') ## AM
 
-        Strng = re.sub("(("+ListV+")"+"|"+"("+ListC+"))"+"("+ya+")",r'\1'+ii,Strng)
-        Strng = re.sub("(("+ListV+")"+"|"+"("+ListC+"))"+"("+va+")",r'\1'+uu,Strng)
+    Strng = re.sub("(("+ListV+")"+"|"+"("+ListC+"))"+"("+ya+")",r'\1'+ii,Strng)
+    Strng = re.sub("(("+ListV+")"+"|"+"("+ListC+"))"+"("+va+")",r'\1'+uu,Strng)
 
-        Strng = Strng.replace(Avestan.ConsonantMap[15]  + '\u02BF', '\U00010B1D') ## TTE
-        Strng = Strng.replace(va + '\u02BF', '\U00010B21') # BHA
+    Strng = Strng.replace(Avestan.ConsonantMap[15]  + '\u02BF', '\U00010B1D') ## TTE
+    Strng = Strng.replace(va + '\u02BF', '\U00010B21') # BHA
 
-        Strng = Strng.replace('𐬰\u02BF', '𐬲').replace('𐬱\u02BF', '𐬲') ## ZHA
-        Strng = Strng.replace('𐬢\u02BF','𐬤') ## NGVA
-        Strng = Strng.replace('𐬁_𐬋', '𐬃') ## AO
+    Strng = Strng.replace('𐬰\u02BF', '𐬲').replace('𐬱\u02BF', '𐬲') ## ZHA
+    Strng = Strng.replace('𐬢\u02BF','𐬤') ## NGVA
+    Strng = Strng.replace('𐬁_𐬋', '𐬃') ## AO
 
-        Strng = Strng.replace('\u02BF', '')
+    Strng = Strng.replace('\u02BF', '')
 
-    else:
-        Strng = Strng.replace('𐬄', '𐬀𐬩')
-        Strng = Strng.replace('𐬅', '𐬁𐬩')
 
-        Strng = Strng.replace(ii, ya).replace(uu, va)
 
-        #print('I am here')
-
-        Strng = Strng.replace('\U00010B1D', Avestan.ConsonantMap[15]  + '\u02BF')
-        Strng = Strng.replace('𐬣', Avestan.ConsonantMap[4])
-
-        Strng = Strng.replace('\U00010B12', Avestan.ConsonantMap[1])
-        Strng = Strng.replace('\U00010B33', Avestan.ConsonantMap[29])
-        Strng = Strng.replace('𐬡', va + '\u02BF')
-
-        Strng = Strng.replace('𐬲', '𐬰\u02BF') ## ZHA
-        Strng = Strng.replace('𐬤', '𐬢\u02BF') ## NGVA
-        Strng = Strng.replace('𐬃', '𐬁_𐬋') ## AO
-
-        ## 𐬲𐬤𐬃  approximate this
-
-        ### Replave JHA + Nukta as ZHA in Devanagari & Gujarati
 
     return Strng
+
+def _FixAvestanDecode(Strng):
+    extraCons = ["\U00010B33","\U00010B32","\U00010B1D","\U00010B12", '𐬣', '𐬝']
+    ListC = "|".join(GM.CrunchSymbols(GM.Consonants, "Avestan")+extraCons)
+    ListV = "|".join(GM.CrunchSymbols(GM.Vowels,"Avestan"))
+
+    ya = Avestan.ConsonantMap[25]
+    va = Avestan.ConsonantMap[28]
+    ii = Avestan.VowelMap[2] * 2
+    uu = Avestan.VowelMap[4] * 2
+
+    Strng = Strng.replace('𐬄', '𐬀𐬩')
+    Strng = Strng.replace('𐬅', '𐬁𐬩')
+
+    Strng = Strng.replace(ii, ya).replace(uu, va)
+
+    #print('I am here')
+
+    Strng = Strng.replace('\U00010B1D', Avestan.ConsonantMap[15]  + '\u02BF')
+    Strng = Strng.replace('𐬣', Avestan.ConsonantMap[4])
+
+    Strng = Strng.replace('\U00010B12', Avestan.ConsonantMap[1])
+    Strng = Strng.replace('\U00010B33', Avestan.ConsonantMap[29])
+    Strng = Strng.replace('𐬡', va + '\u02BF')
+
+    Strng = Strng.replace('𐬲', '𐬰\u02BF') ## ZHA
+    Strng = Strng.replace('𐬤', '𐬢\u02BF') ## NGVA
+    Strng = Strng.replace('𐬃', '𐬁_𐬋') ## AO
+
+    ## 𐬲𐬤𐬃  approximate this
+
+    ### Replave JHA + Nukta as ZHA in Devanagari & Gujarati
+
+    return Strng
+
+def FixAvestan(Strng, reverse=False):
+    return _FixAvestanDecode(Strng) if reverse else _FixAvestanEncode(Strng)
 
 def FixLao(Strng,reverse=False):
     if reverse:
@@ -2368,54 +2584,73 @@ def kharoshthiNumber(Strng):
 
     return kharnum
 
-def FixSinhala(Strng,reverse=False):
+def _FixSinhalaEncode(Strng):
     Strng = PostProcess.SinhalaDefaultConjuncts(Strng)
 
-    if not reverse:
-        #sinhala numerals
-        Strng = PostProcess.RetainIndicNumerals(Strng, 'Sinhala', True)
-        #Sinhala JNA
-        Strng = Strng.replace("\u0DA2\u0DCA\u0DA4","\u0DA5")
-        #sinhala
-        Strng = Strng.replace("(අ)(අ)","(ආ)")
-    else:
-        #sinhala numerals
-        Strng = PostProcess.RetainIndicNumerals(Strng, 'Sinhala')
-        Strng = Strng.replace("\u0DA5","\u0DA2\u0DCA\u0DA4")
-        ## Remove joiners
-        Strng = Strng.replace("‍","")
-        Strng = Strng.replace("(ආ)","(අ)(අ)")
+    Strng = PostProcess.RetainIndicNumerals(Strng, 'Sinhala', True)
+    #Sinhala JNA
+    Strng = Strng.replace("\u0DA2\u0DCA\u0DA4","\u0DA5")
+    #sinhala
+    Strng = Strng.replace("(අ)(අ)","(ආ)")
 
+
+    return Strng
+
+def _FixSinhalaDecode(Strng):
+    Strng = PostProcess.SinhalaDefaultConjuncts(Strng)
+
+    #sinhala numerals
+    Strng = PostProcess.RetainIndicNumerals(Strng, 'Sinhala')
+    Strng = Strng.replace("\u0DA5","\u0DA2\u0DCA\u0DA4")
+    ## Remove joiners
+    Strng = Strng.replace("‍","")
+    Strng = Strng.replace("(ආ)","(අ)(අ)")
+
+
+    return Strng
+
+def FixSinhala(Strng, reverse=False):
+    return _FixSinhalaDecode(Strng) if reverse else _FixSinhalaEncode(Strng)
+
+def _FixSantaliEncode(Strng):
+    Strng = Strng.replace('ᱹᱸ', 'ᱺ')
+    Strng = Strng.replace('ᱻᱸ', 'ᱸᱻ')
+
+    return Strng
+
+def _FixSantaliDecode(Strng):
+    Strng = Strng.replace('ᱺ', 'ᱹᱸ')
+    Strng = Strng.replace('ᱽ','’')
+    Strng = Strng.replace('ᱸᱻ', 'ᱻᱸ')
 
     return Strng
 
 def FixSantali(Strng, reverse=False):
-    if not reverse:
-        Strng = Strng.replace('ᱹᱸ', 'ᱺ')
-        Strng = Strng.replace('ᱻᱸ', 'ᱸᱻ')
-    else:
-        Strng = Strng.replace('ᱺ', 'ᱹᱸ')
-        Strng = Strng.replace('ᱽ','’')
-        Strng = Strng.replace('ᱸᱻ', 'ᱻᱸ')
+    return _FixSantaliDecode(Strng) if reverse else _FixSantaliEncode(Strng)
 
-    return Strng
-
-def FixSoraSompeng(Strng, reverse = False):
+def _FixSoraSompengEncode(Strng):
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'SoraSompeng')) + ')'
 
-    if not reverse:
-        Strng = re.sub(ListC + '(ə)', r'\1', Strng)
-        Strng = Strng.replace('ə', '\U000110E6\U000110E8')
-    else:
-        ListV = "(" + "|".join(GM.CrunchSymbols(GM.Vowels, 'SoraSompeng')) + ')'
-        Strng = re.sub(ListC + '(?!' + ListV + ')', r'\1' + 'ə', Strng)
-
-        Strng = Strng.replace('𑃔ə𑃨', '𑃔𑃨ə')
-
-        Strng = Strng.replace('𑃦𑃨', 'ə')
-        Strng = Strng.replace('ə𑃨', '𑃨')
+    Strng = re.sub(ListC + '(ə)', r'\1', Strng)
+    Strng = Strng.replace('ə', '\U000110E6\U000110E8')
 
     return Strng
+
+def _FixSoraSompengDecode(Strng):
+    ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'SoraSompeng')) + ')'
+
+    ListV = "(" + "|".join(GM.CrunchSymbols(GM.Vowels, 'SoraSompeng')) + ')'
+    Strng = re.sub(ListC + '(?!' + ListV + ')', r'\1' + 'ə', Strng)
+
+    Strng = Strng.replace('𑃔ə𑃨', '𑃔𑃨ə')
+
+    Strng = Strng.replace('𑃦𑃨', 'ə')
+    Strng = Strng.replace('ə𑃨', '𑃨')
+
+    return Strng
+
+def FixSoraSompeng(Strng, reverse=False):
+    return _FixSoraSompengDecode(Strng) if reverse else _FixSoraSompengEncode(Strng)
 
 
 # FixRomanReadable and FixRomanColloquial share the same nasal-assimilation
@@ -2464,59 +2699,67 @@ def FixRomanColloquial(Strng, reverse = False):
     return _FixRomanReadableColloquial(Strng, reverse, colloquial=True)
 
 
-def FixWarangCiti(Strng, reverse = False):
+def _FixWarangCitiEncode(Strng):
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'WarangCiti')) + ')'
     ListV = "(" + "|".join(GM.CrunchSymbols(GM.Vowels, 'WarangCiti') + ['\u200D']) + ')'
 
-    if not reverse:
-        Strng = re.sub(ListC + ListC, r'\1' + '\u200D' + r'\2', Strng)
+    Strng = re.sub(ListC + ListC, r'\1' + '\u200D' + r'\2', Strng)
 
-        # Remove the inherent vowel
-        Strng = re.sub(ListC + '(\U000118C1\U000118D9\u02BE)', r'\1' + '\u00BD', Strng)
+    # Remove the inherent vowel
+    Strng = re.sub(ListC + '(\U000118C1\U000118D9\u02BE)', r'\1' + '\u00BD', Strng)
 
-        Strng = re.sub(ListC + '(\U000118C1)', r'\1', Strng)
+    Strng = re.sub(ListC + '(\U000118C1)', r'\1', Strng)
 
-        Strng = re.sub(ListV + '(\U000118C0)', r'\1' + '\u200D' + r'\2', Strng)
+    Strng = re.sub(ListV + '(\U000118C0)', r'\1' + '\u200D' + r'\2', Strng)
 
-        Strng = Strng.replace('\u02BE', '')
+    Strng = Strng.replace('\u02BE', '')
 
-        Strng = Strng.replace("𑣟\u02BF", "𑣙𑣗") # Remove Warang Citi Nukta
+    Strng = Strng.replace("𑣟\u02BF", "𑣙𑣗") # Remove Warang Citi Nukta
 
-        # Brining back 'AA'
+    # Brining back 'AA'
 
-        Strng = Strng.replace('\u00BD', '\U000118C1')
+    Strng = Strng.replace('\u00BD', '\U000118C1')
 
-        # remove Nukta
+    # remove Nukta
 
-        Strng = Strng.replace("\u02BF", "")
+    Strng = Strng.replace("\u02BF", "")
 
-    else:
-        Strng = Strng.lower()
-        ## Replace hb -> vQ
-        Strng = Strng.replace("𑣙𑣗", "𑣟\u02BF") # Introduce Warang Citi Nukta
-        Strng = Strng.replace('\u00D7', '\u200D')
-
-        ## Reintroduce vowel AA
-        Strng = re.sub(ListC + '(\U000118C1)', r'\1' + '\u00BD',Strng)
-        Strng = re.sub('(\u02BF)' + '(\U000118C1)', r'\1' + '\U000118C1\u00BD',Strng)
-
-        # Introduce the inhernt  Vowel
-        Strng = re.sub(ListC + '(?!' + ListV + ')', r'\1' + '\U000118C1', Strng)
-
-        ## Retain Aspirates
-        Strng = re.sub('([\U000118D4\U000118D5\U000118CC\U000118CB\U000118CF\U000118CE\U000118D2\U000118D1\U000118D5\U000118D4\U000118D8\U000118D7\U000118DB])(\u200D)(𑣙)', r'\1' + '\u00D6' + r'\3', Strng)
-        Strng = Strng.replace('\u200D', '')
-        Strng = Strng.replace('\u00D6', '\u200D')
-
-        ## Move vowel signs and nUkta viQ -> vQi
-        Strng = re.sub('(𑣁)' + '(\u02BF)' + ListV , r'\2\3', Strng)
-
-        ## Remove a if necessary
-        Strng = Strng.replace('𑣁' + '\u02BB', '')
-
-        Strng = Strng.replace('\U000118C1\u00BD', '\U000118C1\U000118D9\u02BE')
 
     return Strng
+
+def _FixWarangCitiDecode(Strng):
+    ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'WarangCiti')) + ')'
+    ListV = "(" + "|".join(GM.CrunchSymbols(GM.Vowels, 'WarangCiti') + ['\u200D']) + ')'
+
+    Strng = Strng.lower()
+    ## Replace hb -> vQ
+    Strng = Strng.replace("𑣙𑣗", "𑣟\u02BF") # Introduce Warang Citi Nukta
+    Strng = Strng.replace('\u00D7', '\u200D')
+
+    ## Reintroduce vowel AA
+    Strng = re.sub(ListC + '(\U000118C1)', r'\1' + '\u00BD',Strng)
+    Strng = re.sub('(\u02BF)' + '(\U000118C1)', r'\1' + '\U000118C1\u00BD',Strng)
+
+    # Introduce the inhernt  Vowel
+    Strng = re.sub(ListC + '(?!' + ListV + ')', r'\1' + '\U000118C1', Strng)
+
+    ## Retain Aspirates
+    Strng = re.sub('([\U000118D4\U000118D5\U000118CC\U000118CB\U000118CF\U000118CE\U000118D2\U000118D1\U000118D5\U000118D4\U000118D8\U000118D7\U000118DB])(\u200D)(𑣙)', r'\1' + '\u00D6' + r'\3', Strng)
+    Strng = Strng.replace('\u200D', '')
+    Strng = Strng.replace('\u00D6', '\u200D')
+
+    ## Move vowel signs and nUkta viQ -> vQi
+    Strng = re.sub('(𑣁)' + '(\u02BF)' + ListV , r'\2\3', Strng)
+
+    ## Remove a if necessary
+    Strng = Strng.replace('𑣁' + '\u02BB', '')
+
+    Strng = Strng.replace('\U000118C1\u00BD', '\U000118C1\U000118D9\u02BE')
+
+    return Strng
+
+def FixWarangCiti(Strng, reverse=False):
+    return _FixWarangCitiDecode(Strng) if reverse else _FixWarangCitiEncode(Strng)
 
 def FixLimbuLoC(Strng, reverse=False):
     Strng = FixLimbu(Strng, reverse)
@@ -2580,77 +2823,95 @@ def FixLimbu(Strng,reverse=False):
     return Strng
 
 
-def FixDevanagari(Strng, reverse=False):
+def _FixDevanagariEncode(Strng):
     Sindhi = ['ॻ','ॼ','ॾ','ॿ']
     SindhiApprox = ['ˍग','ˍज','ˍड','ˍब']
-    if not reverse:
-        #print(Strng)
+    Strng = Strng.replace('ʔ', 'ॽ')
 
-        Strng = Strng.replace('ʔ', 'ॽ')
+    for x, y in zip(Sindhi, SindhiApprox):
+        Strng = Strng.replace(y, x)
 
-        for x, y in zip(Sindhi, SindhiApprox):
-            Strng = Strng.replace(y, x)
+    Strng = Strng.replace('ज़़','ॹ')
+    Strng = Strng.replace('श़','ॹ')
+    Strng = Strng.replace('ऱ्', 'ऱ्‌') ## Prevent RRA from forming conjuncts
 
-        Strng = Strng.replace('ज़़','ॹ')
-        Strng = Strng.replace('श़','ॹ')
-        Strng = Strng.replace('ऱ्', 'ऱ्‌') ## Prevent RRA from forming conjuncts
+    ## Except for YA and HA
+    Strng = Strng.replace('ऱ्‌य', 'ऱ्य')
+    Strng = Strng.replace('ऱ्‌ह', 'ऱ्ह')
 
-        ## Except for YA and HA
-        Strng = Strng.replace('ऱ्‌य', 'ऱ्य')
-        Strng = Strng.replace('ऱ्‌ह', 'ऱ्ह')
+    # Kashmiri ux, uux
 
-        # Kashmiri ux, uux
+    #Strng = Strng.replace('उʼ', 'ॶ').replace('ऊʼ', 'ॷ').replace('ुʼ', 'ॖ').replace('ूʼ','ॗ')
 
-        #Strng = Strng.replace('उʼ', 'ॶ').replace('ऊʼ', 'ॷ').replace('ुʼ', 'ॖ').replace('ूʼ','ॗ')
+    # Kashmir oe oe
 
-        # Kashmir oe oe
+    #Strng = Strng.replace('अʼ', 'ॳ').replace('आʼ', 'ॴ')
 
-        #Strng = Strng.replace('अʼ', 'ॳ').replace('आʼ', 'ॴ')
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Devanagari'))
 
-        ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Devanagari'))
+    Strng = re.sub('(' + ListC + ')' + 'ʼ', r'\1' + '\u093A', Strng)
+    Strng = Strng.replace('\u093Eʼ','\u093B')
 
-        Strng = re.sub('(' + ListC + ')' + 'ʼ', r'\1' + '\u093A', Strng)
-        Strng = Strng.replace('\u093Eʼ','\u093B')
 
-    else:
-        # remove schwa accent
-        Strng = Strng.replace('\u0954', '')
 
-        Strng = PostProcess.DevanagariPrishtamatra(Strng, reverse=True)
-        Strng = Strng.replace('ॽ', 'ʔ')
-        Strng = Strng.replace('ॹ', 'ज़़')
 
-        for x, y in zip(Sindhi, SindhiApprox):
-            Strng = Strng.replace(x, y)
 
-        # Kashmiri ux, uux
-        #Strng = Strng.replace('ॶ', 'उʼ').replace('ॷ', 'ऊʼ').replace('ॖ', 'ुʼ').replace('ॗ', 'ूʼ')
+    return Strng
 
-        # oe
-        #Strng = Strng.replace('ॳ', 'अʼ').replace('ॴ', 'आʼ').replace('\u093B', '\u093Eʼ').replace('\u093A','ʼ')
+def _FixDevanagariDecode(Strng):
+    Sindhi = ['ॻ','ॼ','ॾ','ॿ']
+    SindhiApprox = ['ˍग','ˍज','ˍड','ˍब']
+    # remove schwa accent
+    Strng = Strng.replace('\u0954', '')
 
+    Strng = PostProcess.DevanagariPrishtamatra(Strng, reverse=True)
+    Strng = Strng.replace('ॽ', 'ʔ')
+    Strng = Strng.replace('ॹ', 'ज़़')
+
+    for x, y in zip(Sindhi, SindhiApprox):
+        Strng = Strng.replace(x, y)
+
+    # Kashmiri ux, uux
+    #Strng = Strng.replace('ॶ', 'उʼ').replace('ॷ', 'ऊʼ').replace('ॖ', 'ुʼ').replace('ॗ', 'ूʼ')
+
+    # oe
+    #Strng = Strng.replace('ॳ', 'अʼ').replace('ॴ', 'आʼ').replace('\u093B', '\u093Eʼ').replace('\u093A','ʼ')
+
+
+    return Strng
+
+def FixDevanagari(Strng, reverse=False):
+    return _FixDevanagariDecode(Strng) if reverse else _FixDevanagariEncode(Strng)
+
+def _FixKaithiEncode(Strng):
+    Strng = Strng.replace(' ', '⸱')
+
+    return Strng
+
+def _FixKaithiDecode(Strng):
+    Strng = Strng.replace("⸱",' ')
+    # Strng = re.sub('', '', Strng)
 
     return Strng
 
 def FixKaithi(Strng, reverse=False):
-    if not reverse:
-        Strng = Strng.replace(' ', '⸱')
-    else:
-        Strng = Strng.replace("⸱",' ')
-        # Strng = re.sub('', '', Strng)
-
-    return Strng
+    return _FixKaithiDecode(Strng) if reverse else _FixKaithiEncode(Strng)
 
 def FixLao2(Strng, reverse = False):
     return FixLao(Strng, reverse)
 
-def FixNandinagari(Strng, reverse=False):
-    if not reverse:
-        pass
-    else:
-        Strng = PostProcess.NandinagariPrishtamatra(Strng, reverse=True)
+def _FixNandinagariEncode(Strng):
+    pass
 
     return Strng
+
+def _FixNandinagariDecode(Strng):
+    Strng = PostProcess.NandinagariPrishtamatra(Strng, reverse=True)
+
+    return Strng
+
+def FixNandinagari(Strng, reverse=False):
+    return _FixNandinagariDecode(Strng) if reverse else _FixNandinagariEncode(Strng)
 
 #Subjoined, final and la-ligatures
 # Fix aH -> a ;
@@ -2769,83 +3030,103 @@ def FixSundanese(Strng,reverse=False):
     return Strng
 
 # Repha & Subjoined
-def FixRejang(Strng,reverse=False):
+def _FixRejangEncode(Strng):
     vir = Rejang.ViramaMap[0]
 
     r = Rejang.ConsonantMap[26] + vir
     n = Rejang.ConsonantMap[19] + vir
     ListC = '|'.join(GM.CrunchSymbols(GM.Consonants + GM.Vowels + GM.VowelSignsNV,'Rejang'))
 
-    if not reverse:
-        # Sundanese Repha
-        Strng = re.sub('(' + ListC + ')' + r, r'\1' + '\uA951', Strng)
-        Strng = re.sub('(' + ListC + ')' + n, r'\1' + '\uA950', Strng)
-    else:
-        # Reverse above
-        Strng = Strng.replace('\uA951',r)
-        Strng = Strng.replace('\uA950',n)
+    Strng = re.sub('(' + ListC + ')' + r, r'\1' + '\uA951', Strng)
+    Strng = re.sub('(' + ListC + ')' + n, r'\1' + '\uA950', Strng)
 
     return Strng
 
+def _FixRejangDecode(Strng):
+    vir = Rejang.ViramaMap[0]
+
+    r = Rejang.ConsonantMap[26] + vir
+    n = Rejang.ConsonantMap[19] + vir
+    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants + GM.Vowels + GM.VowelSignsNV,'Rejang'))
+
+    # Reverse above
+    Strng = Strng.replace('\uA951',r)
+    Strng = Strng.replace('\uA950',n)
+
+    return Strng
+
+def FixRejang(Strng, reverse=False):
+    return _FixRejangDecode(Strng) if reverse else _FixRejangEncode(Strng)
+
 # Chakmaa VS A and Subjoined
-def FixChakma(Strng,reverse=False):
+def _FixChakmaEncode(Strng):
     listC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Chakma")+Chakma.VowelMap[:1],key=len,reverse=True))+')'
     listV = '('+"|".join(sorted(GM.CrunchSymbols(GM.VowelSigns,"Chakma")+Chakma.ViramaMap+['\U00011133'],key=len,reverse=True))+')'
 
     Strng = Strng.replace("\u02BD","")
 
-    if not reverse:
-        # Introduce vowel Sign A ; Chakma - Inharant vowel is AA
-        Strng = re.sub("("+listC+")"+"(?!"+listV+")",r'\1''\u02BE',Strng)
-        Strng = Strng.replace("\U00011127","")
-        Strng = Strng.replace("\u02BE","\U00011127")
+    Strng = re.sub("("+listC+")"+"(?!"+listV+")",r'\1''\u02BE',Strng)
+    Strng = Strng.replace("\U00011127","")
+    Strng = Strng.replace("\u02BE","\U00011127")
 
-        Strng = Strng.replace('𑄣𑄳𑄦', '𑅄')
-        Strng = Strng.replace('𑄣𑄴𑄦', '𑅄')
+    Strng = Strng.replace('𑄣𑄳𑄦', '𑅄')
+    Strng = Strng.replace('𑄣𑄴𑄦', '𑅄')
 
-        ## Ai => kai
-        Strng = re.sub("("+listC+")"+"(𑄃𑄨)", r'\1' + '\U0001112D', Strng)
-        ## ei' => kei
-        Strng = Strng.replace('\U0001112C𑄃𑄨ʼ', '\U00011146', )
+    ## Ai => kai
+    Strng = re.sub("("+listC+")"+"(𑄃𑄨)", r'\1' + '\U0001112D', Strng)
+    ## ei' => kei
+    Strng = Strng.replace('\U0001112C𑄃𑄨ʼ', '\U00011146', )
 
 
-    else:
-        Strng = PostProcess.ChakmaGemination(Strng, reverse = True)
-
-        Strng = Strng.replace('𑅄', '𑄣𑄳𑄦')
-
-        Strng = Strng.replace('\U00011133\U00011103', '\U00011145')
-        Strng = Strng.replace('\U00011133\U00011104', '\U00011146')
-
-        Strng = Strng.replace('\U0001112D', '𑄃𑄨')
-        Strng = Strng.replace('\U00011146', '\U0001112C𑄃𑄨ʼ')
-
-        Strng = Strng.replace("\U00011127","\u02BE")
-        Strng = re.sub("("+listC+")"+"(?!"+listV+'|\u02BE'+")",r'\1''\U00011127',Strng)
-        Strng = Strng.replace("\u02BE","")
 
     yrlvn = "("+"|".join(Chakma.ConsonantMap[19:20]+Chakma.ConsonantMap[26:29])+")"
 
-    if not reverse:
-        # Subjoined consonants
-        # Usual convention
-        Strng = re.sub("\U00011134"+"(?="+yrlvn+")","\U00011133",Strng)
+    Strng = re.sub("\U00011134"+"(?="+yrlvn+")","\U00011133",Strng)
 
-        Strng = PostProcess.ChakmaGemination(Strng)
-    else:
-        # Reverse above
-        Strng = Strng.replace("\U00011133","\U00011134")
-
-        # Reverse independetnet vowels to a-based vowels
-        vowelDepA = ["𑄃𑄨", "𑄃𑄪", "𑄃𑄬"]
-        vowelIndep = ["\U00011104", "\U00011105" , "\U00011106"]
-
-        for x, y in zip(vowelDepA, vowelIndep):
-            Strng = Strng.replace(y, x)
+    Strng = PostProcess.ChakmaGemination(Strng)
 
     ###  O/Sub-va lookign similar; check
 
     return Strng
+
+def _FixChakmaDecode(Strng):
+    listC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Chakma")+Chakma.VowelMap[:1],key=len,reverse=True))+')'
+    listV = '('+"|".join(sorted(GM.CrunchSymbols(GM.VowelSigns,"Chakma")+Chakma.ViramaMap+['\U00011133'],key=len,reverse=True))+')'
+
+    Strng = Strng.replace("\u02BD","")
+
+    Strng = PostProcess.ChakmaGemination(Strng, reverse = True)
+
+    Strng = Strng.replace('𑅄', '𑄣𑄳𑄦')
+
+    Strng = Strng.replace('\U00011133\U00011103', '\U00011145')
+    Strng = Strng.replace('\U00011133\U00011104', '\U00011146')
+
+    Strng = Strng.replace('\U0001112D', '𑄃𑄨')
+    Strng = Strng.replace('\U00011146', '\U0001112C𑄃𑄨ʼ')
+
+    Strng = Strng.replace("\U00011127","\u02BE")
+    Strng = re.sub("("+listC+")"+"(?!"+listV+'|\u02BE'+")",r'\1''\U00011127',Strng)
+    Strng = Strng.replace("\u02BE","")
+
+    yrlvn = "("+"|".join(Chakma.ConsonantMap[19:20]+Chakma.ConsonantMap[26:29])+")"
+
+    # Reverse above
+    Strng = Strng.replace("\U00011133","\U00011134")
+
+    # Reverse independetnet vowels to a-based vowels
+    vowelDepA = ["𑄃𑄨", "𑄃𑄪", "𑄃𑄬"]
+    vowelIndep = ["\U00011104", "\U00011105" , "\U00011106"]
+
+    for x, y in zip(vowelDepA, vowelIndep):
+        Strng = Strng.replace(y, x)
+
+    ###  O/Sub-va lookign similar; check
+
+    return Strng
+
+def FixChakma(Strng, reverse=False):
+    return _FixChakmaDecode(Strng) if reverse else _FixChakmaEncode(Strng)
 
 def FixIAST(Strng,reverse=False):
     if reverse:
@@ -2854,24 +3135,31 @@ def FixIAST(Strng,reverse=False):
 
     return Strng
 
-def FixIPA(Strng,reverse=False):
+def _FixIPAEncode(Strng):
     colon_tilde = "\u02D0\u0303"
     tilde_colon = "\u0303\u02D0"
 
-    if not reverse:
-        # ɑː̃ -> ɑ̃ː
-        Strng = Strng.replace(colon_tilde,tilde_colon)
-        # Add Visarga echo - kuH/kUH -> kuhŭ/kuːhŭ
-        Strng = re.sub("(.)(\u02D0?)(\u0068)",r'\1\2\3\1'+'\u0306',Strng)
-        Strng = Strng.replace('ə̸ə̸', 'ɑ̷ː')
-    else:
-        Strng = Strng.replace('ɑ̷ː', 'ə̸ə̸')
-        # ɑː̃ <- ɑ̃ː
-        Strng = Strng.replace(tilde_colon,colon_tilde)
-        # Reverse Visarga echo - kuH/kUH <- kuhŭ/kuːhŭ
-        Strng = re.sub("(.)(\u02D0?)(\u0068)"+r"\1"+"\u0306",r"\1\2\3",Strng)
+    Strng = Strng.replace(colon_tilde,tilde_colon)
+    # Add Visarga echo - kuH/kUH -> kuhŭ/kuːhŭ
+    Strng = re.sub("(.)(\u02D0?)(\u0068)",r'\1\2\3\1'+'\u0306',Strng)
+    Strng = Strng.replace('ə̸ə̸', 'ɑ̷ː')
 
     return Strng
+
+def _FixIPADecode(Strng):
+    colon_tilde = "\u02D0\u0303"
+    tilde_colon = "\u0303\u02D0"
+
+    Strng = Strng.replace('ɑ̷ː', 'ə̸ə̸')
+    # ɑː̃ <- ɑ̃ː
+    Strng = Strng.replace(tilde_colon,colon_tilde)
+    # Reverse Visarga echo - kuH/kUH <- kuhŭ/kuːhŭ
+    Strng = re.sub("(.)(\u02D0?)(\u0068)"+r"\1"+"\u0306",r"\1\2\3",Strng)
+
+    return Strng
+
+def FixIPA(Strng, reverse=False):
+    return _FixIPADecode(Strng) if reverse else _FixIPAEncode(Strng)
 
 # Rearrange PhagsPa Letters ; Subjoined Letters ;
 def FixPhagsPa(Strng,reverse=False):
@@ -3128,16 +3416,21 @@ def FixMalayalam(Strng, reverse=False):
 
     return Strng
 
-def FixTelugu(Strng, reverse=False):
-    if not reverse:
-        Strng = PostProcess.RetainDandasIndic(Strng, 'Telugu', True)
-        Strng = PostProcess.RetainIndicNumerals(Strng, 'Telugu', True)
-    else:
-        Strng = PostProcess.RetainIndicNumerals(Strng, 'Telugu')
-        Strng = PostProcess.RetainDandasIndic(Strng, 'Telugu')
-        Strng = Strng.replace('ఁ', 'ఀ')
+def _FixTeluguEncode(Strng):
+    Strng = PostProcess.RetainDandasIndic(Strng, 'Telugu', True)
+    Strng = PostProcess.RetainIndicNumerals(Strng, 'Telugu', True)
 
     return Strng
+
+def _FixTeluguDecode(Strng):
+    Strng = PostProcess.RetainIndicNumerals(Strng, 'Telugu')
+    Strng = PostProcess.RetainDandasIndic(Strng, 'Telugu')
+    Strng = Strng.replace('ఁ', 'ఀ')
+
+    return Strng
+
+def FixTelugu(Strng, reverse=False):
+    return _FixTeluguDecode(Strng) if reverse else _FixTeluguEncode(Strng)
 
 def FixMeeteiMayek(Strng,reverse=False):
     vir = MeeteiMayek.ViramaMap[0]
@@ -3157,13 +3450,18 @@ def FixMeeteiMayek(Strng,reverse=False):
 
 ## Consider replacement of Anusvara by Nasal for East Asian Sripts which don't ahve a Sanskrit writing Tradition
 
-def FixBatakSima(Strng, reverse= False):
-    if not reverse:
-        Strng = Strng.replace('ᯙᯮ', 'ᯙᯯ')
-    else:
-        Strng = Strng.replace('ᯙᯯ', 'ᯙᯮ')
+def _FixBatakSimaEncode(Strng):
+    Strng = Strng.replace('ᯙᯮ', 'ᯙᯯ')
 
     return Strng
+
+def _FixBatakSimaDecode(Strng):
+    Strng = Strng.replace('ᯙᯯ', 'ᯙᯮ')
+
+    return Strng
+
+def FixBatakSima(Strng, reverse=False):
+    return _FixBatakSimaDecode(Strng) if reverse else _FixBatakSimaEncode(Strng)
 
 # Cham Final & Subjoined
 def FixCham(Strng,reverse=False):
@@ -3436,175 +3734,228 @@ def FixSharada(Strng,reverse=False):
 
     return Strng
 
-def FixKannada(Strng,reverse=False):
-    if not reverse:
-        #print(Strng)
-        Strng = PostProcess.RetainDandasIndic(Strng, 'Kannada', True)
-        #Strng = PostProcess.RetainIndicNumerals(Strng, 'Kannada', True)
+def _FixKannadaEncode(Strng):
+    Strng = PostProcess.RetainDandasIndic(Strng, 'Kannada', True)
+    #Strng = PostProcess.RetainIndicNumerals(Strng, 'Kannada', True)
 
-        Strng = re.sub('(\u0CCD)([^\u0CAB\u0C9C])(\u0CBC)', r'\1' + '\u200C' + r'\2\3', Strng)
-    else:
-        Strng = PostProcess.RetainDandasIndic(Strng, 'Kannada')
+    Strng = re.sub('(\u0CCD)([^\u0CAB\u0C9C])(\u0CBC)', r'\1' + '\u200C' + r'\2\3', Strng)
+
+    return Strng
+
+def _FixKannadaDecode(Strng):
+    Strng = PostProcess.RetainDandasIndic(Strng, 'Kannada')
+
+    return Strng
+
+def FixKannada(Strng, reverse=False):
+    return _FixKannadaDecode(Strng) if reverse else _FixKannadaEncode(Strng)
+
+def _FixGranthaEncode(Strng):
+    Strng = Strng.replace('॑', '᳴')
+    Strng = Strng.replace('᳚', '॑')
+    Strng = Strng.replace('ꣳ', '𑍞')
+    Strng = Strng.replace('ꣴ', '𑍟')
+    Strng = Strng.replace('𑌼𑍍', '𑌼𑍍\u200C')
+
+    return Strng
+
+def _FixGranthaDecode(Strng):
+    Strng = Strng.replace('𑌼𑍍\u200C', '𑌼𑍍')
+    Strng = Strng.replace('॑', '᳚')
+    Strng = Strng.replace('᳴', '॑')
+    Strng = Strng.replace('𑍞', 'ꣳ')
+    Strng = Strng.replace('𑍟', 'ꣴ')
 
     return Strng
 
 def FixGrantha(Strng, reverse=False):
-    if not reverse:
-        Strng = Strng.replace('॑', '᳴')
-        Strng = Strng.replace('᳚', '॑')
-        Strng = Strng.replace('ꣳ', '𑍞')
-        Strng = Strng.replace('ꣴ', '𑍟')
-        Strng = Strng.replace('𑌼𑍍', '𑌼𑍍\u200C')
-    else:
-        Strng = Strng.replace('𑌼𑍍\u200C', '𑌼𑍍')
-        Strng = Strng.replace('॑', '᳚')
-        Strng = Strng.replace('᳴', '॑')
-        Strng = Strng.replace('𑍞', 'ꣳ')
-        Strng = Strng.replace('𑍟', 'ꣴ')
+    return _FixGranthaDecode(Strng) if reverse else _FixGranthaEncode(Strng)
+
+def _FixMahajaniEncode(Strng):
+    Strng = Strng.replace('𑅰𑅳ʾ𑅭ʿ𑅑', '\U00011176')
+    Strng = Strng.replace('\u02BE','').replace('\u02BF','')
+
+    return Strng
+
+def _FixMahajaniDecode(Strng):
+    Strng = Strng.replace('\U00011176', '𑅰𑅳ʾ𑅭ʿ𑅑')
 
     return Strng
 
 def FixMahajani(Strng, reverse=False):
-    if not reverse:
-        #print(Strng)
-        Strng = Strng.replace('𑅰𑅳ʾ𑅭ʿ𑅑', '\U00011176')
-        Strng = Strng.replace('\u02BE','').replace('\u02BF','')
-    else:
-        Strng = Strng.replace('\U00011176', '𑅰𑅳ʾ𑅭ʿ𑅑')
+    return _FixMahajaniDecode(Strng) if reverse else _FixMahajaniEncode(Strng)
 
-    return Strng
-
-def FixAhom(Strng, reverse = False):
+def _FixAhomEncode(Strng):
     ListVS = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, 'Ahom')) + ')'
     Anu = '('+ GM.CrunchList('AyogavahaMap', 'Ahom')[1] + ')'
 
-    if not reverse:
-        Strng = Strng.replace('\U0001172B\U0001170D', '\U0001171E')
-        Strng = Strng.replace('\U0001172B\U0001170E', '\U0001171D')
+    Strng = Strng.replace('\U0001172B\U0001170D', '\U0001171E')
+    Strng = Strng.replace('\U0001172B\U0001170E', '\U0001171D')
 
-        Strng = re.sub(ListVS + Anu, r'\2\1', Strng)
-        Strng = re.sub(Anu + '(𑜦)', r'\2\1', Strng)
+    Strng = re.sub(ListVS + Anu, r'\2\1', Strng)
+    Strng = re.sub(Anu + '(𑜦)', r'\2\1', Strng)
 
-    else:
-        Strng = Strng.replace('\U0001171E', '\U0001172B\U0001170D')
-        Strng = Strng.replace('\U0001171D', '\U0001172B\U0001170E')
-
-        vir = Ahom.ViramaMap[0]
-        anu = Ahom.AyogavahaMap[1]
-
-        #reverse closed syllable e
-        Strng = re.sub(anu + '\U00011727' + '(?!\U00011728)', '\U00011726\U00011727\U0001172A', Strng)
-        Strng = re.sub('(\U00011726)(.)('+vir+')', '\U00011726\U00011727'+r'\2\3', Strng)
-
-        #rever closed syllable o
-        Strng = re.sub('(\U00011728)(.)('+vir+')', '\U00011726\U00011721'+r'\2\3', Strng)
-
-        Strng = Strng.replace(anu + '\U00011728', '\U00011726\U00011721\U0001172A')
-
-        Strng = re.sub(Anu + ListVS, r'\2\1', Strng)
 
     return Strng
 
-def FixMultani(Strng, reverse = False):
-    if not reverse:
-        Strng = Strng.replace('\u02BE','').replace('\u02BF','')
-        Strng = Strng.replace('ˍ\U0001128C', '\U0001128D').replace('ˍ\U00011282','\U00011293') ## Plosives
+def _FixAhomDecode(Strng):
+    ListVS = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, 'Ahom')) + ')'
+    Anu = '('+ GM.CrunchList('AyogavahaMap', 'Ahom')[1] + ')'
 
-    else:
-        Strng = Strng.replace('\U0001128D','ˍ\U0001128C').replace('\U00011293','ˍ\U00011292') ## Plsosives
+    Strng = Strng.replace('\U0001171E', '\U0001172B\U0001170D')
+    Strng = Strng.replace('\U0001171D', '\U0001172B\U0001170E')
+
+    vir = Ahom.ViramaMap[0]
+    anu = Ahom.AyogavahaMap[1]
+
+    #reverse closed syllable e
+    Strng = re.sub(anu + '\U00011727' + '(?!\U00011728)', '\U00011726\U00011727\U0001172A', Strng)
+    Strng = re.sub('(\U00011726)(.)('+vir+')', '\U00011726\U00011727'+r'\2\3', Strng)
+
+    #rever closed syllable o
+    Strng = re.sub('(\U00011728)(.)('+vir+')', '\U00011726\U00011721'+r'\2\3', Strng)
+
+    Strng = Strng.replace(anu + '\U00011728', '\U00011726\U00011721\U0001172A')
+
+    Strng = re.sub(Anu + ListVS, r'\2\1', Strng)
 
     return Strng
 
+def FixAhom(Strng, reverse=False):
+    return _FixAhomDecode(Strng) if reverse else _FixAhomEncode(Strng)
 
-def FixGujarati(Strng,reverse=False):
-    if not reverse:
-        Strng = PostProcess.RetainDandasIndic(Strng, 'Gujarati', True)
-        Strng = Strng.replace('જ઼઼', 'ૹ').replace('શ઼', 'ૹ')
-    else:
-        Strng = PostProcess.RetainDandasIndic(Strng, 'Gujarati')
-        Strng = Strng.replace('ૹ', 'જ઼઼').replace('ૹ', 'શ઼')
+def _FixMultaniEncode(Strng):
+    Strng = Strng.replace('\u02BE','').replace('\u02BF','')
+    Strng = Strng.replace('ˍ\U0001128C', '\U0001128D').replace('ˍ\U00011282','\U00011293') ## Plosives
+
 
     return Strng
 
-def FixZanabazarSquare(Strng, reverse=False):
+def _FixMultaniDecode(Strng):
+    Strng = Strng.replace('\U0001128D','ˍ\U0001128C').replace('\U00011293','ˍ\U00011292') ## Plsosives
+
+    return Strng
+
+def FixMultani(Strng, reverse=False):
+    return _FixMultaniDecode(Strng) if reverse else _FixMultaniEncode(Strng)
+
+
+def _FixGujaratiEncode(Strng):
+    Strng = PostProcess.RetainDandasIndic(Strng, 'Gujarati', True)
+    Strng = Strng.replace('જ઼઼', 'ૹ').replace('શ઼', 'ૹ')
+
+    return Strng
+
+def _FixGujaratiDecode(Strng):
+    Strng = PostProcess.RetainDandasIndic(Strng, 'Gujarati')
+    Strng = Strng.replace('ૹ', 'જ઼઼').replace('ૹ', 'શ઼')
+
+    return Strng
+
+def FixGujarati(Strng, reverse=False):
+    return _FixGujaratiDecode(Strng) if reverse else _FixGujaratiEncode(Strng)
+
+def _FixZanabazarSquareEncode(Strng):
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ZanabazarSquare'))
     yrlv = ZanabazarSquare.ConsonantMap[25:29]
     yrlv_sub = ['\U00011A3B', '\U00011A3C', '\U00011A3D', '\U00011A3E']
 
     vir = ZanabazarSquare.ViramaMap[0]
 
-    if not reverse:
-        Strng = re.sub(vir+'('+ListC+')','\U00011A47'+r'\1',Strng)
-        # KSSA
-        Strng = Strng.replace('𑨋𑩇𑨯','𑨲')
-    else:
-        Strng = Strng.replace('\U00011A41', ' ')
+    Strng = re.sub(vir+'('+ListC+')','\U00011A47'+r'\1',Strng)
+    # KSSA
+    Strng = Strng.replace('𑨋𑩇𑨯','𑨲')
 
-        tsaSeries = ['𑨣', '𑨤', '𑨥']
-        caSeries = ['𑨐','𑨑','𑨒']
+    return Strng
 
-        for x, y in zip(tsaSeries,caSeries):
-            Strng = Strng.replace(y, x)
+def _FixZanabazarSquareDecode(Strng):
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ZanabazarSquare'))
+    yrlv = ZanabazarSquare.ConsonantMap[25:29]
+    yrlv_sub = ['\U00011A3B', '\U00011A3C', '\U00011A3D', '\U00011A3E']
 
-        # subjoining contextual y/r/l/v
-        for x, y in zip(yrlv, yrlv_sub):
-            Strng = Strng.replace(y, '\U00011A47' + x)
+    vir = ZanabazarSquare.ViramaMap[0]
 
-        # Repha
-        Strng = Strng.replace('\U00011A3A', yrlv[1] + '\U00011A47')
+    Strng = Strng.replace('\U00011A41', ' ')
 
-        # KSSA
-        Strng = Strng.replace('𑨲', '𑨋𑩇𑨯')
+    tsaSeries = ['𑨣', '𑨤', '𑨥']
+    caSeries = ['𑨐','𑨑','𑨒']
 
-        # Alternate ai/au
-        Strng = Strng.replace('\U00011A07', '\U00011A04\U00011A0A')
-        Strng = Strng.replace('\U00011A08', '\U00011A06\U00011A0A')
+    for x, y in zip(tsaSeries,caSeries):
+        Strng = Strng.replace(y, x)
 
-        # Mongolian final -> Virama
-        Strng = Strng.replace('\U00011A33', vir)
+    # subjoining contextual y/r/l/v
+    for x, y in zip(yrlv, yrlv_sub):
+        Strng = Strng.replace(y, '\U00011A47' + x)
 
-        # Subojin to Normal vir
-        Strng = Strng.replace('\U00011A47', vir)
+    # Repha
+    Strng = Strng.replace('\U00011A3A', yrlv[1] + '\U00011A47')
+
+    # KSSA
+    Strng = Strng.replace('𑨲', '𑨋𑩇𑨯')
+
+    # Alternate ai/au
+    Strng = Strng.replace('\U00011A07', '\U00011A04\U00011A0A')
+    Strng = Strng.replace('\U00011A08', '\U00011A06\U00011A0A')
+
+    # Mongolian final -> Virama
+    Strng = Strng.replace('\U00011A33', vir)
+
+    # Subojin to Normal vir
+    Strng = Strng.replace('\U00011A47', vir)
+
+    return Strng
+
+def FixZanabazarSquare(Strng, reverse=False):
+    return _FixZanabazarSquareDecode(Strng) if reverse else _FixZanabazarSquareEncode(Strng)
+
+def _FixKhojkiEncode(Strng):
+    sindhi = ['\U0001120B', '\U00011211', '\U0001121C', '\U00011222']
+    sindhiapprox = ['ˍ\U0001120A', 'ˍ\U00011210', 'ˍ\U00011216', 'ˍ\U00011221']
+
+    for x, y in zip(sindhi, sindhiapprox):
+        Strng = Strng.replace(y, x)
+    Strng = PostProcess.InsertGeminationSign(Strng, 'Khojki')
+    # Move Shadda after consonant
+    Strng = re.sub('(\U00011237)(.)', r'\2\1', Strng)
+    # Reverse : Shadda + Nukta
+    Strng = Strng.replace('𑈷𑈶', '𑈶𑈷')
+    #Strng = re.sub('(' + GM.Germination['Khojki'] + ')', r'\2', Strng)
+    # WordSeparatror
+    Strng = Strng.replace(' ', '\U0001123A')
+
+    return Strng
+
+def _FixKhojkiDecode(Strng):
+    sindhi = ['\U0001120B', '\U00011211', '\U0001121C', '\U00011222']
+    sindhiapprox = ['ˍ\U0001120A', 'ˍ\U00011210', 'ˍ\U00011216', 'ˍ\U00011221']
+
+    # Reverse Word Separator
+    Strng = Strng.replace('\U0001123A', ' ')
+
+    for x, y in zip(sindhi, sindhiapprox):
+        Strng = Strng.replace(x, y)
+    # Reverse : Nukta + Shadda
+    Strng = Strng.replace('𑈶𑈷', '𑈷𑈶')
+    # Move Shadda before consonant
+    Strng = re.sub('(.)(\U00011237)', r'\2\1', Strng)
+    Strng = PostProcess.ReverseGeminationSign(Strng, 'Khojki')
 
     return Strng
 
 def FixKhojki(Strng, reverse=False):
-    sindhi = ['\U0001120B', '\U00011211', '\U0001121C', '\U00011222']
-    sindhiapprox = ['ˍ\U0001120A', 'ˍ\U00011210', 'ˍ\U00011216', 'ˍ\U00011221']
+    return _FixKhojkiDecode(Strng) if reverse else _FixKhojkiEncode(Strng)
 
-    if not reverse:
-        for x, y in zip(sindhi, sindhiapprox):
-            Strng = Strng.replace(y, x)
-        Strng = PostProcess.InsertGeminationSign(Strng, 'Khojki')
-        # Move Shadda after consonant
-        Strng = re.sub('(\U00011237)(.)', r'\2\1', Strng)
-        # Reverse : Shadda + Nukta
-        Strng = Strng.replace('𑈷𑈶', '𑈶𑈷')
-        #Strng = re.sub('(' + GM.Germination['Khojki'] + ')', r'\2', Strng)
-        # WordSeparatror
-        Strng = Strng.replace(' ', '\U0001123A')
-    else:
-        # Reverse Word Separator
-        Strng = Strng.replace('\U0001123A', ' ')
-
-        for x, y in zip(sindhi, sindhiapprox):
-            Strng = Strng.replace(x, y)
-        # Reverse : Nukta + Shadda
-        Strng = Strng.replace('𑈶𑈷', '𑈷𑈶')
-        # Move Shadda before consonant
-        Strng = re.sub('(.)(\U00011237)', r'\2\1', Strng)
-        Strng = PostProcess.ReverseGeminationSign(Strng, 'Khojki')
+def _FixNewaEncode(Strng):
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Newa'))
+    ra = Newa.ConsonantMap[26]
+    vir = Newa.ViramaMap[0]
+    ## The default behavior of Repha has been proposed to change
+    # Strng = re.sub(ra + vir + '(' + ListC + ')', ra + vir + '\u200D' + r'\1', Strng)
 
     return Strng
+def _FixNewaDecode(Strng):
+    pass
 
+    return Strng
 def FixNewa(Strng, reverse=False):
-    if not reverse:
-        ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Newa'))
-        ra = Newa.ConsonantMap[26]
-        vir = Newa.ViramaMap[0]
-        ## The default behavior of Repha has been proposed to change
-        # Strng = re.sub(ra + vir + '(' + ListC + ')', ra + vir + '\u200D' + r'\1', Strng)
-    else:
-        pass
-
-    return Strng
+    return _FixNewaDecode(Strng) if reverse else _FixNewaEncode(Strng)
