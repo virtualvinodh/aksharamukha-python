@@ -5,6 +5,7 @@ from . import ScriptRegistry as SR
 import re
 import string
 import unicodedata
+import functools
 from . import PostProcess
 from . import ConvertFix as CF
 from aksharamukha.ScriptMap.EastIndic import PhagsPa, Burmese, Khmer
@@ -756,11 +757,18 @@ def retainLatin(Strng, reverse=False):
 # Hiragana and Katakana sources), verified the same way as everywhere
 # else in this session: A/B comparison plus the full suite.
 
-def _japanese_kakasi_romanize(txt):
+@functools.lru_cache(maxsize=None)
+def _get_kakasi():
+    # pykakasi.kakasi() was previously constructed fresh on every single
+    # Hiragana/Katakana->other conversion - real, measurable per-call cost
+    # for no benefit, since the converter itself holds no per-call state.
     import pykakasi
+    return pykakasi.kakasi()
+
+def _japanese_kakasi_romanize(txt):
     from . import Convert
 
-    kks = pykakasi.kakasi()
+    kks = _get_kakasi()
 
     txt = Convert.convertScript(txt.lower(), "ISO", "Devanagari")
     #print(txt)
