@@ -2,6 +2,7 @@ from aksharamukha import GeneralMap
 from aksharamukha.gimeltra import Transliterator
 from . import Convert,PostOptions,PostProcess,PreProcess
 from . import ConvertFix
+from . import ScriptRegistry as SR
 import json
 import requests
 import html
@@ -227,68 +228,68 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     ## ALA-LC Romanizations
     ## process as follows, if source is associated with LoC script
-    if tgt == 'RomanLoC' and src in GeneralMap.LoCScripts:
+    if tgt == 'RomanLoC' and SR.get(src).is_loc_script:
     ### swtiches for Source scripts
-        if src in GeneralMap.LoCSrcMap:
+        if SR.get(src).loc_src_map:
             src = src + 'LoC'
         elif 'Tham' in src:
             src = 'ThamLoC'
-        if src in GeneralMap.LoCTgtMap:
+        if SR.get(src).loc_tgt_map:
             tgt = src + tgt
-        elif src in GeneralMap.LoCTgtISO:
+        elif SR.get(src).loc_tgt_iso:
             tgt = 'ISO'
 
         # the below order for preoptions is important
         #special for east-asian scripts
-        if src in GeneralMap.LocPostPre:
+        if SR.get(src).loc_post_pre:
             preoptions = preoptions + [tgt + 'Target']
             postoptions =  [tgt + 'Target'] + postoptions
             nativize = False
 
             if src in ['KhmerLoC']:
                 preoptions =  preoptions + ['SchwaFinalKhmerLoC']
-        #read from GeneralMap
+        #read from ScriptRegistry
         else:
-            if src in GeneralMap.LoCTgtPostOptions.keys():
-                postoptions =  GeneralMap.LoCTgtPostOptions[src] + postoptions
-            if src in GeneralMap.LoCTgtPreOptions.keys():
-                preoptions =  preoptions + GeneralMap.LoCTgtPreOptions[src]
+            if SR.get(src).loc_tgt_post_options:
+                postoptions =  list(SR.get(src).loc_tgt_post_options) + postoptions
+            if SR.get(src).loc_tgt_pre_options:
+                preoptions =  preoptions + list(SR.get(src).loc_tgt_pre_options)
 
     ## if source is not associated with LoC script
-    if tgt == 'RomanLoC' and src not in GeneralMap.LoCScripts:
-        if src in GeneralMap.SemiticScripts:
+    if tgt == 'RomanLoC' and not SR.get(src).is_loc_script:
+        if SR.get(src).is_semitic:
             tgt = 'ISO233'
         else:
             tgt = 'ISO'
 
     ## Switches for Target scripts
     ## if target is associated with the loc Script
-    if src == 'RomanLoC' and tgt in GeneralMap.LoCScripts:
-        if tgt in GeneralMap.LoCSrcMap:
+    if src == 'RomanLoC' and SR.get(tgt).is_loc_script:
+        if SR.get(tgt).loc_src_map:
             tgt = tgt + 'LoC'
         elif 'Tham' in tgt:
             if 'Khuen' in tgt:
                 txt = txt+'\u02BE' # indicator for Khuen text
             tgt = 'ThamLoC'
-        if tgt in GeneralMap.LoCTgtMap:
+        if SR.get(tgt).loc_tgt_map:
             src = tgt + src
-        elif tgt in GeneralMap.LoCTgtISO:
+        elif SR.get(tgt).loc_tgt_iso:
             src = 'ISO'
 
-        if tgt in GeneralMap.LocPostPre:
+        if SR.get(tgt).loc_post_pre:
             preoptions = [src + 'Source'] + preoptions
             postoptions =  [src + 'Source'] + postoptions
             nativize = False
-        #read from GeneralMap
+        #read from ScriptRegistry
         else:
-            if tgt in GeneralMap.LoCSrcPostOptions.keys():
-                postoptions =  GeneralMap.LoCSrcPostOptions[tgt] + postoptions
-            if tgt in GeneralMap.LoCSrcPreOptions.keys():
-                preoptions =  preoptions + GeneralMap.LoCSrcPreOptions[tgt]
+            if SR.get(tgt).loc_src_post_options:
+                postoptions =  list(SR.get(tgt).loc_src_post_options) + postoptions
+            if SR.get(tgt).loc_src_pre_options:
+                preoptions =  preoptions + list(SR.get(tgt).loc_src_pre_options)
 
     ## if target is not associated with the loc Script
-    if src == 'RomanLoC' and tgt not in GeneralMap.LoCScripts:
-        if tgt in GeneralMap.SemiticScripts:
+    if src == 'RomanLoC' and not SR.get(tgt).is_loc_script:
+        if SR.get(tgt).is_semitic:
             src = 'ISO233'
         else:
             src = 'ISO'

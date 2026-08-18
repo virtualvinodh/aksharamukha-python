@@ -122,6 +122,25 @@ def _build_registry():
 
 SCRIPTS = _build_registry()
 
+_MISSING = ScriptDescriptor(
+    name='', path_family=None, category=None,
+    is_indic=False, is_latin=False, is_semitic=False,
+    is_roman_diacritic=False, is_transliteration=False, is_pipe_script=False,
+    is_reversible=False, has_roman_numerals=False, has_roman_punct=False,
+    gemination_mark=None, is_loc_script=False, loc_post_pre=False,
+    loc_src_map=False, loc_tgt_map=False, loc_tgt_iso=False,
+)
+
+
+def get(name):
+    """Like SCRIPTS[name], but returns an all-False/empty descriptor for
+    an unregistered name instead of raising KeyError - mirrors the
+    "not in list" semantics of the membership checks this registry
+    replaces (e.g. pseudo-script names like 'ISO233' that only ever
+    appear as an assigned value, never as a real registered script), so
+    callers don't need a special-case guard at every call site."""
+    return SCRIPTS.get(name, _MISSING)
+
 
 def _verify_consistency():
     """Re-derive every field from GeneralMap.py's source lists/dicts and
