@@ -8,6 +8,48 @@ from . import PostProcess as PP
 from . import GeneralMap as GM
 from . import ScriptRegistry as SR
 
+# Target -> default postoptions applied unconditionally for that target.
+# Targets with conditional logic (Bengali: depends on PostOptions; Latn:
+# depends on Source) are handled separately in ApplyScriptDefaults, not here.
+_TARGET_DEFAULT_OPTIONS = {
+    'Telugu': ['NasalToAnusvara', 'MToAnusvara', 'TeluguRemoveNukta', 'TeluguRemoveAeAo'],
+    'Kannada': ['NasalToAnusvara', 'MToAnusvara'],
+    'Sinhala': ['SinhalaChandrbinduAnusvara'],
+    'Khojki': ['KhojkiRRI'],
+    'Nandinagari': ['NasalToAnusvara'],
+    'Hebrew': ['HebrewVetVav', 'HebrewnonFinalShort'],
+    'Malayalam': ['MalayalamAnusvaraNasal', 'MToAnusvara', 'MalayalamremoveHistorical'],
+    'Tamil': ['TamilNaToNNa', 'AnusvaraToNasal', 'TamilpredictDentaNa'],
+    'MeeteiMayek': ['MeeteiMayekremoveHistorical'],
+    'Limbu': ['LimburemoveHistorical'],
+    'Assamese': ['YaToYYa', 'AnusvaraToNasal'],
+    'Oriya': ['AnusvaraToNasal', 'OriyaVa', 'YaToYYa'],
+    'Chakma': ['YaToYYa'],
+    'Gurmukhi': ['GurmukhiCandrabindu', 'GurmukhiTippiBindu', 'GurmukhiTippiGemination'],
+    'Saurashtra': ['SaurashtraHaru'],
+    'Ahom': ['AhomClosed'],
+    'Tibetan': ['TibetanRemoveVirama', 'TibetanRemoveBa'],
+    'Thaana': ['ThaanaRemoveHistorical'],
+    'Avestan': ['AvestanConventions'],
+    'Sundanese': ['SundaneseRemoveHistoric'],
+    'Multani': ['MultaniAbjad'],
+    'Modi': ['ModiRemoveLong'],
+    'WarangCiti': ['WarangCitiModernOrthogaphy'],
+    'Arab': ['ArabRemoveAdditions'],
+}
+
+# Latn's defaults depend on Source, not Target.
+## Also make changes in FixSemiticPreProcess
+_LATN_SOURCE_DEFAULT_OPTIONS = {
+    'Arab': ['arabizeLatn'],
+    'Arab-Ur': ['urduizeLatn'],
+    'Arab-Pa': ['urduizeLatn'],
+    'Arab-Fa': ['urduizeLatn'],
+    'Syrn': ['syricizeLatn'],
+    'Syrj': ['hebraizeLatn'],
+    'Hebr': ['hebraizeLatn'],
+}
+
 def ApplyScriptDefaults(Strng,Source,Target, PostOptions=[]):
     Options = []
 
@@ -16,97 +58,17 @@ def ApplyScriptDefaults(Strng,Source,Target, PostOptions=[]):
     if SR.get(Target).is_indic:
         Options += []#['RemoveDiacritics'] #Sometimes you may wanna keep it. Adjust options
 
-    if Target == 'Telugu':
-        Options += ['NasalToAnusvara','MToAnusvara', 'TeluguRemoveNukta', 'TeluguRemoveAeAo']
-
-    elif Target == 'Kannada':
-        Options += ['NasalToAnusvara','MToAnusvara']
-
-    elif Target == 'Sinhala':
-        Options += ['SinhalaChandrbinduAnusvara']
-
-    elif Target == 'Khojki':
-        Options += ['KhojkiRRI']
-
-    elif Target == 'Nandinagari':
-        Options += ['NasalToAnusvara']
-
-    elif Target == 'Hebrew':
-        Options += ['HebrewVetVav', 'HebrewnonFinalShort']
-
-    elif Target == 'Malayalam':
-        Options += ['MalayalamAnusvaraNasal', 'MToAnusvara', 'MalayalamremoveHistorical']
-
-    elif Target == 'Tamil':
-        Options += ['TamilNaToNNa','AnusvaraToNasal', 'TamilpredictDentaNa']
-
-    elif Target == 'Bengali':
+    if Target == 'Bengali':
         if 'BengaliRaBa' in PostOptions:
             Options += ['YaToYYa','AnusvaraToNasal', 'BengaliConjunctVB']
         else:
             Options += ['AnusvaraToNasal', 'VaToBa','YaToYYa', 'BengaliConjunctVB']
 
-    elif Target == 'MeeteiMayek':
-        Options += ['MeeteiMayekremoveHistorical']
-
-    elif Target == 'Limbu':
-        Options += ['LimburemoveHistorical']
-
-    elif Target == 'Assamese':
-        Options += ['YaToYYa','AnusvaraToNasal']
-
-    elif Target == 'Oriya':
-        Options += ['AnusvaraToNasal', 'OriyaVa','YaToYYa']
-
-    elif Target == 'Chakma':
-        Options += ['YaToYYa']
-
-    elif Target == 'Gurmukhi':
-        Options += ['GurmukhiCandrabindu', 'GurmukhiTippiBindu','GurmukhiTippiGemination']
-
-    elif Target == 'Saurashtra':
-        Options += ['SaurashtraHaru']
-
-    elif Target == 'Ahom':
-        Options +=['AhomClosed']
-
-    elif Target == 'Tibetan':
-        Options += ['TibetanRemoveVirama', 'TibetanRemoveBa']
-
-    elif Target == "Thaana":
-        Options += ['ThaanaRemoveHistorical']
-
-    elif Target == "Avestan":
-        Options += ['AvestanConventions']
-
-    elif Target == "Sundanese":
-        Options += ['SundaneseRemoveHistoric']
-
-    elif Target == "Multani":
-        Options += ['MultaniAbjad']
-
-    elif Target == "Modi":
-        Options += ['ModiRemoveLong']
-
-    elif Target == "WarangCiti":
-        Options += ['WarangCitiModernOrthogaphy']
-
-    elif Target == "Latn":
-        ## Also make changes in FixSemiticPreProcess
-        if Source == 'Arab':
-            Options += ['arabizeLatn']
-        elif Source == 'Arab-Ur' or Source == 'Arab-Pa' or Source == 'Arab-Fa':
-            Options += ['urduizeLatn']
-        elif Source == 'Syrn':
-            Options += ['syricizeLatn']
-        elif Source == 'Syrj' or Source == 'Hebr':
-            Options += ['hebraizeLatn']
-
-    elif Target == "Arab":
-        Options += ['ArabRemoveAdditions']
+    elif Target == 'Latn':
+        Options += _LATN_SOURCE_DEFAULT_OPTIONS.get(Source, [])
 
     else:
-        Options += []
+        Options += _TARGET_DEFAULT_OPTIONS.get(Target, [])
 
     for Option in Options:
         if Option.find(Target) != -1:
