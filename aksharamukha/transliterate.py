@@ -451,6 +451,17 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     #if src not in GeneralMap.SemiticScripts and tgt == 'Arab' and not nativize:
         #postoptions.append('arabicRemoveAdditionsPhonetic')
 
+    # Thai/Lao "short vowels not shown" transcription mode - previously
+    # signalled by splicing a private-use marker into txt itself and having
+    # ConvertFix.FixThai/FixLaoPali check for it; now a real parameter
+    # threaded through Convert.convertScript instead. Four preoptions feed
+    # this same mode (verified by exhaustive grep, not just the two most
+    # obviously-named ones - ThaiOrthography/LaoTranscription looked like
+    # they might be unrelated but turned out to inject the identical
+    # marker for the identical consumer).
+    transcription_mode = ('ThaiPhonetic' in preoptions or 'LaoPhonetic' in preoptions
+                           or 'ThaiOrthography' in preoptions or 'LaoTranscription' in preoptions)
+
     for options in preoptions:
       txt = GeneralMap.resolve(PreProcess, options, txt)
 
@@ -482,11 +493,11 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
         transliteration = ''
         for i, word in enumerate(txt.split("##")):
             if (i%2 == 0):
-                transliteration += Convert.convertScript(word, src, tgt)
+                transliteration += Convert.convertScript(word, src, tgt, transcription_mode=transcription_mode)
             else:
                 transliteration += word
     else:
-        transliteration = Convert.convertScript(txt, src, tgt)
+        transliteration = Convert.convertScript(txt, src, tgt, transcription_mode=transcription_mode)
 
     #print(transliteration)
 

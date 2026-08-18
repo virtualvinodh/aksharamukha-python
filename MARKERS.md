@@ -4,8 +4,8 @@ Private-use / rare codepoints used as transient, invisible signals passed
 between pipeline stages inside the transliterated string itself (inject
 somewhere, check `if marker in Strng`, strip somewhere else). This file is
 the map of what currently exists, found by an independent code audit
-(2026-08). It documents the current state - it does not fix anything, and
-none of the code these entries describe has been renamed to use it yet.
+(2026-08). It documents the current state - it does not fix anything unless
+noted, and most of the entries below have not been renamed/retired yet.
 Renaming a use site to a named constant is expected to happen opportunistically,
 whenever that function is touched for other reasons - not as a standalone sweep.
 
@@ -44,8 +44,8 @@ about the other 8 without reading this file or grepping first.
    and needs a real look at Soyombo finals semantics, not a rename.
 5. **`transliterate.convert()` line ~271** - appended to Khuen Tham text as
    an "indicator for Khuen text", consumed somewhere in the
-   `FixThamLoC`/`FixKhuenTham` family (ConvertFix.py ~3318-3370, the same
-   "Tall A" cluster flagged for Phase 2B parameterization).
+   `FixThamLoC`/`FixKhuenTham` family (ConvertFix.py ~3295-3330, since
+   merged into one parameterized `_FixTaiThamFamily` function).
 6. **`ConvertFix.FixWarangCiti`** (~line 2483-2533) - internal staging
    marker, self-contained.
 7. **`ConvertFix.FixChakma`** (~line 2807-2841) + **`PreProcess.ChakmaPali`**
@@ -54,12 +54,13 @@ about the other 8 without reading this file or grepping first.
    codepoint `\U00011127`. Three files, but one coordinated pattern specific
    to Chakma (each stage does the same swap-and-restore), not random reuse -
    lower risk than #1-6 despite spanning multiple files.
-8. **`ConvertFix.FixThamLoC`** (~line 3318-3330, also `~3500`, `~3539`) -
-   "Tall A" TaiTham-family marker, checked with `if 'ʾ' in Strng`.
+8. **`ConvertFix._FixTaiThamFamily`** (~line 3295-3327, formerly split
+   across `FixThamLoC`/`FixLueTham`/`FixKhuenTham`) - "Tall A" TaiTham-family
+   marker, checked with `if 'ʾ' in Strng`.
 9. **`PostProcess.HebrewnonFinalShort`** (~line 1025-1047) - Vav/dagesh
    marker for a Hebrew-specific short-vowel rule.
 
-## `Schwa = ''` / `DepV = 'ṿ'`
+## `Schwa = U+F000` / `DepV = U+1E7F` ('ṿ')
 
 Defined as identical copy-pasted literals in three separate places instead
 of one shared constant:
@@ -72,7 +73,7 @@ Lower risk than `ʾ` - these appear to be the *same* meaning
 factored into one shared definition. A safe, mechanical dedup whenever one
 of these three functions is touched.
 
-## ``-``
+## U+EA01-U+EA06 (private use)
 
 Two unrelated uses of the same private-use range:
 - **`PreProcess.py`** (~line 641-743) - Syriac ligature-disambiguation
@@ -84,12 +85,10 @@ Two unrelated uses of the same private-use range:
 No overlap in practice (Syriac and Japanese conversions never share a
 pipeline), but nothing prevents a collision if that ever changes.
 
-## `׍`, `׌`, `"ʻʻ"` (U+02BB doubled), `˂`, ``
+## `׍`, `׌`, `˂`, U+F001
 
-Injected by various pre-processing steps (`transliterate.py:360,401`,
-`PreProcess.AlephMaterLectionis`, `PreProcess.ThaiPhonetic`/`LaoPhonetic`/
-`UrduShortNotShown`) for Semitic-to-Indic and Thai/Lao/Urdu
-phonetic-transcription modes. All 5 are stripped as a final safety net by
+Injected by `transliterate.py:360,401` and `PreProcess.AlephMaterLectionis`
+for Semitic-to-Indic transcription modes. Stripped as a final safety net by
 **`PostProcess.default()`**, called unconditionally at the end of every
 `Convert.convertScript()` call via `Convert.py:340` (`Strng = PP.default(Strng)`).
 
@@ -99,6 +98,41 @@ search (matching the fully-qualified name) missed the aliased call site.
 Confirmed live and correctly wired via `git blame`/manual read plus an
 empirical no-leak test across 8 representative conversions. No action
 needed here.
+
+## `"ʻʻ"` (U+02BB doubled) - Thai/Lao/Urdu transcription mode
+
+**Partially retired.** 5 real injection points feed this one marker, not
+the 3 an earlier pass of this file assumed - that undercount caused a real
+regression (`TestPreOptions[ThaiOrthography]`/`TestPreOptions[LaoTranscription]`
+broke when only 3 of the 5 were migrated to the new mechanism below; caught
+by the full suite, fixed same session by an exhaustive grep instead of
+trusting the earlier partial list): `PreProcess.ThaiPhonetic`, `PreProcess.
+LaoPhonetic`, `PreProcess.ThaiOrthography`, `PreProcess.LaoTranscription`
+(all four retired now - see below), and `PreProcess.UrduShortNotShown`
+(still injects the marker, untouched). 3 consumption points:
+`ConvertFix.FixThai`, `ConvertFix.FixLaoPali` (both retired),
+`ConvertFix.FixUrduShahmukhi` (still checks for the marker, untouched -
+deliberately deferred alongside `FixKhamtiShan`/`FixTaiLaing`/`FixShan`,
+since it's a 258-line `reverse=`-fused function and tracing its actual
+control flow required running code, not just reading it - a first manual
+read of where the marker check lived turned out to be wrong).
+
+Thai/Lao side: the four `PreProcess` functions no longer inject anything;
+`transliterate.convert()` now computes a real `transcription_mode` boolean
+from `preoptions` membership and threads it as a keyword argument through
+`Convert.convertScript()` -> the `Fix*` dispatch (only added to the call
+when `Source`/`Target` is `Thai`/`LaoPali`, so no other script's `Fix*`
+function signature is affected) -> `ConvertFix.FixThai`/`FixLaoPali`,
+which check `if transcription_mode:` instead of `if "ʻʻ" in Strng:`.
+Verified behavior-identical via a 13-case A/B comparison (git
+stash-based) against the pre-change implementation before committing.
+
+Urdu side: `PreProcess.UrduShortNotShown` still appends `"ʻʻ"` and
+`ConvertFix.FixUrduShahmukhi` still checks for it exactly as before -
+completely untouched, still working. Retiring this one requires the same
+`transcription_mode`-threading treatment, but only after `FixUrduShahmukhi`
+itself gets the same careful extraction+trace treatment given to the
+TaiTham cluster - not attempted this session.
 
 ## `͏` (COMBINING GRAPHEME JOINER)
 

@@ -364,13 +364,18 @@ def FixSemiticOutput(Strng,Source,Target):
 
 # Fixing the Indic Ouput for the standard corrections
 # Indic Fix are mandatory corrections to the immediate ouput.
-def FixIndicOutput(Strng,Source,Target):
+def FixIndicOutput(Strng,Source,Target,transcription_mode=False):
     vir = GM.CrunchList('ViramaMap', Target)[0]
 
     Strng = Strng.replace(vir + '_', vir)
 
     try:
-        Strng = globals()["Fix"+Target](Strng)
+        # transcription_mode only means anything to FixThai/FixLaoPali;
+        # every other script's Fix* function takes no such argument.
+        if Target in ('Thai', 'LaoPali'):
+            Strng = globals()["Fix"+Target](Strng, transcription_mode=transcription_mode)
+        else:
+            Strng = globals()["Fix"+Target](Strng)
     except KeyError:
         pass
         #print #"Fix"+Target+" doesn't exist"
@@ -2008,13 +2013,12 @@ def FixKhomThai(Strng, reverse=False):
 
     return Strng
 
-def FixThai(Strng,reverse=False):
+def FixThai(Strng,reverse=False,transcription_mode=False):
     Strng = ThaiReverseVowelSigns(Strng,reverse)
     Strng = ThaiDigraphConjuncts(Strng,reverse)
 
-    if "\u02BB\u02BB" in Strng:
+    if transcription_mode:
         Strng = PostProcess.ThaiLaoTranscription(Strng,"Thai", '\u0E30', '\u0E31', True)
-        Strng = Strng.replace("\u02BB\u02BB", '')
 
         Strng = Strng.replace("หฺ์","ห์")
 
@@ -2037,14 +2041,13 @@ def ThaiReverseVowelSigns(Strng,reverse=False):
 
     return Strng
 
-def FixLaoPali(Strng,reverse=False):
+def FixLaoPali(Strng,reverse=False,transcription_mode=False):
     ## Check AU in Lao in THN file pdf in Lao-Pali text
 
     Strng = ReverseVowelSigns(Strng,"LaoPali",reverse)
 
-    if "\u02BB\u02BB" in Strng:
+    if transcription_mode:
         Strng = LaoPaliTranscribe(Strng, True)
-        Strng = Strng.replace("\u02BB\u02BB", '')
 
         Strng = Strng.replace("ຫ຺໌","ຫ໌")
 

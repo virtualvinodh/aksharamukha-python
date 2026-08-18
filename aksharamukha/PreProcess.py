@@ -844,8 +844,6 @@ def ThaiPhonetic(Strng):
 
     Strng = Strng.replace('\u0E47', '')
 
-    Strng += "\u02BB\u02BB"
-
     return Strng
 
 def LaoPhonetic(Strng):
@@ -854,8 +852,6 @@ def LaoPhonetic(Strng):
     Strng = Strng.replace('ງໍ', 'ງ')
 
     Strng = Strng.replace('\u035C', '')
-
-    Strng += "\u02BB\u02BB"
 
     return Strng
 
@@ -1147,12 +1143,10 @@ def siddhamUnicode(Strng):
     return Strng
 
 def ThaiOrthography(Strng):
-    Strng += "\u02BB\u02BB"
 
     return Strng
 
 def LaoTranscription(Strng):
-    Strng += "\u02BB\u02BB"
 
     return Strng
 
