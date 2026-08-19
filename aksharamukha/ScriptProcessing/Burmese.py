@@ -8,6 +8,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.EastIndic import Burmese
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixBurmeseEncode(Strng):
     """Encodes Burmese script orthography: converts virama to subjoined forms, inserts kinzi/repha, forms tall-a, reorders medials, and applies script-specific ligatures."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Burmese'))
@@ -129,6 +131,8 @@ def _FixBurmeseDecode(Strng):
 def FixBurmese(Strng, reverse=False):
     """Dispatches to the Burmese encode or decode fix routine depending on conversion direction."""
     return _FixBurmeseDecode(Strng) if reverse else _FixBurmeseEncode(Strng)
+
+# ---- Pre-processing options ----
 
 def segmentBurmeseSyllables(Strng):
     # segment text into syllables

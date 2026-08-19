@@ -15,6 +15,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.EastIndic import Kawi
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def FixKawi(Strng, reverse=False):
     """Dispatches to the Kawi encode or decode fix routine depending on the reverse flag."""
     return _FixKawiDecode(Strng) if reverse else _FixKawiEncode(Strng)
@@ -84,6 +86,8 @@ def _FixKawiDecode(Strng):
 
     return Strng
 
+# ---- Pre-processing options ----
+
 def KawiMoveRepha_pre(Strng):
     """Moves the Kawi repha (superscript RA) mark from before to after the consonant/vowel cluster it modifies, for correct rendering order."""
     tgt = 'Kawi'
@@ -96,6 +100,8 @@ def KawiMoveRepha_pre(Strng):
     Strng = re.sub(repha + '(('+cons+')' + '('+ vir + cons +')*'+'(' + vows + ')?)', r'\1' + repha, Strng)
 
     return Strng
+
+# ---- Post-processing options ----
 
 def KawiAltAiAU(Strng):
     #  Alt ai, alt au

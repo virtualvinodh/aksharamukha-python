@@ -9,6 +9,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def FixShahmukhi(Strng, reverse=False):
 
     """Applies the shared Perso-Arabic Shahmukhi/Urdu fix routine to encode or decode Shahmukhi text based on the reverse flag."""

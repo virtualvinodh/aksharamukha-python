@@ -24,6 +24,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixLaoPaliEncode(Strng, ctx):
     """Encodes Lao Pali text: reverses vowel sign order, optionally applies phonetic transcription, and ligates AA+anusvara into the AM vowel sign."""
     from .. import ConvertFix as CF
@@ -71,6 +73,8 @@ def LaoPaliTranscribe(Strng,reverse=False, anusvaraChange = True):
 
     return Strng
 
+# ---- Pre-processing options ----
+
 def LaoTranscription_pre(Strng):
 
     """Placeholder pre-processing step for Lao transcription mode; currently a no-op."""
@@ -104,6 +108,8 @@ def LaoSajhayaOrthographywithA(Strng):
     Strng = LaoSajhayaOrthography(Strng)
 
     return Strng
+
+# ---- Post-processing options ----
 
 def LaoTranscription_post(Strng):
     """Post-processing step that applies Lao Pali transcription and removes the short-a sign before a final virama-like mark."""

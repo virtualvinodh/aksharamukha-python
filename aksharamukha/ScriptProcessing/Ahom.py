@@ -8,6 +8,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.MainIndic import Ahom
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixAhomEncode(Strng):
     """Reorders Ahom vowel signs and anusvara into correct visual order and merges two consonant+vowel sequences into single ligature characters."""
     ListVS = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, 'Ahom')) + ')'
@@ -49,6 +51,8 @@ def _FixAhomDecode(Strng):
 def FixAhom(Strng, reverse=False):
     """Dispatches to the Ahom encode or decode fix-up routine based on the reverse flag."""
     return _FixAhomDecode(Strng) if reverse else _FixAhomEncode(Strng)
+
+# ---- Post-processing options ----
 
 def removePaliAhom(Strng):
     """Replaces Pali-specific Ahom characters with their standard non-Pali equivalents, e.g. 𑝁 𑝂 𑝃 𑝄 𑝅 𑝆 → 𑜄 𑜌 𑜓 𑜔 𑜃 𑜎."""

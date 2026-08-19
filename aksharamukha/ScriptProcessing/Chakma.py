@@ -19,6 +19,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.MainIndic import Chakma
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixChakmaEncode(Strng):
     """Inserts the Chakma inherent vowel-A sign (Chakma's default vowel being AA), forms ai/ei ligatures, subjoins virama before y/r/l/n, and applies consonant gemination."""
     listC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Chakma")+Chakma.VowelMap[:1],key=len,reverse=True))+')'
@@ -92,6 +94,8 @@ def FixChakma(Strng, reverse=False):
     """Dispatches to the Chakma encode or decode fix routine depending on the reverse flag."""
     return _FixChakmaDecode(Strng) if reverse else _FixChakmaEncode(Strng)
 
+# ---- Pre-processing options ----
+
 def ChakmaPali_pre(Strng):
     """Pre-processes Chakma text for Pali conversion by normalizing Ya/vA consonant forms and inserting the inherent vowel-A sign where absent."""
     Strng = Strng.replace('\U00011147', '𑄤') # Replace Ya
@@ -110,6 +114,8 @@ def ChakmaPali_pre(Strng):
     Strng = Strng.replace("\u02BE","\U00011127")
 
     return Strng
+
+# ---- Post-processing options ----
 
 def ChakmaPali_post(Strng):
     """Post-processes Chakma Pali text: reverses gemination and Ya/vA substitutions, then maps vowel-A to visarga and subjoined consonants to explicit virama per Pali convention."""

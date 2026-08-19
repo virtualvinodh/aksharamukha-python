@@ -9,6 +9,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixBugineseEncode(Strng):
 
     """Merges prenasalized consonant sequences (e.g. ᨂʾᨀ→ᨃ) into single letters, inserts the gemination sign, and strips glottal-stop markers."""

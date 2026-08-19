@@ -10,11 +10,15 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def FixRomanReadable(Strng, reverse = False):
 
     """Delegates to the shared readable/colloquial Roman transliteration routine with standard readable-style rendering."""
     from .. import ConvertFix as CF
     return CF._FixRomanReadableColloquial(Strng, reverse, colloquial=False)
+
+# ---- Post-processing options ----
 
 def RomanReadableLongEO(Strng):
 

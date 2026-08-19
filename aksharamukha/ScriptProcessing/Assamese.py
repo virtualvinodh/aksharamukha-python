@@ -9,6 +9,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixAssameseEncode(Strng):
 
     """Applies the khanda-ta fix and converts standard ra to the Assamese ra form (ৰ) when encoding into Assamese."""

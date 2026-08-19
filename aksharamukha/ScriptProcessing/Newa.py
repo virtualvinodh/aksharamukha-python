@@ -8,6 +8,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.MainIndic import Newa
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixNewaEncode(Strng):
     """Placeholder Newa encode fixer; repha insertion after ra+virama is currently disabled (commented out)."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Newa'))
@@ -27,6 +29,8 @@ def _FixNewaDecode(Strng):
 def FixNewa(Strng, reverse=False):
     """Dispatches to the Newa encode or decode fix routine depending on conversion direction."""
     return _FixNewaDecode(Strng) if reverse else _FixNewaEncode(Strng)
+
+# ---- Post-processing options ----
 
 def nepaldevafont(Strng):
     """Marks output for rendering with a Devanagari-based Newa font - 𑐧𑐸𑐡𑑂𑐢𑑅 → बुद्धः."""

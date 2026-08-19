@@ -6,6 +6,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixLatnEncode(Strng, Source):
     """Reorders visarga to precede an adjacent vowel or combining mark and strips a spurious 'a' before an aspiration marker when encoding to Latin."""
     vir = ''
@@ -36,6 +38,8 @@ def _FixLatnDecode(Strng, Source):
 def FixLatn(Strng, Source, reverse=False):
     """Dispatches to the Latin-script encode or decode fix-up routine based on the reverse flag."""
     return _FixLatnDecode(Strng, Source) if reverse else _FixLatnEncode(Strng, Source)
+
+# ---- Post-processing options ----
 
 def alephAyinLatnAlternate(Strng):
     """Uses modifier-letter apostrophe symbols instead of aleph/ayin for glottal stop and voiced pharyngeal, e.g. ʾ ʿ → ʼ ʽ."""

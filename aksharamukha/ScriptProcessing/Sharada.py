@@ -10,6 +10,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixSharadaEncode(Strng):
 
     """Applies the Assamese khanda-ta fix and inserts a ZWNJ between virama- or nukta-marked consonants and a following nukta letter when encoding into Sharada."""

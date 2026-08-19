@@ -6,6 +6,8 @@
 import re
 from aksharamukha.ScriptMap.MainIndic import MeeteiMayek
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixMeeteiMayekEncode(Strng):
     """Converts eight specific consonant+virama sequences into their dedicated Meetei Mayek final-consonant Unicode characters."""
     vir = MeeteiMayek.ViramaMap[0]

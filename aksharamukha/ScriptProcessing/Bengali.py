@@ -11,6 +11,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixBengaliEncode(Strng):
 
     """Inserts a ZWNJ before bare ba after a virama, fixes subjoined bva rendered as va-with-nukta, and applies the khanda-ta fix when encoding into Bengali."""
@@ -49,6 +51,8 @@ def FixBengali(Strng, reverse=False):
     from .. import PostProcess
     return _FixBengaliDecode(Strng) if reverse else _FixBengaliEncode(Strng)
 
+# ---- Pre-processing options ----
+
 def BengaliSubojinedVa(Strng):
 
     """Renders subjoined /va/ using nukta-ba (ভ়) instead of plain ba, e.g. স্ব দ্ব → sva dva."""
@@ -64,6 +68,8 @@ def BengaliTargetVa(Strng):
     Strng = Strng.replace('ব', 'ভ়')
 
     return Strng
+
+# ---- Post-processing options ----
 
 def BengaliOldRA(Strng):
 

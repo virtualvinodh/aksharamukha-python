@@ -9,6 +9,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def FixKhmerLoC(Strng,reverse=False):
 
     """Applies the shared Khmer fix-up logic (via ConvertFix.FixKhmer) targeting the Library of Congress romanization scheme."""

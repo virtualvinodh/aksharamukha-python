@@ -9,6 +9,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixLimbuLoCEncode(Strng):
 
     """Applies the shared Limbu orthographic fix routine when encoding into Limbu for the LoC romanization."""

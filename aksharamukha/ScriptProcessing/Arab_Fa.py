@@ -10,6 +10,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def FixArab_Fa(Strng, Source, reverse=False):
 
     """Applies the shared Perso-Arabic script fixes (via ConvertFix.FixArab) used for Farsi text."""
@@ -17,6 +19,8 @@ def FixArab_Fa(Strng, Source, reverse=False):
     Strng = CF.FixArab(Strng, Source, reverse)
 
     return Strng
+
+# ---- Post-processing options ----
 
 def persianPaGaFaJa(Strng):
 

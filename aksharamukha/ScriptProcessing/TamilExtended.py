@@ -13,6 +13,8 @@ from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.MainIndic import Tamil
 from aksharamukha.ScriptMap.MainIndic import TamilExtended
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixTamilExtendedEncode(Strng):
 
     """Normalizes the ksha and shra conjuncts, uses the older-style AU vowel sign, and repositions zero-width joiners relative to Vedic svara marks when encoding Tamil-Grantha extended text."""
@@ -42,6 +44,8 @@ def FixTamilExtended(Strng, reverse=False):
     """Dispatches to the Tamil-Grantha extended encode or decode fix routine depending on conversion direction."""
     from .. import PostProcess
     return _FixTamilExtendedDecode(Strng) if reverse else _FixTamilExtendedEncode(Strng)
+
+# ---- Post-processing options ----
 
 def TamilStyleUUCore(Strng):
 

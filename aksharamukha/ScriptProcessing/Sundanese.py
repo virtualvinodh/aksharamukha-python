@@ -12,6 +12,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.EastIndic import Sundanese
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixSundaneseEncode(Strng):
 
     """Converts ra-virama after a consonant to the Sundanese repha sign and subjoins virama-plus-ya/ra/la into their combining consonant forms when encoding."""
@@ -64,6 +66,8 @@ def FixSundanese(Strng,reverse=False):
     """Dispatches to the Sundanese encode or decode fix-up routine based on the reverse flag."""
     from .. import PostProcess
     return _FixSundaneseDecode(Strng) if reverse else _FixSundaneseEncode(Strng)
+
+# ---- Post-processing options ----
 
 def SundaneseHistoricConjuncts(Strng, reverse = False):
 

@@ -13,6 +13,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixDivesAkuruEncode(Strng):
     """Converts explicit virama+consonant into subjoining virama and forms special ra/ya conjuncts (repha, subjoined ya) for Dives Akuru."""
     target = 'DivesAkuru'
@@ -81,6 +83,8 @@ def FixDivesAkuru(Strng, reverse=False):
     """Dispatches to the Dives Akuru encode or decode fix-up routine based on the reverse flag."""
     return _FixDivesAkuruDecode(Strng) if reverse else _FixDivesAkuruEncode(Strng)
 
+# ---- Pre-processing options ----
+
 def DivesAkuruAlternateIndVowels_pre(Strng):
     # use alt /y/
     #Strng = Strng.replace("\U00011925", "\U00011926")
@@ -95,6 +99,8 @@ def DivesAkuruAlternateIndVowels_pre(Strng):
         Strng = Strng.replace(vy, v)
 
     return Strng
+
+# ---- Post-processing options ----
 
 def DivesAkuruAlternateIndVowels_post(Strng):
     # use alt /y/

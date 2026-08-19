@@ -14,6 +14,8 @@
 import re
 from aksharamukha.ScriptMap.EastIndic import Javanese
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixJavaneseEncode(Strng):
     """Inserts the Javanese repha and converts virama+ra/ya sequences into the subjoining cakra/pengkal forms when encoding."""
     from .. import ConvertFix as CF
@@ -62,10 +64,14 @@ def FixJavanese(Strng,reverse=False):
     """Dispatches to the Javanese encode or decode fix routine depending on conversion direction."""
     return _FixJavaneseDecode(Strng) if reverse else _FixJavaneseEncode(Strng)
 
+# ---- Pre-processing options ----
+
 def JavaneseMoveRepha_pre(Strng):
     """Pre-processing step that repositions the Javanese repha sign (ꦂ) relative to its base consonant."""
     from .. import PreProcess as PP
     return PP.BalineseJavaneseMoveRepha(Strng, 'Javanese', 'ꦂ')
+
+# ---- Post-processing options ----
 
 def JavaneseArchaicJNA(Strng):
     """Converts the archaic jña conjunct to its dedicated Javanese letter (ꦗ꧀ꦚ → ꦘ)."""

@@ -8,6 +8,8 @@ import re
 from aksharamukha.ScriptMap.EastIndic import Burmese
 from aksharamukha.ScriptMap.EastIndic import KhamtiShan
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixKhamtiShanEncode(Strng):
     """Converts virama+ra/ya/wa consonant sequences into Myanmar medial signs and reorders medial-sign combinations for Khamti Shan encoding."""
     Strng = Strng.replace('်ရ', 'ြ')
@@ -38,6 +40,8 @@ def _FixKhamtiShanDecode(Strng):
 def FixKhamtiShan(Strng, reverse=False):
     """Dispatches to the Khamti Shan encode or decode fix-up routine based on the reverse flag."""
     return _FixKhamtiShanDecode(Strng) if reverse else _FixKhamtiShanEncode(Strng)
+
+# ---- Post-processing options ----
 
 def KhamiShanMyanmarNumerals(Strng):
     """Converts Khamti Shan numerals into standard Myanmar/Burmese numerals, e.g. ႑႒႓ → ၁၂၃."""

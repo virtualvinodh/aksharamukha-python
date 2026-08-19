@@ -6,6 +6,8 @@
 
 import re
 
+# ---- Post-processing options ----
+
 def olddogra(Strng):
 
     """Uses older/alternate Dogra letterforms for select vowel signs - 𑠂 𑠄 𑠈 𑠘 𑠧 → 𑠂 𑠄 𑠈 𑠘 𑠧."""

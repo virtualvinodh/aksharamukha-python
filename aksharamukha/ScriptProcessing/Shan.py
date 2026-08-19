@@ -6,6 +6,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixShanEncode(Strng):
     """Encodes Shan script: forms ြ/ျ/ဝ medial ligatures from virama clusters, reorders medials, and fixes the shya conjunct."""
     Strng = Strng.replace('်ရ', 'ြ')
@@ -47,6 +49,8 @@ def _FixShanDecode(Strng):
 def FixShan(Strng, reverse=False):
     """Dispatches to the Shan encode or decode fix routine depending on conversion direction."""
     return _FixShanDecode(Strng) if reverse else _FixShanEncode(Strng)
+
+# ---- Pre-processing options ----
 
 def segmentShanSyllables(Strng):
     # segment text into syllables

@@ -5,6 +5,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixMahajaniEncode(Strng):
     """Converts the multi-character Mahajani rupee-sign sequence into its single Unicode ligature and strips joiner marks."""
     Strng = Strng.replace('𑅰𑅳ʾ𑅭ʿ𑅑', '\U00011176')

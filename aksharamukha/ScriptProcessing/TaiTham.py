@@ -11,6 +11,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.EastIndic import TaiTham
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixTaiThamEncode(Strng):
 
     """Applies Tai Tham-specific subjoining of ra/la, the mai kang lai and great-sa ligatures, tall-A vowel forms, and conjunct reordering when encoding."""

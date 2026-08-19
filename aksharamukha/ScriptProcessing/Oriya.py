@@ -11,6 +11,8 @@
 import re
 from aksharamukha.ScriptMap.MainIndic import Oriya
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixOriyaEncode(Strng):
 
     """No-op encode fix for Oriya; no additional orthographic corrections are currently applied."""
@@ -33,6 +35,8 @@ def FixOriya(Strng, reverse=False):
     from .. import PostProcess
     return _FixOriyaDecode(Strng) if reverse else _FixOriyaEncode(Strng)
 
+# ---- Pre-processing options ----
+
 def OriyaSubojinedVa(Strng):
 
     """Renders subjoined /va/ using ୱ instead of plain ba, e.g. ସ୍ବ ଦ୍ବ → sva dva."""
@@ -48,6 +52,8 @@ def OriyaTargetVa(Strng):
     Strng = Strng.replace('ବ', 'ୱ')
 
     return Strng
+
+# ---- Post-processing options ----
 
 def OriyaVaAlt(Strng):
 

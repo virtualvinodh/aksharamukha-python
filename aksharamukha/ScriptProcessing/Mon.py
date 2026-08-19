@@ -9,6 +9,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixMonEncode(Strng):
 
     """Applies Burmese base fixes plus Mon-specific medial consonant signs and nga/nya letter disambiguation for encoding."""

@@ -18,6 +18,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.Roman import IAST
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixIASTEncode(Strng):
 
     """No-op placeholder for IAST encoding; returns the string unchanged."""
@@ -34,6 +36,8 @@ def FixIAST(Strng,reverse=False):
     """Dispatches to the IAST encode or decode fix-up routine based on the reverse flag."""
     return _FixIASTDecode(Strng) if reverse else _FixIASTEncode(Strng)
 
+# ---- Pre-processing options ----
+
 def RomanLoCSLaDotLaUnderscore_pre(Strng):
     """Converts the IAST ḻ (la with dot below) to an l+diaeresis-below form and normalizes an l+underscore variant to ḻ, for LoC-style romanization."""
     Strng = Strng.replace('ḻ', 'l̤')
@@ -41,14 +45,16 @@ def RomanLoCSLaDotLaUnderscore_pre(Strng):
 
     return Strng
 
+def joinVowelConsIAST(Strng):
+    """Joins separated vowel and consonant word boundaries into single words for IAST, e.g. tat tvam asi → tattvamasi."""
+    from .. import PreProcess as PP
+    return PP.joinVowelCons(Strng, 'IAST')
+
+# ---- Post-processing options ----
+
 def RomanLoCSLaDotLaUnderscore_post(Strng):
     """Reverses the LoC-style ḻ diacritic substitution, restoring the standard ḻ representation."""
     Strng = Strng.replace('ḻ', 'l̳')
     Strng = Strng.replace('l̤', 'ḻ')
 
     return Strng
-
-def joinVowelConsIAST(Strng):
-    """Joins separated vowel and consonant word boundaries into single words for IAST, e.g. tat tvam asi → tattvamasi."""
-    from .. import PreProcess as PP
-    return PP.joinVowelCons(Strng, 'IAST')

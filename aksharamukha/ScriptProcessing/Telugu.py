@@ -11,6 +11,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixTeluguEncode(Strng):
 
     """Retains Indic dandas and numerals when encoding into Telugu script."""
@@ -35,6 +37,8 @@ def FixTelugu(Strng, reverse=False):
     """Dispatches to the Telugu encode or decode fix-up routine based on the reverse flag."""
     from .. import PostProcess
     return _FixTeluguDecode(Strng) if reverse else _FixTeluguEncode(Strng)
+
+# ---- Post-processing options ----
 
 def TeluguRemoveNukta(Strng):
 

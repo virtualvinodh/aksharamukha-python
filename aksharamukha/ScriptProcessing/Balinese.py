@@ -17,6 +17,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixBalineseEncode(Strng):
     """Inserts the Balinese repha sign (preposed ra) when encoding text into Balinese script."""
     from .. import ConvertFix as CF
@@ -50,10 +52,14 @@ def FixBalinese(Strng,reverse=False):
     """Dispatches to the Balinese encode or decode fix routine depending on conversion direction."""
     return _FixBalineseDecode(Strng) if reverse else _FixBalineseEncode(Strng)
 
+# ---- Pre-processing options ----
+
 def BalineseMoveRepha_pre(Strng):
     """Pre-processing step that repositions the Balinese repha sign (ᬃ) relative to its base consonant."""
     from .. import PreProcess as PP
     return PP.BalineseJavaneseMoveRepha(Strng, 'Balinese', 'ᬃ')
+
+# ---- Post-processing options ----
 
 def BalineseArchaicJNA(Strng):
     """Converts the archaic jña conjunct to its dedicated Balinese letter (ᬚ᭄ᬜ → ᭌ)."""

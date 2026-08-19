@@ -9,6 +9,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def FixLao2(Strng, reverse = False):
 
     """Delegates Lao2 script fix-up to the shared Lao encode/decode logic."""

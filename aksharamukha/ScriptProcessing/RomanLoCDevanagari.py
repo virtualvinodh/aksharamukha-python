@@ -15,6 +15,8 @@
 
 import re
 
+# ---- Pre-processing options ----
+
 def HindiMarathiRomanLoCFix_pre(Strng):
     """Substitutes 'sh'→ṣ, ḷ→ḻ, and l̤→l̳ before Hindi/Marathi Library of Congress romanization."""
     Strng = Strng.replace('sh', 'ṣ')
@@ -22,6 +24,8 @@ def HindiMarathiRomanLoCFix_pre(Strng):
     Strng = Strng.replace('l̤', 'l̳')
 
     return Strng
+
+# ---- Post-processing options ----
 
 def HindiMarathiRomanLoCFix_post(Strng):
     """Reverses the Hindi/Marathi LoC substitutions: ṣ→'sh', ḻ→ḷ, l̳→l̤."""

@@ -6,6 +6,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixMasaramGondiEncode(Strng):
     """Ligates the KSSA/JNYA/TRA conjuncts and the special kra/rka consonant clusters into their dedicated Masaram Gondi code points, and drops a trailing virama not followed by a consonant."""
     consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'MasaramGondi')) + ')'

@@ -5,6 +5,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixTaiLaingEncode(Strng):
     """Converts virama+medial ra/ya/wa sequences into their dedicated Tai Laing medial signs and reorders medial-sign combinations to the correct rendering order."""
     Strng = Strng.replace('်ꩺ', 'ြ')

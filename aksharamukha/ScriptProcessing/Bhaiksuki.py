@@ -6,6 +6,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixBhaiksukiEncode(Strng):
     """Replaces the plain ASCII space with the Bhaiksuki word-divider punctuation mark."""
     Strng = Strng.replace(' ', '𑱃')
@@ -21,6 +23,8 @@ def _FixBhaiksukiDecode(Strng):
 def FixBhaiksuki(Strng, reverse=False):
     """Dispatches to the Bhaiksuki encode or decode fix routine depending on the reverse flag."""
     return _FixBhaiksukiDecode(Strng) if reverse else _FixBhaiksukiEncode(Strng)
+
+# ---- Post-processing options ----
 
 def BhaiksukiRetainSpace(Strng):
     """Retains spaces in Bhaiksuki text by converting the word-divider mark back to a plain space."""

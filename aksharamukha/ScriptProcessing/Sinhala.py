@@ -20,6 +20,8 @@
 import re
 from aksharamukha.ScriptMap.MainIndic import Sinhala
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixSinhalaEncode(Strng):
     """Forms default Sinhala conjuncts, retains native numerals, and merges the ja-nya conjunct and doubled-a (ආ) notation."""
     from .. import PostProcess
@@ -53,6 +55,16 @@ def FixSinhala(Strng, reverse=False):
     """Dispatches to the Sinhala encode or decode fix-up routine based on the reverse flag."""
     return _FixSinhalaDecode(Strng) if reverse else _FixSinhalaEncode(Strng)
 
+# ---- Pre-processing options ----
+
+def SinhalaPali_pre(Strng):
+    """Pre-converts Southern short e/o vowel forms to standard Sinhala long vowel forms before processing Pali text."""
+    Strng = SinhalaPali_post(Strng, reverse=True)
+
+    return Strng
+
+# ---- Post-processing options ----
+
 def SinhalaDefaultConjuncts(Strng):
     """Inserts ZWJ to form default Sinhala consonant conjuncts before ya/ra and other special consonant clusters."""
     vir = Sinhala.ViramaMap[0]
@@ -84,12 +96,6 @@ def SinhalaPali_post(Strng, reverse = False):
 
     return Strng
 
-def SinhalaPali_pre(Strng):
-    """Pre-converts Southern short e/o vowel forms to standard Sinhala long vowel forms before processing Pali text."""
-    Strng = SinhalaPali_post(Strng, reverse=True)
-
-    return Strng
-
 def SinhalaConjuncts(Strng):
     """Enables full Sinhala conjunct formation by inserting ZWJ between all consonant clusters, e.g. බුද්ධස්ස → බුද්‍ධස‍්ස."""
     ListC = Sinhala.ConsonantMap + [Sinhala.SouthConsonantMap[0]]
@@ -117,4 +123,3 @@ def SinhalaChandrbinduAnusvara(Strng):
     Strng = Strng.replace('\u0D81', '\u0D82')
 
     return Strng
-

@@ -7,6 +7,8 @@
 # ScriptProcessing/Arab.py.
 
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixArab_UrEncode(Strng, Source):
     """Applies the shared Arabic fix-up logic (via ConvertFix.FixArab) when encoding text into the Urdu Perso-Arabic script."""
     from .. import ConvertFix as CF

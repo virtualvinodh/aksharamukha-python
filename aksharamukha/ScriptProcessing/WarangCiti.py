@@ -7,6 +7,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixWarangCitiEncode(Strng):
     """Marks consonant clusters with ZWJ, removes/restores the inherent and AA vowel signs, and merges the Warang Citi nukta letter sequence into its ligature when encoding."""
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'WarangCiti')) + ')'
@@ -72,6 +74,8 @@ def FixWarangCiti(Strng, reverse=False):
     """Dispatches to the Warang Citi encode or decode fix routine depending on conversion direction."""
     return _FixWarangCitiDecode(Strng) if reverse else _FixWarangCitiEncode(Strng)
 
+# ---- Pre-processing options ----
+
 def SchwaFinalWarangCiti(Strng):
     """Deletes the word-final inherent vowel (schwa) in Warang Citi text (𑣜𑣁𑣖 → rām)."""
     Target = "WarangCiti"
@@ -93,6 +97,8 @@ def SchwaFinalWarangCiti(Strng):
     Strng = re.sub(ISyl+Cons2+"(?!" + Char + ")", r'\1\8' + vir, Strng) # kama -> kam
 
     return Strng
+
+# ---- Post-processing options ----
 
 def WarangCitiModernOrthogaphy(Strng):
     """Converts to modern Warang Citi orthography by removing aspirate-ligature joiners and replacing the obsolete letter 𑣝 with 𑣞."""

@@ -10,6 +10,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixNandinagariEncode(Strng):
 
     """No-op placeholder for Nandinagari encoding; returns the string unchanged."""
@@ -31,6 +33,8 @@ def FixNandinagari(Strng, reverse=False):
     """Dispatches to the Nandinagari encode or decode fix-up routine based on the reverse flag."""
     from .. import PostProcess
     return _FixNandinagariDecode(Strng) if reverse else _FixNandinagariEncode(Strng)
+
+# ---- Post-processing options ----
 
 def NandinagariPrishtamatra(Strng, reverse = False):
 

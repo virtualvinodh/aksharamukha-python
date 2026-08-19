@@ -11,6 +11,8 @@
 
 import re
 
+# ---- Pre-processing options ----
+
 def swapEeItrans_pre(Strng):
     """Pre-processing step that temporarily swaps ITRANS 'e'/'o' and '^e'/'^o' markers to disambiguate short and long e/o vowels before conversion."""
     Strng = Strng.replace('^e', 'X@X@')
@@ -22,6 +24,8 @@ def swapEeItrans_pre(Strng):
     Strng = Strng.replace('X@X@','o')
 
     return Strng
+
+# ---- Post-processing options ----
 
 def swapEeItrans_post(Strng):
     """Post-processing step that restores ITRANS e/o vowel distinctions, mapping short vowels to lowercase and long vowels to uppercase E/O."""

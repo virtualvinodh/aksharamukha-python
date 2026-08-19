@@ -6,6 +6,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def FixOldPersian(Strng,reverse=False):
     """Applies Old Persian cuneiform syllable-spelling and numeral-sign conversions, dispatching by conversion direction."""
     Strng = OldPersianSyllable(Strng,reverse)

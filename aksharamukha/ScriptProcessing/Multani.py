@@ -5,6 +5,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixMultaniEncode(Strng):
     """Strips nukta joiner marks and merges nukta+consonant sequences into dedicated Multani plosive characters."""
     Strng = Strng.replace('\u02BE','').replace('\u02BF','')

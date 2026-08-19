@@ -7,6 +7,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixHebrewEncode(Strng):
     """Builds surface Hebrew script from the internal representation: inserts default patah, fixes nasal assimilation before certain consonants, reorders dagesh/vowel diacritics, marks gemination with dagesh, and applies final letter forms."""
     vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew')) + ')'
@@ -220,6 +222,8 @@ def FixHebrew(Strng, reverse = False):
     """Dispatches to the Hebrew encode or decode fix routine based on the reverse flag."""
     return _FixHebrewDecode(Strng) if reverse else _FixHebrewEncode(Strng)
 
+# ---- Pre-processing options ----
+
 def holamlong(Strng):
     """Writes holam as vav+holam to denote a long /o/ rather than a bare holam."""
     Strng = Strng.replace('ֹּ','ֹּ')
@@ -252,6 +256,8 @@ def shvanakhall(Strng):
     Strng = Strng + ' \u0BDE'
 
     return Strng
+
+# ---- Post-processing options ----
 
 def removeNikkud(Strng):
     """Strips all niqqud (vowel-point) diacritics such as patach, kamatz, hiriq, and dagesh from the text."""

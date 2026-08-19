@@ -5,6 +5,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixKhudawadiEncode(Strng):
     """Converts approximated Sindhi implosive-consonant digraphs (e.g. ˍ𑊼) into their precomposed Khudawadi implosive letters when encoding."""
     sindhi = ['𑊽', '𑋃', '𑋉', '𑋕']

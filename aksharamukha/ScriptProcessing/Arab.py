@@ -10,6 +10,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixArabEncode(Strng, Source):
 
     """Applies Perso-Arabic punctuation normalization when encoding text into Arabic script."""
@@ -37,6 +39,8 @@ def FixArab(Strng, Source, reverse=False):
     from .. import ConvertFix as CF
     return _FixArabDecode(Strng, Source) if reverse else _FixArabEncode(Strng, Source)
 
+# ---- Pre-processing options ----
+
 def ArabicGimelJa(Strng):
 
     """Represents /g/ using ڨ instead of jim ج - /ج/ as /g/."""
@@ -44,6 +48,8 @@ def ArabicGimelJa(Strng):
     Strng = Strng.replace("ج", "ڨ")
 
     return Strng
+
+# ---- Post-processing options ----
 
 def ArabRemoveAdditions(Strng):
 

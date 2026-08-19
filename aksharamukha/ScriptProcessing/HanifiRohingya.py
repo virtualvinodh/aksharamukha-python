@@ -6,6 +6,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _hanifi_rohingya_lookups():
     """Builds regex character-class strings for Hanifi Rohingya consonants and vowels used by the encode/decode fixers."""
     consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'HanifiRohingya')+['\U00010D17', '\U00010D19']) + ')'

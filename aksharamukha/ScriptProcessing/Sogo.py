@@ -15,11 +15,15 @@
 
 import re
 
+# ---- Pre-processing options ----
+
 def SogoReshAyinDaleth_pre(Strng):
     """Replaces the Sogdian resh-ayin-daleth ligature character with a bracketed private-use-area placeholder sequence before processing."""
     Strng = Strng.replace('𐼘', '[\uEA01-\uEA02-\uEA06]') # resh yin daleth
 
     return Strng
+
+# ---- Post-processing options ----
 
 def SogoReshAyinDaleth_post(Strng):
     """Replaces a Sogdian private-use character with the resh-ayin-daleth ligature character after processing."""

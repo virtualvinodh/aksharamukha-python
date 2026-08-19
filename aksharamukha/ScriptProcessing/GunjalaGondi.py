@@ -6,6 +6,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixGunjalaGondiEncode(Strng):
     """Merges apostrophe-marked vowel-sign sequences into the dedicated Gunjala Gondi combining sign, strips the modifier apostrophes, and drops a trailing virama not followed by a consonant."""
     consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'GunjalaGondi')) + ')'

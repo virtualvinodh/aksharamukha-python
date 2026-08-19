@@ -6,6 +6,8 @@
 
 import re
 
+# ---- Post-processing options ----
+
 def kawitan(Strng):
 
     """Selects the Kawitan Pallava/Kawi font style: ꦥꦭ꧀ꦭꦮ ꦒ꧀ꦫꦤ꧀ꦡ (no-op transformation)."""

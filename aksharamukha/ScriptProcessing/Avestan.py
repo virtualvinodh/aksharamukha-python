@@ -7,6 +7,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.Roman import Avestan
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixAvestanEncode(Strng):
     """Applies Avestan orthographic fixes: aM/AM ligatures, ya/va to long ii/uu after vowels or consonants, and TTE/BHA/ZHA/NGVA/AO ligature substitutions."""
     extraCons = ["\U00010B33","\U00010B32","\U00010B1D","\U00010B12", '𐬣', '𐬝']

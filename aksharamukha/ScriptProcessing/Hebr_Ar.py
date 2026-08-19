@@ -6,6 +6,8 @@
 
 import re
 
+# ---- Post-processing options ----
+
 def gainGimel(Strng):
     """Marks Hebrew qof with a two-dot diacritic to represent Arabic gimel/ghayn, e.g. עׄ ← ג."""
     return Strng.replace('ק','ק̈')

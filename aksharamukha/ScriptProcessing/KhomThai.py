@@ -9,6 +9,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixKhomThaiEncode(Strng):
 
     """Encodes Khom Thai orthography: expands the โ ligature, reverses vowel sign order, and reorders sara-ai/repha clusters around subscript consonants."""

@@ -5,6 +5,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixBatakSimaEncode(Strng):
     """Replaces the vowel-sign-U sequence ᯙᯮ with the Simalungun Batak equivalent ᯙᯯ when encoding."""
     Strng = Strng.replace('ᯙᯮ', 'ᯙᯯ')

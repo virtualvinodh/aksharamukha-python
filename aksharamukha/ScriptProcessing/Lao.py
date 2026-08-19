@@ -10,6 +10,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixLaoEncode(Strng):
 
     """Applies Lao encoding fixes: maps aspirate consonants marked with a pseudo-nukta to their unaspirated forms, reverses vowel-sign order, transcribes tone/vowel spelling, and merges AA+Anusvara into the AM ligature."""
@@ -80,6 +82,8 @@ def LaoTranscribe(Strng,reverse=False):
         Strng = pp.ThaiLaoTranscription(Strng,"Lao",shortA, conjA,reverse=True)
 
     return Strng
+
+# ---- Post-processing options ----
 
 def LaoNative(Strng):
 

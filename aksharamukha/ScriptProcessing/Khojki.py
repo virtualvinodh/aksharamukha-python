@@ -10,6 +10,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixKhojkiEncode(Strng):
 
     """Converts approximated Sindhi consonant sequences to their dedicated Khojki characters, inserts the gemination sign, moves shadda after its consonant, reorders shadda+nukta, and encodes spaces as the Khojki word separator."""
@@ -55,6 +57,8 @@ def FixKhojki(Strng, reverse=False):
     """Dispatches to the Khojki encode or decode fix routine based on the reverse flag."""
     from .. import PostProcess
     return _FixKhojkiDecode(Strng) if reverse else _FixKhojkiEncode(Strng)
+
+# ---- Post-processing options ----
 
 def KhojkiRRI(Strng):
 

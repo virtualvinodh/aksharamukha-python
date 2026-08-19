@@ -5,6 +5,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixWanchoEncode(Strng):
     """Encode romanized input into native Wancho script: convert ASCII tone-mark escapes to tone codepoints, fuse nasalization/anusvara markers with their vowels, and merge digraph/WA ligatures into single codepoints."""
     tonemarks = ['\U0001E2EC', '\U0001E2ED', '\U0001E2EE', '\U0001E2EF']

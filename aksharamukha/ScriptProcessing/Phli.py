@@ -6,6 +6,8 @@
 
 import re
 
+# ---- Pre-processing options ----
+
 def PhliWawAyinResh(Strng):
     """Disambiguates the ambiguous Pahlavi Waw-Ayin-Resh grapheme 𐭥 by expanding it to explicit [w-ʿ-r]."""
     Strng = Strng.replace('𐭥', '[\uEA05-\uEA02-\uEA01]') # resh yin

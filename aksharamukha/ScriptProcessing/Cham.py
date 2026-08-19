@@ -7,6 +7,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.EastIndic import Cham
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixChamEncode(Strng):
     """Forms Cham subjoined consonant ligatures (ya/ra/la/va), converts consonants to word-final forms before virama, and builds final-h (ꩍ) forms."""
     Strng = Strng.replace("\u02BD","")

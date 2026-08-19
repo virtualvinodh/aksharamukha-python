@@ -7,6 +7,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixSoyomboEncode(Strng):
     """Encodes Soyombo script: forms the KSSA ligature, fixes shka, marks gemination, applies final consonant forms, and drops trailing viramas."""
     finVir = ['\U00011A5E\U00011A99','\U00011A5C\U00011A99','\U00011A60\U00011A99','\U00011A6D\U00011A99','\U00011A6F\U00011A99','\U00011A72\U00011A99','\U00011A74\U00011A99','\U00011A7C\U00011A99','\U00011A7D\U00011A99','\U00011A7F\U00011A99','\U00011A81\U00011A99']
@@ -66,6 +68,8 @@ def _FixSoyomboDecode(Strng):
 def FixSoyombo(Strng, reverse=False):
     """Dispatches to the Soyombo encode or decode fix routine depending on conversion direction."""
     return _FixSoyomboDecode(Strng) if reverse else _FixSoyomboEncode(Strng)
+
+# ---- Post-processing options ----
 
 def SoyomboSyllabize(Strng):
     """Splits Soyombo text into syllables by inserting spaces between syllable units - 𑩲𑩖𑩮𑩑𑪁𑩫𑪘𑪙𑩾 → 𑩲𑩖 𑩮𑩑 𑪁 𑩫𑪘𑪙𑩾."""

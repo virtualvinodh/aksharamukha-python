@@ -9,6 +9,8 @@
 # Strng`, no calls) - defined once here and re-exported unsuffixed to
 # both, same reasoning as Grantha.py's egrantamil.
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def FixSiddham(Strng, reverse=False):
     """Dispatches to the Siddham encode or decode fix routine depending on the reverse flag."""
     return _FixSiddhamDecode(Strng) if reverse else _FixSiddhamEncode(Strng)
@@ -30,6 +32,14 @@ def _FixSiddhamDecode(Strng):
     Strng = Strng.replace('𑗚', '𑖃') # VS II
 
     return Strng
+
+# ---- Pre-processing options ----
+
+def siddhammukta(Strng):
+    """Selects the Devanagari-based Siddham font variant (no-op transformation)."""
+    return Strng
+
+# ---- Post-processing options ----
 
 def UseAlternateI1(Strng):
     """Uses variant I form 1: 𑖂 → 𑗘."""
@@ -65,8 +75,4 @@ def UseAlternateVSUU(Strng):
     """Uses the variant vowel sign UU: 𑖎𑖳𑖚𑖳𑖦𑖳 → 𑖎𑗝𑖚𑗝𑖦𑗝."""
     Strng = Strng.replace('𑖳', '𑗝')
 
-    return Strng
-
-def siddhammukta(Strng):
-    """Selects the Devanagari-based Siddham font variant (no-op transformation)."""
     return Strng

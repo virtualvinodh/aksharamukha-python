@@ -28,6 +28,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.MainIndic import Tamil
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def FixTamil(Strng,reverse=False):
     """Dispatches to the Tamil encode or decode fix-up routine based on the reverse flag."""
     return _FixTamilDecode(Strng) if reverse else _FixTamilEncode(Strng)
@@ -79,6 +81,7 @@ def _FixTamilDecode(Strng):
 
     return Strng
 
+# ---- Pre-processing options ----
 
 def TamilNumeralSub(Strng):
     """Converts diacritic digit suffixes into Tamil superscript numerals used to mark Grantha consonants, e.g. க2 க3 க4 → க² க³ க⁴."""
@@ -199,6 +202,7 @@ def TamilTranscribeDialect(Strng):
 
     return Strng
 
+# ---- Post-processing options ----
 
 def TamilNaToNNa(Strng):
     """Converts dental na (ந) to alveolar ன after vowels, except when followed by த், per Tamil orthographic convention."""
@@ -508,4 +512,3 @@ def TamilSubScript(Strng):
 def oldtamilortho(Strng):
     """Selects old Tamil orthography style (currently a no-op placeholder)."""
     return Strng
-

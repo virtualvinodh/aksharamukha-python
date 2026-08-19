@@ -19,6 +19,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.MainIndic import Malayalam
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixMalayalamEncode(Strng):
     """Converts chillu consonants to their Unicode chillu codepoints and retains Malayalam dandas and numerals when encoding into Malayalam."""
     from .. import PostProcess
@@ -62,6 +64,8 @@ def _FixMalayalamDecode(Strng):
 def FixMalayalam(Strng, reverse=False):
     """Dispatches to the Malayalam encode or decode fix-up routine based on the reverse flag."""
     return _FixMalayalamDecode(Strng) if reverse else _FixMalayalamEncode(Strng)
+
+# ---- Pre-processing options ----
 
 def ShowChillus(Strng):
     """Displays chillu consonants with an explicit transliteration marker instead of collapsing them, e.g. ധർമൻ → /dharˍmanˍ/ not /dharman/."""
@@ -141,6 +145,8 @@ def MalayalamPrakrit_pre(Strng):
     Strng = Strng.replace("ഀ", "ം")
 
     return Strng
+
+# ---- Post-processing options ----
 
 def tradOrtho(Strng):
     """Traditional Malayalam orthography option, currently a no-op passthrough, e.g. തു തൂ → തു തൂ."""

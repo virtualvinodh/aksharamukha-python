@@ -8,6 +8,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.EastIndic import ZanabazarSquare
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixZanabazarSquareEncode(Strng):
     """Applies Zanabazar Square encoding fixes: converts virama+consonant to subjoining form and merges the KSSA conjunct sequence into its dedicated character."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ZanabazarSquare'))
@@ -63,6 +65,8 @@ def _FixZanabazarSquareDecode(Strng):
 def FixZanabazarSquare(Strng, reverse=False):
     """Dispatches to the Zanabazar Square encode or decode fix routine depending on the reverse flag."""
     return _FixZanabazarSquareDecode(Strng) if reverse else _FixZanabazarSquareEncode(Strng)
+
+# ---- Post-processing options ----
 
 def ZanabazarSanskritPalatals(Strng):
     """Converts TSA-series letters to Sanskrit palatal (CA-series) forms: 𑨣 𑨤 𑨥 → 𑨐 𑨑 𑨒."""

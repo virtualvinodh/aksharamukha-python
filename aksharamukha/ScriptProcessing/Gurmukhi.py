@@ -12,6 +12,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.MainIndic import Gurmukhi
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixGurmukhiEncode(Strng):
 
     """Applies Gurmukhi encoding fixes: RU/LU vowel correction, doubled Aunkar to bracketed AA, gemination-sign insertion, Indic-numeral retention, and Vedic svara consonant doubling."""
@@ -74,6 +76,8 @@ def FixGurmukhi(Strng,reverse=False):
     from .. import PostProcess
     return _FixGurmukhiDecode(Strng) if reverse else _FixGurmukhiEncode(Strng)
 
+# ---- Pre-processing options ----
+
 def SchwaFinalGurmukhi(Strng):
 
     """Deletes the schwa only in word-final position: ਰਾਮ → rām."""
@@ -86,6 +90,8 @@ def SchwaFinalGurmukhi(Strng):
     Strng = PP.RemoveFinal(Strng, 'Gurmukhi')
 
     return Strng
+
+# ---- Post-processing options ----
 
 def GurmukhiCandrabindu(Strng):
 

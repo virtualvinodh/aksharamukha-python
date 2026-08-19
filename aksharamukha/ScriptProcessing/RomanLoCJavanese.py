@@ -6,6 +6,8 @@
 
 import re
 
+# ---- Post-processing options ----
+
 def JavaneseSimplified(Strng):
     """Simplifies the jny consonant cluster to ny under the simplified Javanese romanization mapping."""
     Strng = Strng.replace('jny', 'ny')

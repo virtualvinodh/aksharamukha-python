@@ -6,6 +6,8 @@
 
 import re
 
+# ---- Post-processing options ----
+
 def LoCMarc8(Strng):
     """Decomposes combining diacritics into MARC-8-compatible NFD form and swaps the ring-above for a dot-above."""
     import unicodedata

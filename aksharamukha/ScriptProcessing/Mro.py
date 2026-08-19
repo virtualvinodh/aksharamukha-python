@@ -5,6 +5,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixMroEncode(Strng):
     """Merges specific Mro consonant + diacritic sequences into their dedicated precomposed consonant letters."""
     extracons = ['\U00016A4E', '\U00016A59', '\U00016A5A', '\U00016A5B', '\U00016A5C', '\U00016A5E']

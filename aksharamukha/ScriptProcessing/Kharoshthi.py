@@ -5,6 +5,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def FixKharoshthi(Strng, reverse=False):
     """Converts decimal numerals in the text to or from Kharoshthi numeral notation."""
     Strng = KharoshthiNumerals(Strng, reverse)

@@ -9,6 +9,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixTagbanwaEncode(Strng):
 
     """Inserts the gemination sign for doubled consonants when encoding into Tagbanwa."""

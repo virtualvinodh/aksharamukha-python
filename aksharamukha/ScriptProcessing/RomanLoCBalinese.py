@@ -6,6 +6,8 @@
 
 import re
 
+# ---- Post-processing options ----
+
 def BalineseSimplified(Strng):
     """Uses simplified romanization mapping: ᬡ ᬙ ᬣ → na ca ta."""
     return Strng

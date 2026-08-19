@@ -5,6 +5,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixUgarEncode(Strng, Source):
     """Merges a marked consonant+2 sequence into its dedicated Ugaritic letter and replaces spaces with the Ugaritic word-divider wedge character."""
     Strng = Strng.replace("𐎒²","𐎝")

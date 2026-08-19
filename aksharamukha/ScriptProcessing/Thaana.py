@@ -10,6 +10,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixThaanaEncode(Strng):
 
     """Applies Thaana encoding fixes: gemination-sign insertion, removal of redundant inherent-vowel sign before vowel signs, and Arabic-to-Thaana punctuation mapping."""

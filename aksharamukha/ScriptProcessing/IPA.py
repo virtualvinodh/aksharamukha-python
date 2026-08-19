@@ -5,6 +5,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixIPAEncode(Strng):
     """Reorders tilde before the length mark, appends a short echo vowel after visarga-derived h, and fixes a schwa ligature when encoding to IPA."""
     colon_tilde = "\u02D0\u0303"

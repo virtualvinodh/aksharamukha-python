@@ -9,6 +9,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def FixUrdu(Strng, reverse=False):
 
     """Core Urdu encode/decode logic: delegate to the shared Shahmukhi orthography fixer."""

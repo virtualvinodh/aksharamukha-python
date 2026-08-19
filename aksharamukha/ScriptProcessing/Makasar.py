@@ -10,6 +10,8 @@
 import re
 from aksharamukha.ScriptMap.EastIndic import Makasar
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixMakasarEncode(Strng):
 
     """Inserts the gemination sign and collapses a doubled Makasar consonant into a single consonant plus the killer sign (Anka)."""

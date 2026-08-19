@@ -9,6 +9,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixBuhidEncode(Strng):
 
     """Inserts the Buhid gemination sign into the string when encoding into Buhid script."""

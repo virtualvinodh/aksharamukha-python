@@ -6,6 +6,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixMarchenEncode(Strng):
     """Converts glottal-stop-prefixed consonant markers into their dedicated Marchen subjoined letters and strips leftover marker characters."""
     subjoinCons = '𑱲 𑱳 𑱴 𑱵 𑱶 𑱷 𑱸 𑱹 𑱺 𑱻 𑱼 𑱽 𑱾 𑱿 𑲀 𑲁 𑲂 𑲃 𑲄 𑲅 𑲆 𑲇 𑲉 𑲊 𑲋 𑲌 𑲍 𑲎'.split(' ')
@@ -39,6 +41,8 @@ def _FixMarchenDecode(Strng):
 def FixMarchen(Strng, reverse=False):
     """Dispatches to the Marchen encode or decode fix routine based on the reverse flag."""
     return _FixMarchenDecode(Strng) if reverse else _FixMarchenEncode(Strng)
+
+# ---- Post-processing options ----
 
 def MarchenSanskritPalatals(Strng):
     """Renders Sanskrit palatal consonants using the tsa-series Marchen letters instead of the ja-series, e.g. 𑲂 𑲃 𑲄 𑲄𑲮 → 𑱶 𑱷 𑱸 𑱸𑲮."""

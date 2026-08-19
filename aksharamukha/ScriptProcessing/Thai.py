@@ -24,6 +24,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.EastIndic import Thai
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def FixThai(Strng,reverse=False,ctx=None):
     """Dispatches Thai fix logic: reverses vowel sign order, resolves digraph conjuncts, and optionally applies phonetic transcription."""
     from .. import PostProcess
@@ -77,6 +79,8 @@ def ThaiDigraphConjuncts(Strng,reverse=False):
 
     return Strng
 
+# ---- Pre-processing options ----
+
 def ThaiOrthography(Strng):
 
     """Marks text as standard Thai orthography - e.g. พุทธะ."""
@@ -118,6 +122,8 @@ def ThaiSajjhayawithA_pre(Strng):
     Strng = ThaiSajjhayaOrthography_pre(Strng)
 
     return Strng
+
+# ---- Post-processing options ----
 
 def ThaiNativeConsonants(Strng):
     """Converts to native Thai phonetic consonant forms - พุทฺธตฺว → บุดธะต͜วะ."""

@@ -12,6 +12,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.EastIndic import Tibetan
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixTibetanEncode(Strng, swapNative):
 
     """Converts consonant+virama sequences to subjoined Tibetan letters, fixes wa-zur/ya-zur/ra-zur subjoined clusters, encodes spaces as tsheg, maps decomposed dzha+nukta to za, and converts ASCII brackets to Tibetan bracket forms."""
@@ -100,6 +102,8 @@ def FixTibetan(Strng,reverse=False, swapNative = True):
     """Dispatches to the Tibetan encode or decode fix routine based on the reverse flag, optionally swapping native Tibetan letter forms."""
     from .. import PostProcess
     return _FixTibetanDecode(Strng, swapNative) if reverse else _FixTibetanEncode(Strng, swapNative)
+
+# ---- Post-processing options ----
 
 def TibetanSyllabize(Strng):
 

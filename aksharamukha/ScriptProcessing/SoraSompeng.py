@@ -6,6 +6,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixSoraSompengEncode(Strng):
     """Drops the inherent schwa marker after consonants and expands a standalone schwa into its full vowel-letter sequence when encoding into Sora Sompeng."""
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'SoraSompeng')) + ')'

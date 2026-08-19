@@ -10,6 +10,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixGujaratiEncode(Strng):
 
     """Retains Indic dandas and merges nukta-marked ja/sha into the dedicated Gujarati letter ૹ when encoding."""
@@ -39,6 +41,8 @@ def FixGujarati(Strng, reverse=False):
 
     from .. import PostProcess
     return _FixGujaratiDecode(Strng) if reverse else _FixGujaratiEncode(Strng)
+
+# ---- Pre-processing options ----
 
 def SchwaFinalGujarati(Strng):
 

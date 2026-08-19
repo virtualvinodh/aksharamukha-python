@@ -11,11 +11,15 @@
 
 import re
 
+# ---- Pre-processing options ----
+
 def CyrillicPali_pre(Strng):
     """Swaps the Cyrillic Pali l-with-dot-below diacritic (л̣) to a distinct combining form (л̤) before conversion."""
     Strng = Strng.replace('л̣', 'л̤',)
 
     return Strng
+
+# ---- Post-processing options ----
 
 def CyrillicPali_post(Strng):
     """Reverses the Cyrillic Pali l diacritic swap, л̤ → л̣, after conversion."""

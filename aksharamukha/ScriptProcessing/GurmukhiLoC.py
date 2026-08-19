@@ -11,6 +11,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.MainIndic import Gurmukhi
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixGurmukhiLoCEncode(Strng):
 
     """Corrects ru/lu vowel signs, collapses a doubled ava sign into parenthesized ā, inserts the gemination sign, retains Indic numerals, and expands addak+Vedic-svara sequences for LoC Gurmukhi encoding."""

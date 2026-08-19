@@ -9,6 +9,8 @@
 # ConvertFix.py.
 
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixThaaEncode(Strng, Source):
     """Applies Perso-Arabic punctuation fixes when encoding into Thaana."""
     from .. import ConvertFix as CF

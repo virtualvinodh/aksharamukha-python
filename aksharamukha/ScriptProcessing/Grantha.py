@@ -17,6 +17,8 @@
 import re
 import functools
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def FixGrantha(Strng, reverse=False):
     """Dispatches to the Grantha encode or decode fix-up routine based on the reverse flag."""
     return _FixGranthaDecode(Strng) if reverse else _FixGranthaEncode(Strng)
@@ -40,6 +42,14 @@ def _FixGranthaDecode(Strng):
     Strng = Strng.replace('𑍟', 'ꣴ')
 
     return Strng
+
+# ---- Pre-processing options ----
+
+def egrantamil(Strng):
+    """E-Grantamil encoding option, currently a no-op passthrough."""
+    return Strng
+
+# ---- Post-processing options ----
 
 def GranthaOldau(Strng):
     """Uses the old Grantha AU vowel sign, e.g. 𑌕𑍗 → 𑌕𑍌."""
@@ -70,8 +80,4 @@ def granthafinal(Strng):
 
 def granthaserif(Strng):
     """Noto Serif Grantha rendering option, currently a no-op passthrough, e.g. 𑌬𑍁𑌦𑍍𑌧𑌂 → 𑌬𑍁𑌦𑍍𑌧𑌂."""
-    return Strng
-
-def egrantamil(Strng):
-    """E-Grantamil encoding option, currently a no-op passthrough."""
     return Strng

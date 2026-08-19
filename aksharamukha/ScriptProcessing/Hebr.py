@@ -10,6 +10,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixHebrEncode(Strng, Source):
     """Moves the Hebrew geresh (׳) mark to appear after adjacent vowel points instead of before them when encoding."""
     vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['\u05BC']) + ')'

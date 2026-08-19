@@ -7,6 +7,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.MainIndic import Lepcha
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixLepchaEncode(Strng):
     """Forms Lepcha subjoined consonant clusters, converts consonants to their word-final forms, and reorders the rang vowel sign around final consonants."""
     vir = Lepcha.ViramaMap[0]

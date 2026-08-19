@@ -5,6 +5,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixSaurashtraEncode(Strng):
     """Inserts a ZWNJ within the ksha conjunct to prevent unwanted ligation when encoding into Saurashtra, e.g. ꢒ꣄ꢰ → ꢒ꣄‍ꢰ."""
     Strng = Strng.replace('ꢒ꣄ꢰ', 'ꢒ꣄‍ꢰ') # Ksha

@@ -12,10 +12,14 @@
 import re
 from aksharamukha.ScriptMap.MainIndic import Takri
 
+# ---- Pre-processing options ----
+
 def TakriArchaicKha_pre(Strng):
 
     """Temporarily substitutes the archaic Takri kha (𑚋) with a placeholder character before further processing."""
     return Strng.replace('𑚋', '𑚸')
+
+# ---- Post-processing options ----
 
 def TakriArchaicKha_post(Strng):
 

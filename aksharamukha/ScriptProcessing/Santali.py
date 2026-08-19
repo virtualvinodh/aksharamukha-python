@@ -5,6 +5,8 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixSantaliEncode(Strng):
     """Ligates the Santali vowel-modifier+ahad sign combination into its dedicated letter and reorders the gaahlaa+ahad sequence."""
     Strng = Strng.replace('ᱹᱸ', 'ᱺ')

@@ -10,11 +10,15 @@
 
 import re
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def FixKhuenTham(Strng, reverse=False):
 
     """Applies the shared Tai Tham family fix-up, with ra-haam swap enabled, for Khuen Tham script conversion."""
     from .. import ConvertFix as CF
     return CF._FixTaiThamFamily(Strng, reverse, ['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ'], marker_cleanup=False, ra_haam_swap=True)
+
+# ---- Pre-processing options ----
 
 def KhuenRaHaamKaren(Strng):
 

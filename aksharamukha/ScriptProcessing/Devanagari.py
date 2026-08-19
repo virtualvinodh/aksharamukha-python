@@ -15,6 +15,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixDevanagariDecode(Strng):
     """Strips the schwa accent, reverses Prishthamatra vowel-sign spelling, and decodes ॽ, ॹ, and Sindhi implosive letters to their approximate spellings."""
     Sindhi = ['ॻ','ॼ','ॾ','ॿ']
@@ -77,6 +79,8 @@ def _FixDevanagariEncode(Strng):
 def FixDevanagari(Strng, reverse=False):
     """Dispatches to the Devanagari encode or decode fix routine depending on conversion direction."""
     return _FixDevanagariDecode(Strng) if reverse else _FixDevanagariEncode(Strng)
+
+# ---- Pre-processing options ----
 
 def AnuChandraEqDeva(Strng):
 
@@ -144,6 +148,8 @@ def RemoveSchwaHindi(Strng, showschwa=False):
     Strng = Strng.replace(vir, vir2)
 
     return Strng
+
+# ---- Post-processing options ----
 
 def ShowSchwaHindi(Strng):
     """Marks deleted Hindi schwas with a visible accent instead of silently removing them (rāma → राम॔, viracita → विर॔॔चित॔)."""

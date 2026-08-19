@@ -8,6 +8,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.MainIndic import Tamil
 
+# ---- Pre-processing options ----
+
 def SaurastraHaaruColonTamil(Strng):
     """Represents Saurashtra haaru with a colon in Tamil-script text - நீ: → ꢥꢴꢷ."""
     Strng = Strng.replace('ன', 'ந')
@@ -21,6 +23,8 @@ def SaurastraHaaruColonTamil(Strng):
     Strng = re.sub(chars + ':', r'\1' + '\uA8B4', Strng)
 
     return Strng
+
+# ---- Post-processing options ----
 
 def SaurastraHaaruColon(Strng):
     """Converts Saurashtra haaru into a colon representation - ꢥꢴꢷ → நீ:."""

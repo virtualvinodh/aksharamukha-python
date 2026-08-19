@@ -17,6 +17,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.MainIndic import Limbu
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixLimbuEncode(Strng):
     """Converts virama+ya/ra/va to subjoined consonant letters, maps consonant+virama to dedicated Limbu final-consonant letters, and substitutes punctuation with Limbu equivalents."""
     vir = Limbu.ViramaMap[0]
@@ -91,6 +93,8 @@ def FixLimbu(Strng,reverse=False):
     """Dispatches to the Limbu encode or decode fix routine depending on conversion direction."""
     return _FixLimbuDecode(Strng) if reverse else _FixLimbuEncode(Strng)
 
+# ---- Pre-processing options ----
+
 def LimbuSpellingSaI_pre(Strng): ## Fix this not for all
     """Pre-processing step that prefixes Limbu final-consonant letters with the sa-i sign for an alternate spelling convention."""
     vir = Limbu.ViramaMap[0]
@@ -102,6 +106,8 @@ def LimbuSpellingSaI_pre(Strng): ## Fix this not for all
         Strng = Strng.replace(x, '\u193A' + y)
 
     return Strng
+
+# ---- Post-processing options ----
 
 def LimbuSpellingSaI_post(Strng):
     """Post-processing step that removes the sa-i sign prefix from Limbu final-consonant letters, restoring the standard consonant+virama spelling."""

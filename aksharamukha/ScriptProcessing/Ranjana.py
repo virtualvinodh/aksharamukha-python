@@ -6,6 +6,8 @@
 
 import re
 
+# ---- Post-processing options ----
+
 def ranjanalantsa(Strng):
     """Applies Lantsa Tibetan calligraphic style by replacing the Tibetan syllable separator with a plain space: बुद्धः → བུདྡྷཿ."""
     Strng = Strng.replace('་', ' ')

@@ -7,6 +7,8 @@ import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.EastIndic import Rejang
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixRejangEncode(Strng):
     """Converts consonant+virama+ra and consonant+virama+na sequences into the dedicated Rejang final ra and na signs."""
     vir = Rejang.ViramaMap[0]

@@ -11,6 +11,8 @@
 import re
 from .. import GeneralMap as GM
 
+# ---- Fix (encode/decode conversion logic) ----
+
 def _FixKannadaEncode(Strng):
 
     """Retains Indic dandas and inserts a ZWNJ before a nukta after virama (except before pha/ja) when encoding into Kannada."""
@@ -35,6 +37,8 @@ def FixKannada(Strng, reverse=False):
     """Dispatches to the Kannada encode or decode fix-up routine based on the reverse flag."""
     from .. import PostProcess
     return _FixKannadaDecode(Strng) if reverse else _FixKannadaEncode(Strng)
+
+# ---- Post-processing options ----
 
 def KannadaSpacingCandrabindu(Strng):
 
