@@ -1506,36 +1506,9 @@ def RomanLoCLaUnderscoreDoubleDot(Strng):
 # consolidated there (batch migration).
 from .ScriptProcessing.RomanLoCDevanagari import HindiMarathiRomanLoCFix_post as HindiMarathiRomanLoCFix
 
-def DivesAkuruHomoOrganNasal(Strng):
-    homoNasal = '\U0001193F'
-
-    Strng = re.sub('(𑤐\U0001193E)(?=[𑤌𑤍𑤎𑤏])', homoNasal, Strng)
-    Strng = re.sub('(𑤕\U0001193E)(?=[𑤑𑤒𑤓])', homoNasal, Strng)
-    Strng = re.sub('(𑤚\U0001193E)(?=[𑤖𑤘𑤙])', homoNasal, Strng)
-    Strng = re.sub('(𑤟\U0001193E)(?=[𑤛𑤜𑤝𑤞])', homoNasal, Strng)
-    Strng = re.sub('(𑤤\U0001193E)(?=[𑤠𑤡𑤢𑤣])', homoNasal, Strng)
-
-
-    return Strng
-
-def DivesAkuruAlternateIndVowels(Strng):
-    # use alt /y/
-    Strng = Strng.replace("\U00011925", "\U00011926")
-
-    # replace ind. vow with /y/
-
-    vow = "𑤀 𑤁 𑤂 𑤃 𑤄 𑤅 𑤆 𑤆𑤵 𑤉".split(" ")
-    vowy = "𑤥 𑤥𑤰 𑤥𑤱 𑤥𑤲 𑤥𑤳 𑤥𑤴 𑤥𑤵 𑤥𑤷 𑤥𑤸".split(" ")
-
-    for v, vy in zip(vow, vowy):
-        Strng = Strng.replace(v, vy)
-
-    return Strng
-
-def UseAlternateYA(Strng):
-    Strng = Strng.replace("\U00011925", "\U00011926")
-
-    return Strng
+# DivesAkuru's own logic now lives in ScriptProcessing/DivesAkuru.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.DivesAkuru import DivesAkuruAlternateIndVowels_post as DivesAkuruAlternateIndVowels, DivesAkuruHomoOrganNasal, UseAlternateYA
 
 def KawiMoveRepha(Strng):
     tgt = 'Kawi'
@@ -1564,18 +1537,9 @@ def KawiArchaicJNA(Strng):
     Strng = Strng.replace('𑼙𑽂𑼛', '\U00011F33')
     return Strng
 
-def JavaneseArchaicJNA(Strng):
-    Strng = Strng.replace('ꦗ꧀ꦚ', 'ꦘ')
-    return Strng
-
-def JavaneseAvowels(Strng):
-    vowelsA = ['ꦄꦶ', 'ꦄꦷ', 'ꦄꦸ', 'ꦄꦹ', 'ꦄꦽ', 'ꦄ꧀ꦉꦴ', 'ꦄ꧀ꦭꦼ', 'ꦄ꧀ꦭꦼꦴ', 'ꦄꦺ', 'ꦄꦻ', 'ꦄꦺꦴ', 'ꦄꦻꦴ']
-    vowels = ['ꦆ', 'ꦇ', 'ꦈ', 'ꦈꦴ', 'ꦉ', 'ꦉꦴ', 'ꦊ', 'ꦋ', 'ꦌ', 'ꦍ', 'ꦎ', 'ꦎꦴ']
-
-    for v, vA in zip(vowels, vowelsA):
-        Strng = Strng.replace(v, vA)
-
-    return Strng
+# Javanese's own logic now lives in ScriptProcessing/Javanese.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Javanese import JavaneseArchaicJNA, JavaneseAvowels, JavaneseMoveRepha_post as JavaneseMoveRepha
 
 def TibetanLoCRomanLoCFix(Strng):
     Strng = re.sub('tʹ(?!s)', 't', Strng)
@@ -1604,9 +1568,9 @@ def JavaneseRomanLoCFix(Strng):
 
     return Strng
 
-def BalineseArchaicJNA(Strng):
-    Strng = Strng.replace('ᬚ᭄ᬜ', 'ᭌ')
-    return Strng
+# Balinese's own logic now lives in ScriptProcessing/Balinese.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Balinese import BalineseArchaicJNA, BalineseAvowels, BalineseMoveRepha_post as BalineseMoveRepha
 
 def BalineseJavaneseMoveRepha(Strng, tgt, reph):
     repha = '(' + reph + ')'
@@ -1619,21 +1583,6 @@ def BalineseJavaneseMoveRepha(Strng, tgt, reph):
 
     candAnu = '[' + ''.join(GM.CrunchSymbols(GM.CombiningSigns, tgt)[:2]) + ']'
     Strng = re.sub(repha+'(' + candAnu + ')', r'\2\1', Strng)
-
-    return Strng
-
-def JavaneseMoveRepha(Strng):
-    return BalineseJavaneseMoveRepha(Strng, 'Javanese', 'ꦂ')
-
-def BalineseMoveRepha(Strng):
-    return BalineseJavaneseMoveRepha(Strng, 'Balinese', 'ᬃ')
-
-def BalineseAvowels(Strng):
-    vowelsA = ['ᬅᬶ', 'ᬅᬷ', 'ᬅᬸ', 'ᬅᬹ', 'ᬅᬺ', 'ᬅᬻ', 'ᬅ᭄ᬮᭂ', 'ᬅ᭄ᬮᭃ', 'ᬅᬾ', 'ᬅᬿ', 'ᬅᭀ', 'ᬅᭁ']
-    vowels = ['ᬇ', 'ᬈ', 'ᬉ', 'ᬊ', 'ᬋ', 'ᬌ', 'ᬍ', 'ᬎ', 'ᬏ', 'ᬐ', 'ᬑ', 'ᬒ']
-
-    for v, vA in zip(vowels, vowelsA):
-        Strng = Strng.replace(v, vA)
 
     return Strng
 
@@ -1727,30 +1676,9 @@ def nepaldevafont(Strng):
 def granthaserif(Strng):
     return Strng
 
-def ChakmaPali(Strng):
-    listC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Chakma")+Chakma.VowelMap[:1],key=len,reverse=True))+')'
-    listV = '('+"|".join(sorted(GM.CrunchSymbols(GM.VowelSigns,"Chakma")+Chakma.ViramaMap+['\U00011133'],key=len,reverse=True))+')'
-
-    Strng = ChakmaGemination(Strng, reverse = True)
-
-    Strng = Strng.replace('𑄤', '\U00011147') # Replace Ya
-    Strng = Strng.replace('𑄡', '𑄠') # Replace vA
-
-    ## reverse A introduction
-
-    Strng = Strng.replace("\U00011127","\u02BE")
-    Strng = re.sub("("+listC+")"+"(?!"+listV+'|\u02BE'+")",r'\1''\U00011127',Strng)
-    Strng = Strng.replace("\u02BE","")
-
-    ## Replace A with Visarga as per Pali
-
-    Strng = Strng.replace('\U00011127', '\U00011102')
-
-    ## Replace subjoining with Explicit Virama
-
-    Strng = Strng.replace('\U00011133', '\U00011134')
-
-    return Strng
+# Chakma's own logic now lives in ScriptProcessing/Chakma.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Chakma import ChakmaPali_post as ChakmaPali, ChakmaEnableAllConjuncts, ChakmaVowelsIndependent, ChakmaGemination
 
 def ThaiSajjhayawithA(Strng):
     Strng = ThaiSajjhayaOrthography(Strng)
@@ -1843,46 +1771,6 @@ def DevanagariACandra(Strng):
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.WarangCiti import WarangCitiModernOrthogaphy
-
-def ChakmaEnableAllConjuncts(Strng):
-    listC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Chakma")+Chakma.VowelMap[:1],key=len,reverse=True))+')'
-    Strng = re.sub("\U00011134"+'('+listC+')',"\U00011133"+r'\1',Strng)
-
-    Strng = ChakmaGemination(Strng)
-
-    return Strng
-
-def ChakmaGemination(Strng, reverse = False):
-    ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Chakma')) + ")"
-    virs = "([\U00011134\U00011133])"
-    virExp = "\U00011134"
-    virDep = "\U00011133"
-    ListV = '('+"|".join(sorted(GM.CrunchSymbols(GM.VowelSignsNV,"Chakma"), key=len, reverse = True)) + ")"
-
-    if not reverse:
-        Strng = re.sub(ListC + virs + r'\1' + ListV, r'\1' + virExp + r'\3' , Strng)
-
-        Strng = re.sub(ListC + virExp + r'\1' + virDep + ListC, r'\1' + virExp + virDep + r'\2' , Strng)
-        Strng = re.sub(ListC + virDep + r'\1' + virDep + ListC, r'\1' + virExp + virDep + r'\2' , Strng)
-
-        Strng = re.sub(virDep + ListC + virExp + ListV, virExp + r'\1' + virExp + r'\2' , Strng)
-
-        # Strng = re.sub(ListC + virExp + virExp, r'\1' + virExp + r'\1' + virExp, Strng)
-    else:
-        Strng = re.sub(ListC + virExp + ListV, r'\1' + virExp + r'\1' + r'\2', Strng)
-        Strng = re.sub(ListC + virExp + virDep, r'\1' + virExp + r'\1' + virDep, Strng)
-
-
-    return Strng
-
-def ChakmaVowelsIndependent(Strng):
-    vowelDepA = ["𑄃𑄨", "𑄃𑄪", "𑄃𑄬"]
-    vowelIndep = ["\U00011104", "\U00011105" , "\U00011106"]
-
-    for x, y in zip(vowelDepA, vowelIndep):
-        Strng = Strng.replace(x, y)
-
-    return Strng
 
 def MultaniAbjad(Strng):
     ListAll = "(" + "|".join(GM.CrunchSymbols(GM.Characters, 'Multani') + ["𑊓", "𑊍"]) + ")"

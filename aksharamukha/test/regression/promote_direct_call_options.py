@@ -38,11 +38,20 @@ def _extract_call_arg(wrapper_fn, arg_index):
     script characters (Javanese repha, Tai Tham consonants, ...) are lifted
     byte-for-byte from the real code instead of being hand-retyped here,
     where a look-alike glyph or missing combining mark could silently slip
-    in undetected."""
+    in undetected.
+
+    Searches for the `return` statement anywhere in the function body
+    rather than assuming it's the first statement - functions living in
+    ScriptProcessing/*.py commonly start with a local
+    `from .. import PostProcess`/`PreProcess` import (needed to avoid a
+    circular import with the modules that re-export them), so the return
+    is no longer necessarily body[0]."""
     src = inspect.getsource(wrapper_fn)
     tree = ast.parse(src.strip())
-    call = tree.body[0].body[0].value
-    return ast.literal_eval(call.args[arg_index])
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Return):
+            return ast.literal_eval(node.value.args[arg_index])
+    raise ValueError('no return statement found in %s' % wrapper_fn.__name__)
 
 
 def _extract_join_assign(fn, var_name):

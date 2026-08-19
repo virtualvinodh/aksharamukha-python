@@ -101,19 +101,9 @@ def BalineseJavaneseMoveRepha(Strng, tgt, reph):
 
     return Strng
 
-def DivesAkuruAlternateIndVowels(Strng):
-    # use alt /y/
-    #Strng = Strng.replace("\U00011925", "\U00011926")
-
-    # replace ind. vow with /y/
-
-    vow = "𑤁 𑤂 𑤃 𑤄 𑤅 𑤆 𑤆𑤵 𑤉 𑤀".split(" ")
-    vowy = "𑤥𑤰 𑤥𑤱 𑤥𑤲 𑤥𑤳 𑤥𑤴 𑤥𑤵 𑤥𑤷 𑤥𑤸 𑤥".split(" ")
-
-    for v, vy in zip(vow, vowy):
-        Strng = Strng.replace(vy, v)
-
-    return Strng
+# DivesAkuru's own logic now lives in ScriptProcessing/DivesAkuru.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.DivesAkuru import DivesAkuruAlternateIndVowels_pre as DivesAkuruAlternateIndVowels
 
 def KawiMoveRepha(Strng):
     tgt = 'Kawi'
@@ -127,11 +117,13 @@ def KawiMoveRepha(Strng):
 
     return Strng
 
-def JavaneseMoveRepha(Strng):
-    return BalineseJavaneseMoveRepha(Strng, 'Javanese', 'ꦂ')
+# Javanese's own logic now lives in ScriptProcessing/Javanese.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Javanese import JavaneseMoveRepha_pre as JavaneseMoveRepha
 
-def BalineseMoveRepha(Strng):
-    return BalineseJavaneseMoveRepha(Strng, 'Balinese', 'ᬃ')
+# Balinese's own logic now lives in ScriptProcessing/Balinese.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Balinese import BalineseMoveRepha_pre as BalineseMoveRepha
 
 def OriyaSubojinedVa(Strng):
     Strng = re.sub('(??<![ମବ])(୍ବ)', '୍ୱ', Strng)
@@ -841,23 +833,9 @@ def LaoPhonetic(Strng):
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.TamilSaurashtra import SaurastraHaaruColonTamil
 
-def ChakmaPali(Strng):
-    Strng = Strng.replace('\U00011147', '𑄤') # Replace Ya
-    Strng = Strng.replace('𑄠', '𑄡') # Replace vA
-
-    listC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Chakma")+Chakma.VowelMap[:1],key=len,reverse=True))+')'
-    listV = '('+"|".join(sorted(GM.CrunchSymbols(GM.VowelSigns,"Chakma")+Chakma.ViramaMap+['\U00011133'],key=len,reverse=True))+')'
-
-    Strng = Strng.replace("\u02BD","")
-
-    Strng = Strng.replace('\U00011102', '\U00011127')
-
-    # Introduce vowel Sign A ; Chakma - Inharant vowel is AA
-    Strng = re.sub("("+listC+")"+"(?!"+listV+")",r'\1''\u02BE',Strng)
-    Strng = Strng.replace("\U00011127","")
-    Strng = Strng.replace("\u02BE","\U00011127")
-
-    return Strng
+# Chakma's own logic now lives in ScriptProcessing/Chakma.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Chakma import ChakmaPali_pre as ChakmaPali
 
 # Takri's own logic now lives in ScriptProcessing/Takri.py -
 # consolidated there (batch migration).

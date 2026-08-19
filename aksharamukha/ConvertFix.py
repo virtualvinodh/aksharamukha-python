@@ -976,99 +976,14 @@ from .ScriptProcessing.Buginese import _FixBugineseEncode, _FixBugineseDecode, F
 
 
 # Balinese Repha
-def _FixBalineseEncode(Strng):
-    Repha = '\u1B03'
-
-    Strng = AddRepha(Strng,"Balinese",Repha,False)
-
-    pass
-
-    return Strng
-
-def _FixBalineseDecode(Strng):
-    Repha = '\u1B03'
-
-    Strng = AddRepha(Strng,"Balinese",Repha,True)
-
-    # reversing archaic jna
-    Strng = Strng.replace('ᭌ', 'ᬚ᭄ᬜ')
-    # Fix a-based vowels
-    vowelsA = ['ᬅᬶ', 'ᬅᬷ', 'ᬅᬸ', 'ᬅᬹ', 'ᬅᬺ', 'ᬅᬻ', 'ᬅ᭄ᬮᭂ', 'ᬅ᭄ᬮᭃ', 'ᬅᬾ', 'ᬅᬿ', 'ᬅᭀ', 'ᬅᭁ']
-    vowels = ['ᬇ', 'ᬈ', 'ᬉ', 'ᬊ', 'ᬋ', 'ᬌ', 'ᬍ', 'ᬎ', 'ᬏ', 'ᬐ', 'ᬑ', 'ᬒ']
-
-    for v, vA in zip(vowels, vowelsA):
-        Strng = Strng.replace(vA, v)
-
-    return Strng
-
-def FixBalinese(Strng,reverse=False):
-    return _FixBalineseDecode(Strng) if reverse else _FixBalineseEncode(Strng)
+# Balinese's own logic now lives in ScriptProcessing/Balinese.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Balinese import _FixBalineseEncode, _FixBalineseDecode, FixBalinese
 
 # Javanese - Reppha & Subjoining ra & ya
-def _FixDivesAkuruEncode(Strng):
-    target = 'DivesAkuru'
-
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target)+['\U00011926'])
-    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,target))
-    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,target))
-
-    ra = GM.CrunchSymbols(GM.Consonants,target)[26]
-    ya = GM.CrunchSymbols(GM.Consonants,target)[25]
-    vir = GM.CrunchSymbols(GM.virama,target)[0]
-    combVir = '\U0001193E'
-    aVS = '\U00011F34'
-
-    Strng = re.sub(vir+'('+ListC+')', combVir+r'\1',Strng)
-    # Replace Explicit Virama + Cons -> Subjoining Virama + Cons
-    Strng = re.sub(combVir +ra, '\U00011942',Strng)
-    # Replace Explicit Virama + Cons -> Subjoining Virama + Cons
-    Strng = re.sub(combVir +ya, '\U00011940',Strng)
-    # Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
-    Strng = re.sub('(?<!\U0001193E)'+ra+'\U0001193E'+'('+ListC+')','\U00011941'+r'\1',Strng)
-
-
-    return Strng
-
-def _FixDivesAkuruDecode(Strng):
-    target = 'DivesAkuru'
-
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target)+['\U00011926'])
-    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,target))
-    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,target))
-
-    ra = GM.CrunchSymbols(GM.Consonants,target)[26]
-    ya = GM.CrunchSymbols(GM.Consonants,target)[25]
-    vir = GM.CrunchSymbols(GM.virama,target)[0]
-    combVir = '\U0001193E'
-    aVS = '\U00011F34'
-
-    # reverse homonasal
-    homoNasal = '\U0001193F'
-
-    Strng = re.sub(homoNasal+'(?=[𑤌𑤍𑤎𑤏])', '𑤐\U0001193E', Strng)
-    Strng = re.sub(homoNasal+'(?=[𑤑𑤒𑤓])', '𑤕\U0001193E', Strng)
-    Strng = re.sub(homoNasal+'(?=[𑤖𑤘𑤙])', '𑤚\U0001193E', Strng)
-    Strng = re.sub(homoNasal+'(?=[𑤛𑤜𑤝𑤞])', '𑤟\U0001193E', Strng)
-    Strng = re.sub(homoNasal+'(?=[𑤠𑤡𑤢𑤣])', '𑤤\U0001193E', Strng)
-
-    # reverse the joning virama
-    Strng = Strng.replace(combVir, vir)
-    # replace alter. ya
-    Strng = Strng.replace("\U00011926", "\U00011925")
-    # Reverse : Replace Explicit Virama + Cons -> Subjoining Virama + Cons
-    Strng = re.sub(combVir, vir, Strng)
-    # Reverse : Replace Explicit Virama + Cons -> Subjoining Virama + Cons
-    Strng = re.sub('\U00011942', vir +ra, Strng)
-    # Reverse : Replace Explicit Virama + Cons -> Subjoining Virama + Cons
-    Strng = re.sub('\U00011940', vir +ya, Strng)
-    # Reverse : Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
-    Strng = re.sub('\U00011941', vir +ra, Strng)
-
-
-    return Strng
-
-def FixDivesAkuru(Strng, reverse=False):
-    return _FixDivesAkuruDecode(Strng) if reverse else _FixDivesAkuruEncode(Strng)
+# DivesAkuru's own logic now lives in ScriptProcessing/DivesAkuru.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.DivesAkuru import _FixDivesAkuruEncode, _FixDivesAkuruDecode, FixDivesAkuru
 
 # Javanese - Reppha & Subjoining ra & ya
 def _FixKawiEncode(Strng):
@@ -1138,48 +1053,9 @@ def FixKawi(Strng, reverse=False):
     return _FixKawiDecode(Strng) if reverse else _FixKawiEncode(Strng)
 
 # Javanese - Reppha & Subjoining ra & ya
-def _FixJavaneseEncode(Strng):
-    Repha = '\uA982'
-    vir = Javanese.ViramaMap[0]
-    ra, ya = Javanese.ConsonantMap[26], Javanese.ConsonantMap[25]
-    SubRa, SubYa = '\uA9BF','\uA9BE'
-
-    Strng = AddRepha(Strng,"Javanese",Repha,False)
-
-    # Introduce subjoining Ra & Ya
-    Strng = Strng.replace(vir+ra,SubRa).replace(vir+ya,SubYa)
-
-
-    return Strng
-
-def _FixJavaneseDecode(Strng):
-    Repha = '\uA982'
-    vir = Javanese.ViramaMap[0]
-    ra, ya = Javanese.ConsonantMap[26], Javanese.ConsonantMap[25]
-    SubRa, SubYa = '\uA9BF','\uA9BE'
-
-    Strng = AddRepha(Strng,"Javanese",Repha,True)
-
-    #Fix Archaic Jna
-    Strng = Strng.replace('ꦘ', 'ꦗ꧀ꦚ')
-    # Fix ra agang
-    Strng = Strng.replace('ꦬ', ra)
-    # Replace Subjoining forms with cons+vir
-    Strng = Strng.replace(SubRa,vir+ra).replace(SubYa,vir+ya)
-    # reversing archaic jna
-    Strng = Strng.replace('ᭌ', 'ᬚ᭄ᬜ')
-    # reverse a-based vowels
-    vowelsA = ['ꦄꦶ', 'ꦄꦷ', 'ꦄꦸ', 'ꦄꦹ', 'ꦄꦽ', 'ꦄ꧀ꦉꦴ', 'ꦄ꧀ꦭꦼ', 'ꦄ꧀ꦭꦼꦴ', 'ꦄꦺ', 'ꦄꦻ', 'ꦄꦺꦴ', 'ꦄꦻꦴ']
-    vowels = ['ꦆ', 'ꦇ', 'ꦈ', 'ꦈꦴ', 'ꦉ', 'ꦉꦴ', 'ꦊ', 'ꦋ', 'ꦌ', 'ꦍ', 'ꦎ', 'ꦎꦴ']
-
-    for v, vA in zip(vowels, vowelsA):
-        Strng = Strng.replace(vA, v)
-
-
-    return Strng
-
-def FixJavanese(Strng,reverse=False):
-    return _FixJavaneseDecode(Strng) if reverse else _FixJavaneseEncode(Strng)
+# Javanese's own logic now lives in ScriptProcessing/Javanese.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Javanese import _FixJavaneseEncode, _FixJavaneseDecode, FixJavanese
 
 
 # Urdu's own Fix logic now lives in ScriptProcessing/Urdu.py -
@@ -1913,75 +1789,9 @@ from .ScriptProcessing.Sundanese import _FixSundaneseEncode, _FixSundaneseDecode
 from .ScriptProcessing.Rejang import _FixRejangEncode, _FixRejangDecode, FixRejang
 
 # Chakmaa VS A and Subjoined
-def _FixChakmaEncode(Strng):
-    listC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Chakma")+Chakma.VowelMap[:1],key=len,reverse=True))+')'
-    listV = '('+"|".join(sorted(GM.CrunchSymbols(GM.VowelSigns,"Chakma")+Chakma.ViramaMap+['\U00011133'],key=len,reverse=True))+')'
-
-    Strng = Strng.replace("\u02BD","")
-
-    # Introduce vowel Sign A ; Chakma - Inharant vowel is AA
-    Strng = re.sub("("+listC+")"+"(?!"+listV+")",r'\1''\u02BE',Strng)
-    Strng = Strng.replace("\U00011127","")
-    Strng = Strng.replace("\u02BE","\U00011127")
-
-    Strng = Strng.replace('𑄣𑄳𑄦', '𑅄')
-    Strng = Strng.replace('𑄣𑄴𑄦', '𑅄')
-
-    ## Ai => kai
-    Strng = re.sub("("+listC+")"+"(𑄃𑄨)", r'\1' + '\U0001112D', Strng)
-    ## ei' => kei
-    Strng = Strng.replace('\U0001112C𑄃𑄨ʼ', '\U00011146', )
-
-
-
-    yrlvn = "("+"|".join(Chakma.ConsonantMap[19:20]+Chakma.ConsonantMap[26:29])+")"
-
-    Strng = re.sub("\U00011134"+"(?="+yrlvn+")","\U00011133",Strng)
-
-    Strng = PostProcess.ChakmaGemination(Strng)
-
-    ###  O/Sub-va lookign similar; check
-
-    return Strng
-
-def _FixChakmaDecode(Strng):
-    listC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Chakma")+Chakma.VowelMap[:1],key=len,reverse=True))+')'
-    listV = '('+"|".join(sorted(GM.CrunchSymbols(GM.VowelSigns,"Chakma")+Chakma.ViramaMap+['\U00011133'],key=len,reverse=True))+')'
-
-    Strng = Strng.replace("\u02BD","")
-
-    Strng = PostProcess.ChakmaGemination(Strng, reverse = True)
-
-    Strng = Strng.replace('𑅄', '𑄣𑄳𑄦')
-
-    Strng = Strng.replace('\U00011133\U00011103', '\U00011145')
-    Strng = Strng.replace('\U00011133\U00011104', '\U00011146')
-
-    Strng = Strng.replace('\U0001112D', '𑄃𑄨')
-    Strng = Strng.replace('\U00011146', '\U0001112C𑄃𑄨ʼ')
-
-    Strng = Strng.replace("\U00011127","\u02BE")
-    Strng = re.sub("("+listC+")"+"(?!"+listV+'|\u02BE'+")",r'\1''\U00011127',Strng)
-    Strng = Strng.replace("\u02BE","")
-
-    yrlvn = "("+"|".join(Chakma.ConsonantMap[19:20]+Chakma.ConsonantMap[26:29])+")"
-
-    # Reverse above
-    Strng = Strng.replace("\U00011133","\U00011134")
-
-    # Reverse independetnet vowels to a-based vowels
-    vowelDepA = ["𑄃𑄨", "𑄃𑄪", "𑄃𑄬"]
-    vowelIndep = ["\U00011104", "\U00011105" , "\U00011106"]
-
-    for x, y in zip(vowelDepA, vowelIndep):
-        Strng = Strng.replace(y, x)
-
-    ###  O/Sub-va lookign similar; check
-
-    return Strng
-
-def FixChakma(Strng, reverse=False):
-    return _FixChakmaDecode(Strng) if reverse else _FixChakmaEncode(Strng)
+# Chakma's own logic now lives in ScriptProcessing/Chakma.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Chakma import _FixChakmaEncode, _FixChakmaDecode, FixChakma
 
 # IAST's own logic now lives in ScriptProcessing/IAST.py -
 # consolidated there (batch migration).
