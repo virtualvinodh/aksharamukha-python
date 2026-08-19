@@ -210,16 +210,10 @@ def ThamLoCRomanLoCSource(Strng):
 
     return Strng
 
-def KhmerWordSplit(Strng):
-    from khmernltk import word_tokenize
-    sents = Strng.split('\n')
-    sent_token = []
-    for sent in sents:
-        sent_token.append(' '.join(word_tokenize(sent)))
-    Strng = '\n'.join(sent_token)
-    Strng = Strng.replace('  ', ' ')
-
-    return Strng
+# Khmer's own logic now lives in ScriptProcessing/Khmer.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Khmer import KhmerWordSplit
 
 def KhmerLoCRomanLoCTarget(Strng):
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Khmer'))
@@ -298,14 +292,10 @@ def ShanLoCRomanLoCTarget(Strng):
 
     return Strng
 
-def KhuenRaHaamKaren(Strng):
-    # replace ra ham with r+ra-haam ->
-    Strng = Strng.replace('᩺', 'ᩁ\u1A60')
-
-    # replace lue-karan with ra-haam
-    Strng = Strng.replace('᩼', '᩺')
-
-    return Strng
+# KhuenTham's own logic now lives in ScriptProcessing/KhuenTham.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.KhuenTham import KhuenRaHaamKaren
 
 def ShanLoCRomanLoCSource(Strng):
 
@@ -368,35 +358,15 @@ def segmentThamSyllabes(Strng):
 
     return Strng
 
-def segmentBurmeseSyllables(Strng):
-    # segment text into syllables
+# Burmese's own logic now lives in ScriptProcessing/Burmese.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Burmese import segmentBurmeseSyllables
 
-    # https://github.com/ye-kyaw-thu/myWord/blob/main/syl_segment.py
-    myConsonant = r"က-အ"
-    otherChar = r"ဣဤဥဦဧဩဪဿ၌၍၏၀-၉၊။!-/:-@[-`{-~\s"
-    ssSymbol = r'္'
-    aThat = r'်'
-
-    BreakPattern = re.compile(r"((?<!" + ssSymbol + r")["+ myConsonant + r"](?![" + aThat + ssSymbol + r"])" + r"|["  + otherChar + r"])", re.UNICODE)
-    Strng = Strng.replace("့်", "့်")
-    Strng = BreakPattern.sub(' ' + r"\1", Strng)
-
-    return Strng
-
-def segmentShanSyllables(Strng):
-    # segment text into syllables
-
-    # https://github.com/ye-kyaw-thu/myWord/blob/main/syl_segment.py
-    myConsonant = r"ၵၶၷꧠငၸꧡꩡꧢၺꩦꩧꩨꩩꧣတထၻꩪၼပၽၿꧤမယရလဝသႁꩮၹၾႀဢ"
-    otherChar = r"႞႟႐-႙၊။!-/:-@[-`{-~\s"
-    ssSymbol = r'္'
-    aThat = r'်'
-
-    BreakPattern = re.compile(r"((?<!" + ssSymbol + r")["+ myConsonant + r"](?![" + aThat + ssSymbol + r"])" + r"|["  + otherChar + r"])", re.UNICODE)
-    Strng = Strng.replace("့်", "့်")
-    Strng = BreakPattern.sub(' ' + r"\1", Strng)
-
-    return Strng
+# Shan's own logic now lives in ScriptProcessing/Shan.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Shan import segmentShanSyllables
 
 def BurmeseRomanLoCTarget(Strng):
     # asat + virma to just virama
@@ -659,15 +629,15 @@ def PhlpWawAyinResh(Strng):
 
     return Strng
 
-def PhliWawAyinResh(Strng):
-    Strng = Strng.replace('𐭥', '[\uEA05-\uEA02-\uEA01]') # resh yin
+# Phli's own logic now lives in ScriptProcessing/Phli.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Phli import PhliWawAyinResh
 
-    return Strng
-
-def HatrDalethResh(Strng):
-    Strng = Strng.replace('𐣣', '[\uEA06-\uEA01]') # resh yin
-
-    return Strng
+# Hatr's own logic now lives in ScriptProcessing/Hatr.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Hatr import HatrDalethResh
 
 def MalayalamHalfu(Strng):
     consu = '[കചടതറനണരലവഴളറ]'
@@ -1102,11 +1072,10 @@ def SchwaFinalGurmukhi(Strng):
 
     return Strng
 
-def SchwaFinalGujarati(Strng):
-
-    Strng = RemoveFinal(Strng, 'Gujarati')
-
-    return Strng
+# Gujarati's own logic now lives in ScriptProcessing/Gujarati.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Gujarati import SchwaFinalGujarati
 
 def SchwaFinalBengali(Strng):
 
@@ -1126,26 +1095,10 @@ def SchwaFinalKhmer(Strng):
 
     return Strng
 
-def SchwaFinalWarangCiti(Strng):
-    Target = "WarangCiti"
-
-    VowI = "(" + '|'.join(GM.CrunchSymbols(GM.Vowels,Target)) + ")"
-    VowS = "(" + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, Target)) + ")"
-    Cons = "(" + '|'.join(GM.CrunchSymbols(GM.Consonants, Target)) + ")"
-    Char = "(" + '|'.join(GM.CrunchSymbols(GM.Characters, Target)) + ")"
-
-    Nas = "([" + '|'.join(GM.CrunchList('AyogavahaMap',Target)) + "]?)"
-
-    ISyl = "((" + VowI + "|" + "(" + Cons + VowS + "?" + ")" + Nas + '))'
-    Syl = "((" + Cons + VowS + ')' + Nas + ")"
-    SylAny = "((" + Cons + VowS + "?" + ')' + Nas + ")"
-
-    vir = '\u02BB'
-    Cons2 = '((' + Cons + vir + ')?' + Cons + ')'
-
-    Strng = re.sub(ISyl+Cons2+"(?!" + Char + ")", r'\1\8' + vir, Strng) # kama -> kam
-
-    return Strng
+# WarangCiti's own logic now lives in ScriptProcessing/WarangCiti.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.WarangCiti import SchwaFinalWarangCiti
 
 def siddhamUnicode(Strng):
     return Strng

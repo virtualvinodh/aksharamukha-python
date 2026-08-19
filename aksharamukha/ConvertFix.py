@@ -645,36 +645,10 @@ def FixHebrew(Strng, reverse = False):
     return _FixHebrewDecode(Strng) if reverse else _FixHebrewEncode(Strng)
 
 
-def _FixMongolianEncode(Strng):
-    vowels = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'Mongolian')) + ')'
-    consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Mongolian')) + ')'
-
-    #Strng = re.sub(consonants + '?' + vowels + '([\u1880\u1881])?', r'\1\2\3 ', Strng)
-    Strng = re.sub('(\u180B)' + consonants, r'\2', Strng)
-    Strng = re.sub('(\u180B)' + vowels, r'\2', Strng)
-
-    Strng = re.sub(consonants + consonants + consonants + vowels + '(\u1880)', r'\5\1\2\3\4', Strng)
-    Strng = re.sub(consonants + consonants + vowels + '(\u1880)', r'\4\1\2\3', Strng)
-    Strng = re.sub(consonants + '?' + vowels + '(\u1880)', r'\3\1\2', Strng)
-    Strng = Strng.replace(' \u02BC', '\u200B')
-    Strng = Strng.replace('\u02BC', '\u200B')
-
-
-    return Strng
-
-def _FixMongolianDecode(Strng):
-    vowels = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'Mongolian')) + ')'
-    consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Mongolian')) + ')'
-
-    ## add variation seelct one
-    #print(Strng)
-    Strng = re.sub('(ᠠ)(?!\u180B)', r'\1' + '\u180B', Strng)
-    #print(Strng)
-
-    return Strng
-
-def FixMongolian(Strng, reverse=False):
-    return _FixMongolianDecode(Strng) if reverse else _FixMongolianEncode(Strng)
+# Mongolian's own logic now lives in ScriptProcessing/Mongolian.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Mongolian import _FixMongolianEncode, _FixMongolianDecode, FixMongolian
 
 # HanifiRohingya's own Fix logic now lives in ScriptProcessing/HanifiRohingya.py -
 # consolidated there (batch migration). Re-exported here so
@@ -754,36 +728,10 @@ def FixSoyombo(Strng, reverse=False):
 # GM.resolve's getattr(CF, "FixKharoshthi", ...) dispatch keeps working.
 from .ScriptProcessing.Kharoshthi import FixKharoshthi, KharoshthiNumerals, kharoshthiNumber
 
-def _FixMarchenEncode(Strng):
-    subjoinCons = '𑱲 𑱳 𑱴 𑱵 𑱶 𑱷 𑱸 𑱹 𑱺 𑱻 𑱼 𑱽 𑱾 𑱿 𑲀 𑲁 𑲂 𑲃 𑲄 𑲅 𑲆 𑲇 𑲉 𑲊 𑲋 𑲌 𑲍 𑲎'.split(' ')
-    subjoined = '𑲒 𑲓 𑲔 𑲕 𑲖 𑲗 𑲘 𑲙 𑲚 𑲛 𑲜 𑲝 𑲞 𑲟 𑲠 𑲡 𑲢 𑲣 𑲤 𑲥 𑲦 𑲧 𑲩 𑲪 𑲫 𑲬 𑲭 𑲮'.split(' ')
-
-    for x, y in zip(subjoinCons, subjoined):
-        Strng = Strng.replace('ʾ' + x, y)
-
-    Strng = Strng.replace('ʾ', '')
-    Strng = Strng.replace('\u02BF', '')
-
-
-    return Strng
-
-def _FixMarchenDecode(Strng):
-    subjoinCons = '𑱲 𑱳 𑱴 𑱵 𑱶 𑱷 𑱸 𑱹 𑱺 𑱻 𑱼 𑱽 𑱾 𑱿 𑲀 𑲁 𑲂 𑲃 𑲄 𑲅 𑲆 𑲇 𑲉 𑲊 𑲋 𑲌 𑲍 𑲎'.split(' ')
-    subjoined = '𑲒 𑲓 𑲔 𑲕 𑲖 𑲗 𑲘 𑲙 𑲚 𑲛 𑲜 𑲝 𑲞 𑲟 𑲠 𑲡 𑲢 𑲣 𑲤 𑲥 𑲦 𑲧 𑲩 𑲪 𑲫 𑲬 𑲭 𑲮'.split(' ')
-
-    tsaSeries = ['\U00011C82', '\U00011C83', '\U00011C84']
-    jaSereis =  ['\U00011C76', '\U00011C77', '\U00011C78']
-
-    for x, y in zip(tsaSeries, jaSereis):
-        Strng = Strng.replace(y, x)
-
-    for x, y in zip(subjoinCons, subjoined):
-        Strng = Strng.replace(y, 'ʾ' + x)
-
-    return Strng
-
-def FixMarchen(Strng, reverse=False):
-    return _FixMarchenDecode(Strng) if reverse else _FixMarchenEncode(Strng)
+# Marchen's own logic now lives in ScriptProcessing/Marchen.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Marchen import _FixMarchenEncode, _FixMarchenDecode, FixMarchen
 
 # Mro's own Fix logic now lives in ScriptProcessing/Mro.py -
 # consolidated there (batch migration). Re-exported here so
@@ -814,18 +762,10 @@ def _FixSiddhamDecode(Strng):
 def FixSiddham(Strng, reverse=False):
     return _FixSiddhamDecode(Strng) if reverse else _FixSiddhamEncode(Strng)
 
-def _FixBhaiksukiEncode(Strng):
-    Strng = Strng.replace(' ', '𑱃')
-
-    return Strng
-
-def _FixBhaiksukiDecode(Strng):
-    Strng = Strng.replace('𑱃', ' ')
-
-    return Strng
-
-def FixBhaiksuki(Strng, reverse=False):
-    return _FixBhaiksukiDecode(Strng) if reverse else _FixBhaiksukiEncode(Strng)
+# Bhaiksuki's own logic now lives in ScriptProcessing/Bhaiksuki.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Bhaiksuki import _FixBhaiksukiEncode, _FixBhaiksukiDecode, FixBhaiksuki
 
 # Khudawadi's own Fix logic now lives in ScriptProcessing/Khudawadi.py -
 # consolidated there (batch migration). Re-exported here so
@@ -1002,43 +942,10 @@ def FixTamilGrantha(Strng, reverse=False):
 from .ScriptProcessing.KhmerLoC import FixKhmerLoC
 
 # Khmer - Subjoining Consonants and Repha
-def _FixKhmerEncode(Strng, target):
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target))
-    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,target))
-    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,target))
-
-    ra = Khmer.ConsonantMap[26]
-    vir = Khmer.ViramaMap[0]
-
-    Strng = re.sub(vir+'('+ListC+')','\u17D2'+r'\1',Strng)
-    # Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
-    Strng = re.sub('(?<!\u17D2)('+ra+')'+'\u17D2'+'('+ListC+')',r'\2'+'\u17CC',Strng)
-    # i + Anusara -> i-Anusvara ligature
-    Strng = Strng.replace('\u17B7\u17C6','\u17B9')
-
-
-    return Strng
-
-def _FixKhmerDecode(Strng, target):
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target))
-    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,target))
-    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,target))
-
-    ra = Khmer.ConsonantMap[26]
-    vir = Khmer.ViramaMap[0]
-
-    # Replace Subjoining Virama with Explicit Virama
-    Strng = Strng.replace('\u17D2',vir)
-    Strng = re.sub(vir+'(?=[\u17AB\u17AC\u17AD\u17AE])','\u17D2',Strng)
-    # Remove Repha : ra + sub Virama + Cons <- Cons + Repha
-    Strng = re.sub('('+ListC+')'+'\u17CC',ra+vir+r'\1',Strng)
-    # i + Anusara -> i-Anusvara ligature
-    Strng = Strng.replace('\u17B9','\u17B7\u17C6')
-
-    return Strng
-
-def FixKhmer(Strng,reverse=False, target="Khmer"):
-    return _FixKhmerDecode(Strng, target) if reverse else _FixKhmerEncode(Strng, target)
+# Khmer's own logic now lives in ScriptProcessing/Khmer.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Khmer import _FixKhmerEncode, _FixKhmerDecode, FixKhmer
 
 def _FixKhamtiShanEncode(Strng):
     Strng = Strng.replace('်ရ', 'ြ')
@@ -1073,44 +980,10 @@ def FixKhamtiShan(Strng, reverse=False):
 # GM.resolve's getattr(CF, "FixTaiLaing", ...) dispatch keeps working.
 from .ScriptProcessing.TaiLaing import _FixTaiLaingEncode, _FixTaiLaingDecode, FixTaiLaing
 
-def _FixShanEncode(Strng):
-    Strng = Strng.replace('်ရ', 'ြ')
-    Strng = Strng.replace('်ယ', 'ျ')
-    Strng = Strng.replace('်ဝ', '\u1082')
-    #Strng = Strng.replace('်ႁ', 'ှ')
-
-    ## Maintain the order of the medials
-    Strng = re.sub('(ှ)' + '([ျြွ])', r'\2\1', Strng)
-    Strng = Strng.replace("\u103C\u103B", "\u103B\u103C")
-    Strng = Strng.replace("\u103D\u103B", "\u103B\u103D")
-    Strng = Strng.replace("ွ\u103C", "\u103Cွ")
-
-    ## Fix Shya
-    Strng = re.sub('သျ\u02BD?ျ', 'သျ်ယ', Strng)
-
-
-    return Strng
-
-def _FixShanDecode(Strng):
-    ## Reverse the order of the medials
-    Strng = re.sub('([ျြွ])' + '(ှ)', r'\2\1', Strng)
-    Strng = Strng.replace("\u103B\u103C", "\u103C\u103B")
-    Strng = Strng.replace("\u103B\u103D", "\u103D\u103B")
-    Strng = Strng.replace("\u103Cွ", "ွ\u103C")
-
-    Strng = Strng.replace('ြ', '်ရ')
-    Strng = Strng.replace('ျ', '်ယ')
-    Strng = Strng.replace('ွ', '်ဝ')
-    Strng = Strng.replace('\u1082', '်ဝ')
-    Strng = Strng.replace('ှ', '်ႁ')
-
-    #for old shan in case it appears
-    Strng = Strng.replace('\u1039', '\u103A')
-
-    return Strng
-
-def FixShan(Strng, reverse=False):
-    return _FixShanDecode(Strng) if reverse else _FixShanEncode(Strng)
+# Shan's own logic now lives in ScriptProcessing/Shan.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Shan import _FixShanEncode, _FixShanDecode, FixShan
 
 # Mon's own Fix logic now lives in ScriptProcessing/Mon.py -
 # consolidated there (batch migration). Re-exported here so
@@ -1118,124 +991,10 @@ def FixShan(Strng, reverse=False):
 from .ScriptProcessing.Mon import _FixMonEncode, _FixMonDecode, FixMon
 
 # Burmese - Tall A + Subjoning Consonants
-def _FixBurmeseEncode(Strng):
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Burmese'))
-    vir = Burmese.ViramaMap[0]
-
-    AA = Burmese.VowelSignMap[0]
-    E = Burmese.VowelSignMap[9]
-
-    ## Check Rendering with Myanmar1 font buddho go gau
-
-    yrvh = Burmese.ConsonantMap[25:27] + Burmese.ConsonantMap[28:29] + Burmese.ConsonantMap[32:33]
-    yrvhsub = ['\u103B','\u103C','\u103D','\u103E']
-
-    TallACons = '|'.join([Burmese.ConsonantMap[x] for x in [1,2,4,17,20,28]])
-
-    Strng = re.sub('(?<!ာ)' + vir+'('+ListC+')','\u1039'+r'\1',Strng)
-
-    # Introduce Kinzi: ga + NGA + sub-Virama -> ga + NGA + exp-Virama + sub-Virama
-    Strng = re.sub('('+Burmese.ConsonantMap[4]+')'+'('+'\u1039'+')',r'\1'+vir+r'\2',Strng)
-
-    # Introduce Repha
-    Strng = re.sub('(ရ)'+'('+'\u1039'+')',r'\1'+vir+r'\2',Strng)
-
-    # Introduce Tall A: ka + AA -> ka + Tall A
-    Strng = re.sub('(?<!\u1039)('+TallACons+')'+'('+E+'?)'+AA,r'\1\2'+'\u102B',Strng)
-
-    ## buddho --> Tall A
-    Strng = re.sub('('+TallACons+')(\u1039)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4'+'\u102B',Strng)
-    Strng = re.sub('('+TallACons+')(\u1039)('+ListC +')'+'(\u1039)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4\5\6'+'\u102B',Strng)
-
-    Strng = re.sub('(?<=်္)' + '('+TallACons+')'+'('+E+'?)'+AA,r'\1\2'+'\u102B',Strng)
-
-    # Remove Tall a Kinzi
-
-    for x,y in zip(yrvh,yrvhsub):
-        # Introduce subjoining forms: sub-virama + y/r/v/h -> subjoining y/r/v/h
-        Strng = re.sub('(?<!်)\u1039'+x,y,Strng)
-
-    Strng = re.sub('ျါ','ျာ', Strng)
-
-    Strng = re.sub('(?<!ဂ)ြါ','ြာ', Strng)
-
-    Strng = re.sub('ျေါ','ျော', Strng)
-
-    Strng = re.sub('(?<!ဂ)ြေါ','ြော', Strng)
-
-
-    Strng = Strng.replace("သ္သ", "ဿ")
-    Strng = Strng.replace("ဉ္ဉ", "ည")
-
-    Strng = Strng.replace("\u02F3", "့")
-    Strng = Strng.replace("့်", "့်",)
-
-    Strng = Strng.replace("ာ္", "ာ်")
-
-    Strng = re.sub("(ရ်္င်္)" + "(" + ListC + ")", "ရ်္င္" + r'\2', Strng)
-
-    Strng = Strng.replace("ါ္", "ါ်")
-
-    Strng = Strng.replace("\u103A\u1039\u101A", "\u103B")
-    Strng = Strng.replace('\u103C\u103A\u1039ဝ', "\u103Cွ")
-
-    ## Maintain the order of the medials
-    Strng = re.sub('(ှ)' + '([ျြွ])', r'\2\1', Strng)
-    Strng = Strng.replace("\u103C\u103B", "\u103B\u103C")
-    Strng = Strng.replace("\u103D\u103B", "\u103B\u103D")
-    Strng = Strng.replace("ွ\u103C", "\u103Cွ")
-
-    ## Introduce repha for ra and ga
-    Strng = Strng.replace('ရျ', 'ရ်္ယ')
-    Strng = Strng.replace('ငျ', 'င်္ယ')
-
-    #Strng = Strng.replace("\u103A\u1039", "\u1039")
-
-    return Strng
-
-def _FixBurmeseDecode(Strng):
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Burmese'))
-    vir = Burmese.ViramaMap[0]
-
-    AA = Burmese.VowelSignMap[0]
-    E = Burmese.VowelSignMap[9]
-
-    ## Check Rendering with Myanmar1 font buddho go gau
-
-    yrvh = Burmese.ConsonantMap[25:27] + Burmese.ConsonantMap[28:29] + Burmese.ConsonantMap[32:33]
-    yrvhsub = ['\u103B','\u103C','\u103D','\u103E']
-
-    TallACons = '|'.join([Burmese.ConsonantMap[x] for x in [1,2,4,17,20,28]])
-
-    ## Reverse the order of the medials
-    Strng = re.sub('([ျြွ])' + '(ှ)', r'\2\1', Strng)
-    Strng = Strng.replace("\u103B\u103C", "\u103C\u103B")
-    Strng = Strng.replace("\u103B\u103D", "\u103D\u103B")
-    Strng = Strng.replace("\u103Cွ", "ွ\u103C")
-
-    Strng = Strng.replace("ဿ","သ္သ")
-    Strng = Strng.replace("ည", "ဉ္ဉ")
-
-    Strng = Strng.replace("့်", "့်")
-    Strng = Strng.replace("့","\u02F3")
-
-    # Replace sub Virama with explicit Virama
-    Strng = Strng.replace('\u1039',vir)
-    # Replace Tall AA with AA
-    Strng = Strng.replace('\u102B',AA)
-    # Replace Kinzi with NGA + Virama
-    Strng = Strng.replace(Burmese.ConsonantMap[4]+vir+vir,Burmese.ConsonantMap[4]+vir)
-    # Replace Repha
-    Strng = Strng.replace('ရ'+vir+vir,'ရ'+vir)
-
-    for x,y in zip(yrvh,yrvhsub):
-        # Replace subjoining forms: exp-virama + y/r/v/h <- subjoining y/r/v/h
-        Strng = Strng.replace(y,vir+x)
-
-    return Strng
-
-def FixBurmese(Strng, reverse=False):
-    return _FixBurmeseDecode(Strng) if reverse else _FixBurmeseEncode(Strng)
+# Burmese's own logic now lives in ScriptProcessing/Burmese.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Burmese import _FixBurmeseEncode, _FixBurmeseDecode, FixBurmese
 
 # Add Repha (Bali,Java,Sundanese)
 # a + r + ka -> a<repha>ka
@@ -2002,52 +1761,10 @@ from .ScriptProcessing.Makasar import _FixMakasarEncode, _FixMakasarDecode, FixM
 # GM.resolve's getattr(CF, "FixAvestan", ...) dispatch keeps working.
 from .ScriptProcessing.Avestan import _FixAvestanEncode, _FixAvestanDecode, FixAvestan
 
-def _FixLaoEncode(Strng):
-
-    Strng = Strng.replace("ທ\uEB0A", "ດ")
-    Strng = Strng.replace("ປ\uEB0A", 'ບ')
-    Strng = Strng.replace("ພ\uEB0A",'ຟ')
-
-    Strng = re.sub("(?<!ດ)(?<!ບ)(?<!ຟ)\uEB0A", "", Strng)
-
-    Strng = ReverseVowelSigns(Strng,"Lao",False)
-    Strng = LaoTranscribe(Strng,False)
-
-    Strng = Strng.replace("\u0EB2\u0ECD","\u0EB3")
-
-    # Remove the Pseduo Nukta
-    Strng = Strng.replace("\uEB0A", "")
-
-
-    return Strng
-
-def _FixLaoDecode(Strng):
-    Strng = Strng.replace("ດ", "ທ\uEB0A")
-    Strng = Strng.replace('ບ', "ປ\uEB0A")
-    Strng = Strng.replace('ຟ', "ພ\uEB0A")
-    Strng = Strng.replace('ັ','ະ')
-
-
-    Strng = ReverseVowelSigns(Strng,"Lao",True)
-    Strng = LaoTranscribe(Strng,True)
-
-    # VS AA + Anusvara <- VS AM (Ligature)
-    Strng= Strng.replace("\u0EB3","\u0EB2\u0ECD")
-
-    # Swap Nukta
-    Strng = Strng.replace("\u0EBA\uEB0A","\uEB0A\u0EBA")
-
-    ## Fix NHukt and vowe a short a
-
-    Strng = Strng.replace('຺ະ', '')
-    #Strng = Strng.replace('຺', '')
-
-    Strng = Strng.replace('ອ\u0EBAົ','ອົ')
-
-    return Strng
-
-def FixLao(Strng,reverse=False):
-    return _FixLaoDecode(Strng) if reverse else _FixLaoEncode(Strng)
+# Lao's own logic now lives in ScriptProcessing/Lao.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Lao import _FixLaoEncode, _FixLaoDecode, FixLao, LaoTranscribe
 
 # Re-arrange Vowels Signs /E/, /AI/, /O/ for digraph <dv>, <mh> etc
 # e.g dve -> เทฺว instead of ทฺเว
@@ -2157,8 +1874,10 @@ def _FixRomanReadableColloquial(Strng, reverse, colloquial):
 
     return Strng
 
-def FixRomanReadable(Strng, reverse = False):
-    return _FixRomanReadableColloquial(Strng, reverse, colloquial=False)
+# RomanReadable's own logic now lives in ScriptProcessing/RomanReadable.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.RomanReadable import FixRomanReadable
 
 # RomanColloquial's own Fix logic now lives in ScriptProcessing/RomanColloquial.py -
 # consolidated there (batch migration). Re-exported here so
@@ -2166,67 +1885,10 @@ def FixRomanReadable(Strng, reverse = False):
 from .ScriptProcessing.RomanColloquial import FixRomanColloquial
 
 
-def _FixWarangCitiEncode(Strng):
-    ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'WarangCiti')) + ')'
-    ListV = "(" + "|".join(GM.CrunchSymbols(GM.Vowels, 'WarangCiti') + ['\u200D']) + ')'
-
-    Strng = re.sub(ListC + ListC, r'\1' + '\u200D' + r'\2', Strng)
-
-    # Remove the inherent vowel
-    Strng = re.sub(ListC + '(\U000118C1\U000118D9\u02BE)', r'\1' + '\u00BD', Strng)
-
-    Strng = re.sub(ListC + '(\U000118C1)', r'\1', Strng)
-
-    Strng = re.sub(ListV + '(\U000118C0)', r'\1' + '\u200D' + r'\2', Strng)
-
-    Strng = Strng.replace('\u02BE', '')
-
-    Strng = Strng.replace("𑣟\u02BF", "𑣙𑣗") # Remove Warang Citi Nukta
-
-    # Brining back 'AA'
-
-    Strng = Strng.replace('\u00BD', '\U000118C1')
-
-    # remove Nukta
-
-    Strng = Strng.replace("\u02BF", "")
-
-
-    return Strng
-
-def _FixWarangCitiDecode(Strng):
-    ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'WarangCiti')) + ')'
-    ListV = "(" + "|".join(GM.CrunchSymbols(GM.Vowels, 'WarangCiti') + ['\u200D']) + ')'
-
-    Strng = Strng.lower()
-    ## Replace hb -> vQ
-    Strng = Strng.replace("𑣙𑣗", "𑣟\u02BF") # Introduce Warang Citi Nukta
-    Strng = Strng.replace('\u00D7', '\u200D')
-
-    ## Reintroduce vowel AA
-    Strng = re.sub(ListC + '(\U000118C1)', r'\1' + '\u00BD',Strng)
-    Strng = re.sub('(\u02BF)' + '(\U000118C1)', r'\1' + '\U000118C1\u00BD',Strng)
-
-    # Introduce the inhernt  Vowel
-    Strng = re.sub(ListC + '(?!' + ListV + ')', r'\1' + '\U000118C1', Strng)
-
-    ## Retain Aspirates
-    Strng = re.sub('([\U000118D4\U000118D5\U000118CC\U000118CB\U000118CF\U000118CE\U000118D2\U000118D1\U000118D5\U000118D4\U000118D8\U000118D7\U000118DB])(\u200D)(𑣙)', r'\1' + '\u00D6' + r'\3', Strng)
-    Strng = Strng.replace('\u200D', '')
-    Strng = Strng.replace('\u00D6', '\u200D')
-
-    ## Move vowel signs and nUkta viQ -> vQi
-    Strng = re.sub('(𑣁)' + '(\u02BF)' + ListV , r'\2\3', Strng)
-
-    ## Remove a if necessary
-    Strng = Strng.replace('𑣁' + '\u02BB', '')
-
-    Strng = Strng.replace('\U000118C1\u00BD', '\U000118C1\U000118D9\u02BE')
-
-    return Strng
-
-def FixWarangCiti(Strng, reverse=False):
-    return _FixWarangCitiDecode(Strng) if reverse else _FixWarangCitiEncode(Strng)
+# WarangCiti's own logic now lives in ScriptProcessing/WarangCiti.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.WarangCiti import _FixWarangCitiEncode, _FixWarangCitiDecode, FixWarangCiti
 
 # LimbuLoC's own Fix logic now lives in ScriptProcessing/LimbuLoC.py -
 # consolidated there (batch migration). Re-exported here so
@@ -2366,37 +2028,20 @@ def _FixDevanagariDecode(Strng):
 def FixDevanagari(Strng, reverse=False):
     return _FixDevanagariDecode(Strng) if reverse else _FixDevanagariEncode(Strng)
 
-def _FixKaithiEncode(Strng):
-    Strng = Strng.replace(' ', '⸱')
-
-    return Strng
-
-def _FixKaithiDecode(Strng):
-    Strng = Strng.replace("⸱",' ')
-    # Strng = re.sub('', '', Strng)
-
-    return Strng
-
-def FixKaithi(Strng, reverse=False):
-    return _FixKaithiDecode(Strng) if reverse else _FixKaithiEncode(Strng)
+# Kaithi's own logic now lives in ScriptProcessing/Kaithi.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Kaithi import _FixKaithiEncode, _FixKaithiDecode, FixKaithi
 
 # Lao2's own Fix logic now lives in ScriptProcessing/Lao2.py -
 # consolidated there (batch migration). Re-exported here so
 # GM.resolve's getattr(CF, "FixLao2", ...) dispatch keeps working.
 from .ScriptProcessing.Lao2 import FixLao2
 
-def _FixNandinagariEncode(Strng):
-    pass
-
-    return Strng
-
-def _FixNandinagariDecode(Strng):
-    Strng = PostProcess.NandinagariPrishtamatra(Strng, reverse=True)
-
-    return Strng
-
-def FixNandinagari(Strng, reverse=False):
-    return _FixNandinagariDecode(Strng) if reverse else _FixNandinagariEncode(Strng)
+# Nandinagari's own logic now lives in ScriptProcessing/Nandinagari.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Nandinagari import _FixNandinagariEncode, _FixNandinagariDecode, FixNandinagari
 
 #Subjoined, final and la-ligatures
 # Fix aH -> a ;
@@ -2406,49 +2051,10 @@ def FixNandinagari(Strng, reverse=False):
 from .ScriptProcessing.Lepcha import _FixLepchaEncode, _FixLepchaDecode, FixLepcha
 
 # Repha & Subjoined
-def _FixSundaneseEncode(Strng):
-    vir = Sundanese.ViramaMap[0]
-
-    r = Sundanese.ConsonantMap[26] + vir
-    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants + GM.Vowels + GM.VowelSignsNV,'Sundanese'))
-    #print(ListC)
-
-
-    # Sundanese Repha
-    Strng = re.sub('(' + ListC + ')' + r, r'\1' + '\u1B81', Strng)
-
-    yrl = [vir+x for x in Sundanese.ConsonantMap[25:28]]
-    yrlSub = ['\u1BA1','\u1BA2','\u1BA3']
-
-    for x,y in zip(yrl,yrlSub):
-        # Subjoined consonants
-        Strng = Strng.replace(x,y)
-
-    return Strng
-
-def _FixSundaneseDecode(Strng):
-    vir = Sundanese.ViramaMap[0]
-
-    r = Sundanese.ConsonantMap[26] + vir
-    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants + GM.Vowels + GM.VowelSignsNV,'Sundanese'))
-    #print(ListC)
-
-
-    # Reverse above
-    Strng = Strng.replace('\u1B81',r)
-    Strng = PostProcess.SundaneseHistoricConjuncts(Strng, True)
-
-    yrl = [vir+x for x in Sundanese.ConsonantMap[25:28]]
-    yrlSub = ['\u1BA1','\u1BA2','\u1BA3']
-
-    for x,y in zip(yrl,yrlSub):
-        # Reverse above
-        Strng = Strng.replace(y,x)
-
-    return Strng
-
-def FixSundanese(Strng,reverse=False):
-    return _FixSundaneseDecode(Strng) if reverse else _FixSundaneseEncode(Strng)
+# Sundanese's own logic now lives in ScriptProcessing/Sundanese.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Sundanese import _FixSundaneseEncode, _FixSundaneseDecode, FixSundanese
 
 # Repha & Subjoined
 # Rejang's own Fix logic now lives in ScriptProcessing/Rejang.py -
@@ -2777,10 +2383,10 @@ def FixThaa(Strng, Source, reverse=False):
 def FixArab_Ph(Strng, Source, reverse=False):
     return FixArab(Strng, Source, reverse)
 
-def FixArab_Fa(Strng, Source, reverse=False):
-    Strng = FixArab(Strng, Source, reverse)
-
-    return Strng
+# Arab-Fa's own logic now lives in ScriptProcessing/Arab_Fa.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Arab_Fa import FixArab_Fa
 
 def _FixArab_UrEncode(Strng, Source):
     Strng = FixArab(Strng, Source, False)
@@ -2951,19 +2557,10 @@ from .ScriptProcessing.ThamLoC import FixThamLoC
 # GM.resolve's getattr(CF, "FixLueTham", ...) dispatch keeps working.
 from .ScriptProcessing.LueTham import FixLueTham
 
-def FixKhuenTham(Strng, reverse=False):
-    return _FixTaiThamFamily(Strng, reverse, ['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ'], marker_cleanup=False, ra_haam_swap=True)
-def LaoTranscribe(Strng,reverse=False):
-    from . import PostProcess as pp
-
-    shortA, conjA = '\u0EB0', '\u0EB1'
-
-    if not reverse:
-        Strng = pp.ThaiLaoTranscription(Strng,"Lao",shortA,conjA)
-    else:
-        Strng = pp.ThaiLaoTranscription(Strng,"Lao",shortA, conjA,reverse=True)
-
-    return Strng
+# KhuenTham's own logic now lives in ScriptProcessing/KhuenTham.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.KhuenTham import FixKhuenTham
 
 # Transcription for Pali Lao
 def LaoPaliTranscribe(Strng,reverse=False, anusvaraChange = True):
@@ -3060,44 +2657,10 @@ def FixGrantha(Strng, reverse=False):
 # GM.resolve's getattr(CF, "FixMahajani", ...) dispatch keeps working.
 from .ScriptProcessing.Mahajani import _FixMahajaniEncode, _FixMahajaniDecode, FixMahajani
 
-def _FixAhomEncode(Strng):
-    ListVS = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, 'Ahom')) + ')'
-    Anu = '('+ GM.CrunchList('AyogavahaMap', 'Ahom')[1] + ')'
-
-    Strng = Strng.replace('\U0001172B\U0001170D', '\U0001171E')
-    Strng = Strng.replace('\U0001172B\U0001170E', '\U0001171D')
-
-    Strng = re.sub(ListVS + Anu, r'\2\1', Strng)
-    Strng = re.sub(Anu + '(𑜦)', r'\2\1', Strng)
-
-
-    return Strng
-
-def _FixAhomDecode(Strng):
-    ListVS = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, 'Ahom')) + ')'
-    Anu = '('+ GM.CrunchList('AyogavahaMap', 'Ahom')[1] + ')'
-
-    Strng = Strng.replace('\U0001171E', '\U0001172B\U0001170D')
-    Strng = Strng.replace('\U0001171D', '\U0001172B\U0001170E')
-
-    vir = Ahom.ViramaMap[0]
-    anu = Ahom.AyogavahaMap[1]
-
-    #reverse closed syllable e
-    Strng = re.sub(anu + '\U00011727' + '(?!\U00011728)', '\U00011726\U00011727\U0001172A', Strng)
-    Strng = re.sub('(\U00011726)(.)('+vir+')', '\U00011726\U00011727'+r'\2\3', Strng)
-
-    #rever closed syllable o
-    Strng = re.sub('(\U00011728)(.)('+vir+')', '\U00011726\U00011721'+r'\2\3', Strng)
-
-    Strng = Strng.replace(anu + '\U00011728', '\U00011726\U00011721\U0001172A')
-
-    Strng = re.sub(Anu + ListVS, r'\2\1', Strng)
-
-    return Strng
-
-def FixAhom(Strng, reverse=False):
-    return _FixAhomDecode(Strng) if reverse else _FixAhomEncode(Strng)
+# Ahom's own logic now lives in ScriptProcessing/Ahom.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Ahom import _FixAhomEncode, _FixAhomDecode, FixAhom
 
 # Multani's own Fix logic now lives in ScriptProcessing/Multani.py -
 # consolidated there (batch migration). Re-exported here so
@@ -3105,20 +2668,10 @@ def FixAhom(Strng, reverse=False):
 from .ScriptProcessing.Multani import _FixMultaniEncode, _FixMultaniDecode, FixMultani
 
 
-def _FixGujaratiEncode(Strng):
-    Strng = PostProcess.RetainDandasIndic(Strng, 'Gujarati', True)
-    Strng = Strng.replace('જ઼઼', 'ૹ').replace('શ઼', 'ૹ')
-
-    return Strng
-
-def _FixGujaratiDecode(Strng):
-    Strng = PostProcess.RetainDandasIndic(Strng, 'Gujarati')
-    Strng = Strng.replace('ૹ', 'જ઼઼').replace('ૹ', 'શ઼')
-
-    return Strng
-
-def FixGujarati(Strng, reverse=False):
-    return _FixGujaratiDecode(Strng) if reverse else _FixGujaratiEncode(Strng)
+# Gujarati's own logic now lives in ScriptProcessing/Gujarati.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Gujarati import _FixGujaratiEncode, _FixGujaratiDecode, FixGujarati
 
 def _FixZanabazarSquareEncode(Strng):
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ZanabazarSquare'))

@@ -66,25 +66,20 @@ def KhojkiQa(Strng):
 
     return Strng
 
-def removePaliAhom(Strng):
-    pali = "𑝁 𑝂 𑝃 𑝄 𑝅 𑝆".split(" ")
-    nonPali ="𑜄 𑜌 𑜓 𑜔 𑜃 𑜎".split(" ")
-
-    for p, np in zip(pali, nonPali):
-        Strng = Strng.replace(p, np)
-
-    return Strng
+# Ahom's own logic now lives in ScriptProcessing/Ahom.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Ahom import removePaliAhom, AhomClosed
 
 def SinhalaChandrbinduAnusvara(Strng):
     Strng = Strng.replace('\u0D81', '\u0D82')
 
     return Strng
 
-def LoCMarc8(Strng):
-    import unicodedata
-    Strng = unicodedata.normalize('NFD', Strng)
-    Strng = Strng.replace('\u02DA', '\u02D9')
-    return Strng
+# RomanLoC's own logic now lives in ScriptProcessing/RomanLoC.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.RomanLoC import LoCMarc8
 
 def AnusvaraAsN(Strng):
     Strng = Strng.replace('m\u034F', 'n')
@@ -183,13 +178,10 @@ def HebrewSBLTarget(Strng):
     return Strng
 
 #testcase todo
-def removetddash(Strng):
-    Strng += '\u05CE'
-
-    Strng = Strng.replace('d', 'd꞉').replace('t', 't꞉').replace('g', 'g꞉')
-    Strng = Strng.replace('ḏ', 'd').replace('ṯ', 't').replace('ḡ', 'g').replace('\u05CE', '')
-
-    return Strng
+# HebrewSBL's own logic now lives in ScriptProcessing/HebrewSBL.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.HebrewSBL import removetddash
 
 #testcase todo
 def ISO259Source(Strng):
@@ -460,10 +452,10 @@ def removeSukunEnd(Strng):
     return Strng
 
 #testcase todo
-def persianPaGaFaJa(Strng):
-    Strng = Strng.replace('پ', 'ف').replace('گ', 'ج')
-
-    return Strng
+# Arab-Fa's own logic now lives in ScriptProcessing/Arab_Fa.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Arab_Fa import persianPaGaFaJa
 
 #testcase todo
 def removeDiacriticsPersian(Strng):
@@ -1308,30 +1300,6 @@ def TamilpredictDentaNaExtended(Strng):
 
     return Strng
 
-def AhomClosed(Strng):
-    vir = Ahom.ViramaMap[0]
-    anu = Ahom.AyogavahaMap[1]
-
-    #closed i
-    Strng = Strng.replace('\U00011722', '\U00011723')
-    Strng = re.sub('(\U00011723)(.)('+vir+')', '\U00011722'+r'\2\3', Strng)
-    Strng = Strng.replace(anu + '\U00011723', anu + '\U00011722')
-
-    #closed u
-    Strng = Strng.replace('\U00011724', '\U00011725')
-    Strng = re.sub('(\U00011725)(.)('+vir+')', '\U00011724'+r'\2\3', Strng)
-    Strng = Strng.replace(anu + '\U00011725', anu + '\U00011724')
-
-    #closed e
-    Strng = re.sub('(\U00011726\U00011727)(.)('+vir+')', '\U00011726'+r'\2\3', Strng)
-    Strng = Strng.replace('\U00011726\U0001172A\U00011727', anu + '\U00011727')
-
-    #closed o
-    Strng = re.sub('(\U00011726\U00011721)(.)('+vir+')', '\U00011728'+r'\2\3', Strng)
-    Strng = Strng.replace('\U00011726\U0001172A\U00011721', anu + '\U00011728')
-
-    return Strng
-
 def TeluguTamilZha(Strng):
 
     return Strng
@@ -1446,20 +1414,10 @@ def TakriRemoveGemination(Strng):
 
     return Strng
 
-def MongolianSyllabize(Strng):
-    vowels = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'Mongolian')+['\u1820']) + ')'
-    consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Mongolian')) + ')'
-
-    Strng = re.sub(consonants + '?' + vowels, r'\1\2' + ' ', Strng)
-    Strng = re.sub('(\u180E\u1820)' + consonants, r'\1 \2', Strng)
-    Strng = re.sub('\u1820 ', '\u1820\u180B ', Strng)
-    Strng = Strng.replace('ᠣᠸᠠ᠋', 'ᠣᠸᠠ')
-    Strng = Strng.replace('ᠣᠸᠸᠠ᠋', 'ᠣᠸᠸᠠ')
-    Strng = Strng.replace(' \u180E', '\u180E')
-    Strng = Strng.replace(' ' + '\u200B', '')
-    Strng = Strng.replace(' ᢁ', 'ᢁ')
-
-    return Strng
+# Mongolian's own logic now lives in ScriptProcessing/Mongolian.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Mongolian import MongolianSyllabize
 
 def TibetanSyllabize(Strng):
     vowels = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'Tibetan')) + ')'
@@ -1527,32 +1485,20 @@ def TamilExtendedAnusvara(Strng):
 
     return Strng
 
-def RomanReadableLongEO(Strng):
-
-    Strng = Strng.replace('o', 'oa')
-    Strng = Strng.replace('oa\'', 'o')
-
-    Strng = Strng.replace('e', 'ae')
-    Strng = Strng.replace('ae\'', 'e')
-
-    Strng = Strng.replace('aeae', 'ee')
-    Strng = Strng.replace('oaoa', 'oo')
-
-    return Strng
+# RomanReadable's own logic now lives in ScriptProcessing/RomanReadable.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.RomanReadable import RomanReadableLongEO
 
 def TeluguArasunnaChandrabindu(Strng):
     Strng = Strng.replace('ఀ', 'ఁ')
 
     return Strng
 
-def MarchenSanskritPalatals(Strng):
-    tsaSeries = ['\U00011C82', '\U00011C83', '\U00011C84']
-    jaSereis =  ['\U00011C76', '\U00011C77', '\U00011C78']
-
-    for x, y in zip(tsaSeries, jaSereis):
-        Strng = Strng.replace(x, y)
-
-    return Strng
+# Marchen's own logic now lives in ScriptProcessing/Marchen.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Marchen import MarchenSanskritPalatals
 
 
 def SoyomboSanskritPalatals(Strng):
@@ -1715,12 +1661,15 @@ def TibetanLoCRomanLoCFix(Strng):
 
     return Strng
 
-def JavaneseSimplified(Strng):
-    Strng = Strng.replace('jny', 'ny')
-    return Strng
+# RomanLoCJavanese's own logic now lives in ScriptProcessing/RomanLoCJavanese.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.RomanLoCJavanese import JavaneseSimplified
 
-def BalineseSimplified(Strng):
-    return Strng
+# RomanLoCBalinese's own logic now lives in ScriptProcessing/RomanLoCBalinese.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.RomanLoCBalinese import BalineseSimplified
 
 def BalineseRomanLoCFix(Strng):
     Strng = Strng.replace('ḧ', 'h').replace('ng̈', '‘')
@@ -1980,13 +1929,10 @@ def DevanagariACandra(Strng):
 
     return Strng
 
-def WarangCitiModernOrthogaphy(Strng):
-    Strng = re.sub('([\U000118D4\U000118D5\U000118CC\U000118CB\U000118CF\U000118CE\U000118D2\U000118D1\U000118D5\U000118D4\U000118D8\U000118D7\U000118DB])(\u200D)(𑣙)', r'\1', Strng)
-    Strng = Strng.replace('𑣝', '𑣞')
-
-    Strng = Strng.replace('\u200D', '')
-
-    return Strng
+# WarangCiti's own logic now lives in ScriptProcessing/WarangCiti.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.WarangCiti import WarangCitiModernOrthogaphy
 
 def ChakmaEnableAllConjuncts(Strng):
     listC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Chakma")+Chakma.VowelMap[:1],key=len,reverse=True))+')'
@@ -2040,36 +1986,15 @@ def MultaniAbjad(Strng):
 
     return Strng
 
-def LaoNative(Strng):
+# Lao's own logic now lives in ScriptProcessing/Lao.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Lao import LaoNative
 
-    Strng = re.sub('ຕ([ເແໂໄ]?)ຕ', 'ດ' + r'\1' + 'ຕ', Strng)
-    Strng = re.sub('ຕ([ເແໂໄ]?)ຖ', 'ດ' + r'\1' + 'ຖ', Strng)
-    Strng = re.sub('ທ([ເແໂໄ]?)ທ', 'ດ' + r'\1' + 'ທ', Strng)
-    Strng = re.sub('ສ([ເແໂໄ]?)ສ', 'ດ' + r'\1' + 'ສ', Strng)
-
-    Strng = re.sub('ປ([ເແໂໄ]?)ປ', 'ບ' + r'\1' + 'ປ', Strng)
-    Strng = re.sub('ພ([ເແໂໄ]?)ພ', 'ບ' + r'\1' + 'ພ', Strng)
-
-    return Strng
-
-def SundaneseHistoricConjuncts(Strng, reverse = False):
-    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants + GM.Vowels + GM.VowelSignsNV,'Sundanese'))
-
-    if not reverse:
-        Strng = Strng.replace('᮪ᮙ', '\u1BAC') # Subjoined m
-        Strng = Strng.replace('᮪ᮝ', '\u1BAD') # Subjoined w
-
-        ListC = '|'.join(GM.CrunchSymbols(GM.Consonants + GM.Vowels + GM.VowelSignsNV,'Sundanese'))
-        Strng = re.sub('(' + ListC + ')' + 'ᮊ᮪', r'\1' + 'ᮾ', Strng) # Final K
-        Strng = re.sub('(' + ListC + ')' + 'ᮙ᮪', r'\1' + 'ᮿ', Strng) # Final M
-
-    else:
-        Strng = Strng.replace('\u1BAC', '᮪ᮙ') # Subjoined m
-        Strng = Strng.replace('\u1BAD', '᮪ᮝ') # Subjoined w
-        Strng = Strng.replace('ᮾ','ᮊ᮪') # Final K
-        Strng = Strng.replace('ᮿ','ᮙ᮪') # Final M
-
-    return Strng
+# Sundanese's own logic now lives in ScriptProcessing/Sundanese.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Sundanese import SundaneseHistoricConjuncts, SundaneseRemoveHistoric
 
 def LimbuSpellingSaI(Strng):
     vir = Limbu.ViramaMap[0]
@@ -2097,15 +2022,15 @@ def KhojkiRetainSpace(Strng):
 
     return Strng
 
-def BhaiksukiRetainSpace(Strng):
-    Strng = Strng.replace('𑱃', ' ')
+# Bhaiksuki's own logic now lives in ScriptProcessing/Bhaiksuki.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Bhaiksuki import BhaiksukiRetainSpace
 
-    return Strng
-
-def KaithiRetainSpace(Strng):
-    Strng = Strng.replace('⸱', ' ')
-
-    return Strng
+# Kaithi's own logic now lives in ScriptProcessing/Kaithi.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Kaithi import KaithiRetainSpace
 
 def MedievalTamilOrthography(Strng):
     OldEO = ['எ்', 'ெ்', 'ஒ்', 'ெ்ா', 'எ', 'ெ', 'ஒ', 'ொ']
@@ -2156,20 +2081,10 @@ def LimbuDevanagariConvention(Strng):
 
     return Strng
 
-def NandinagariPrishtamatra(Strng, reverse = False):
-    if not reverse:
-        Strng = Strng.replace('𑧚','𑧤')
-        Strng = Strng.replace('𑧛','𑧤𑧚')
-        Strng = Strng.replace('𑧜','𑧤𑧑')
-        Strng = Strng.replace('𑧝','𑧤𑧜')
-    else:
-        Strng = Strng.replace('𑧤𑧚', '𑧛')
-        Strng = Strng.replace('𑧤𑧑', '𑧜')
-        Strng = Strng.replace('𑧤𑧜', '𑧝')
-        Strng = Strng.replace('𑧤', '𑧚')
-
-
-    return Strng
+# Nandinagari's own logic now lives in ScriptProcessing/Nandinagari.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Nandinagari import NandinagariPrishtamatra
 
 def DevanagariPrishtamatra(Strng, reverse = False):
     if not reverse:
@@ -2747,15 +2662,6 @@ def RetainGujaratiDanda(Strng):
 
 def RetainGurmukhiNumerals(Strng):
     return RetainIndicNumerals(Strng, 'Gurmukhi')
-
-def SundaneseRemoveHistoric(Strng):
-    Strng = Strng.replace('᮪ᮻ', 'ᮢᮩ')
-    Strng = Strng.replace('᮪ᮼ', 'ᮣᮩ')
-    Strng = Strng.replace('ᮻ', 'ᮛᮩ')
-    Strng = Strng.replace('ᮼ', 'ᮜᮩ')
-    Strng = Strng.replace('\u1BBD','\u1B98')
-
-    return Strng
 
 def OriyaVa(Strng):
 
