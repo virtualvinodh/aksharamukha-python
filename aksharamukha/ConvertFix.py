@@ -1737,33 +1737,9 @@ from .ScriptProcessing.OldPersian import FixOldPersian, OldPersianSyllable, OldP
 # d<a> +i -> d<i> + i
 # d<a> + u -> d<u> + u
 # Convert numbers into Persinal Numeral System
-def _FixSinhalaEncode(Strng):
-    Strng = PostProcess.SinhalaDefaultConjuncts(Strng)
-
-    Strng = PostProcess.RetainIndicNumerals(Strng, 'Sinhala', True)
-    #Sinhala JNA
-    Strng = Strng.replace("\u0DA2\u0DCA\u0DA4","\u0DA5")
-    #sinhala
-    Strng = Strng.replace("(අ)(අ)","(ආ)")
-
-
-    return Strng
-
-def _FixSinhalaDecode(Strng):
-    Strng = PostProcess.SinhalaDefaultConjuncts(Strng)
-
-    #sinhala numerals
-    Strng = PostProcess.RetainIndicNumerals(Strng, 'Sinhala')
-    Strng = Strng.replace("\u0DA5","\u0DA2\u0DCA\u0DA4")
-    ## Remove joiners
-    Strng = Strng.replace("‍","")
-    Strng = Strng.replace("(ආ)","(අ)(අ)")
-
-
-    return Strng
-
-def FixSinhala(Strng, reverse=False):
-    return _FixSinhalaDecode(Strng) if reverse else _FixSinhalaEncode(Strng)
+# Sinhala's own logic now lives in ScriptProcessing/Sinhala.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Sinhala import _FixSinhalaEncode, _FixSinhalaDecode, FixSinhala
 
 # Santali's own Fix logic now lives in ScriptProcessing/Santali.py -
 # consolidated there (batch migration). Re-exported here so
@@ -2007,18 +1983,9 @@ def _FixChakmaDecode(Strng):
 def FixChakma(Strng, reverse=False):
     return _FixChakmaDecode(Strng) if reverse else _FixChakmaEncode(Strng)
 
-def _FixIASTEncode(Strng):
-
-    return Strng
-
-def _FixIASTDecode(Strng):
-    Strng = Strng.replace("ṁ",IAST.AyogavahaMap[1])
-    # ^ Some IAST publications use /ṁ/ instead of /m dot below/
-
-    return Strng
-
-def FixIAST(Strng,reverse=False):
-    return _FixIASTDecode(Strng) if reverse else _FixIASTEncode(Strng)
+# IAST's own logic now lives in ScriptProcessing/IAST.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.IAST import _FixIASTEncode, _FixIASTDecode, FixIAST
 
 # IPA's own Fix logic now lives in ScriptProcessing/IPA.py -
 # consolidated there (batch migration). Re-exported here so

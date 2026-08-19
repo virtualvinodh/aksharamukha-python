@@ -47,11 +47,9 @@ def RomanLoCSasha(Strng):
 
     return Strng
 
-def RomanLoCSLaDotLaUnderscore(Strng):
-    Strng = Strng.replace('ḻ', 'l̤')
-    Strng = Strng.replace( 'l̳', 'ḻ',)
-
-    return Strng
+# IAST's own logic now lives in ScriptProcessing/IAST.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.IAST import RomanLoCSLaDotLaUnderscore_pre as RomanLoCSLaDotLaUnderscore, joinVowelConsIAST
 
 def RomanLoCLaUnderscoreDoubleDot(Strng):
     Strng = Strng.replace('l̤', 'ḻ')
@@ -861,9 +859,9 @@ def ChakmaPali(Strng):
 
     return Strng
 
-def TakriArchaicKha(Strng):
-
-    return Strng.replace('𑚋', '𑚸')
+# Takri's own logic now lives in ScriptProcessing/Takri.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Takri import TakriArchaicKha_pre as TakriArchaicKha
 
 def UrduShortNotShown(Strng):
     Strng += "\u02BB\u02BB"
@@ -898,16 +896,9 @@ def swapEe(Strng):
 
     return Strng
 
-def swapEeItrans(Strng):
-    Strng = Strng.replace('^e', 'X@X@')
-    Strng = Strng.replace('e', '^e')
-    Strng = Strng.replace('X@X@','e')
-
-    Strng = Strng.replace('^o', 'X@X@')
-    Strng = Strng.replace('o', '^o')
-    Strng = Strng.replace('X@X@','o')
-
-    return Strng
+# Itrans's own logic now lives in ScriptProcessing/Itrans.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Itrans import swapEeItrans_pre as swapEeItrans
 
 def egrantamil(Strng):
     return Strng
@@ -1118,20 +1109,18 @@ def removeChillus(Strng):
 
     return Strng
 
-def SinhalaPali(Strng):
-    Strng = PostProcess.SinhalaPali(Strng, reverse = True)
-
-    return Strng
+# Sinhala's own logic now lives in ScriptProcessing/Sinhala.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Sinhala import SinhalaPali_pre as SinhalaPali
 
 def IASTPali(Strng):
     Strng = Strng.replace('ḷ', 'l̤')
 
     return Strng
 
-def CyrillicPali(Strng):
-    Strng = Strng.replace('л̣', 'л̤',)
-
-    return Strng
+# RussianCyrillic's own logic now lives in ScriptProcessing/RussianCyrillic.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.RussianCyrillic import CyrillicPali_pre as CyrillicPali
 
 def MalayalamPrakrit(Strng):
     ## Reverse Gemination
@@ -1184,9 +1173,6 @@ def joinVowelCons(Strng, script):
     Strng = re.sub(consonantsAll + ' ' + consonantsAll, r'\1\2', Strng)
 
     return Strng
-
-def joinVowelConsIAST(Strng):
-    return joinVowelCons(Strng, 'IAST')
 
 def PreProcess(Strng,Source,Target,postoptions,preoptions):
     if SR.get(Source).is_roman_diacritic or Source == 'Latn':

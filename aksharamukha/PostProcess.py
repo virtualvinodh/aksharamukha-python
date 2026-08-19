@@ -65,10 +65,9 @@ from .ScriptProcessing.Khojki import KhojkiRRI, KhojkiQa, KhojkiRetainSpace
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Ahom import removePaliAhom, AhomClosed
 
-def SinhalaChandrbinduAnusvara(Strng):
-    Strng = Strng.replace('\u0D81', '\u0D82')
-
-    return Strng
+# Sinhala's own logic now lives in ScriptProcessing/Sinhala.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Sinhala import SinhalaDefaultConjuncts, SinhalaPali_post as SinhalaPali, SinhalaConjuncts, SinhalaChandrbinduAnusvara
 
 # RomanLoC's own logic now lives in ScriptProcessing/RomanLoC.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
@@ -715,13 +714,9 @@ def westernsyriac(Strng):
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Pallava import kawitan, sundapura
 
-def readableItrans(Strng):
-    pairsReadable = [('R^i','RRi'), ('R^I','RRii'), ('',''), ('',''), ('A', 'aa'), ('I', 'ii'), ('U', 'uu'), ('Ch', 'chh'), ('kSh','x'), ('M', '.m')]
-
-    for x, y in pairsReadable:
-        Strng = Strng.replace(x,y)
-
-    return Strng
+# Itrans's own logic now lives in ScriptProcessing/Itrans.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Itrans import swapEeItrans_post as swapEeItrans, readableItrans
 
 #todo change UI example : haMpi  ha~pi hA~s hAMs hU~ hUM -> hampi hAA hAs
 def NasalTilde(Strng):
@@ -1350,11 +1345,9 @@ def TamilExtendedNNA(Strng):
 
     return Strng
 
-def TakriRemoveGemination(Strng):
-
-    Strng = re.sub('(.)' + Takri.ViramaMap[0] + r'\1', r'\1', Strng)
-
-    return Strng
+# Takri's own logic now lives in ScriptProcessing/Takri.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Takri import TakriArchaicKha_post as TakriArchaicKha, TakriRemoveGemination
 
 # Mongolian's own logic now lives in ScriptProcessing/Mongolian.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
@@ -1401,10 +1394,6 @@ def SoyomboSyllabize(Strng):
 
     return Strng
 
-
-def TakriArchaicKha(Strng):
-
-    return Strng.replace('𑚸', '𑚋')
 
 def TeluguReph(Strng):
     consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Telugu')) + ')'
@@ -1504,11 +1493,9 @@ def RomanLoCSasha(Strng):
     Strng = Strng.replace('ṣ', 'sh')
     return Strng
 
-def RomanLoCSLaDotLaUnderscore(Strng):
-    Strng = Strng.replace('ḻ', 'l̳')
-    Strng = Strng.replace('l̤', 'ḻ')
-
-    return Strng
+# IAST's own logic now lives in ScriptProcessing/IAST.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.IAST import RomanLoCSLaDotLaUnderscore_post as RomanLoCSLaDotLaUnderscore
 
 def RomanLoCLaUnderscoreDoubleDot(Strng):
     Strng = Strng.replace('ḻ', 'l̤')
@@ -1713,19 +1700,9 @@ def AnusvaratoNasalASTISO(Strng):
     return Strng
 
 
-def removeDiacritics(Strng):
-    diacritics = ['\u0331', '\u0306', '\u0323', '\u035F', '\u0324', '\u035F', '\u0307', '\u0301', '\u0303', '\u0310', '\u0306', '\u0302', '\u0304']
-
-    for dia in diacritics:
-        Strng = Strng.replace(dia, '')
-
-    vowelDia = ['а̄', 'ӣ', 'ӯ', 'ӗ']
-    vowel = ['\u0430', '\u0438', '\u0443', '\u044D']
-
-    for x, y in zip(vowelDia, vowel):
-        Strng = Strng.replace(x, y)
-
-    return Strng
+# RussianCyrillic's own logic now lives in ScriptProcessing/RussianCyrillic.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.RussianCyrillic import CyrillicPali_post as CyrillicPali, removeDiacritics
 
 # Ranjana's own logic now lives in ScriptProcessing/Ranjana.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
@@ -2561,63 +2538,8 @@ def SaurashtraHaru(Strng):
 
     return Strng
 
-def SinhalaDefaultConjuncts(Strng):
-    vir = Sinhala.ViramaMap[0]
-    YR = '|'.join(Sinhala.ConsonantMap[25:27])
-
-    Strng = re.sub('('+vir+')'+'('+YR+')',r'\1'+'\u200D'+r'\2',Strng)
-    Strng = re.sub('('+YR[2]+')'+'('+vir+')'+'('+'\u200D'+')'+'('+YR[0]+')',r'\1\3\2\3\4',Strng)
-
-    Strng = Strng.replace(Sinhala.ConsonantMap[7]+Sinhala.ViramaMap[0]+Sinhala.ConsonantMap[9],'\u0DA5')
-    Strng = Strng.replace(Sinhala.ConsonantMap[0]+vir+Sinhala.ConsonantMap[30],Sinhala.ConsonantMap[0]+vir+'\u200D'+Sinhala.ConsonantMap[30])
-
-    ## KSHA
-
-    Strng = Strng.replace('ර‍්‍ය', 'ර්ය')
-    Strng = Strng.replace('ර්‍ර', 'ර්ර')
-
-    return Strng
-
 def IASTPali(Strng):
     Strng = Strng.replace('l̤', 'ḷ')
-
-    return Strng
-
-def CyrillicPali(Strng):
-    Strng = Strng.replace('л̤', 'л̣')
-
-    return Strng
-
-def SinhalaConjuncts(Strng):
-    ListC = Sinhala.ConsonantMap + [Sinhala.SouthConsonantMap[0]]
-    vir = Sinhala.ViramaMap[0]
-    ZWJ ="\u200D"
-
-    conjoining =[(0, 28), (2, 18), (9, 5), (10, 11), (15, 16), (15, 28), (17, 18), (17, 28), (19, 16), (19, 17), (19, 18), (19, 28) ]
-
-    for x, y in conjoining:
-        Strng = Strng.replace(ListC[x] + vir + ListC[y], ListC[x] + vir + ZWJ + ListC[y])
-
-    for x in ListC:
-        Strng = Strng.replace(ListC[26] + vir + x, ListC[26] + vir + ZWJ + x)
-
-    for x in ListC:
-        for y in ListC:
-            Strng = Strng.replace(x + vir + y, x + ZWJ + vir + y)
-
-    Strng = Strng.replace('ර‍්‍ය', 'ර්‍ය')
-
-    return Strng
-
-def SinhalaPali(Strng, reverse = False):
-    EOLong = Sinhala.VowelMap[10:11]+Sinhala.VowelMap[12:13]+Sinhala.VowelSignMap[9:10]+Sinhala.VowelSignMap[11:12]
-    EOShort = Sinhala.SouthVowelMap+Sinhala.SouthVowelSignMap
-
-    for x,y in zip(EOLong,EOShort):
-        if not reverse:
-            Strng = Strng.replace(x,y)
-        else:
-            Strng = Strng.replace(y,x)
 
     return Strng
 
@@ -3108,17 +3030,6 @@ def swapEe(Strng):
     Strng = Strng.replace('X@X@', 'e')
 
     Strng = Strng.replace('O', 'X@X@')
-    Strng = Strng.replace('o', 'O')
-    Strng = Strng.replace('X@X@', 'o')
-
-    return Strng
-
-def swapEeItrans(Strng):
-    Strng = Strng.replace('^e', 'X@X@')
-    Strng = Strng.replace('e', 'E')
-    Strng = Strng.replace('X@X@', 'e')
-
-    Strng = Strng.replace('^o', 'X@X@')
     Strng = Strng.replace('o', 'O')
     Strng = Strng.replace('X@X@', 'o')
 
