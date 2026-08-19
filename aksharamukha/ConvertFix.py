@@ -2040,23 +2040,10 @@ from .ScriptProcessing.PhagsPa import _FixPhagsPaEncode, _FixPhagsPaDecode, FixP
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Latn import _FixLatnEncode, _FixLatnDecode, FixLatn
 
-def _FixArabEncode(Strng, Source):
-    Strng = PersoArabicPuntuation(Strng, False)
-    pass
-    #Strng = Strng.replace('â', 'ʾ')
-
-    return Strng
-
-def _FixArabDecode(Strng, Source):
-    Strng = PersoArabicPuntuation(Strng, True)
-    Strng = Strng.replace('آ', 'آ').replace('ـ', '')
-    ## reverse shadda kasra
-    Strng = Strng.replace('\u064E\u0651', '\u0651\u064E')
-
-    return Strng
-
-def FixArab(Strng, Source, reverse=False):
-    return _FixArabDecode(Strng, Source) if reverse else _FixArabEncode(Strng, Source)
+# Arab's own logic now lives in ScriptProcessing/Arab.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Arab import _FixArabEncode, _FixArabDecode, FixArab
 
 def _FixThaaEncode(Strng, Source):
     Strng = PersoArabicPuntuation(Strng, False)
@@ -2300,21 +2287,10 @@ from .ScriptProcessing.Assamese import _FixAssameseEncode, _FixAssameseDecode, F
 # GM.resolve's getattr(CF, "FixSharada", ...) dispatch keeps working.
 from .ScriptProcessing.Sharada import _FixSharadaEncode, _FixSharadaDecode, FixSharada
 
-def _FixKannadaEncode(Strng):
-    Strng = PostProcess.RetainDandasIndic(Strng, 'Kannada', True)
-    #Strng = PostProcess.RetainIndicNumerals(Strng, 'Kannada', True)
-
-    Strng = re.sub('(\u0CCD)([^\u0CAB\u0C9C])(\u0CBC)', r'\1' + '\u200C' + r'\2\3', Strng)
-
-    return Strng
-
-def _FixKannadaDecode(Strng):
-    Strng = PostProcess.RetainDandasIndic(Strng, 'Kannada')
-
-    return Strng
-
-def FixKannada(Strng, reverse=False):
-    return _FixKannadaDecode(Strng) if reverse else _FixKannadaEncode(Strng)
+# Kannada's own logic now lives in ScriptProcessing/Kannada.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Kannada import _FixKannadaEncode, _FixKannadaDecode, FixKannada
 
 def _FixGranthaEncode(Strng):
     Strng = Strng.replace('॑', '᳴')

@@ -807,10 +807,10 @@ def shvanakhall(Strng):
 
     return Strng
 
-def longEOISO(Strng):
-    Strng = Strng.replace('e', 'ē').replace('o', 'ō')
-
-    return Strng
+# ISO's own logic now lives in ScriptProcessing/ISO.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.ISO import longEOISO, joinVowelConsISO
 
 def SanskritLexicaizeHK(Strng):
 
@@ -1188,9 +1188,6 @@ def joinVowelCons(Strng, script):
 def joinVowelConsIAST(Strng):
     return joinVowelCons(Strng, 'IAST')
 
-def joinVowelConsISO(Strng):
-    return joinVowelCons(Strng, 'ISO')
-
 def PreProcess(Strng,Source,Target,postoptions,preoptions):
     if SR.get(Source).is_roman_diacritic or Source == 'Latn':
         Strng = Strng.lower()
@@ -1406,10 +1403,10 @@ def RemoveJoiners(Strng):
 
     return Strng
 
-def ArabicGimelJa(Strng):
-    Strng = Strng.replace("ج", "ڨ")
-
-    return Strng
+# Arab's own logic now lives in ScriptProcessing/Arab.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Arab import ArabicGimelJa
 
 # Normalize Input
 # ka + <nukta> -> qa etc

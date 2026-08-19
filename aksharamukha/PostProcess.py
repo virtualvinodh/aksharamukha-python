@@ -85,24 +85,10 @@ def ShowSchwaHindi(Strng):
     Strng = PreP.RemoveSchwaHindi(Strng, True)
     return Strng
 
-def KannadaSpacingCandrabindu(Strng):
-    Strng = Strng.replace('\u0C81', '\u0C80')
-
-    return Strng
-
-def KannadaNotRepha(Strng):
-    ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Kannada')) + ")"
-
-    Strng = re.sub('ರ್(?=' + ListC + ')', 'ರ‍್', Strng)
-
-    return Strng
-
-def KannadaNakaraPollu(Strng):
-    ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Kannada')) + ")"
-
-    Strng = re.sub('(?<!\u0CCD)ನ್(?!' + ListC + ')', '\u0CDD', Strng)
-
-    return Strng
+# Kannada's own logic now lives in ScriptProcessing/Kannada.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Kannada import KannadaSpacingCandrabindu, KannadaNotRepha, KannadaNakaraPollu
 
 def TeluguRemoveNukta(Strng):
     Strng = Strng.replace('\u0C3C', '')
@@ -357,18 +343,12 @@ from .ScriptProcessing.Latn import alephAyinLatnAlternate, alephAyinLatnAlternat
 
 #testcase todo
 #testcase todo
-def ArabRemoveAdditions(Strng):
-    Strng = Strng.replace('ڨ', 'ج').replace('ڤ', 'ف').replace('پ', 'ف')
-
-    return Strng
+# Arab's own logic now lives in ScriptProcessing/Arab.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Arab import ArabRemoveAdditions, arabicRemoveAdditionsPhonetic, ArabAtoAleph
 
 #testcase todo
-def arabicRemoveAdditionsPhonetic(Strng):
-
-    Strng = Strng.replace('ڨ', 'غ').replace('ڤ', 'ف').replace('پ', 'ب')
-
-    return Strng
-
 #testcase todo
 def removeSemiticLetters(Strng):
     Strng = Strng.replace('ṭ', 't').replace('ḥ', 'h').replace('ḍ', 'z').replace('ḏ', 'z').replace('ẓ', 'z')\
@@ -714,12 +694,6 @@ def FixSemiticRoman(Strng, Target):
     return Strng
 
 #testcase todo
-def ArabAtoAleph(Strng):
-    Strng = Strng.replace('أ', 'ا')
-
-
-    return Strng
-
 #testcase todo
 def estrangelasyriac(Strng):
 
@@ -1083,10 +1057,10 @@ def mDotBelowToAbove(Strng):
 
 #todo : ISOPali postoptions empty todo
 
-def noLongEO(Strng):
-    Strng = Strng.replace('ē', 'e').replace('ō', 'o')
-
-    return Strng
+# ISO's own logic now lives in ScriptProcessing/ISO.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.ISO import noLongEO
 
 def TamilStyleUUCore(Strng):
     Strng = re.sub('([ഖഗഘഛഝഠഡഢഥദധഫബഭ])' + '([ുൂ])', r'\1' + '\u200D' + r'\2', Strng)
