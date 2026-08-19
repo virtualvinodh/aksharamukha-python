@@ -105,17 +105,9 @@ def BalineseJavaneseMoveRepha(Strng, tgt, reph):
 # consolidated there (batch migration).
 from .ScriptProcessing.DivesAkuru import DivesAkuruAlternateIndVowels_pre as DivesAkuruAlternateIndVowels
 
-def KawiMoveRepha(Strng):
-    tgt = 'Kawi'
-    repha = '\U00011F02'
-
-    cons = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants + GM.Vowels, tgt)) + ')'
-    vows = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, tgt)) + ')'
-    vir = '\U00011F42'
-
-    Strng = re.sub(repha + '(('+cons+')' + '('+ vir + cons +')*'+'(' + vows + ')?)', r'\1' + repha, Strng)
-
-    return Strng
+# Kawi's own logic now lives in ScriptProcessing/Kawi.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Kawi import KawiMoveRepha_pre as KawiMoveRepha
 
 # Javanese's own logic now lives in ScriptProcessing/Javanese.py -
 # consolidated there (batch migration).

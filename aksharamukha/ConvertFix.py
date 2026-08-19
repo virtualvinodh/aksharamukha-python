@@ -910,71 +910,9 @@ from .ScriptProcessing.Balinese import _FixBalineseEncode, _FixBalineseDecode, F
 from .ScriptProcessing.DivesAkuru import _FixDivesAkuruEncode, _FixDivesAkuruDecode, FixDivesAkuru
 
 # Javanese - Reppha & Subjoining ra & ya
-def _FixKawiEncode(Strng):
-    target = 'Kawi'
-
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target))
-    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,target))
-    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,target))
-
-    ra = Kawi.ConsonantMap[26]
-    vir = Kawi.ViramaMap[0]
-    aVS = '\U00011F34'
-    aVSAlt = '\U00011F35'
-    E = '\U00011F3E'
-    AA = '\U00011F34'
-
-    Strng = re.sub(vir+'('+ListC+')','\U00011F42'+r'\1',Strng)
-    # Introduce Repha : ra + sub Virama + Cons -> Cons + Repha
-    Strng = re.sub('(?<!\U00011F42)'+ra+'\U00011F42'+'('+ListC+')','\U00011F02'+r'\1',Strng)
-    #special AA
-    TallACons = '|'.join(['\U00011F26', '\U00011F16', '\U00011F1C'])
-
-    Strng = re.sub('(?<!\U00011F42)('+TallACons+')'+'('+E+'?)'+AA,r'\1\2'+'\U00011F35',Strng)
-
-     ## buddho --> Tall A
-    Strng = re.sub('('+TallACons+')(\U00011F42)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4'+'\U00011F35',Strng)
-    Strng = re.sub('('+TallACons+')(\U00011F42)('+ListC +')'+'(\U00011F42)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4\5\6'+'\U00011F35',Strng)
-
-    ## post-base consonant signs do not need disambiguating AA
-    postBaseCons = '|'.join(['\U00011F1A', '\U00011F26', '\U00011F27', '\U00011F2B', '\U00011F31'])
-    Strng = re.sub('(\U00011F42)('+postBaseCons+')'+'(\U00011F35)', r'\1\2' + AA, Strng)
-
-
-
-    return Strng
-
-def _FixKawiDecode(Strng):
-    target = 'Kawi'
-
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target))
-    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,target))
-    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,target))
-
-    ra = Kawi.ConsonantMap[26]
-    vir = Kawi.ViramaMap[0]
-    aVS = '\U00011F34'
-    aVSAlt = '\U00011F35'
-    E = '\U00011F3E'
-    AA = '\U00011F34'
-
-    # Replace Subjoining Virama with Explicit Virama
-    Strng = Strng.replace('\U00011F42',vir)
-    # Replace Repha
-    Strng = Strng.replace('\U00011F02', ra + vir)
-    # reverse AltA
-    Strng = Strng.replace(aVSAlt, aVS)
-    # reverse JNA
-    Strng = Strng.replace('\U00011F33', '𑼙𑽂𑼛')
-    # decompose ind.vowels
-    Strng = Strng.replace('\U00011F04\U00011F34', '\U00011F05').replace('\U00011F06\U00011F34', '\U00011F07').replace('\U00011F08\U00011F34', '\U00011F09')
-    # reverse Alt ai, alt au
-    Strng = Strng.replace('\U00011F3E\U00011F3E', '\U00011F3F')
-
-    return Strng
-
-def FixKawi(Strng, reverse=False):
-    return _FixKawiDecode(Strng) if reverse else _FixKawiEncode(Strng)
+# Kawi's own logic now lives in ScriptProcessing/Kawi.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Kawi import FixKawi, _FixKawiEncode, _FixKawiDecode
 
 # Javanese - Reppha & Subjoining ra & ya
 # Javanese's own logic now lives in ScriptProcessing/Javanese.py -

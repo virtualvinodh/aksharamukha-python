@@ -1187,32 +1187,9 @@ from .ScriptProcessing.RomanLoCDevanagari import HindiMarathiRomanLoCFix_post as
 # consolidated there (batch migration).
 from .ScriptProcessing.DivesAkuru import DivesAkuruAlternateIndVowels_post as DivesAkuruAlternateIndVowels, DivesAkuruHomoOrganNasal, UseAlternateYA
 
-def KawiMoveRepha(Strng):
-    tgt = 'Kawi'
-    repha = '\U00011F02'
-
-    cons = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants + GM.Vowels, tgt)) + ')'
-    vows = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, tgt)) + ')'
-    vir = '\U00011F42'
-
-    Strng = re.sub('(('+cons+')' + '('+ vir + cons +')*'+'(' + vows + ')?)' + repha , repha + r'\1', Strng)
-
-    return Strng
-
-def KawiAltAiAU(Strng):
-    #  Alt ai, alt au
-    Strng = Strng.replace('\U00011F3F', '\U00011F3E\U00011F3E')
-
-    return Strng
-
-def KawiDecomposedVowel(Strng):
-    Strng = Strng.replace('\U00011F05', '\U00011F04\U00011F34').replace('\U00011F07', '\U00011F06\U00011F34').replace('\U00011F09', '\U00011F08\U00011F34')
-
-    return Strng
-
-def KawiArchaicJNA(Strng):
-    Strng = Strng.replace('𑼙𑽂𑼛', '\U00011F33')
-    return Strng
+# Kawi's own logic now lives in ScriptProcessing/Kawi.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Kawi import KawiAltAiAU, KawiArchaicJNA, KawiDecomposedVowel, KawiMoveRepha_post as KawiMoveRepha
 
 # Javanese's own logic now lives in ScriptProcessing/Javanese.py -
 # consolidated there (batch migration).
