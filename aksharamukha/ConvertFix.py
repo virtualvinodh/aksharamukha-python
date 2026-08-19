@@ -1482,12 +1482,16 @@ def FixJavanese(Strng,reverse=False):
     return _FixJavaneseDecode(Strng) if reverse else _FixJavaneseEncode(Strng)
 
 
-def FixUrdu(Strng, reverse=False):
-    return FixUrduShahmukhi("Urdu", Strng, reverse)
+# Urdu's own Fix logic now lives in ScriptProcessing/Urdu.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixUrdu", ...) dispatch keeps working.
+from .ScriptProcessing.Urdu import FixUrdu
 
 
-def FixShahmukhi(Strng, reverse=False):
-    return FixUrduShahmukhi('Shahmukhi', Strng, reverse)
+# Shahmukhi's own Fix logic now lives in ScriptProcessing/Shahmukhi.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixShahmukhi", ...) dispatch keeps working.
+from .ScriptProcessing.Shahmukhi import FixShahmukhi
 
 # Urdu - Shadda, Final E
 def _FixUrduShahmukhiEncode(Target, Strng):
@@ -2156,8 +2160,10 @@ def _FixRomanReadableColloquial(Strng, reverse, colloquial):
 def FixRomanReadable(Strng, reverse = False):
     return _FixRomanReadableColloquial(Strng, reverse, colloquial=False)
 
-def FixRomanColloquial(Strng, reverse = False):
-    return _FixRomanReadableColloquial(Strng, reverse, colloquial=True)
+# RomanColloquial's own Fix logic now lives in ScriptProcessing/RomanColloquial.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixRomanColloquial", ...) dispatch keeps working.
+from .ScriptProcessing.RomanColloquial import FixRomanColloquial
 
 
 def _FixWarangCitiEncode(Strng):
@@ -2795,19 +2801,10 @@ def _FixArab_UrDecode(Strng, Source):
 def FixArab_Ur(Strng, Source, reverse=False):
     return _FixArab_UrDecode(Strng, Source) if reverse else _FixArab_UrEncode(Strng, Source)
 
-def _FixUgarEncode(Strng, Source):
-    Strng = Strng.replace("𐎒²","𐎝")
-    Strng = Strng.replace(' ', '𐎟')
-
-    return Strng
-
-def _FixUgarDecode(Strng, Source):
-    Strng = Strng.replace('𐎟', '')
-
-    return Strng
-
-def FixUgar(Strng, Source, reverse=False):
-    return _FixUgarDecode(Strng, Source) if reverse else _FixUgarEncode(Strng, Source)
+# Ugar's own Fix logic now lives in ScriptProcessing/Ugar.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixUgar", ...) dispatch keeps working.
+from .ScriptProcessing.Ugar import _FixUgarEncode, _FixUgarDecode, FixUgar
 
 def _FixSogdEncode(Strng, Source):
     Strng = Strng.replace("𐼹²","𐽄")
@@ -2900,76 +2897,15 @@ from .ScriptProcessing.Cham import _FixChamEncode, _FixChamDecode, FixCham
 
 # Subjoined Consonants in Tai Tham
 # Mai Kang Lai - /ng/
-def _FixTaiThamEncode(Strng):
-    vir = TaiTham.ViramaMap[0]
-    Cons = [vir+x for x in [TaiTham.ConsonantMap[x] for x in [26,27]]] # /ra/ and /la/
-    Sub =['\u1A55','\u1A56'] # Subjoined Forms of /ra/ and /la/
+# TaiTham's own Fix logic now lives in ScriptProcessing/TaiTham.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixTaiTham", ...) dispatch keeps working.
+from .ScriptProcessing.TaiTham import _FixTaiThamEncode, _FixTaiThamDecode, FixTaiTham
 
-    # Ra/La + vira -> Subjoined
-    for x,y in zip(Cons,Sub):
-        Strng = Strng.replace(x,y)
-
-    # Strng = Strng.replace("\u1A63\u1A74","\u1A74\u1A63") # kAM -> kMA (Like Thai ำ )
-    # Check above in Pali texts
-    #Strng = Strng.replace('ᩰ', 'ᩮᩣ')
-    pass
-
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'TaiTham'))
-    ng = TaiTham.ConsonantMap[4]+vir
-
-    # Mai Kang Lai
-    Strng = re.sub('('+ng+')'+'('+ListC+')','\u1A58'+r'\2',Strng)
-    # Subjoining Virama
-    Strng = re.sub(vir+'('+ListC+')','\u1A60'+r'\1',Strng)
-    # Great Sa
-    Strng = Strng.replace('ᩈ᩠ᩈ','ᩔ')
-
-    # Fix Tall A
-    TallACons = '|'.join(['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ']) ## va da dha ga
-
-    Strng = PostProcess.FixTallA(Strng, TallACons)
-
-    Strng = Strng.replace('\u1A55\u1A60\u1A3F', '\u1A60\u1A3F\u1A55') # Fix krya
-
-    Strng = Strng.replace('\u1A60\u1A47', vir + '\u1A47') ## Fonts don't support SSA conjunct
-
-
-
-    return Strng
-
-def _FixTaiThamDecode(Strng):
-    vir = TaiTham.ViramaMap[0]
-    Cons = [vir+x for x in [TaiTham.ConsonantMap[x] for x in [26,27]]] # /ra/ and /la/
-    Sub =['\u1A55','\u1A56'] # Subjoined Forms of /ra/ and /la/
-
-    # Ra/La + vira -> Subjoined
-    for x,y in zip(Cons,Sub):
-        Strng = Strng.replace(y,x)
-
-    #Strng = Strng.replace("\u1A74\u1A63","\u1A63\u1A74") # kAM <- kMA
-    pass
-
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'TaiTham'))
-    ng = TaiTham.ConsonantMap[4]+vir
-
-    AA = 'ᩣ'
-    Strng = Strng.replace('ᩔ', 'ᩈ᩠ᩈ') ## Reverse great sa
-    Strng = re.sub('('+ListC+')'+'\u1A58',r'\1' + ng,Strng) # Reverse: Kai mang Lai -> ng + virama
-    Strng = Strng.replace('\u1A60',vir) # Regular Virama for Transliteration
-    Strng = Strng.replace("ᩤ", AA) # Reverse Tall A
-
-    Strng = Strng.replace('\u1A60\u1A3F\u1A55', '\u1A55\u1A60\u1A3F') # Rever krya
-
-
-    return Strng
-
-def FixTaiTham(Strng,reverse=False):
-    return _FixTaiThamDecode(Strng) if reverse else _FixTaiThamEncode(Strng)
-
-def FixLaoTham(Strng, reverse=False):
-    Strng = FixTaiTham(Strng, reverse)
-
-    return Strng
+# LaoTham's own Fix logic now lives in ScriptProcessing/LaoTham.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixLaoTham", ...) dispatch keeps working.
+from .ScriptProcessing.LaoTham import FixLaoTham
 
 # FixThamLoC/FixLueTham/FixKhuenTham share the same "Tall A" regex logic;
 # they differ in the TaiTham consonant list used for the Tall A match
@@ -3010,8 +2946,10 @@ def _FixTaiThamFamily(Strng, reverse, tall_a_cons, marker_cleanup, ra_haam_swap)
 # GM.resolve's getattr(CF, "FixThamLoC", ...) dispatch keeps working.
 from .ScriptProcessing.ThamLoC import FixThamLoC
 
-def FixLueTham(Strng, reverse=False):
-    return _FixTaiThamFamily(Strng, reverse, ['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ'], marker_cleanup=False, ra_haam_swap=False)
+# LueTham's own Fix logic now lives in ScriptProcessing/LueTham.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixLueTham", ...) dispatch keeps working.
+from .ScriptProcessing.LueTham import FixLueTham
 
 def FixKhuenTham(Strng, reverse=False):
     return _FixTaiThamFamily(Strng, reverse, ['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ'], marker_cleanup=False, ra_haam_swap=True)
@@ -3070,28 +3008,10 @@ def _FixBengaliDecode(Strng):
 def FixBengali(Strng, reverse=False):
     return _FixBengaliDecode(Strng) if reverse else _FixBengaliEncode(Strng)
 
-def _FixAssameseEncode(Strng):
-    Ra = "\u09B0"
-    AssRa = "\u09F0"
-
-    Strng = PostProcess.KhandaTa(Strng, 'Assamese', False)
-
-    Strng = Strng.replace(Ra,AssRa)
-
-    return Strng
-
-def _FixAssameseDecode(Strng):
-    Ra = "\u09B0"
-    AssRa = "\u09F0"
-
-    Strng = PostProcess.KhandaTa(Strng, 'Assamese', True)
-
-    Strng = Strng.replace(AssRa,Ra)
-
-    return Strng
-
-def FixAssamese(Strng,reverse=False):
-    return _FixAssameseDecode(Strng) if reverse else _FixAssameseEncode(Strng)
+# Assamese's own Fix logic now lives in ScriptProcessing/Assamese.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixAssamese", ...) dispatch keeps working.
+from .ScriptProcessing.Assamese import _FixAssameseEncode, _FixAssameseDecode, FixAssamese
 
 # Sharada's own Fix logic now lives in ScriptProcessing/Sharada.py -
 # consolidated there (batch migration). Re-exported here so
