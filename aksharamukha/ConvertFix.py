@@ -486,24 +486,9 @@ from .ScriptProcessing.Mro import _FixMroEncode, _FixMroDecode, FixMro
 # GM.resolve's getattr(CF, "FixWancho", ...) dispatch keeps working.
 from .ScriptProcessing.Wancho import _FixWanchoEncode, _FixWanchoDecode, FixWancho
 
-def _FixSiddhamEncode(Strng):
-    pass
-
-    return Strng
-
-def _FixSiddhamDecode(Strng):
-    ## reverse the alternate forms
-    Strng = Strng.replace('𑗜', '𑖲') # VS U
-    Strng = Strng.replace('𑗝', '𑖳') # VS UU
-    Strng = Strng.replace('𑗛', '𑖄') # VS U
-    Strng = Strng.replace('𑗘', '𑖂') # VS I1
-    Strng = Strng.replace('𑗙', '𑖂') # VS I2
-    Strng = Strng.replace('𑗚', '𑖃') # VS II
-
-    return Strng
-
-def FixSiddham(Strng, reverse=False):
-    return _FixSiddhamDecode(Strng) if reverse else _FixSiddhamEncode(Strng)
+# Siddham's own logic now lives in ScriptProcessing/Siddham.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Siddham import FixSiddham, _FixSiddhamEncode, _FixSiddhamDecode
 
 # Bhaiksuki's own logic now lives in ScriptProcessing/Bhaiksuki.py -
 # consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
@@ -1120,35 +1105,9 @@ def ThaiReverseVowelSigns(Strng,reverse=False):
 
     return Strng
 
-def _FixLaoPaliEncode(Strng, ctx):
-    Strng = ReverseVowelSigns(Strng,"LaoPali",False)
-
-    transcription_mode = ctx.transcription_mode if ctx is not None else False
-    if transcription_mode:
-        Strng = LaoPaliTranscribe(Strng, True)
-
-        Strng = Strng.replace("ຫ຺໌","ຫ໌")
-
-    Strng = Strng.replace("\u0EB2\u0ECD","\u0EB3")
-
-    return Strng
-
-def _FixLaoPaliDecode(Strng, ctx):
-    Strng = ReverseVowelSigns(Strng,"LaoPali",True)
-
-    transcription_mode = ctx.transcription_mode if ctx is not None else False
-    if transcription_mode:
-        Strng = LaoPaliTranscribe(Strng, True)
-
-        Strng = Strng.replace("ຫ຺໌","ຫ໌")
-
-    # VS AA + Anusvara <- VS AM (Ligature)
-    Strng= Strng.replace("\u0EB3","\u0EB2\u0ECD")
-
-    return Strng
-
-def FixLaoPali(Strng,reverse=False,ctx=None):
-    return _FixLaoPaliDecode(Strng, ctx) if reverse else _FixLaoPaliEncode(Strng, ctx)
+# LaoPali's own logic now lives in ScriptProcessing/LaoPali.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.LaoPali import _FixLaoPaliEncode, _FixLaoPaliDecode, FixLaoPali, LaoPaliTranscribe
 
 # Makasar's own Fix logic now lives in ScriptProcessing/Makasar.py -
 # consolidated there (batch migration). Re-exported here so
@@ -1583,17 +1542,6 @@ from .ScriptProcessing.LueTham import FixLueTham
 from .ScriptProcessing.KhuenTham import FixKhuenTham
 
 # Transcription for Pali Lao
-def LaoPaliTranscribe(Strng,reverse=False, anusvaraChange = True):
-    from . import PostProcess as pp
-    shortA, conjA = '\u0EB0', '\u0EB1'
-
-    if not reverse:
-        Strng = pp.ThaiLaoTranscription(Strng,"LaoPali",shortA,conjA, anusvaraChange = anusvaraChange)
-    else:
-        Strng = pp.ThaiLaoTranscription(Strng,"LaoPali",shortA, conjA,reverse=True)
-
-    return Strng
-
 # Assamese and Bengali have the same mapping file duplicated
 # Replace Bengali /ra/ with Assamese /ra/
 # Bengali's own logic now lives in ScriptProcessing/Bengali.py -

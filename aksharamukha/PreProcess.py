@@ -777,14 +777,9 @@ def ThaiPhonetic(Strng):
 
     return Strng
 
-def LaoPhonetic(Strng):
-    Strng = Strng.replace('ດ', 'ທ')
-    Strng = Strng.replace('ບ', 'ພ')
-    Strng = Strng.replace('ງໍ', 'ງ')
-
-    Strng = Strng.replace('\u035C', '')
-
-    return Strng
+# LaoPali's own logic now lives in ScriptProcessing/LaoPali.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.LaoPali import LaoTranscription_pre as LaoTranscription, LaoPhonetic_pre as LaoPhonetic, LaoSajhayaOrthography, LaoSajhayaOrthographywithA
 
 # TamilSaurashtra's own logic now lives in ScriptProcessing/TamilSaurashtra.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
@@ -840,8 +835,9 @@ from .ScriptProcessing.Itrans import swapEeItrans_pre as swapEeItrans
 # consolidated there (batch migration).
 from .ScriptProcessing.Grantha import egrantamil
 
-def siddhammukta(Strng):
-    return Strng
+# Siddham's own logic now lives in ScriptProcessing/Siddham.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Siddham import siddhammukta
 
 def TaiKuen(Strng):
     return Strng
@@ -867,23 +863,6 @@ def ThaiSajjhayaOrthography(Strng):
 def ThaiSajjhayawithA(Strng):
     Strng = Strng.replace('ะ', '')
     Strng = ThaiSajjhayaOrthography(Strng)
-
-    return Strng
-
-def LaoSajhayaOrthography(Strng):
-    Strng = Strng.replace('ັງ', 'ັງ຺')
-
-    Strng = re.sub('([ເໂໄ])(.๎)([ຍຣລວຨຩສຫຬ])', r'\2\1\3', Strng)
-
-    Strng = Strng.replace('໌', '຺')
-    Strng = Strng.replace('๎', '຺')
-    Strng = Strng.replace('ັ', '')
-
-    return Strng
-
-def LaoSajhayaOrthographywithA(Strng):
-    Strng = Strng.replace('ະ', '')
-    Strng = LaoSajhayaOrthography(Strng)
 
     return Strng
 
@@ -1013,10 +992,6 @@ def siddhamUnicode(Strng):
     return Strng
 
 def ThaiOrthography(Strng):
-
-    return Strng
-
-def LaoTranscription(Strng):
 
     return Strng
 

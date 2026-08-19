@@ -1286,67 +1286,13 @@ def ThaiSajjhayawithA(Strng):
 
     return Strng
 
-def LaoSajjhaya(Strng):
-    Strng = ThaiSajjhayaOrthography(Strng, Script = "LaoPali")
+# LaoPali's own logic now lives in ScriptProcessing/LaoPali.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.LaoPali import LaoTranscription_post as LaoTranscription, LaoPhonetic_post as LaoPhonetic, LaoSajjhaya, LaoSajjhayawithA
 
-    Strng = re.sub('([ເໂໄ])(.)(\u0ECE)', r'\2\3\1', Strng)
-
-    return Strng
-
-def LaoSajjhayawithA(Strng):
-    Strng = LaoSajjhaya(Strng)
-
-    # The below logic is for Thai yamakkan. Use Thai Yamakkan not to break it
-    Strng = Strng.replace('\u0ECE', '\u0E4E')
-
-    Strng = Strng.replace('ັງ', 'ັງ຺')
-    Strng = CF.LaoPaliTranscribe(Strng, anusvaraChange = True)
-
-    Strng = Strng.replace('ະໍ', 'ໍ')
-    Strng = Strng.replace('ະັ', 'ັ')
-    Strng = Strng.replace('ະ๎', '๎')
-
-    Strng = Strng.replace('ະ໌', '໌')
-    Strng = Strng.replace('ະົ', 'ົ')
-
-    Strng = re.sub('([ເໂໄ])(.๎)([ຍຣລວຨຩສຫຬ])ະ', r'\1\2\3', Strng)
-
-    Strng = Strng.replace('າໍ', 'ຳ')
-
-    # Use Lao Yamakkan again
-    Strng = Strng.replace('\u0E4E', '\u0ECE')
-
-    return Strng
-
-def UseAlternateVSU(Strng):
-    Strng = Strng.replace('𑖲', '𑗜')
-
-    return Strng
-
-def UseAlternateVSUU(Strng):
-    Strng = Strng.replace('𑖳', '𑗝')
-
-    return Strng
-
-def UseAlternateU(Strng):
-    Strng = Strng.replace('𑖄', '𑗛')
-
-    return Strng
-
-def UseAlternateI1(Strng):
-    Strng = Strng.replace('𑖂', '𑗘')
-
-    return Strng
-
-def UseAlternateI2(Strng):
-    Strng = Strng.replace('𑖂', '𑗙')
-
-    return Strng
-
-def UseAlternateII(Strng):
-    Strng = Strng.replace('𑖃',  '𑗚')
-
-    return Strng
+# Siddham's own logic now lives in ScriptProcessing/Siddham.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Siddham import UseAlternateI1, UseAlternateI2, UseAlternateII, UseAlternateU, UseAlternateVSU, UseAlternateVSUU, siddhammukta
 
 def DevanagariACandra(Strng):
     Strng = Strng.replace('ऍ', 'ॲ')
@@ -1383,9 +1329,6 @@ from .ScriptProcessing.Sundanese import SundaneseHistoricConjuncts, SundaneseRem
 # Limbu's own logic now lives in ScriptProcessing/Limbu.py -
 # consolidated there (batch migration).
 from .ScriptProcessing.Limbu import LimbuSpellingSaI_post as LimbuSpellingSaI, LimburemoveHistorical
-
-def siddhammukta(Strng):
-    return Strng
 
 def tradOrtho(Strng):
     return Strng
@@ -2035,13 +1978,6 @@ def ThaiLaoTranscription(Strng,Script,shortA,shortAconj,reverse=False, anusvaraC
 
     return Strng
 
-def LaoTranscription(Strng):
-    Strng = CF.LaoPaliTranscribe(Strng)
-
-    Strng = Strng.replace('ະ໌', '໌')
-
-    return Strng
-
 def ThaiVisargaSaraA(Strng):
     Strng = Strng.replace('ห์','ะ')
 
@@ -2060,27 +1996,6 @@ def ThamTallAOthers(Strng):
     return Strng
 
 #start here
-def LaoPhonetic(Strng):
-    Strng = re.sub('(\u0EBA)([ໂເໄ]?)([ຍຣລວຫ])', '\u035C'+ r'\2\3', Strng)
-    Strng = re.sub('([ຍຣລວຫ])' + '\u035C' + '([ໂເໄ]?)' + r'\1', r'\1' + '\u0EBA' + r'\2\1', Strng)
-
-    Strng = Strng.replace('ຫ\u0EBA', 'ຫ\u035C')
-
-    Strng = re.sub('([ຍຣລວຫ])' + '\u035C' + r'\1', r'\1' + '\u0EBA' + r'\1', Strng)
-
-    Strng = LaoTranscription(Strng)
-
-    Strng = Strng.replace('\u0EB0\u035C', '\u035C')
-
-    Strng = Strng.replace('ງ', 'ງໍ')
-
-    #Strng = Strng.replace('ຄ', 'ກ')
-    #Strng = Strng.replace('ຊ', 'ຈ')
-    Strng = Strng.replace('ທ', 'ດ')
-    Strng = Strng.replace('ພ', 'ບ')
-
-    return Strng
-
 
 def RephaDoubleMalayalam(Strng):
     repha = '[ർൎ]'
