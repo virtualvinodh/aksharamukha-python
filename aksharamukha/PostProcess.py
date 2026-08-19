@@ -55,16 +55,10 @@ def defaultPost(src, tgt, Strng, nativize, preoptions, postoptions):
 
 ## Avestan ##
 
-def KhojkiRRI(Strng):
-    Strng = Strng.replace('\U00011241', '\U00011235\U00011226\U0001122D')
-    Strng = Strng.replace('\U00011240', '\U00011202')
-
-    return Strng
-
-def KhojkiQa(Strng):
-    Strng = Strng.replace('𑈈𑈶', '\U0001123F')
-
-    return Strng
+# Khojki's own logic now lives in ScriptProcessing/Khojki.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Khojki import KhojkiRRI, KhojkiQa, KhojkiRetainSpace
 
 # Ahom's own logic now lives in ScriptProcessing/Ahom.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
@@ -138,9 +132,10 @@ def syriacWesternOToU(Strng):
     return Strng
 
 #testcase todo
-def olddogra(Strng):
-
-    return Strng
+# Dogra's own logic now lives in ScriptProcessing/Dogra.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Dogra import olddogra, DograShaKha
 
 #testcase todo
 def ISO259Target(Strng):
@@ -355,17 +350,12 @@ def syriacRoman(Strng):
     return Strng
 
 #testcase todo
-def alephAyinLatnAlternate(Strng):
-    Strng = Strng.replace('ʾ', 'ʼ').replace('ʿ', 'ʽ')
-
-    return Strng
+# Latn's own logic now lives in ScriptProcessing/Latn.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Latn import alephAyinLatnAlternate, alephAyinLatnAlternate2
 
 #testcase todo
-def alephAyinLatnAlternate2(Strng):
-    Strng = Strng.replace('ʾ', 'ʔ').replace('ʿ', 'ʕ')
-
-    return Strng
-
 #testcase todo
 def ArabRemoveAdditions(Strng):
     Strng = Strng.replace('ڨ', 'ج').replace('ڤ', 'ف').replace('پ', 'ف')
@@ -746,13 +736,10 @@ def westernsyriac(Strng):
     return Strng
 
 
-def kawitan(Strng):
-
-    return Strng
-
-def sundapura(Strng):
-
-    return Strng
+# Pallava's own logic now lives in ScriptProcessing/Pallava.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Pallava import kawitan, sundapura
 
 def readableItrans(Strng):
     pairsReadable = [('R^i','RRi'), ('R^I','RRii'), ('',''), ('',''), ('A', 'aa'), ('I', 'ii'), ('U', 'uu'), ('Ch', 'chh'), ('kSh','x'), ('M', '.m')]
@@ -1079,10 +1066,10 @@ def jainomDevangari(Strng):
 
     return Strng
 
-def GurmukhiCandrabindu(Strng):
-    Strng = Strng.replace('ਁ', 'ਂ')
-
-    return Strng
+# Gurmukhi's own logic now lives in ScriptProcessing/Gurmukhi.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Gurmukhi import GurmukhiCandrabindu, GurmukhiYakaash, GurmukhiTippiBindu, GurmukhiTippiGemination
 
 #misnomer
 def mDotAboveToBelow(Strng):
@@ -1345,17 +1332,10 @@ def ThaiNativeConsonants(Strng):
 
     return Strng
 
-def KhamiShanMyanmarNumerals(Strng):
-    for x, y in zip(KhamtiShan.NumeralMap, Burmese.NumeralMap):
-        Strng = Strng.replace(x, y)
-
-    return Strng
-
-def KhamtiShanRa(Strng):
-
-    Strng = Strng.replace('ရ', 'ꩳ')
-
-    return Strng
+# KhamtiShan's own logic now lives in ScriptProcessing/KhamtiShan.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.KhamtiShan import KhamiShanMyanmarNumerals, KhamtiShanRa
 
 def granthafinal(Strng):
 
@@ -1373,20 +1353,10 @@ def Dot2Pipes(Strng):
 
     return Strng
 
-def SaurastraHaaruColon(Strng):
-    vir = Tamil.ViramaMap[0]
-    ha = Tamil.ConsonantMap[-1]
-
-    Strng = Strng.replace(vir + ha, ':')
-
-    ListVS = '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Tamil'))
-
-    Strng = re.sub('(:)' + '(' + ListVS + ')', r'\2\1', Strng)
-
-    Strng = re.sub('(\s)(ன)', r'\1' + 'ந', Strng)
-    Strng = re.sub('^ன', 'ந', Strng)
-
-    return Strng
+# TamilSaurashtra's own logic now lives in ScriptProcessing/TamilSaurashtra.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.TamilSaurashtra import SaurastraHaaruColon
 
 def TamilExtendedNNA(Strng):
     na = TamilExtended.ConsonantMap[19]
@@ -1471,13 +1441,10 @@ def TeluguReph(Strng):
 
     return Strng
 
-def PhagsPaTib(Strng):
-
-    return Strng
-
-def PhagsPaSeal(Strng):
-
-    return Strng
+# PhagsPa's own logic now lives in ScriptProcessing/PhagsPa.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.PhagsPa import PhagsPaTib, PhagsPaSeal
 
 def TamilExtendedAnusvara(Strng):
     Strng = AnusvaraToNasal(Strng, 'TamilExtended')
@@ -1791,13 +1758,10 @@ def removeDiacritics(Strng):
 
     return Strng
 
-def ranjanalantsa(Strng):
-    Strng = Strng.replace('་', ' ')
-    return Strng
-
-def ranjanawartu(Strng):
-    Strng = Strng.replace('་', '࿎ ')
-    return Strng
+# Ranjana's own logic now lives in ScriptProcessing/Ranjana.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Ranjana import ranjanalantsa, ranjanawartu
 
 def TaiKuen(Strng):
     return Strng
@@ -2017,11 +1981,6 @@ def tradOrtho(Strng):
 def siddhamap(Strng):
     return Strng
 
-def KhojkiRetainSpace(Strng):
-    Strng = Strng.replace('\U0001123A', ' ')
-
-    return Strng
-
 # Bhaiksuki's own logic now lives in ScriptProcessing/Bhaiksuki.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
@@ -2105,14 +2064,6 @@ def ThaanaRemoveHistorical(Strng):
 
 def OriyaVaAlt(Strng):
     return  Strng.replace('ୱ','ଵ')
-
-def GurmukhiYakaash(Strng, reverse=False):
-    if not reverse:
-        Strng = Strng.replace('੍ਯ','ੵ')
-    else:
-        Strng = Strng.replace('ੵ', '੍ਯ')
-
-    return Strng
 
 def dotReph(Strng):
     ListC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Malayalam"))) + ')'
@@ -2293,38 +2244,6 @@ def ReverseGeminationSign(Strng,Target): #Fix this
 
     for i in range(len(ConAsp)):
         Strng = re.sub('(' + GM.Gemination[Target] + ')' + '(' + ConAsp [i] +')', ConUnAsp[i] + vir + r'\2', Strng)
-
-    return Strng
-
-def GurmukhiTippiBindu(Strng): # Check this Function
-    Bindi = Gurmukhi.AyogavahaMap[1];
-    Tippi = '\u0A70'
-    ListTippi = '|'.join(GM.CrunchSymbols(GM.Consonants, 'Gurmukhi')+[Gurmukhi.VowelMap[x] for x in [0,2,4]]
-        +[Gurmukhi.VowelSignMap[1]]+[Gurmukhi.VowelSignMap[3]]+[Gurmukhi.VowelSignMap[4]])
-
-    Char = '|'.join(GM.CrunchSymbols(GM.Consonants, 'Gurmukhi') + GM.CrunchSymbols(GM.Vowels, 'Gurmukhi'))
-
-    Strng = re.sub('(' + Gurmukhi.VowelSignMap[4] +')' + Bindi + '(?!'+ Char + ')',  r'\1' + Tippi, Strng)
-
-    # Strng = '(' + Gurmukhi.VowelSignMap[4] +')' + Bindi + '(=!'+ Char + ')'
-
-    Strng = re.sub('('+ListTippi+')'+'('+Bindi+')',r'\1'+Tippi, Strng)
-
-    return Strng
-
-def GurmukhiTippiGemination(Strng):
-    n = Gurmukhi.ConsonantMap[19]
-    m = Gurmukhi.ConsonantMap[24]
-    vir = Gurmukhi.ViramaMap[0]
-    Addak = 'ੱ'
-    Tippi = '\u0A70'
-
-    #print(Strng)
-
-    Strng = Strng.replace(Addak + m , Tippi + m)
-    Strng = Strng.replace(Addak + n, Tippi + n)
-
-    #print(Strng)
 
     return Strng
 
@@ -2936,11 +2855,6 @@ def RephaDoubleMalayalam(Strng):
     # Dot reph with ya
 
     # Strng = Strng.replace('ൎയ', 'ൎയ്യ')
-
-    return Strng
-
-def DograShaKha(Strng):
-    Strng = Strng.replace('𑠨', '𑠋')
 
     return Strng
 

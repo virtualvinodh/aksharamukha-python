@@ -799,46 +799,10 @@ from .ScriptProcessing.GurmukhiLoC import _FixGurmukhiLoCEncode, _FixGurmukhiLoC
 
 # Correct Ru'', Lu'' -> R, lR
 # Tippi/Bindu
-def _FixGurmukhiEncode(Strng):
-    Strng = CorrectRuLu(Strng,"Gurmukhi",False)
-
-    ava = Gurmukhi.SignMap[0]
-    avaA = '\u0028\u0A06\u0029'
-
-    # Tippi/Bindu conversion options are optional. Look into PostProcess
-
-    Strng = Strng.replace(ava+ava,avaA)
-    Strng = PostProcess.InsertGeminationSign(Strng, 'Gurmukhi')
-    Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi', True)
-
-    Vedicomp = '([' + ''.join(GM.VedicSvarasList) + '])'
-
-    Strng = re.sub(Vedicomp + '\u0A71' + '(.)', r'\1' + r'\2' + Gurmukhi.ViramaMap[0] + r'\2' , Strng)
-
-
-    return Strng
-
-def _FixGurmukhiDecode(Strng):
-    Strng = CorrectRuLu(Strng,"Gurmukhi",True)
-
-    ava = Gurmukhi.SignMap[0]
-    avaA = '\u0028\u0A06\u0029'
-
-    # Tippi/Bindu conversion options are optional. Look into PostProcess
-
-    Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi')
-    Strng = Strng.replace(avaA,ava+ava)
-    Strng = PostProcess.ReverseGeminationSign(Strng, 'Gurmukhi')
-    Strng = Strng.replace('ੰਨ','ਨ੍ਨ')
-    Strng = Strng.replace('ੰਮ','ਮ੍ਮ')
-    # Replace Tippi by Bindu
-    Strng = Strng.replace('\u0A70','\u0A02')
-    Strng = PostProcess.GurmukhiYakaash(Strng, True)
-
-    return Strng
-
-def FixGurmukhi(Strng,reverse=False):
-    return _FixGurmukhiDecode(Strng) if reverse else _FixGurmukhiEncode(Strng)
+# Gurmukhi's own logic now lives in ScriptProcessing/Gurmukhi.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Gurmukhi import _FixGurmukhiEncode, _FixGurmukhiDecode, FixGurmukhi
 
 # Fix ru', ru'',lu',lu'' in Tamil & Gurmukhi
 # रुʼ -> ऋ, रूʼ -> ॠ, लुʼ -> ऌ, लूʼ -> ॡ
@@ -947,33 +911,10 @@ from .ScriptProcessing.KhmerLoC import FixKhmerLoC
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Khmer import _FixKhmerEncode, _FixKhmerDecode, FixKhmer
 
-def _FixKhamtiShanEncode(Strng):
-    Strng = Strng.replace('်ရ', 'ြ')
-    Strng = Strng.replace('်ယ', 'ျ')
-    Strng = Strng.replace('်ဝ', 'ွ')
-
-    ## Maintain the order of the medials
-    Strng = Strng.replace("\u103C\u103B", "\u103B\u103C")
-    Strng = Strng.replace("\u103D\u103B", "\u103B\u103D")
-    Strng = Strng.replace("ႂ\u103C", "\u103Cွ")
-
-    return Strng
-
-def _FixKhamtiShanDecode(Strng):
-    Strng = Strng.replace('ꩳ', 'ရ')
-    Strng = Strng.replace("\u103B\u103C", "\u103C\u103B")
-    Strng = Strng.replace("\u103B\u103D", "\u103D\u103B")
-    Strng = Strng.replace("\u103Cႂ", "ႂ\u103C")
-
-    Strng = Strng.replace('ြ', '်ꩳ')
-    Strng = Strng.replace('ꩳ', 'ရ')
-    Strng = Strng.replace('ျ', '်ယ')
-    Strng = Strng.replace('ွ', '်ဝ')
-
-    return Strng
-
-def FixKhamtiShan(Strng, reverse=False):
-    return _FixKhamtiShanDecode(Strng) if reverse else _FixKhamtiShanEncode(Strng)
+# KhamtiShan's own logic now lives in ScriptProcessing/KhamtiShan.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.KhamtiShan import _FixKhamtiShanEncode, _FixKhamtiShanDecode, FixKhamtiShan
 
 # TaiLaing's own Fix logic now lives in ScriptProcessing/TaiLaing.py -
 # consolidated there (batch migration). Re-exported here so
@@ -2152,199 +2093,19 @@ def FixIAST(Strng,reverse=False):
 from .ScriptProcessing.IPA import _FixIPAEncode, _FixIPADecode, FixIPA
 
 # Rearrange PhagsPa Letters ; Subjoined Letters ;
-def _FixPhagsPaEncode(Strng):
-    candraBindu = PhagsPa.AyogavahaMap[0]
-    ListC = "|".join(sorted(PhagsPa.ConsonantMap,key=len,reverse=True)) #Do this for all
-    ListV = "|".join(sorted(PhagsPa.VowelMap,key=len,reverse=True))
-    ListVS = "|".join(sorted(PhagsPa.VowelSignMap,key=len,reverse=True))
-
-    vir  = PhagsPa.ViramaMap[0]
-    Virrvy = [vir+x for x in [PhagsPa.ConsonantMap[c] for c in [25,26,28]]]
-    Subrvy = ['\uA868','\uA871','\uA867']
-
-    SubrvyE = ['ꡱꡨ'] + Subrvy
-
-
-    # Removing Indep. Vowel Sign
-    #ListV = ListV.replace("\u1E7F","")
-    #Strng = Strng.replace("\u1E7F","")
-
-    for x,y in zip(Virrvy,Subrvy):
-        Strng = Strng.replace(x,y)
-
-    Strng = re.sub("("+ListV+")"+"("+candraBindu+")",r'\2\1',Strng)
-
-    # Move Chandrabindu - bhrUM
-    Strng = re.sub("("+ListC+")"+"(("+"|".join(SubrvyE)+")?)"+"(("+ListVS+")?)"+"("+candraBindu+")",r'\6\1\2\4',Strng)
-    # Move Sigh Candrabindu
-
-    # Move Vowel Sign AA for subjoining vowels ## Not moving
-   #  Strng = re.sub("(["+"".join(Subrvy[1])+"])"+"("+PhagsPa.VowelSignMap[0]+")",r'\2\1',Strng)
-
-
-    ## Fix rka - superfixed ra ; rka used only for Specific Tibetan context.
-    Strng = Strng.replace(" ", "᠂")
-    Strng = Strng.replace("\u02BD","")
-
-    ## separate syllables
-
-    #Strng = re.sub("(?<!ꡖ)" + "(" + "(" + ListV +")" + ")" + "(?!" + ListCVir + ")", r'\1' + ' ', Strng)
-    #Strng = re.sub("(" + "(" + ListC +")" + "(" + "|".join(Subrvy) + ")?" + "(" + ListVS + ")" + ")" + "(?!" + ListCVir + ")", r'\1' + ' ', Strng)
-    #Strng = Strng.replace("")
-    #Strng = re.sub("(" + "(" + ListC +")" + "(" + "|".join(Subrvy) + ")?" + "(?!" + ListCVir + ")" + ")", r'\1' + ' ', Strng)
-
-    ## sakv sakr not changing properly
-    Strng = re.sub("(("+candraBindu+")?"+"("+ListC+")"+"(("+"|".join(SubrvyE)+")?)"+"(("+ListVS+")?))" +
-        "(("+candraBindu+")?"+"("+ListC+")"+"(("+"|".join(SubrvyE)+")?)"+"(("+ListVS+")?))" + "(?!" + vir + ")", r'\1 \8', Strng)
-    Strng = re.sub("(("+candraBindu+")?"+"("+ListC+")"+"(("+"|".join(SubrvyE)+")?)"+"(("+ListVS+")?))" +
-        "(("+candraBindu+")?"+"("+ListC+")"+"(("+"|".join(SubrvyE)+")?)"+"(("+ListVS+")?))" + "(?!" + vir + ")", r'\1 \8', Strng)
-
-    Strng = re.sub("(("+candraBindu+")?"+"("+ListV+"))" +
-        "(("+candraBindu+")?"+"("+ListC+")"+"(("+"|".join(SubrvyE)+")?)"+"(("+ListVS+")?))" + "(?!" + vir + ")", r'\1 \4', Strng)
-    Strng = re.sub("(("+candraBindu+")?"+"("+ListV+"))" +
-        "(("+candraBindu+")?"+"("+ListC+")"+"(("+"|".join(SubrvyE)+")?)"+"(("+ListVS+")?))" + "(?!" + vir + ")", r'\1 \4', Strng)
-
-    Strng = re.sub("(("+candraBindu+")?"+"("+ListC+")"+"(("+"|".join(SubrvyE)+")?)"+"(("+ListVS+")?))" +
-        "(("+candraBindu+")?"+"("+ListV+"))" + "(?!" + vir + ")", r'\1 \8', Strng)
-    Strng = re.sub("(("+candraBindu+")?"+"("+ListC+")"+"(("+"|".join(SubrvyE)+")?)"+"(("+ListVS+")?))" +
-        "(("+candraBindu+")?"+"("+ListV+"))" + "(?!" + vir + ")", r'\1 \8', Strng)
-
-    Strng = re.sub("(("+candraBindu+")?"+"("+ListV+"))" + "(?!" + vir + ")" +
-        "(("+candraBindu+")?"+"("+ListV+"))" + "(?!" + vir + ")", r'\1 \4', Strng)
-    Strng = re.sub("(("+candraBindu+")?"+"("+ListV+"))" + "(?!" + vir + ")" +
-        "(("+candraBindu+")?"+"("+ListV+"))" + "(?!" + vir + ")", r'\1 \4', Strng)
-
-    Strng = Strng.replace("\n","\n")
-
-    #Strng = "(" + "(" + ListC +")" + "(" + "|".join(Subrvy) + ")?" + "(" + ListVS + ")" + ")" + "(?!" + ListCVir + ")"
-
-    Strng = '\u12BA᠂' + Strng
-
-    ListCE = ListC + "|" + "|".join(SubrvyE)
-
-    ## Probably add more punctuations
-    Strng = re.sub('(?:(?<!\n)(?<!᠂)(?<![,\.\"\?\&\(\)]))' + "(?<!" + vir + ")" + '(' + ListC + ')' + vir + "((" + candraBindu +")?" + "("+ListC+"))",r"\1 \2", Strng) #\u02BF Virama
-    Strng = re.sub('(?<!᠂)' + '(' + ListC + ')' + vir + "((" + candraBindu +")?" + "("+ListV+"))",r" \1", Strng) #\u02BF Virama
-
-    Strng = Strng.replace(vir,"") #\u02BF Virama
-    Strng = Strng.replace("\u1E7F","")
-    Strng = Strng.replace("\u1E7E","")
-    Strng = Strng.replace("\u12BA᠂","")
-
-    Strng = Strng.replace("᠂", " ᠂ ")
-
-
-    #print Strng
-
-
-
-    return Strng
-
-def _FixPhagsPaDecode(Strng):
-    candraBindu = PhagsPa.AyogavahaMap[0]
-    ListC = "|".join(sorted(PhagsPa.ConsonantMap,key=len,reverse=True)) #Do this for all
-    ListV = "|".join(sorted(PhagsPa.VowelMap,key=len,reverse=True))
-    ListVS = "|".join(sorted(PhagsPa.VowelSignMap,key=len,reverse=True))
-
-    vir  = PhagsPa.ViramaMap[0]
-    Virrvy = [vir+x for x in [PhagsPa.ConsonantMap[c] for c in [25,26,28]]]
-    Subrvy = ['\uA868','\uA871','\uA867']
-
-    SubrvyE = ['ꡱꡨ'] + Subrvy
-
-
-    ListV = ListV.replace("\u1E7F","")
-
-    Strng = Strng.replace('ꡖꡘꡟ','ꡱꡖꡟ')
-
-    Aspirate = [('\uA842\uA85C','\u1E7E\uA842\u1E7E\uA85C\u1E7E'), ('\uA852\uA85C','\u1E7E\uA852\u1E7E\uA85C\u1E7E'), ('\uA86B\uA85C','\u1E7E\uA86B\u1E7E\uA85C\u1E7E'),
-        ('\uA84A\uA85C','\u1E7E\uA84A\u1E7E\uA85C\u1E7E'),('\uA84E\uA85C','\u1E7E\uA84E\u1E7E\uA85C\u1E7E')]
-
-    for x,y in Aspirate:
-        Strng = Strng.replace(x,y)
-
-    Strng = re.sub("("+PhagsPa.VowelSignMap[0]+")"+"(["+"".join(Subrvy[1])+"])",r'\2\1',Strng)
-    Strng = re.sub("("+candraBindu+')'+"("+ListC+')'+"(("+"|".join(SubrvyE)+")?)"+"(("+ListVS+')?)',r'\2\3\5\1',Strng)
-    Strng = re.sub("("+candraBindu+')'+'('+ListV+')',r'\2\1',Strng)
-
-    for x,y in zip(Virrvy,Subrvy):
-        Strng = Strng.replace(y,x)
-
-    # Fixing  + Indepdendent vowels.
-    Strng = re.sub("("+ListV+")","\u1E7F"r"\1",Strng)
-    Strng = re.sub("("+ListC+"|ꡖ)"+"("+"\u1E7F"+")",r'\1',Strng)
-
-    ## Fix rka - superfixed ra ; rka used only for Specific Tibetan context.
-    Strng = Strng.replace("ꡆ","ꡒ")
-
-    for x,y in zip(Virrvy,Subrvy):
-        Strng = Strng.replace(x,y)
-
-    #print(Strng)
-
-    ## Fix splavya
-    Strng = re.sub("((" + ListC + ")" + "(("+"|".join(SubrvyE)+")?)" + "(?!" + ListVS + "))"
-        + "((("+ListC+")"+"(("+"|".join(SubrvyE)+")?)"+"(("+ListVS+"))" + "("+candraBindu+")?))"  , r"\1" + vir + r"\6", Strng)
-
-
-    Strng = re.sub("((("+ListC+")"+"(("+"|".join(SubrvyE)+")?)"+"(("+ListVS+")?)" + "("+candraBindu+")?)"
-        + "((" + ListC + ")" + "(("+"|".join(SubrvyE)+")?)" + "(?!" + ListVS + ")))" , r"\1" + vir, Strng)
-
-    Strng = re.sub("((("+ListV+")" + "("+candraBindu+")?)"
-        + "((" + ListC + ")" + "(("+"|".join(SubrvyE)+")?)" + "(?!" + ListVS + ")))" , r"\1" + vir, Strng)
-
-    for x,y in zip(Virrvy,Subrvy):
-        Strng = Strng.replace(y,x)
-
-    Strng = Strng.replace(" ", "")
-    Strng = Strng.replace("᠂"," ")
-    Strng = Strng.replace("᠃"," ")
-
-    Strng = Strng.replace(vir + vir, vir)
-
-    # ꡳꡊꡞꡚ ꡩꡖ ꡗ ---> diMSTAya
-    # Fix Aspirated add the extra character
-    # Fix saphA -> sphA ; sata -> sat ; suda -> sud
-    # Add options to retain space
-    #Strng = Strng.replace("(" + ListC + ")")
-
-
-    return Strng
-
-def FixPhagsPa(Strng,reverse=False):
-    return _FixPhagsPaDecode(Strng) if reverse else _FixPhagsPaEncode(Strng)
+# PhagsPa's own logic now lives in ScriptProcessing/PhagsPa.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.PhagsPa import _FixPhagsPaEncode, _FixPhagsPaDecode, FixPhagsPa
 
 # Meetei Mayek Final
 # Think of a-k-ka vers a-ka+vir-ka, also ag to ak. (Virama extends to second letter... ag could be replaced by ak..
 # since a+ga+vir woould orthographically wrong (it has no following consonant to extend to), considered replacing a+g+virama with a+k
 
-def _FixLatnEncode(Strng, Source):
-    vir = ''
-
-    #print('here at last ')
-
-    Strng = re.sub('([aiuāīū' + vir + '])(꞉)', r'\2\1', Strng)
-    Strng = re.sub('(꞉)(\u033D)', r'\2\1', Strng)
-
-    Strng = Strng.replace('aʰ', 'ʰ') ## Remove extraneous h
-    #Strng = PostProcess.LatnInitialVowels(Strng)
-
-    return Strng
-
-def _FixLatnDecode(Strng, Source):
-    vir = ''
-
-    #print('here at last ')
-
-    #print(Strng)
-    Strng = re.sub('([aiuāīū' + vir + '])(꞉)', r'\2\1', Strng)
-    Strng = re.sub('(\u033D)(꞉)', r'\2\1', Strng)
-    #print(Strng)
-
-    return Strng
-
-def FixLatn(Strng, Source, reverse=False):
-    return _FixLatnDecode(Strng, Source) if reverse else _FixLatnEncode(Strng, Source)
+# Latn's own logic now lives in ScriptProcessing/Latn.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Latn import _FixLatnEncode, _FixLatnDecode, FixLatn
 
 def _FixArabEncode(Strng, Source):
     Strng = PersoArabicPuntuation(Strng, False)
@@ -2726,42 +2487,10 @@ def _FixZanabazarSquareDecode(Strng):
 def FixZanabazarSquare(Strng, reverse=False):
     return _FixZanabazarSquareDecode(Strng) if reverse else _FixZanabazarSquareEncode(Strng)
 
-def _FixKhojkiEncode(Strng):
-    sindhi = ['\U0001120B', '\U00011211', '\U0001121C', '\U00011222']
-    sindhiapprox = ['ˍ\U0001120A', 'ˍ\U00011210', 'ˍ\U00011216', 'ˍ\U00011221']
-
-    for x, y in zip(sindhi, sindhiapprox):
-        Strng = Strng.replace(y, x)
-    Strng = PostProcess.InsertGeminationSign(Strng, 'Khojki')
-    # Move Shadda after consonant
-    Strng = re.sub('(\U00011237)(.)', r'\2\1', Strng)
-    # Reverse : Shadda + Nukta
-    Strng = Strng.replace('𑈷𑈶', '𑈶𑈷')
-    #Strng = re.sub('(' + GM.Germination['Khojki'] + ')', r'\2', Strng)
-    # WordSeparatror
-    Strng = Strng.replace(' ', '\U0001123A')
-
-    return Strng
-
-def _FixKhojkiDecode(Strng):
-    sindhi = ['\U0001120B', '\U00011211', '\U0001121C', '\U00011222']
-    sindhiapprox = ['ˍ\U0001120A', 'ˍ\U00011210', 'ˍ\U00011216', 'ˍ\U00011221']
-
-    # Reverse Word Separator
-    Strng = Strng.replace('\U0001123A', ' ')
-
-    for x, y in zip(sindhi, sindhiapprox):
-        Strng = Strng.replace(x, y)
-    # Reverse : Nukta + Shadda
-    Strng = Strng.replace('𑈶𑈷', '𑈷𑈶')
-    # Move Shadda before consonant
-    Strng = re.sub('(.)(\U00011237)', r'\2\1', Strng)
-    Strng = PostProcess.ReverseGeminationSign(Strng, 'Khojki')
-
-    return Strng
-
-def FixKhojki(Strng, reverse=False):
-    return _FixKhojkiDecode(Strng) if reverse else _FixKhojkiEncode(Strng)
+# Khojki's own logic now lives in ScriptProcessing/Khojki.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Khojki import _FixKhojkiEncode, _FixKhojkiDecode, FixKhojki
 
 def _FixNewaEncode(Strng):
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Newa'))

@@ -619,15 +619,10 @@ def SogoReshAyinDaleth(Strng):
 
     return Strng
 
-def PhlpMemQoph(Strng):
-    Strng = Strng.replace('𐮋', '[\uEA03-\uEA04]') # mem qoph
-
-    return Strng
-
-def PhlpWawAyinResh(Strng):
-    Strng = Strng.replace('𐮅', '[\uEA05-\uEA02-\uEA01]') # resh yin
-
-    return Strng
+# Phlp's own logic now lives in ScriptProcessing/Phlp.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Phlp import PhlpMemQoph, PhlpWawAyinResh
 
 # Phli's own logic now lives in ScriptProcessing/Phli.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
@@ -848,18 +843,10 @@ def LaoPhonetic(Strng):
 
     return Strng
 
-def SaurastraHaaruColonTamil(Strng):
-    Strng = Strng.replace('ன', 'ந')
-
-    ListVS = '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Tamil'))
-
-    Strng = re.sub('(' + ListVS + ')' + '(:)' , r'\2\1', Strng)
-
-    chars = '([நமரல])'
-
-    Strng = re.sub(chars + ':', r'\1' + '\uA8B4', Strng)
-
-    return Strng
+# TamilSaurashtra's own logic now lives in ScriptProcessing/TamilSaurashtra.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.TamilSaurashtra import SaurastraHaaruColonTamil
 
 def ChakmaPali(Strng):
     Strng = Strng.replace('\U00011147', '𑄤') # Replace Ya
@@ -1066,11 +1053,10 @@ def RemoveFinal(Strng, Target):
 
     return Strng
 
-def SchwaFinalGurmukhi(Strng):
-
-    Strng = RemoveFinal(Strng, 'Gurmukhi')
-
-    return Strng
+# Gurmukhi's own logic now lives in ScriptProcessing/Gurmukhi.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Gurmukhi import SchwaFinalGurmukhi
 
 # Gujarati's own logic now lives in ScriptProcessing/Gujarati.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
@@ -1623,26 +1609,10 @@ def removeZW(Strng):
 
     return Strng
 
-def PhagsPaArrange(Strng,Source):
-    if SR.get(Source).is_indic:
-        ListC = "|".join(sorted(GM.CrunchSymbols(GM.Consonants, Source),key=len,reverse=True)) #Do this for all
-        ListV = "|".join(sorted(GM.CrunchSymbols(GM.Vowels, Source),key=len,reverse=True))
-        ListVS = "|".join(sorted(GM.CrunchSymbols(GM.VowelSignsNV, Source),key=len,reverse=True))
-        ListCS = "|".join(sorted(GM.CrunchSymbols(GM.CombiningSigns, Source),key=len,reverse=True))
-
-        vir = GM.CrunchSymbols(GM.VowelSigns,Source)[0]
-
-        yrv = "|".join([GM.CrunchSymbols(GM.Consonants, Source)[i] for i in [25,26,28]])
-
-        Strng = re.sub("("+ListC+")"+"("+vir+")"+"("+yrv+")"+"("+"("+ListVS+")?"+"("+ListCS+")?"+")",r' \1\2\3\4',Strng)
-        Strng = re.sub("("+ListC+ListV+")"+"("+"("+ListVS+")?"+"("+ListCS+")?"+")"+"("+ListC+")"+"("+vir+")"+"(?!\s)",r"\1\2\5\6 ",Strng)
-        Strng = re.sub("("+ListC+ListV+")"+"("+"("+ListVS+")?"+"("+ListCS+")?"+")"+"("+ListC+")"+'(?!'+vir+')',r"\1\2 \5",Strng)
-        Strng = re.sub("("+ListC+ListV+")"+"("+"("+ListVS+")?"+"("+ListCS+")?"+")"+"("+ListC+")"+'(?!'+vir+')',r"\1\2 \5",Strng)
-
-    elif SR.get(Source).is_latin:
-        pass
-
-    return Strng
+# PhagsPa's own logic now lives in ScriptProcessing/PhagsPa.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.PhagsPa import PhagsPaArrange
 
 def IPAIndic(Strng):
     Strng = Strng.replace("ʊ","u")
