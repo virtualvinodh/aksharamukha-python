@@ -999,39 +999,9 @@ from .ScriptProcessing.Tamil import (TamilNaToNNa, TamilpredictDentaNa, Contextu
     FinalNNa, TamilAddFirstVarga, TamilDisableSHA, TamilGranthaVisarga, TamilOmDisable,
     TamilRemoveApostrophe, TamilRemoveNumbers, TamilSubScript, oldtamilortho)
 
-def ThaiNativeConsonants(Strng):
-    Strng = Strng.replace('ท', 'ด')
-    Strng = Strng.replace('พ', 'บ')
-    Strng = Strng.replace("\u0E36","\u0E34\u0E4D")
-    Strng = Strng.replace('ํ', 'งฺ')
-
-    Strng = re.sub('(\u0E3A)([ยรลวห])', '\u035C'+ r'\2', Strng)
-    Strng = Strng.replace('ห\u0E3A', 'ห\u035C')
-
-    Strng = re.sub('([ยรลวห])' + '\u035C' + r'\1', r'\1' + '\u0E3A' + r'\1', Strng)
-
-    Strng = re.sub('(า)(.)(ฺ)', '็' + r'\1\2\3', Strng)
-    Strng = re.sub('([เโ])(.)(.)(ฺ)',  r'\1\2' + '็' +  r'\3\4', Strng)
-
-    Strng = ThaiTranscription(Strng, False)
-
-    Strng = Strng.replace('ะ͜', '\u035C')
-    Strng = Strng.replace('ะ็', '็')
-    Strng = re.sub('([เโไ])(.)(\u035C)(.)([ะ\u0E31])', r'\1\2\3\4', Strng)
-
-    Strng = Strng.replace('ค', 'ก\u0325')
-    Strng = Strng.replace('ช', 'จ\u0325')
-
-    Strng = Strng.replace('ํ', 'ง')
-    Strng = Strng.replace('ง', 'งํ')
-
-    Strng = Strng.replace('ะงํ\u035C', '\u0E31งํ')
-
-    Strng = re.sub('([เโไ])(งํ)([าัะ])', r'\1' + 'ง' + r'\2', Strng)
-    Strng = re.sub('([เโไ])(งํ)', r'\1' + 'ง', Strng)
-    Strng = re.sub('(งํ)([าัะ])', 'ง' + r'\2', Strng)
-
-    return Strng
+# Thai's own logic now lives in ScriptProcessing/Thai.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Thai import ThaiNativeConsonants, ThaiSajjhayaOrthography_post as ThaiSajjhayaOrthography, ThaiSajjhayawithA_post as ThaiSajjhayawithA, ThaiTranscription, ThaiVisargaSaraA
 
 # KhamtiShan's own logic now lives in ScriptProcessing/KhamtiShan.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
@@ -1270,21 +1240,6 @@ from .ScriptProcessing.Newa import nepaldevafont, NewaMurmurConsonants, NewaSpec
 # Chakma's own logic now lives in ScriptProcessing/Chakma.py -
 # consolidated there (batch migration).
 from .ScriptProcessing.Chakma import ChakmaPali_post as ChakmaPali, ChakmaEnableAllConjuncts, ChakmaVowelsIndependent, ChakmaGemination
-
-def ThaiSajjhayawithA(Strng):
-    Strng = ThaiSajjhayaOrthography(Strng)
-    Strng = Strng.replace('ัง','ังฺ')
-    Strng = ThaiTranscription(Strng, anusvaraChange = True)
-
-    Strng = Strng.replace('ะํ', 'ํ')
-    Strng = Strng.replace('ะั', 'ั')
-    Strng = Strng.replace('ะ๎', '๎')
-
-    Strng = re.sub('([เโไ])(.๎)([ยรลวศษสหฬ])ะ', r'\1\2\3', Strng)
-
-    Strng = Strng.replace("\u0E32\u0E4D", "\u0E33").replace("\u0E34\u0E4D", "\u0E36") # reverse AM, iM
-
-    return Strng
 
 # LaoPali's own logic now lives in ScriptProcessing/LaoPali.py -
 # consolidated there (batch migration).
@@ -1978,11 +1933,6 @@ def ThaiLaoTranscription(Strng,Script,shortA,shortAconj,reverse=False, anusvaraC
 
     return Strng
 
-def ThaiVisargaSaraA(Strng):
-    Strng = Strng.replace('ห์','ะ')
-
-    return Strng
-
 def ThamTallADisable(Strng):
     Strng = Strng.replace('\u1A64', '\u1A63')
 
@@ -2059,92 +2009,6 @@ def FixTallA(Strng, TallACons):
 
     return Strng
 
-def ThaiSajjhayaOrthography(Strng, Script = "Thai"):
-    ## reverse digraphs
-    Strng = CF.ThaiReverseVowelSigns(Strng, True)
-    Strng = CF.ThaiDigraphConjuncts(Strng, True)
-    Strng = CF.ThaiReverseVowelSigns(Strng)
-
-    if Script == "Thai":
-        Strng = Strng.replace('ฺ', '์')
-    if Script == "LaoPali":
-        Strng = Strng.replace('຺', '์')
-
-    cons = "|".join(GM.CrunchSymbols(GM.Consonants, Script)+GM.CrunchList('VowelMap',Script)[0:1])
-    EAIO = "".join(GM.CrunchList('VowelSignMap',Script)[9:12]+GM.CrunchList('SinhalaVowelSignMap',Script)[:])
-
-    # short a for conjuncts : t(a)ssa
-    Strng = re.sub('(?<![' + EAIO + '])' + '(' + cons + ')' + '(' + cons + ')' + '(์)', r'\1' + 'ั' + r'\2\3', Strng)
-
-    if Script == "Thai":
-        cons_others  = '([ยรลวศษสหฬ])' # avarga
-    if Script == "LaoPali":
-        cons_others = '([ຍຣລວຨຩສຫຬ])' # avarga
-
-    Strng = re.sub('(?<![' + EAIO + '])' + '(' + cons + ')' + '(' + cons + ')' + '(์)', r'\1' + 'ั' + r'\2\3', Strng)
-
-    # varga + avaraga or avarga + varga add joiner
-    # hma, mha etc.
-    Strng = re.sub('(' + cons + ')' + '(์)' + '([' + EAIO + ']?)' + cons_others , r'\1' + '๎' + r'\3\4', Strng)
-    Strng = re.sub(cons_others + '(์)' + '([' + EAIO + ']?)' + '(' + cons + ')', r'\1' + '๎' + r'\3\4', Strng)
-
-    ## ssa, lla, nna do no add joiner
-    Strng = re.sub(cons_others + '(๎)' + '([' + EAIO + ']?)' + r'\1' , r'\1' + '์' + r'\3\1', Strng)
-
-    #reorder dve sme
-    Strng = re.sub('(' + cons  + ')' + '(๎)' + '([' + EAIO + '])' + '(' + cons + ')', r'\3\1\2\4', Strng)
-
-    if Script == "Thai":
-        Strng = Strng.replace('ง์', 'ง')
-        Strng = re.sub('(\u0E31)(.)(\u0E4E)', r'\2\3', Strng)
-
-    if Script == "LaoPali":
-        Strng = Strng.replace('ั', 'ັ')
-        Strng = Strng.replace("ງ์", "ງ")
-        Strng = Strng.replace("์", "໌")
-        Strng = re.sub('(\u0EB1)(.)(\u0E4E)', r'\2\3', Strng)
-
-        Strng = Strng.replace('\u0E4E', '\u0ECE')
-
-    #Strng = re.sub('([ยรลวศษสหฬ])(์)', r'\1' + '๎', Strng)
-
-    return Strng
-
-
-def ThaiTranscription(Strng, anusvaraChange = True):
-
-    ## reverse digraphs
-    Strng = CF.ThaiReverseVowelSigns(Strng, True)
-    Strng = CF.ThaiDigraphConjuncts(Strng, True)
-    Strng = CF.ThaiReverseVowelSigns(Strng)
-
-    Strng = ThaiLaoTranscription(Strng,"Thai", '\u0E30', '\u0E31', anusvaraChange = anusvaraChange)
-
-    Strng = Strng.replace('ะ์','์')
-
-    Strng = Strng.replace('ะงัง', '\u0E31งํ')
-
-    #print(Strng)
-
-#    shortA = u'\u0E30'
-#    shortAconj = u'\u0E31'
-#    cons = "|".join(GM.CrunchSymbols(GM.Consonants, "Thai")+Thai.VowelMap[0:1])
-#    vir = Thai.ViramaMap[0]
-#    AIUVir = "".join(Thai.VowelSignMap[0:5]+[vir])
-#    EAIO = "".join(Thai.VowelSignMap[9:12])
-#    Anu = Thai.AyogavahaMap[1]
-#    ng = Thai.ConsonantMap[4]
-#
-#    Strng = AnusvaraToNasal(Strng,"Thai")
-#
-#    Strng = re.sub("(["+EAIO+"])"+"("+cons+")"+"("+vir+")",r'\2\3\1',Strng) #Reverse bre, bro etc
-#    Strng = Strng.replace(u"\u0E33",u"\u0E32\u0E4D").replace(u"\u0E36",u"\u0E34\u0E4D") # reverse AM, iM
-#    Strng = re.sub("(?<!["+EAIO+"])"+"("+cons+")"+"(?!["+AIUVir+"])",r'\1'+shortA,Strng)
-#    Strng = Strng.replace(Anu,ng)
-#    Strng = Strng.replace(vir,"")
-#    Strng = re.sub("("+shortA+")"+"(?=("+cons+")"+"("+cons+"|"+"["+EAIO+"]))",shortAconj,Strng)
-
-    return Strng
 
 def AvestanConventions(Strng):
     # Fix Nasalization, hma etc

@@ -764,18 +764,9 @@ def SanskritLexicaizeHK(Strng):
 
     return Strng
 
-def ThaiPhonetic(Strng):
-    Strng = Strng.replace('ด', 'ท')
-    Strng = Strng.replace('บ', 'พ')
-    Strng = Strng.replace('ก\u0325', 'ค')
-    Strng = Strng.replace('จ\u0325', 'ช')
-    Strng = Strng.replace('งํ', 'ง')
-
-    Strng = Strng.replace('\u035C', '')
-
-    Strng = Strng.replace('\u0E47', '')
-
-    return Strng
+# Thai's own logic now lives in ScriptProcessing/Thai.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Thai import ThaiOrthography, ThaiPhonetic, ThaiSajjhayaOrthography_pre as ThaiSajjhayaOrthography, ThaiSajjhayawithA_pre as ThaiSajjhayawithA
 
 # LaoPali's own logic now lives in ScriptProcessing/LaoPali.py -
 # consolidated there (batch migration).
@@ -843,27 +834,6 @@ def TaiKuen(Strng):
     return Strng
 
 def TaiThamLao(Strng):
-    return Strng
-
-def ThaiSajjhayaOrthography(Strng):
-    Script = "Thai"
-
-    #cons = "|".join(GM.CrunchSymbols(GM.Consonants, Script)+GM.CrunchList('VowelMap',Script)[0:1])
-    #EAIO = "".join(GM.CrunchList('VowelSignMap',Script)[9:12]+GM.CrunchList('SinhalaVowelSignMap',Script)[:])
-    ## Reorder dve
-    #Strng = re.sub('([' + EAIO + '])' + '(' + cons  + ')' + '(๎)' + '(' + cons + ')', r'\2\3\1\4', Strng)
-
-    Strng = Strng.replace('ัง', 'ังฺ')
-    Strng = Strng.replace('์', 'ฺ')
-    Strng = Strng.replace('๎', 'ฺ')
-    Strng = Strng.replace('ั', '')
-
-    return Strng
-
-def ThaiSajjhayawithA(Strng):
-    Strng = Strng.replace('ะ', '')
-    Strng = ThaiSajjhayaOrthography(Strng)
-
     return Strng
 
 # consider adding an optional NUkta to the post consonantal position
@@ -989,10 +959,6 @@ def SchwaFinalKhmer(Strng):
 from .ScriptProcessing.WarangCiti import SchwaFinalWarangCiti
 
 def siddhamUnicode(Strng):
-    return Strng
-
-def ThaiOrthography(Strng):
-
     return Strng
 
 # DevanagariLimbu's own logic now lives in ScriptProcessing/DevanagariLimbu.py -

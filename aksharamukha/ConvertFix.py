@@ -1076,34 +1076,9 @@ def ReverseVowelSigns(Strng,Script,reverse=False):
 # GM.resolve's getattr(CF, "FixKhomThai", ...) dispatch keeps working.
 from .ScriptProcessing.KhomThai import _FixKhomThaiEncode, _FixKhomThaiDecode, FixKhomThai
 
-def FixThai(Strng,reverse=False,ctx=None):
-    Strng = ThaiReverseVowelSigns(Strng,reverse)
-    Strng = ThaiDigraphConjuncts(Strng,reverse)
-
-    transcription_mode = ctx.transcription_mode if ctx is not None else False
-    if transcription_mode:
-        Strng = PostProcess.ThaiLaoTranscription(Strng,"Thai", '\u0E30', '\u0E31', True)
-
-        Strng = Strng.replace("หฺ์","ห์")
-
-    return Strng
-
-def ThaiReverseVowelSigns(Strng,reverse=False):
-#    EAIO = "".join(Thai.VowelSignMap[9:12])
-#    cons = "|".join(GM.CrunchSymbols(GM.Consonants, "Thai"))
-#    a = Thai.VowelMap[0]
-#    Strng = re.sub("("+cons+")(["+EAIO+"])(?!["+EAIO+"]"+a+")",r"\2\1",Strng)
-
-    Strng = ReverseVowelSigns(Strng,"Thai",reverse)
-    if not reverse:
-        # VS AA + Anusvara -> VS AM (Ligature)
-        # VS I + Anusvara -> VS IM (Ligature)
-        Strng = Strng.replace("\u0E32\u0E4D","\u0E33").replace("\u0E34\u0E4D","\u0E36")
-    else:
-        # Reverse above
-        Strng = Strng.replace("\u0E33","\u0E32\u0E4D").replace("\u0E36","\u0E34\u0E4D")
-
-    return Strng
+# Thai's own logic now lives in ScriptProcessing/Thai.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Thai import FixThai, ThaiReverseVowelSigns, ThaiDigraphConjuncts
 
 # LaoPali's own logic now lives in ScriptProcessing/LaoPali.py -
 # consolidated there (batch migration).
@@ -1126,25 +1101,6 @@ from .ScriptProcessing.Lao import _FixLaoEncode, _FixLaoDecode, FixLao, LaoTrans
 
 # Re-arrange Vowels Signs /E/, /AI/, /O/ for digraph <dv>, <mh> etc
 # e.g dve -> เทฺว instead of ทฺเว
-def ThaiDigraphConjuncts(Strng,reverse=False):
-    EAIO = "".join(Thai.VowelSignMap[9:12])
-    cons = "|".join(GM.CrunchSymbols(GM.Consonants, "Thai"))
-    yrlvh = "|".join(GM.CrunchSymbols(GM.Consonants, "Thai")[25:29] + GM.CrunchSymbols(GM.Consonants, "Thai")[32:33])
-    sh = "|".join(Thai.ConsonantMap[31:33])
-    vir = Thai.ViramaMap[0]
-
-    #Replace \s with all punctuations
-    if not reverse:
-        # Comments
-        Strng = re.sub("(?<=\s)("+cons+")"+"("+vir+")"+"(["+EAIO+"])"+"("+cons+")",r"\3\1\2\4",Strng)
-        Strng = re.sub("("+cons+")"+"("+vir+")"+"(["+EAIO+"])"+"("+yrlvh+")",r"\3\1\2\4",Strng)
-        Strng = re.sub("("+sh+")"+"("+vir+")"+"(["+EAIO+"])"+"("+cons+")",r"\3\1\2\4",Strng)
-    else:
-        ## Reverse the above.
-        Strng = re.sub("(["+EAIO+"])"+"("+vir+")"+"("+cons+")",r"\2\3\1",Strng)
-
-    return Strng
-
 # OldPersian's own Fix logic now lives in ScriptProcessing/OldPersian.py -
 # consolidated there (batch migration). Re-exported here so
 # GM.resolve's getattr(CF, "FixOldPersian", ...) dispatch keeps working.
