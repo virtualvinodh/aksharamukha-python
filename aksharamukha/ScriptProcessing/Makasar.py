@@ -32,7 +32,6 @@ def _FixMakasarEncode(Strng):
 def _FixMakasarDecode(Strng):
 
     """Expands the Makasar killer sign (Anka) marking a doubled consonant back into the repeated consonant sequence."""
-    from .. import PostProcess
     ListC = "|".join(Makasar.ConsonantMap)
     #ListV = "|".join(Makasar.VowelSignMap)
     #print(ListV)

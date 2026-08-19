@@ -43,7 +43,6 @@ def FixArab(Strng, Source, reverse=False):
 def ArabicGimelJa(Strng):
 
     """Represents /g/ using ڨ instead of jim ج - /ج/ as /g/."""
-    from .. import ConvertFix as CF
     Strng = Strng.replace("ج", "ڨ")
 
     return Strng
@@ -53,7 +52,6 @@ def ArabicGimelJa(Strng):
 def ArabRemoveAdditions(Strng):
 
     """Reverts extended Arabic letters back to their standard base forms: ڨ→ج, ڤ→ف, پ→ف."""
-    from .. import ConvertFix as CF
     Strng = Strng.replace('ڨ', 'ج').replace('ڤ', 'ف').replace('پ', 'ف')
 
     return Strng
@@ -61,7 +59,6 @@ def ArabRemoveAdditions(Strng):
 def arabicRemoveAdditionsPhonetic(Strng):
 
     """Maps extended phonetic letters to their nearest standard Arabic equivalents - /g j p b/ → /غ ج ب ب/ not /ج ج ف ب/."""
-    from .. import ConvertFix as CF
 
     Strng = Strng.replace('ڨ', 'غ').replace('ڤ', 'ف').replace('پ', 'ب')
 
@@ -70,7 +67,6 @@ def arabicRemoveAdditionsPhonetic(Strng):
 def ArabAtoAleph(Strng):
 
     """Converts hamza-carrying alif أ back to plain alif ا - أ/a/ to Alif /ا/."""
-    from .. import ConvertFix as CF
     Strng = Strng.replace('أ', 'ا')
 
 

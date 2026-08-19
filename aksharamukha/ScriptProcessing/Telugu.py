@@ -42,7 +42,6 @@ def FixTelugu(Strng, reverse=False):
 def TeluguRemoveNukta(Strng):
 
     """Removes the nukta combining mark from Telugu text."""
-    from .. import PostProcess
     Strng = Strng.replace('\u0C3C', '')
 
     return Strng
@@ -50,7 +49,6 @@ def TeluguRemoveNukta(Strng):
 def TeluguRemoveAeAo(Strng):
 
     """Removes the candra-sign-plus-ZWSP sequence used to mark short e/o vowels in Telugu."""
-    from .. import PostProcess
     Strng = Strng.replace('\u0952\u200B', '')
 
     return Strng
@@ -58,7 +56,6 @@ def TeluguRemoveAeAo(Strng):
 def TeluguNakaraPollu(Strng):
 
     """Converts word-final na-virama to the special Telugu nakaara pollu character, e.g. భగవన్ → భగవౝ."""
-    from .. import PostProcess
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Telugu')) + ")"
 
     Strng = re.sub('(?<!\u0C4D)న్(?!' + ListC + ')', '\u0C5D', Strng)
@@ -68,14 +65,12 @@ def TeluguNakaraPollu(Strng):
 def TeluguTamilZha(Strng):
 
     """Tamil-style zha rendering option for Telugu, currently a no-op passthrough, e.g. ఆఴ్వార్ → ఆఴ్వార్."""
-    from .. import PostProcess
 
     return Strng
 
 def TeluguTamilRra(Strng):
 
     """Renders Tamil-style rra/tra/ndra conjuncts using the Telugu ౘ character, e.g. ఆఱ్ఱు → ఆౘ్ౘు."""
-    from .. import PostProcess
     Strng = Strng.replace('ఱ్ఱ', 'ౘ్ౘ')
     Strng = Strng.replace('ట్ర', 'ౘ్ౘ')
     Strng = Strng.replace('ండ్ర','న్ఱ')
@@ -85,7 +80,6 @@ def TeluguTamilRra(Strng):
 def TeluguReph(Strng):
 
     """Inserts a ZWNJ after ra-virama before a consonant to render it as a Telugu repha (valapala gilaka), e.g. ధర్మ → ధర్‍మ."""
-    from .. import PostProcess
     consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Telugu')) + ')'
     Strng = re.sub('ర్' + consonants, 'ర్‍' + r'\1', Strng)
     Strng = Strng.replace('\u0C4Dర్‍', '\u0C4Dర్')
@@ -95,7 +89,6 @@ def TeluguReph(Strng):
 def TeluguArasunnaChandrabindu(Strng):
 
     """Treats the Telugu arasunna character as chandrabindu, e.g. హూఀ → హూఁ."""
-    from .. import PostProcess
     Strng = Strng.replace('ఀ', 'ఁ')
 
     return Strng

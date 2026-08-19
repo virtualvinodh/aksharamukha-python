@@ -56,7 +56,6 @@ def _FixTaiThamEncode(Strng):
 def _FixTaiThamDecode(Strng):
 
     """Reverses Tai Tham subjoining, ligature, and tall-A vowel fixes back to standard consonant-plus-virama sequences when decoding."""
-    from .. import PostProcess
     vir = TaiTham.ViramaMap[0]
     Cons = [vir+x for x in [TaiTham.ConsonantMap[x] for x in [26,27]]] # /ra/ and /la/
     Sub =['\u1A55','\u1A56'] # Subjoined Forms of /ra/ and /la/

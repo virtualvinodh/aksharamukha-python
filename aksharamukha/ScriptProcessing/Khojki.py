@@ -62,7 +62,6 @@ def FixKhojki(Strng, reverse=False):
 def KhojkiRRI(Strng):
 
     """Decomposes the Khojki vocalic RI/RII ligature characters into their constituent letter sequences."""
-    from .. import PostProcess
     Strng = Strng.replace('\U00011241', '\U00011235\U00011226\U0001122D')
     Strng = Strng.replace('\U00011240', '\U00011202')
 
@@ -71,7 +70,6 @@ def KhojkiRRI(Strng):
 def KhojkiQa(Strng):
 
     """Uses the dedicated Khojki qa ligature instead of ka+nukta, e.g. 𑈈𑈶 → 𑈿."""
-    from .. import PostProcess
     Strng = Strng.replace('𑈈𑈶', '\U0001123F')
 
     return Strng
@@ -79,7 +77,6 @@ def KhojkiQa(Strng):
 def KhojkiRetainSpace(Strng):
 
     """Replaces the Khojki word-separator character with a plain space."""
-    from .. import PostProcess
     Strng = Strng.replace('\U0001123A', ' ')
 
     return Strng

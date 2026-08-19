@@ -18,7 +18,6 @@ from aksharamukha.ScriptMap.MainIndic import TamilExtended
 def _FixTamilExtendedEncode(Strng):
 
     """Normalizes the ksha and shra conjuncts, uses the older-style AU vowel sign, and repositions zero-width joiners relative to Vedic svara marks when encoding Tamil-Grantha extended text."""
-    from .. import PostProcess
     Strng = Strng.replace('ക്‌ഷ', 'ക്ഷ')
     Strng = Strng.replace('ശ്‌ര', 'ശ്‍ര')
     Strng = Strng.replace('ൗ', 'ൌ')
@@ -31,7 +30,6 @@ def _FixTamilExtendedEncode(Strng):
 def _FixTamilExtendedDecode(Strng):
 
     """Repositions zero-width joiners relative to Vedic svara marks and inserts a ZWNJ after every virama when decoding Tamil-Grantha extended text."""
-    from .. import PostProcess
     for svara in GM.VedicSvarasList:
         Strng = Strng.replace(svara + '\u200C', '\u200C' + svara)
 
@@ -49,7 +47,6 @@ def FixTamilExtended(Strng, reverse=False):
 def TamilStyleUUCore(Strng):
 
     """Applies the core-Grantha style for u/ū vowel signs by inserting a ZWJ after certain consonants (ഗുബൂഫുഭൂ → ഗ‍ുബ‍ൂഫ‍ുഭ‍ൂ)."""
-    from .. import PostProcess
     Strng = re.sub('([ഖഗഘഛഝഠഡഢഥദധഫബഭ])' + '([ുൂ])', r'\1' + '\u200D' + r'\2', Strng)
 
     return Strng
@@ -57,7 +54,6 @@ def TamilStyleUUCore(Strng):
 def TamilStyleUUOther(Strng):
 
     """Applies the Tamilized-Grantha style for u/ū vowel signs on sibilants, ha, and the shra conjunct by inserting a ZWJ (ജൂസുഷുഹൂ → ജ‍ൂസ‍ുഷ‍ുഹ‍ൂ)."""
-    from .. import PostProcess
     Strng = re.sub('([ജശഷസഹ])' + '([ുൂ])', r'\1' + '\u200D' + r'\2', Strng)
     Strng = re.sub('(ശ്ര)' + '([ുൂ])', r'\1' + '\u200D' + r'\2', Strng)
     Strng = re.sub('(ശ്‍ര)' + '([ുൂ])', r'\1' + '\u200D' + r'\2', Strng)
@@ -68,7 +64,6 @@ def TamilStyleUUOther(Strng):
 def TamilpredictDentaNaExtended(Strng):
 
     """Corrects ambiguous nna/dental-na spellings back to dental na for a hardcoded list of known Sanskrit-derived words in Tamil-Grantha extended text."""
-    from .. import PostProcess
     listDentalNa = '''ഩഖ
 ഩഗര
 ഩകുല
@@ -246,7 +241,6 @@ def TamilpredictDentaNaExtended(Strng):
 def TamilExtendedNNA(Strng):
 
     """Contextually converts dental na to nna per Tamil spelling rules, then fixes known exceptions via the hardcoded word list (ഗജാനനന്‌ → ഗജാഩഩഩ്‌)."""
-    from .. import PostProcess
     na = TamilExtended.ConsonantMap[19]
     nna = TamilExtended.SouthConsonantMap[3]
     vir = TamilExtended.ViramaMap[0]

@@ -23,7 +23,6 @@ def FixRomanReadable(Strng, reverse = False):
 def RomanReadableLongEO(Strng):
 
     """Alternates long/short e and o vowel notation: e' e o' o → e ae o oa."""
-    from .. import ConvertFix as CF
 
     Strng = Strng.replace('o', 'oa')
     Strng = Strng.replace('oa\'', 'o')

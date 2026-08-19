@@ -15,7 +15,6 @@ import re
 def _FixGujaratiEncode(Strng):
 
     """Retains Indic dandas and merges nukta-marked ja/sha into the dedicated Gujarati letter ૹ when encoding."""
-    from .. import PreProcess as PP
 
     from .. import PostProcess
     Strng = PostProcess.RetainDandasIndic(Strng, 'Gujarati', True)
@@ -26,7 +25,6 @@ def _FixGujaratiEncode(Strng):
 def _FixGujaratiDecode(Strng):
 
     """Retains Indic dandas and expands the Gujarati letter ૹ back into nukta-marked ja/sha when decoding."""
-    from .. import PreProcess as PP
 
     from .. import PostProcess
     Strng = PostProcess.RetainDandasIndic(Strng, 'Gujarati')
@@ -46,8 +44,6 @@ def SchwaFinalGujarati(Strng):
 
     """Deletes the inherent schwa only at the end of a word - राम → rām."""
     from .. import PreProcess as PP
-
-    from .. import PostProcess
 
     Strng = PP.RemoveFinal(Strng, 'Gujarati')
 

@@ -19,8 +19,6 @@ def _FixGurmukhiEncode(Strng):
     """Applies Gurmukhi encoding fixes: RU/LU vowel correction, doubled Aunkar to bracketed AA, gemination-sign insertion, Indic-numeral retention, and Vedic svara consonant doubling."""
     from .. import ConvertFix as CF
 
-    from .. import PreProcess as PP
-
     from .. import PostProcess
     Strng = CF.CorrectRuLu(Strng,"Gurmukhi",False)
 
@@ -44,8 +42,6 @@ def _FixGurmukhiDecode(Strng):
 
     """Reverses Gurmukhi encoding fixes: RU/LU vowel correction, Indic numerals, gemination sign, nn/mm-halant normalization, Tippi-to-Bindu, and Yakaash conjuncts."""
     from .. import ConvertFix as CF
-
-    from .. import PreProcess as PP
 
     from .. import PostProcess
     Strng = CF.CorrectRuLu(Strng,"Gurmukhi",True)
@@ -77,11 +73,8 @@ def FixGurmukhi(Strng,reverse=False):
 def SchwaFinalGurmukhi(Strng):
 
     """Deletes the schwa only in word-final position: ਰਾਮ → rām."""
-    from .. import ConvertFix as CF
 
     from .. import PreProcess as PP
-
-    from .. import PostProcess
 
     Strng = PP.RemoveFinal(Strng, 'Gurmukhi')
 
@@ -92,11 +85,7 @@ def SchwaFinalGurmukhi(Strng):
 def GurmukhiCandrabindu(Strng):
 
     """Replaces the Gurmukhi candrabindu sign (ਁ) with anusvara (ਂ), since Gurmukhi does not distinguish them."""
-    from .. import ConvertFix as CF
 
-    from .. import PreProcess as PP
-
-    from .. import PostProcess
     Strng = Strng.replace('ਁ', 'ਂ')
 
     return Strng
@@ -104,11 +93,7 @@ def GurmukhiCandrabindu(Strng):
 def GurmukhiYakaash(Strng, reverse=False):
 
     """Applies (or reverses) the Yakaash ligature: ਕ੍ਯ → ਕੵ."""
-    from .. import ConvertFix as CF
 
-    from .. import PreProcess as PP
-
-    from .. import PostProcess
     if not reverse:
         Strng = Strng.replace('੍ਯ','ੵ')
     else:
@@ -136,11 +121,7 @@ def GurmukhiTippiBindu(Strng): # Check this Function
 def GurmukhiTippiGemination(Strng):
 
     """Replaces the Addak gemination mark (ੱ) with Tippi before ਨ or ਮ, reflecting pronunciation of geminated nasals."""
-    from .. import ConvertFix as CF
 
-    from .. import PreProcess as PP
-
-    from .. import PostProcess
     n = Gurmukhi.ConsonantMap[19]
     m = Gurmukhi.ConsonantMap[24]
     vir = Gurmukhi.ViramaMap[0]

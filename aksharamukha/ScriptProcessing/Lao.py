@@ -70,7 +70,6 @@ def FixLao(Strng,reverse=False):
 def LaoTranscribe(Strng,reverse=False):
 
     """Applies or reverses Lao short-a/conjunct-a transcription rules via the shared Thai/Lao transcription routine."""
-    from .. import ConvertFix as CF
     from .. import PostProcess as pp
 
     shortA, conjA = '\u0EB0', '\u0EB1'
@@ -87,7 +86,6 @@ def LaoTranscribe(Strng,reverse=False):
 def LaoNative(Strng):
 
     """Nativizes Lao spelling by simplifying doubled aspirate/sibilant consonant clusters: ພຸທທັງ ຄັຈຈາມິ ສັພພັງ → ພຸດທັງ ຄັຈສາມິ ສັບພັງ."""
-    from .. import ConvertFix as CF
 
     Strng = re.sub('ຕ([ເແໂໄ]?)ຕ', 'ດ' + r'\1' + 'ຕ', Strng)
     Strng = re.sub('ຕ([ເແໂໄ]?)ຖ', 'ດ' + r'\1' + 'ຖ', Strng)

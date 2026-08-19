@@ -17,7 +17,6 @@ from aksharamukha.ScriptMap.EastIndic import Tibetan
 def _FixTibetanEncode(Strng, swapNative):
 
     """Converts consonant+virama sequences to subjoined Tibetan letters, fixes wa-zur/ya-zur/ra-zur subjoined clusters, encodes spaces as tsheg, maps decomposed dzha+nukta to za, and converts ASCII brackets to Tibetan bracket forms."""
-    from .. import PostProcess
     ListC = [Tibetan.ViramaMap[0]+chr(x) for x in range(0x0F40,0x0F68)] # Consonants
     ListSubC = [chr(x+80) for x in range(0x0F40,0x0F68)] # Subjoined Consonants
 
@@ -50,7 +49,6 @@ def _FixTibetanEncode(Strng, swapNative):
 def _FixTibetanDecode(Strng, swapNative):
 
     """Expands subjoined Tibetan letters back to consonant+virama sequences, normalizes decomposed aspirate conjuncts, restores vocalic ri/li clusters, converts tsheg back to space, restores bracket forms, and optionally swaps native Tibetan letters for their Sanskrit-transliteration equivalents."""
-    from .. import PostProcess
     ListC = [Tibetan.ViramaMap[0]+chr(x) for x in range(0x0F40,0x0F68)] # Consonants
     ListSubC = [chr(x+80) for x in range(0x0F40,0x0F68)] # Subjoined Consonants
 
@@ -107,7 +105,6 @@ def FixTibetan(Strng,reverse=False, swapNative = True):
 def TibetanSyllabize(Strng):
 
     """Inserts tsheg (syllable-separator dots) between Tibetan syllables, e.g. བོདྷིསཏྟྭ → བོ་དྷི་ས་ཏྟྭ."""
-    from .. import PostProcess
     vowels = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'Tibetan')) + ')'
     consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Tibetan')+['ཨ','ཅ','ཆ','ཇ','ཇྷ']) + ')'
     vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Tibetan')+['\u0F80']) + ')'
@@ -129,7 +126,6 @@ def TibetanSyllabize(Strng):
 def TibetanSanskritPalatals(Strng):
 
     """Renders Sanskrit palatal consonants using the native Tibetan ca-series letters instead of the tsa-series, e.g. ཙ ཚ ཛ ཛྷ → ཅ ཆ ཇ ཇྷ."""
-    from .. import PostProcess
     caSeries = ['ཅ','ཆ','ཇ','ཇྷ']
     tsaSeries = ['ཙ','ཚ','ཛ','ཛྷ']
 
@@ -141,13 +137,11 @@ def TibetanSanskritPalatals(Strng):
 def tibetandbumed(Strng):
 
     """Placeholder for rendering Tibetan in Dbu Med (Ume) cursive style; currently returns the string unchanged."""
-    from .. import PostProcess
     return Strng
 
 def TibetanNada(Strng):
 
     """Replaces the bindu-with-nada sign with the plain anusvara sign, e.g. ཨྃ → ཨྂ."""
-    from .. import PostProcess
     Strng = Strng.replace('\u0F83','\u0F82')
 
     return Strng
@@ -155,7 +149,6 @@ def TibetanNada(Strng):
 def TibetanTsheg(Strng):
 
     """Replaces the tsheg syllable separator with a plain space, e.g. ན་མོ → ན མོ."""
-    from .. import PostProcess
     Strng = Strng.replace('\u0F0B', ' ')
 
     return Strng
@@ -163,7 +156,6 @@ def TibetanTsheg(Strng):
 def TibetanRemoveVirama(Strng):
 
     """Strips the explicit Tibetan virama sign from the text."""
-    from .. import PostProcess
     Strng = Strng.replace(Tibetan.ViramaMap[0],'')
 
     return Strng

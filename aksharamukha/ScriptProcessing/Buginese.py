@@ -29,7 +29,6 @@ def _FixBugineseEncode(Strng):
 def _FixBugineseDecode(Strng):
 
     """Expands merged Buginese prenasalized consonants (e.g. ᨃ→ᨂʾᨀ) back into their component consonant sequences."""
-    from .. import PostProcess
     Strng = Strng.replace("ᨃ", "ᨂ\u02BEᨀ")
     Strng = Strng.replace("ᨇ", "ᨆ\u02BEᨄ")
     Strng = Strng.replace("ᨋ", "ᨊ\u02BEᨑ")

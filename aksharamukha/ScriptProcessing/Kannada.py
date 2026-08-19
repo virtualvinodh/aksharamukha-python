@@ -42,7 +42,6 @@ def FixKannada(Strng, reverse=False):
 def KannadaSpacingCandrabindu(Strng):
 
     """Uses the spacing candrabindu form instead of the combining one, e.g. ಯಹಾಁ → ಯಹಾಀ."""
-    from .. import PostProcess
     Strng = Strng.replace('\u0C81', '\u0C80')
 
     return Strng
@@ -50,7 +49,6 @@ def KannadaSpacingCandrabindu(Strng):
 def KannadaNotRepha(Strng):
 
     """Prevents ra-virama before a consonant from forming a visual repha ligature, e.g. ಧರ್ಮ → ಧರ‍್ಮ."""
-    from .. import PostProcess
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Kannada')) + ")"
 
     Strng = re.sub('ರ್(?=' + ListC + ')', 'ರ‍್', Strng)
@@ -60,7 +58,6 @@ def KannadaNotRepha(Strng):
 def KannadaNakaraPollu(Strng):
 
     """Converts word-final na-virama to the special Kannada nakaara pollu character, e.g. ಭಗವನ್ → ಭಗವೝ."""
-    from .. import PostProcess
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Kannada')) + ")"
 
     Strng = re.sub('(?<!\u0CCD)ನ್(?!' + ListC + ')', '\u0CDD', Strng)

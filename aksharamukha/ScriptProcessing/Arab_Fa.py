@@ -25,7 +25,6 @@ def FixArab_Fa(Strng, Source, reverse=False):
 def persianPaGaFaJa(Strng):
 
     """Converts Persian-specific letters pe and gaf to Arabic fa and jim (/p g/ پ گ → /f j/ ف ج)."""
-    from .. import ConvertFix as CF
     Strng = Strng.replace('پ', 'ف').replace('گ', 'ج')
 
     return Strng

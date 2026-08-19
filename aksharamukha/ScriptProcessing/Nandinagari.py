@@ -15,7 +15,6 @@ import re
 def _FixNandinagariEncode(Strng):
 
     """No-op placeholder for Nandinagari encoding; returns the string unchanged."""
-    from .. import PostProcess
     pass
 
     return Strng
@@ -38,7 +37,6 @@ def FixNandinagari(Strng, reverse=False):
 def NandinagariPrishtamatra(Strng, reverse = False):
 
     """Converts Nandinagari vowel signs to the prishtamatra orthographic style, e.g. 𑦮𑧚 𑦮𑧜 𑦮𑧛 𑦮𑧝 → 𑦮𑧤 𑦮𑧤𑧑 𑦮𑧤𑧚 𑦮𑧤𑧜."""
-    from .. import PostProcess
     if not reverse:
         Strng = Strng.replace('𑧚','𑧤')
         Strng = Strng.replace('𑧛','𑧤𑧚')

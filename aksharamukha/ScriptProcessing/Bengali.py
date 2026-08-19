@@ -55,7 +55,6 @@ def FixBengali(Strng, reverse=False):
 def BengaliSubojinedVa(Strng):
 
     """Renders subjoined /va/ using nukta-ba (ভ়) instead of plain ba, e.g. স্ব দ্ব → sva dva."""
-    from .. import PostProcess
     Strng = re.sub('(?<![মব])(্ব)', '্ভ়', Strng)
 
     return Strng
@@ -63,7 +62,6 @@ def BengaliSubojinedVa(Strng):
 def BengaliTargetVa(Strng):
 
     """Uses nukta-ba (ভ়) as the target letter for /va/, e.g. ব → va."""
-    from .. import PostProcess
     Strng = Strng.replace('ব', 'ভ়')
 
     return Strng
@@ -73,7 +71,6 @@ def BengaliTargetVa(Strng):
 def BengaliOldRA(Strng):
 
     """Uses the old Bengali ra form (ৰ) instead of the standard ra, e.g. র → ৰ."""
-    from .. import PostProcess
     Strng = Strng.replace('র', 'ৰ')
 
     return Strng
@@ -81,7 +78,6 @@ def BengaliOldRA(Strng):
 def BengaliConjunctVB(Strng):
 
     """Merges ZWNJ-separated virama+ba clusters into a normal conjunct (so kva/kba render alike) and converts khanda-ta+ba to ta+virama+ba."""
-    from .. import PostProcess
     ## kva / kba will be rendered the same
     Strng = Strng.replace('\u09CD\u200C\u09AC', '\u09CD\u09AC')
     Strng = khandatabatova(Strng)
@@ -91,7 +87,6 @@ def BengaliConjunctVB(Strng):
 def khandatabatova(Strng):
 
     """Converts khanda-ta followed by ba (with or without an intervening ZWNJ) into full ta+virama+ba, e.g. ৎব → ত্ব."""
-    from .. import PostProcess
     Strng = Strng.replace('ৎব', 'ত্ব')
     Strng = Strng.replace('ৎ\u200Cব', 'ত্ব')
 
@@ -100,7 +95,6 @@ def khandatabatova(Strng):
 def BengaliRaBa(Strng):
 
     """Treats ৰ as /b/ and ব as /v/, breaking ra conjuncts and inserting joiners to correctly render bra/bya/bru and rba clusters."""
-    from .. import PostProcess
     Strng = Strng.replace('ৰু', 'ৰ‌ু').replace('ৰূ', 'ৰ‌ূ')
     ## Avoid bba -> rra
     ## break all ba conjuncts
@@ -118,7 +112,6 @@ def BengaliRaBa(Strng):
 def BengaliIntervocalicDDA(Strng):
 
     """Converts ড/ঢ to their nukta forms ড়/ঢ় in intervocalic position, e.g. দৃঢ আষাঢ → দৃঢ় আষাঢ়."""
-    from .. import PostProcess
     Target = 'Bengali'
 
     ListC = '|'.join(GM.CrunchSymbols(GM.Characters, Target)+[GM.CrunchList('SignMap',Target)[0]] + ['ৰ'])

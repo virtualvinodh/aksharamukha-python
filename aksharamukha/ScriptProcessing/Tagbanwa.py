@@ -22,7 +22,6 @@ def _FixTagbanwaEncode(Strng):
 def _FixTagbanwaDecode(Strng):
 
     """No-op decode fix for Tagbanwa; no additional corrections are currently applied."""
-    from .. import PostProcess
     pass
 
     return Strng

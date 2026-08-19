@@ -23,7 +23,6 @@ def FixKhuenTham(Strng, reverse=False):
 def KhuenRaHaamKaren(Strng):
 
     """Expands ra-haam into an explicit ra consonant sign and reassigns the lue-karan mark to represent ra-haam, e.g. ᨠ᩺ → kar, ᨠ᩼ → k."""
-    from .. import ConvertFix as CF
     # replace ra ham with r+ra-haam ->
     Strng = Strng.replace('᩺', 'ᩁ\u1A60')
 

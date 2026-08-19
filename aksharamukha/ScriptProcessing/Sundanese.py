@@ -17,7 +17,6 @@ from aksharamukha.ScriptMap.EastIndic import Sundanese
 def _FixSundaneseEncode(Strng):
 
     """Converts ra-virama after a consonant to the Sundanese repha sign and subjoins virama-plus-ya/ra/la into their combining consonant forms when encoding."""
-    from .. import PostProcess
     vir = Sundanese.ViramaMap[0]
 
     r = Sundanese.ConsonantMap[26] + vir
@@ -71,7 +70,6 @@ def FixSundanese(Strng,reverse=False):
 def SundaneseHistoricConjuncts(Strng, reverse = False):
 
     """Converts to/from archaic Sundanese subjoined-consonant and word-final consonant forms, e.g. ᮊ᮪ᮙ ᮊ᮪ᮝ ᮃᮊ᮪ ᮃᮙ᮪ → ᮊᮬ ᮊᮭ ᮃᮾ ᮃᮿ."""
-    from .. import PostProcess
     ListC = '|'.join(GM.CrunchSymbols(GM.Consonants + GM.Vowels + GM.VowelSignsNV,'Sundanese'))
 
     if not reverse:
@@ -93,7 +91,6 @@ def SundaneseHistoricConjuncts(Strng, reverse = False):
 def SundaneseRemoveHistoric(Strng):
 
     """Replaces historic Sundanese vocalic-r/l consonant letters and the archaic pamaeh sign with their modern letter-plus-panyecek combinations."""
-    from .. import PostProcess
     Strng = Strng.replace('᮪ᮻ', 'ᮢᮩ')
     Strng = Strng.replace('᮪ᮼ', 'ᮣᮩ')
     Strng = Strng.replace('ᮻ', 'ᮛᮩ')

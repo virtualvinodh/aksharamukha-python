@@ -22,7 +22,6 @@ def _FixBuhidEncode(Strng):
 def _FixBuhidDecode(Strng):
 
     """No-op decode step for Buhid script; gemination-sign removal is currently unimplemented."""
-    from .. import PostProcess
     pass
 
     return Strng
