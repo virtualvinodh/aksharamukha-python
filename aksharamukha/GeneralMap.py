@@ -345,6 +345,18 @@ ReversibleScripts = ['Devanagari', 'Tamil', 'Telugu', 'Kannada', 'Sinhala', 'Ori
 RomanReversible = ['IAST', 'HK', 'Itrans', 'Velthuis', 'Titus', 'WX', 'RussianCyrillic', 'ISO']
 
 CharmapLists = ['VowelMap', 'VowelSignMap', 'ConsonantMap', 'SignMap', 'AyogavahaMap', 'ModernVowelMap', 'ModernVowelSignMap']
+# VowelMap/VowelSignMap (and ModernVowelMap/ModernVowelSignMap) deliberately
+# SHARE a base codepoint. convertScript's Latin->Indic path builds the
+# 'Inter' pivot representation of a vowel using only the VowelMap mapping
+# (convertInter's ScriptAll has no VowelSigns group - Latin vowels are always
+# "independent" going in), then RomanPreFix inserts a DepV marker in front of
+# syllable-medial occurrences and _build_char_pairs looks those up as
+# DepV + <VowelSignMap's Inter placeholder>. That lookup only hits because
+# VowelSignMap's placeholder for a given vowel equals VowelMap's placeholder
+# for the same vowel - the shared base isn't a leftover collision, it's what
+# makes the independent/dependent-vowel disambiguation trick work. (Given
+# separate bases instead, per category, RomanLoC->Khmer/Shan/TaiTham
+# round-trips broke - confirmed empirically, not just by reasoning.)
 InterAdd = {'VowelMap': '\U000F0000', 'VowelSignMap': '\U000F0000', 'ConsonantMap':'\U000F2000', 'SignMap':'\U000F3000', 'AyogavahaMap':'\U000F4000', 'ModernVowelMap': '\U000F5000', 'ModernVowelSignMap':'\U000F5000'}
 
 def add_additional_chars(script_char_map, file_script):
@@ -369,12 +381,21 @@ def add_additional_chars(script_char_map, file_script):
                     if mapping[mapchar][0] == -1:
                          first_char = ''
                     else:
-                         #print(charlist)
-                         #print(mapping[mapchar][0])
-                         first_char= script_char_map[charlist][mapping[mapchar][0]]
+                         base_index = mapping[mapchar][0]
+                         if base_index >= len(script_char_map[charlist]):
+                             raise ValueError(
+                                 "FallBack.py entry %r's %s base index %d is out of range "
+                                 "for %s's own %s (only %d entries so far) - a bad fallback "
+                                 "index in FallBack.py, not a problem with %s itself."
+                                 % (char, mapchar, base_index, file_script, charlist,
+                                    len(script_char_map[charlist]), file_script))
+                         first_char = script_char_map[charlist][base_index]
 
                     if len(mapping[mapchar]) > 1:
-                        if 'nukta' in mapping[mapchar]:
+                        # 'nukta' is a sentinel value, not a literal suffix - checked by
+                        # position (not `in`, which would also match if it ever appeared
+                        # as the base index instead of the suffix).
+                        if mapping[mapchar][1] == 'nukta':
                             second_char = ModScript.NuktaMap[0]
                         else:
                             second_char = mapping[mapchar][1]
