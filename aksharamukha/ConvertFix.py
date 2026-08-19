@@ -621,6 +621,7 @@ def _FixMongolianEncode(Strng):
     vowels = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'Mongolian')) + ')'
     consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Mongolian')) + ')'
 
+    #Strng = re.sub(consonants + '?' + vowels + '([\u1880\u1881])?', r'\1\2\3 ', Strng)
     Strng = re.sub('(\u180B)' + consonants, r'\2', Strng)
     Strng = re.sub('(\u180B)' + vowels, r'\2', Strng)
 
@@ -1201,6 +1202,7 @@ def _FixTamilGranthaEncode(Strng):
     ListEAI = '|'.join(TamilGrantha.VowelSignMap[9:11]+TamilGrantha.SouthVowelSignMap[0:1])
     ListOAU = TamilGrantha.VowelSignMap[11:13]+TamilGrantha.SouthVowelSignMap[1:2]
 
+    # k + VS e/E/ai -> Joiners + VS e/E/ai + k
     Strng = re.sub('('+ListC+')'+'('+ListEAI+')','\u200B\u200C\u200D\u200C'+r'\2\1',Strng)
     # k + VS o/O/au -> Joiners + VS e/E + k + VS AA/La
     Strng = re.sub('('+ListC+')'+'('+ListOAU[0]+')','\u200B\u200C\u200D\u200C'+TamilGrantha.VowelSignMap[9]+r'\1'+TamilGrantha.VowelSignMap[0],Strng)
@@ -1802,6 +1804,7 @@ def _FixJavaneseEncode(Strng):
 
     Strng = AddRepha(Strng,"Javanese",Repha,False)
 
+    # Introduce subjoining Ra & Ya
     Strng = Strng.replace(vir+ra,SubRa).replace(vir+ya,SubYa)
 
 
@@ -2125,6 +2128,7 @@ def _FixThaanaEncode(Strng):
     VowelVS = '|'.join(GM.CrunchSymbols(GM.VowelSigns,'Thaana'))
     aBase = '\u0787'
 
+    # Replace VS-A + Vowel Sign -> Vowel Sign :
     Strng = PostProcess.InsertGeminationSign(Strng, 'Thaana')
     Strng = re.sub("(\u07A6)"+"(?=("+VowelVS+"))","",Strng)
     Strng = Strng.replace("\u02BE","")
@@ -2195,6 +2199,7 @@ def _FixTibetanEncode(Strng, swapNative):
     SubC = ["ཝྭ","ཡྱ","རྱ","རྭ", "ྺྭ"]
     SubMinC = ["ཝྺ","ཡྻ","ཪྻ","ཪྺ", "ྺྺ"]
 
+    #introduce virama for Jihva/Upadh
     Strng = re.sub('([ྈྉ])', r'\1' + '\u0f84',  Strng)
 
     for x,y in zip(ListC,ListSubC):
@@ -2908,19 +2913,15 @@ def FixLimbuLoC(Strng, reverse=False):
     return _FixLimbuLoCDecode(Strng) if reverse else _FixLimbuLoCEncode(Strng)
 
 #Subojined & Final
-def FixLimbu(Strng,reverse=False):
+def _FixLimbuEncode(Strng):
     vir = Limbu.ViramaMap[0]
 
     SCons = [vir+x for x in [Limbu.ConsonantMap[x] for x in [25,26,28]]]  # /ya/, /ra/, /va/
     SubCons = ['\u1929','\u192A','\u192B']
 
     for x,y in zip(SCons,SubCons):
-        if not reverse:
-            # Replace Subjoined Consonants
-            Strng = Strng.replace(x,y)
-        else:
-            # Reverse above
-            Strng = Strng.replace(y,x)
+        # Replace Subjoined Consonants
+        Strng = Strng.replace(x,y)
 
     signAll = '|'.join(GM.CrunchSymbols(GM.Consonants+GM.Vowels+GM.VowelSignsNV, "Limbu"))
 
@@ -2928,37 +2929,60 @@ def FixLimbu(Strng,reverse=False):
     FinalCons = ['\u1930','\u1931','\u1933','\u1934','\u1935','\u1936','\u1937','\u1938']
 
     ### ZWNJ with finalcons + ya/ra/la/va (perhaps do this for other scripts)ˍ
-    if reverse:
-        #Strng = Strng.replace("\u193A\u1922", "\u1922\u193A")
-        Strng = re.sub('(' + '|'.join(FinalCons) + ')' + '(?=[ᤕᤖᤘ])', r'\1' + '\u200C', Strng)
-        Strng = re.sub('([ᤀᤁᤂᤃᤄᤅᤆᤇᤈᤉᤊᤋᤌᤍᤎᤏᤐᤑᤒᤓᤔᤕᤖᤗᤘᤚᤛᤜᤠᤣᤥᤧᤨᤩᤪᤫ])᤺', r'\1' + '꞉', Strng)
-        ## Modifying letter colon ## Fix this only with aH ᤆᤠ᤺ᤣ
-    else:
-        #Strng = Strng.replace("\u1922\u193A", "\u193A\u1922")
-        Strng = Strng.replace('꞉', '᤺')
+    #Strng = Strng.replace("\u1922\u193A", "\u193A\u1922")
+    Strng = Strng.replace('꞉', '᤺')
 
     for x,y in zip(FCons,FinalCons):
-        if not reverse:
-            # Replace Final pure consonants
-            Strng = re.sub('('+signAll+')'+ '(\u193A?)' + '('+x+')',r'\1\2'+y,Strng)
-        else:
-            # Reverse above
-            Strng = Strng.replace(y,x)
+        # Replace Final pure consonants
+        Strng = re.sub('('+signAll+')'+ '(\u193A?)' + '('+x+')',r'\1\2'+y,Strng)
 
-    if not reverse:
-        Strng = Strng.replace('ʔ','᤹')
-        Strng = Strng.replace('!','᥄')
-        Strng = Strng.replace('?','᥅')
-    else:
-        Strng = Strng.replace('᤹', 'ʔ')
-        Strng = Strng.replace('᥄', '!')
-        Strng = Strng.replace('᥅', '?')
+    Strng = Strng.replace('ʔ','᤹')
+    Strng = Strng.replace('!','᥄')
+    Strng = Strng.replace('?','᥅')
     ## Add proper support for Limbu e,o to Devanagari
     ## Limbu Question mark and exclamation mark?
     ## LImbu to devanagari conventions
     ## Limbu Danda
 
     return Strng
+
+def _FixLimbuDecode(Strng):
+    vir = Limbu.ViramaMap[0]
+
+    SCons = [vir+x for x in [Limbu.ConsonantMap[x] for x in [25,26,28]]]  # /ya/, /ra/, /va/
+    SubCons = ['\u1929','\u192A','\u192B']
+
+    for x,y in zip(SCons,SubCons):
+        # Reverse above
+        Strng = Strng.replace(y,x)
+
+    signAll = '|'.join(GM.CrunchSymbols(GM.Consonants+GM.Vowels+GM.VowelSignsNV, "Limbu"))
+
+    FCons = [x+vir for x in [Limbu.ConsonantMap[x] for x in[0,4,15,19,20,24,26,27]]]
+    FinalCons = ['\u1930','\u1931','\u1933','\u1934','\u1935','\u1936','\u1937','\u1938']
+
+    ### ZWNJ with finalcons + ya/ra/la/va (perhaps do this for other scripts)ˍ
+    #Strng = Strng.replace("\u193A\u1922", "\u1922\u193A")
+    Strng = re.sub('(' + '|'.join(FinalCons) + ')' + '(?=[ᤕᤖᤘ])', r'\1' + '\u200C', Strng)
+    Strng = re.sub('([ᤀᤁᤂᤃᤄᤅᤆᤇᤈᤉᤊᤋᤌᤍᤎᤏᤐᤑᤒᤓᤔᤕᤖᤗᤘᤚᤛᤜᤠᤣᤥᤧᤨᤩᤪᤫ])᤺', r'\1' + '꞉', Strng)
+    ## Modifying letter colon ## Fix this only with aH ᤆᤠ᤺ᤣ
+
+    for x,y in zip(FCons,FinalCons):
+        # Reverse above
+        Strng = Strng.replace(y,x)
+
+    Strng = Strng.replace('᤹', 'ʔ')
+    Strng = Strng.replace('᥄', '!')
+    Strng = Strng.replace('᥅', '?')
+    ## Add proper support for Limbu e,o to Devanagari
+    ## Limbu Question mark and exclamation mark?
+    ## LImbu to devanagari conventions
+    ## Limbu Danda
+
+    return Strng
+
+def FixLimbu(Strng,reverse=False):
+    return _FixLimbuDecode(Strng) if reverse else _FixLimbuEncode(Strng)
 
 
 def _FixDevanagariEncode(Strng):
@@ -3053,7 +3077,7 @@ def FixNandinagari(Strng, reverse=False):
 
 #Subjoined, final and la-ligatures
 # Fix aH -> a ;
-def FixLepcha(Strng,reverse=False):
+def _FixLepchaEncode(Strng):
     vir = Lepcha.ViramaMap[0]
     la = Lepcha.ConsonantMap[27]
 
@@ -3061,23 +3085,15 @@ def FixLepcha(Strng,reverse=False):
     conL = ['\u1C01','\u1C04','\u1C0F','\u1C14','\u1C16','\u1C1E','\u1C12']
 
     for x,y in zip(conLa,conL):
-        if not reverse:
-            # Replace k + vira + la -> kla
-            Strng = Strng.replace(x,y)
-        else:
-            # Reverse above
-            Strng = Strng.replace(y,x)
+        # Replace k + vira + la -> kla
+        Strng = Strng.replace(x,y)
 
     yr = [vir+x for x in Lepcha.ConsonantMap[25:27]]
     yrSub = ['\u1C24','\u1C25']
 
     for x,y in zip(yr,yrSub):
-        if not reverse:
-            # sbjoined ya and ra
-            Strng = Strng.replace(x,y)
-        else:
-            # reverse above
-            Strng = Strng.replace(y,x)
+        # sbjoined ya and ra
+        Strng = Strng.replace(x,y)
 
     ## Word Final Consonants
 
@@ -3089,18 +3105,15 @@ def FixLepcha(Strng,reverse=False):
     listNF += Lepcha.ConsonantMap[25:26]+Lepcha.ConsonantMap[28:29]
     listF += Lepcha.VowelMap[2:3] + Lepcha.VowelMap[4:5]
 
-    if not reverse:
-        # Remove Nukta if it appears with Virama
-        # ka + Q + Viramam -> ka + virama
-        Strng = Strng.replace(Lepcha.NuktaMap[0]+vir,vir)
-        Strng = Strng.replace(Lepcha.ConsonantMap[32]+vir,'') # Remove <h> ; sihma -> sima
-        consAll = "(" + "|".join(Lepcha.ConsonantMap + Lepcha.VowelMap + Lepcha.VowelSignMap) + ")"
-        for x,y in zip(listNF,listF):
-            Strng = re.sub(consAll+"(" + x+vir + ")",r'\1'+y+vir,Strng)
+    # Remove Nukta if it appears with Virama
+    # ka + Q + Viramam -> ka + virama
+    Strng = Strng.replace(Lepcha.NuktaMap[0]+vir,vir)
+    Strng = Strng.replace(Lepcha.ConsonantMap[32]+vir,'') # Remove <h> ; sihma -> sima
+    consAll = "(" + "|".join(Lepcha.ConsonantMap + Lepcha.VowelMap + Lepcha.VowelSignMap) + ")"
+    for x,y in zip(listNF,listF):
+        Strng = re.sub(consAll+"(" + x+vir + ")",r'\1'+y+vir,Strng)
 
 
-    else:
-        pass # Irreversible
 
     conFinal = [x+vir for x in [Lepcha.ConsonantMap[c] for c in [0,15,19,20,24,26,27]]]
     conF = ['\u1C2D','\u1C33','\u1C30','\u1C31','\u1C2E','\u1C32','\u1C2F',]
@@ -3109,36 +3122,80 @@ def FixLepcha(Strng,reverse=False):
     signAll = '|'.join(GM.CrunchSymbols(GM.Consonants+GM.Vowels+GM.VowelSignsNV, "Lepcha"))
 
     for x,y in zip(conFinal,conF):
-        if not reverse:
-            # Replace final consonants
-            Strng = re.sub('('+signAll+')'+'('+x+')',r'\1'+y,Strng)
-        else:
-            # KIp ᰀᰧᰱᰶ -> rang, final consonant
-            Strng = re.sub('([' + finConsList + '])' + '(ᰶ)', r'\2\1', Strng)
-            Strng = Strng.replace(y,x)
+        # Replace final consonants
+        Strng = re.sub('('+signAll+')'+'('+x+')',r'\1'+y,Strng)
 
     # Remove Virama - Lepcha doesn't have virama ?
 
     signVow = '|'.join(GM.CrunchSymbols(GM.VowelSignsNV,"Lepcha"))
 
-    if not reverse:
-        Strng = Strng.replace(vir,'') ## Removing faux Virama
-        # Using Sign Kang with Vowel Signs
-        # Inherent Consonant uses 1C34
-        # kiM -> ki + 1C35 ; kaM -> ka + 1C34
-        Strng = re.sub("("+signVow+')'+'('+Lepcha.AyogavahaMap[1]+')',r'\1'+'\u1C35',Strng)
-        Strng = Strng.replace("ᰧᰶᰵ", "ᰧᰵᰶ") ## Fiximg IM issues kIM swap the Ran and M to display it better
-        # swap rang + final con - unicode ordering to get the correct rendering
-        # kIP -> ᰀᰧᰱᰶ
-        Strng = re.sub('(ᰶ)' + '([' + finConsList + '])', r'\2\1', Strng)
-    else:
-        Strng = Strng.replace('\u1C35',Lepcha.AyogavahaMap[1])
-        Strng = Strng.replace("\u1C34\u1C36","\u1C36\u1C34") ## Fiximg IM issues kIM swap the Ran and M to display it better
+    Strng = Strng.replace(vir,'') ## Removing faux Virama
+    # Using Sign Kang with Vowel Signs
+    # Inherent Consonant uses 1C34
+    # kiM -> ki + 1C35 ; kaM -> ka + 1C34
+    Strng = re.sub("("+signVow+')'+'('+Lepcha.AyogavahaMap[1]+')',r'\1'+'\u1C35',Strng)
+    Strng = Strng.replace("ᰧᰶᰵ", "ᰧᰵᰶ") ## Fiximg IM issues kIM swap the Ran and M to display it better
+    # swap rang + final con - unicode ordering to get the correct rendering
+    # kIP -> ᰀᰧᰱᰶ
+    Strng = re.sub('(ᰶ)' + '([' + finConsList + '])', r'\2\1', Strng)
 
     return Strng
 
+def _FixLepchaDecode(Strng):
+    vir = Lepcha.ViramaMap[0]
+    la = Lepcha.ConsonantMap[27]
+
+    conLa = [x+vir+la for x in [Lepcha.ConsonantMap[c] for c in [0,2,20,22,24,32]]+[Lepcha.NuktaConsonantMap[6]]]
+    conL = ['\u1C01','\u1C04','\u1C0F','\u1C14','\u1C16','\u1C1E','\u1C12']
+
+    for x,y in zip(conLa,conL):
+        # Reverse above
+        Strng = Strng.replace(y,x)
+
+    yr = [vir+x for x in Lepcha.ConsonantMap[25:27]]
+    yrSub = ['\u1C24','\u1C25']
+
+    for x,y in zip(yr,yrSub):
+        # reverse above
+        Strng = Strng.replace(y,x)
+
+    ## Word Final Consonants
+
+    ## Consider adding -u instead of mass replacement [for Cham too] !
+
+    listNF = [Lepcha.ConsonantMap[x] for x in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,17,18,21,22,23,29,30,31]]
+    listF = [(Lepcha.ConsonantMap[:33]+Lepcha.AyogavahaMap)[x] for x in [0,0,0,34,0,0,0,0,19,15,15,15,15,19,15,15,15,20,20,20,15,15,15]]
+
+    listNF += Lepcha.ConsonantMap[25:26]+Lepcha.ConsonantMap[28:29]
+    listF += Lepcha.VowelMap[2:3] + Lepcha.VowelMap[4:5]
+
+    pass # Irreversible
+
+    conFinal = [x+vir for x in [Lepcha.ConsonantMap[c] for c in [0,15,19,20,24,26,27]]]
+    conF = ['\u1C2D','\u1C33','\u1C30','\u1C31','\u1C2E','\u1C32','\u1C2F',]
+    finConsList = ''.join(conF)
+
+    signAll = '|'.join(GM.CrunchSymbols(GM.Consonants+GM.Vowels+GM.VowelSignsNV, "Lepcha"))
+
+    for x,y in zip(conFinal,conF):
+        # KIp ᰀᰧᰱᰶ -> rang, final consonant
+        Strng = re.sub('([' + finConsList + '])' + '(ᰶ)', r'\2\1', Strng)
+        Strng = Strng.replace(y,x)
+
+    # Remove Virama - Lepcha doesn't have virama ?
+
+    signVow = '|'.join(GM.CrunchSymbols(GM.VowelSignsNV,"Lepcha"))
+
+    Strng = Strng.replace('\u1C35',Lepcha.AyogavahaMap[1])
+    Strng = Strng.replace("\u1C34\u1C36","\u1C36\u1C34") ## Fiximg IM issues kIM swap the Ran and M to display it better
+
+    return Strng
+
+def FixLepcha(Strng,reverse=False):
+    return _FixLepchaDecode(Strng) if reverse else _FixLepchaEncode(Strng)
+
 # Repha & Subjoined
-def FixSundanese(Strng,reverse=False):
+def _FixSundaneseEncode(Strng):
     vir = Sundanese.ViramaMap[0]
 
     r = Sundanese.ConsonantMap[26] + vir
@@ -3146,26 +3203,41 @@ def FixSundanese(Strng,reverse=False):
     #print(ListC)
 
 
-    if not reverse:
-        # Sundanese Repha
-        Strng = re.sub('(' + ListC + ')' + r, r'\1' + '\u1B81', Strng)
-    else:
-        # Reverse above
-        Strng = Strng.replace('\u1B81',r)
-        Strng = PostProcess.SundaneseHistoricConjuncts(Strng, reverse)
+    # Sundanese Repha
+    Strng = re.sub('(' + ListC + ')' + r, r'\1' + '\u1B81', Strng)
 
     yrl = [vir+x for x in Sundanese.ConsonantMap[25:28]]
     yrlSub = ['\u1BA1','\u1BA2','\u1BA3']
 
     for x,y in zip(yrl,yrlSub):
-        if not reverse:
-            # Subjoined consonants
-            Strng = Strng.replace(x,y)
-        else:
-            # Reverse above
-            Strng = Strng.replace(y,x)
+        # Subjoined consonants
+        Strng = Strng.replace(x,y)
 
     return Strng
+
+def _FixSundaneseDecode(Strng):
+    vir = Sundanese.ViramaMap[0]
+
+    r = Sundanese.ConsonantMap[26] + vir
+    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants + GM.Vowels + GM.VowelSignsNV,'Sundanese'))
+    #print(ListC)
+
+
+    # Reverse above
+    Strng = Strng.replace('\u1B81',r)
+    Strng = PostProcess.SundaneseHistoricConjuncts(Strng, True)
+
+    yrl = [vir+x for x in Sundanese.ConsonantMap[25:28]]
+    yrlSub = ['\u1BA1','\u1BA2','\u1BA3']
+
+    for x,y in zip(yrl,yrlSub):
+        # Reverse above
+        Strng = Strng.replace(y,x)
+
+    return Strng
+
+def FixSundanese(Strng,reverse=False):
+    return _FixSundaneseDecode(Strng) if reverse else _FixSundaneseEncode(Strng)
 
 # Repha & Subjoined
 def _FixRejangEncode(Strng):
@@ -3203,6 +3275,7 @@ def _FixChakmaEncode(Strng):
 
     Strng = Strng.replace("\u02BD","")
 
+    # Introduce vowel Sign A ; Chakma - Inharant vowel is AA
     Strng = re.sub("("+listC+")"+"(?!"+listV+")",r'\1''\u02BE',Strng)
     Strng = Strng.replace("\U00011127","")
     Strng = Strng.replace("\u02BE","\U00011127")
@@ -3283,6 +3356,7 @@ def _FixIPAEncode(Strng):
     colon_tilde = "\u02D0\u0303"
     tilde_colon = "\u0303\u02D0"
 
+    # ɑː̃ -> ɑ̃ː
     Strng = Strng.replace(colon_tilde,tilde_colon)
     # Add Visarga echo - kuH/kUH -> kuhŭ/kuːhŭ
     Strng = re.sub("(.)(\u02D0?)(\u0068)",r'\1\2\3\1'+'\u0306',Strng)
@@ -3656,7 +3730,7 @@ def FixBatakSima(Strng, reverse=False):
     return _FixBatakSimaDecode(Strng) if reverse else _FixBatakSimaEncode(Strng)
 
 # Cham Final & Subjoined
-def FixCham(Strng,reverse=False):
+def _FixChamEncode(Strng):
     Strng = Strng.replace("\u02BD","")
 
     ## Check Differences between Vietnamese Cham & Cambodian Cham
@@ -3681,12 +3755,8 @@ def FixCham(Strng,reverse=False):
     listC = [vir+x for x in Cham.ConsonantMap[25:29]]
     SubC = ['\uAA33','\uAA34','\uAA35','\uAA36'] # Subjoined - /ya/, /ra/, /la/, /va/
     for x,y in zip(listC,SubC):
-        if not reverse:
-            # Subjoined consonants
-            Strng = Strng.replace(x,y)
-        else:
-            # Reverse above
-            Strng = Strng.replace(y,x)
+        # Subjoined consonants
+        Strng = Strng.replace(x,y)
 
     # Replace Consonants without Final forms to Consonts with Final Forms
     # vagh -> vag, prajJa -> pracJA etc
@@ -3695,10 +3765,7 @@ def FixCham(Strng,reverse=False):
     listF = [Cham.ConsonantMap[x] for x in [0,2,5,5,5,19,15,15,15,20,20,20,30,30]]  # Final
 
     for x,y in zip(listNF,listF):
-        if not reverse:
-            Strng = Strng.replace(x+vir,y+vir)
-        else:
-            pass # Irreversible
+        Strng = Strng.replace(x+vir,y+vir)
 
     ## Fix Hma Hla - Word Initial
     ## hma  ꩍꨠ -> Becomes ःम
@@ -3710,79 +3777,144 @@ def FixCham(Strng,reverse=False):
 
     for x,y in zip(listC,finalC):
         # final consonants
-        if not reverse:
-            Strng = Strng.replace(x,y)
-            Strng = re.sub('(' + ListCAll + '|' +  ListVow + '|' +  ListVowS + ')' + 'ꨨ' + vir, r'\1'+'ꩍ', Strng)
+        Strng = Strng.replace(x,y)
+        Strng = re.sub('(' + ListCAll + '|' +  ListVow + '|' +  ListVowS + ')' + 'ꨨ' + vir, r'\1'+'ꩍ', Strng)
 
-        else:
-            Strng = Strng.replace('ꩍ','ꨨ' + vir)
-            if y not in Cham.AyogavahaMap:
-                Strng = Strng.replace(y,x)
 
     # Remove faux Virama:
     va = Cham.ConsonantMap[28]
-    if not reverse:
-        Strng = Strng.replace(va+vir,va)
-        #Strng = Strng.replace('ʾ', '')
-    else:
-        pass # Irreversible
+    Strng = Strng.replace(va+vir,va)
+    #Strng = Strng.replace('ʾ', '')
 
     return Strng
 
+def _FixChamDecode(Strng):
+    Strng = Strng.replace("\u02BD","")
+
+    ## Check Differences between Vietnamese Cham & Cambodian Cham
+
+    ListCAll = '('+'|'.join(GM.CrunchSymbols(GM.Consonants,'Cham')) + ')'
+    ListVow = '('+'|'.join(GM.CrunchSymbols(GM.Vowels,'Cham')) + ')'
+    ListVowS = '('+'|'.join(GM.CrunchSymbols(GM.VowelSignsNV,'Cham')) + ')'
+
+    ## http://www.youtube.com/watch?v=z2_8GMqbO6M - Prenasalized Consonants
+    vir = Cham.ViramaMap[0]
+    nja = Cham.ConsonantMap[9] + vir + Cham.ConsonantMap[7]
+
+#    if not reverse:
+#        Strng = Strng.replace(nja,u'\uAA12')
+#    else:
+#        Strng = Strng.replace(u'\uAA12',nja)
+
+    ## Replace Mue with ma, nue with na ???  - Should it be done ???
+
+    ## Subjoined Consonants
+
+    listC = [vir+x for x in Cham.ConsonantMap[25:29]]
+    SubC = ['\uAA33','\uAA34','\uAA35','\uAA36'] # Subjoined - /ya/, /ra/, /la/, /va/
+    for x,y in zip(listC,SubC):
+        # Reverse above
+        Strng = Strng.replace(y,x)
+
+    # Replace Consonants without Final forms to Consonts with Final Forms
+    # vagh -> vag, prajJa -> pracJA etc
+
+    listNF = [Cham.ConsonantMap[x] for x in [1,3,6,7,8,9,16,17,18,21,22,23,31,29]]  # Non Final
+    listF = [Cham.ConsonantMap[x] for x in [0,2,5,5,5,19,15,15,15,20,20,20,30,30]]  # Final
+
+    for x,y in zip(listNF,listF):
+        pass # Irreversible
+
+    ## Fix Hma Hla - Word Initial
+    ## hma  ꩍꨠ -> Becomes ःम
+
+    ## Consonnant h
+
+    listC = [x+vir for x in [Cham.ConsonantMap[x] for x in [0,2,4,5,15,19,20,25,26,27,30,24]]]
+    finalC = ['\uAA40','\uAA41','\uAA42','\uAA44','\uAA45','\uAA46','\uAA47','\uAA48','\uAA49','\uAA4A','\uAA4B','\uAA4C']
+
+    for x,y in zip(listC,finalC):
+        # final consonants
+        Strng = Strng.replace('ꩍ','ꨨ' + vir)
+        if y not in Cham.AyogavahaMap:
+            Strng = Strng.replace(y,x)
+
+    # Remove faux Virama:
+    va = Cham.ConsonantMap[28]
+    pass # Irreversible
+
+    return Strng
+
+def FixCham(Strng,reverse=False):
+    return _FixChamDecode(Strng) if reverse else _FixChamEncode(Strng)
+
 # Subjoined Consonants in Tai Tham
 # Mai Kang Lai - /ng/
-def FixTaiTham(Strng,reverse=False):
+def _FixTaiThamEncode(Strng):
     vir = TaiTham.ViramaMap[0]
     Cons = [vir+x for x in [TaiTham.ConsonantMap[x] for x in [26,27]]] # /ra/ and /la/
     Sub =['\u1A55','\u1A56'] # Subjoined Forms of /ra/ and /la/
 
     # Ra/La + vira -> Subjoined
     for x,y in zip(Cons,Sub):
-        if not reverse:
-            Strng = Strng.replace(x,y)
-        else:
-            Strng = Strng.replace(y,x)
+        Strng = Strng.replace(x,y)
 
-    if not reverse:
-        # Strng = Strng.replace("\u1A63\u1A74","\u1A74\u1A63") # kAM -> kMA (Like Thai ำ )
-        # Check above in Pali texts
-        #Strng = Strng.replace('ᩰ', 'ᩮᩣ')
-        pass
-    else:
-        #Strng = Strng.replace("\u1A74\u1A63","\u1A63\u1A74") # kAM <- kMA
-        pass
+    # Strng = Strng.replace("\u1A63\u1A74","\u1A74\u1A63") # kAM -> kMA (Like Thai ำ )
+    # Check above in Pali texts
+    #Strng = Strng.replace('ᩰ', 'ᩮᩣ')
+    pass
 
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'TaiTham'))
     ng = TaiTham.ConsonantMap[4]+vir
 
-    if not reverse:
-        # Mai Kang Lai
-        Strng = re.sub('('+ng+')'+'('+ListC+')','\u1A58'+r'\2',Strng)
-        # Subjoining Virama
-        Strng = re.sub(vir+'('+ListC+')','\u1A60'+r'\1',Strng)
-        # Great Sa
-        Strng = Strng.replace('ᩈ᩠ᩈ','ᩔ')
+    # Mai Kang Lai
+    Strng = re.sub('('+ng+')'+'('+ListC+')','\u1A58'+r'\2',Strng)
+    # Subjoining Virama
+    Strng = re.sub(vir+'('+ListC+')','\u1A60'+r'\1',Strng)
+    # Great Sa
+    Strng = Strng.replace('ᩈ᩠ᩈ','ᩔ')
 
-        # Fix Tall A
-        TallACons = '|'.join(['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ']) ## va da dha ga
+    # Fix Tall A
+    TallACons = '|'.join(['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ']) ## va da dha ga
 
-        Strng = PostProcess.FixTallA(Strng, TallACons)
+    Strng = PostProcess.FixTallA(Strng, TallACons)
 
-        Strng = Strng.replace('\u1A55\u1A60\u1A3F', '\u1A60\u1A3F\u1A55') # Fix krya
+    Strng = Strng.replace('\u1A55\u1A60\u1A3F', '\u1A60\u1A3F\u1A55') # Fix krya
 
-        Strng = Strng.replace('\u1A60\u1A47', vir + '\u1A47') ## Fonts don't support SSA conjunct
+    Strng = Strng.replace('\u1A60\u1A47', vir + '\u1A47') ## Fonts don't support SSA conjunct
 
-    else:
-        AA = 'ᩣ'
-        Strng = Strng.replace('ᩔ', 'ᩈ᩠ᩈ') ## Reverse great sa
-        Strng = re.sub('('+ListC+')'+'\u1A58',r'\1' + ng,Strng) # Reverse: Kai mang Lai -> ng + virama
-        Strng = Strng.replace('\u1A60',vir) # Regular Virama for Transliteration
-        Strng = Strng.replace("ᩤ", AA) # Reverse Tall A
-
-        Strng = Strng.replace('\u1A60\u1A3F\u1A55', '\u1A55\u1A60\u1A3F') # Rever krya
 
 
     return Strng
+
+def _FixTaiThamDecode(Strng):
+    vir = TaiTham.ViramaMap[0]
+    Cons = [vir+x for x in [TaiTham.ConsonantMap[x] for x in [26,27]]] # /ra/ and /la/
+    Sub =['\u1A55','\u1A56'] # Subjoined Forms of /ra/ and /la/
+
+    # Ra/La + vira -> Subjoined
+    for x,y in zip(Cons,Sub):
+        Strng = Strng.replace(y,x)
+
+    #Strng = Strng.replace("\u1A74\u1A63","\u1A63\u1A74") # kAM <- kMA
+    pass
+
+    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'TaiTham'))
+    ng = TaiTham.ConsonantMap[4]+vir
+
+    AA = 'ᩣ'
+    Strng = Strng.replace('ᩔ', 'ᩈ᩠ᩈ') ## Reverse great sa
+    Strng = re.sub('('+ListC+')'+'\u1A58',r'\1' + ng,Strng) # Reverse: Kai mang Lai -> ng + virama
+    Strng = Strng.replace('\u1A60',vir) # Regular Virama for Transliteration
+    Strng = Strng.replace("ᩤ", AA) # Reverse Tall A
+
+    Strng = Strng.replace('\u1A60\u1A3F\u1A55', '\u1A55\u1A60\u1A3F') # Rever krya
+
+
+    return Strng
+
+def FixTaiTham(Strng,reverse=False):
+    return _FixTaiThamDecode(Strng) if reverse else _FixTaiThamEncode(Strng)
 
 def FixLaoTham(Strng, reverse=False):
     Strng = FixTaiTham(Strng, reverse)
