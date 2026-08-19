@@ -71,6 +71,17 @@ def _build_char_pairs(Source, Target, source_transform=None, target_transform=No
         charPairs += ScriptMap
     return sorted(charPairs, key=cmp_to_key(lenSort))
 
+def _om_boundary_class(Source):
+    # The punctuation/whitespace boundary class used to detect a standalone
+    # Om symbol before swapping it for the Target script's own Om - shared
+    # verbatim by the two branches that build it (Latin->Indic, Indic->
+    # Indic). What each branch then DOES with it differs for real reasons
+    # (single vs double regex pass, a len(sOm)==1 guard, or no regex pass
+    # at all for Indic->Latin) - only this construction is genuinely
+    # identical, so only this part is shared.
+    return '(' + '|'.join(["\u005C"+x for x in list(string.punctuation)]+ ['\s']
+    + [x.replace('.', '\.') for x in GM.CrunchSymbols(GM.Signs,Source)[1:3]]) + ')'
+
 # Conversion Module
 def convertScript(Strng,Source,Target,ctx=None):
     if SR.get(Source).is_latin and SR.get(Target).is_indic:
@@ -108,8 +119,7 @@ def _convert_latin_to_indic(Strng, Source, Target, ctx):
 
     Strng = CF.VedicSvarasLatinIndic(Strng, Source)
 
-    punc =  '(' + '|'.join(["\u005C"+x for x in list(string.punctuation)]+ ['\s']
-                + [x.replace('.', '\.') for x in GM.CrunchSymbols(GM.Signs,Source)[1:3]]) + ')'
+    punc = _om_boundary_class(Source)
 
     sOm, tOm = GM.CrunchList('OmMap', Source)[0],GM.CrunchList('OmMap', Target)[0]
 
@@ -199,8 +209,7 @@ def _convert_indic_to_indic(Strng, Source, Target, ctx):
     Strng = CF.ShiftDiacritics(Strng,Source,reverse=True)
     Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
 
-    punc =  '(' + '|'.join(["\u005C"+x for x in list(string.punctuation)]+ ['\s']
-                + [x.replace('.', '\.') for x in GM.CrunchSymbols(GM.Signs,Source)[1:3]]) + ')'
+    punc = _om_boundary_class(Source)
 
     sOm, tOm = GM.CrunchList('OmMap', Source)[0],GM.CrunchList('OmMap', Target)[0]
 
