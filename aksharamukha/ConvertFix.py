@@ -676,121 +676,21 @@ def _FixMongolianDecode(Strng):
 def FixMongolian(Strng, reverse=False):
     return _FixMongolianDecode(Strng) if reverse else _FixMongolianEncode(Strng)
 
-def _hanifi_rohingya_lookups():
-    consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'HanifiRohingya')+['\U00010D17', '\U00010D19']) + ')'
-    vowList = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'HanifiRohingya')) + ')'
+# HanifiRohingya's own Fix logic now lives in ScriptProcessing/HanifiRohingya.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixHanifiRohingya", ...) dispatch keeps working.
+from .ScriptProcessing.HanifiRohingya import _hanifi_rohingya_lookups, _FixHanifiRohingyaEncode, _FixHanifiRohingyaDecode, FixHanifiRohingya
 
-    vowListNotA = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'HanifiRohingya')[1:]) + ')'
-
-    consListLookBehind = ''.join(map(lambda x: '(?<!' + x + ')', GM.CrunchSymbols(GM.Consonants, 'HanifiRohingya')))
-    return consList, vowList, vowListNotA, consListLookBehind
-
-def _FixHanifiRohingyaEncode(Strng):
-    consList, vowList, vowListNotA, consListLookBehind = _hanifi_rohingya_lookups()
-
-    Strng = re.sub(consListLookBehind + vowList, '\U00010D00' + r'\1', Strng ) # Add Vowel Carrier
-    Strng = re.sub(consList + r'\1', r'\1' + '\U00010D27', Strng) # Add Gemination
-
-    Strng = re.sub(vowListNotA + '𐴀𐴟', r'\1' + '\U00010D17', Strng) # koi, kui etc
-    Strng = re.sub(vowListNotA + '𐴀𐴞', r'\1' + '\U00010D19', Strng) # kou etc. using the dipthong character
-
-    Strng = Strng.replace('\U00010D24\\', '\U00010D25') #swap tone 2
-    Strng = Strng.replace('\U00010D24/', '\U00010D26') #swap tone 3
-
-    Strng = Strng.replace('_', '\U00010D22') # Map Sukun
-
-    for x,y in zip([',','?',';'],['،','؟','؛']):
-        Strng = Strng.replace(x,y)
-
-    return Strng
-
-def _FixHanifiRohingyaDecode(Strng):
-    consList, vowList, vowListNotA, consListLookBehind = _hanifi_rohingya_lookups()
-
-    tones = '([\U00010D24\U00010D25\U00010D26])'
-    Strng = re.sub('(\U00010D00)' + tones + vowList, r'\1\3\2', Strng) # Swap Vowel-carrier + tone + vowelsign
-    Strng = re.sub(consList + tones + vowList, r'\1\3\2', Strng) # swap cons + tone + vowel sign
-
-    Strng = re.sub(vowListNotA.replace('\U00010D00', '') + '\U00010D17' , r'\1' + '𐴀𐴟', Strng) #swap tone 2
-    Strng = re.sub(vowListNotA.replace('\U00010D00', '') +'\U00010D19', r'\1' + '𐴀𐴞' , Strng) #swap tone 3
-
-    Strng = Strng.replace('\U00010D00', '') # remove vowel carrier
-    Strng = re.sub('(.)' + '\U00010D27', r'\1\1' , Strng) # reverse gemination
-
-    Strng = Strng.replace('\U00010D25', '\U00010D24\\') #swap tone 2
-    Strng = Strng.replace('\U00010D26', '\U00010D24/') # swap tone 3
-
-    Strng = re.sub(consList + '\U00010D17' , r'\1' + '\U00010D16\u02BE', Strng) # cons + dipth.y -> y + nukta
-
-    Strng = re.sub(consList +'\U00010D19', r'\1' + '\U00010D18\u02BE', Strng) # cons + dipth.w -> v + nukta
-
-    Strng = Strng.replace('\U00010D22', '_') #remove Sukun
-
-    Strng = Strng.replace('𐴜', '𐴖') # v -> w; Archaic v is not used anyway
-
-    for x,y in zip([',','?',';'],['،','؟','؛']):
-        Strng = Strng.replace(y,x)
-
-    return Strng
-
-def FixHanifiRohingya(Strng, reverse=False):
-    return _FixHanifiRohingyaDecode(Strng) if reverse else _FixHanifiRohingyaEncode(Strng)
-def _FixMasaramGondiEncode(Strng):
-    consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'MasaramGondi')) + ')'
-
-    Strng = Strng.replace('𑴌𑵅𑴪','\U00011D2E') # KSSA
-    Strng = Strng.replace('𑴓𑵅𑴕','\U00011D2F') # JNYA
-    Strng = Strng.replace('𑴛𑵅𑴦','\U00011D30') # TRA
-
-    Strng = re.sub(consList + '\U00011D45\U00011D26', r'\1' + '\U00011D47', Strng) # kra
-    Strng = re.sub('\U00011D26\U00011D45' + consList, '\U00011D46' + r'\1', Strng) # rka
-
-    ## remove final virama when not followed by a consonant
-    Strng = re.sub('\U00011D45(?!' + consList + ')' , '\U00011D44', Strng)
-
-    return Strng
-
-def _FixMasaramGondiDecode(Strng):
-    consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'MasaramGondi')) + ')'
-
-    Strng = Strng.replace('\U00011D2E', '𑴌𑵅𑴪') # KSSA
-    Strng = Strng.replace('\U00011D2F', '𑴓𑵅𑴕') # JNYA
-    Strng = Strng.replace('\U00011D30', '𑴛𑵅𑴦') # TRA
-
-    Strng = Strng.replace('\U00011D47', '\U00011D45\U00011D26',) # kra
-    Strng = Strng.replace('\U00011D46', '\U00011D26\U00011D45') # rka
-
-    Strng = Strng.replace('\U00011D44','\U00011D45')
-
-    return Strng
-
-def FixMasaramGondi(Strng, reverse=False):
-    return _FixMasaramGondiDecode(Strng) if reverse else _FixMasaramGondiEncode(Strng)
+# MasaramGondi's own Fix logic now lives in ScriptProcessing/MasaramGondi.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixMasaramGondi", ...) dispatch keeps working.
+from .ScriptProcessing.MasaramGondi import _FixMasaramGondiEncode, _FixMasaramGondiDecode, FixMasaramGondi
 
 
-def _FixGunjalaGondiEncode(Strng):
-    consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'GunjalaGondi')) + ')'
-
-    Strng = re.sub('(\U00011D7A\u02BE)([\U00011D7B\U00011D7C\U00011D80\U00011D81])', '\U00011D95' + r'\1', Strng)
-    Strng = re.sub('(\U00011D7A\u02BF)([\U00011D7D\U00011D7E\U00011D82\U00011D83])', '\U00011D95' + r'\1', Strng)
-
-    Strng = Strng.replace('\u02BE', '')
-    Strng = Strng.replace('\u02BF', '')
-
-    ## remove final virama when not followed by a consonant
-    Strng = re.sub('\U00011D97(?!' + consList + ')' , '', Strng)
-
-    return Strng
-
-def _FixGunjalaGondiDecode(Strng):
-    consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'GunjalaGondi')) + ')'
-
-    pass
-
-    return Strng
-
-def FixGunjalaGondi(Strng, reverse=False):
-    return _FixGunjalaGondiDecode(Strng) if reverse else _FixGunjalaGondiEncode(Strng)
+# GunjalaGondi's own Fix logic now lives in ScriptProcessing/GunjalaGondi.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixGunjalaGondi", ...) dispatch keeps working.
+from .ScriptProcessing.GunjalaGondi import _FixGunjalaGondiEncode, _FixGunjalaGondiDecode, FixGunjalaGondi
 
 def _FixSoyomboEncode(Strng):
     finVir = ['\U00011A5E\U00011A99','\U00011A5C\U00011A99','\U00011A60\U00011A99','\U00011A6D\U00011A99','\U00011A6F\U00011A99','\U00011A72\U00011A99','\U00011A74\U00011A99','\U00011A7C\U00011A99','\U00011A7D\U00011A99','\U00011A7F\U00011A99','\U00011A81\U00011A99']
@@ -849,10 +749,10 @@ def _FixSoyomboDecode(Strng):
 def FixSoyombo(Strng, reverse=False):
     return _FixSoyomboDecode(Strng) if reverse else _FixSoyomboEncode(Strng)
 
-def FixKharoshthi(Strng, reverse=False):
-    Strng = KharoshthiNumerals(Strng, reverse)
-
-    return Strng
+# Kharoshthi's own Fix logic now lives in ScriptProcessing/Kharoshthi.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixKharoshthi", ...) dispatch keeps working.
+from .ScriptProcessing.Kharoshthi import FixKharoshthi, KharoshthiNumerals, kharoshthiNumber
 
 def _FixMarchenEncode(Strng):
     subjoinCons = '𑱲 𑱳 𑱴 𑱵 𑱶 𑱷 𑱸 𑱹 𑱺 𑱻 𑱼 𑱽 𑱾 𑱿 𑲀 𑲁 𑲂 𑲃 𑲄 𑲅 𑲆 𑲇 𑲉 𑲊 𑲋 𑲌 𑲍 𑲎'.split(' ')
@@ -885,91 +785,15 @@ def _FixMarchenDecode(Strng):
 def FixMarchen(Strng, reverse=False):
     return _FixMarchenDecode(Strng) if reverse else _FixMarchenEncode(Strng)
 
-def _FixMroEncode(Strng):
-    extracons = ['\U00016A4E', '\U00016A59', '\U00016A5A', '\U00016A5B', '\U00016A5C', '\U00016A5E']
-    consnormaldig = ['𖩃𖩢', '𖩌𖩢', '𖩍𖩢', '𖩍𖩣', '𖩉𖩢', '𖩀𖩢']
-    consnormal = ['𖩃', '𖩌', '𖩍', '𖩍', '𖩉', '𖩀']
+# Mro's own Fix logic now lives in ScriptProcessing/Mro.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixMro", ...) dispatch keeps working.
+from .ScriptProcessing.Mro import _FixMroEncode, _FixMroDecode, FixMro
 
-    for x, y in zip(consnormaldig, extracons):
-        Strng = Strng.replace(x, y)
-
-    return Strng
-
-def _FixMroDecode(Strng):
-    extracons = ['\U00016A4E', '\U00016A59', '\U00016A5A', '\U00016A5B', '\U00016A5C', '\U00016A5E']
-    consnormaldig = ['𖩃𖩢', '𖩌𖩢', '𖩍𖩢', '𖩍𖩣', '𖩉𖩢', '𖩀𖩢']
-    consnormal = ['𖩃', '𖩌', '𖩍', '𖩍', '𖩉', '𖩀']
-
-    for x, y in zip(extracons, consnormal):
-        Strng = Strng.replace(x, y)
-
-    return Strng
-
-def FixMro(Strng, reverse=False):
-    return _FixMroDecode(Strng) if reverse else _FixMroEncode(Strng)
-
-def _FixWanchoEncode(Strng):
-    tonemarks = ['\U0001E2EC', '\U0001E2ED', '\U0001E2EE', '\U0001E2EF']
-    tonewri = ['\\_', '\\-', '\\!', '\\;']
-
-    nasalization = ['\U0001E2E6', '\U0001E2E7', '\U0001E2E8', '\U0001E2EA'] # o, e, aa , u ; nasalization
-    nasvowels = ['\U0001E2D5', '\U0001E2DB', '\U0001E2C0', '\U0001E2DE']
-
-    Anusvaras = ['\U0001E2E2', '\U0001E2E3', '\U0001E2E4', '\U0001E2E5'] # o, aa, a, i
-    AnusvaraVowels = ['\U0001E2D5', '\U0001E2C0', '\U0001E2C1', '\U0001E2DC']
-
-    for x, y in zip(tonemarks, tonewri):
-        Strng = Strng.replace(y, x)
-
-    for x, y in zip(nasvowels, nasalization):
-        Strng = Strng.replace(x + 'ʿ', y)
-
-    Strng = Strng.replace('ʿ', '𞋉')
-
-    for x, y in zip(AnusvaraVowels, Anusvaras):
-        Strng = Strng.replace(x + 'ʾ', y)
-
-    Strng = Strng.replace('ʾ', '𞋝')
-
-    Strng = Strng.replace('𞋋𞋗', '\U0001E2E1')
-    Strng = Strng.replace('𞋋𞋎', '\U0001E2E0')
-
-    Strng = Strng.replace('𞋓Ø', '\U0001E2D2') ## WA
-    Strng = Strng.replace('Ø', '')
-
-
-
-    return Strng
-
-def _FixWanchoDecode(Strng):
-    tonemarks = ['\U0001E2EC', '\U0001E2ED', '\U0001E2EE', '\U0001E2EF']
-    tonewri = ['\\_', '\\-', '\\!', '\\;']
-
-    nasalization = ['\U0001E2E6', '\U0001E2E7', '\U0001E2E8', '\U0001E2EA'] # o, e, aa , u ; nasalization
-    nasvowels = ['\U0001E2D5', '\U0001E2DB', '\U0001E2C0', '\U0001E2DE']
-
-    Anusvaras = ['\U0001E2E2', '\U0001E2E3', '\U0001E2E4', '\U0001E2E5'] # o, aa, a, i
-    AnusvaraVowels = ['\U0001E2D5', '\U0001E2C0', '\U0001E2C1', '\U0001E2DC']
-
-    for x, y in zip(tonemarks, tonewri):
-        Strng = Strng.replace(x, y)
-
-    for x, y in zip(nasvowels, nasalization):
-        Strng = Strng.replace(y, x + 'ʿ')
-
-    for x, y in zip(AnusvaraVowels, Anusvaras):
-        Strng = Strng.replace(y, x + 'ʾ')
-
-    Strng = Strng.replace('\U0001E2E1', '𞋋𞋗')
-    Strng = Strng.replace('\U0001E2E0', '𞋋𞋎')
-
-    Strng = Strng.replace('\U0001E2D2', '𞋓Ø') ## WA
-
-
-    return Strng
-
-def FixWancho(Strng, reverse=False):
-    return _FixWanchoDecode(Strng) if reverse else _FixWanchoEncode(Strng)
+# Wancho's own Fix logic now lives in ScriptProcessing/Wancho.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixWancho", ...) dispatch keeps working.
+from .ScriptProcessing.Wancho import _FixWanchoEncode, _FixWanchoDecode, FixWancho
 
 def _FixSiddhamEncode(Strng):
     pass
@@ -1003,26 +827,10 @@ def _FixBhaiksukiDecode(Strng):
 def FixBhaiksuki(Strng, reverse=False):
     return _FixBhaiksukiDecode(Strng) if reverse else _FixBhaiksukiEncode(Strng)
 
-def _FixKhudawadiEncode(Strng):
-    sindhi = ['𑊽', '𑋃', '𑋉', '𑋕']
-    sindhiapprox = ['ˍ𑊼', 'ˍ𑋂', 'ˍ𑋈', 'ˍ𑋔']
-
-    for x, y in zip(sindhi, sindhiapprox):
-        Strng = Strng.replace(y,x)
-
-    return Strng
-
-def _FixKhudawadiDecode(Strng):
-    sindhi = ['𑊽', '𑋃', '𑋉', '𑋕']
-    sindhiapprox = ['ˍ𑊼', 'ˍ𑋂', 'ˍ𑋈', 'ˍ𑋔']
-
-    for x, y in zip(sindhi, sindhiapprox):
-        Strng = Strng.replace(x,y)
-
-    return Strng
-
-def FixKhudawadi(Strng, reverse=False):
-    return _FixKhudawadiDecode(Strng) if reverse else _FixKhudawadiEncode(Strng)
+# Khudawadi's own Fix logic now lives in ScriptProcessing/Khudawadi.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixKhudawadi", ...) dispatch keeps working.
+from .ScriptProcessing.Khudawadi import _FixKhudawadiEncode, _FixKhudawadiDecode, FixKhudawadi
 
 # Tamil's Fix logic now lives in ScriptProcessing/Tamil.py (consolidated
 # there with its pre/post-options too - see that file's header comment for
@@ -1044,45 +852,10 @@ def _FixOriyaDecode(Strng):
 def FixOriya(Strng, reverse=False):
     return _FixOriyaDecode(Strng) if reverse else _FixOriyaEncode(Strng)
 
-def _FixGurmukhiLoCEncode(Strng):
-    Strng = CorrectRuLu(Strng,"Gurmukhi",False)
-
-    ava = Gurmukhi.SignMap[0]
-    avaA = '\u0028\u0A06\u0029'
-
-    # Tippi/Bindu conversion options are optional. Look into PostProcess
-
-    Strng = Strng.replace(ava+ava,avaA)
-    Strng = PostProcess.InsertGeminationSign(Strng, 'Gurmukhi')
-    Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi', True)
-
-    Vedicomp = '([' + ''.join(GM.VedicSvarasList) + '])'
-
-    Strng = re.sub(Vedicomp + '\u0A71' + '(.)', r'\1' + r'\2' + Gurmukhi.ViramaMap[0] + r'\2' , Strng)
-
-
-    return Strng
-
-def _FixGurmukhiLoCDecode(Strng):
-    Strng = CorrectRuLu(Strng,"Gurmukhi",True)
-
-    ava = Gurmukhi.SignMap[0]
-    avaA = '\u0028\u0A06\u0029'
-
-    # Tippi/Bindu conversion options are optional. Look into PostProcess
-
-    Strng = PostProcess.RetainIndicNumerals(Strng, 'Gurmukhi')
-    Strng = Strng.replace(avaA,ava+ava)
-    Strng = PostProcess.ReverseGeminationSign(Strng, 'Gurmukhi')
-    #Strng = Strng.replace('ੰਨ','ਨ੍ਨ')
-    #Strng = Strng.replace('ੰਮ','ਮ੍ਮ')
-    # Replace Tippi by Bindu
-    #Strng = PostProcess.GurmukhiYakaash(Strng, True)
-
-    return Strng
-
-def FixGurmukhiLoC(Strng,reverse=False):
-    return _FixGurmukhiLoCDecode(Strng) if reverse else _FixGurmukhiLoCEncode(Strng)
+# GurmukhiLoC's own Fix logic now lives in ScriptProcessing/GurmukhiLoC.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixGurmukhiLoC", ...) dispatch keeps working.
+from .ScriptProcessing.GurmukhiLoC import _FixGurmukhiLoCEncode, _FixGurmukhiLoCDecode, FixGurmukhiLoC
 
 # Correct Ru'', Lu'' -> R, lR
 # Tippi/Bindu
@@ -1223,8 +996,10 @@ def _FixTamilGranthaDecode(Strng):
 def FixTamilGrantha(Strng, reverse=False):
     return _FixTamilGranthaDecode(Strng) if reverse else _FixTamilGranthaEncode(Strng)
 
-def FixKhmerLoC(Strng,reverse=False):
-    return FixKhmer(Strng, reverse, target="KhmerLoC")
+# KhmerLoC's own Fix logic now lives in ScriptProcessing/KhmerLoC.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixKhmerLoC", ...) dispatch keeps working.
+from .ScriptProcessing.KhmerLoC import FixKhmerLoC
 
 # Khmer - Subjoining Consonants and Repha
 def _FixKhmerEncode(Strng, target):
@@ -1293,34 +1068,10 @@ def _FixKhamtiShanDecode(Strng):
 def FixKhamtiShan(Strng, reverse=False):
     return _FixKhamtiShanDecode(Strng) if reverse else _FixKhamtiShanEncode(Strng)
 
-def _FixTaiLaingEncode(Strng):
-    Strng = Strng.replace('်ꩺ', 'ြ')
-    Strng = Strng.replace('်ယ', 'ျ')
-    Strng = Strng.replace('်ဝ', 'ႂ')
-
-    ## Maintain the order of the medials
-    Strng = Strng.replace("\u103C\u103B", "\u103B\u103C")
-    Strng = Strng.replace("\u103D\u103B", "\u103B\u103D")
-    Strng = Strng.replace("ႂ\u103C", "\u103Cႂ")
-
-    Strng = Strng.replace('ႂျ','်၀ျ')
-
-
-    return Strng
-
-def _FixTaiLaingDecode(Strng):
-    Strng = Strng.replace("\u103B\u103C", "\u103C\u103B")
-    Strng = Strng.replace("\u103B\u103D", "\u103D\u103B")
-    Strng = Strng.replace("\u103Cႂ", "ႂ\u103C")
-
-    Strng = Strng.replace('ြ', '်ꩺ')
-    Strng = Strng.replace('ျ', '်ယ')
-    Strng = Strng.replace('ႂ', '်ဝ')
-
-    return Strng
-
-def FixTaiLaing(Strng, reverse=False):
-    return _FixTaiLaingDecode(Strng) if reverse else _FixTaiLaingEncode(Strng)
+# TaiLaing's own Fix logic now lives in ScriptProcessing/TaiLaing.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixTaiLaing", ...) dispatch keeps working.
+from .ScriptProcessing.TaiLaing import _FixTaiLaingEncode, _FixTaiLaingDecode, FixTaiLaing
 
 def _FixShanEncode(Strng):
     Strng = Strng.replace('်ရ', 'ြ')
@@ -1361,75 +1112,10 @@ def _FixShanDecode(Strng):
 def FixShan(Strng, reverse=False):
     return _FixShanDecode(Strng) if reverse else _FixShanEncode(Strng)
 
-def _FixMonEncode(Strng):
-    pairs = [('င', 'ၚ'),('ဉ', 'ည'), ('ဈ', 'ၛ')]
-
-    for x, y in pairs:
-        Strng = Strng.replace(y, x)
-
-    Strng = FixBurmese(Strng, False)
-
-    Strng = Strng.replace('ည', '\uE001') #
-
-    for x, y in pairs:
-        Strng = Strng.replace(x, y)
-
-    Strng = Strng.replace('\uE001', 'ည\u1039ည')
-
-    medials_cons_mon = ['\u1039န', '\u1039မ', '\u1039လ']
-    medials_mon = ['ၞ', 'ၟ', 'ၠ']
-
-    for x, y in zip(medials_cons_mon, medials_mon):
-        Strng = Strng.replace(x, y)
-
-    Strng = Strng.replace('ၠြ', 'ြၠ')
-
-    # Contigous Mon Medials
-    for i, med1 in enumerate(medials_mon):
-        for j, med2 in enumerate(medials_mon):
-            Strng = Strng.replace(med1 + med2, medials_cons_mon[i] + medials_cons_mon[j])
-
-    # Contiguous Medials + ya, ra and va
-    for i, med in enumerate(medials_mon):
-        Strng = Strng.replace(med + 'ျ', medials_cons_mon[i] + 'ျ')
-
-        Strng = Strng.replace('ရ်' + med,  'ရ်' + medials_cons_mon[i])
-        Strng = Strng.replace('ၚ်' + med,  'ၚ်' + medials_cons_mon[i])
-
-
-    # RA + Medial
-
-    return Strng
-
-def _FixMonDecode(Strng):
-    pairs = [('င', 'ၚ'),('ဉ', 'ည'), ('ဈ', 'ၛ')]
-
-    for x, y in pairs:
-        Strng = Strng.replace(y, x)
-
-    Strng = FixBurmese(Strng, True)
-
-    Strng = Strng.replace('ည', '\uE001') #
-
-    for x, y in pairs:
-        Strng = Strng.replace(x, y)
-
-    Strng = Strng.replace('\uE001', 'ည\u1039ည')
-
-    medials_cons_mon = ['\u1039န', '\u1039မ', '\u1039လ']
-    medials_mon = ['ၞ', 'ၟ', 'ၠ']
-
-    Strng = Strng.replace('်ရၠ', 'ၠ်ရ')
-
-    for x, y in zip(medials_cons_mon, medials_mon):
-        Strng = Strng.replace(y, x)
-
-    Strng = Strng.replace('\u1039', '်')
-
-    return Strng
-
-def FixMon(Strng, reverse=False):
-    return _FixMonDecode(Strng) if reverse else _FixMonEncode(Strng)
+# Mon's own Fix logic now lives in ScriptProcessing/Mon.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixMon", ...) dispatch keeps working.
+from .ScriptProcessing.Mon import _FixMonEncode, _FixMonDecode, FixMon
 
 # Burmese - Tall A + Subjoning Consonants
 def _FixBurmeseEncode(Strng):
@@ -1573,54 +1259,20 @@ def AddRepha(Strng,Script,Repha,reverse=False):
 
     return Strng
 
-def _FixTagbanwaEncode(Strng):
-    Strng = PostProcess.InsertGeminationSign(Strng, 'Tagbanwa')
+# Tagbanwa's own Fix logic now lives in ScriptProcessing/Tagbanwa.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixTagbanwa", ...) dispatch keeps working.
+from .ScriptProcessing.Tagbanwa import _FixTagbanwaEncode, _FixTagbanwaDecode, FixTagbanwa
 
-    return Strng
+# Buhid's own Fix logic now lives in ScriptProcessing/Buhid.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixBuhid", ...) dispatch keeps working.
+from .ScriptProcessing.Buhid import _FixBuhidEncode, _FixBuhidDecode, FixBuhid
 
-def _FixTagbanwaDecode(Strng):
-    pass
-
-    return Strng
-
-def FixTagbanwa(Strng, reverse=False):
-    return _FixTagbanwaDecode(Strng) if reverse else _FixTagbanwaEncode(Strng)
-
-def _FixBuhidEncode(Strng):
-    Strng = PostProcess.InsertGeminationSign(Strng, 'Buhid')
-
-    return Strng
-
-def _FixBuhidDecode(Strng):
-    pass
-
-    return Strng
-
-def FixBuhid(Strng, reverse=False):
-    return _FixBuhidDecode(Strng) if reverse else _FixBuhidEncode(Strng)
-
-def _FixBugineseEncode(Strng):
-    Strng = Strng.replace("ᨂ\u02BEᨀ","ᨃ")
-    Strng = Strng.replace("ᨆ\u02BEᨄ","ᨇ")
-    Strng = Strng.replace("ᨊ\u02BEᨑ","ᨋ")
-    Strng = Strng.replace("ᨎ\u02BEᨌ","ᨏ")
-
-    Strng = PostProcess.InsertGeminationSign(Strng, 'Buginese')
-
-    Strng = Strng.replace('\u02BE', '')
-
-    return Strng
-
-def _FixBugineseDecode(Strng):
-    Strng = Strng.replace("ᨃ", "ᨂ\u02BEᨀ")
-    Strng = Strng.replace("ᨇ", "ᨆ\u02BEᨄ")
-    Strng = Strng.replace("ᨋ", "ᨊ\u02BEᨑ")
-    Strng = Strng.replace("ᨏ", "ᨎ\u02BEᨌ")
-
-    return Strng
-
-def FixBuginese(Strng, reverse=False):
-    return _FixBugineseDecode(Strng) if reverse else _FixBugineseEncode(Strng)
+# Buginese's own Fix logic now lives in ScriptProcessing/Buginese.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixBuginese", ...) dispatch keeps working.
+from .ScriptProcessing.Buginese import _FixBugineseEncode, _FixBugineseDecode, FixBuginese
 
 
 # Balinese Repha
@@ -2151,73 +1803,20 @@ def PersoArabicPuntuation(Strng, reverse=False):
 
 ### Anusvara to Nasal for Thanaa - Consider Add
 # ThaanaVowelSign A
-def _FixThaanaEncode(Strng):
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Thaana'))
-    VowelVS = '|'.join(GM.CrunchSymbols(GM.VowelSigns,'Thaana'))
-    aBase = '\u0787'
+# Thaana's own Fix logic now lives in ScriptProcessing/Thaana.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixThaana", ...) dispatch keeps working.
+from .ScriptProcessing.Thaana import _FixThaanaEncode, _FixThaanaDecode, FixThaana
 
-    # Replace VS-A + Vowel Sign -> Vowel Sign :
-    Strng = PostProcess.InsertGeminationSign(Strng, 'Thaana')
-    Strng = re.sub("(\u07A6)"+"(?=("+VowelVS+"))","",Strng)
-    Strng = Strng.replace("\u02BE","")
+# Saurashtra's own Fix logic now lives in ScriptProcessing/Saurashtra.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixSaurashtra", ...) dispatch keeps working.
+from .ScriptProcessing.Saurashtra import _FixSaurashtraEncode, _FixSaurashtraDecode, FixSaurashtra
 
-    for x,y in zip([',','?',';'],['،','؟','؛']):
-        Strng = Strng.replace(x,y)
-
-    Strng = Strng.replace('ʔ', 'އް')
-
-
-    return Strng
-
-def _FixThaanaDecode(Strng):
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Thaana'))
-    VowelVS = '|'.join(GM.CrunchSymbols(GM.VowelSigns,'Thaana'))
-    aBase = '\u0787'
-
-    # Add VS-A to all VowelSigns
-    # Approximate
-    Strng = Strng.replace('ޢ','އ')
-    Strng = Strng.replace('ޡ','ތ')
-    Strng = Strng.replace('ޥ','ވ') # waav to va
-    Strng = Strng.replace('ޠ','ތ') # To to ta
-    Strng = Strng.replace('ޟ','ސ')
-    Strng = Strng.replace('ޞ','ސ')
-    Strng = Strng.replace('ޜ','ށ')
-    Strng = Strng.replace('ޛ','ދ')
-    Strng = Strng.replace('ޘ','ތ')
-    Strng = Strng.replace('ޛ','ދ')
-    Strng = Strng.replace('ޙ', 'ހ')
-
-    Strng = re.sub('(' + ListC.replace('ަ','') + ')' + '(?!' + VowelVS + '|ަ' + ')', r'\1' + 'ް', Strng)
-
-    Strng = re.sub('(?<!'+aBase+')(?<!'+'\u02BD\u02BD\u02BD'+')('+VowelVS+')',"\u07A6"+r'\1',Strng)
-    Strng = PostProcess.ReverseGeminationSign(Strng, 'Thaana')
-
-    Strng = Strng.replace('އް','ʔ')
-
-    for x,y in zip([',','?',';'],['،','؟','؛']):
-        Strng = Strng.replace(y,x)
-
-    return Strng
-
-def FixThaana(Strng, reverse=False):
-    return _FixThaanaDecode(Strng) if reverse else _FixThaanaEncode(Strng)
-
-def _FixSaurashtraEncode(Strng):
-    Strng = Strng.replace('ꢒ꣄ꢰ', 'ꢒ꣄‍ꢰ') # Ksha
-
-    return Strng
-
-def _FixSaurashtraDecode(Strng):
-    Strng = Strng.replace('ꢴ','꣄ꢲ')
-
-    return Strng
-
-def FixSaurashtra(Strng, reverse=False):
-    return _FixSaurashtraDecode(Strng) if reverse else _FixSaurashtraEncode(Strng)
-
-def FixTibetanLoC(Strng,reverse=False):
-    return FixTibetan(Strng,reverse, swapNative=False)
+# TibetanLoC's own Fix logic now lives in ScriptProcessing/TibetanLoC.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixTibetanLoC", ...) dispatch keeps working.
+from .ScriptProcessing.TibetanLoC import FixTibetanLoC
 
 # Tibetan Subjoining Consnants
 def _FixTibetanEncode(Strng, swapNative):
@@ -2325,34 +1924,10 @@ def ReverseVowelSigns(Strng,Script,reverse=False):
 
     return Strng
 
-def _FixKhomThaiEncode(Strng):
-    Strng = Strng.replace('โ','เา')
-    Strng = ThaiReverseVowelSigns(Strng,False)
-    Strng = re.sub('(.\u0E3A)(.\u0E3A)(ใ)', r'\3\1\2', Strng) # reversed
-    Strng = re.sub('(.\u0E3A)(ใ)', r'\2\1', Strng) # reversed
-
-    Strng = re.sub('((.\u0E3A)+)(เ)', r'\3\1', Strng) # reversed
-    Strng = re.sub('(.\u0E3A)?(.)(ฺร)', r'\3\1\2', Strng) # reversed
-    Strng = Strng.replace('เอา', 'โอ')
-
-    Strng = Strng.replace("เอำ", 'เาอํ')
-    Strng = Strng.replace('เาอํ', 'โอํ')
-
-    return Strng
-
-def _FixKhomThaiDecode(Strng):
-    Strng = re.sub('(ใ)(.\u0E3A)(.\u0E3A)', r'\2\3\1', Strng)
-    Strng = re.sub('(ใ)(.\u0E3A)', r'\2\1', Strng)
-
-    Strng = re.sub('(ฺร)(.\u0E3A)?(.)', r'\2\3\1', Strng)
-    Strng = re.sub('(เ)((.\u0E3A)+)', r'\2\1', Strng)
-    Strng = ThaiReverseVowelSigns(Strng,True)
-    Strng = Strng.replace('เา', 'โ')
-
-    return Strng
-
-def FixKhomThai(Strng, reverse=False):
-    return _FixKhomThaiDecode(Strng) if reverse else _FixKhomThaiEncode(Strng)
+# KhomThai's own Fix logic now lives in ScriptProcessing/KhomThai.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixKhomThai", ...) dispatch keeps working.
+from .ScriptProcessing.KhomThai import _FixKhomThaiEncode, _FixKhomThaiDecode, FixKhomThai
 
 def FixThai(Strng,reverse=False,ctx=None):
     Strng = ThaiReverseVowelSigns(Strng,reverse)
@@ -2413,101 +1988,15 @@ def _FixLaoPaliDecode(Strng, ctx):
 def FixLaoPali(Strng,reverse=False,ctx=None):
     return _FixLaoPaliDecode(Strng, ctx) if reverse else _FixLaoPaliEncode(Strng, ctx)
 
-def _FixMakasarEncode(Strng):
-    ListC = "|".join(Makasar.ConsonantMap)
-    #ListV = "|".join(Makasar.VowelSignMap)
-    #print(ListV)
-    ListV = "|".join(['\U00011EF3', '\U00011EF4', '\U00011EF5', '\U00011EF6'])
-    Anka = '\U00011EF2'
-    #print(Makasar.VowelSignMap)
+# Makasar's own Fix logic now lives in ScriptProcessing/Makasar.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixMakasar", ...) dispatch keeps working.
+from .ScriptProcessing.Makasar import _FixMakasarEncode, _FixMakasarDecode, FixMakasar
 
-    Strng = PostProcess.InsertGeminationSign(Strng, 'Makasar')
-    Strng = Strng.replace('\u02BE', '').replace('\u02BD', '')
-    Strng = re.sub('(' + ListC + ')' + '(' + ListV + ')?' + r'\1', r'\1' + r'\2' + Anka, Strng)
-
-    return Strng
-
-def _FixMakasarDecode(Strng):
-    ListC = "|".join(Makasar.ConsonantMap)
-    #ListV = "|".join(Makasar.VowelSignMap)
-    #print(ListV)
-    ListV = "|".join(['\U00011EF3', '\U00011EF4', '\U00011EF5', '\U00011EF6'])
-    Anka = '\U00011EF2'
-    #print(Makasar.VowelSignMap)
-
-    Strng = re.sub('(' + ListC + ')' + '(' + ListV + ')?' + Anka, r'\1' + r'\2' + r'\1', Strng)
-
-    return Strng
-
-def FixMakasar(Strng, reverse=False):
-    return _FixMakasarDecode(Strng) if reverse else _FixMakasarEncode(Strng)
-
-def _FixAvestanEncode(Strng):
-    extraCons = ["\U00010B33","\U00010B32","\U00010B1D","\U00010B12", '𐬣', '𐬝']
-    ListC = "|".join(GM.CrunchSymbols(GM.Consonants, "Avestan")+extraCons)
-    ListV = "|".join(GM.CrunchSymbols(GM.Vowels,"Avestan"))
-
-    ya = Avestan.ConsonantMap[25]
-    va = Avestan.ConsonantMap[28]
-    ii = Avestan.VowelMap[2] * 2
-    uu = Avestan.VowelMap[4] * 2
-
-    Strng = Strng.replace('𐬀𐬩', '𐬄') ## aM
-    Strng = Strng.replace('𐬁𐬩', '𐬅') ## AM
-
-    Strng = re.sub("(("+ListV+")"+"|"+"("+ListC+"))"+"("+ya+")",r'\1'+ii,Strng)
-    Strng = re.sub("(("+ListV+")"+"|"+"("+ListC+"))"+"("+va+")",r'\1'+uu,Strng)
-
-    Strng = Strng.replace(Avestan.ConsonantMap[15]  + '\u02BF', '\U00010B1D') ## TTE
-    Strng = Strng.replace(va + '\u02BF', '\U00010B21') # BHA
-
-    Strng = Strng.replace('𐬰\u02BF', '𐬲').replace('𐬱\u02BF', '𐬲') ## ZHA
-    Strng = Strng.replace('𐬢\u02BF','𐬤') ## NGVA
-    Strng = Strng.replace('𐬁_𐬋', '𐬃') ## AO
-
-    Strng = Strng.replace('\u02BF', '')
-
-
-
-
-    return Strng
-
-def _FixAvestanDecode(Strng):
-    extraCons = ["\U00010B33","\U00010B32","\U00010B1D","\U00010B12", '𐬣', '𐬝']
-    ListC = "|".join(GM.CrunchSymbols(GM.Consonants, "Avestan")+extraCons)
-    ListV = "|".join(GM.CrunchSymbols(GM.Vowels,"Avestan"))
-
-    ya = Avestan.ConsonantMap[25]
-    va = Avestan.ConsonantMap[28]
-    ii = Avestan.VowelMap[2] * 2
-    uu = Avestan.VowelMap[4] * 2
-
-    Strng = Strng.replace('𐬄', '𐬀𐬩')
-    Strng = Strng.replace('𐬅', '𐬁𐬩')
-
-    Strng = Strng.replace(ii, ya).replace(uu, va)
-
-    #print('I am here')
-
-    Strng = Strng.replace('\U00010B1D', Avestan.ConsonantMap[15]  + '\u02BF')
-    Strng = Strng.replace('𐬣', Avestan.ConsonantMap[4])
-
-    Strng = Strng.replace('\U00010B12', Avestan.ConsonantMap[1])
-    Strng = Strng.replace('\U00010B33', Avestan.ConsonantMap[29])
-    Strng = Strng.replace('𐬡', va + '\u02BF')
-
-    Strng = Strng.replace('𐬲', '𐬰\u02BF') ## ZHA
-    Strng = Strng.replace('𐬤', '𐬢\u02BF') ## NGVA
-    Strng = Strng.replace('𐬃', '𐬁_𐬋') ## AO
-
-    ## 𐬲𐬤𐬃  approximate this
-
-    ### Replave JHA + Nukta as ZHA in Devanagari & Gujarati
-
-    return Strng
-
-def FixAvestan(Strng, reverse=False):
-    return _FixAvestanDecode(Strng) if reverse else _FixAvestanEncode(Strng)
+# Avestan's own Fix logic now lives in ScriptProcessing/Avestan.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixAvestan", ...) dispatch keeps working.
+from .ScriptProcessing.Avestan import _FixAvestanEncode, _FixAvestanDecode, FixAvestan
 
 def _FixLaoEncode(Strng):
 
@@ -2577,180 +2066,15 @@ def ThaiDigraphConjuncts(Strng,reverse=False):
 
     return Strng
 
-def FixOldPersian(Strng,reverse=False):
-    Strng = OldPersianSyllable(Strng,reverse)
-    Strng = OldPersianNumeral(Strng,reverse)
-
-    return Strng
+# OldPersian's own Fix logic now lives in ScriptProcessing/OldPersian.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixOldPersian", ...) dispatch keeps working.
+from .ScriptProcessing.OldPersian import FixOldPersian, OldPersianSyllable, OldPersianNumeral
 
 # Syllabization of Persian
 # d<a> +i -> d<i> + i
 # d<a> + u -> d<u> + u
-def OldPersianSyllable(Strng,reverse=True):
-    ICons = [x+'\U000103A1' for x in ['\U000103AD','\U000103B6','\U000103A9','\U000103BA','\U000103AB','\U000103B4','\U000103BC']]
-    ICons_ = [x+'_\U000103A1' for x in ['\U000103AD','\U000103B6','\U000103A9','\U000103BA','\U000103AB','\U000103B4','\U000103BC']]
-    ISyll = [x+'\U000103A1' for x in ['\U000103AE','\U000103B7','\U000103AA','\U000103BB','\U000103AB','\U000103B4','\U000103BC']]
-
-    UCons = [x+'\U000103A2' for x in ['\U000103AD','\U000103B6','\U000103A3','\U000103A5','\U000103AB','\U000103B4','\U000103BC']]
-    UCons_ = [x+'_\U000103A2' for x in ['\U000103AD','\U000103B6','\U000103A3','\U000103A5','\U000103AB','\U000103B4','\U000103BC']]
-    USyll = [x+'\U000103A2' for x in ['\U000103AF','\U000103B8','\U000103A4','\U000103A6','\U000103AC','\U000103B5','\U000103BD']]
-
-    ACons = [x+'<\U000103A0' for x in ['\U000103AD','\U000103B6','\U000103A3','\U000103A5','\U000103A9','\U000103BA','𐎼','𐎴','𐎫']]
-    ASyll = ['\U000103AD','\U000103B6','\U000103A3','\U000103A5','\U000103A9','\U000103BA','𐎼','𐎴','𐎫']
-
-    SylAlpha = '([𐎧𐎨𐏂𐎰𐎱𐎳𐎲𐎹𐎾𐎿𐏀𐏁𐏃])'
-
-    ListC = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'OldPersian')) + ')'
-
-    if not reverse:
-        #print(Strng)
-        Strng = Strng.replace(" ","\U000103D0").replace("_","").replace("<","")
-        for x,y in zip(ICons+UCons+ACons,ISyll+USyll+ASyll):
-            Strng = Strng.replace(x,y)
-        #print(Strng)
-    else:
-        Strng = re.sub('𐎻(?!\U000103A1)', '𐎻\U000103A1', Strng)
-
-        for x,y in zip(ICons_+UCons_,ISyll+USyll):
-            Strng = Strng.replace(y,x)
-
-        Strng = re.sub(SylAlpha + '(𐎠𐎡)', r'\1<\2', Strng)
-        Strng = re.sub(SylAlpha + '(𐎠𐎢)', r'\1<\2', Strng)
-
-        Strng = re.sub(ListC + '\U000103A0', r'\1' + '_\U000103A0', Strng)
-        Strng = re.sub(SylAlpha + '([\U000103A1\U000103A2])', r'\1_\2', Strng)
-
-        Strng = re.sub('([' + "".join(ASyll) + '])' + '([\U000103A1\U000103A2])', r'\1' + '<' + '\U000103A0' + r'\2' , Strng)
-
-        Strng = Strng.replace('𐏐',' ')
-
-
-
-    if not reverse:
-        # Replace Space with Word Sperator
-        # Remove _ - (why :-/ )
-        pass
-        #Strng = Strng.replace(" ","\U000103D0").replace("_","").replace("<","")
-    else:
-        pass
-        #Strng = re.sub('([\U000103AD\U000103B6\U000103A3\U000103A5\U000103A9\U000103BA])_\U000103A0(?![𐎡𐎢])',r"\1",Strng)
-
-
-    ## Fix dai Vs tai
-
-    return Strng
-
 # Convert numbers into Persinal Numeral System
-def OldPersianNumeral(Strng,reverse=False):
-    One = '\U000103D1'
-    Two = '\U000103D2'
-    Ten = '\U000103D3'
-    Twenty = '\U000103D4'
-    Hundred = '\U000103D5'
-
-    Numbers = sorted(map(int,re.findall("\d+", Strng)),reverse=True)
-
-    if not reverse:
-        for num in Numbers:
-            hN = int(num / 100)
-            tW = int((num - (hN*100)) / 20)
-            tN = int((num - (hN*100) - (tW*20)) /10)
-            t2 = int((num - (hN*100) - (tW*20) - (tN*10)) /2)
-            n1 = int(num - (hN*100) - (tW*20) - (tN*10) - (t2*2))
-
-            perNum = (Hundred*hN) + (Twenty*tW) + (Ten*tN) + (Two*t2) + (One*n1)
-
-            Strng = Strng.replace(str(num),perNum)
-    else:
-        Strng = Strng.replace(One, '1#')
-        Strng = Strng.replace(Two, '2#')
-        Strng = Strng.replace(Ten, '10#')
-        Strng = Strng.replace(Twenty, '20#')
-        Strng = Strng.replace(Hundred, '100#')
-
-    return Strng
-
-def KharoshthiNumerals(Strng, reverse=False):
-    Numbers = sorted(map(int,re.findall("\d+", Strng)),reverse=True)
-
-    if not reverse:
-        for num in Numbers:
-             Strng = Strng.replace(str(num),kharoshthiNumber(num))
-    else:
-        one = '𐩀'
-        two = '𐩁'
-        three = '𐩂'
-        four = '𐩃'
-        ten = '𐩄'
-        twenty = '𐩅'
-        hundred = '𐩆'
-        thousand = '𐩇'
-
-        Strng = Strng.replace(one, '1#')
-        Strng = Strng.replace(two, '2#')
-        Strng = Strng.replace(three, '3#')
-        Strng = Strng.replace(four, '4#')
-        Strng = Strng.replace(ten, '10#')
-        Strng = Strng.replace(twenty, '20#')
-        Strng = Strng.replace(hundred, '100#')
-        Strng = Strng.replace(thousand, '1000#')
-
-
-    return Strng
-
-def kharoshthiNumber(Strng):
-    one = '𐩀'
-    two = '𐩁'
-    three = '𐩂'
-    four = '𐩃'
-    ten = '𐩄'
-    twenty = '𐩅'
-    hundred = '𐩆'
-    thousand = '𐩇'
-
-    num = int(Strng)
-    kharnum = ''
-    thou = int(num/1000)
-    if thou > 0:
-        if thou > 1:
-            kharnum += kharoshthiNumber(thou)
-        kharnum += thousand
-    hund = int((num - (thou*1000))/100)
-    if hund > 0:
-        if hund > 1:
-            kharnum += kharoshthiNumber(hund)
-        kharnum += hundred
-    twen = int((num - (thou*1000) - (hund * 100))/20)
-    if twen > 0:
-        kharnum += twenty * twen
-    tenn = int((num - (thou*1000) - (hund * 100) - (twen*20))/10)
-    if tenn > 0:
-        if tenn > 1:
-            kharnum += kharoshthiNumber(tenn)
-        kharnum += ten
-    ones = int((num - (thou*1000) - (hund * 100) - (twen*20) - (tenn * 10)))
-    if ones > 0:
-        if ones == 1:
-            kharnum += one
-        elif ones == 2:
-            kharnum += two
-        elif ones == 3:
-            kharnum += three
-        elif ones == 4:
-            kharnum += four
-        elif ones == 5:
-            kharnum += four + one
-        elif ones == 6:
-            kharnum += four + two
-        elif ones == 7:
-            kharnum += four + three
-        elif ones == 8:
-            kharnum += four + four
-        elif ones == 9:
-            kharnum += four + four + one
-
-    return kharnum
-
 def _FixSinhalaEncode(Strng):
     Strng = PostProcess.SinhalaDefaultConjuncts(Strng)
 
@@ -2779,45 +2103,15 @@ def _FixSinhalaDecode(Strng):
 def FixSinhala(Strng, reverse=False):
     return _FixSinhalaDecode(Strng) if reverse else _FixSinhalaEncode(Strng)
 
-def _FixSantaliEncode(Strng):
-    Strng = Strng.replace('ᱹᱸ', 'ᱺ')
-    Strng = Strng.replace('ᱻᱸ', 'ᱸᱻ')
+# Santali's own Fix logic now lives in ScriptProcessing/Santali.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixSantali", ...) dispatch keeps working.
+from .ScriptProcessing.Santali import _FixSantaliEncode, _FixSantaliDecode, FixSantali
 
-    return Strng
-
-def _FixSantaliDecode(Strng):
-    Strng = Strng.replace('ᱺ', 'ᱹᱸ')
-    Strng = Strng.replace('ᱽ','’')
-    Strng = Strng.replace('ᱸᱻ', 'ᱻᱸ')
-
-    return Strng
-
-def FixSantali(Strng, reverse=False):
-    return _FixSantaliDecode(Strng) if reverse else _FixSantaliEncode(Strng)
-
-def _FixSoraSompengEncode(Strng):
-    ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'SoraSompeng')) + ')'
-
-    Strng = re.sub(ListC + '(ə)', r'\1', Strng)
-    Strng = Strng.replace('ə', '\U000110E6\U000110E8')
-
-    return Strng
-
-def _FixSoraSompengDecode(Strng):
-    ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'SoraSompeng')) + ')'
-
-    ListV = "(" + "|".join(GM.CrunchSymbols(GM.Vowels, 'SoraSompeng')) + ')'
-    Strng = re.sub(ListC + '(?!' + ListV + ')', r'\1' + 'ə', Strng)
-
-    Strng = Strng.replace('𑃔ə𑃨', '𑃔𑃨ə')
-
-    Strng = Strng.replace('𑃦𑃨', 'ə')
-    Strng = Strng.replace('ə𑃨', '𑃨')
-
-    return Strng
-
-def FixSoraSompeng(Strng, reverse=False):
-    return _FixSoraSompengDecode(Strng) if reverse else _FixSoraSompengEncode(Strng)
+# SoraSompeng's own Fix logic now lives in ScriptProcessing/SoraSompeng.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixSoraSompeng", ...) dispatch keeps working.
+from .ScriptProcessing.SoraSompeng import _FixSoraSompengEncode, _FixSoraSompengDecode, FixSoraSompeng
 
 
 # FixRomanReadable and FixRomanColloquial share the same nasal-assimilation
@@ -2928,20 +2222,10 @@ def _FixWarangCitiDecode(Strng):
 def FixWarangCiti(Strng, reverse=False):
     return _FixWarangCitiDecode(Strng) if reverse else _FixWarangCitiEncode(Strng)
 
-def _FixLimbuLoCEncode(Strng):
-    Strng = FixLimbu(Strng, False)
-
-    return Strng
-
-def _FixLimbuLoCDecode(Strng):
-    Strng = FixLimbu(Strng, True)
-    Strng = Strng.replace('ʔ', '᤹')
-    Strng = Strng.replace('꞉', '’')
-
-    return Strng
-
-def FixLimbuLoC(Strng, reverse=False):
-    return _FixLimbuLoCDecode(Strng) if reverse else _FixLimbuLoCEncode(Strng)
+# LimbuLoC's own Fix logic now lives in ScriptProcessing/LimbuLoC.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixLimbuLoC", ...) dispatch keeps working.
+from .ScriptProcessing.LimbuLoC import _FixLimbuLoCEncode, _FixLimbuLoCDecode, FixLimbuLoC
 
 #Subojined & Final
 def _FixLimbuEncode(Strng):
@@ -3090,8 +2374,10 @@ def _FixKaithiDecode(Strng):
 def FixKaithi(Strng, reverse=False):
     return _FixKaithiDecode(Strng) if reverse else _FixKaithiEncode(Strng)
 
-def FixLao2(Strng, reverse = False):
-    return FixLao(Strng, reverse)
+# Lao2's own Fix logic now lives in ScriptProcessing/Lao2.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixLao2", ...) dispatch keeps working.
+from .ScriptProcessing.Lao2 import FixLao2
 
 def _FixNandinagariEncode(Strng):
     pass
@@ -3108,122 +2394,10 @@ def FixNandinagari(Strng, reverse=False):
 
 #Subjoined, final and la-ligatures
 # Fix aH -> a ;
-def _FixLepchaEncode(Strng):
-    vir = Lepcha.ViramaMap[0]
-    la = Lepcha.ConsonantMap[27]
-
-    conLa = [x+vir+la for x in [Lepcha.ConsonantMap[c] for c in [0,2,20,22,24,32]]+[Lepcha.NuktaConsonantMap[6]]]
-    conL = ['\u1C01','\u1C04','\u1C0F','\u1C14','\u1C16','\u1C1E','\u1C12']
-
-    for x,y in zip(conLa,conL):
-        # Replace k + vira + la -> kla
-        Strng = Strng.replace(x,y)
-
-    yr = [vir+x for x in Lepcha.ConsonantMap[25:27]]
-    yrSub = ['\u1C24','\u1C25']
-
-    for x,y in zip(yr,yrSub):
-        # sbjoined ya and ra
-        Strng = Strng.replace(x,y)
-
-    ## Word Final Consonants
-
-    ## Consider adding -u instead of mass replacement [for Cham too] !
-
-    listNF = [Lepcha.ConsonantMap[x] for x in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,17,18,21,22,23,29,30,31]]
-    listF = [(Lepcha.ConsonantMap[:33]+Lepcha.AyogavahaMap)[x] for x in [0,0,0,34,0,0,0,0,19,15,15,15,15,19,15,15,15,20,20,20,15,15,15]]
-
-    listNF += Lepcha.ConsonantMap[25:26]+Lepcha.ConsonantMap[28:29]
-    listF += Lepcha.VowelMap[2:3] + Lepcha.VowelMap[4:5]
-
-    # Remove Nukta if it appears with Virama
-    # ka + Q + Viramam -> ka + virama
-    Strng = Strng.replace(Lepcha.NuktaMap[0]+vir,vir)
-    Strng = Strng.replace(Lepcha.ConsonantMap[32]+vir,'') # Remove <h> ; sihma -> sima
-    consAll = "(" + "|".join(Lepcha.ConsonantMap + Lepcha.VowelMap + Lepcha.VowelSignMap) + ")"
-    for x,y in zip(listNF,listF):
-        Strng = re.sub(consAll+"(" + x+vir + ")",r'\1'+y+vir,Strng)
-
-
-
-    conFinal = [x+vir for x in [Lepcha.ConsonantMap[c] for c in [0,15,19,20,24,26,27]]]
-    conF = ['\u1C2D','\u1C33','\u1C30','\u1C31','\u1C2E','\u1C32','\u1C2F',]
-    finConsList = ''.join(conF)
-
-    signAll = '|'.join(GM.CrunchSymbols(GM.Consonants+GM.Vowels+GM.VowelSignsNV, "Lepcha"))
-
-    for x,y in zip(conFinal,conF):
-        # Replace final consonants
-        Strng = re.sub('('+signAll+')'+'('+x+')',r'\1'+y,Strng)
-
-    # Remove Virama - Lepcha doesn't have virama ?
-
-    signVow = '|'.join(GM.CrunchSymbols(GM.VowelSignsNV,"Lepcha"))
-
-    Strng = Strng.replace(vir,'') ## Removing faux Virama
-    # Using Sign Kang with Vowel Signs
-    # Inherent Consonant uses 1C34
-    # kiM -> ki + 1C35 ; kaM -> ka + 1C34
-    Strng = re.sub("("+signVow+')'+'('+Lepcha.AyogavahaMap[1]+')',r'\1'+'\u1C35',Strng)
-    Strng = Strng.replace("ᰧᰶᰵ", "ᰧᰵᰶ") ## Fiximg IM issues kIM swap the Ran and M to display it better
-    # swap rang + final con - unicode ordering to get the correct rendering
-    # kIP -> ᰀᰧᰱᰶ
-    Strng = re.sub('(ᰶ)' + '([' + finConsList + '])', r'\2\1', Strng)
-
-    return Strng
-
-def _FixLepchaDecode(Strng):
-    vir = Lepcha.ViramaMap[0]
-    la = Lepcha.ConsonantMap[27]
-
-    conLa = [x+vir+la for x in [Lepcha.ConsonantMap[c] for c in [0,2,20,22,24,32]]+[Lepcha.NuktaConsonantMap[6]]]
-    conL = ['\u1C01','\u1C04','\u1C0F','\u1C14','\u1C16','\u1C1E','\u1C12']
-
-    for x,y in zip(conLa,conL):
-        # Reverse above
-        Strng = Strng.replace(y,x)
-
-    yr = [vir+x for x in Lepcha.ConsonantMap[25:27]]
-    yrSub = ['\u1C24','\u1C25']
-
-    for x,y in zip(yr,yrSub):
-        # reverse above
-        Strng = Strng.replace(y,x)
-
-    ## Word Final Consonants
-
-    ## Consider adding -u instead of mass replacement [for Cham too] !
-
-    listNF = [Lepcha.ConsonantMap[x] for x in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,17,18,21,22,23,29,30,31]]
-    listF = [(Lepcha.ConsonantMap[:33]+Lepcha.AyogavahaMap)[x] for x in [0,0,0,34,0,0,0,0,19,15,15,15,15,19,15,15,15,20,20,20,15,15,15]]
-
-    listNF += Lepcha.ConsonantMap[25:26]+Lepcha.ConsonantMap[28:29]
-    listF += Lepcha.VowelMap[2:3] + Lepcha.VowelMap[4:5]
-
-    pass # Irreversible
-
-    conFinal = [x+vir for x in [Lepcha.ConsonantMap[c] for c in [0,15,19,20,24,26,27]]]
-    conF = ['\u1C2D','\u1C33','\u1C30','\u1C31','\u1C2E','\u1C32','\u1C2F',]
-    finConsList = ''.join(conF)
-
-    signAll = '|'.join(GM.CrunchSymbols(GM.Consonants+GM.Vowels+GM.VowelSignsNV, "Lepcha"))
-
-    for x,y in zip(conFinal,conF):
-        # KIp ᰀᰧᰱᰶ -> rang, final consonant
-        Strng = re.sub('([' + finConsList + '])' + '(ᰶ)', r'\2\1', Strng)
-        Strng = Strng.replace(y,x)
-
-    # Remove Virama - Lepcha doesn't have virama ?
-
-    signVow = '|'.join(GM.CrunchSymbols(GM.VowelSignsNV,"Lepcha"))
-
-    Strng = Strng.replace('\u1C35',Lepcha.AyogavahaMap[1])
-    Strng = Strng.replace("\u1C34\u1C36","\u1C36\u1C34") ## Fiximg IM issues kIM swap the Ran and M to display it better
-
-    return Strng
-
-def FixLepcha(Strng,reverse=False):
-    return _FixLepchaDecode(Strng) if reverse else _FixLepchaEncode(Strng)
+# Lepcha's own Fix logic now lives in ScriptProcessing/Lepcha.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixLepcha", ...) dispatch keeps working.
+from .ScriptProcessing.Lepcha import _FixLepchaEncode, _FixLepchaDecode, FixLepcha
 
 # Repha & Subjoined
 def _FixSundaneseEncode(Strng):
@@ -3271,33 +2445,10 @@ def FixSundanese(Strng,reverse=False):
     return _FixSundaneseDecode(Strng) if reverse else _FixSundaneseEncode(Strng)
 
 # Repha & Subjoined
-def _FixRejangEncode(Strng):
-    vir = Rejang.ViramaMap[0]
-
-    r = Rejang.ConsonantMap[26] + vir
-    n = Rejang.ConsonantMap[19] + vir
-    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants + GM.Vowels + GM.VowelSignsNV,'Rejang'))
-
-    Strng = re.sub('(' + ListC + ')' + r, r'\1' + '\uA951', Strng)
-    Strng = re.sub('(' + ListC + ')' + n, r'\1' + '\uA950', Strng)
-
-    return Strng
-
-def _FixRejangDecode(Strng):
-    vir = Rejang.ViramaMap[0]
-
-    r = Rejang.ConsonantMap[26] + vir
-    n = Rejang.ConsonantMap[19] + vir
-    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants + GM.Vowels + GM.VowelSignsNV,'Rejang'))
-
-    # Reverse above
-    Strng = Strng.replace('\uA951',r)
-    Strng = Strng.replace('\uA950',n)
-
-    return Strng
-
-def FixRejang(Strng, reverse=False):
-    return _FixRejangDecode(Strng) if reverse else _FixRejangEncode(Strng)
+# Rejang's own Fix logic now lives in ScriptProcessing/Rejang.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixRejang", ...) dispatch keeps working.
+from .ScriptProcessing.Rejang import _FixRejangEncode, _FixRejangDecode, FixRejang
 
 # Chakmaa VS A and Subjoined
 def _FixChakmaEncode(Strng):
@@ -3383,32 +2534,10 @@ def _FixIASTDecode(Strng):
 def FixIAST(Strng,reverse=False):
     return _FixIASTDecode(Strng) if reverse else _FixIASTEncode(Strng)
 
-def _FixIPAEncode(Strng):
-    colon_tilde = "\u02D0\u0303"
-    tilde_colon = "\u0303\u02D0"
-
-    # ɑː̃ -> ɑ̃ː
-    Strng = Strng.replace(colon_tilde,tilde_colon)
-    # Add Visarga echo - kuH/kUH -> kuhŭ/kuːhŭ
-    Strng = re.sub("(.)(\u02D0?)(\u0068)",r'\1\2\3\1'+'\u0306',Strng)
-    Strng = Strng.replace('ə̸ə̸', 'ɑ̷ː')
-
-    return Strng
-
-def _FixIPADecode(Strng):
-    colon_tilde = "\u02D0\u0303"
-    tilde_colon = "\u0303\u02D0"
-
-    Strng = Strng.replace('ɑ̷ː', 'ə̸ə̸')
-    # ɑː̃ <- ɑ̃ː
-    Strng = Strng.replace(tilde_colon,colon_tilde)
-    # Reverse Visarga echo - kuH/kUH <- kuhŭ/kuːhŭ
-    Strng = re.sub("(.)(\u02D0?)(\u0068)"+r"\1"+"\u0306",r"\1\2\3",Strng)
-
-    return Strng
-
-def FixIPA(Strng, reverse=False):
-    return _FixIPADecode(Strng) if reverse else _FixIPAEncode(Strng)
+# IPA's own Fix logic now lives in ScriptProcessing/IPA.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixIPA", ...) dispatch keeps working.
+from .ScriptProcessing.IPA import _FixIPAEncode, _FixIPADecode, FixIPA
 
 # Rearrange PhagsPa Letters ; Subjoined Letters ;
 def _FixPhagsPaEncode(Strng):
@@ -3748,165 +2877,26 @@ def _FixTeluguDecode(Strng):
 def FixTelugu(Strng, reverse=False):
     return _FixTeluguDecode(Strng) if reverse else _FixTeluguEncode(Strng)
 
-def _FixMeeteiMayekEncode(Strng):
-    vir = MeeteiMayek.ViramaMap[0]
-    listC = [x+vir for x in [MeeteiMayek.ConsonantMap[x] for x in [0,27,24,20,19,15,4,25]]]
-    finalC = ['\uABDB','\uABDC','\uABDD','\uABDE','\uABDF','\uABE0','\uABE1','\uABE2']
-
-    for x,y in zip(listC,finalC):
-        Strng = re.sub(x,y,Strng)
-
-    return Strng
-
-def _FixMeeteiMayekDecode(Strng):
-    vir = MeeteiMayek.ViramaMap[0]
-    listC = [x+vir for x in [MeeteiMayek.ConsonantMap[x] for x in [0,27,24,20,19,15,4,25]]]
-    finalC = ['\uABDB','\uABDC','\uABDD','\uABDE','\uABDF','\uABE0','\uABE1','\uABE2']
-
-    for x,y in zip(listC,finalC):
-        Strng = Strng.replace(y, x)
-
-    return Strng
-
-def FixMeeteiMayek(Strng,reverse=False):
-    return _FixMeeteiMayekDecode(Strng) if reverse else _FixMeeteiMayekEncode(Strng)
+# MeeteiMayek's own Fix logic now lives in ScriptProcessing/MeeteiMayek.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixMeeteiMayek", ...) dispatch keeps working.
+from .ScriptProcessing.MeeteiMayek import _FixMeeteiMayekEncode, _FixMeeteiMayekDecode, FixMeeteiMayek
 
 ## Reverse not working
 ## For other batak writings as well
 
 ## Consider replacement of Anusvara by Nasal for East Asian Sripts which don't ahve a Sanskrit writing Tradition
 
-def _FixBatakSimaEncode(Strng):
-    Strng = Strng.replace('ᯙᯮ', 'ᯙᯯ')
-
-    return Strng
-
-def _FixBatakSimaDecode(Strng):
-    Strng = Strng.replace('ᯙᯯ', 'ᯙᯮ')
-
-    return Strng
-
-def FixBatakSima(Strng, reverse=False):
-    return _FixBatakSimaDecode(Strng) if reverse else _FixBatakSimaEncode(Strng)
+# BatakSima's own Fix logic now lives in ScriptProcessing/BatakSima.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixBatakSima", ...) dispatch keeps working.
+from .ScriptProcessing.BatakSima import _FixBatakSimaEncode, _FixBatakSimaDecode, FixBatakSima
 
 # Cham Final & Subjoined
-def _FixChamEncode(Strng):
-    Strng = Strng.replace("\u02BD","")
-
-    ## Check Differences between Vietnamese Cham & Cambodian Cham
-
-    ListCAll = '('+'|'.join(GM.CrunchSymbols(GM.Consonants,'Cham')) + ')'
-    ListVow = '('+'|'.join(GM.CrunchSymbols(GM.Vowels,'Cham')) + ')'
-    ListVowS = '('+'|'.join(GM.CrunchSymbols(GM.VowelSignsNV,'Cham')) + ')'
-
-    ## http://www.youtube.com/watch?v=z2_8GMqbO6M - Prenasalized Consonants
-    vir = Cham.ViramaMap[0]
-    nja = Cham.ConsonantMap[9] + vir + Cham.ConsonantMap[7]
-
-#    if not reverse:
-#        Strng = Strng.replace(nja,u'\uAA12')
-#    else:
-#        Strng = Strng.replace(u'\uAA12',nja)
-
-    ## Replace Mue with ma, nue with na ???  - Should it be done ???
-
-    ## Subjoined Consonants
-
-    listC = [vir+x for x in Cham.ConsonantMap[25:29]]
-    SubC = ['\uAA33','\uAA34','\uAA35','\uAA36'] # Subjoined - /ya/, /ra/, /la/, /va/
-    for x,y in zip(listC,SubC):
-        # Subjoined consonants
-        Strng = Strng.replace(x,y)
-
-    # Replace Consonants without Final forms to Consonts with Final Forms
-    # vagh -> vag, prajJa -> pracJA etc
-
-    listNF = [Cham.ConsonantMap[x] for x in [1,3,6,7,8,9,16,17,18,21,22,23,31,29]]  # Non Final
-    listF = [Cham.ConsonantMap[x] for x in [0,2,5,5,5,19,15,15,15,20,20,20,30,30]]  # Final
-
-    for x,y in zip(listNF,listF):
-        Strng = Strng.replace(x+vir,y+vir)
-
-    ## Fix Hma Hla - Word Initial
-    ## hma  ꩍꨠ -> Becomes ःम
-
-    ## Consonnant h
-
-    listC = [x+vir for x in [Cham.ConsonantMap[x] for x in [0,2,4,5,15,19,20,25,26,27,30,24]]]
-    finalC = ['\uAA40','\uAA41','\uAA42','\uAA44','\uAA45','\uAA46','\uAA47','\uAA48','\uAA49','\uAA4A','\uAA4B','\uAA4C']
-
-    for x,y in zip(listC,finalC):
-        # final consonants
-        Strng = Strng.replace(x,y)
-        Strng = re.sub('(' + ListCAll + '|' +  ListVow + '|' +  ListVowS + ')' + 'ꨨ' + vir, r'\1'+'ꩍ', Strng)
-
-
-    # Remove faux Virama:
-    va = Cham.ConsonantMap[28]
-    Strng = Strng.replace(va+vir,va)
-    #Strng = Strng.replace('ʾ', '')
-
-    return Strng
-
-def _FixChamDecode(Strng):
-    Strng = Strng.replace("\u02BD","")
-
-    ## Check Differences between Vietnamese Cham & Cambodian Cham
-
-    ListCAll = '('+'|'.join(GM.CrunchSymbols(GM.Consonants,'Cham')) + ')'
-    ListVow = '('+'|'.join(GM.CrunchSymbols(GM.Vowels,'Cham')) + ')'
-    ListVowS = '('+'|'.join(GM.CrunchSymbols(GM.VowelSignsNV,'Cham')) + ')'
-
-    ## http://www.youtube.com/watch?v=z2_8GMqbO6M - Prenasalized Consonants
-    vir = Cham.ViramaMap[0]
-    nja = Cham.ConsonantMap[9] + vir + Cham.ConsonantMap[7]
-
-#    if not reverse:
-#        Strng = Strng.replace(nja,u'\uAA12')
-#    else:
-#        Strng = Strng.replace(u'\uAA12',nja)
-
-    ## Replace Mue with ma, nue with na ???  - Should it be done ???
-
-    ## Subjoined Consonants
-
-    listC = [vir+x for x in Cham.ConsonantMap[25:29]]
-    SubC = ['\uAA33','\uAA34','\uAA35','\uAA36'] # Subjoined - /ya/, /ra/, /la/, /va/
-    for x,y in zip(listC,SubC):
-        # Reverse above
-        Strng = Strng.replace(y,x)
-
-    # Replace Consonants without Final forms to Consonts with Final Forms
-    # vagh -> vag, prajJa -> pracJA etc
-
-    listNF = [Cham.ConsonantMap[x] for x in [1,3,6,7,8,9,16,17,18,21,22,23,31,29]]  # Non Final
-    listF = [Cham.ConsonantMap[x] for x in [0,2,5,5,5,19,15,15,15,20,20,20,30,30]]  # Final
-
-    for x,y in zip(listNF,listF):
-        pass # Irreversible
-
-    ## Fix Hma Hla - Word Initial
-    ## hma  ꩍꨠ -> Becomes ःम
-
-    ## Consonnant h
-
-    listC = [x+vir for x in [Cham.ConsonantMap[x] for x in [0,2,4,5,15,19,20,25,26,27,30,24]]]
-    finalC = ['\uAA40','\uAA41','\uAA42','\uAA44','\uAA45','\uAA46','\uAA47','\uAA48','\uAA49','\uAA4A','\uAA4B','\uAA4C']
-
-    for x,y in zip(listC,finalC):
-        # final consonants
-        Strng = Strng.replace('ꩍ','ꨨ' + vir)
-        if y not in Cham.AyogavahaMap:
-            Strng = Strng.replace(y,x)
-
-    # Remove faux Virama:
-    va = Cham.ConsonantMap[28]
-    pass # Irreversible
-
-    return Strng
-
-def FixCham(Strng,reverse=False):
-    return _FixChamDecode(Strng) if reverse else _FixChamEncode(Strng)
+# Cham's own Fix logic now lives in ScriptProcessing/Cham.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixCham", ...) dispatch keeps working.
+from .ScriptProcessing.Cham import _FixChamEncode, _FixChamDecode, FixCham
 
 # Subjoined Consonants in Tai Tham
 # Mai Kang Lai - /ng/
@@ -4015,8 +3005,10 @@ def _FixTaiThamFamily(Strng, reverse, tall_a_cons, marker_cleanup, ra_haam_swap)
 
     return Strng
 
-def FixThamLoC(Strng, reverse=False):
-    return _FixTaiThamFamily(Strng, reverse, ['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ', 'ᨷ'], marker_cleanup=True, ra_haam_swap=False)
+# ThamLoC's own Fix logic now lives in ScriptProcessing/ThamLoC.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixThamLoC", ...) dispatch keeps working.
+from .ScriptProcessing.ThamLoC import FixThamLoC
 
 def FixLueTham(Strng, reverse=False):
     return _FixTaiThamFamily(Strng, reverse, ['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ'], marker_cleanup=False, ra_haam_swap=False)
@@ -4101,57 +3093,10 @@ def _FixAssameseDecode(Strng):
 def FixAssamese(Strng,reverse=False):
     return _FixAssameseDecode(Strng) if reverse else _FixAssameseEncode(Strng)
 
-def _FixSharadaEncode(Strng):
-    Strng = PostProcess.KhandaTa(Strng, 'Assamese', False)
-
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Sharada'))
-    Nukta = '|'.join(GM.CrunchSymbols(GM.CombiningSigns,'Sharada')[-1])
-    Virama = ''.join(GM.CrunchSymbols(['ViramaMap'], 'Sharada'))
-
-    Strng = Strng.replace( Nukta + Virama, Nukta + Virama + '\u200C')
-    Strng = re.sub('(' + Virama + ')' + '(' + ListC + ')' + '(' + Nukta + ')', r'\1' + '\u200C' + r'\2\3', Strng)
-
-    '''Strng = Strng.replace('𑆇ʼ','\U00011183\U000111CB\U000111B6').replace('𑆈ʼ','\U00011183\U000111CB\U000111B7')\
-        .replace('𑆶ʼ','\U000111CB\U000111B6').replace('𑆷ʼ','\U000111CB\U000111B7')
-
-    Strng = Strng.replace('\U00011184ʼ', '𑆃𑇋𑆳')
-    Strng = re.sub('(?<!\U000111BE)\U000111B3ʼ', '\U000111CB\U000111B3', Strng)
-
-    Strng = Strng.replace('𑆃ʼ', '𑆃𑇋', )
-    Strng = re.sub('(' + ListC + ')'+ 'ʼ', r'\1' + '\U000111CB', Strng)'''
-
-
-
-
-
-
-    return Strng
-
-def _FixSharadaDecode(Strng):
-    Strng = PostProcess.KhandaTa(Strng, 'Assamese', True)
-
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Sharada'))
-    Nukta = '|'.join(GM.CrunchSymbols(GM.CombiningSigns,'Sharada')[-1])
-    Virama = ''.join(GM.CrunchSymbols(['ViramaMap'], 'Sharada'))
-
-    pass
-    # u^ u^^ to vriaama
-    # Fix Devanagari as well u^ u^^ to devanagri vowels
-
-    # half-u and half-long-u
-    #Strng = Strng.replace('\U00011183\U000111CB\U000111B6', '𑆇ʼ').replace('\U00011183\U000111CB\U000111B7', '𑆈ʼ').\
-    #    replace('\U000111CB\U000111B6', '𑆶ʼ').replace('\U000111CB\U000111B7', '𑆷ʼ')
-
-    #Strng = Strng.replace('𑆃𑇋𑆳', '\U00011184ʼ')
-    #Strng = re.sub('(?<!\U000111BE)\U000111CB\U000111B3', '\U000111B3ʼ', Strng)
-
-    #Strng = Strng.replace('𑆃𑇋', '𑆃ʼ')
-    #Strng = re.sub('(' + ListC + ')'+ '\U000111CB', r'\1' +  'ʼ', Strng)
-
-    return Strng
-
-def FixSharada(Strng,reverse=False):
-    return _FixSharadaDecode(Strng) if reverse else _FixSharadaEncode(Strng)
+# Sharada's own Fix logic now lives in ScriptProcessing/Sharada.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixSharada", ...) dispatch keeps working.
+from .ScriptProcessing.Sharada import _FixSharadaEncode, _FixSharadaDecode, FixSharada
 
 def _FixKannadaEncode(Strng):
     Strng = PostProcess.RetainDandasIndic(Strng, 'Kannada', True)
@@ -4190,19 +3135,10 @@ def _FixGranthaDecode(Strng):
 def FixGrantha(Strng, reverse=False):
     return _FixGranthaDecode(Strng) if reverse else _FixGranthaEncode(Strng)
 
-def _FixMahajaniEncode(Strng):
-    Strng = Strng.replace('𑅰𑅳ʾ𑅭ʿ𑅑', '\U00011176')
-    Strng = Strng.replace('\u02BE','').replace('\u02BF','')
-
-    return Strng
-
-def _FixMahajaniDecode(Strng):
-    Strng = Strng.replace('\U00011176', '𑅰𑅳ʾ𑅭ʿ𑅑')
-
-    return Strng
-
-def FixMahajani(Strng, reverse=False):
-    return _FixMahajaniDecode(Strng) if reverse else _FixMahajaniEncode(Strng)
+# Mahajani's own Fix logic now lives in ScriptProcessing/Mahajani.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixMahajani", ...) dispatch keeps working.
+from .ScriptProcessing.Mahajani import _FixMahajaniEncode, _FixMahajaniDecode, FixMahajani
 
 def _FixAhomEncode(Strng):
     ListVS = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, 'Ahom')) + ')'
@@ -4243,20 +3179,10 @@ def _FixAhomDecode(Strng):
 def FixAhom(Strng, reverse=False):
     return _FixAhomDecode(Strng) if reverse else _FixAhomEncode(Strng)
 
-def _FixMultaniEncode(Strng):
-    Strng = Strng.replace('\u02BE','').replace('\u02BF','')
-    Strng = Strng.replace('ˍ\U0001128C', '\U0001128D').replace('ˍ\U00011282','\U00011293') ## Plosives
-
-
-    return Strng
-
-def _FixMultaniDecode(Strng):
-    Strng = Strng.replace('\U0001128D','ˍ\U0001128C').replace('\U00011293','ˍ\U00011292') ## Plsosives
-
-    return Strng
-
-def FixMultani(Strng, reverse=False):
-    return _FixMultaniDecode(Strng) if reverse else _FixMultaniEncode(Strng)
+# Multani's own Fix logic now lives in ScriptProcessing/Multani.py -
+# consolidated there (batch migration). Re-exported here so
+# GM.resolve's getattr(CF, "FixMultani", ...) dispatch keeps working.
+from .ScriptProcessing.Multani import _FixMultaniEncode, _FixMultaniDecode, FixMultani
 
 
 def _FixGujaratiEncode(Strng):
