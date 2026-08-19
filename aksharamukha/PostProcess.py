@@ -1124,42 +1124,14 @@ def TamilStyleUUOther(Strng):
 
     return Strng
 
-def ContextualLLa(Strng):
-    ListVS = '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Tamil'))
-    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants, 'Tamil'))
-
-    Strng = re.sub('(ஆவ|ாவ)'+ 'ல', r'\1' +  'ள', Strng)
-    Strng = re.sub('(்ரவா|்ரவ|ர|பவ|வி|ரா|ஷ்க|த⁴வ)'+ 'ல', r'\1' +  'ள', Strng)
-    Strng = re.sub('(யா|யாம|கோம)'+ 'ல', r'\1' +  'ள', Strng)
-    Strng = re.sub('(மௌ)'+ 'ல', r'\1' +  'ள', Strng)
-    Strng = re.sub('([\s^])(ந)'+ 'ல', r'\1' +  'ள', Strng)
-    Strng = Strng.replace('கலத்ர', 'களத்ர')
-    Strng = Strng.replace('ஶீதல', 'ஶீதள')
-    Strng = Strng.replace('ஸுதல', 'ஸுதள')
-    Strng = Strng.replace('காலி', 'காளி')
-    Strng = Strng.replace('காலீ', 'காளீ')
-    Strng = Strng.replace('கலேவர', 'களேவர')
-    Strng = Strng.replace('கலேவர', 'களேவர')
-    Strng = Strng.replace('ப³ஹுல', 'ப³ஹுள')
-    Strng = Strng.replace('கஶ்மல', 'கஶ்மள')
-
-    Strng = re.sub('([கத])' + '(' + ListVS + ')?' + '([³⁴])'+ 'ல', r'\1\2\3' +  'ள', Strng)
-    Strng = re.sub('(ஜு)'+ 'ல', r'\1' +  'ள', Strng)
-    Strng = re.sub('(து)'+ 'லசி', r'\1' +  'ளசி', Strng)
-    Strng = re.sub('(ரிம)'+ 'ல', r'\1' +  'ள', Strng)
-
-    Strng = Strng.replace('ள்ய', 'ல்ய')
-
-    return Strng
-
-def FinalNNa(Strng):
-    Strng = re.sub('ன', 'ந', Strng)
-
-    Strng = re.sub('ந்' + '([\.।॥,!-])', 'ன்' + r'\1', Strng)
-    Strng = re.sub('ந்' + '(\s)', 'ன்' + r'\1', Strng)
-    Strng = re.sub('ந்$', 'ன்', Strng)
-
-    return Strng
+# Tamil's post-options (and its default-bundle TamilNaToNNa/
+# TamilpredictDentaNa) now live in ScriptProcessing/Tamil.py, consolidated
+# there with its Fix logic and pre-options too. Re-exported here so
+# Options.py's getmembers(PostProcess, isfunction) discovery still finds
+# them, and so PostOptions.py's default bundle for Tamil keeps resolving.
+from .ScriptProcessing.Tamil import (TamilNaToNNa, TamilpredictDentaNa, ContextualLLa,
+    FinalNNa, TamilAddFirstVarga, TamilDisableSHA, TamilGranthaVisarga, TamilOmDisable,
+    TamilRemoveApostrophe, TamilRemoveNumbers, TamilSubScript, oldtamilortho)
 
 def TamilpredictDentaNaExtended(Strng):
     listDentalNa = '''ഩഖ
@@ -1333,185 +1305,6 @@ def TamilpredictDentaNaExtended(Strng):
             Strng = Strng.replace(wordNa + vir, wordNna + vir)
 
         Strng = Strng.replace('ഩ്‌ന', 'ന്‌ന')
-
-    return Strng
-
-def TamilpredictDentaNa(Strng):
-    listDentalNa = '''னக²
-னக³ர
-னகுல
-னக்³ன
-னக்ஷத்ர
-னடராஜ
-னடீ
-னதீ³
-னந்த³ன
-னபும்ʼஸக
-னப⁴**
-னம**
-னமஶ்
-னமஸ்
-னமாம
-னமாமி
-னமாமோ
-னமுசி
-னமோ
-னமோநம
-னமோநமோ
-னமோஸ்து
-னமோஸ்துதே
-னம꞉
-னயன
-னர**
-னரக
-னர்தக
-னர்தன
-னர்மத³
-னல**
-னலின
-னவ**
-னவீன
-னவ்ய
-னஶ்**
-னஷ்ட
-னாராயண
-னாக³
-னாடக
-னாடீ³
-னாட்ய
-னாட்³ய
-னாத²
-னாத³
-னாரத
-னானா***
-னான்ய**
-னான்ருʼத
-னாப⁴
-னாம
-னாயக
-னாயிகா
-னாரத³
-னாரஸிம்ʼஹ
-னாரி
-னாரீ
-னாவ***
-னாஶ
-னாஸிக
-னிக³ம
-னிகட
-னிகர
-னிகாம
-னிகாய
-னிகி²ல
-னிகுஞ்ஜ
-னிகூ⁴ன
-னிகேத
-னிக்³ரஹ
-னிக்³ருʼஹ
-னிக்ருʼந்த
-னிக்³ரந்த
-னிக்ஷிப
-னிக்ஷேப
-னிக்⁴ன
-னிஜ
-னித³ர்ஶ
-னிதம்ப³
-னிதர
-னிதா³க⁴
-னிதா³ன
-னிதாந்த
-னிதா⁴ன
-னிதா⁴ய
-னித⁴
-னிதே⁴ஹி
-னித்³ர
-னித்ய
-னிந்தா³
-னிப³த்³த⁴
-னிப³த்⁴
-னிப³ந்த⁴ன
-னிபட
-னிபதித
-னிபத்ய
-னிபபாத
-னிபாதித
-னிபாத்ய
-னிபுண
-னிபோ³த⁴
-னிப்⁴ருʼத
-னிமக்³ன
-னிமித்த
-னிமிஷ
-னியத
-னியந்த
-னியந்த்ர
-னியம
-னியுக்த
-னியுஜ்ய
-னியோ
-னிர
-னிர்
-னிலய
-னிவர்
-னிவஸ
-னிவார
-னிவாஸ
-னிவிஷ்ட
-னிவேத³
-னிவேஶ
-னிவ்ருʼ
-னிஶ
-னிஶ்
-னிஷ
-னிஷ்
-னிஸ
-னிஸ்
-னிஹித
-னி꞉ஶ
-னி꞉ஷ
-னி꞉ஸ
-னீச
-னீதி
-னீர
-னீல
-னூதன
-னூபுர
-னேத்ர
-னேய**
-னைமித்த
-னைமிஷ
-னைராஶ்ய
-னைர்ருʼத
-னைவேத்³ய
-னைஷ்
-ன்யாய
-ன்யாஸ
-ன்யூன
-ன்ருʼ'''.split('\n')
-
-    vir = Tamil.ViramaMap[0]
-
-    Tamillist = '²³⁴ஃஅஆஇஈஉஊஎஏஐஒஓஔகஙசஜஞடணதநனபமயரறலளழவஷஸஹாிீுூெேைொோௌ்ௗ'
-
-    for wordNna in listDentalNa:
-        wordNa = re.sub('^ன', 'ந', wordNna)
-        if '²' in wordNna[-1] or '³' in wordNna[-1] or '⁴' in wordNna[-1]:
-            number = wordNna[-1]
-
-            wordNnaN = wordNna[:-1]
-            wordNaN = wordNa[:-1]
-            for vow in GM.CrunchSymbols(GM.VowelSigns, 'Tamil'):
-                Strng = Strng.replace(wordNnaN + vow + number, wordNaN + vow + number)
-
-        Strng = Strng.replace(wordNna, wordNa)
-
-        for wordNna in ['னாம','னர']:
-            wordNa = re.sub('^ன', 'ந', wordNna)
-            Strng = re.sub('([' + Tamillist +'])('+wordNa + vir +')', r'\1' + wordNna + vir, Strng)
-
-        Strng = Strng.replace('ன்ந', 'ந்ந')
-
-        Strng = Strng.replace('னாம்ன', 'நாம்ன')
 
     return Strng
 
@@ -2069,9 +1862,6 @@ def egrantamil(Strng):
 def tibetandbumed(Strng):
     return Strng
 
-def oldtamilortho(Strng):
-    return Strng
-
 def nepaldevafont(Strng):
     return Strng
 
@@ -2417,11 +2207,6 @@ def dotReph(Strng):
 
     return Strng
 
-def TamilGranthaVisarga(Strng):
-    Strng = Strng.replace('꞉', '𑌃')
-
-    return Strng
-
 def archaicAIAU(Strng):
     Strng = Strng.replace('ൗ', 'ൌ')
     Strng = Strng.replace('ഈ', 'ൟ')
@@ -2473,35 +2258,8 @@ def MeeteiMayekremoveHistorical(Strng):
 
     return Strng
 
-def TamilOmDisable(Strng):
-    return Strng.replace("ௐ", "ஓம்")
-
 def TamilSHADisable(Strng):
     return Strng.replace("ஶ", "ஸ²")
-
-def TamilNaToNNa(Strng):
-    na = Tamil.ConsonantMap[19]
-    nna = Tamil.SouthConsonantMap[3]
-    vir = Tamil.ViramaMap[0]
-    ta = Tamil.ConsonantMap[15]
-
-    ListV = '|'.join(GM.CrunchSymbols(GM.Vowels+GM.VowelSigns+GM.Consonants,'Tamil')+[Tamil.SignMap[0].replace('(','\(').replace(')','\)')])
-
-    Strng = re.sub('('+ListV+')'+ GM.VedicSvaras + '('+na+')' + '(?!' + vir + ta + ')',r'\1\2'+nna,Strng)
-    Strng = re.sub('('+ListV+')'+ GM.VedicSvaras + '('+na+')' + '(?!' + vir + ta + ')',r'\1\2'+nna,Strng)
-
-    Strng = re.sub('(²|³|⁴)'+ GM.VedicSvaras + '('+na+')' + '(?!' + vir + ta + ')',r'\1\2'+nna,Strng)
-    Strng = re.sub('(²|³|⁴)'+ GM.VedicSvaras + '('+na+')' + '(?!' + vir + ta + ')',r'\1\2'+nna,Strng)
-
-    #Strng = re.sub('(²|³|⁴)'+'('+na+')',r'\1'+nna,Strng)
-
-    #Strng = re.sub('(\s)(ன)', r'\1' + 'ந', Strng)
-    #Strng = re.sub('(\.)(ன)', r'\1' + 'ந', Strng)
-    #Strng = re.sub('^ன', 'ந', Strng)
-
-    Strng = re.sub("(?<=ஶ்ரீ)(ன)(?!" + vir + ")", "ந", Strng)
-
-    return Strng
 
 # കൽന് കത്ല് ക്ഷേത്ര് കൻല് - Check this
 
@@ -3017,30 +2775,6 @@ def RemoveDiacritics(Strng):
 def RemoveDiacriticsTamil(Strng):
     for x in GM.DiacriticsRemovableTamil:
         Strng = Strng.replace(x,'')
-
-    return Strng
-
-def TamilSubScript(Strng):
-
-    SuperScript = ['\u00B9', '\u00B2', '\u00B3','\u2074']
-    SubScript = ['\u2081','\u2082','\u2083','\u2084']
-
-    for x,y in zip(SuperScript,SubScript):
-        Strng = Strng.replace(x,y)
-
-    return Strng
-
-def TamilAddFirstVarga(Strng):
-    CM = GM.CrunchList('ConsonantMap','Tamil')
-    ConUnVoiced = '|'.join([CM[x] for x in [0,5,10,15,20]])
-    SuperSubScript = '|'.join(['\u00B2', '\u00B3','\u2074', '₂', '₃', '₄'])
-
-    Strng = re.sub('('+ConUnVoiced+')'+'(?!'+SuperSubScript+')',r'\1'+'\u00B9',Strng)
-
-    from . import ConvertFix
-    Strng = ConvertFix.ShiftDiacritics(Strng,'Tamil')
-    #remove spurios one
-    Strng = re.sub('\u00B9'+'(?='+SuperSubScript+')', '', Strng)
 
     return Strng
 
@@ -3594,30 +3328,9 @@ def ZanabazarSquareMongolianFinal(Strng):
 
     return Strng
 
-def TamilRemoveApostrophe(Strng):
-    Strng = Strng.replace('ʼ', '').replace('ˮ', '')
-
-    return Strng
-
-def TamilRemoveNumbers(Strng):
-    numerals = ['²', '³', '⁴', '₂', '₃', '₄', '¹', '₁']
-
-    for num in numerals:
-        Strng = Strng.replace(num, '')
-
-    return Strng
-
 def NewaSpecialTa(Strng):
 
     Strng = Strng.replace('𑐟𑑂', '𑐟𑑂‍') #Ta+virama -> ta + virama + ZWJ
-
-    return Strng
-
-def TamilDisableSHA(Strng):
-    Strng = Strng.replace('ஶ', 'ஷ²')
-    Strng = CF.ShiftDiacritics(Strng,'Tamil')
-
-    Strng = Strng.replace( 'ஷ்²ரீ', 'ஶ்ரீ')
 
     return Strng
 

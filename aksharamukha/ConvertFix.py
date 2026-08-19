@@ -1024,50 +1024,12 @@ def _FixKhudawadiDecode(Strng):
 def FixKhudawadi(Strng, reverse=False):
     return _FixKhudawadiDecode(Strng) if reverse else _FixKhudawadiEncode(Strng)
 
-# Correct Ru2, Lu2 -> R, lR
-def _FixTamilEncode(Strng):
-    Strng = CorrectRuLu(Strng,"Tamil",False)
-
-    ava = Tamil.SignMap[0]
-    avaA = '\u0028\u0B86\u0029'
-
-    VedicSign = ['॑', '॒', '᳚']
-    TamilDiacritic = ['ʼ', 'ˮ', '꞉']#, '²', '³', '⁴', '₂', '₃', '₄']
-
-    Strng = Strng.replace(ava+ava,avaA)
-    Strng = PostProcess.RetainDandasIndic(Strng, 'Tamil', True)
-    Strng = PostProcess.RetainIndicNumerals(Strng, 'Tamil', True)
-
-    for x in TamilDiacritic:
-        for y in VedicSign:
-            Strng = Strng.replace(x + y, y + x)
-
-    return Strng
-
-def _FixTamilDecode(Strng):
-    Strng = CorrectRuLu(Strng,"Tamil",True)
-
-    ava = Tamil.SignMap[0]
-    avaA = '\u0028\u0B86\u0029'
-
-    VedicSign = ['॑', '॒', '᳚']
-    TamilDiacritic = ['ʼ', 'ˮ', '꞉']#, '²', '³', '⁴', '₂', '₃', '₄']
-
-    Strng = PostProcess.RetainDandasIndic(Strng, 'Tamil')
-    Strng = PostProcess.RetainIndicNumerals(Strng, 'Tamil')
-    Strng = Strng.replace(avaA,ava+ava)
-    Strng = Strng.replace('ஷ²', 'ஶ')
-
-    Strng = Strng.replace('𑌃', '꞉')
-
-    for x in TamilDiacritic:
-        for y in VedicSign:
-            Strng = Strng.replace(y + x, x + y)
-
-    return Strng
-
-def FixTamil(Strng,reverse=False):
-    return _FixTamilDecode(Strng) if reverse else _FixTamilEncode(Strng)
+# Tamil's Fix logic now lives in ScriptProcessing/Tamil.py (consolidated
+# there with its pre/post-options too - see that file's header comment for
+# why the cross-module imports there are whole-module style, not
+# `from .X import name`). Re-exported here so GM.resolve's getattr(CF,
+# "FixTamil", ...) dispatch in Convert.py keeps working unchanged.
+from .ScriptProcessing.Tamil import FixTamil, _FixTamilEncode, _FixTamilDecode
 
 def _FixOriyaEncode(Strng):
     pass
