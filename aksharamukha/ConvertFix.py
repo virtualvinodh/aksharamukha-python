@@ -400,39 +400,9 @@ def FixIndicOutput(Strng,Source,Target,ctx=None):
 
     return Strng
 
-def _FixHebrEncode(Strng, Source):
-    vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['\u05BC']) + ')'
-    vowelsigns2 = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['\u05BC']) + ')?'
-
-    #print('here fixing')
-    #print('reverse is ', str(reverse), 'vinodh')
-    Strng = re.sub('(׳)' + vowelsigns + vowelsigns2, r'\3\2\1', Strng)
-    Strng = re.sub('(וֹ)(׳)', r'\2\1', Strng)
-    Strng = re.sub('(וּ)(׳)', r'\2\1', Strng)
-    Strng = re.sub('(׳)(\u05b7)', r'\2\1', Strng)
-    Strng = re.sub('(׳)(\u05b7)', r'\1', Strng)
-
-    return Strng
-
-def _FixHebrDecode(Strng, Source):
-    vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['\u05BC']) + ')'
-    vowelsigns2 = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['\u05BC']) + ')?'
-
-    #print('here fixing')
-    #print('reverse is ', str(reverse), 'vinodh')
-    # swap garesh and short vowels
-    vowels = ['ְ','ֱ','ֲ','ֳ','ִ','ֵ','ֶ','ַ','ָ','ֹ','ֺ','ֻ','ׇ','\u05BC']
-    vowelsR = '(' + '|'.join(vowels + ['וֹ', 'וּ']) + ')'
-    Strng = re.sub(vowelsR + "(׳)", r'\2\1', Strng)
-    Strng = re.sub(vowelsR + "(׳)", r'\2\1', Strng)
-
-    Strng = re.sub(vowelsR + "(׳)", r'\2\1', Strng)
-    Strng = re.sub(vowelsR + "(׳)", r'\2\1', Strng)
-
-    return Strng
-
-def FixHebr(Strng, Source, reverse = False):
-    return _FixHebrDecode(Strng, Source) if reverse else _FixHebrEncode(Strng, Source)
+# Hebr's own logic now lives in ScriptProcessing/Hebr.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Hebr import _FixHebrEncode, _FixHebrDecode, FixHebr
 
 # Hebrew's own logic now lives in ScriptProcessing/Hebrew.py -
 # consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
@@ -568,41 +538,9 @@ def ShiftDiacritics(Strng,Target,reverse=False):
 from .ScriptProcessing.TamilExtended import _FixTamilExtendedEncode, _FixTamilExtendedDecode, FixTamilExtended
 
 # Move Vowel Signs
-def _FixTamilGranthaEncode(Strng):
-    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants, 'TamilGrantha'))
-    ListEAI = '|'.join(TamilGrantha.VowelSignMap[9:11]+TamilGrantha.SouthVowelSignMap[0:1])
-    ListOAU = TamilGrantha.VowelSignMap[11:13]+TamilGrantha.SouthVowelSignMap[1:2]
-
-    # k + VS e/E/ai -> Joiners + VS e/E/ai + k
-    Strng = re.sub('('+ListC+')'+'('+ListEAI+')','\u200B\u200C\u200D\u200C'+r'\2\1',Strng)
-    # k + VS o/O/au -> Joiners + VS e/E + k + VS AA/La
-    Strng = re.sub('('+ListC+')'+'('+ListOAU[0]+')','\u200B\u200C\u200D\u200C'+TamilGrantha.VowelSignMap[9]+r'\1'+TamilGrantha.VowelSignMap[0],Strng)
-    Strng = re.sub('('+ListC+')'+'('+ListOAU[2]+')','\u200B\u200C\u200D\u200C'+TamilGrantha.SouthVowelSignMap[0]+r'\1'+TamilGrantha.VowelSignMap[0],Strng)
-    Strng = re.sub('('+ListC+')'+'('+ListOAU[1]+')','\u200B\u200C\u200D\u200C'+TamilGrantha.SouthVowelSignMap[0]+r'\1'+Tamil.SouthConsonantMap[0],Strng)
-
-    ## Reversing நே்ˆদ
-    Strng = re.sub('(\u200B\u200C\u200D\u200C.)'+'('+ListC+')'+'(்ˆ)',r'\2\3\1',Strng)
-
-
-    return Strng
-
-def _FixTamilGranthaDecode(Strng):
-    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants, 'TamilGrantha'))
-    ListEAI = '|'.join(TamilGrantha.VowelSignMap[9:11]+TamilGrantha.SouthVowelSignMap[0:1])
-    ListOAU = TamilGrantha.VowelSignMap[11:13]+TamilGrantha.SouthVowelSignMap[1:2]
-
-    #print('I am here')
-    # k + VS o/O/au <- Joiners + VS e/E + k + VS AA/La
-    Strng = re.sub('\u200B'+TamilGrantha.VowelSignMap[9]+'('+ListC+')'+TamilGrantha.VowelSignMap[0],r'\1'+ListOAU[0],Strng)
-    Strng = re.sub('\u200B'+TamilGrantha.SouthVowelSignMap[0]+'('+ListC+')'+TamilGrantha.VowelSignMap[0],r'\1'+ListOAU[2],Strng)
-    Strng = re.sub('\u200B'+TamilGrantha.SouthVowelSignMap[0]+'('+ListC+')'+Tamil.SouthConsonantMap[0],r'\1'+ListOAU[1],Strng)
-    # k + VS e/E/ai <- Joiners + VS e/E/ai + k
-    Strng = re.sub('\u200B'+'('+ListEAI+')'+'('+ListC+')',r'\2\1',Strng)
-
-    return Strng
-
-def FixTamilGrantha(Strng, reverse=False):
-    return _FixTamilGranthaDecode(Strng) if reverse else _FixTamilGranthaEncode(Strng)
+# TamilGrantha's own logic now lives in ScriptProcessing/TamilGrantha.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.TamilGrantha import _FixTamilGranthaEncode, _FixTamilGranthaDecode, FixTamilGrantha
 
 # KhmerLoC's own Fix logic now lives in ScriptProcessing/KhmerLoC.py -
 # consolidated there (batch migration). Re-exported here so
@@ -1263,21 +1201,9 @@ from .ScriptProcessing.Latn import _FixLatnEncode, _FixLatnDecode, FixLatn
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Arab import _FixArabEncode, _FixArabDecode, FixArab
 
-def _FixThaaEncode(Strng, Source):
-    Strng = PersoArabicPuntuation(Strng, False)
-    pass
-    #Strng = Strng.replace('â', 'ʾ')
-
-    return Strng
-
-def _FixThaaDecode(Strng, Source):
-    Strng = PersoArabicPuntuation(Strng, True)
-    pass
-
-    return Strng
-
-def FixThaa(Strng, Source, reverse=False):
-    return _FixThaaDecode(Strng, Source) if reverse else _FixThaaEncode(Strng, Source)
+# Thaa's own logic now lives in ScriptProcessing/Thaa.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Thaa import _FixThaaEncode, _FixThaaDecode, FixThaa
 
 def FixArab_Ph(Strng, Source, reverse=False):
     return FixArab(Strng, Source, reverse)
@@ -1287,24 +1213,9 @@ def FixArab_Ph(Strng, Source, reverse=False):
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Arab_Fa import FixArab_Fa
 
-def _FixArab_UrEncode(Strng, Source):
-    Strng = FixArab(Strng, Source, False)
-
-    if Source != 'Type':
-        ## introduce hamza
-        pass
-
-    return Strng
-
-def _FixArab_UrDecode(Strng, Source):
-    Strng = FixArab(Strng, Source, True)
-
-    pass
-
-    return Strng
-
-def FixArab_Ur(Strng, Source, reverse=False):
-    return _FixArab_UrDecode(Strng, Source) if reverse else _FixArab_UrEncode(Strng, Source)
+# Arab_Ur's own logic now lives in ScriptProcessing/Arab_Ur.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Arab_Ur import _FixArab_UrEncode, _FixArab_UrDecode, FixArab_Ur
 
 # Ugar's own Fix logic now lives in ScriptProcessing/Ugar.py -
 # consolidated there (batch migration). Re-exported here so
