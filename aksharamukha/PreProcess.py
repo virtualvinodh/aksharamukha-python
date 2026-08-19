@@ -130,15 +130,10 @@ from .ScriptProcessing.Balinese import BalineseMoveRepha_pre as BalineseMoveReph
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Oriya import OriyaSubojinedVa, OriyaTargetVa
 
-def BengaliSubojinedVa(Strng):
-    Strng = re.sub('(?<![মব])(্ব)', '্ভ়', Strng)
-
-    return Strng
-
-def BengaliTargetVa(Strng):
-    Strng = Strng.replace('ব', 'ভ়')
-
-    return Strng
+# Bengali's own logic now lives in ScriptProcessing/Bengali.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Bengali import BengaliSubojinedVa, BengaliTargetVa
 
 def RetainDevangariDanda(Strng):
     Strng = Strng.replace('।', '│').replace('॥', '┃')

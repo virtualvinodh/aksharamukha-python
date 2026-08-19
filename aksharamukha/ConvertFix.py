@@ -666,62 +666,10 @@ from .ScriptProcessing.MasaramGondi import _FixMasaramGondiEncode, _FixMasaramGo
 # GM.resolve's getattr(CF, "FixGunjalaGondi", ...) dispatch keeps working.
 from .ScriptProcessing.GunjalaGondi import _FixGunjalaGondiEncode, _FixGunjalaGondiDecode, FixGunjalaGondi
 
-def _FixSoyomboEncode(Strng):
-    finVir = ['\U00011A5E\U00011A99','\U00011A5C\U00011A99','\U00011A60\U00011A99','\U00011A6D\U00011A99','\U00011A6F\U00011A99','\U00011A72\U00011A99','\U00011A74\U00011A99','\U00011A7C\U00011A99','\U00011A7D\U00011A99','\U00011A7F\U00011A99','\U00011A81\U00011A99']
-    fin = ['\U00011A8A','\U00011A8B','\U00011A8C','\U00011A8D','\U00011A8E','\U00011A8F','\U00011A90','\U00011A91','\U00011A92','\U00011A93','\U00011A94']
-    consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Soyombo')) + ')'
-
-    Strng = Strng.replace('𑩜𑪙𑪀', '\U00011A83')  #KSSA
-    Strng = re.sub('\U00011A7F\U00011A99' + '(?=' + consList + ')' , '\U00011A88', Strng) # Fix shka
-
-    ## Gemination ##
-    Strng = re.sub('(?<!𑪙)(.)𑪙' + r'\1', r'\1' + '\U00011A98', Strng)
-    # final consonats
-    if '\u02BE' in Strng:
-        for x, y in zip (finVir, fin):
-            Strng = re.sub(x + '(?!' + consList + ')' , y, Strng)
-
-        Strng = re.sub('𑪈(?!' + consList + ')' , '\U00011A93', Strng)
-
-        Strng = Strng.replace('\u02BE', '')
-
-    ## remove final virama when not followed by a consonant
-    Strng = re.sub('\U00011A99(?!' + consList + ')' , '', Strng)
-
-    return Strng
-
-def _FixSoyomboDecode(Strng):
-    finVir = ['\U00011A5E\U00011A99','\U00011A5C\U00011A99','\U00011A60\U00011A99','\U00011A6D\U00011A99','\U00011A6F\U00011A99','\U00011A72\U00011A99','\U00011A74\U00011A99','\U00011A7C\U00011A99','\U00011A7D\U00011A99','\U00011A7F\U00011A99','\U00011A81\U00011A99']
-    fin = ['\U00011A8A','\U00011A8B','\U00011A8C','\U00011A8D','\U00011A8E','\U00011A8F','\U00011A90','\U00011A91','\U00011A92','\U00011A93','\U00011A94']
-    consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Soyombo')) + ')'
-
-    Strng = Strng.replace('\U00011A9A', ' ') ## Reverse Tsheg
-    Strng = Strng.replace('\U00011A83', '𑩜𑪙𑪀')  #KSSA
-
-    ## Gemination ##
-    Strng = re.sub('(.)\U00011A98', r'\1' + '\U00011A99' + r'\1', Strng)
-
-    viraCon = ['\U00011A7C\U00011A99', '\U00011A7D\U00011A99', '\U00011A81\U00011A99', '\U00011A7F\U00011A99']
-    initial = ['\U00011A86', '\U00011A87', '\U00011A89', '\U00011A88']
-
-    for x, y in zip(viraCon, initial):
-        Strng = Strng.replace(y, x)
-
-    tsaSeries = ['𑩵','𑩶','𑩷']
-    caSeries = ['𑩡','𑩢','𑩣']
-
-    for x, y in zip(tsaSeries,caSeries):
-        Strng = Strng.replace(y, x)
-
-    ## initial ##
-
-    for x, y in zip(finVir, fin):
-        Strng = Strng.replace(y, x)
-
-    return Strng
-
-def FixSoyombo(Strng, reverse=False):
-    return _FixSoyomboDecode(Strng) if reverse else _FixSoyomboEncode(Strng)
+# Soyombo's own logic now lives in ScriptProcessing/Soyombo.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Soyombo import _FixSoyomboEncode, _FixSoyomboDecode, FixSoyombo
 
 # Kharoshthi's own Fix logic now lives in ScriptProcessing/Kharoshthi.py -
 # consolidated there (batch migration). Re-exported here so
@@ -1375,85 +1323,10 @@ from .ScriptProcessing.Saurashtra import _FixSaurashtraEncode, _FixSaurashtraDec
 from .ScriptProcessing.TibetanLoC import FixTibetanLoC
 
 # Tibetan Subjoining Consnants
-def _FixTibetanEncode(Strng, swapNative):
-    ListC = [Tibetan.ViramaMap[0]+chr(x) for x in range(0x0F40,0x0F68)] # Consonants
-    ListSubC = [chr(x+80) for x in range(0x0F40,0x0F68)] # Subjoined Consonants
-
-    SubC = ["ཝྭ","ཡྱ","རྱ","རྭ", "ྺྭ"]
-    SubMinC = ["ཝྺ","ཡྻ","ཪྻ","ཪྺ", "ྺྺ"]
-
-    #introduce virama for Jihva/Upadh
-    Strng = re.sub('([ྈྉ])', r'\1' + '\u0f84',  Strng)
-
-    for x,y in zip(ListC,ListSubC):
-        Strng = Strng.replace(x,y)
-
-    for x,y in zip(SubC,SubMinC):
-        Strng = Strng.replace(x,y)
-
-    Strng = Strng.replace(' ', '\u0F0B')
-
-    Strng = Strng.replace("ཛྷ༹", "ཞ")
-
-    Strng = Strng.replace("(", "༺")
-    Strng = Strng.replace(")", "༻")
-
-    Strng = Strng.replace("{", "༼")
-    Strng = Strng.replace("}", "༽")
-
-
-
-    return Strng
-
-def _FixTibetanDecode(Strng, swapNative):
-    ListC = [Tibetan.ViramaMap[0]+chr(x) for x in range(0x0F40,0x0F68)] # Consonants
-    ListSubC = [chr(x+80) for x in range(0x0F40,0x0F68)] # Subjoined Consonants
-
-    SubC = ["ཝྭ","ཡྱ","རྱ","རྭ", "ྺྭ"]
-    SubMinC = ["ཝྺ","ཡྻ","ཪྻ","ཪྺ", "ྺྺ"]
-
-
-
-    AspirateDecom= ["གྷ", "ཌྷ", "དྷ", "བྷ", "ཛྷ", "ྒྷ", "ྜྷ", "ྡྷ", "ྦྷ", "ྫྷ"]
-    AspirateAtomic = ["གྷ", "ཌྷ", "དྷ", "བྷ", "ཛྷ", "ྒྷ", "ྜྷ", "ྡྷ", "ྦྷ", "ྫྷ"]
-
-    for x, y in zip(AspirateDecom, AspirateAtomic):
-        Strng = Strng.replace(x, y)
-
-    for x,y in zip(SubC,SubMinC):
-        Strng = Strng.replace(y,x)
-
-    for x,y in zip(ListC,ListSubC):
-        Strng = Strng.replace(y,x)
-
-    for x,y in zip(['྄རྀ','྄རཱྀ','྄ལྀ',"྄ལཱྀ"],['ྲྀ','ྲཱྀ', 'ླྀ','ླཱྀ']):
-        Strng = Strng.replace(x,y)
-
-    Strng = Strng.replace('་', ' ')
-    Strng = Strng.replace("༔", "།")
-    Strng = Strng.replace("༈", "།")
-
-    Strng = Strng.replace("༺", "(")
-    Strng = Strng.replace("༻", ")")
-
-    Strng = Strng.replace("༼", "{")
-    Strng = Strng.replace("༽", "}")
-
-    #remove virama from Jihva/Upadh
-    Strng = re.sub('([ྈྉ])(\u0f84)', r'\1',  Strng)
-
-    if swapNative:
-        Strng = Strng.replace('ཇྷ', 'ཛྷ') ## JHA -> DZHA
-        Strng = Strng.replace("ཇ", "ཛ")
-        Strng = Strng.replace('ཅ', 'ཙ')
-        Strng = Strng.replace('ཆ', 'ཚ')
-        Strng = Strng.replace("ཞ", "ཛྷ༹")
-        Strng = Strng.replace("འ", "ཨ")
-
-    return Strng
-
-def FixTibetan(Strng,reverse=False, swapNative = True):
-    return _FixTibetanDecode(Strng, swapNative) if reverse else _FixTibetanEncode(Strng, swapNative)
+# Tibetan's own logic now lives in ScriptProcessing/Tibetan.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Tibetan import _FixTibetanEncode, _FixTibetanDecode, FixTibetan
 
 # Thai, Lao follow visual ordering of Vowels signs ; <e> + k => <e>k
 # Other Indic scripts follow logical order ; k + <e> => <e>k
@@ -1889,21 +1762,10 @@ def _FixMalayalamDecode(Strng):
 def FixMalayalam(Strng, reverse=False):
     return _FixMalayalamDecode(Strng) if reverse else _FixMalayalamEncode(Strng)
 
-def _FixTeluguEncode(Strng):
-    Strng = PostProcess.RetainDandasIndic(Strng, 'Telugu', True)
-    Strng = PostProcess.RetainIndicNumerals(Strng, 'Telugu', True)
-
-    return Strng
-
-def _FixTeluguDecode(Strng):
-    Strng = PostProcess.RetainIndicNumerals(Strng, 'Telugu')
-    Strng = PostProcess.RetainDandasIndic(Strng, 'Telugu')
-    Strng = Strng.replace('ఁ', 'ఀ')
-
-    return Strng
-
-def FixTelugu(Strng, reverse=False):
-    return _FixTeluguDecode(Strng) if reverse else _FixTeluguEncode(Strng)
+# Telugu's own logic now lives in ScriptProcessing/Telugu.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Telugu import _FixTeluguEncode, _FixTeluguDecode, FixTelugu
 
 # MeeteiMayek's own Fix logic now lives in ScriptProcessing/MeeteiMayek.py -
 # consolidated there (batch migration). Re-exported here so
@@ -2001,34 +1863,10 @@ def LaoPaliTranscribe(Strng,reverse=False, anusvaraChange = True):
 
 # Assamese and Bengali have the same mapping file duplicated
 # Replace Bengali /ra/ with Assamese /ra/
-def _FixBengaliEncode(Strng):
-    Virama = ''.join(GM.CrunchSymbols(['ViramaMap'], 'Bengali'))
-    ba = 'ব'
-
-    Strng = re.sub('(?<![রবম])' + Virama + ba,  Virama + '\u200C' + ba, Strng)
-    #print(Strng)
-    ## Fix স্ভ়ারা  -> স্বারা ; subjoined ba is by default pronounced as /va/ in Bengali
-    Strng = re.sub('(?<![রবমভ়])' + '(\u09CD\u09AD\u09BC)', '\u09CD\u09AC', Strng)
-    #print(Strng)
-
-    Strng = PostProcess.KhandaTa(Strng, 'Bengali', False)
-    #print(Strng)
-
-    return Strng
-
-def _FixBengaliDecode(Strng):
-    Virama = ''.join(GM.CrunchSymbols(['ViramaMap'], 'Bengali'))
-    ba = 'ব'
-
-    pass
-
-    Strng = PostProcess.KhandaTa(Strng, 'Bengali', True)
-    #print(Strng)
-
-    return Strng
-
-def FixBengali(Strng, reverse=False):
-    return _FixBengaliDecode(Strng) if reverse else _FixBengaliEncode(Strng)
+# Bengali's own logic now lives in ScriptProcessing/Bengali.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Bengali import _FixBengaliEncode, _FixBengaliDecode, FixBengali
 
 # Assamese's own Fix logic now lives in ScriptProcessing/Assamese.py -
 # consolidated there (batch migration). Re-exported here so
@@ -2087,58 +1925,10 @@ from .ScriptProcessing.Multani import _FixMultaniEncode, _FixMultaniDecode, FixM
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Gujarati import _FixGujaratiEncode, _FixGujaratiDecode, FixGujarati
 
-def _FixZanabazarSquareEncode(Strng):
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ZanabazarSquare'))
-    yrlv = ZanabazarSquare.ConsonantMap[25:29]
-    yrlv_sub = ['\U00011A3B', '\U00011A3C', '\U00011A3D', '\U00011A3E']
-
-    vir = ZanabazarSquare.ViramaMap[0]
-
-    Strng = re.sub(vir+'('+ListC+')','\U00011A47'+r'\1',Strng)
-    # KSSA
-    Strng = Strng.replace('𑨋𑩇𑨯','𑨲')
-
-    return Strng
-
-def _FixZanabazarSquareDecode(Strng):
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ZanabazarSquare'))
-    yrlv = ZanabazarSquare.ConsonantMap[25:29]
-    yrlv_sub = ['\U00011A3B', '\U00011A3C', '\U00011A3D', '\U00011A3E']
-
-    vir = ZanabazarSquare.ViramaMap[0]
-
-    Strng = Strng.replace('\U00011A41', ' ')
-
-    tsaSeries = ['𑨣', '𑨤', '𑨥']
-    caSeries = ['𑨐','𑨑','𑨒']
-
-    for x, y in zip(tsaSeries,caSeries):
-        Strng = Strng.replace(y, x)
-
-    # subjoining contextual y/r/l/v
-    for x, y in zip(yrlv, yrlv_sub):
-        Strng = Strng.replace(y, '\U00011A47' + x)
-
-    # Repha
-    Strng = Strng.replace('\U00011A3A', yrlv[1] + '\U00011A47')
-
-    # KSSA
-    Strng = Strng.replace('𑨲', '𑨋𑩇𑨯')
-
-    # Alternate ai/au
-    Strng = Strng.replace('\U00011A07', '\U00011A04\U00011A0A')
-    Strng = Strng.replace('\U00011A08', '\U00011A06\U00011A0A')
-
-    # Mongolian final -> Virama
-    Strng = Strng.replace('\U00011A33', vir)
-
-    # Subojin to Normal vir
-    Strng = Strng.replace('\U00011A47', vir)
-
-    return Strng
-
-def FixZanabazarSquare(Strng, reverse=False):
-    return _FixZanabazarSquareDecode(Strng) if reverse else _FixZanabazarSquareEncode(Strng)
+# ZanabazarSquare's own logic now lives in ScriptProcessing/ZanabazarSquare.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.ZanabazarSquare import _FixZanabazarSquareEncode, _FixZanabazarSquareDecode, FixZanabazarSquare
 
 # Khojki's own logic now lives in ScriptProcessing/Khojki.py -
 # consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s

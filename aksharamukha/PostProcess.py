@@ -89,22 +89,10 @@ def ShowSchwaHindi(Strng):
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Kannada import KannadaSpacingCandrabindu, KannadaNotRepha, KannadaNakaraPollu
 
-def TeluguRemoveNukta(Strng):
-    Strng = Strng.replace('\u0C3C', '')
-
-    return Strng
-
-def TeluguRemoveAeAo(Strng):
-    Strng = Strng.replace('\u0952\u200B', '')
-
-    return Strng
-
-def TeluguNakaraPollu(Strng):
-    ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Telugu')) + ")"
-
-    Strng = re.sub('(?<!\u0C4D)న్(?!' + ListC + ')', '\u0C5D', Strng)
-
-    return Strng
+# Telugu's own logic now lives in ScriptProcessing/Telugu.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Telugu import TeluguRemoveNukta, TeluguRemoveAeAo, TeluguNakaraPollu, TeluguTamilZha, TeluguTamilRra, TeluguReph, TeluguArasunnaChandrabindu
 
 #testcase todo
 def syriacVowelsBelow(Strng):
@@ -199,10 +187,10 @@ def inherentAO(Strng):
 
     return Strng
 
-def BengaliOldRA(Strng):
-    Strng = Strng.replace('র', 'ৰ')
-
-    return Strng
+# Bengali's own logic now lives in ScriptProcessing/Bengali.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Bengali import BengaliOldRA, BengaliConjunctVB, khandatabatova, BengaliRaBa, BengaliIntervocalicDDA
 
 #testcase todo
 def PersianDMGTarget(Strng):
@@ -1067,17 +1055,6 @@ from .ScriptProcessing.Tamil import (TamilNaToNNa, TamilpredictDentaNa, Contextu
     FinalNNa, TamilAddFirstVarga, TamilDisableSHA, TamilGranthaVisarga, TamilOmDisable,
     TamilRemoveApostrophe, TamilRemoveNumbers, TamilSubScript, oldtamilortho)
 
-def TeluguTamilZha(Strng):
-
-    return Strng
-
-def TeluguTamilRra(Strng):
-    Strng = Strng.replace('ఱ్ఱ', 'ౘ్ౘ')
-    Strng = Strng.replace('ట్ర', 'ౘ్ౘ')
-    Strng = Strng.replace('ండ్ర','న్ఱ')
-
-    return Strng
-
 def ThaiNativeConsonants(Strng):
     Strng = Strng.replace('ท', 'ด')
     Strng = Strng.replace('พ', 'บ')
@@ -1147,53 +1124,16 @@ from .ScriptProcessing.Takri import TakriArchaicKha_post as TakriArchaicKha, Tak
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Mongolian import MongolianSyllabize
 
-def TibetanSyllabize(Strng):
-    vowels = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'Tibetan')) + ')'
-    consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Tibetan')+['ཨ','ཅ','ཆ','ཇ','ཇྷ']) + ')'
-    vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Tibetan')+['\u0F80']) + ')'
-    combiningSigns = '(' + '|'.join(GM.CrunchSymbols(GM.CombiningSigns, 'Tibetan')+['\u0F82']) + ')'
-    ListSubC = '(' + '|'.join([chr(x+80) for x in range(0x0F40,0x0F68)] + ['ྻ','ྺ','ྼ']) + ')' # Subjoined Consonants
+# Tibetan's own logic now lives in ScriptProcessing/Tibetan.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Tibetan import TibetanSyllabize, TibetanSanskritPalatals, tibetandbumed, TibetanNada, TibetanTsheg, TibetanRemoveVirama, TibetanRemoveBa
 
-    Strng = re.sub(vowelsigns + combiningSigns + '?', r'\1\2་', Strng)
-    Strng = re.sub(consonants , r'\1་', Strng)
-    Strng = re.sub(ListSubC, r'\1་', Strng)
-    Strng = re.sub('་' + vowelsigns, r'\1', Strng)
-    Strng = re.sub('་' + ListSubC, r'\1', Strng)
-    Strng = re.sub('་' + combiningSigns, r'\1', Strng)
-    Strng = re.sub(combiningSigns, r'\1་', Strng)
+# Soyombo's own logic now lives in ScriptProcessing/Soyombo.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Soyombo import SoyomboSyllabize, SoyomboSanskritPalatals, SoyomboFinals, SoyomboInitials, SoyomboSpaceTscheg
 
-    Strng = Strng.replace('་་', '་')
-
-    return Strng
-
-def SoyomboSyllabize(Strng):
-    vowels = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'Soyombo')) + ')'
-    consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Soyombo')+['𑩐', '\U00011A83']) + ')'
-    vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Soyombo')) + ')'
-    combiningSigns = '(' + '|'.join(GM.CrunchSymbols(GM.CombiningSigns, 'Soyombo')) + ')'
-
-    fin = '(' + '|'.join(['\U00011A8A','\U00011A8B','\U00011A8C','\U00011A8D','\U00011A8E','\U00011A8F','\U00011A90','\U00011A91','\U00011A92','\U00011A93','\U00011A94']) + ')'
-
-    Strng = re.sub(vowelsigns + combiningSigns + '?', r'\1\2 ', Strng)
-    Strng = re.sub(consonants , r'\1 ', Strng)
-    Strng = re.sub(' ' + vowelsigns, r'\1', Strng)
-    Strng = re.sub(' ' + combiningSigns, r'\1', Strng)
-    Strng = re.sub('\U00011A99' + ' ', '\U00011A99', Strng)
-    Strng = re.sub(combiningSigns, r'\1 ', Strng)
-    Strng = re.sub(' 𑪘', '\U00011A98', Strng)
-    Strng = re.sub(fin, r'\1 ', Strng)
-    Strng = re.sub('( )' + fin, r'\2 ', Strng)
-    #Strng = re.sub(combiningSigns, r'\1་', Strng)
-
-    return Strng
-
-
-def TeluguReph(Strng):
-    consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Telugu')) + ')'
-    Strng = re.sub('ర్' + consonants, 'ర్‍' + r'\1', Strng)
-    Strng = Strng.replace('\u0C4Dర్‍', '\u0C4Dర్')
-
-    return Strng
 
 # PhagsPa's own logic now lives in ScriptProcessing/PhagsPa.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
@@ -1205,66 +1145,16 @@ from .ScriptProcessing.PhagsPa import PhagsPaTib, PhagsPaSeal
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.RomanReadable import RomanReadableLongEO
 
-def TeluguArasunnaChandrabindu(Strng):
-    Strng = Strng.replace('ఀ', 'ఁ')
-
-    return Strng
-
 # Marchen's own logic now lives in ScriptProcessing/Marchen.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Marchen import MarchenSanskritPalatals
 
 
-def SoyomboSanskritPalatals(Strng):
-    tsaSeries = ['𑩵','𑩶','𑩷']
-    caSeries = ['𑩡','𑩢','𑩣']
-
-    for x, y in zip(tsaSeries,caSeries):
-        Strng = Strng.replace(x, y)
-
-    return Strng
-
-def TibetanSanskritPalatals(Strng):
-    caSeries = ['ཅ','ཆ','ཇ','ཇྷ']
-    tsaSeries = ['ཙ','ཚ','ཛ','ཛྷ']
-
-    for x, y in zip(tsaSeries,caSeries):
-        Strng = Strng.replace(x, y)
-
-    return Strng
-
-def ZanabazarSanskritPalatals(Strng):
-    tsaSeries = ['𑨣', '𑨤', '𑨥']
-    caSeries = ['𑨐','𑨑','𑨒']
-
-    for x, y in zip(tsaSeries,caSeries):
-        Strng = Strng.replace(x, y)
-
-    return Strng
-
-def SoyomboFinals(Strng):
-
-    return Strng
-
-def SoyomboInitials(Strng):
-    viraCon = ['\U00011A7C\U00011A99', '\U00011A7D\U00011A99', '\U00011A81\U00011A99']
-    initial = ['\U00011A86', '\U00011A87', '\U00011A89']
-
-    for x, y in zip(viraCon, initial):
-        Strng = Strng.replace(x, y)
-
-    return Strng
-
-def ZanzabarSpaceTsheg(Strng):
-    Strng = Strng.replace(' ', '\U00011A41')
-
-    return Strng
-
-def SoyomboSpaceTscheg(Strng):
-    Strng = Strng.replace(' ', '\U00011A9A')
-
-    return Strng
+# ZanabazarSquare's own logic now lives in ScriptProcessing/ZanabazarSquare.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.ZanabazarSquare import ZanabazarSanskritPalatals, ZanzabarSpaceTsheg, ZanabazarSquareContextual, ZanabazarSquareAiAu, ZanabazarSquareMongolianFinal
 
 def KhandaTaRomanLoC(Strng):
     Strng = Strng.replace('ṯ', 'ৎ')
@@ -1452,9 +1342,6 @@ def TaiThamLao(Strng):
     return Strng
 
 def egrantamil(Strng):
-    return Strng
-
-def tibetandbumed(Strng):
     return Strng
 
 # Newa's own logic now lives in ScriptProcessing/Newa.py -
@@ -1842,46 +1729,6 @@ def ReverseGeminationSign(Strng,Target): #Fix this
 
     return Strng
 
-def BengaliConjunctVB(Strng):
-    ## kva / kba will be rendered the same
-    Strng = Strng.replace('\u09CD\u200C\u09AC', '\u09CD\u09AC')
-    Strng = khandatabatova(Strng)
-
-    return Strng
-
-def khandatabatova(Strng):
-    Strng = Strng.replace('ৎব', 'ত্ব')
-    Strng = Strng.replace('ৎ\u200Cব', 'ত্ব')
-
-    return Strng
-
-def BengaliRaBa(Strng):
-    Strng = Strng.replace('ৰু', 'ৰ‌ু').replace('ৰূ', 'ৰ‌ূ')
-    ## Avoid bba -> rra
-    ## break all ba conjuncts
-    Strng = Strng.replace('\u09CD\u09F0', '\u09CD\u200C\u09F0')
-
-    ## bra/bya bru fix
-    Strng = re.sub('(\u09F0)(\u09CD)([\u09B0\u09AF])', r'\1' + '\u200D' + r'\2\3', Strng)
-    Strng = re.sub('(\u09F0)(\u09CD)', r'\1\2' + '\u200C', Strng)
-
-    ## rba
-    Strng = Strng.replace('র্‌ৰ', 'ৰ্ৰ')
-
-    return Strng
-
-def BengaliIntervocalicDDA(Strng):
-    Target = 'Bengali'
-
-    ListC = '|'.join(GM.CrunchSymbols(GM.Characters, Target)+[GM.CrunchList('SignMap',Target)[0]] + ['ৰ'])
-
-    replacements = [('ড', 'ড়'), ('ঢ', 'ঢ়')]
-
-    for x, y in replacements:
-        Strng = re.sub('('+ListC+')'+ GM.VedicSvaras + x,r'\1\2'+y,Strng)
-
-    return Strng
-
 def KhandaTa(Strng,Target, reverse=False): #Check for Bhakt - Khanda Ta not formed
 
     ta = GM.CrunchSymbols(GM.Consonants, Target)[15]
@@ -2203,30 +2050,6 @@ def IASTPali(Strng):
 
 def UrduAlternateUU(Strng):
     Strng = Strng.replace("\\u064F\\u0648","\u0648\u0657")
-
-    return Strng
-
-def TibetanNada(Strng):
-    Strng = Strng.replace('\u0F83','\u0F82')
-
-    return Strng
-
-def TibetanTsheg(Strng):
-    Strng = Strng.replace('\u0F0B', ' ')
-
-    return Strng
-
-def TibetanRemoveVirama(Strng):
-    Strng = Strng.replace(Tibetan.ViramaMap[0],'')
-
-    return Strng
-
-def TibetanRemoveBa(Strng):
-    Strng = VaToBa(Strng,'Tibetan')
-
-    Strng = Strng.replace('ཪྺ', 'རྦ')
-    Strng = Strng.replace('བྺ', 'བྦ')
-    Strng = Strng.replace('ྦྺ', 'ྦྦ')
 
     return Strng
 
@@ -2651,28 +2474,6 @@ def IPARemoveCross(Strng):
 
 # not used
 def ChakmaAVowels(Strng):
-
-    return Strng
-
-def ZanabazarSquareContextual(Strng):
-    yrlv = ZanabazarSquare.ConsonantMap[25:29]
-    yrlv_sub = ['\U00011A3B', '\U00011A3C', '\U00011A3D', '\U00011A3E']
-
-    for x, y in zip(yrlv, yrlv_sub):
-        Strng = Strng.replace('\U00011A47' + x, y)
-    # Repha
-    Strng = re.sub('(?<!\U00011A47)' + yrlv[1] + '\U00011A47', '\U00011A3A', Strng)
-
-    return Strng
-
-def ZanabazarSquareAiAu(Strng):
-    Strng = Strng.replace('\U00011A04\U00011A0A', '\U00011A07')
-    Strng = Strng.replace('\U00011A06\U00011A0A', '\U00011A08')
-
-    return Strng
-
-def ZanabazarSquareMongolianFinal(Strng):
-    Strng = Strng.replace(ZanabazarSquare.ViramaMap[0], '\U00011A33')
 
     return Strng
 
