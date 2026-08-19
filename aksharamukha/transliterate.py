@@ -495,14 +495,15 @@ def _apply_target_renaming_postoptions(src, tgt, txt, preoptions, postoptions, n
 def _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativize, ctx):
     # Thai/Lao "short vowels not shown" transcription mode - previously
     # signalled by splicing a private-use marker into txt itself and having
-    # ConvertFix.FixThai/FixLaoPali check for it; now a real parameter
-    # threaded through Convert.convertScript instead. Four preoptions feed
+    # ConvertFix.FixThai/FixLaoPali check for it; now lives on ctx instead,
+    # read by whichever Fix* function declares it wants ctx (no more
+    # separate parameter threaded alongside ctx). Four preoptions feed
     # this same mode (verified by exhaustive grep, not just the two most
     # obviously-named ones - ThaiOrthography/LaoTranscription looked like
     # they might be unrelated but turned out to inject the identical
     # marker for the identical consumer).
-    transcription_mode = ('ThaiPhonetic' in preoptions or 'LaoPhonetic' in preoptions
-                           or 'ThaiOrthography' in preoptions or 'LaoTranscription' in preoptions)
+    ctx.transcription_mode = ('ThaiPhonetic' in preoptions or 'LaoPhonetic' in preoptions
+                               or 'ThaiOrthography' in preoptions or 'LaoTranscription' in preoptions)
 
     for options in preoptions:
       txt = Options.call_pre_option(options, txt, ctx=ctx)
@@ -530,19 +531,19 @@ def _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativiz
     if src == "Oriya" and tgt == "IPA":
         txt = ConvertFix.OriyaIPAFixPre(txt)
 
-    return src, tgt, txt, srcOld, transcription_mode
+    return src, tgt, txt, srcOld
 
-def _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, transcription_mode, ctx):
+def _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, ctx):
     if src == "Itrans" and '##' in txt:
         #print('I am here tyring to do things')
         transliteration = ''
         for i, word in enumerate(txt.split("##")):
             if (i%2 == 0):
-                transliteration += Convert.convertScript(word, src, tgt, transcription_mode=transcription_mode, ctx=ctx)
+                transliteration += Convert.convertScript(word, src, tgt, ctx=ctx)
             else:
                 transliteration += word
     else:
-        transliteration = Convert.convertScript(txt, src, tgt, transcription_mode=transcription_mode, ctx=ctx)
+        transliteration = Convert.convertScript(txt, src, tgt, ctx=ctx)
 
     #print(transliteration)
 
@@ -633,9 +634,9 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
     #if src not in GeneralMap.SemiticScripts and tgt == 'Arab' and not nativize:
         #postoptions.append('arabicRemoveAdditionsPhonetic')
 
-    src, tgt, txt, srcOld, transcription_mode = _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativize, ctx)
+    src, tgt, txt, srcOld = _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativize, ctx)
 
-    tgt, transliteration = _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, transcription_mode, ctx)
+    tgt, transliteration = _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, ctx)
 
     '''if src == "Itrans" and '##' in txt:
         textConv = {**dict(list(json.loads(transliteration.replace("\n", "\\n")))), ** dict(textRest)}

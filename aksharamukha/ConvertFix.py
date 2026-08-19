@@ -364,18 +364,23 @@ def FixSemiticOutput(Strng,Source,Target):
 
 # Fixing the Indic Ouput for the standard corrections
 # Indic Fix are mandatory corrections to the immediate ouput.
-def FixIndicOutput(Strng,Source,Target,transcription_mode=False):
+def FixIndicOutput(Strng,Source,Target,ctx=None):
     vir = GM.CrunchList('ViramaMap', Target)[0]
 
     Strng = Strng.replace(vir + '_', vir)
 
     try:
-        # transcription_mode only means anything to FixThai/FixLaoPali;
-        # every other script's Fix* function takes no such argument.
-        if Target in ('Thai', 'LaoPali'):
-            Strng = globals()["Fix"+Target](Strng, transcription_mode=transcription_mode)
+        fn = globals()["Fix"+Target]
+        # ctx passed only to functions that declare it (e.g. FixThai/
+        # FixLaoPali, for transcription_mode) - everything else keeps its
+        # existing (Strng) call unchanged. Mirrors GM.resolve()'s own
+        # ctx-passing rule; can't use resolve() itself here since this
+        # dispatch resolves through globals() (a dict), not a module
+        # object, so there's no getattr() target to hand it.
+        if ctx is not None and GM.accepts_ctx(fn):
+            Strng = fn(Strng, ctx=ctx)
         else:
-            Strng = globals()["Fix"+Target](Strng)
+            Strng = fn(Strng)
     except KeyError:
         pass
         #print #"Fix"+Target+" doesn't exist"
@@ -2387,10 +2392,11 @@ def _FixKhomThaiDecode(Strng):
 def FixKhomThai(Strng, reverse=False):
     return _FixKhomThaiDecode(Strng) if reverse else _FixKhomThaiEncode(Strng)
 
-def FixThai(Strng,reverse=False,transcription_mode=False):
+def FixThai(Strng,reverse=False,ctx=None):
     Strng = ThaiReverseVowelSigns(Strng,reverse)
     Strng = ThaiDigraphConjuncts(Strng,reverse)
 
+    transcription_mode = ctx.transcription_mode if ctx is not None else False
     if transcription_mode:
         Strng = PostProcess.ThaiLaoTranscription(Strng,"Thai", '\u0E30', '\u0E31', True)
 
@@ -2415,9 +2421,10 @@ def ThaiReverseVowelSigns(Strng,reverse=False):
 
     return Strng
 
-def _FixLaoPaliEncode(Strng, transcription_mode):
+def _FixLaoPaliEncode(Strng, ctx):
     Strng = ReverseVowelSigns(Strng,"LaoPali",False)
 
+    transcription_mode = ctx.transcription_mode if ctx is not None else False
     if transcription_mode:
         Strng = LaoPaliTranscribe(Strng, True)
 
@@ -2427,9 +2434,10 @@ def _FixLaoPaliEncode(Strng, transcription_mode):
 
     return Strng
 
-def _FixLaoPaliDecode(Strng, transcription_mode):
+def _FixLaoPaliDecode(Strng, ctx):
     Strng = ReverseVowelSigns(Strng,"LaoPali",True)
 
+    transcription_mode = ctx.transcription_mode if ctx is not None else False
     if transcription_mode:
         Strng = LaoPaliTranscribe(Strng, True)
 
@@ -2440,8 +2448,8 @@ def _FixLaoPaliDecode(Strng, transcription_mode):
 
     return Strng
 
-def FixLaoPali(Strng,reverse=False,transcription_mode=False):
-    return _FixLaoPaliDecode(Strng, transcription_mode) if reverse else _FixLaoPaliEncode(Strng, transcription_mode)
+def FixLaoPali(Strng,reverse=False,ctx=None):
+    return _FixLaoPaliDecode(Strng, ctx) if reverse else _FixLaoPaliEncode(Strng, ctx)
 
 def _FixMakasarEncode(Strng):
     ListC = "|".join(Makasar.ConsonantMap)

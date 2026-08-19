@@ -49,8 +49,12 @@ def CrunchList(List,Script):
     # copy on the way out for the same reason as CrunchSymbols above
     return list(result) if isinstance(result, list) else result
 
+# Public (not module-local) since ConvertFix.FixIndicOutput's own
+# globals()-based dispatch needs this same check and can't go through
+# resolve() below (its "module" is obtained via globals(), a dict, which
+# doesn't support the getattr() resolve() relies on).
 @lru_cache(maxsize=None)
-def _accepts_ctx(fn):
+def accepts_ctx(fn):
     try:
         return 'ctx' in inspect.signature(fn).parameters
     except (TypeError, ValueError):
@@ -76,7 +80,7 @@ def resolve(module, name, txt, *extra, optional=False, ctx=None, **kwargs):
             return txt
     else:
         fn = getattr(module, name)
-    if ctx is not None and _accepts_ctx(fn):
+    if ctx is not None and accepts_ctx(fn):
         kwargs = dict(kwargs, ctx=ctx)
     return fn(txt, *extra, **kwargs)
 

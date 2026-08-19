@@ -48,7 +48,7 @@ def convertInter(Strng,Source):
     return Strng
 
 # Conversion Module
-def convertScript(Strng,Source,Target,transcription_mode=False,ctx=None):
+def convertScript(Strng,Source,Target,ctx=None):
     #print("I am here")
 
     charPairs=[];
@@ -141,7 +141,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False,ctx=None):
         #print(Strng)
 
         # Apply Fixes on the Output based on the Script
-        Strng = CF.FixIndicOutput(Strng, Source, Target, transcription_mode=transcription_mode)
+        Strng = CF.FixIndicOutput(Strng, Source, Target, ctx=ctx)
 
         #print(Strng)
 
@@ -165,11 +165,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False,ctx=None):
         Strng = PrP.RemoveJoiners(Strng)
 
         Strng = CF.ShiftDiacritics(Strng,Source,reverse=True)
-        # transcription_mode only means anything to FixThai/FixLaoPali (the
-        # Thai/Lao "short vowels shown" preoptions) - passing it to every
-        # other script's Fix* function would break their signatures.
-        _extra = {'transcription_mode': transcription_mode} if Source in ('Thai', 'LaoPali') else {}
-        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx,**_extra)
+        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
 
         punc =  '(' + '|'.join(["\u005C"+x for x in list(string.punctuation)]+ ['\s']
                     + [x.replace('.', '\.') for x in GM.CrunchSymbols(GM.Signs,Source)[1:3]]) + ')'
@@ -212,15 +208,14 @@ def convertScript(Strng,Source,Target,transcription_mode=False,ctx=None):
         #Strng = Strng.replace(GM.CrunchList('OmMap', Source)[0],GM.CrunchList('OmMap', Target)[0])
         # Apply Fixes on the Output based on the Script
 
-        Strng = CF.FixIndicOutput(Strng, Source, Target, transcription_mode=transcription_mode)
+        Strng = CF.FixIndicOutput(Strng, Source, Target, ctx=ctx)
 
     elif SR.get(Source).is_indic and SR.get(Target).is_latin:
         #print(Strng)
         Strng = PrP.RemoveJoiners(Strng)
         Strng = CF.ShiftDiacritics(Strng, Source, reverse=True)
         #print(Strng)
-        _extra = {'transcription_mode': transcription_mode} if Source in ('Thai', 'LaoPali') else {}
-        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx,**_extra)
+        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
         #print(Strng)
         sOm, tOm = GM.CrunchList('OmMap', Source)[0],GM.CrunchList('OmMap', Target)[0]
 
