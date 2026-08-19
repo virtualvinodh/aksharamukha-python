@@ -87,5 +87,4 @@ def _FixMonDecode(Strng):
 def FixMon(Strng, reverse=False):
 
     """Dispatches to the Mon encode or decode fix-up routine based on the reverse flag."""
-    from .. import ConvertFix as CF
     return _FixMonDecode(Strng) if reverse else _FixMonEncode(Strng)

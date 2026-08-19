@@ -63,7 +63,5 @@ def _FixGurmukhiLoCDecode(Strng):
 def FixGurmukhiLoC(Strng,reverse=False):
 
     """Dispatches to the Gurmukhi LoC encode or decode fix routine based on the reverse flag."""
-    from .. import ConvertFix as CF
 
-    from .. import PostProcess
     return _FixGurmukhiLoCDecode(Strng) if reverse else _FixGurmukhiLoCEncode(Strng)

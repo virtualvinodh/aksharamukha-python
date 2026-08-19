@@ -64,7 +64,6 @@ def _FixSundaneseDecode(Strng):
 def FixSundanese(Strng,reverse=False):
 
     """Dispatches to the Sundanese encode or decode fix-up routine based on the reverse flag."""
-    from .. import PostProcess
     return _FixSundaneseDecode(Strng) if reverse else _FixSundaneseEncode(Strng)
 
 # ---- Post-processing options ----

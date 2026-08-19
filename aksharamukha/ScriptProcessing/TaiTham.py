@@ -85,5 +85,4 @@ def _FixTaiThamDecode(Strng):
 def FixTaiTham(Strng,reverse=False):
 
     """Dispatches to the Tai Tham encode or decode fix-up routine based on the reverse flag."""
-    from .. import PostProcess
     return _FixTaiThamDecode(Strng) if reverse else _FixTaiThamEncode(Strng)

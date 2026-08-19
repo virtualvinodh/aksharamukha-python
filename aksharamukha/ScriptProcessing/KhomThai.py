@@ -46,5 +46,4 @@ def _FixKhomThaiDecode(Strng):
 def FixKhomThai(Strng, reverse=False):
 
     """Dispatches to the Khom Thai encode or decode fix routine depending on conversion direction."""
-    from .. import ConvertFix as CF
     return _FixKhomThaiDecode(Strng) if reverse else _FixKhomThaiEncode(Strng)

@@ -42,7 +42,6 @@ def _FixTamilExtendedDecode(Strng):
 def FixTamilExtended(Strng, reverse=False):
 
     """Dispatches to the Tamil-Grantha extended encode or decode fix routine depending on conversion direction."""
-    from .. import PostProcess
     return _FixTamilExtendedDecode(Strng) if reverse else _FixTamilExtendedEncode(Strng)
 
 # ---- Post-processing options ----

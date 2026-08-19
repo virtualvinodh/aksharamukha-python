@@ -48,7 +48,6 @@ def _FixBengaliDecode(Strng):
 def FixBengali(Strng, reverse=False):
 
     """Dispatches to the Bengali encode or decode fix routine based on the reverse flag."""
-    from .. import PostProcess
     return _FixBengaliDecode(Strng) if reverse else _FixBengaliEncode(Strng)
 
 # ---- Pre-processing options ----

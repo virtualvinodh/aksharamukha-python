@@ -47,5 +47,4 @@ def _FixMakasarDecode(Strng):
 def FixMakasar(Strng, reverse=False):
 
     """Dispatches to the Makasar encode or decode fix-up routine based on the reverse flag."""
-    from .. import PostProcess
     return _FixMakasarDecode(Strng) if reverse else _FixMakasarEncode(Strng)

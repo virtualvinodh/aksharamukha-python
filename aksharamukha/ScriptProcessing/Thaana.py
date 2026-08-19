@@ -70,5 +70,4 @@ def _FixThaanaDecode(Strng):
 def FixThaana(Strng, reverse=False):
 
     """Dispatches to the Thaana encode or decode fix routine depending on the reverse flag."""
-    from .. import PostProcess
     return _FixThaanaDecode(Strng) if reverse else _FixThaanaEncode(Strng)

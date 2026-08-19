@@ -30,5 +30,4 @@ def _FixBuhidDecode(Strng):
 def FixBuhid(Strng, reverse=False):
 
     """Dispatches to the Buhid encode or decode fix-up routine based on the reverse flag."""
-    from .. import PostProcess
     return _FixBuhidDecode(Strng) if reverse else _FixBuhidEncode(Strng)

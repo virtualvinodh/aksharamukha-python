@@ -65,7 +65,6 @@ def _FixLaoDecode(Strng):
 def FixLao(Strng,reverse=False):
 
     """Dispatches to the Lao encode or decode fix routine depending on the reverse flag."""
-    from .. import ConvertFix as CF
     return _FixLaoDecode(Strng) if reverse else _FixLaoEncode(Strng)
 
 def LaoTranscribe(Strng,reverse=False):

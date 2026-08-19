@@ -55,7 +55,6 @@ def _FixKhojkiDecode(Strng):
 def FixKhojki(Strng, reverse=False):
 
     """Dispatches to the Khojki encode or decode fix routine based on the reverse flag."""
-    from .. import PostProcess
     return _FixKhojkiDecode(Strng) if reverse else _FixKhojkiEncode(Strng)
 
 # ---- Post-processing options ----

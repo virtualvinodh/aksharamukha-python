@@ -100,7 +100,6 @@ def _FixTibetanDecode(Strng, swapNative):
 def FixTibetan(Strng,reverse=False, swapNative = True):
 
     """Dispatches to the Tibetan encode or decode fix routine based on the reverse flag, optionally swapping native Tibetan letter forms."""
-    from .. import PostProcess
     return _FixTibetanDecode(Strng, swapNative) if reverse else _FixTibetanEncode(Strng, swapNative)
 
 # ---- Post-processing options ----

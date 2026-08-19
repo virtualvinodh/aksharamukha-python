@@ -32,5 +32,4 @@ def _FixLimbuLoCDecode(Strng):
 def FixLimbuLoC(Strng, reverse=False):
 
     """Dispatches to the Limbu LoC encode or decode fix routine based on the reverse flag."""
-    from .. import ConvertFix as CF
     return _FixLimbuLoCDecode(Strng) if reverse else _FixLimbuLoCEncode(Strng)

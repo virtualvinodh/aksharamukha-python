@@ -40,5 +40,4 @@ def _FixAssameseDecode(Strng):
 def FixAssamese(Strng,reverse=False):
 
     """Dispatches to the Assamese encode or decode fix routine based on the reverse flag."""
-    from .. import PostProcess
     return _FixAssameseDecode(Strng) if reverse else _FixAssameseEncode(Strng)

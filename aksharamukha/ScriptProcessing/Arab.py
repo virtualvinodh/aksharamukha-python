@@ -36,7 +36,6 @@ def _FixArabDecode(Strng, Source):
 def FixArab(Strng, Source, reverse=False):
 
     """Dispatches to the Arabic encode or decode fix routine depending on conversion direction."""
-    from .. import ConvertFix as CF
     return _FixArabDecode(Strng, Source) if reverse else _FixArabEncode(Strng, Source)
 
 # ---- Pre-processing options ----

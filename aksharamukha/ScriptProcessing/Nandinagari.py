@@ -31,7 +31,6 @@ def _FixNandinagariDecode(Strng):
 def FixNandinagari(Strng, reverse=False):
 
     """Dispatches to the Nandinagari encode or decode fix-up routine based on the reverse flag."""
-    from .. import PostProcess
     return _FixNandinagariDecode(Strng) if reverse else _FixNandinagariEncode(Strng)
 
 # ---- Post-processing options ----

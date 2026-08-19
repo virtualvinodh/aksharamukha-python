@@ -35,7 +35,6 @@ def _FixKannadaDecode(Strng):
 def FixKannada(Strng, reverse=False):
 
     """Dispatches to the Kannada encode or decode fix-up routine based on the reverse flag."""
-    from .. import PostProcess
     return _FixKannadaDecode(Strng) if reverse else _FixKannadaEncode(Strng)
 
 # ---- Post-processing options ----

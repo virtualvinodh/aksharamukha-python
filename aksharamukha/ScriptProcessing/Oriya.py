@@ -32,7 +32,6 @@ def _FixOriyaDecode(Strng):
 def FixOriya(Strng, reverse=False):
 
     """Dispatches to the Oriya encode or decode fix routine based on the reverse flag."""
-    from .. import PostProcess
     return _FixOriyaDecode(Strng) if reverse else _FixOriyaEncode(Strng)
 
 # ---- Pre-processing options ----

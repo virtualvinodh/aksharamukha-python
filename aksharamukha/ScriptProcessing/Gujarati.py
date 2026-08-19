@@ -37,9 +37,7 @@ def _FixGujaratiDecode(Strng):
 def FixGujarati(Strng, reverse=False):
 
     """Dispatches to the Gujarati encode or decode fix routine depending on conversion direction."""
-    from .. import PreProcess as PP
 
-    from .. import PostProcess
     return _FixGujaratiDecode(Strng) if reverse else _FixGujaratiEncode(Strng)
 
 # ---- Pre-processing options ----

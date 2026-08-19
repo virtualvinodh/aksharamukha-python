@@ -40,5 +40,4 @@ def _FixBugineseDecode(Strng):
 def FixBuginese(Strng, reverse=False):
 
     """Dispatches to the Buginese encode or decode fix-up routine based on the reverse flag."""
-    from .. import PostProcess
     return _FixBugineseDecode(Strng) if reverse else _FixBugineseEncode(Strng)

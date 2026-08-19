@@ -70,5 +70,4 @@ def _FixSharadaDecode(Strng):
 def FixSharada(Strng,reverse=False):
 
     """Dispatches to the Sharada encode or decode fix routine based on the reverse flag."""
-    from .. import PostProcess
     return _FixSharadaDecode(Strng) if reverse else _FixSharadaEncode(Strng)

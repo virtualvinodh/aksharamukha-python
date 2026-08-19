@@ -30,5 +30,4 @@ def _FixTagbanwaDecode(Strng):
 def FixTagbanwa(Strng, reverse=False):
 
     """Dispatches to the Tagbanwa encode or decode fix routine based on the reverse flag."""
-    from .. import PostProcess
     return _FixTagbanwaDecode(Strng) if reverse else _FixTagbanwaEncode(Strng)
