@@ -384,13 +384,13 @@ NAME_TABLES = {
 
 def _resolve_base_index(charlist, base):
     # base is normally an HK-style name (str) resolved against this
-    # category's own canonical order. A handful of FallBack.py entries still
-    # carry a raw int - either -1 (no base character) or, in one known case
-    # (VowelPairs['Thamclosedau']'s dependent form), an index past the
-    # canonical range that's always meant a previously-synthesized fallback
-    # character at that position in whichever script requests it - existing,
-    # order-dependent behavior predating this naming scheme, left as-is
-    # rather than silently reinterpreted.
+    # category's own canonical order. None (no base character) is handled by
+    # the caller before this is even reached. One FallBack.py entry
+    # (VowelPairs['Thamclosedau']'s dependent form) still carries a raw int
+    # past the canonical range - it's always meant a previously-synthesized
+    # fallback character at that position in whichever script requests it,
+    # existing order-dependent behavior predating this naming scheme, left
+    # as-is rather than silently reinterpreted.
     if isinstance(base, str):
         return NAME_TABLES[charlist].index(base)
     return base
@@ -428,7 +428,7 @@ def add_additional_chars(script_char_map, file_script):
                     spec = mapping.get(mapchar, mapping.get('Others'))
 
                     base_raw = spec[0]
-                    if base_raw == -1:
+                    if base_raw is None:
                          first_char = ''
                     else:
                          base_index = _resolve_base_index(charlist, base_raw)
@@ -442,10 +442,9 @@ def add_additional_chars(script_char_map, file_script):
                          first_char = script_char_map[charlist][base_index]
 
                     if len(spec) > 1:
-                        # 'nukta' is a sentinel value, not a literal suffix - checked by
-                        # position (not `in`, which would also match if it ever appeared
-                        # as the base index instead of the suffix).
-                        if spec[1] == 'nukta':
+                        # fb.NUKTA is a sentinel object, not a literal suffix - checked
+                        # by identity, so no real suffix string could ever collide with it.
+                        if spec[1] is fb.NUKTA:
                             second_char = ModScript.NuktaMap[0]
                         else:
                             second_char = spec[1]

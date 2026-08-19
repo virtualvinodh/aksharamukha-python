@@ -1,7 +1,7 @@
-# -1 means don't use internal mapping - just use the replacement character.
-# 'nukta' as a suffix (in position 1, never as the base index) means combine
-# the base character with that script's own nukta sign instead of a literal
-# suffix string.
+# A base index of None means don't use internal mapping - just use the
+# replacement character. NUKTA as a suffix (in position 1, never as the base
+# index) means combine the base character with that script's own nukta sign
+# instead of a literal suffix string.
 #
 ## OthersRev/OthersNonRev/Others: [base, suffix] - synthesizes a fallback
 ## character for any script with no explicit mapping of its own, by
@@ -37,6 +37,7 @@
 ThamFamily = ('ThamLoC', 'LaoTham', 'LueTham', 'TaiTham', 'KhuenTham')
 ShanPair = ('ShanLoC', 'Shan')
 IsoIast = ('IAST', 'ISO')
+NUKTA = object()  # sentinel for the suffix position; see comment above
 
 # VowelPairs holds each vowel's independent form (used when the vowel
 # starts a syllable) paired with its dependent/sign form (used after a
@@ -309,7 +310,7 @@ VowelPairs = {
         'dependent': {
             'KhmerLoC': 'ឿ',
             'KhmerLoCRomanLoC': 'ẏa',
-            'Others': [-1, '˂'],
+            'Others': [None, '˂'],
         },
     },
     'Khmeria': {
@@ -321,7 +322,7 @@ VowelPairs = {
         'dependent': {
             'KhmerLoC': 'ៀ',
             'KhmerLoCRomanLoC': 'ia',
-            'Others': [-1, '˂'],
+            'Others': [None, '˂'],
         },
     },
     'Khmershortaa': {
@@ -345,7 +346,7 @@ VowelPairs = {
         'dependent': {
             ThamFamily: 'ᩢ',
             'ThamLoCRomanLoC': 'aʽ',
-            'Others': [-1, '˂'],
+            'Others': [None, '˂'],
         },
     },
     'Thamclosede': {
@@ -593,7 +594,7 @@ ConsonantMap = {
     'theta': {
         ShanPair: 'ႀ',
         'ShanLoCRomanLoC': 'x',
-        'Others': ['t', 'nukta'],
+        'Others': ['t', NUKTA],
     },
     'khmernga': {
         'KhmerLoC': 'ង៉',
@@ -666,23 +667,23 @@ SignMap = {
     'shanexcl': {
         ShanPair: '႟',
         'ShanLoCRomanLoC': 'u*',
-        'OthersRev': [-1, '!˂˂˂˂˂'],
-        'OthersNonRev': [-1, '!˂˂˂˂'],
+        'OthersRev': [None, '!˂˂˂˂˂'],
+        'OthersNonRev': [None, '!˂˂˂˂'],
     },
     'shanone': {
         ShanPair: '႞',
         'ShanLoCRomanLoC': 'n*',
-        'Others': [-1, '!!˂'],
+        'Others': [None, '!!˂'],
     },
     'Khmerdivider': {
         'KhmerLoC': '៖',
         'KhmerLoCRomanLoC': ':',
-        'Others': [-1, '!!!˂'],
+        'Others': [None, '!!!˂'],
     },
     'Thamlae': {
         'ThamLoC': 'ᩓ',
         'ThamLoCRomanLoC': 'læ',
-        'Others': [-1, '!!!˂'],
+        'Others': [None, '!!!˂'],
     },
 }
 
@@ -714,76 +715,76 @@ AyogavahaMap = {
     'shantone2': {
         ShanPair: 'ႇ',
         'ShanLoCRomanLoC': '̢',
-        'Others': [-1, '˂'],
+        'Others': [None, '˂'],
     },
     'shantone3': {
         ShanPair: 'ႈ',
         'ShanLoCRomanLoC': '̐',
-        'Others': [-1, '˂˂'],
+        'Others': [None, '˂˂'],
     },
     'shantone5': {
         ShanPair: 'ႉ',
         'ShanLoCRomanLoC': 'ʹ',
-        'Others': [-1, '˂˂˂'],
+        'Others': [None, '˂˂˂'],
     },
     'shantone6': {
         ShanPair: 'ႊ',
         'ShanLoCRomanLoC': '˝',
-        'Others': [-1, '˂˂˂˂'],
+        'Others': [None, '˂˂˂˂'],
     },
     'KhmerTone3': {
         'KhmerLoC': '៍',
         'KhmerLoCRomanLoC': '˚',
-        'Others': [-1, '˂˂˂'],
+        'Others': [None, '˂˂˂'],
     },
     'KhmerTone4': {
         'KhmerLoC': '៎',
         'KhmerLoCRomanLoC': '’',
-        'Others': [-1, '˂˂˂'],
+        'Others': [None, '˂˂˂'],
     },
     'KhmerTone5': {
         'KhmerLoC': '៏',
         'KhmerLoCRomanLoC': 'ʻ',
-        'Others': [-1, '˂˂˂'],
+        'Others': [None, '˂˂˂'],
     },
     'Khmerbreve': {
         'KhmerLoC': '័',
         'KhmerLoCRomanLoC': '̆',
-        'Others': [-1, '˂'],
+        'Others': [None, '˂'],
     },
     'Khmervisarga2': {
         'KhmerLoC': 'ៈ',
         'KhmerLoCRomanLoC': '̀',
-        'Others': [-1, '˂'],
+        'Others': [None, '˂'],
     },
     'Khmershortener': {
         'KhmerLoC': '់',
         'KhmerLoCRomanLoC': '́',
-        'Others': [-1, '˂'],
+        'Others': [None, '˂'],
     },
     'ThamTone1': {
         ThamFamily: '᩵',
         'ThamLoCRomanLoC': '′',
-        'Others': [-1, '˂˂˂˂˂'],
+        'Others': [None, '˂˂˂˂˂'],
     },
     'ThamTone2': {
         ThamFamily: '᩶',
         'ThamLoCRomanLoC': '″',
-        'Others': [-1, '˂˂˂˂˂'],
+        'Others': [None, '˂˂˂˂˂'],
     },
     'ThamTone3': {
         ThamFamily: '᩷',
         'ThamLoCRomanLoC': 'ˆ',
-        'Others': [-1, '˂˂˂˂˂'],
+        'Others': [None, '˂˂˂˂˂'],
     },
     'ThamTone4': {
         ThamFamily: '᩸',
         'ThamLoCRomanLoC': 'ᴶ',
-        'Others': [-1, '˂˂˂˂˂'],
+        'Others': [None, '˂˂˂˂˂'],
     },
     'ThamTone5': {
         ThamFamily: '᩹',
         'ThamLoCRomanLoC': 'ʵ',
-        'Others': [-1, '˂˂˂˂˂'],
+        'Others': [None, '˂˂˂˂˂'],
     },
 }
