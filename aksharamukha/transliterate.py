@@ -505,6 +505,12 @@ def _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativiz
     ctx.transcription_mode = ('ThaiPhonetic' in preoptions or 'LaoPhonetic' in preoptions
                                or 'ThaiOrthography' in preoptions or 'LaoTranscription' in preoptions)
 
+    # src/tgt as they stand right before preoptions run - see Context.py's
+    # comment on why this is set fresh here rather than once for the whole
+    # convert() call.
+    ctx.src = src
+    ctx.tgt = tgt
+
     for options in preoptions:
       txt = Options.call_pre_option(options, txt, ctx=ctx)
 
@@ -558,6 +564,12 @@ def _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, ctx):
     return tgt, transliteration
 
 def _apply_final_postprocessing(src, tgt, txt, transliteration, nativize, preoptions, postoptions, ctx):
+    # src/tgt as they stand for postoptions - re-set here rather than
+    # trusting whatever _prepare_for_core_conversion set, since
+    # _run_core_conversion can rename tgt (tgtOld restoration) in between.
+    ctx.src = src
+    ctx.tgt = tgt
+
     ## apply phonetic mapping for Arabic beforehand if not semitic source
     if (not SR.get(src).is_semitic and tgt == 'Arab' and nativize) or 'arabicRemoveAdditionsPhonetic' in postoptions:
         transliteration = Options.call_post_option('arabicRemoveAdditionsPhonetic', transliteration, ctx=ctx)

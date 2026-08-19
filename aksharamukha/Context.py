@@ -25,3 +25,16 @@ class ConversionContext:
     # only hands ctx to functions that ask for it, making the hardcoded
     # script-name lists unnecessary.
     transcription_mode: bool = False
+    # The source/target script names in effect at the point a pre/post-option
+    # actually runs - not necessarily the names the caller originally passed
+    # to transliterate.process(), since earlier pipeline stages (LoC/semitic
+    # pivoting, Japanese ISO substitution, tgtOld restoration) can rename
+    # src/tgt before preoptions run and again before postoptions run. Set
+    # fresh at the top of each of those two stages rather than once, since
+    # the two loops can legitimately see different values. Lets any pre/
+    # postoption declare ctx and read ctx.src/ctx.tgt instead of needing a
+    # hardcoded extra-args table (PostOptions.ApplyScriptDefaults already
+    # does this ad hoc by passing Target as a positional arg; this
+    # generalizes it to any option, not just the nativize default bundle).
+    src: str = ''
+    tgt: str = ''
