@@ -344,14 +344,10 @@ def removeSemiticLetters(Strng):
     return Strng
 
 #testcase todo
-def removeNikkud(Strng):
-    nikkuds = ["\u05B7","\u05B8","\u05B4","\u05B4י","\u05BB", "\u05C2", "\u05C1",\
-    "\u05B6","\u05B5","\u05B9","וֹ","\u05B1","\u05B2","\u05B3","\u05BC","\u05B0", "\u05C7"]
-
-    for nikkud in nikkuds:
-        Strng = Strng.replace(nikkud, '')
-
-    return Strng
+# Hebrew's own logic now lives in ScriptProcessing/Hebrew.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Hebrew import removeNikkud, HebrewVetVav, HeberewQoph, HebewShortO, HebrewnonFinalShort
 
 #testcase todo
 def LatnInitialVowels(Strng, initLetter=''):
@@ -921,17 +917,6 @@ def urduRemoveInherent(Strng):
     return Strng
 
 #todo testcase
-def HebrewVetVav(Strng):
-    shortVowels = '(' + '|'.join(['\u05B7', '\u05B8', '\u05B4', '\u05BB', '\u05B5', '\u05B6', '\u05B9', '\u05B0']) + ')'
-
-    Strng = re.sub(shortVowels + '(' + 'ו' + ')' + '(?!\u05BC)', r'\1' + 'ב', Strng)
-
-    # Bet with Holam for Vav with beth with holam
-
-    Strng = Strng.replace('בֺ', 'בֹ')
-
-    return Strng
-
 def devanagariuttara(Strng):
 
     return Strng
@@ -958,17 +943,7 @@ def IASTISONasalTilde(Strng):
     return Strng
 
 #todo testcase
-def HeberewQoph(Strng):
-    Strng = Strng.replace('כּ', 'ק').replace('ךּ', 'ק')
-
-    return Strng
-
 #todo testcase
-def HebewShortO(Strng):
-    Strng = re.sub('(?<!ו)\u05B9', '\u05C7', Strng)
-
-    return Strng
-
 #todo testcase
 def HebrewKatevMalei(Strng):
     Strng = Strng.replace('ָ', 'א') # long aa
@@ -977,37 +952,6 @@ def HebrewKatevMalei(Strng):
     return Strng
 
 #todo testcase
-def HebrewnonFinalShort(Strng):
-    finals = ['ך', 'ם', 'ן', 'ף', 'ץ', 'ףּ', 'ךּ']
-    finalCons = ['כ', 'מ', 'נ', 'פ', 'צ', 'פּ', 'כּ']
-
-    otherCons = 'ב,ח,ע,צ,ש,ת'.split(',')
-    consonantsAll = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Hebrew') + finals  + ['׳', 'י', 'ו'] + otherCons) + ')'
-
-    shortVowels = ['\u05B7', '\u05B8', '\u05B4', '\u05BB', '\u05B5', '\u05B6', '\u05B9', '\u05C7']
-    shortVowelsR = '(' + '|'.join(['\u05B7', '\u05B8', '\u05B4', '\u05BB', '\u05B5', '\u05B6', '\u05B9', '\u05C7'] + ['׳']) + ')'
-
-    for s in shortVowels:
-        Strng = re.sub('(' + s + ')' + '(׳?)' + '(?!' + consonantsAll + ')', r'\1\2' + 'ה' + '\u02BE', Strng )
-
-    for f, c in zip(finals, finalCons):
-        Strng = re.sub('(' + f + ')' + shortVowelsR + '(׳?)' + 'ה' + '\u02BE', c + r'\2\3' + 'ה', Strng)
-
-    for f in finals:
-        Strng = Strng.replace(f + '\u05B0', f)
-
-    Strng = Strng.replace('\u05B0' + '׳' + 'ה' + '\u02BE', '\u05B0' + '׳' )
-    Strng = Strng.replace('וֹה' + '\u02BE', 'וֹ' )
-
-    Strng = Strng.replace('\u02BE', '')
-
-    uVowels = ['וֹ', 'וּ']
-
-    #for s in uVowels:
-        #Strng = re.sub('(' + s + ')' + '(׳?)' + '(?!' + consonantsAll + ')', r'\1\2' + 'א', Strng )
-
-    return Strng
-
 def DevanagariAnusvara(Strng):
 
     return NasalToAnusvara(Strng, 'Devanagari')

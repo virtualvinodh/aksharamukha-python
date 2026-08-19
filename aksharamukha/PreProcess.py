@@ -750,34 +750,10 @@ def JapanesePreProcess(src, txt, preoptions):
         txt = _japanese_normalize_romanization(txt, preoptions)
 
     return txt
-def holamlong(Strng):
-    Strng = Strng.replace('ֹּ','ֹּ')
-    Strng = re.sub('(?<!ו)ֹ', 'וֹ', Strng)
-
-    return Strng
-
-def novowelshebrewIndic(Strng):
-    Strng = novowelshebrewSemitic(Strng)
-
-    finals = ['ך', 'ם', 'ן', 'ף', 'ץ', 'ףּ', 'ךּ']
-    otherCons = 'ב,ח,ע,צ,ש,ת'.split(',')
-    consonantsAll = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Hebrew') + finals  + otherCons + ['׳', 'י', 'ו' ,'א']) + ')'
-    vowelsignsADShinG = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['ַ', 'ּ', 'ׁ', '׳']) + ')'
-
-    Strng = re.sub(consonantsAll + "(?!" + vowelsignsADShinG + ')', r'\1' + 'ַ' + r'\2', Strng)
-
-    return Strng
-
-def novowelshebrewSemitic(Strng):
-    Strng = Strng.replace('כ', 'כּ').replace('פ', 'פּ').replace( 'ב', 'בּ')
-    Strng = Strng.replace('ך', 'ךּ').replace('ף','ףּ')
-
-    return Strng
-
-def shvanakhall(Strng):
-    Strng = Strng + ' \u0BDE'
-
-    return Strng
+# Hebrew's own logic now lives in ScriptProcessing/Hebrew.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Hebrew import holamlong, novowelshebrewIndic, novowelshebrewSemitic, shvanakhall
 
 # ISO's own logic now lives in ScriptProcessing/ISO.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
