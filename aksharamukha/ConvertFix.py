@@ -1191,65 +1191,9 @@ from .ScriptProcessing.LimbuLoC import _FixLimbuLoCEncode, _FixLimbuLoCDecode, F
 from .ScriptProcessing.Limbu import _FixLimbuEncode, _FixLimbuDecode, FixLimbu
 
 
-def _FixDevanagariEncode(Strng):
-    Sindhi = ['ॻ','ॼ','ॾ','ॿ']
-    SindhiApprox = ['ˍग','ˍज','ˍड','ˍब']
-    Strng = Strng.replace('ʔ', 'ॽ')
-
-    for x, y in zip(Sindhi, SindhiApprox):
-        Strng = Strng.replace(y, x)
-
-    Strng = Strng.replace('ज़़','ॹ')
-    Strng = Strng.replace('श़','ॹ')
-    Strng = Strng.replace('ऱ्', 'ऱ्‌') ## Prevent RRA from forming conjuncts
-
-    ## Except for YA and HA
-    Strng = Strng.replace('ऱ्‌य', 'ऱ्य')
-    Strng = Strng.replace('ऱ्‌ह', 'ऱ्ह')
-
-    # Kashmiri ux, uux
-
-    #Strng = Strng.replace('उʼ', 'ॶ').replace('ऊʼ', 'ॷ').replace('ुʼ', 'ॖ').replace('ूʼ','ॗ')
-
-    # Kashmir oe oe
-
-    #Strng = Strng.replace('अʼ', 'ॳ').replace('आʼ', 'ॴ')
-
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Devanagari'))
-
-    Strng = re.sub('(' + ListC + ')' + 'ʼ', r'\1' + '\u093A', Strng)
-    Strng = Strng.replace('\u093Eʼ','\u093B')
-
-
-
-
-
-    return Strng
-
-def _FixDevanagariDecode(Strng):
-    Sindhi = ['ॻ','ॼ','ॾ','ॿ']
-    SindhiApprox = ['ˍग','ˍज','ˍड','ˍब']
-    # remove schwa accent
-    Strng = Strng.replace('\u0954', '')
-
-    Strng = PostProcess.DevanagariPrishtamatra(Strng, reverse=True)
-    Strng = Strng.replace('ॽ', 'ʔ')
-    Strng = Strng.replace('ॹ', 'ज़़')
-
-    for x, y in zip(Sindhi, SindhiApprox):
-        Strng = Strng.replace(x, y)
-
-    # Kashmiri ux, uux
-    #Strng = Strng.replace('ॶ', 'उʼ').replace('ॷ', 'ऊʼ').replace('ॖ', 'ुʼ').replace('ॗ', 'ूʼ')
-
-    # oe
-    #Strng = Strng.replace('ॳ', 'अʼ').replace('ॴ', 'आʼ').replace('\u093B', '\u093Eʼ').replace('\u093A','ʼ')
-
-
-    return Strng
-
-def FixDevanagari(Strng, reverse=False):
-    return _FixDevanagariDecode(Strng) if reverse else _FixDevanagariEncode(Strng)
+# Devanagari's own logic now lives in ScriptProcessing/Devanagari.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Devanagari import _FixDevanagariEncode, _FixDevanagariDecode, FixDevanagari
 
 # Kaithi's own logic now lives in ScriptProcessing/Kaithi.py -
 # consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s

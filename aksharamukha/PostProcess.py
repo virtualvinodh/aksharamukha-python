@@ -79,10 +79,9 @@ def AnusvaraAsN(Strng):
     return Strng
 
 #show Schwa
-def ShowSchwaHindi(Strng):
-    from . import PreProcess as PreP
-    Strng = PreP.RemoveSchwaHindi(Strng, True)
-    return Strng
+# Devanagari's own logic now lives in ScriptProcessing/Devanagari.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Devanagari import ShowSchwaHindi, devanagariuttara, devanagarinepali, devanagaribalbodh, devanagarijain, DevanagariAnusvara, jainomDevangari, DevanagariACandra, DevanagariPrishtamatra
 
 # Kannada's own logic now lives in ScriptProcessing/Kannada.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
@@ -917,22 +916,6 @@ def urduRemoveInherent(Strng):
     return Strng
 
 #todo testcase
-def devanagariuttara(Strng):
-
-    return Strng
-
-def devanagarinepali(Strng):
-
-    return Strng
-
-def devanagaribalbodh(Strng):
-
-    return Strng
-
-def devanagarijain(Strng):
-
-    return Strng
-
 def HiraganaaunotDipthong(Strng):
 
     return Strng
@@ -952,15 +935,6 @@ def HebrewKatevMalei(Strng):
     return Strng
 
 #todo testcase
-def DevanagariAnusvara(Strng):
-
-    return NasalToAnusvara(Strng, 'Devanagari')
-
-def jainomDevangari(Strng):
-    Strng = Strng.replace('ॐ', 'ꣽ')
-
-    return Strng
-
 # Gurmukhi's own logic now lives in ScriptProcessing/Gurmukhi.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
@@ -1249,11 +1223,6 @@ from .ScriptProcessing.LaoPali import LaoTranscription_post as LaoTranscription,
 # consolidated there (batch migration).
 from .ScriptProcessing.Siddham import UseAlternateI1, UseAlternateI2, UseAlternateII, UseAlternateU, UseAlternateVSU, UseAlternateVSUU, siddhammukta
 
-def DevanagariACandra(Strng):
-    Strng = Strng.replace('ऍ', 'ॲ')
-
-    return Strng
-
 # WarangCiti's own logic now lives in ScriptProcessing/WarangCiti.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
@@ -1340,20 +1309,6 @@ from .ScriptProcessing.DevanagariLimbu import LimbuDevanagariConvention_post as 
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Nandinagari import NandinagariPrishtamatra
-
-def DevanagariPrishtamatra(Strng, reverse = False):
-    if not reverse:
-        Strng = Strng.replace('े','ॎ')
-        Strng = Strng.replace('ै','ॎे')
-        Strng = Strng.replace('ो','ॎा')
-        Strng = Strng.replace('ौ','ॎो')
-    else:
-        Strng = Strng.replace('ॎे', 'ै')
-        Strng = Strng.replace('ॎो', 'ौ')
-        Strng = Strng.replace('ॎा', 'ो')
-        Strng = Strng.replace('ॎ', 'े')
-
-    return Strng
 
 def ThaanaRemoveHistorical(Strng):
     return Strng.replace('ޱ','ނ')

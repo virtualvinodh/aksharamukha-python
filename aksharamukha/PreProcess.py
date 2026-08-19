@@ -790,17 +790,9 @@ def UrduShortNotShown(Strng):
 
     return Strng
 
-def AnuChandraEqDeva(Strng):
-
-    return AnuChandraEq(Strng, 'Devanagari')
-
-def AnuChandraEq(Strng, script):
-    Chandrabindu = GM.CrunchList('AyogavahaMap', script)[0]
-    Anusvara = GM.CrunchList('AyogavahaMap', script)[1]
-
-    Strng = Strng.replace(Chandrabindu, Anusvara)
-
-    return Strng
+# Devanagari's own logic now lives in ScriptProcessing/Devanagari.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Devanagari import AnuChandraEqDeva, AnuChandraEq, RemoveSchwaHindi
 
 # Tamil's pre-options now live in ScriptProcessing/Tamil.py, consolidated
 # there with its Fix logic and post-options too. Re-exported here so
@@ -837,58 +829,6 @@ def TaiThamLao(Strng):
     return Strng
 
 # consider adding an optional NUkta to the post consonantal position
-def RemoveSchwaHindi(Strng, showschwa=False):
-    VowI = "(" + '|'.join(GM.CrunchSymbols(GM.Vowels,'Devanagari')) + ")"
-    VowS = "(" + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, 'Devanagari')) + ")"
-    Cons = "(" + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Devanagari')) + ")"
-    Char = "(" + '|'.join(GM.CrunchSymbols(GM.Characters, 'Devanagari')) + ")"
-    Nas = "([ंःँ]?)"
-    ISyl = "((" + VowI + "|" + "(" + Cons + VowS + "?" + "))" + Nas +')'
-    Syl = "((" + Cons + VowS + ')' + Nas + ")"
-    SylAny = "((" + Cons + VowS + "?" + ')' + Nas + ")"
-
-    if not showschwa:
-        vir = '्'
-        vir2 = '्'
-    else:
-        vir = '\u0954'
-        vir2 = '\u0954'
-
-    Strng = re.sub(ISyl+Cons+Cons+SylAny+"(?!" + Char + ")", r'\1\8' + vir + r'\9\10', Strng) # bhAratIya --> bhArtIy
-    Strng = re.sub(ISyl+Cons+Syl+SylAny+"(?!" + Char + ")", r'\1\8' + vir + r'\9\15', Strng) # bhAratIya --> bhArtIy
-    Strng = re.sub(ISyl+Cons+Syl+"(?!" + Char + ")", r'\1\8' + vir + r'\9', Strng) # namakIn -> namkIn
-
-    Strng = re.sub(ISyl+Cons+"(?!" + Char + ")", r'\1\8' + vir, Strng) # kama -> kam
-
-    Cons_sss = '((' + Cons + vir + ')' +'([शषस]))' # delete if double ends with s, sh, s
-    Strng = re.sub(ISyl+Cons_sss+"(?!" + Char + ")", r'\1\8' + vir, Strng)
-
-    ## remove from geminated consonants
-    Target = 'Devanagari'
-
-    ConUnAsp = [GM.CrunchList('ConsonantMap', Target)[x] for x in [0,2,5,7,10,12,15,17,20,22,4,9,14,19,24,25,26,27,28,29,30,31,32]]
-    ConUnAsp = ConUnAsp + GM.CrunchList('SouthConsonantMap',Target) + GM.CrunchList('NuktaConsonantMap',Target)
-    ConAsp   = [GM.CrunchList('ConsonantMap', Target)[x] for x in [1,3,6,8,11,13,16,18,21,23]]
-
-    Strng = re.sub(ISyl + '('+'|'.join(ConUnAsp)+')'+'('+vir+')('+r'\8'+")(?!" + Char + ")", r'\1\8\9\10' + vir,Strng)
-
-    for i in range(len(ConAsp)):
-        Strng = re.sub(ISyl +'('+ConUnAsp[i]+')'+'('+vir+')'+'('+ConAsp[i]+')'+'(?!" + Char + ")', r'\1\8\9\10' + vir,Strng)
-
-    #Strng = re.sub(VowI + Nas + Cons2+"(?!" + Char + ")", r'\1\2\3' + vir, Strng)
-
-    cons_pyramid = ['[यरलव]', '[नमण]', '[शषस]', '[कखपफगघबभ]', '[टठतथडढदध]', '[चछजझज़]']
-    for c1, cons1 in enumerate(cons_pyramid):
-        for c2, cons2 in enumerate(cons_pyramid):
-            if c1 < c2: # delete if ascending order
-                Cons_pyr = '((' + cons1 + vir + ')' +'('+cons2+'))'
-                Strng = re.sub(ISyl+Cons_pyr+"(?!" + Char + ")", r'\1\8' + vir, Strng)
-
-
-    Strng = Strng.replace(vir, vir2)
-
-    return Strng
-
 # consider adding an optional NUkta to the post consonantal position
 def RemoveFinal(Strng, Target):
     if Target == 'Bengali':
