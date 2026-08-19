@@ -110,10 +110,10 @@ virama = ['ViramaMap']
 
 ## Script Paths
 MainIndic = ['GurmukhiLoC', 'LimbuLoC', 'BengaliRaBa', 'Nandinagari','Shahmukhi', 'TamilExtended','MasaramGondi','GunjalaGondi','Dogra', 'Ranjana', 'Khojki','GranthaGrantamil', 'Multani', 'Ahom', 'Mahajani','SiddhamDevanagari', 'Vatteluttu', 'GranthaPandya', 'Khudawadi', 'Bhaiksuki', 'Sharada', 'Newa', 'SylotiNagri', 'Takri', 'Tirhuta', 'Modi', 'Kaithi', 'Kharoshthi','Lepcha','Chakma','Brahmi','MeeteiMayek','Limbu','Assamese','Bengali','Devanagari','Grantha','Gujarati','Gurmukhi','Kannada','Malayalam','Oriya','Saurashtra','Sinhala','Tamil','TamilBrahmi','TamilGrantha','Telugu','Urdu']
-EastIndic =['DivesAkuru', 'TibetanLoC', 'BatakLoC', 'ThamLoC', 'KhmerLoC', 'ShanLoC', 'Makasar', 'Kawi', 'Pallava', 'LaoTham', 'LueTham', 'KhuenTham', 'Marchen', 'Soyombo', 'KhomThai', 'KhamtiShan', 'TaiLaing', 'Mon', 'Shan', 'ZanabazarSquare','Rejang', 'Lao2','Buhid', 'Hanunoo', 'Siddham', 'Tibetan','Lao','TaiTham','Cham','BatakKaro','BatakPakpak','BatakSima','BatakToba','BatakManda','LaoPali','PhagsPa','Buginese','Tagbanwa','Tagalog','Sundanese','Balinese','Burmese','Javanese','Khmer','Siddham','Ranjana','Thaana','Thai', 'BurmeseALALC']
+EastIndic =['DivesAkuru', 'TibetanLoC', 'ThamLoC', 'KhmerLoC', 'ShanLoC', 'Makasar', 'Kawi', 'Pallava', 'LaoTham', 'LueTham', 'KhuenTham', 'Marchen', 'Soyombo', 'KhomThai', 'KhamtiShan', 'TaiLaing', 'Mon', 'Shan', 'ZanabazarSquare','Rejang', 'Lao2','Buhid', 'Hanunoo', 'Siddham', 'Tibetan','Lao','TaiTham','Cham','BatakKaro','BatakPakpak','BatakSima','BatakToba','BatakManda','LaoPali','PhagsPa','Buginese','Tagbanwa','Tagalog','Sundanese','Balinese','Burmese','Javanese','Khmer','Siddham','Ranjana','Thaana','Thai', 'BurmeseALALC']
 NonIndic = ['OldPersian', 'Hebrew']
-Roman =['BatakLoCRomanLoC','GurmukhiLoCRomanLoC','TibetanLoCRomanLoC', 'LimbuLoCRomanLoC', 'BalineseSimpleRomanLoC', 'BalineseRomanLoC', 'JavaneseSimpleRomanLoC', 'JavaneseRomanLoC', 'BatakKaroRomanLoC', 'BatakMandaRomanLoC','BatakPakpakRomanLoC','BatakSimaRomanLoC','BatakTobaRomanLoC', 'GurmukhiRomanLoC', 'TibetanRomanLoC', 'LimbuRomanLoC', 'KannadaRomanLoC', 'TeluguRomanLoC', 'SinhalaRomanLoC', 'OriyaRomanLoC', 'AssameseRomanLoC', 'BengaliRomanLoC', 'GujaratiRomanLoC', 'DevanagariRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'RomanLoC', 'ShanLoCRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'ShanLoCRomanLoC', 'BurmeseRomanLoC', 'RomanSemitic', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya', 'Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng',"WX-kok",'Avestan','HK','IAST','ISO','Itrans','Titus','Titus','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
-RomanDiacritic = ['IAST','Titus','ISO','IPA', 'IASTPali', 'ISOPali', 'BurmeseRomanLoC', 'ISOLOC', 'RomanSemitic', 'ShanLoCRomanLoC', 'KhmerLoCRomanLoC']
+Roman =['GurmukhiLoCRomanLoC','TibetanLoCRomanLoC', 'LimbuLoCRomanLoC', 'BalineseSimpleRomanLoC', 'BalineseRomanLoC', 'JavaneseSimpleRomanLoC', 'JavaneseRomanLoC', 'BatakKaroRomanLoC', 'BatakMandaRomanLoC','BatakPakpakRomanLoC','BatakSimaRomanLoC','BatakTobaRomanLoC', 'KannadaRomanLoC', 'TeluguRomanLoC', 'SinhalaRomanLoC', 'OriyaRomanLoC', 'AssameseRomanLoC', 'BengaliRomanLoC', 'GujaratiRomanLoC', 'DevanagariRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'RomanLoC', 'ShanLoCRomanLoC', 'ThamLoCRomanLoC', 'KhmerLoCRomanLoC', 'ShanLoCRomanLoC', 'BurmeseRomanLoC', 'RomanSemitic', 'RomanColloquial', 'ISOPali', 'RomanKana', 'BarahaNorth', 'BarahaSouth', 'Mongolian', 'SLP1', 'Wancho', 'Mro', 'IASTPali', 'HanifiRohingya', 'Ariyaka', 'RomanReadable', 'Aksharaa', 'WarangCiti', 'SoraSompeng',"WX-kok",'Avestan','HK','IAST','ISO','Itrans','Titus','Titus','Velthuis','WX','Inter','IPA','TolongSiki','Santali','RussianCyrillic']
+RomanDiacritic = ['IAST','Titus','ISO','IPA', 'IASTPali', 'ISOPali', 'BurmeseRomanLoC', 'RomanSemitic', 'ShanLoCRomanLoC', 'KhmerLoCRomanLoC']
 
 ScriptCategory = {}
 
@@ -263,15 +263,18 @@ romanNumeralScripts = ['Tamil', 'Gurmukhi', 'Malayalam', 'Telugu']
 romanPunctscripts = ['Tamil', 'Kannada', 'Malayalam', 'Telugu', 'Gujarati']
 
 ## List of supported LoC scripts
-LoCScripts = ['Burmese', 'Shan', 'Khmer', 'KhuenTham', 'TaiTham', 'LaoTham', 'LueTham', 'Kannada', 'Tamil', 'Malayalam', 'Sinhala', 'Telugu', 'Kannada', 'Oriya', 'Assamese', 'Bengali', 'Gujarati', 'Devanagari', 'Balinese', 'Javanese', 'BatakKaro', 'BatakManda','BatakPakpak','BatakSima','BatakToba','Gurmukhi', 'Tibetan', 'Limbu']
+LoCScripts = ['Burmese', 'Shan', 'Khmer', 'KhuenTham', 'TaiTham', 'LaoTham', 'LueTham', 'Kannada', 'Tamil', 'Malayalam', 'Sinhala', 'Telugu', 'Oriya', 'Assamese', 'Bengali', 'Gujarati', 'Devanagari', 'Balinese', 'Javanese', 'BatakKaro', 'BatakManda','BatakPakpak','BatakSima','BatakToba','Gurmukhi', 'Tibetan', 'Limbu']
 
 #Modified Src Input Map for LoC script
 #speicalpostpre process
-LocPostPre = ['Burmese', 'Shan', 'Khmer', 'ThamLoC', 'ShanLoC', 'KhmerLoC']
+# Bare 'Shan'/'Khmer' are unreachable here - by the time loc_post_pre is
+# checked, src/tgt has already been rewritten to its pivot form
+# ('ShanLoC'/'KhmerLoC') a few lines earlier in transliterate.py.
+LocPostPre = ['Burmese', 'ThamLoC', 'ShanLoC', 'KhmerLoC']
 #spcial Loc source
 LoCSrcMap =  ['Shan', 'Khmer', 'Gurmukhi', 'Limbu', 'Tibetan']
 #Sepcial Map for RomanLoC target
-LoCTgtMap = ['Burmese', 'Shan', 'Khmer', 'KhuenTham', 'TaiTham', 'LaoTham', 'LueTham', 'ThamLoC', 'ShanLoC', 'KhmerLoC', 'Kannada', 'Telugu', 'Sinhala', 'Oriya', 'Assamese', 'Bengali', 'Gujarati', 'Devanagari', 'Balinese', 'Javanese', 'Batak', 'Gurmukhi', 'GurmukhiLoC', 'Tibetan', 'Limbu', 'LimbuLoC', 'Tibetan', 'TibetanLoC']
+LoCTgtMap = ['Burmese', 'Shan', 'Khmer', 'KhuenTham', 'TaiTham', 'LaoTham', 'LueTham', 'ThamLoC', 'ShanLoC', 'KhmerLoC', 'Kannada', 'Telugu', 'Sinhala', 'Oriya', 'Assamese', 'Bengali', 'Gujarati', 'Devanagari', 'Balinese', 'Javanese', 'Batak', 'Gurmukhi', 'GurmukhiLoC', 'Tibetan', 'Limbu', 'LimbuLoC', 'TibetanLoC']
 
 #They're basically modified ISO
 LoCTgtISO = ['Tamil', 'Malayalam']

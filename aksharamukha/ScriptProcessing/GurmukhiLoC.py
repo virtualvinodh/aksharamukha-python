@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 
-# GurmukhiLoC's own Fix logic, consolidated out of ConvertFix.py (batch migration -
-# see ScriptProcessing/Tamil.py for the full rationale/pattern this follows).
+# GurmukhiLoC's own Fix/post-option logic, consolidated out of
+# ConvertFix.py/PostProcess.py (batch migration - see
+# ScriptProcessing/Tamil.py for the full rationale/pattern this follows).
 # PostProcess/ConvertFix are imported LOCALLY inside each function that
 # needs them (not at module level) - required to avoid a load-order-
 # dependent circular import, since ConvertFix.py re-exports names from
 # here. See ScriptProcessing/Tamil.py for the full explanation.
+#
+# GurmukhiRomanLoCFix is a post-option only (no pre-option counterpart),
+# so no _pre/_post suffixing needed here.
 
 import re
 from .. import GeneralMap as GM
@@ -65,3 +69,15 @@ def FixGurmukhiLoC(Strng,reverse=False):
     """Dispatches to the Gurmukhi LoC encode or decode fix routine based on the reverse flag."""
 
     return _FixGurmukhiLoCDecode(Strng) if reverse else _FixGurmukhiLoCEncode(Strng)
+
+# ---- Post-processing options ----
+
+def GurmukhiRomanLoCFix(Strng):
+    """Converts nasalized m before homorganic stops into the corresponding nasal consonant (velar/palatal/retroflex/dental/labial) for Gurmukhi LoC romanization."""
+    Strng = re.sub('(m̆|ṃ)(k|g)', 'ṅ' + r'\2', Strng)
+    Strng = re.sub('(m̆|ṃ)(c|j)', 'ñ' + r'\2', Strng)
+    Strng = re.sub('(m̆|ṃ)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
+    Strng = re.sub('(m̆|ṃ)(t|d)', 'n' + r'\2', Strng)
+    Strng = re.sub('(m̆|ṃ)(p|b)', 'm' + r'\2', Strng)
+
+    return Strng

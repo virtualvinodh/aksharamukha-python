@@ -477,44 +477,9 @@ def ArabicGimelPaBa(Strng):
     return Strng
 
 #testcase todo
-def BurmeseRomanLoCSource(Strng):
-    # remove marking for pure virama
-    """Reverses LoC Burmese romanization conventions back to native encoding: drops pure-virama marker, restores superscript-Ga to subjoined y/r/v/h, reassembles vowel+diacritic sequences, undoes glottal-stop marking."""
-    Strng = Strng.replace('ʻ', '')
-
-    # restore superscript Ga into normal subjoined y, r , v, h
-    yrvh = Burmese.ConsonantMap[25:27] + Burmese.ConsonantMap[28:29] + Burmese.ConsonantMap[32:33]
-    yrvhPat = ''.join(yrvh)
-    Strng = re.sub(f'(\u103A)(\u1039)([{yrvhPat}])', r'\2\3', Strng)
-
-    # restrore special yrvh
-    virsub = '\u1039'
-    yrvhsub = ['\u103B','\u103C','\u103D','\u103E']
-
-    for x,y in zip(yrvh,yrvhsub):
-        # Undo Replace subjoining forms: exp-virama + y/r/v/h <- subjoining y/r/v/h
-        Strng = Strng.replace(virsub + x, y)
-
-    # reverse replace vowel + diac with vowels
-    vowDep = 'အော် အော အိ အီ အု အူ အေ'.split(' ')
-    vowIndep = 'ဪ ဩ ဣ ဤ ဥ ဦ ဧ'.split(' ')
-
-    ## Fix modifier letter apostrephe to normal quotation mark
-    Strng = Strng.replace('ʼ', '’')
-
-    for x, y in zip(vowDep, vowIndep):
-        Strng = Strng.replace('’' + y, x)
-
-    # u-Indep-i -> u-dep-i
-    Strng = Strng.replace('\u102Fဣ', '\u102D\u102F')
-
-    # reverse mark a as glottalstop
-    Strng = Strng.replace('’အ', 'အ')
-
-    # swap tone + virama to proper order
-    Strng = Strng.replace("့်", "့်")
-
-    return Strng
+# BurmeseLoC's own LoC logic now lives in ScriptProcessing/BurmeseLoC.py -
+# consolidated there (LoC redesign).
+from .ScriptProcessing.BurmeseLoC import BurmeseRomanLoCTarget_post as BurmeseRomanLoCTarget, BurmeseRomanLoCSource_post as BurmeseRomanLoCSource
 
 #testcase todo
 def removeSegmentSpacesBurmese(Strng):
@@ -541,135 +506,21 @@ def UseAlternateo2(Strng):
     return Strng
 
 #ThamLoC
-def ThamLoCRomanLoCTarget(Strng):
-    """No-op placeholder (reserved for Tai Tham LoC romanization target-side processing)."""
-    return Strng
-
-def ThamLoCRomanLoCSource(Strng):
-    #cryptogammic dot to Sakot
-    """Converts Tai Tham LoC romanization back to native encoding: maps cryptogrammic dot to sakot, fixes the aiy vowel+consonant sequence."""
-    Strng = Strng.replace('\u1A7F', '᩠')
-
-    #fixing aiy
-    Strng = Strng.replace('\u1A71\u1A3F\u1A7A', '\u1A71᩠ᨿ')
-
-    return Strng
+# ThamLoC's own LoC logic now lives in ScriptProcessing/ThamLoC.py -
+# consolidated there (LoC redesign).
+from .ScriptProcessing.ThamLoC import ThamLoCRomanLoCTarget_post as ThamLoCRomanLoCTarget, ThamLoCRomanLoCSource_post as ThamLoCRomanLoCSource
 
 # khmer
-def KhmerLoCRomanLoCTarget(Strng):
-    """Normalizes Khmer LoC romanization output: NFC-normalizes, repositions consonant-modifier marks before certain vowels, fixes the 'oh' sequence, collapses double spaces."""
-    import unicodedata
-    Strng = unicodedata.normalize('NFC', Strng)
-
-    #move consonant modifiers
-    #Strng = re.sub('(‛ʹ)(′?)(a)(?![ṃḥ])', r'\1\2', Strng)
-    Strng = re.sub('(ʹ)(′?)(?=[aāiīuūẏȳeoăáâààáéíóúàèìòùă])', r'\2', Strng)
-    #Strng = re.sub('(ʹ)(′?)(a)(?=[aāiīuūẏȳeoă])', r'\2', Strng)
-
-    #fix Oh
-    Strng = Strng.replace('oḥ', 'oaḥ')
-    Strng = Strng.replace('  ', ' ')
-
-
-    return Strng
-
-def KhmerLoCRomanLoCSource(Strng):
-    """Reorders Khmer LoC romanization diacritics (bantoc, tone marks) relative to base consonants/vowels, marks subbase-form consonant modifiers, and strips the virama."""
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Khmer'))
-    ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,'Khmer'))
-    ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,'Khmer'))
-
-    vir = Khmer.ViramaMap[0]
-
-    #move bantoc around
-    Strng = re.sub('(\u17CB)(.)', r'\2\1', Strng)
-
-    #move tonemarks around
-    Strng = re.sub('('+ListC+')'+'('+ListV+')''('+ListA+')?''([៎៏])',r'\1\4\2\3',Strng)
-
-    #subjoined a
-    #Strng = Strng.replace(vir + '‛', '\u17D2')
-
-    #mark consonant modifiers with subbase form
-    Strng = re.sub('([ងញមបយរវ])(៉)([ិឹីឺ])', r'\1''ុ'r'\3', Strng)
-    Strng = re.sub('([សហអ])(៊)([ិឹីឺ])', r'\1''ុ'r'\3', Strng)
-
-    #remove virama
-    Strng = Strng.replace(vir, '')
-
-    return Strng
+# KhmerLoC's own LoC logic now lives in ScriptProcessing/KhmerLoC.py -
+# consolidated there (LoC redesign).
+from .ScriptProcessing.KhmerLoC import KhmerLoCRomanLoCTarget_post as KhmerLoCRomanLoCTarget, KhmerLoCRomanLoCSource_post as KhmerLoCRomanLoCSource
 
 # shan
-def ShanLoCRomanLoCTarget(Strng):
-    """Reorders Shan LoC romanization glottal-stop and tone-mark combining diacritics relative to the preceding vowel/consonant."""
-    Strng = re.sub('(ʻ)([\u0310\u0322])', r'\2\1', Strng)
-    Strng = re.sub('(ō)([\u0310\u0322]?)(ʻ)', r'\1\2', Strng)
-
-    return Strng
-
-def ShanLoCRomanLoCSource(Strng):
-    # restrore special yrvh
-    """Restores Shan LoC romanization conventions to native Shan script: undoes subjoined y/r/v marking, strips pure-vowel and glottal markers, reverses ai, and resolves open/closed vowel-consonant ambiguity."""
-    yrv = Burmese.ConsonantMap[25:27] + Burmese.ConsonantMap[28:29]
-    vir = '်'
-    yrvsub = ['\u103B','\u103C','\u1082']
-
-    for x,y in zip(yrv,yrvsub):
-        # Undo Replace subjoining forms: exp-virama + y/r/v/h <- subjoining y/r/v/h
-        Strng = Strng.replace(vir + x, y)
-
-    ## Fix modifier letter apostrephe to normal quotation mark
-    Strng = Strng.replace('ʼ', '’')
-    #remove purevowel marker
-    Strng = Strng.replace('’', '')
-    # remove marking for pure virama
-    Strng = Strng.replace('ʻ', '')
-
-    #ai reversal
-    Strng = Strng.replace('\u036E', 'ႂ်')
-
-    # closed vs open
-    cons = "[ၵၶၷꧠငၸꧡꩡꧢၺꩦꩧꩨꩩꧣတထၻꩪၼပၽၿꧤမယရလဝသႁꩮၹၾႀဢ]"
-    open = ['ႃ', 'ႄ', 'ေ']
-    closed = ['ၢ', 'ႅ', 'ဵ']
-
-    for o, c in zip(open, closed):
-        pass
-        Strng = re.sub('(' + cons + ')' + '(' + o + ')' + '(' + cons + ')', r'\1' + c + r'\3', Strng)
-
-    return Strng
+# ShanLoC's own LoC logic now lives in ScriptProcessing/ShanLoC.py -
+# consolidated there (LoC redesign).
+from .ScriptProcessing.ShanLoC import ShanLoCRomanLoCTarget_post as ShanLoCRomanLoCTarget, ShanLoCRomanLoCSource_post as ShanLoCRomanLoCSource
 
 #testcase todo
-def BurmeseRomanLoCTarget(Strng):
-    #print(Strng)
-    # mark tone
-    """Applies Library of Congress Burmese romanization target conventions: marks tone, folds 'au+glottal' to 'o+glottal', renders visarga as a tone mark, and substitutes a few adhoc lexical characters."""
-    Strng = Strng.replace('˳', 'ʹ')
-
-    # mark depaend au -> o'
-    Strng = Strng.replace('auʻ','oʻ')
-
-    # mark visarga as tone
-    Strng = Strng.replace('ḥ', 'ʺ')
-
-    # sort subjoined consonants
-    # Strng = Strng.replace('‘‘', '')
-
-    # adhoc chars
-    chars_misc = {
-        "e*": "၏",
-        'n*': "၌",
-        'r*': '၍',
-        'l*': '၎'
-    }
-
-    for lat, bur in chars_misc.items():
-        Strng = Strng.replace(bur, lat)
-
-    #Strng = Strng.replace('ṃ', 'ṁ')
-
-    return Strng
-
 ### Add new consonants here when added to gimeltra_data
 #testcase todo
 def insertARomanSemitic(Strng):
@@ -1018,11 +869,9 @@ def mDotAboveToBelow(Strng):
     return Strng
 
 #misnomer
-def mDotBelowToAbove(Strng):
-    """Converts dot-above anusvara back to dot-below (inverse of mDotAboveToBelow)."""
-    Strng = Strng.replace('ṁ', 'ṃ')
-
-    return Strng
+# MalayalamLoC's own LoC logic now lives in ScriptProcessing/MalayalamLoC.py -
+# consolidated there (LoC redesign).
+from .ScriptProcessing.MalayalamLoC import MalayalamRomanLoCFix_post as MalayalamRomanLoCFix, mDotBelowToAbove
 
 #todo : ISOPali postoptions empty todo
 
@@ -1118,11 +967,9 @@ from .ScriptProcessing.Marchen import MarchenSanskritPalatals
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.ZanabazarSquare import ZanabazarSanskritPalatals, ZanzabarSpaceTsheg, ZanabazarSquareContextual, ZanabazarSquareAiAu, ZanabazarSquareMongolianFinal
 
-def KhandaTaRomanLoC(Strng):
-    """Converts LoC romanized t-line into the Bengali khanda ta letter."""
-    Strng = Strng.replace('ṯ', 'ৎ')
-
-    return Strng
+# RomanLoC's own LoC logic now lives in ScriptProcessing/RomanLoC.py -
+# consolidated there (LoC redesign).
+from .ScriptProcessing.RomanLoC import RomanLoCChandrabindu_post as RomanLoCChandrabindu, KhandaTaRomanLoC_post as KhandaTaRomanLoC
 
 # reverse these in preprocess
 def RomanLoCVaWa(Strng):
@@ -1145,9 +992,9 @@ def RomanLoCLaUnderscoreDoubleDot(Strng):
 
     return Strng
 
-# RomanLoCDevanagari's own logic now lives in ScriptProcessing/RomanLoCDevanagari.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.RomanLoCDevanagari import HindiMarathiRomanLoCFix_post as HindiMarathiRomanLoCFix
+# DevanagariLoC's own logic now lives in ScriptProcessing/DevanagariLoC.py -
+# consolidated there (LoC redesign; renamed from RomanLoCDevanagari.py).
+from .ScriptProcessing.DevanagariLoC import HindiMarathiRomanLoCFix_post as HindiMarathiRomanLoCFix, DevanagariRomanLoCFix_post as DevanagariRomanLoCFix
 
 # DivesAkuru's own logic now lives in ScriptProcessing/DivesAkuru.py -
 # consolidated there (batch migration).
@@ -1161,35 +1008,17 @@ from .ScriptProcessing.Kawi import KawiAltAiAU, KawiArchaicJNA, KawiDecomposedVo
 # consolidated there (batch migration).
 from .ScriptProcessing.Javanese import JavaneseArchaicJNA, JavaneseAvowels, JavaneseMoveRepha_post as JavaneseMoveRepha
 
-def TibetanLoCRomanLoCFix(Strng):
-    """Fixes Tibetan LoC romanization: drops the modifier apostrophe on t/n unless followed by s/y respectively, and joins j_h into jh."""
-    Strng = re.sub('tʹ(?!s)', 't', Strng)
-    Strng = re.sub('nʹ(?!y)', 'n', Strng)
-    Strng = re.sub('j_h', 'jh', Strng)
+# TibetanLoC's own LoC logic now lives in ScriptProcessing/TibetanLoC.py -
+# consolidated there (LoC redesign).
+from .ScriptProcessing.TibetanLoC import TibetanLoCRomanLoCFix_post as TibetanLoCRomanLoCFix
 
-    return Strng
+# JavaneseLoC's own logic now lives in ScriptProcessing/JavaneseLoC.py -
+# consolidated there (LoC redesign; renamed from RomanLoCJavanese.py).
+from .ScriptProcessing.JavaneseLoC import JavaneseSimplified, JavaneseRomanLoCFix_post as JavaneseRomanLoCFix
 
-# RomanLoCJavanese's own logic now lives in ScriptProcessing/RomanLoCJavanese.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.RomanLoCJavanese import JavaneseSimplified
-
-# RomanLoCBalinese's own logic now lives in ScriptProcessing/RomanLoCBalinese.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.RomanLoCBalinese import BalineseSimplified
-
-def BalineseRomanLoCFix(Strng):
-    """Fixes Balinese LoC romanization diacritics: h-diaeresis -> h, ng-diaeresis -> apostrophe-like sign."""
-    Strng = Strng.replace('ḧ', 'h').replace('ng̈', '‘')
-
-    return Strng
-
-def JavaneseRomanLoCFix(Strng):
-    """Fixes Javanese LoC romanization diacritics: h-diaeresis -> h, ng-diaeresis -> apostrophe-like sign."""
-    Strng = Strng.replace('ḧ', 'h').replace('ng̈', '‘')
-
-    return Strng
+# BalineseLoC's own logic now lives in ScriptProcessing/BalineseLoC.py -
+# consolidated there (LoC redesign; renamed from RomanLoCBalinese.py).
+from .ScriptProcessing.BalineseLoC import BalineseSimplified, BalineseRomanLoCFix_post as BalineseRomanLoCFix
 
 # Balinese's own logic now lives in ScriptProcessing/Balinese.py -
 # consolidated there (batch migration).
@@ -1210,28 +1039,9 @@ def BalineseJavaneseMoveRepha(Strng, tgt, reph):
 
     return Strng
 
-def GurmukhiRomanLoCFix(Strng):
-    """Converts nasalized m before homorganic stops into the corresponding nasal consonant (velar/palatal/retroflex/dental/labial) for Gurmukhi LoC romanization."""
-    Strng = re.sub('(m̆|ṃ)(k|g)', 'ṅ' + r'\2', Strng)
-    Strng = re.sub('(m̆|ṃ)(c|j)', 'ñ' + r'\2', Strng)
-    Strng = re.sub('(m̆|ṃ)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
-    Strng = re.sub('(m̆|ṃ)(t|d)', 'n' + r'\2', Strng)
-    Strng = re.sub('(m̆|ṃ)(p|b)', 'm' + r'\2', Strng)
-
-    return Strng
-
-def DevanagariRomanLoCFix(Strng):
-    """Fixes Devanagari LoC romanization diaeresis-marked digraphs: g-h-diaeresis -> g-underdot h-underdot, t-diaeresis -> t-underdot, s-diaeresis -> s-underdot, h-diaeresis -> h-underdot."""
-    Strng = Strng.replace('gḧ', 'g̳h̳').replace('ṭ̈', 't̤').replace('s̈', 's̤')\
-        .replace('ḧ', 'h̤')
-
-    return Strng
-
-def MalayalamRomanLoCFix(Strng):
-    """Fixes Malayalam LoC romanization: doubled r-line -> doubled t-line, u-breve -> a-overdot."""
-    Strng = Strng.replace('ṟṟ', 'ṯṯ')
-    Strng = Strng.replace('ŭ', 'ȧ')
-    return Strng
+# GurmukhiLoC's own LoC logic now lives in ScriptProcessing/GurmukhiLoC.py -
+# consolidated there (LoC redesign).
+from .ScriptProcessing.GurmukhiLoC import GurmukhiRomanLoCFix
 
 def MalayalamNTA(Strng):
     """Converts the n+ra sequence into n+t-line (Malayalam nta orthographic convention)."""
@@ -1244,29 +1054,9 @@ def MalayalamTTNTA(Strng):
     Strng = Strng.replace('nṟ', 'nṯ')
     return Strng
 
-def SinhalaSannakaNasalization(Strng):
-    #Strng = Strng.replace('ṁ', 'ṃ')
-
-    """Converts Sinhala prenasalized n-breve/m-breve before homorganic consonants into the corresponding nasal consonant (velar/palatal/retroflex/dental/labial)."""
-    Strng = re.sub('(n̆)(k|g)', 'ṅ' + r'\2', Strng)
-    Strng = re.sub('(n̆)(c|j)', 'ñ' + r'\2', Strng)
-    Strng = re.sub('(n̆)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
-    Strng = re.sub('(n̆)(t|d)', 'n' + r'\2', Strng)
-    Strng = re.sub('(m̆)(p|b)', 'm' + r'\2', Strng)
-
-    return Strng
-
-def RomanLoCChandrabindu(Strng):
-    #Strng = Strng.replace('ṁ', 'ṃ')
-
-    """Converts chandrabindu-marked m before consonants into chandrabindu-marked n, per LoC romanization convention."""
-    Strng = re.sub('(m̐)(k|g)', 'n̐' + r'\2', Strng)
-    Strng = re.sub('(m̐)(c|j)', 'n̐' + r'\2', Strng)
-    Strng = re.sub('(m̐)(ṭ|ḍ)', 'n̐' + r'\2', Strng)
-    Strng = re.sub('(m̐)(t|d)', 'n̐' + r'\2', Strng)
-    Strng = re.sub('(m̐)(p|b)', 'n̐' + r'\2', Strng)
-
-    return Strng
+# Sinhala's own LoC logic now lives in ScriptProcessing/Sinhala.py -
+# consolidated there (LoC redesign).
+from .ScriptProcessing.Sinhala import SinhalaSannakaNasalization
 
 def AnusvaratoNasalASTISO(Strng):
     #Strng = Strng.replace('ṁ', 'ṃ')

@@ -123,3 +123,15 @@ def SinhalaChandrbinduAnusvara(Strng):
     Strng = Strng.replace('\u0D81', '\u0D82')
 
     return Strng
+
+def SinhalaSannakaNasalization(Strng):
+    #Strng = Strng.replace('ṁ', 'ṃ')
+
+    """Converts Sinhala prenasalized n-breve/m-breve before homorganic consonants into the corresponding nasal consonant (velar/palatal/retroflex/dental/labial)."""
+    Strng = re.sub('(n̆)(k|g)', 'ṅ' + r'\2', Strng)
+    Strng = re.sub('(n̆)(c|j)', 'ñ' + r'\2', Strng)
+    Strng = re.sub('(n̆)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
+    Strng = re.sub('(n̆)(t|d)', 'n' + r'\2', Strng)
+    Strng = re.sub('(m̆)(p|b)', 'm' + r'\2', Strng)
+
+    return Strng

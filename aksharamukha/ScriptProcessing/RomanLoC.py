@@ -1,10 +1,32 @@
 # -*- coding: utf-8 -*-
 
-# RomanLoC's own Fix/pre-option/post-option logic, consolidated out of
-# ConvertFix.py/PreProcess.py/PostProcess.py (batch migration - see
-# ScriptProcessing/Tamil.py for the full rationale/pattern this follows).
+# Generic/shared LoC (Library of Congress) romanization logic that isn't
+# exclusive to any one script - consolidated out of ConvertFix.py/
+# PreProcess.py/PostProcess.py (batch migration - see
+# ScriptProcessing/Tamil.py for the full rationale/pattern this
+# follows).
+#
+# RomanLoCChandrabindu is used by Telugu/Kannada/Malayalam/Sinhala/Oriya/
+# Assamese/Bengali/Gujarati/Devanagari. KhandaTaRomanLoC is used by
+# Assamese/Bengali. Both independently define the SAME option name in
+# both PreProcess.py and PostProcess.py as genuinely different functions
+# - suffixed _pre/_post here, same convention used everywhere else.
 
 import re
+
+# ---- Pre-processing options ----
+
+def RomanLoCChandrabindu_pre(Strng):
+    """Normalize candrabindu written as n̐ to m̐ for Library of Congress romanization."""
+    Strng = re.sub('n̐', 'm̐', Strng)
+
+    return Strng
+
+def KhandaTaRomanLoC_pre(Strng):
+    """Render Bengali khanda ta (ৎ) as ṯ in Library of Congress romanization."""
+    Strng = Strng.replace('ৎ', 'ṯ')
+
+    return Strng
 
 # ---- Post-processing options ----
 
@@ -13,4 +35,22 @@ def LoCMarc8(Strng):
     import unicodedata
     Strng = unicodedata.normalize('NFD', Strng)
     Strng = Strng.replace('\u02DA', '\u02D9')
+    return Strng
+
+def RomanLoCChandrabindu_post(Strng):
+    #Strng = Strng.replace('ṁ', 'ṃ')
+
+    """Converts chandrabindu-marked m before consonants into chandrabindu-marked n, per LoC romanization convention."""
+    Strng = re.sub('(m̐)(k|g)', 'n̐' + r'\2', Strng)
+    Strng = re.sub('(m̐)(c|j)', 'n̐' + r'\2', Strng)
+    Strng = re.sub('(m̐)(ṭ|ḍ)', 'n̐' + r'\2', Strng)
+    Strng = re.sub('(m̐)(t|d)', 'n̐' + r'\2', Strng)
+    Strng = re.sub('(m̐)(p|b)', 'n̐' + r'\2', Strng)
+
+    return Strng
+
+def KhandaTaRomanLoC_post(Strng):
+    """Converts LoC romanized t-line into the Bengali khanda ta letter."""
+    Strng = Strng.replace('ṯ', 'ৎ')
+
     return Strng
