@@ -1821,26 +1821,9 @@ from .ScriptProcessing.Sharada import _FixSharadaEncode, _FixSharadaDecode, FixS
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Kannada import _FixKannadaEncode, _FixKannadaDecode, FixKannada
 
-def _FixGranthaEncode(Strng):
-    Strng = Strng.replace('॑', '᳴')
-    Strng = Strng.replace('᳚', '॑')
-    Strng = Strng.replace('ꣳ', '𑍞')
-    Strng = Strng.replace('ꣴ', '𑍟')
-    Strng = Strng.replace('𑌼𑍍', '𑌼𑍍\u200C')
-
-    return Strng
-
-def _FixGranthaDecode(Strng):
-    Strng = Strng.replace('𑌼𑍍\u200C', '𑌼𑍍')
-    Strng = Strng.replace('॑', '᳚')
-    Strng = Strng.replace('᳴', '॑')
-    Strng = Strng.replace('𑍞', 'ꣳ')
-    Strng = Strng.replace('𑍟', 'ꣴ')
-
-    return Strng
-
-def FixGrantha(Strng, reverse=False):
-    return _FixGranthaDecode(Strng) if reverse else _FixGranthaEncode(Strng)
+# Grantha's own logic now lives in ScriptProcessing/Grantha.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Grantha import FixGrantha, _FixGranthaEncode, _FixGranthaDecode
 
 # Mahajani's own Fix logic now lives in ScriptProcessing/Mahajani.py -
 # consolidated there (batch migration). Re-exported here so

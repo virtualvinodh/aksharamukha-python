@@ -860,8 +860,9 @@ def swapEe(Strng):
 # consolidated there (batch migration).
 from .ScriptProcessing.Itrans import swapEeItrans_pre as swapEeItrans
 
-def egrantamil(Strng):
-    return Strng
+# Grantha's own logic now lives in ScriptProcessing/Grantha.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Grantha import egrantamil
 
 def siddhammukta(Strng):
     return Strng

@@ -1094,9 +1094,9 @@ def ThaiNativeConsonants(Strng):
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.KhamtiShan import KhamiShanMyanmarNumerals, KhamtiShanRa
 
-def granthafinal(Strng):
-
-    return Strng
+# Grantha's own logic now lives in ScriptProcessing/Grantha.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Grantha import GranthaOldau, GranthaPrakrit, granthafinal, granthaserif, egrantamil
 
 def Dot2Dandas(Strng):
     Strng = Strng.replace('..', '॥')
@@ -1318,16 +1318,10 @@ def TaiKuen(Strng):
 def TaiThamLao(Strng):
     return Strng
 
-def egrantamil(Strng):
-    return Strng
-
 # Newa's own logic now lives in ScriptProcessing/Newa.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Newa import nepaldevafont, NewaMurmurConsonants, NewaSpecialTa, NewaDisableRepha
-
-def granthaserif(Strng):
-    return Strng
 
 # Chakma's own logic now lives in ScriptProcessing/Chakma.py -
 # consolidated there (batch migration).
@@ -1407,11 +1401,6 @@ def UseAlternateI2(Strng):
 
 def UseAlternateII(Strng):
     Strng = Strng.replace('𑖃',  '𑗚')
-
-    return Strng
-
-def GranthaOldau(Strng):
-    Strng = Strng.replace('𑍗', '𑍌')
 
     return Strng
 
@@ -1559,19 +1548,6 @@ def MalayalamPrakrit(Strng):
 
     return Strng
 
-def GranthaPrakrit(Strng):
-    ## Replace Anusvara with Anusvara above
-    Strng = Strng.replace("𑌂", "𑌀")
-    Strng = InsertGeminationSign(Strng, 'Grantha')
-
-    ## not at the beginning of words
-    pat = r'\s𑌂.'
-    Strng = functools.reduce(lambda s, m: s.replace(m, ReverseGeminationSign(m, 'Grantha')), re.findall(pat, Strng), Strng)
-
-    pat = r'𑍍𑌂.'
-    Strng = functools.reduce(lambda s, m: s.replace(m, ReverseGeminationSign(m, 'Grantha')), re.findall(pat, Strng), Strng)
-
-    return Strng
     ## Insert Gemination Sign
 
 def MeeteiMayekremoveHistorical(Strng):
