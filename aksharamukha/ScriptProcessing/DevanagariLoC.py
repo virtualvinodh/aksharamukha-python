@@ -1,23 +1,20 @@
 # -*- coding: utf-8 -*-
 
-# Devanagari's LoC (Library of Congress) romanization logic, consolidated
-# out of ConvertFix.py/PreProcess.py/PostProcess.py (batch migration -
-# see ScriptProcessing/Tamil.py for the full rationale/pattern this
-# follows). Renamed from RomanLoCDevanagari.py for consistency with the
-# rest of ScriptProcessing/ (one file per script, <Script>LoC.py).
+# Devanagari's LoC (Library of Congress) romanization logic. See
+# ScriptProcessing/HOW_TO_ADD_LOC.md for the naming convention this
+# follows and how to add a new script. Renamed from RomanLoCDevanagari.py
+# for consistency with the rest of ScriptProcessing/ (one file per
+# script, <Script>LoC.py).
 #
-# HindiMarathiRomanLoCFix and DevanagariRomanLoCFix each independently
-# define the SAME option name in both PreProcess.py and PostProcess.py,
-# as genuinely different functions - can't both be a bare top-level
-# `def` of the identical name in one file. Suffixed _pre/_post here;
-# PreProcess.py/PostProcess.py each re-export their own half under the
-# ORIGINAL (unsuffixed) name via `import X_pre as X` / `import X_post as
-# X`, so the public option name (post_options=['X']/pre_options=['X'])
-# is completely unchanged.
+# HindiMarathiRomanLoCFix_pre/_post is a genuinely standalone option
+# (never part of the auto-applied RomanLoC default bundle) - still
+# independently re-exported under its own unsuffixed name, same as
+# before. DevanagariRomanLoCFix_pre/_post, by contrast, WAS part of the
+# default bundle - it's now purely internal, called only from
+# RomanLocToDevanagariPre/DevanagariToRomanLocPost below, no longer
+# independently re-exported.
 
 import re
-
-# ---- Pre-processing options ----
 
 def HindiMarathiRomanLoCFix_pre(Strng):
     """Substitutes 'sh'→ṣ, ḷ→ḻ, and l̤→l̳ before Hindi/Marathi Library of Congress romanization."""
@@ -34,8 +31,6 @@ def DevanagariRomanLoCFix_pre(Strng):
 
     return Strng
 
-# ---- Post-processing options ----
-
 def HindiMarathiRomanLoCFix_post(Strng):
     """Reverses the Hindi/Marathi LoC substitutions: ṣ→'sh', ḻ→ḷ, l̳→l̤."""
     Strng = Strng.replace('ṣ', 'sh')
@@ -48,5 +43,27 @@ def DevanagariRomanLoCFix_post(Strng):
     """Fixes Devanagari LoC romanization diaeresis-marked digraphs: g-h-diaeresis -> g-underdot h-underdot, t-diaeresis -> t-underdot, s-diaeresis -> s-underdot, h-diaeresis -> h-underdot."""
     Strng = Strng.replace('gḧ', 'g̳h̳').replace('ṭ̈', 't̤').replace('s̈', 's̤')\
         .replace('ḧ', 'h̤')
+
+    return Strng
+
+# ---- Pre-processing options ----
+
+def RomanLocToDevanagariPre(Strng):
+    """Applies candrabindu and nukta-digraph LoC fixes before converting LoC Roman text to Devanagari."""
+    from .RomanLoC import RomanLoCChandrabindu_pre
+    Strng = RomanLoCChandrabindu_pre(Strng)
+    Strng = DevanagariRomanLoCFix_pre(Strng)
+
+    return Strng
+
+# ---- Post-processing options ----
+
+def DevanagariToRomanLocPost(Strng):
+    """Applies anusvara-to-nasal, candrabindu, and nukta-digraph LoC fixes after converting Devanagari to LoC Roman."""
+    from .RomanLoC import RomanLoCChandrabindu_post
+    from .. import PostProcess
+    Strng = PostProcess.AnusvaratoNasalASTISO(Strng)
+    Strng = RomanLoCChandrabindu_post(Strng)
+    Strng = DevanagariRomanLoCFix_post(Strng)
 
     return Strng

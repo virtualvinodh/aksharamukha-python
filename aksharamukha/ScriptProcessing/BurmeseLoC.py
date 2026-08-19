@@ -1,29 +1,20 @@
 # -*- coding: utf-8 -*-
 
-# Burmese's LoC (Library of Congress) romanization pre/post-option
-# logic, consolidated out of PreProcess.py/PostProcess.py. Burmese has
-# no separate XLoC pivot script (unlike Gurmukhi/Tibetan/etc.) - it
-# converts directly via the paired Target/Source option quartet below.
-#
-# BurmeseRomanLoCTarget/BurmeseRomanLoCSource each independently define
-# the SAME option name in both PreProcess.py and PostProcess.py as
-# genuinely different functions - suffixed _pre/_post here, same
-# convention used everywhere else in ScriptProcessing/.
-#
-# Target = applied when Burmese is the SOURCE (native text -> LoC
-# Roman). Source = applied when Burmese is the TARGET (LoC Roman ->
-# native text) - the naming refers to which side of the conversion is
-# LoC Roman, not which side Burmese is on.
+# Burmese's LoC (Library of Congress) romanization logic. See
+# ScriptProcessing/HOW_TO_ADD_LOC.md for the naming convention this
+# follows (BurmeseToRomanLocPre/Post run native->LoC-Roman;
+# RomanLocToBurmesePre/Post run LoC-Roman->native) and how to add a new
+# script. Burmese has no separate LoC character-map pivot (unlike
+# Gurmukhi/Tibetan/etc.) - it converts directly from plain Burmese.
 
 
 import re
 from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.EastIndic import Burmese
 
-
 # ---- Pre-processing options ----
 
-def BurmeseRomanLoCTarget_pre(Strng):
+def BurmeseToRomanLocPre(Strng):
     # asat + virma to just virama
     """Apply Burmese LoC target-side normalization: merge asat+virama, reorder subjoined consonants, mark glottal-stop a and pure viramas, and convert dependent vowel+diacritic sequences to independent vowels."""
     Strng = Strng.replace('\u103A\u1039', '\u1039')
@@ -67,7 +58,7 @@ def BurmeseRomanLoCTarget_pre(Strng):
 
     return Strng
 
-def BurmeseRomanLoCSource_pre(Strng):
+def RomanLocToBurmesePre(Strng):
     # adhoc chars
     """Normalize LoC Burmese romanization source text: expand ad hoc letter codes to Burmese punctuation, fix visarga/diacritic characters, convert comma/period to danda marks, and simplify o-quote sequences to au."""
     chars_misc = {
@@ -108,7 +99,7 @@ def BurmeseRomanLoCSource_pre(Strng):
 
 # ---- Post-processing options ----
 
-def BurmeseRomanLoCTarget_post(Strng):
+def BurmeseToRomanLocPost(Strng):
     #print(Strng)
     # mark tone
     """Applies Library of Congress Burmese romanization target conventions: marks tone, folds 'au+glottal' to 'o+glottal', renders visarga as a tone mark, and substitutes a few adhoc lexical characters."""
@@ -138,7 +129,7 @@ def BurmeseRomanLoCTarget_post(Strng):
 
     return Strng
 
-def BurmeseRomanLoCSource_post(Strng):
+def RomanLocToBurmesePost(Strng):
     # remove marking for pure virama
     """Reverses LoC Burmese romanization conventions back to native encoding: drops pure-virama marker, restores superscript-Ga to subjoined y/r/v/h, reassembles vowel+diacritic sequences, undoes glottal-stop marking."""
     Strng = Strng.replace('ʻ', '')

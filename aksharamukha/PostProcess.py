@@ -479,7 +479,7 @@ def ArabicGimelPaBa(Strng):
 #testcase todo
 # BurmeseLoC's own LoC logic now lives in ScriptProcessing/BurmeseLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.BurmeseLoC import BurmeseRomanLoCTarget_post as BurmeseRomanLoCTarget, BurmeseRomanLoCSource_post as BurmeseRomanLoCSource
+from .ScriptProcessing.BurmeseLoC import BurmeseToRomanLocPost, RomanLocToBurmesePost
 
 #testcase todo
 def removeSegmentSpacesBurmese(Strng):
@@ -508,17 +508,17 @@ def UseAlternateo2(Strng):
 #ThamLoC
 # ThamLoC's own LoC logic now lives in ScriptProcessing/ThamLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.ThamLoC import ThamLoCRomanLoCTarget_post as ThamLoCRomanLoCTarget, ThamLoCRomanLoCSource_post as ThamLoCRomanLoCSource
+from .ScriptProcessing.ThamLoC import ThamLoCToRomanLocPost, RomanLocToThamLoCPost
 
 # khmer
 # KhmerLoC's own LoC logic now lives in ScriptProcessing/KhmerLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.KhmerLoC import KhmerLoCRomanLoCTarget_post as KhmerLoCRomanLoCTarget, KhmerLoCRomanLoCSource_post as KhmerLoCRomanLoCSource
+from .ScriptProcessing.KhmerLoC import KhmerLoCToRomanLocPost, RomanLocToKhmerLoCPost
 
 # shan
 # ShanLoC's own LoC logic now lives in ScriptProcessing/ShanLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.ShanLoC import ShanLoCRomanLoCTarget_post as ShanLoCRomanLoCTarget, ShanLoCRomanLoCSource_post as ShanLoCRomanLoCSource
+from .ScriptProcessing.ShanLoC import ShanLoCToRomanLocPost, RomanLocToShanLoCPost
 
 #testcase todo
 ### Add new consonants here when added to gimeltra_data
@@ -871,7 +871,7 @@ def mDotAboveToBelow(Strng):
 #misnomer
 # MalayalamLoC's own LoC logic now lives in ScriptProcessing/MalayalamLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.MalayalamLoC import MalayalamRomanLoCFix_post as MalayalamRomanLoCFix, mDotBelowToAbove
+from .ScriptProcessing.MalayalamLoC import MalayalamToRomanLocPost
 
 #todo : ISOPali postoptions empty todo
 
@@ -994,7 +994,7 @@ def RomanLoCLaUnderscoreDoubleDot(Strng):
 
 # DevanagariLoC's own logic now lives in ScriptProcessing/DevanagariLoC.py -
 # consolidated there (LoC redesign; renamed from RomanLoCDevanagari.py).
-from .ScriptProcessing.DevanagariLoC import HindiMarathiRomanLoCFix_post as HindiMarathiRomanLoCFix, DevanagariRomanLoCFix_post as DevanagariRomanLoCFix
+from .ScriptProcessing.DevanagariLoC import HindiMarathiRomanLoCFix_post as HindiMarathiRomanLoCFix, DevanagariToRomanLocPost
 
 # DivesAkuru's own logic now lives in ScriptProcessing/DivesAkuru.py -
 # consolidated there (batch migration).
@@ -1010,15 +1010,15 @@ from .ScriptProcessing.Javanese import JavaneseArchaicJNA, JavaneseAvowels, Java
 
 # TibetanLoC's own LoC logic now lives in ScriptProcessing/TibetanLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.TibetanLoC import TibetanLoCRomanLoCFix_post as TibetanLoCRomanLoCFix
+from .ScriptProcessing.TibetanLoC import TibetanLoCToRomanLocPost
 
 # JavaneseLoC's own logic now lives in ScriptProcessing/JavaneseLoC.py -
 # consolidated there (LoC redesign; renamed from RomanLoCJavanese.py).
-from .ScriptProcessing.JavaneseLoC import JavaneseSimplified, JavaneseRomanLoCFix_post as JavaneseRomanLoCFix
+from .ScriptProcessing.JavaneseLoC import JavaneseSimplified, JavaneseToRomanLocPost
 
 # BalineseLoC's own logic now lives in ScriptProcessing/BalineseLoC.py -
 # consolidated there (LoC redesign; renamed from RomanLoCBalinese.py).
-from .ScriptProcessing.BalineseLoC import BalineseSimplified, BalineseRomanLoCFix_post as BalineseRomanLoCFix
+from .ScriptProcessing.BalineseLoC import BalineseSimplified, BalineseToRomanLocPost
 
 # Balinese's own logic now lives in ScriptProcessing/Balinese.py -
 # consolidated there (batch migration).
@@ -1041,7 +1041,7 @@ def BalineseJavaneseMoveRepha(Strng, tgt, reph):
 
 # GurmukhiLoC's own LoC logic now lives in ScriptProcessing/GurmukhiLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.GurmukhiLoC import GurmukhiRomanLoCFix
+from .ScriptProcessing.GurmukhiLoC import GurmukhiLoCToRomanLocPost
 
 def MalayalamNTA(Strng):
     """Converts the n+ra sequence into n+t-line (Malayalam nta orthographic convention)."""
@@ -2009,3 +2009,12 @@ def capitalizeSentence(Strng):
 
     return Strng
 
+# New LoC (Library of Congress) romanization post-options - see
+# ScriptProcessing/HOW_TO_ADD_LOC.md for the naming convention.
+from .ScriptProcessing.TeluguLoC import TeluguToRomanLocPost, RomanLocToTeluguPost
+from .ScriptProcessing.KannadaLoC import KannadaToRomanLocPost
+from .ScriptProcessing.SinhalaLoC import SinhalaToRomanLocPost
+from .ScriptProcessing.OriyaLoC import OriyaToRomanLocPost
+from .ScriptProcessing.AssameseLoC import AssameseToRomanLocPost, RomanLocToAssamesePost
+from .ScriptProcessing.BengaliLoC import BengaliToRomanLocPost, RomanLocToBengaliPost
+from .ScriptProcessing.GujaratiLoC import GujaratiToRomanLocPost

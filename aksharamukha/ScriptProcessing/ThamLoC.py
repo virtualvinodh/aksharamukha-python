@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# ThamLoC's own Fix/pre-option/post-option logic, consolidated out of
-# ConvertFix.py/PreProcess.py/PostProcess.py. FixThamLoC delegates to
-# the shared ConvertFix._FixTaiThamFamily; the pre/post options below
-# are genuinely ThamLoC's own.
-#
-# ThamLoCRomanLoCTarget/ThamLoCRomanLoCSource each independently define
-# the SAME option name in both PreProcess.py and PostProcess.py as
-# genuinely different functions - suffixed _pre/_post here, same
-# convention used everywhere else in ScriptProcessing/.
+# ThamLoC's Fix logic and LoC (Library of Congress) romanization logic
+# - shared by KhuenTham/TaiTham/LaoTham/LueTham, all of which pivot to
+# this same 'ThamLoC' identity. See ScriptProcessing/HOW_TO_ADD_LOC.md
+# for the naming convention this follows and how to add a new script.
+# FixThamLoC delegates to the shared ConvertFix._FixTaiThamFamily.
+# KhuenTham additionally overrides RomanLocToKhuenThamPre in its own
+# file (ScriptProcessing/KhuenTham.py) to inject its extra text marker
+# before delegating to RomanLocToThamLoCPre here.
 #
 # PostProcess/ConvertFix are imported LOCALLY inside each function that
 # needs them (not at module level) - required to avoid a load-order-
@@ -29,7 +28,7 @@ def FixThamLoC(Strng, reverse=False):
 
 # ---- Pre-processing options ----
 
-def ThamLoCRomanLoCTarget_pre(Strng):
+def ThamLoCToRomanLocPre(Strng):
     """Apply Tai Tham LoC target-side vowel fixes for o/eo/aiy/koi/au sequences, the lue-karan sign, and vowel-killer marking."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ThamLoC'))
 
@@ -59,7 +58,7 @@ def ThamLoCRomanLoCTarget_pre(Strng):
 
     return Strng
 
-def ThamLoCRomanLoCSource_pre(Strng):
+def RomanLocToThamLoCPre(Strng):
     """Insert a modifier-letter apostrophe before consonants following bare vowels, and expand ʻ to a+vowel-killer, for Tai Tham LoC source text."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ThamLoCRomanLoC'))
     ListV ='|'.join(GM.CrunchSymbols(GM.Vowels,'ThamLoCRomanLoC'))
@@ -73,11 +72,11 @@ def ThamLoCRomanLoCSource_pre(Strng):
 
 # ---- Post-processing options ----
 
-def ThamLoCRomanLoCTarget_post(Strng):
+def ThamLoCToRomanLocPost(Strng):
     """No-op placeholder (reserved for Tai Tham LoC romanization target-side processing)."""
     return Strng
 
-def ThamLoCRomanLoCSource_post(Strng):
+def RomanLocToThamLoCPost(Strng):
     #cryptogammic dot to Sakot
     """Converts Tai Tham LoC romanization back to native encoding: maps cryptogrammic dot to sakot, fixes the aiy vowel+consonant sequence."""
     Strng = Strng.replace('\u1A7F', '᩠')

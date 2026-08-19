@@ -265,12 +265,6 @@ romanPunctscripts = ['Tamil', 'Kannada', 'Malayalam', 'Telugu', 'Gujarati']
 ## List of supported LoC scripts
 LoCScripts = ['Burmese', 'Shan', 'Khmer', 'KhuenTham', 'TaiTham', 'LaoTham', 'LueTham', 'Kannada', 'Tamil', 'Malayalam', 'Sinhala', 'Telugu', 'Oriya', 'Assamese', 'Bengali', 'Gujarati', 'Devanagari', 'Balinese', 'Javanese', 'BatakKaro', 'BatakManda','BatakPakpak','BatakSima','BatakToba','Gurmukhi', 'Tibetan', 'Limbu']
 
-#Modified Src Input Map for LoC script
-#speicalpostpre process
-# Bare 'Shan'/'Khmer' are unreachable here - by the time loc_post_pre is
-# checked, src/tgt has already been rewritten to its pivot form
-# ('ShanLoC'/'KhmerLoC') a few lines earlier in transliterate.py.
-LocPostPre = ['Burmese', 'ThamLoC', 'ShanLoC', 'KhmerLoC']
 #spcial Loc source
 LoCSrcMap =  ['Shan', 'Khmer', 'Gurmukhi', 'Limbu', 'Tibetan']
 #Sepcial Map for RomanLoC target
@@ -279,51 +273,13 @@ LoCTgtMap = ['Burmese', 'Shan', 'Khmer', 'KhuenTham', 'TaiTham', 'LaoTham', 'Lue
 #They're basically modified ISO
 LoCTgtISO = ['Tamil', 'Malayalam']
 
-##
-LoCTgtPostOptions = {
-    'Telugu': ['AnusvaratoNasalASTISO', 'RomanLoCChandrabindu'],
-    'Kannada': ['AnusvaratoNasalASTISO', 'RomanLoCChandrabindu'],
-    'Malayalam': ['AnusvaratoNasalASTISO', 'RomanLoCChandrabindu', 'MalayalamRomanLoCFix', 'mDotBelowToAbove'],
-    'Sinhala': ['AnusvaratoNasalASTISO',  'SinhalaSannakaNasalization', 'RomanLoCChandrabindu'],
-    'Oriya': ['AnusvaratoNasalASTISO', 'RomanLoCChandrabindu'],
-    'Assamese': ['RomanLoCChandrabindu'],
-    'GurmukhiLoC': ['GurmukhiRomanLoCFix'],
-    'Bengali': ['RomanLoCChandrabindu'],
-    'Gujarati': ['AnusvaratoNasalASTISO', 'RomanLoCChandrabindu'],
-    'Devanagari': ['AnusvaratoNasalASTISO', 'RomanLoCChandrabindu', 'DevanagariRomanLoCFix'],
-    'Balinese': ['BalineseRomanLoCFix'],
-    'Javanese': ['JavaneseRomanLoCFix'],
-    'TibetanLoC': ['TibetanLoCRomanLoCFix']
-}
-
-##
-LoCTgtPreOptions = {
-    'Assamese': ['KhandaTaRomanLoC'],
-    'Bengali': ['KhandaTaRomanLoC', 'BengaliSubojinedVa'],
-}
-
-##
-LoCSrcPostOptions = {
-    'Assamese': ['KhandaTaRomanLoC'],
-    'Bengali': ['KhandaTaRomanLoC'],
-    'Telugu':['TeluguArasunnaChandrabindu']
-}
-
-##
-LoCSrcPreOptions = {
-    'Telugu': ['RomanLoCChandrabindu'],
-    'Kannada': ['RomanLoCChandrabindu'],
-    'Malayalam': ['RomanLoCChandrabindu', 'MalayalamRomanLoCFix'],
-    'Sinhala': ['RomanLoCChandrabindu'],
-    'Oriya': ['RomanLoCChandrabindu'],
-    'Assamese': ['RomanLoCChandrabindu'],
-    'Bengali': ['RomanLoCChandrabindu'],
-    'Gujarati': [ 'RomanLoCChandrabindu'],
-    'Devanagari': ['RomanLoCChandrabindu', 'DevanagariRomanLoCFix'],
-    'Balinese': ['BalineseRomanLoCFix'],
-    'Javanese': ['JavaneseRomanLoCFix'],
-    'TibetanLoC': ['TibetanLoCRomanLoCFix']
-}
+# LocPostPre / LoCTgtPostOptions / LoCTgtPreOptions / LoCSrcPostOptions /
+# LoCSrcPreOptions used to list, per script, which extra pre/post-option
+# names to apply for LoC (Library of Congress) romanization. Removed -
+# every LoC-enabled script's pre/post functions are now auto-discovered
+# by name (<Script>ToRomanLocPre/Post, RomanLocTo<Script>Pre/Post) in
+# transliterate.py, with no registry to maintain. See
+# ScriptProcessing/HOW_TO_ADD_LOC.md.
 
 SemiticScripts = ['Arab-Pa', 'Syrj', 'Syrn', 'Syre', 'Thaa', 'Arab-Ur', 'Type', 'Hebr-Ar', 'Arab-Fa', 'Latn', 'Arab', 'Ethi', 'Armi', 'Brah', 'Chrs', 'Egyp', 'Elym', 'Grek', 'Hatr', 'Hebr', 'Mani', 'Narb', 'Nbat', 'Palm', 'Phli', 'Phlp', 'Phnx', 'Prti', 'Samr', 'Sarb', 'Sogd', 'Sogo', 'Ugar']
 

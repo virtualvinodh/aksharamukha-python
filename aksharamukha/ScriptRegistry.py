@@ -18,8 +18,8 @@ sites migrated to read from it yet - that's separate, incremental,
 future work, one call site at a time, each independently tested.
 """
 
-from dataclasses import dataclass, field
-from typing import Optional, Tuple
+from dataclasses import dataclass
+from typing import Optional
 from . import GeneralMap as GM
 
 
@@ -52,20 +52,15 @@ class ScriptDescriptor:
 
     gemination_mark: Optional[str]
 
-    # LoC (ALA-LC romanization) fields - the data behind the "4 patches"
-    # dispatch cluster in transliterate.py's convert(). Consolidating the
-    # data here doesn't remove the dispatch logic itself (that's later,
-    # riskier work) - it just gives that logic one place to read from
-    # instead of 9.
+    # LoC (ALA-LC romanization) fields read by transliterate.py's unified
+    # LoC dispatch. The per-script pre/post option NAMES used to live
+    # here too (loc_tgt_post_options etc.) - removed once every LoC
+    # script's functions became auto-discoverable by name convention
+    # instead (see ScriptProcessing/HOW_TO_ADD_LOC.md).
     is_loc_script: bool
-    loc_post_pre: bool
     loc_src_map: bool
     loc_tgt_map: bool
     loc_tgt_iso: bool
-    loc_tgt_post_options: Tuple[str, ...] = field(default_factory=tuple)
-    loc_tgt_pre_options: Tuple[str, ...] = field(default_factory=tuple)
-    loc_src_post_options: Tuple[str, ...] = field(default_factory=tuple)
-    loc_src_pre_options: Tuple[str, ...] = field(default_factory=tuple)
 
     # What this script's name becomes when routing through the LoC<->RomanLoC
     # pivot (e.g. 'Gurmukhi' -> 'GurmukhiLoC', any Tham-family script ->
@@ -126,14 +121,9 @@ def _build_registry():
             has_roman_punct=name in GM.romanPunctscripts,
             gemination_mark=GM.Gemination.get(name),
             is_loc_script=name in GM.LoCScripts,
-            loc_post_pre=name in GM.LocPostPre,
             loc_src_map=name in GM.LoCSrcMap,
             loc_tgt_map=name in GM.LoCTgtMap,
             loc_tgt_iso=name in GM.LoCTgtISO,
-            loc_tgt_post_options=tuple(GM.LoCTgtPostOptions.get(name, [])),
-            loc_tgt_pre_options=tuple(GM.LoCTgtPreOptions.get(name, [])),
-            loc_src_post_options=tuple(GM.LoCSrcPostOptions.get(name, [])),
-            loc_src_pre_options=tuple(GM.LoCSrcPreOptions.get(name, [])),
             loc_pivot_name=_loc_pivot_name_for(name),
         )
 
@@ -147,7 +137,7 @@ _MISSING = ScriptDescriptor(
     is_indic=False, is_latin=False, is_semitic=False,
     is_roman_diacritic=False, is_transliteration=False, is_pipe_script=False,
     is_reversible=False, has_roman_numerals=False, has_roman_punct=False,
-    gemination_mark=None, is_loc_script=False, loc_post_pre=False,
+    gemination_mark=None, is_loc_script=False,
     loc_src_map=False, loc_tgt_map=False, loc_tgt_iso=False,
     loc_pivot_name='',
 )
@@ -189,14 +179,9 @@ def _verify_consistency():
         assert d.has_roman_punct == (name in GM.romanPunctscripts), name
         assert d.gemination_mark == GM.Gemination.get(name), name
         assert d.is_loc_script == (name in GM.LoCScripts), name
-        assert d.loc_post_pre == (name in GM.LocPostPre), name
         assert d.loc_src_map == (name in GM.LoCSrcMap), name
         assert d.loc_tgt_map == (name in GM.LoCTgtMap), name
         assert d.loc_tgt_iso == (name in GM.LoCTgtISO), name
-        assert d.loc_tgt_post_options == tuple(GM.LoCTgtPostOptions.get(name, [])), name
-        assert d.loc_tgt_pre_options == tuple(GM.LoCTgtPreOptions.get(name, [])), name
-        assert d.loc_src_post_options == tuple(GM.LoCSrcPostOptions.get(name, [])), name
-        assert d.loc_src_pre_options == tuple(GM.LoCSrcPreOptions.get(name, [])), name
         assert d.loc_pivot_name == _loc_pivot_name_for(name), name
         # The pivot name must always be either the script's own identity or
         # an actually-registered script - catches exactly the kind of silent

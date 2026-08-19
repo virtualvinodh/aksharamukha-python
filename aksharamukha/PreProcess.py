@@ -22,15 +22,15 @@ from .ScriptProcessing.RomanLoC import RomanLoCChandrabindu_pre as RomanLoCChand
 
 # BalineseLoC's own LoC logic now lives in ScriptProcessing/BalineseLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.BalineseLoC import BalineseRomanLoCFix_pre as BalineseRomanLoCFix
+from .ScriptProcessing.BalineseLoC import RomanLocToBalinesePre
 
 # JavaneseLoC's own LoC logic now lives in ScriptProcessing/JavaneseLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.JavaneseLoC import JavaneseRomanLoCFix_pre as JavaneseRomanLoCFix
+from .ScriptProcessing.JavaneseLoC import RomanLocToJavanesePre
 
 # DevanagariLoC's own logic now lives in ScriptProcessing/DevanagariLoC.py -
 # consolidated there (LoC redesign; renamed from RomanLoCDevanagari.py).
-from .ScriptProcessing.DevanagariLoC import HindiMarathiRomanLoCFix_pre as HindiMarathiRomanLoCFix, DevanagariRomanLoCFix_pre as DevanagariRomanLoCFix
+from .ScriptProcessing.DevanagariLoC import HindiMarathiRomanLoCFix_pre as HindiMarathiRomanLoCFix, RomanLocToDevanagariPre
 
 def RomanLoCLaUnderscoreDoubleDot(Strng):
     """Convert ḻ to l̤ (or back to ḻ) for Library of Congress romanization depending on direction; note: the forward variant (line 37) is missing its return statement, a likely bug."""
@@ -60,7 +60,7 @@ def RomanLoCLaUnderscoreDoubleDot(Strng):
 
 # MalayalamLoC's own LoC logic now lives in ScriptProcessing/MalayalamLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.MalayalamLoC import MalayalamRomanLoCFix_pre as MalayalamRomanLoCFix
+from .ScriptProcessing.MalayalamLoC import RomanLocToMalayalamPre
 
 def IASTLDotRetroflex(Strng):
     """Convert IAST ḷ (retroflex l) to l̤ for Library of Congress-style romanization."""
@@ -75,7 +75,7 @@ def ArchaicJnaSimplifyRomanLOC(Strng):
 
 # TibetanLoC's own LoC logic now lives in ScriptProcessing/TibetanLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.TibetanLoC import TibetanLoCRomanLoCFix_pre as TibetanLoCRomanLoCFix
+from .ScriptProcessing.TibetanLoC import TibetanLoCToRomanLocPre, RomanLocToTibetanLoCPre
 
 def BalineseJavaneseMoveRepha(Strng, tgt, reph):
     """Reposition the repha (pre-base r) sign to follow its consonant cluster and vowel sign in Balinese/Javanese script."""
@@ -134,7 +134,7 @@ def RetainPipeDanda(Strng, src):
 #ThamLoC
 # ThamLoC's own LoC logic now lives in ScriptProcessing/ThamLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.ThamLoC import ThamLoCRomanLoCTarget_pre as ThamLoCRomanLoCTarget, ThamLoCRomanLoCSource_pre as ThamLoCRomanLoCSource
+from .ScriptProcessing.ThamLoC import ThamLoCToRomanLocPre, RomanLocToThamLoCPre
 
 # Khmer's own logic now lives in ScriptProcessing/Khmer.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
@@ -143,12 +143,12 @@ from .ScriptProcessing.Khmer import KhmerWordSplit
 
 # KhmerLoC's own LoC logic now lives in ScriptProcessing/KhmerLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.KhmerLoC import KhmerLoCRomanLoCTarget_pre as KhmerLoCRomanLoCTarget, KhmerLoCRomanLoCSource_pre as KhmerLoCRomanLoCSource
+from .ScriptProcessing.KhmerLoC import KhmerLoCToRomanLocPre, RomanLocToKhmerLoCPre
 
 # shan
 # ShanLoC's own LoC logic now lives in ScriptProcessing/ShanLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.ShanLoC import ShanLoCRomanLoCTarget_pre as ShanLoCRomanLoCTarget, ShanLoCRomanLoCSource_pre as ShanLoCRomanLoCSource
+from .ScriptProcessing.ShanLoC import ShanLoCToRomanLocPre, RomanLocToShanLoCPre
 
 # KhuenTham's own logic now lives in ScriptProcessing/KhuenTham.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
@@ -157,7 +157,7 @@ from .ScriptProcessing.KhuenTham import KhuenRaHaamKaren
 
 # BurmeseLoC's own LoC logic now lives in ScriptProcessing/BurmeseLoC.py -
 # consolidated there (LoC redesign).
-from .ScriptProcessing.BurmeseLoC import BurmeseRomanLoCTarget_pre as BurmeseRomanLoCTarget, BurmeseRomanLoCSource_pre as BurmeseRomanLoCSource
+from .ScriptProcessing.BurmeseLoC import BurmeseToRomanLocPre, RomanLocToBurmesePre
 
 def paliTham(Strng):
 
@@ -1189,3 +1189,14 @@ def IPAIndic(Strng):
     Strng = Strng.replace("ɛ","e")
 
     return
+
+# New LoC (Library of Congress) romanization pre-options - see
+# ScriptProcessing/HOW_TO_ADD_LOC.md for the naming convention.
+from .ScriptProcessing.TeluguLoC import RomanLocToTeluguPre
+from .ScriptProcessing.KannadaLoC import RomanLocToKannadaPre
+from .ScriptProcessing.SinhalaLoC import RomanLocToSinhalaPre
+from .ScriptProcessing.OriyaLoC import RomanLocToOriyaPre
+from .ScriptProcessing.AssameseLoC import AssameseToRomanLocPre, RomanLocToAssamesePre
+from .ScriptProcessing.BengaliLoC import BengaliToRomanLocPre, RomanLocToBengaliPre
+from .ScriptProcessing.GujaratiLoC import RomanLocToGujaratiPre
+from .ScriptProcessing.KhuenTham import RomanLocToKhuenThamPre

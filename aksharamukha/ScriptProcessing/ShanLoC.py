@@ -1,24 +1,20 @@
 # -*- coding: utf-8 -*-
 
-# ShanLoC's own pre/post-option logic, consolidated out of
-# PreProcess.py/PostProcess.py. No dedicated FixShanLoC exists - the
-# ShanLoC pivot script (ScriptMap/EastIndic/ShanLoC.py) relies purely
-# on these pre/post options plus the ordinary FixShan dispatch.
-#
-# ShanLoCRomanLoCTarget/ShanLoCRomanLoCSource each independently define
-# the SAME option name in both PreProcess.py and PostProcess.py as
-# genuinely different functions - suffixed _pre/_post here. Both
-# reference Burmese's ConsonantMap/ViramaMap directly (Shan's subjoined-
-# consonant ordering is defined in terms of Burmese's), not Shan's own.
+# ShanLoC's LoC (Library of Congress) romanization logic. See
+# ScriptProcessing/HOW_TO_ADD_LOC.md for the naming convention this
+# follows and how to add a new script. No dedicated FixShanLoC exists -
+# the ShanLoC pivot script (ScriptMap/EastIndic/ShanLoC.py) relies
+# purely on these pre/post functions plus the ordinary FixShan dispatch.
+# References Burmese's ConsonantMap/ViramaMap directly (Shan's
+# subjoined-consonant ordering is defined in terms of Burmese's).
 
 
 import re
 from aksharamukha.ScriptMap.EastIndic import Burmese
 
-
 # ---- Pre-processing options ----
 
-def ShanLoCRomanLoCTarget_pre(Strng):
+def ShanLoCToRomanLocPre(Strng):
     #preserve ႂ်
     """Apply Shan LoC target-side normalization: unify /aa/ vowel spellings, merge asat+virama, reorder subjoined consonants, and mark glottal-stop a and pure viramas."""
     Strng = Strng.replace('ႂ်', '\u036E')
@@ -55,21 +51,21 @@ def ShanLoCRomanLoCTarget_pre(Strng):
 
     return Strng
 
-def ShanLoCRomanLoCSource_pre(Strng):
+def RomanLocToShanLoCPre(Strng):
 
     """Placeholder Shan LoC source-side hook (currently a no-op passthrough)."""
     return Strng
 
 # ---- Post-processing options ----
 
-def ShanLoCRomanLoCTarget_post(Strng):
+def ShanLoCToRomanLocPost(Strng):
     """Reorders Shan LoC romanization glottal-stop and tone-mark combining diacritics relative to the preceding vowel/consonant."""
     Strng = re.sub('(ʻ)([\u0310\u0322])', r'\2\1', Strng)
     Strng = re.sub('(ō)([\u0310\u0322]?)(ʻ)', r'\1\2', Strng)
 
     return Strng
 
-def ShanLoCRomanLoCSource_post(Strng):
+def RomanLocToShanLoCPost(Strng):
     # restrore special yrvh
     """Restores Shan LoC romanization conventions to native Shan script: undoes subjoined y/r/v marking, strips pure-vowel and glottal markers, reverses ai, and resolves open/closed vowel-consonant ambiguity."""
     yrv = Burmese.ConsonantMap[25:27] + Burmese.ConsonantMap[28:29]

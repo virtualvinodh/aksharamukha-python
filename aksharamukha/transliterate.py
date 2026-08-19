@@ -247,28 +247,39 @@ def _apply_indic_dandas_preoption(src, tgt, txt, preoptions, postoptions):
 
     return txt, preoptions, postoptions
 
-# The 4 "east-Asian LoC" pivot scripts (Burmese, Shan, Khmer, and the
-# Tham-family) get an extra preoption/postoption injected by name, e.g.
-# 'BurmeseRomanLoCTarget' - previously built by raw string concatenation
-# (tgt + 'Target' / src + 'Source') with no check that the constructed name
-# actually corresponds to a real function. Audited: all 8 names below have
-# a real consumer in both PreProcess.py and PostProcess.py (confirmed via
-# grep, 2026-08). Made explicit here instead of computed blindly - can't
-# verify this the way ScriptRegistry verifies its other fields, since
-# PreProcess.py/PostProcess.py already import ScriptRegistry, so importing
-# them back from here would be circular.
-_LOC_POST_PRE_TARGET_OPTION = {
-    'Burmese': 'BurmeseRomanLoCTarget',
-    'ShanLoC': 'ShanLoCRomanLoCTarget',
-    'KhmerLoC': 'KhmerLoCRomanLoCTarget',
-    'ThamLoC': 'ThamLoCRomanLoCTarget',
-}
-_LOC_POST_PRE_SOURCE_OPTION = {
-    'Burmese': 'BurmeseRomanLoCSource',
-    'ShanLoC': 'ShanLoCRomanLoCSource',
-    'KhmerLoC': 'KhmerLoCRomanLoCSource',
-    'ThamLoC': 'ThamLoCRomanLoCSource',
-}
+# Unified LoC (Library of Congress romanization) dispatch. See
+# ScriptProcessing/HOW_TO_ADD_LOC.md for the naming convention and how
+# to add a new script. Every LoC-enabled script gets up to 4 functions,
+# auto-discovered purely by name - no registry/dict to maintain:
+#   <Script>ToRomanLocPre / <Script>ToRomanLocPost   (native -> LoC Roman)
+#   RomanLocTo<Script>Pre / RomanLocTo<Script>Post   (LoC Roman -> native)
+# None are mandatory - most scripts only need one or two. For scripts
+# that share a pivot (KhuenTham/TaiTham/LaoTham/LueTham all route
+# through 'ThamLoC'), the lookup tries the script's own name first, then
+# falls back to the shared pivot name - so KhuenTham can override with
+# its own function (see ScriptProcessing/KhuenTham.py) while the others
+# automatically share the pivot-level implementation with zero extra code.
+
+def _loc_option_names(script, to_roman, direction):
+    """Candidate function names for a script's LoC pre/post option, own
+    name first then pivot name as fallback. to_roman=True for the
+    native->Roman direction, False for Roman->native. direction is
+    'Pre' or 'Post'."""
+    names = [script]
+    pivot = SR.get(script).loc_pivot_name
+    if pivot and pivot != script:
+        names.append(pivot)
+    for name in names:
+        yield (name + 'ToRomanLoc' + direction) if to_roman else ('RomanLocTo' + name + direction)
+
+def _apply_loc_option(module, script, to_roman, direction, options_list, prepend):
+    for fname in _loc_option_names(script, to_roman, direction):
+        if hasattr(module, fname):
+            if prepend:
+                options_list.insert(0, fname)
+            else:
+                options_list.append(fname)
+            return
 
 # The two "not LoC-associated" cases (src-side and tgt-side) really are
 # clean mirrors of each other - unified here.
@@ -278,64 +289,45 @@ def _resolve_loc_fallback_target(script):
     else:
         return 'ISO'
 
-# The two "is LoC-associated" cases (below) are NOT clean mirrors of each
-# other, despite looking like they should be - kept as two separate named
-# functions rather than one merged behind an is_source flag, which would
-# just be the reverse=-fusion anti-pattern in a new shape. Real differences,
-# not just renamed variables:
-#  - target-side alone injects the Khuen-text u02BE marker
-#  - source-side alone adds the extra 'SchwaFinalKhmerLoC' preoption
-#  - source-side appends to preoptions but prepends to postoptions;
-#    target-side prepends to both
-#  - they read different ScriptRegistry fields (loc_tgt_* vs loc_src_*)
+# nativize=False is preserved specifically for the 4 scripts that used
+# to route through the old "east-Asian LoC" special case (Burmese, Shan,
+# Khmer, and the Tham-family, via their pivot names) - not fully
+# understood well enough downstream to risk generalizing to every LoC
+# script in this pass, so kept as an explicit, narrow carry-over rather
+# than silently changed.
+_LOC_NATIVIZE_FALSE_PIVOTS = {'Burmese', 'ShanLoC', 'KhmerLoC', 'ThamLoC'}
+
 def _resolve_loc_when_source_is_loc_script(src, tgt, txt, preoptions, postoptions, nativize):
-    ### swtiches for Source scripts
-    src = SR.get(src).loc_pivot_name
-    if SR.get(src).loc_tgt_map:
-        tgt = src + tgt
-    elif SR.get(src).loc_tgt_iso:
+    pivot = SR.get(src).loc_pivot_name
+    if SR.get(pivot).loc_tgt_map:
+        tgt = pivot + tgt
+    elif SR.get(pivot).loc_tgt_iso:
         tgt = 'ISO'
 
-    # the below order for preoptions is important
-    #special for east-asian scripts
-    if SR.get(src).loc_post_pre:
-        target_option = _LOC_POST_PRE_TARGET_OPTION[src]
-        preoptions = preoptions + [target_option]
-        postoptions =  [target_option] + postoptions
+    # order matters: pre-options APPEND (run after any user-supplied
+    # preoptions), post-options PREPEND (run before any user-supplied
+    # postoptions) - applied uniformly for every LoC script now.
+    _apply_loc_option(PreProcess, src, True, 'Pre', preoptions, prepend=False)
+    _apply_loc_option(PostProcess, src, True, 'Post', postoptions, prepend=True)
+    if pivot in _LOC_NATIVIZE_FALSE_PIVOTS:
         nativize = False
 
-        if src in ['KhmerLoC']:
-            preoptions =  preoptions + ['SchwaFinalKhmerLoC']
-    #read from ScriptRegistry
-    else:
-        if SR.get(src).loc_tgt_post_options:
-            postoptions =  list(SR.get(src).loc_tgt_post_options) + postoptions
-        if SR.get(src).loc_tgt_pre_options:
-            preoptions =  preoptions + list(SR.get(src).loc_tgt_pre_options)
-
+    src = pivot
     return src, tgt, txt, preoptions, postoptions, nativize
 
 def _resolve_loc_when_target_is_loc_script(src, tgt, txt, preoptions, postoptions, nativize, ctx):
-    if 'Khuen' in tgt:
-        txt = txt+'\u02BE' # indicator for Khuen text
-    tgt = SR.get(tgt).loc_pivot_name
-    if SR.get(tgt).loc_tgt_map:
-        src = tgt + src
-    elif SR.get(tgt).loc_tgt_iso:
+    pivot = SR.get(tgt).loc_pivot_name
+    if SR.get(pivot).loc_tgt_map:
+        src = pivot + src
+    elif SR.get(pivot).loc_tgt_iso:
         src = 'ISO'
 
-    if SR.get(tgt).loc_post_pre:
-        source_option = _LOC_POST_PRE_SOURCE_OPTION[tgt]
-        preoptions = [source_option] + preoptions
-        postoptions =  [source_option] + postoptions
+    _apply_loc_option(PreProcess, tgt, False, 'Pre', preoptions, prepend=False)
+    _apply_loc_option(PostProcess, tgt, False, 'Post', postoptions, prepend=True)
+    if pivot in _LOC_NATIVIZE_FALSE_PIVOTS:
         nativize = False
-    #read from ScriptRegistry
-    else:
-        if SR.get(tgt).loc_src_post_options:
-            postoptions =  list(SR.get(tgt).loc_src_post_options) + postoptions
-        if SR.get(tgt).loc_src_pre_options:
-            preoptions =  preoptions + list(SR.get(tgt).loc_src_pre_options)
 
+    tgt = pivot
     return src, tgt, txt, preoptions, postoptions, nativize
 
 def _resolve_loc_dispatch(src, tgt, txt, preoptions, postoptions, nativize, ctx):

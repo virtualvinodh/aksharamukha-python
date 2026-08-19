@@ -30,3 +30,15 @@ def KhuenRaHaamKaren(Strng):
     Strng = Strng.replace('᩼', '᩺')
 
     return Strng
+
+# KhuenTham overrides the shared ThamLoC RomanLocToPre with its own
+# extra text-marker injection before delegating - see
+# ScriptProcessing/HOW_TO_ADD_LOC.md and ScriptProcessing/ThamLoC.py.
+
+def RomanLocToKhuenThamPre(Strng):
+    """Injects the Khuen text marker, then applies the shared Tai Tham LoC pre-conversion fix, before converting LoC Roman text to Khuen Tham."""
+    from .ThamLoC import RomanLocToThamLoCPre
+    Strng = Strng + '\u02BE'  # indicator for Khuen text
+    Strng = RomanLocToThamLoCPre(Strng)
+
+    return Strng
