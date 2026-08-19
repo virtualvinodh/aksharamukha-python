@@ -359,17 +359,59 @@ CharmapLists = ['VowelMap', 'VowelSignMap', 'ConsonantMap', 'SignMap', 'Ayogavah
 # round-trips broke - confirmed empirically, not just by reasoning.)
 InterAdd = {'VowelMap': '\U000F0000', 'VowelSignMap': '\U000F0000', 'ConsonantMap':'\U000F2000', 'SignMap':'\U000F3000', 'AyogavahaMap':'\U000F4000', 'ModernVowelMap': '\U000F5000', 'ModernVowelSignMap':'\U000F5000'}
 
+# Canonical per-category letter orders, used to resolve the mnemonic HK-style
+# names FallBack.py's OthersRev/OthersNonRev/Others base index can use
+# instead of a raw integer (e.g. 'u' instead of 4). These match HK.py's own
+# literal base-list definitions exactly (VOWEL_SIGN_NAMES = VOWEL_NAMES[1:]
+# because HK.py itself defines VowelSignMap = VowelMap[1:]; MODERN_VOWEL_NAMES
+# covers both Modern forms because HK.py defines ModernVowelSignMap =
+# ModernVowelMap[:], unshifted) - not an independently-maintained guess.
+VOWEL_NAMES = ['a', 'A', 'i', 'I', 'u', 'U', 'R', 'RR', 'lR', 'lRR', 'e', 'ai', 'o', 'au']
+VOWEL_SIGN_NAMES = VOWEL_NAMES[1:]
+MODERN_VOWEL_NAMES = ['aE', 'aO']
+CONSONANT_NAMES = ['k', 'kh', 'g', 'gh', 'G', 'c', 'ch', 'j', 'jh', 'J', 'T', 'Th', 'D', 'Dh', 'N',
+                    't', 'th', 'd', 'dh', 'n', 'p', 'ph', 'b', 'bh', 'm', 'y', 'r', 'l', 'v', 'z', 'S', 's', 'h']
+AYOGAVAHA_NAMES = ['~', 'M', 'H']
+NAME_TABLES = {
+    'VowelMap': VOWEL_NAMES,
+    'VowelSignMap': VOWEL_SIGN_NAMES,
+    'ConsonantMap': CONSONANT_NAMES,
+    'SignMap': None,
+    'AyogavahaMap': AYOGAVAHA_NAMES,
+    'ModernVowelMap': MODERN_VOWEL_NAMES,
+    'ModernVowelSignMap': MODERN_VOWEL_NAMES,
+}
+
+def _resolve_base_index(charlist, base):
+    # base is normally an HK-style name (str) resolved against this
+    # category's own canonical order. A handful of FallBack.py entries still
+    # carry a raw int - either -1 (no base character) or, in one known case
+    # (VowelPairs['Thamclosedau']'s dependent form), an index past the
+    # canonical range that's always meant a previously-synthesized fallback
+    # character at that position in whichever script requests it - existing,
+    # order-dependent behavior predating this naming scheme, left as-is
+    # rather than silently reinterpreted.
+    if isinstance(base, str):
+        return NAME_TABLES[charlist].index(base)
+    return base
+
 def add_additional_chars(script_char_map, file_script):
     for charlist in CharmapLists:
         mapping_char = getattr(fb, charlist)
-        #print('vinodh')
-        #print(file_script)
         ModScript = importlib.import_module(ScriptPath(file_script))
         InterAddIndex = ord(InterAdd[charlist])
         for num, mapng in enumerate(mapping_char.items()):
                 char, mapping = mapng
-                if file_script in mapping.keys():
-                        script_char_map[charlist].append(mapping[file_script])
+                # A key can be a single script name, or (when several
+                # scripts share the same value) a tuple of script names.
+                direct = mapping.get(file_script)
+                if direct is None:
+                    for k in mapping:
+                        if isinstance(k, tuple) and file_script in k:
+                            direct = mapping[k]
+                            break
+                if direct is not None:
+                        script_char_map[charlist].append(direct)
                 elif file_script == 'Inter':
                         script_char_map[charlist].append(chr(InterAddIndex+num))
                 else:
@@ -378,29 +420,37 @@ def add_additional_chars(script_char_map, file_script):
                     else:
                         mapchar = 'OthersNonRev'
 
-                    if mapping[mapchar][0] == -1:
+                    # 'Others' is the single spec used for both reversible and
+                    # non-reversible scripts, when they don't need to differ -
+                    # OthersRev/OthersNonRev only appear explicitly for the
+                    # rare entries where the two genuinely need different
+                    # suffixes.
+                    spec = mapping.get(mapchar, mapping.get('Others'))
+
+                    base_raw = spec[0]
+                    if base_raw == -1:
                          first_char = ''
                     else:
-                         base_index = mapping[mapchar][0]
+                         base_index = _resolve_base_index(charlist, base_raw)
                          if base_index >= len(script_char_map[charlist]):
                              raise ValueError(
-                                 "FallBack.py entry %r's %s base index %d is out of range "
+                                 "FallBack.py entry %r's %s base %r is out of range "
                                  "for %s's own %s (only %d entries so far) - a bad fallback "
                                  "index in FallBack.py, not a problem with %s itself."
-                                 % (char, mapchar, base_index, file_script, charlist,
+                                 % (char, mapchar, base_raw, file_script, charlist,
                                     len(script_char_map[charlist]), file_script))
                          first_char = script_char_map[charlist][base_index]
 
-                    if len(mapping[mapchar]) > 1:
+                    if len(spec) > 1:
                         # 'nukta' is a sentinel value, not a literal suffix - checked by
                         # position (not `in`, which would also match if it ever appeared
                         # as the base index instead of the suffix).
-                        if mapping[mapchar][1] == 'nukta':
+                        if spec[1] == 'nukta':
                             second_char = ModScript.NuktaMap[0]
                         else:
-                            second_char = mapping[mapchar][1]
+                            second_char = spec[1]
 
-                    if len(mapping[mapchar]) == 1:
+                    if len(spec) == 1:
                         script_char_map[charlist].append(first_char)
                     else:
                         script_char_map[charlist].append(first_char+second_char)
