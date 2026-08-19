@@ -1837,76 +1837,9 @@ from .ScriptProcessing.WarangCiti import _FixWarangCitiEncode, _FixWarangCitiDec
 from .ScriptProcessing.LimbuLoC import _FixLimbuLoCEncode, _FixLimbuLoCDecode, FixLimbuLoC
 
 #Subojined & Final
-def _FixLimbuEncode(Strng):
-    vir = Limbu.ViramaMap[0]
-
-    SCons = [vir+x for x in [Limbu.ConsonantMap[x] for x in [25,26,28]]]  # /ya/, /ra/, /va/
-    SubCons = ['\u1929','\u192A','\u192B']
-
-    for x,y in zip(SCons,SubCons):
-        # Replace Subjoined Consonants
-        Strng = Strng.replace(x,y)
-
-    signAll = '|'.join(GM.CrunchSymbols(GM.Consonants+GM.Vowels+GM.VowelSignsNV, "Limbu"))
-
-    FCons = [x+vir for x in [Limbu.ConsonantMap[x] for x in[0,4,15,19,20,24,26,27]]]
-    FinalCons = ['\u1930','\u1931','\u1933','\u1934','\u1935','\u1936','\u1937','\u1938']
-
-    ### ZWNJ with finalcons + ya/ra/la/va (perhaps do this for other scripts)ˍ
-    #Strng = Strng.replace("\u1922\u193A", "\u193A\u1922")
-    Strng = Strng.replace('꞉', '᤺')
-
-    for x,y in zip(FCons,FinalCons):
-        # Replace Final pure consonants
-        Strng = re.sub('('+signAll+')'+ '(\u193A?)' + '('+x+')',r'\1\2'+y,Strng)
-
-    Strng = Strng.replace('ʔ','᤹')
-    Strng = Strng.replace('!','᥄')
-    Strng = Strng.replace('?','᥅')
-    ## Add proper support for Limbu e,o to Devanagari
-    ## Limbu Question mark and exclamation mark?
-    ## LImbu to devanagari conventions
-    ## Limbu Danda
-
-    return Strng
-
-def _FixLimbuDecode(Strng):
-    vir = Limbu.ViramaMap[0]
-
-    SCons = [vir+x for x in [Limbu.ConsonantMap[x] for x in [25,26,28]]]  # /ya/, /ra/, /va/
-    SubCons = ['\u1929','\u192A','\u192B']
-
-    for x,y in zip(SCons,SubCons):
-        # Reverse above
-        Strng = Strng.replace(y,x)
-
-    signAll = '|'.join(GM.CrunchSymbols(GM.Consonants+GM.Vowels+GM.VowelSignsNV, "Limbu"))
-
-    FCons = [x+vir for x in [Limbu.ConsonantMap[x] for x in[0,4,15,19,20,24,26,27]]]
-    FinalCons = ['\u1930','\u1931','\u1933','\u1934','\u1935','\u1936','\u1937','\u1938']
-
-    ### ZWNJ with finalcons + ya/ra/la/va (perhaps do this for other scripts)ˍ
-    #Strng = Strng.replace("\u193A\u1922", "\u1922\u193A")
-    Strng = re.sub('(' + '|'.join(FinalCons) + ')' + '(?=[ᤕᤖᤘ])', r'\1' + '\u200C', Strng)
-    Strng = re.sub('([ᤀᤁᤂᤃᤄᤅᤆᤇᤈᤉᤊᤋᤌᤍᤎᤏᤐᤑᤒᤓᤔᤕᤖᤗᤘᤚᤛᤜᤠᤣᤥᤧᤨᤩᤪᤫ])᤺', r'\1' + '꞉', Strng)
-    ## Modifying letter colon ## Fix this only with aH ᤆᤠ᤺ᤣ
-
-    for x,y in zip(FCons,FinalCons):
-        # Reverse above
-        Strng = Strng.replace(y,x)
-
-    Strng = Strng.replace('᤹', 'ʔ')
-    Strng = Strng.replace('᥄', '!')
-    Strng = Strng.replace('᥅', '?')
-    ## Add proper support for Limbu e,o to Devanagari
-    ## Limbu Question mark and exclamation mark?
-    ## LImbu to devanagari conventions
-    ## Limbu Danda
-
-    return Strng
-
-def FixLimbu(Strng,reverse=False):
-    return _FixLimbuDecode(Strng) if reverse else _FixLimbuEncode(Strng)
+# Limbu's own logic now lives in ScriptProcessing/Limbu.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Limbu import _FixLimbuEncode, _FixLimbuDecode, FixLimbu
 
 
 def _FixDevanagariEncode(Strng):
@@ -2173,18 +2106,9 @@ def FixArab_Ur(Strng, Source, reverse=False):
 # GM.resolve's getattr(CF, "FixUgar", ...) dispatch keeps working.
 from .ScriptProcessing.Ugar import _FixUgarEncode, _FixUgarDecode, FixUgar
 
-def _FixSogdEncode(Strng, Source):
-    Strng = Strng.replace("𐼹²","𐽄")
-
-    return Strng
-
-def _FixSogdDecode(Strng, Source):
-    pass
-
-    return Strng
-
-def FixSogd(Strng, Source, reverse=False):
-    return _FixSogdDecode(Strng, Source) if reverse else _FixSogdEncode(Strng, Source)
+# Sogd's own logic now lives in ScriptProcessing/Sogd.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Sogd import _FixSogdEncode, _FixSogdDecode, FixSogd
 
 def _FixMalayalamEncode(Strng):
     Strng = PostProcess.MalayalamChillu(Strng, False)

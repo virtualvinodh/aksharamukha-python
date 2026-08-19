@@ -777,16 +777,14 @@ def vtobJapanese(txt):
     return txt
 
 #todo testcase
-def SogdReshAyin(Strng):
-    Strng = Strng.replace('𐼽', '𐽀')
-
-    return Strng
+# Sogd's own logic now lives in ScriptProcessing/Sogd.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Sogd import SogdReshAyin_post as SogdReshAyin
 
 #todo testcase
-def SogoReshAyinDaleth(Strng):
-    Strng = Strng.replace('𐼓','𐼘')
-
-    return Strng
+# Sogo's own logic now lives in ScriptProcessing/Sogo.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Sogo import SogoReshAyinDaleth_post as SogoReshAyinDaleth
 
 #todo testcase
 def arabPaFa(Strng):
@@ -1543,12 +1541,9 @@ def RomanLoCLaUnderscoreDoubleDot(Strng):
 
     return Strng
 
-def HindiMarathiRomanLoCFix(Strng):
-    Strng = Strng.replace('ṣ', 'sh')
-    Strng = Strng.replace('ḻ', 'ḷ')
-    Strng = Strng.replace('l̳', 'l̤')
-
-    return Strng
+# RomanLoCDevanagari's own logic now lives in ScriptProcessing/RomanLoCDevanagari.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.RomanLoCDevanagari import HindiMarathiRomanLoCFix_post as HindiMarathiRomanLoCFix
 
 def DivesAkuruHomoOrganNasal(Strng):
     homoNasal = '\U0001193F'
@@ -1960,17 +1955,9 @@ from .ScriptProcessing.Lao import LaoNative
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Sundanese import SundaneseHistoricConjuncts, SundaneseRemoveHistoric
 
-def LimbuSpellingSaI(Strng):
-    vir = Limbu.ViramaMap[0]
-
-    FCons = [x+vir for x in [Limbu.ConsonantMap[x] for x in[0,4,15,19,20,24,26,27]]]
-    FinalCons = ['\u1930','\u1931','\u1933','\u1934','\u1935','\u1936','\u1937','\u1938']
-
-    for x, y in zip(FCons, FinalCons):
-        Strng = Strng.replace('\u193A' + y, x)
-        Strng = Strng.replace('\u193A\u1922' + y, '\u1922' + x)
-
-    return Strng
+# Limbu's own logic now lives in ScriptProcessing/Limbu.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Limbu import LimbuSpellingSaI_post as LimbuSpellingSaI, LimburemoveHistorical
 
 def siddhammukta(Strng):
     return Strng
@@ -2031,14 +2018,9 @@ def ModiRemoveLong(Strng):
 
     return Strng
 
-def LimbuDevanagariConvention(Strng):
-    Strng = Strng.replace('ऎ', 'ए़')
-    Strng = Strng.replace('ऒ', 'ओ़')
-    Strng = Strng.replace('ॆ', 'े़')
-    Strng = Strng.replace('ॊ', 'ो़')
-    Strng = Strng.replace('꞉', 'ः')
-
-    return Strng
+# DevanagariLimbu's own logic now lives in ScriptProcessing/DevanagariLimbu.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.DevanagariLimbu import LimbuDevanagariConvention_post as LimbuDevanagariConvention
 
 # Nandinagari's own logic now lives in ScriptProcessing/Nandinagari.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
@@ -2082,14 +2064,6 @@ def archaicAIAU(Strng):
 def MalayalamremoveHistorical(Strng):
     Strng = Strng.replace('\u0D29','\u0D28')
     Strng = Strng.replace('ന‍്', 'ൻ')
-
-    return Strng
-
-def LimburemoveHistorical(Strng):
-    removePairs = [("ᤉ", "ᤈ"), ("ᤊ","ᤏ"), ("ᤚ", "ᤙ"), ("ᤲ", "ᤱ")]
-
-    for x,y in removePairs:
-        Strng = Strng.replace(x,y)
 
     return Strng
 

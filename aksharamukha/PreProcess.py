@@ -30,12 +30,9 @@ def JavaneseRomanLoCFix(Strng):
 
     return Strng
 
-def HindiMarathiRomanLoCFix(Strng):
-    Strng = Strng.replace('sh', 'ṣ')
-    Strng = Strng.replace('ḷ', 'ḻ')
-    Strng = Strng.replace('l̤', 'l̳')
-
-    return Strng
+# RomanLoCDevanagari's own logic now lives in ScriptProcessing/RomanLoCDevanagari.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.RomanLoCDevanagari import HindiMarathiRomanLoCFix_pre as HindiMarathiRomanLoCFix
 
 def RomanLoCLaUnderscoreDoubleDot(Strng):
     Strng = Strng.replace('ḻ', 'l̤')
@@ -609,15 +606,13 @@ def default(Strng):
 
     return Strng
 
-def SogdReshAyin(Strng):
-    Strng = Strng.replace('𐽀', '[\uEA01-\uEA02]') # resh yin
+# Sogd's own logic now lives in ScriptProcessing/Sogd.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Sogd import SogdReshAyin_pre as SogdReshAyin
 
-    return Strng
-
-def SogoReshAyinDaleth(Strng):
-    Strng = Strng.replace('𐼘', '[\uEA01-\uEA02-\uEA06]') # resh yin daleth
-
-    return Strng
+# Sogo's own logic now lives in ScriptProcessing/Sogo.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Sogo import SogoReshAyinDaleth_pre as SogoReshAyinDaleth
 
 # Phlp's own logic now lives in ScriptProcessing/Phlp.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
@@ -1097,25 +1092,13 @@ def LaoTranscription(Strng):
 
     return Strng
 
-def LimbuDevanagariConvention(Strng):
-    Strng = Strng.replace('ए़', 'ऎ')
-    Strng = Strng.replace('ओ़', 'ऒ')
-    Strng = Strng.replace('े़', 'ॆ')
-    Strng = Strng.replace('ो़', 'ॊ')
-    Strng = Strng.replace('ः', '꞉')
+# DevanagariLimbu's own logic now lives in ScriptProcessing/DevanagariLimbu.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.DevanagariLimbu import LimbuDevanagariConvention_pre as LimbuDevanagariConvention
 
-    return Strng
-
-def LimbuSpellingSaI(Strng): ## Fix this not for all
-    vir = Limbu.ViramaMap[0]
-
-    FCons = [x+vir for x in [Limbu.ConsonantMap[x] for x in[0,4,15,19,20,24,26,27]]]
-    FinalCons = ['\u1930','\u1931','\u1933','\u1934','\u1935','\u1936','\u1937','\u1938']
-
-    for x, y in zip(FCons, FinalCons):
-        Strng = Strng.replace(x, '\u193A' + y)
-
-    return Strng
+# Limbu's own logic now lives in ScriptProcessing/Limbu.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Limbu import LimbuSpellingSaI_pre as LimbuSpellingSaI
 
 
 def removeChillus(Strng):
