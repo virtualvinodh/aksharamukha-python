@@ -47,6 +47,30 @@ def convertInter(Strng,Source):
 
     return Strng
 
+def _build_char_pairs(Source, Target, source_transform=None, target_transform=None):
+    # Shared by every convertScript branch that maps characters
+    # group-by-group via GM.ScriptAll, sorted longest-first so multi-
+    # character sequences replace before any of their own prefixes/
+    # suffixes. source_transform/target_transform, if given, receive
+    # (charList, crunched_list) and return a replacement list - used for
+    # the DepV/Schwa disambiguation markers some branches need on one
+    # side or the other (e.g. Latin->Indic prefixes DepV onto VowelSigns
+    # on the Source side; Indic->Latin suffixes Schwa onto Consonants and
+    # prefixes DepV onto Vowels on the Target side). Branches with no
+    # such need (e.g. Indic->Indic) just omit the transform.
+    charPairs = []
+    for charList in GM.ScriptAll:
+        SourceScript = GM.CrunchSymbols(GM.retCharList(charList), Source)
+        TargetScript = GM.CrunchSymbols(GM.retCharList(charList), Target)
+        if source_transform:
+            SourceScript = source_transform(charList, SourceScript)
+        if target_transform:
+            TargetScript = target_transform(charList, TargetScript)
+        ScriptMap = list(zip(SourceScript, TargetScript))
+        ScriptMap.sort(reverse=True)
+        charPairs += ScriptMap
+    return sorted(charPairs, key=cmp_to_key(lenSort))
+
 # Conversion Module
 def convertScript(Strng,Source,Target,ctx=None):
     if SR.get(Source).is_latin and SR.get(Target).is_indic:
@@ -71,7 +95,6 @@ def convertScript(Strng,Source,Target,ctx=None):
     return Strng
 
 def _convert_latin_to_indic(Strng, Source, Target, ctx):
-    charPairs=[]
     DepV = '\u1E7F'
     Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
 
@@ -114,23 +137,15 @@ def _convert_latin_to_indic(Strng, Source, Target, ctx):
     Strng = Strng.replace("ṿ×_","ṿ")
 
     ha = GM.CrunchSymbols(GM.Consonants,Source)[32]
-    charPairs=[]
 
-    for charList in GM.ScriptAll:
-        # Crunch all related characters into a list
-        TargetScript = GM.CrunchSymbols(GM.retCharList(charList),Target)
+    # Add DepVSign to all VowelSigns on the Source side, to differentiate
+    # from Independent Vowels.
+    def _source_add_depv(charList, crunched):
         if charList == 'VowelSigns':
-            # Add DepVSign to all VowelSigns to differentiate from Independent Vowels
-            SourceScript = [DepV+x for x in GM.CrunchSymbols(GM.VowelSigns,Source)]
-        else:
-            SourceScript = GM.CrunchSymbols(GM.retCharList(charList),Source)
-        # Create a Tuple for the conversion pair
-        ScriptMap = list(zip(SourceScript,TargetScript))
-        # Sort the mapping in descending order. Longer Characters are to be replaced first. ऍˇ > ऍ
-        ScriptMap.sort(reverse=True);
-        charPairs= charPairs + ScriptMap
+            return [DepV+x for x in crunched]
+        return crunched
 
-    charPairs = sorted(charPairs,key=cmp_to_key(lenSort))
+    charPairs = _build_char_pairs(Source, Target, source_transform=_source_add_depv)
 
     # Perform replacement sequentially for each character group
     for x,y in charPairs:
@@ -179,7 +194,6 @@ def _convert_latin_to_latin(Strng, Source, Target, ctx):
     return Strng
 
 def _convert_indic_to_indic(Strng, Source, Target, ctx):
-    charPairs=[]
     Strng = PrP.RemoveJoiners(Strng)
 
     Strng = CF.ShiftDiacritics(Strng,Source,reverse=True)
@@ -199,19 +213,7 @@ def _convert_indic_to_indic(Strng, Source, Target, ctx):
     if len(sOm) == 1:
         Strng = Strng.replace(sOm, tOm)
 
-    # Iterate for each character group
-    for charList in GM.ScriptAll:
-        # Crunch all related characters into a list
-        SourceScript = GM.CrunchSymbols(GM.retCharList(charList),Source)
-        TargetScript = GM.CrunchSymbols(GM.retCharList(charList),Target)
-        # Create a Tuple for the conversion pair
-        ScriptMap = list(zip(SourceScript,TargetScript))
-        # Sort the mapping in descending order. why ?
-        ScriptMap.sort(reverse=True)
-        charPairs= charPairs + ScriptMap
-
-    #Sort based on Length - Longest first
-    charPairs = sorted(charPairs,key=cmp_to_key(lenSort))
+    charPairs = _build_char_pairs(Source, Target)
 
     #print(Strng)
 
@@ -231,7 +233,6 @@ def _convert_indic_to_indic(Strng, Source, Target, ctx):
     return Strng
 
 def _convert_indic_to_latin(Strng, Source, Target, ctx):
-    charPairs=[]
     Schwa = '\uF000'
     DepV = '\u1E7F'
     #print(Strng)
@@ -244,25 +245,16 @@ def _convert_indic_to_latin(Strng, Source, Target, ctx):
 
     Strng = Strng.replace(sOm, tOm)
 
-    # Iterate for each character group
-    for charList in GM.ScriptAll:
-        # Crunch all related characters into a list
-        SourceScript = GM.CrunchSymbols(GM.retCharList(charList),Source)
+    def _target_add_schwa_depv(charList, crunched):
         if charList == 'Consonants':
             # Add Schwa to all Roman consonants. Basically, the Roman script is "Indianized"
-            TargetScript = [x+Schwa for x in GM.CrunchSymbols(GM.Consonants,Target)]
+            return [x+Schwa for x in crunched]
         elif charList == 'Vowels':
             # Add DepVSign to all Independent vowel to differentiate from vowel sign.
-            TargetScript = [DepV+x for x in GM.CrunchSymbols(GM.Vowels,Target)]
-        else:
-            TargetScript = GM.CrunchSymbols(GM.retCharList(charList),Target)
-        # Create a Tuple for the conversion pair
-        ScriptMap = list(zip(SourceScript,TargetScript))
-        # Sort the mapping in descending order. Longer Characters are to be replaced first. ऍˇ > ऍ
-        ScriptMap.sort(reverse=True);
-        charPairs= charPairs + ScriptMap
+            return [DepV+x for x in crunched]
+        return crunched
 
-    charPairs = sorted(charPairs,key=cmp_to_key(lenSort))
+    charPairs = _build_char_pairs(Source, Target, target_transform=_target_add_schwa_depv)
 
     # special case just for roman semitic
     if Source == 'RomanSemitic':
