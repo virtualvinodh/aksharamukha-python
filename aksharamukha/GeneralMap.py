@@ -3,6 +3,7 @@
 ### Introduce Nasal to Anusvara for scripts lacking nasal letters but having Anusvara/Chandrabindu
 
 import importlib, string
+import inspect
 import re
 from functools import reduce, lru_cache
 from . import FallBack as fb
@@ -48,7 +49,14 @@ def CrunchList(List,Script):
     # copy on the way out for the same reason as CrunchSymbols above
     return list(result) if isinstance(result, list) else result
 
-def resolve(module, name, txt, *extra, optional=False, **kwargs):
+@lru_cache(maxsize=None)
+def _accepts_ctx(fn):
+    try:
+        return 'ctx' in inspect.signature(fn).parameters
+    except (TypeError, ValueError):
+        return False
+
+def resolve(module, name, txt, *extra, optional=False, ctx=None, **kwargs):
     # Single home for the reflection-dispatch pattern ("call the function
     # named by this string, if it exists") repeated ~9 times across the
     # codebase. optional=False (the default) preserves the plain-getattr
@@ -57,12 +65,20 @@ def resolve(module, name, txt, *extra, optional=False, **kwargs):
     # is for the sites that treat "no such function" as "this script has no
     # override, leave the text unchanged" - previously a try/except
     # AttributeError: pass wrapped around the call.
+    #
+    # ctx: passed through only to functions that actually declare a `ctx`
+    # parameter (mirrors Options.py's call_pre_option/call_post_option) -
+    # every existing Fix*/PreProcess/PostProcess function is untouched by
+    # this, since none of them declare it yet.
     if optional:
         fn = getattr(module, name, None)
         if fn is None:
             return txt
-        return fn(txt, *extra, **kwargs)
-    return getattr(module, name)(txt, *extra, **kwargs)
+    else:
+        fn = getattr(module, name)
+    if ctx is not None and _accepts_ctx(fn):
+        kwargs = dict(kwargs, ctx=ctx)
+    return fn(txt, *extra, **kwargs)
 
 #Introduce in all Latin Conversions
 def EscapeChar(Strng):

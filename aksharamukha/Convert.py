@@ -59,7 +59,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False,ctx=None):
     ## Itrans Comments ##
 
     if SR.get(Source).is_latin and SR.get(Target).is_indic:
-        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True)
+        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
 
        #short u
         if Source in ['IAST', 'ISO', 'ISOPali', 'Titus']:
@@ -146,7 +146,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False,ctx=None):
         #print(Strng)
 
     elif SR.get(Source).is_latin and SR.get(Target).is_latin:
-        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True)
+        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
 
         ScriptAll = GM.Vowels+GM.Consonants+GM.CombiningSigns+GM.Numerals+GM.Signs+GM.Aytham
 
@@ -169,7 +169,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False,ctx=None):
         # Thai/Lao "short vowels shown" preoptions) - passing it to every
         # other script's Fix* function would break their signatures.
         _extra = {'transcription_mode': transcription_mode} if Source in ('Thai', 'LaoPali') else {}
-        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,**_extra)
+        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx,**_extra)
 
         punc =  '(' + '|'.join(["\u005C"+x for x in list(string.punctuation)]+ ['\s']
                     + [x.replace('.', '\.') for x in GM.CrunchSymbols(GM.Signs,Source)[1:3]]) + ')'
@@ -220,7 +220,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False,ctx=None):
         Strng = CF.ShiftDiacritics(Strng, Source, reverse=True)
         #print(Strng)
         _extra = {'transcription_mode': transcription_mode} if Source in ('Thai', 'LaoPali') else {}
-        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,**_extra)
+        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx,**_extra)
         #print(Strng)
         sOm, tOm = GM.CrunchList('OmMap', Source)[0],GM.CrunchList('OmMap', Target)[0]
 
@@ -275,7 +275,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False,ctx=None):
         # Convert Syllabic lR -> l_R Important !!!
 
     elif SR.get(Source).is_semitic and SR.get(Target).is_semitic:
-        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,Source,reverse=True,optional=True)
+        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,Source,reverse=True,optional=True,ctx=ctx)
 
         tr = gimeltra.Transliterator()
 
@@ -324,7 +324,7 @@ def convertScript(Strng,Source,Target,transcription_mode=False,ctx=None):
         Strng = CF.FixSemiticOutput(Strng, Source, Target)
 
     elif SR.get(Source).is_semitic and (SR.get(Target).is_indic or SR.get(Target).is_latin):
-        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,Source,reverse=True,optional=True)
+        Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,Source,reverse=True,optional=True,ctx=ctx)
 
         tr = gimeltra.Transliterator()
 
