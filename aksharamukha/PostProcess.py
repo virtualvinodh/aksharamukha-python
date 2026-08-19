@@ -771,17 +771,13 @@ def gainGimel(Strng):
     return Strng.replace('עׄ','ג')
 
 #todo testcase
-def tavTwodot(Strng):
-    return Strng.replace('ת','ת̈')
+# Hebr-Ar's own logic now lives in ScriptProcessing/Hebr_Ar.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Hebr_Ar import gainGimel, tavTwodot, tavThreedot
 
 #todo testcase
-def tavThreedot(Strng):
-    return Strng.replace('תׄ','ת֒')
-
 #todo testcase
-def gainGimel(Strng):
-    return Strng.replace('ק','ק̈')
-
 #todo testcase
 def tokushuon(txt):
    txt = txt.replace('si', 'suxi').replace('zi', 'zuxi')
@@ -1057,18 +1053,10 @@ def mDotBelowToAbove(Strng):
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.ISO import noLongEO
 
-def TamilStyleUUCore(Strng):
-    Strng = re.sub('([ഖഗഘഛഝഠഡഢഥദധഫബഭ])' + '([ുൂ])', r'\1' + '\u200D' + r'\2', Strng)
-
-    return Strng
-
-def TamilStyleUUOther(Strng):
-    Strng = re.sub('([ജശഷസഹ])' + '([ുൂ])', r'\1' + '\u200D' + r'\2', Strng)
-    Strng = re.sub('(ശ്ര)' + '([ുൂ])', r'\1' + '\u200D' + r'\2', Strng)
-    Strng = re.sub('(ശ്‍ര)' + '([ുൂ])', r'\1' + '\u200D' + r'\2', Strng)
-
-
-    return Strng
+# TamilExtended's own logic now lives in ScriptProcessing/TamilExtended.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.TamilExtended import TamilStyleUUCore, TamilStyleUUOther, TamilpredictDentaNaExtended, TamilExtendedNNA, TamilExtendedAnusvara
 
 # Tamil's post-options (and its default-bundle TamilNaToNNa/
 # TamilpredictDentaNa) now live in ScriptProcessing/Tamil.py, consolidated
@@ -1078,181 +1066,6 @@ def TamilStyleUUOther(Strng):
 from .ScriptProcessing.Tamil import (TamilNaToNNa, TamilpredictDentaNa, ContextualLLa,
     FinalNNa, TamilAddFirstVarga, TamilDisableSHA, TamilGranthaVisarga, TamilOmDisable,
     TamilRemoveApostrophe, TamilRemoveNumbers, TamilSubScript, oldtamilortho)
-
-def TamilpredictDentaNaExtended(Strng):
-    listDentalNa = '''ഩഖ
-ഩഗര
-ഩകുല
-ഩഗ്‌ഩ
-ഩക്ഷത്‌ര
-ഩടരാജ
-ഩടീ
-ഩദീ
-ഩന്‌ദഩ
-ഩപുംസക
-ഩഭ**
-ഩമ**
-ഩമശ്‌
-ഩമസ്‌
-ഩമാമ
-ഩമാമി
-ഩമാമോ
-ഩമുചി
-ഩമോ
-ഩമോനമ
-ഩമോനമോ
-ഩമോസ്‌തു
-ഩമോസ്‌തുതേ
-ഩമഃ
-ഩയഩ
-ഩര**
-ഩരക
-ഩര്‌തക
-ഩര്‌തഩ
-ഩര്‌മദ
-ഩല**
-ഩലിഩ
-ഩവ**
-ഩവീഩ
-ഩവ്‌യ
-ഩശ്‌**
-ഩഷ്‌ട
-ഩാരായണ
-ഩാഗ
-ഩാടക
-ഩാഡീ
-ഩാട്‌യ
-ഩാഡ്‌യ
-ഩാഥ
-ഩാദ
-ഩാരത
-ഩാഩാ***
-ഩാഩ്‌യ**
-ഩാഩൃത
-ഩാഭ
-ഩാമ
-ഩായക
-ഩായികാ
-ഩാരദ
-ഩാരസിംഹ
-ഩാരി
-ഩാരീ
-ഩാവ***
-ഩാശ
-ഩാസിക
-ഩിഗമ
-ഩികട
-ഩികര
-ഩികാമ
-ഩികായ
-ഩിഖില
-ഩികുഞ്‌ജ
-ഩിഘൂഩ
-ഩികേത
-ഩിഗ്‌രഹ
-ഩിഗൃഹ
-ഩികൃന്‌ത
-ഩിഗ്‌രന്‌ത
-ഩിക്ഷിപ
-ഩിക്ഷേപ
-ഩിഘ്‌ഩ
-ഩിജ
-ഩിദര്‌ശ
-ഩിതമ്‌ബ
-ഩിതര
-ഩിദാഘ
-ഩിദാഩ
-ഩിതാന്‌ത
-ഩിധാഩ
-ഩിധായ
-ഩിധ
-ഩിധേഹി
-ഩിദ്‌ര
-ഩിത്‌യ
-ഩിന്‌ദാ
-ഩിബദ്‌ധ
-ഩിബധ്‌
-ഩിബന്‌ധഩ
-ഩിപട
-ഩിപതിത
-ഩിപത്‌യ
-ഩിപപാത
-ഩിപാതിത
-ഩിപാത്‌യ
-ഩിപുണ
-ഩിബോധ
-ഩിഭൃത
-ഩിമഗ്‌ഩ
-ഩിമിത്‌ത
-ഩിമിഷ
-ഩിയത
-ഩിയന്‌ത
-ഩിയന്‌ത്‌ര
-ഩിയമ
-ഩിയുക്‌ത
-ഩിയുജ്‌യ
-ഩിയോ
-ഩിര
-ഩിര്‌
-ഩിലയ
-ഩിവര്‌
-ഩിവസ
-ഩിവാര
-ഩിവാസ
-ഩിവിഷ്‌ട
-ഩിവേദ
-ഩിവേശ
-ഩിവൃ
-ഩിശ
-ഩിശ്‌
-ഩിഷ
-ഩിഷ്‌
-ഩിസ
-ഩിസ്‌
-ഩിഹിത
-ഩിഃശ
-ഩിഃഷ
-ഩിഃസ
-ഩീച
-ഩീതി
-ഩീര
-ഩീല
-ഩൂതഩ
-ഩൂപുര
-ഩേത്‌ര
-ഩേയ**
-ഩൈമിത്‌ത
-ഩൈമിഷ
-ഩൈരാശ്‌യ
-ഩൈരൃത
-ഩൈവേദ്‌യ
-ഩൈഷ്‌
-ഩ്‌യായ
-ഩ്‌യാസ
-ഩ്‌യൂഩ
-ഩൃ'''.split('\n')
-
-    vir = Tamil.ViramaMap[0]
-
-    for wordNna in listDentalNa:
-        wordNa = re.sub('^ഩ', 'ന', wordNna)
-        if '²' in wordNna[-1] or '³' in wordNna[-1] or '⁴' in wordNna[-1]:
-            number = wordNna[-1]
-
-            wordNnaN = wordNna[:-1]
-            wordNaN = wordNa[:-1]
-            for vow in GM.CrunchSymbols(GM.VowelSigns, 'Tamil'):
-                Strng = Strng.replace(wordNnaN + vow + number, wordNaN + vow + number)
-
-        Strng = Strng.replace(wordNna, wordNa)
-
-        for wordNna in ['ഩാമ','ഩര']:
-            wordNa = re.sub('^ഩ', 'ന', wordNna)
-            Strng = Strng.replace(wordNa + vir, wordNna + vir)
-
-        Strng = Strng.replace('ഩ്‌ന', 'ന്‌ന')
-
-    return Strng
 
 def TeluguTamilZha(Strng):
 
@@ -1325,26 +1138,6 @@ def Dot2Pipes(Strng):
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.TamilSaurashtra import SaurastraHaaruColon
 
-def TamilExtendedNNA(Strng):
-    na = TamilExtended.ConsonantMap[19]
-    nna = TamilExtended.SouthConsonantMap[3]
-    vir = TamilExtended.ViramaMap[0]
-    ta = TamilExtended.ConsonantMap[15]
-
-    ListV = '|'.join(GM.CrunchSymbols(GM.Vowels+GM.VowelSigns+GM.Consonants,'TamilExtended')+[TamilExtended.SignMap[0]])
-
-    Strng = re.sub('('+ListV+')'+ GM.VedicSvaras + '('+na+')' + '(?!' + vir + ')',r'\1\2'+nna,Strng)
-    Strng = re.sub('('+ListV+')'+ GM.VedicSvaras + '('+na+')' + '(?!' + vir + ')',r'\1\2'+nna,Strng)
-
-    Strng = re.sub('(ന്‌)(?![തഥദധ])', 'ഩ്‌', Strng)
-
-    Strng = re.sub('(\s)ഩ്', r'\1' + 'ന്‌', Strng)
-    Strng = re.sub('^ഩ്', r'' + 'ന്‌', Strng)
-
-    Strng = TamilpredictDentaNaExtended(Strng)
-
-    return Strng
-
 # Takri's own logic now lives in ScriptProcessing/Takri.py -
 # consolidated there (batch migration).
 from .ScriptProcessing.Takri import TakriArchaicKha_post as TakriArchaicKha, TakriRemoveGemination
@@ -1406,12 +1199,6 @@ def TeluguReph(Strng):
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.PhagsPa import PhagsPaTib, PhagsPaSeal
-
-def TamilExtendedAnusvara(Strng):
-    Strng = AnusvaraToNasal(Strng, 'TamilExtended')
-    Strng = Strng.replace('\u0D02', 'മ്‌')
-
-    return Strng
 
 # RomanReadable's own logic now lives in ScriptProcessing/RomanReadable.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
@@ -1670,8 +1457,10 @@ def egrantamil(Strng):
 def tibetandbumed(Strng):
     return Strng
 
-def nepaldevafont(Strng):
-    return Strng
+# Newa's own logic now lives in ScriptProcessing/Newa.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Newa import nepaldevafont, NewaMurmurConsonants, NewaSpecialTa, NewaDisableRepha
 
 def granthaserif(Strng):
     return Strng
@@ -1830,15 +1619,6 @@ def AmbigousTamilOrthography(Strng):
 
     return Strng
 
-def NewaMurmurConsonants(Strng):
-    murmur = ['𑐓','𑐙','𑐤', '𑐪', '𑐭', '𑐯']
-    connsh = ['𑐴𑑂𑐒', '𑐴𑑂𑐘', '𑐴𑑂𑐣', '𑐴𑑂𑐩', '𑐴𑑂𑐬', '𑐴𑑂𑐮']
-
-    for x, y in zip(murmur, connsh):
-        Strng = Strng.replace(y, x)
-
-    return Strng
-
 def ModiRemoveLong(Strng):
     Strng = Strng.replace('𑘂', '𑘃')
     Strng = Strng.replace('𑘅','𑘄')
@@ -1883,8 +1663,10 @@ def DevanagariPrishtamatra(Strng, reverse = False):
 def ThaanaRemoveHistorical(Strng):
     return Strng.replace('ޱ','ނ')
 
-def OriyaVaAlt(Strng):
-    return  Strng.replace('ୱ','ଵ')
+# Oriya's own logic now lives in ScriptProcessing/Oriya.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Oriya import OriyaVaAlt, OriyaYYA, OriyaVa
 
 def dotReph(Strng):
     ListC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Malayalam"))) + ')'
@@ -2214,9 +1996,6 @@ def MToAnusvara(Strng,Target):
 
     return Strng
 
-def OriyaYYA(Strng):
-    return YYAEverywhere(Strng, 'Oriya')
-
 def BengaliYYA(Strng):
     return YYAEverywhere(Strng, 'Bengali')
 
@@ -2394,15 +2173,6 @@ def RetainGujaratiDanda(Strng):
 
 def RetainGurmukhiNumerals(Strng):
     return RetainIndicNumerals(Strng, 'Gurmukhi')
-
-def OriyaVa(Strng):
-
-    va = Oriya.ConsonantMap[28]
-    OriyaVa = '\u0B2C'
-
-    Strng =  re.sub('(?<!୍)' + va, OriyaVa, Strng)
-
-    return Strng
 
 def RemoveDiacritics(Strng):
     for x in GM.DiacriticsRemovable:
@@ -2906,12 +2676,6 @@ def ZanabazarSquareMongolianFinal(Strng):
 
     return Strng
 
-def NewaSpecialTa(Strng):
-
-    Strng = Strng.replace('𑐟𑑂', '𑐟𑑂‍') #Ta+virama -> ta + virama + ZWJ
-
-    return Strng
-
 def swapEe(Strng):
     Strng = Strng.replace('E', 'X@X@')
     Strng = Strng.replace('e', 'E')
@@ -2937,7 +2701,3 @@ def capitalizeSentence(Strng):
 
     return Strng
 
-def NewaDisableRepha(Strng):
-    Strng = Strng.replace('𑐬𑑂', '𑐬𑑂\u200D')
-
-    return Strng

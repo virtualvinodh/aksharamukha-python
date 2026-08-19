@@ -1,0 +1,66 @@
+# -*- coding: utf-8 -*-
+
+# Oriya's own Fix/pre-option/post-option logic, consolidated out of
+# ConvertFix.py/PreProcess.py/PostProcess.py (batch migration - see
+# ScriptProcessing/Tamil.py for the full rationale/pattern this follows).
+# ConvertFix/PreProcess/PostProcess are imported LOCALLY inside each
+# function that needs them (not at module level) - required to avoid a
+# load-order-dependent circular import, since these three modules
+# re-export names from here. See ScriptProcessing/Tamil.py.
+
+import re
+from aksharamukha.ScriptMap.MainIndic import Oriya
+
+def _FixOriyaEncode(Strng):
+
+    from .. import PostProcess
+    pass
+
+    return Strng
+
+def _FixOriyaDecode(Strng):
+
+    from .. import PostProcess
+    Strng = Strng.replace('ଵ','ୱ')
+
+    return Strng
+
+def FixOriya(Strng, reverse=False):
+
+    from .. import PostProcess
+    return _FixOriyaDecode(Strng) if reverse else _FixOriyaEncode(Strng)
+
+def OriyaSubojinedVa(Strng):
+
+    from .. import PostProcess
+    Strng = re.sub('(??<![ମବ])(୍ବ)', '୍ୱ', Strng)
+
+    return Strng
+
+def OriyaTargetVa(Strng):
+
+    from .. import PostProcess
+    Strng = Strng.replace('ବ', 'ୱ')
+
+    return Strng
+
+def OriyaVaAlt(Strng):
+
+    from .. import PostProcess
+    return  Strng.replace('ୱ','ଵ')
+
+def OriyaYYA(Strng):
+
+    from .. import PostProcess
+    return PostProcess.YYAEverywhere(Strng, 'Oriya')
+
+def OriyaVa(Strng):
+
+    from .. import PostProcess
+
+    va = Oriya.ConsonantMap[28]
+    OriyaVa = '\u0B2C'
+
+    Strng =  re.sub('(?<!୍)' + va, OriyaVa, Strng)
+
+    return Strng

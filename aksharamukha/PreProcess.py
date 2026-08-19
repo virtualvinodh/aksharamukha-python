@@ -125,10 +125,10 @@ from .ScriptProcessing.Javanese import JavaneseMoveRepha_pre as JavaneseMoveReph
 # consolidated there (batch migration).
 from .ScriptProcessing.Balinese import BalineseMoveRepha_pre as BalineseMoveRepha
 
-def OriyaSubojinedVa(Strng):
-    Strng = re.sub('(??<![ମବ])(୍ବ)', '୍ୱ', Strng)
-
-    return Strng
+# Oriya's own logic now lives in ScriptProcessing/Oriya.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Oriya import OriyaSubojinedVa, OriyaTargetVa
 
 def BengaliSubojinedVa(Strng):
     Strng = re.sub('(?<![মব])(্ব)', '্ভ়', Strng)
@@ -137,11 +137,6 @@ def BengaliSubojinedVa(Strng):
 
 def BengaliTargetVa(Strng):
     Strng = Strng.replace('ব', 'ভ়')
-
-    return Strng
-
-def OriyaTargetVa(Strng):
-    Strng = Strng.replace('ବ', 'ୱ')
 
     return Strng
 

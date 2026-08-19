@@ -779,18 +779,10 @@ from .ScriptProcessing.Khudawadi import _FixKhudawadiEncode, _FixKhudawadiDecode
 # "FixTamil", ...) dispatch in Convert.py keeps working unchanged.
 from .ScriptProcessing.Tamil import FixTamil, _FixTamilEncode, _FixTamilDecode
 
-def _FixOriyaEncode(Strng):
-    pass
-
-    return Strng
-
-def _FixOriyaDecode(Strng):
-    Strng = Strng.replace('ଵ','ୱ')
-
-    return Strng
-
-def FixOriya(Strng, reverse=False):
-    return _FixOriyaDecode(Strng) if reverse else _FixOriyaEncode(Strng)
+# Oriya's own logic now lives in ScriptProcessing/Oriya.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Oriya import _FixOriyaEncode, _FixOriyaDecode, FixOriya
 
 # GurmukhiLoC's own Fix logic now lives in ScriptProcessing/GurmukhiLoC.py -
 # consolidated there (batch migration). Re-exported here so
@@ -842,26 +834,10 @@ def ShiftDiacritics(Strng,Target,reverse=False):
     return Strng
 
 
-def _FixTamilExtendedEncode(Strng):
-    Strng = Strng.replace('ക്‌ഷ', 'ക്ഷ')
-    Strng = Strng.replace('ശ്‌ര', 'ശ്‍ര')
-    Strng = Strng.replace('ൗ', 'ൌ')
-
-    for svara in GM.VedicSvarasList:
-        Strng = Strng.replace('\u200C' + svara, svara + '\u200C')
-
-    return Strng
-
-def _FixTamilExtendedDecode(Strng):
-    for svara in GM.VedicSvarasList:
-        Strng = Strng.replace(svara + '\u200C', '\u200C' + svara)
-
-    Strng = Strng.replace('\u0D4D', '\u0D4D\u200C')
-
-    return Strng
-
-def FixTamilExtended(Strng, reverse=False):
-    return _FixTamilExtendedDecode(Strng) if reverse else _FixTamilExtendedEncode(Strng)
+# TamilExtended's own logic now lives in ScriptProcessing/TamilExtended.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.TamilExtended import _FixTamilExtendedEncode, _FixTamilExtendedDecode, FixTamilExtended
 
 # Move Vowel Signs
 def _FixTamilGranthaEncode(Strng):
@@ -2169,17 +2145,8 @@ def FixZanabazarSquare(Strng, reverse=False):
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Khojki import _FixKhojkiEncode, _FixKhojkiDecode, FixKhojki
 
-def _FixNewaEncode(Strng):
-    ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Newa'))
-    ra = Newa.ConsonantMap[26]
-    vir = Newa.ViramaMap[0]
-    ## The default behavior of Repha has been proposed to change
-    # Strng = re.sub(ra + vir + '(' + ListC + ')', ra + vir + '\u200D' + r'\1', Strng)
+# Newa's own logic now lives in ScriptProcessing/Newa.py -
+# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Newa import _FixNewaEncode, _FixNewaDecode, FixNewa
 
-    return Strng
-def _FixNewaDecode(Strng):
-    pass
-
-    return Strng
-def FixNewa(Strng, reverse=False):
-    return _FixNewaDecode(Strng) if reverse else _FixNewaEncode(Strng)
