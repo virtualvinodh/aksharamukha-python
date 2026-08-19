@@ -9,6 +9,7 @@ from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.EastIndic import Burmese
 
 def _FixBurmeseEncode(Strng):
+    """Encodes Burmese script orthography: converts virama to subjoined forms, inserts kinzi/repha, forms tall-a, reorders medials, and applies script-specific ligatures."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Burmese'))
     vir = Burmese.ViramaMap[0]
 
@@ -84,6 +85,7 @@ def _FixBurmeseEncode(Strng):
     return Strng
 
 def _FixBurmeseDecode(Strng):
+    """Reverses Burmese encoding fixes: expands subjoined consonants, kinzi, repha, tall-a, and medials back to explicit virama sequences."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Burmese'))
     vir = Burmese.ViramaMap[0]
 
@@ -125,12 +127,14 @@ def _FixBurmeseDecode(Strng):
     return Strng
 
 def FixBurmese(Strng, reverse=False):
+    """Dispatches to the Burmese encode or decode fix routine depending on conversion direction."""
     return _FixBurmeseDecode(Strng) if reverse else _FixBurmeseEncode(Strng)
 
 def segmentBurmeseSyllables(Strng):
     # segment text into syllables
 
     # https://github.com/ye-kyaw-thu/myWord/blob/main/syl_segment.py
+    """Segments Burmese text into syllables by inserting spaces at syllable boundaries - လေထဲပျော် → လေ ထဲ ပျော်."""
     myConsonant = r"က-အ"
     otherChar = r"ဣဤဥဦဧဩဪဿ၌၍၏၀-၉၊။!-/:-@[-`{-~\s"
     ssSymbol = r'္'

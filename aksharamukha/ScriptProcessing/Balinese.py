@@ -18,6 +18,7 @@
 import re
 
 def _FixBalineseEncode(Strng):
+    """Inserts the Balinese repha sign (preposed ra) when encoding text into Balinese script."""
     from .. import ConvertFix as CF
     Repha = '\u1B03'
 
@@ -28,6 +29,7 @@ def _FixBalineseEncode(Strng):
     return Strng
 
 def _FixBalineseDecode(Strng):
+    """Removes the Balinese repha sign, expands the archaic jña ligature, and converts a-based vowel spellings back to precomposed independent vowels when decoding."""
     from .. import ConvertFix as CF
     Repha = '\u1B03'
 
@@ -45,17 +47,21 @@ def _FixBalineseDecode(Strng):
     return Strng
 
 def FixBalinese(Strng,reverse=False):
+    """Dispatches to the Balinese encode or decode fix routine depending on conversion direction."""
     return _FixBalineseDecode(Strng) if reverse else _FixBalineseEncode(Strng)
 
 def BalineseMoveRepha_pre(Strng):
+    """Pre-processing step that repositions the Balinese repha sign (ᬃ) relative to its base consonant."""
     from .. import PreProcess as PP
     return PP.BalineseJavaneseMoveRepha(Strng, 'Balinese', 'ᬃ')
 
 def BalineseArchaicJNA(Strng):
+    """Converts the archaic jña conjunct to its dedicated Balinese letter (ᬚ᭄ᬜ → ᭌ)."""
     Strng = Strng.replace('ᬚ᭄ᬜ', 'ᭌ')
     return Strng
 
 def BalineseAvowels(Strng):
+    """Uses a-based independent vowel spellings instead of dedicated vowel letters (e.g. ᬇ ᬈ ᬉ ᬊ → ᬅᬶ ᬅᬷ ᬅᬸ ᬅᬹ)."""
     vowelsA = ['ᬅᬶ', 'ᬅᬷ', 'ᬅᬸ', 'ᬅᬹ', 'ᬅᬺ', 'ᬅᬻ', 'ᬅ᭄ᬮᭂ', 'ᬅ᭄ᬮᭃ', 'ᬅᬾ', 'ᬅᬿ', 'ᬅᭀ', 'ᬅᭁ']
     vowels = ['ᬇ', 'ᬈ', 'ᬉ', 'ᬊ', 'ᬋ', 'ᬌ', 'ᬍ', 'ᬎ', 'ᬏ', 'ᬐ', 'ᬑ', 'ᬒ']
 
@@ -65,5 +71,6 @@ def BalineseAvowels(Strng):
     return Strng
 
 def BalineseMoveRepha_post(Strng):
+    """Post-processing step that repositions the Balinese repha sign (ᬃ) back to its rendered position."""
     from .. import PostProcess
     return PostProcess.BalineseJavaneseMoveRepha(Strng, 'Balinese', 'ᬃ')

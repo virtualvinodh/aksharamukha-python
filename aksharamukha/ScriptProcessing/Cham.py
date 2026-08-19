@@ -8,6 +8,7 @@ from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.EastIndic import Cham
 
 def _FixChamEncode(Strng):
+    """Forms Cham subjoined consonant ligatures (ya/ra/la/va), converts consonants to word-final forms before virama, and builds final-h (ꩍ) forms."""
     Strng = Strng.replace("\u02BD","")
 
     ## Check Differences between Vietnamese Cham & Cambodian Cham
@@ -66,6 +67,7 @@ def _FixChamEncode(Strng):
     return Strng
 
 def _FixChamDecode(Strng):
+    """Reverses Cham subjoined consonant ligatures and final-h forms when decoding; the non-final-to-final consonant merge is not reversible."""
     Strng = Strng.replace("\u02BD","")
 
     ## Check Differences between Vietnamese Cham & Cambodian Cham
@@ -123,4 +125,5 @@ def _FixChamDecode(Strng):
     return Strng
 
 def FixCham(Strng,reverse=False):
+    """Dispatches to the Cham encode or decode fix-up routine based on the reverse flag."""
     return _FixChamDecode(Strng) if reverse else _FixChamEncode(Strng)

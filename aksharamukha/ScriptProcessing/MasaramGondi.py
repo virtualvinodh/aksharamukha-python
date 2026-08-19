@@ -7,6 +7,7 @@ import re
 from .. import GeneralMap as GM
 
 def _FixMasaramGondiEncode(Strng):
+    """Ligates the KSSA/JNYA/TRA conjuncts and the special kra/rka consonant clusters into their dedicated Masaram Gondi code points, and drops a trailing virama not followed by a consonant."""
     consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'MasaramGondi')) + ')'
 
     Strng = Strng.replace('𑴌𑵅𑴪','\U00011D2E') # KSSA
@@ -22,6 +23,7 @@ def _FixMasaramGondiEncode(Strng):
     return Strng
 
 def _FixMasaramGondiDecode(Strng):
+    """Expands the KSSA/JNYA/TRA and kra/rka ligatures back to their consonant+virama sequences in Masaram Gondi."""
     consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'MasaramGondi')) + ')'
 
     Strng = Strng.replace('\U00011D2E', '𑴌𑵅𑴪') # KSSA
@@ -36,4 +38,5 @@ def _FixMasaramGondiDecode(Strng):
     return Strng
 
 def FixMasaramGondi(Strng, reverse=False):
+    """Dispatches to the Masaram Gondi encode or decode fix routine depending on conversion direction."""
     return _FixMasaramGondiDecode(Strng) if reverse else _FixMasaramGondiEncode(Strng)

@@ -11,5 +11,6 @@ import re
 
 def FixShahmukhi(Strng, reverse=False):
 
+    """Applies the shared Perso-Arabic Shahmukhi/Urdu fix routine to encode or decode Shahmukhi text based on the reverse flag."""
     from .. import ConvertFix as CF
     return CF.FixUrduShahmukhi('Shahmukhi', Strng, reverse)

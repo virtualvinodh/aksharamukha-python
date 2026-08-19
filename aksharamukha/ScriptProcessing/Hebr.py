@@ -11,6 +11,7 @@ import re
 from .. import GeneralMap as GM
 
 def _FixHebrEncode(Strng, Source):
+    """Moves the Hebrew geresh (׳) mark to appear after adjacent vowel points instead of before them when encoding."""
     vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['\u05BC']) + ')'
     vowelsigns2 = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['\u05BC']) + ')?'
 
@@ -25,6 +26,7 @@ def _FixHebrEncode(Strng, Source):
     return Strng
 
 def _FixHebrDecode(Strng, Source):
+    """Moves the Hebrew geresh (׳) mark back to appear before adjacent vowel points when decoding."""
     vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['\u05BC']) + ')'
     vowelsigns2 = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew') + ['\u05BC']) + ')?'
 
@@ -42,4 +44,5 @@ def _FixHebrDecode(Strng, Source):
     return Strng
 
 def FixHebr(Strng, Source, reverse = False):
+    """Dispatches to the Hebrew encode or decode fix-up routine based on the reverse flag."""
     return _FixHebrDecode(Strng, Source) if reverse else _FixHebrEncode(Strng, Source)

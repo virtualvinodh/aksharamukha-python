@@ -7,11 +7,13 @@
 import re
 
 def PhlpMemQoph(Strng):
+    """Disambiguates the Psalter Pahlavi Mem-Qoph ligature by expanding it to a bracketed [m-q] marker (𐮋 → [m-q])."""
     Strng = Strng.replace('𐮋', '[\uEA03-\uEA04]') # mem qoph
 
     return Strng
 
 def PhlpWawAyinResh(Strng):
+    """Disambiguates the Psalter Pahlavi Waw-Ayin-Resh ligature by expanding it to a bracketed [w-ʿ-r] marker (𐮅)."""
     Strng = Strng.replace('𐮅', '[\uEA05-\uEA02-\uEA01]') # resh yin
 
     return Strng

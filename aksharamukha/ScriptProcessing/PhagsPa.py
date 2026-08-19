@@ -10,6 +10,7 @@ from .. import ScriptRegistry as SR
 from aksharamukha.ScriptMap.EastIndic import PhagsPa
 
 def _FixPhagsPaEncode(Strng):
+    """Reorders candrabindu and subjoined consonants, removes viramas, and inserts syllable-separating spaces for 'Phags-pa encoding."""
     candraBindu = PhagsPa.AyogavahaMap[0]
     ListC = "|".join(sorted(PhagsPa.ConsonantMap,key=len,reverse=True)) #Do this for all
     ListV = "|".join(sorted(PhagsPa.VowelMap,key=len,reverse=True))
@@ -98,6 +99,7 @@ def _FixPhagsPaEncode(Strng):
     return Strng
 
 def _FixPhagsPaDecode(Strng):
+    """Reconstructs viramas between 'Phags-pa syllables, expands aspirate letter markers, and reverses subjoined consonant and candrabindu placement when decoding."""
     candraBindu = PhagsPa.AyogavahaMap[0]
     ListC = "|".join(sorted(PhagsPa.ConsonantMap,key=len,reverse=True)) #Do this for all
     ListV = "|".join(sorted(PhagsPa.VowelMap,key=len,reverse=True))
@@ -169,9 +171,11 @@ def _FixPhagsPaDecode(Strng):
     return Strng
 
 def FixPhagsPa(Strng,reverse=False):
+    """Dispatches to the 'Phags-pa encode or decode fix-up routine based on the reverse flag."""
     return _FixPhagsPaDecode(Strng) if reverse else _FixPhagsPaEncode(Strng)
 
 def PhagsPaArrange(Strng,Source):
+    """Inserts spaces between consonant-vowel syllable clusters when arranging 'Phags-pa output for Indic-derived source scripts."""
     if SR.get(Source).is_indic:
         ListC = "|".join(sorted(GM.CrunchSymbols(GM.Consonants, Source),key=len,reverse=True)) #Do this for all
         ListV = "|".join(sorted(GM.CrunchSymbols(GM.Vowels, Source),key=len,reverse=True))
@@ -194,8 +198,10 @@ def PhagsPaArrange(Strng,Source):
 
 def PhagsPaTib(Strng):
 
+    """Selects Tibetan-style 'Phags-pa rendering (currently a no-op placeholder)."""
     return Strng
 
 def PhagsPaSeal(Strng):
 
+    """Selects seal-script-style 'Phags-pa rendering (currently a no-op placeholder)."""
     return Strng

@@ -11,5 +11,6 @@ import re
 
 def FixLao2(Strng, reverse = False):
 
+    """Delegates Lao2 script fix-up to the shared Lao encode/decode logic."""
     from .. import ConvertFix as CF
     return CF.FixLao(Strng, reverse)

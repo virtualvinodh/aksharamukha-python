@@ -7,6 +7,7 @@ import re
 from .. import GeneralMap as GM
 
 def _FixGunjalaGondiEncode(Strng):
+    """Merges apostrophe-marked vowel-sign sequences into the dedicated Gunjala Gondi combining sign, strips the modifier apostrophes, and drops a trailing virama not followed by a consonant."""
     consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'GunjalaGondi')) + ')'
 
     Strng = re.sub('(\U00011D7A\u02BE)([\U00011D7B\U00011D7C\U00011D80\U00011D81])', '\U00011D95' + r'\1', Strng)
@@ -21,6 +22,7 @@ def _FixGunjalaGondiEncode(Strng):
     return Strng
 
 def _FixGunjalaGondiDecode(Strng):
+    """Currently a no-op decode fix for Gunjala Gondi; returns the string unchanged."""
     consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'GunjalaGondi')) + ')'
 
     pass
@@ -28,4 +30,5 @@ def _FixGunjalaGondiDecode(Strng):
     return Strng
 
 def FixGunjalaGondi(Strng, reverse=False):
+    """Dispatches to the Gunjala Gondi encode or decode fix routine based on the reverse flag."""
     return _FixGunjalaGondiDecode(Strng) if reverse else _FixGunjalaGondiEncode(Strng)

@@ -7,6 +7,7 @@
 import re
 
 def removetddash(Strng):
+    """Removes the SBL spirant marks on ḏ ṯ ḡ and marks the plain stops with a modifier colon instead - ḏ ṯ ḡ → d t g & d t g → d꞉ t꞉ g꞉."""
     Strng += '\u05CE'
 
     Strng = Strng.replace('d', 'd꞉').replace('t', 't꞉').replace('g', 'g꞉')

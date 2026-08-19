@@ -11,6 +11,7 @@ import re
 
 def _FixBuhidEncode(Strng):
 
+    """Inserts the Buhid gemination sign into the string when encoding into Buhid script."""
     from .. import PostProcess
     Strng = PostProcess.InsertGeminationSign(Strng, 'Buhid')
 
@@ -18,6 +19,7 @@ def _FixBuhidEncode(Strng):
 
 def _FixBuhidDecode(Strng):
 
+    """No-op decode step for Buhid script; gemination-sign removal is currently unimplemented."""
     from .. import PostProcess
     pass
 
@@ -25,5 +27,6 @@ def _FixBuhidDecode(Strng):
 
 def FixBuhid(Strng, reverse=False):
 
+    """Dispatches to the Buhid encode or decode fix-up routine based on the reverse flag."""
     from .. import PostProcess
     return _FixBuhidDecode(Strng) if reverse else _FixBuhidEncode(Strng)

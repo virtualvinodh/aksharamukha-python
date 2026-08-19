@@ -16,6 +16,7 @@ import re
 from .. import GeneralMap as GM
 
 def _FixDevanagariDecode(Strng):
+    """Strips the schwa accent, reverses Prishthamatra vowel-sign spelling, and decodes ॽ, ॹ, and Sindhi implosive letters to their approximate spellings."""
     Sindhi = ['ॻ','ॼ','ॾ','ॿ']
     SindhiApprox = ['ˍग','ˍज','ˍड','ˍब']
     # remove schwa accent
@@ -38,6 +39,7 @@ def _FixDevanagariDecode(Strng):
     return Strng
 
 def _FixDevanagariEncode(Strng):
+    """Maps ʔ and Sindhi implosive letters to Devanagari equivalents, blocks RRA from forming conjuncts (except before ya/ha), and encodes apostrophe-marked Kashmiri oe/ooe vowels."""
     Sindhi = ['ॻ','ॼ','ॾ','ॿ']
     SindhiApprox = ['ˍग','ˍज','ˍड','ˍब']
     Strng = Strng.replace('ʔ', 'ॽ')
@@ -73,13 +75,16 @@ def _FixDevanagariEncode(Strng):
     return Strng
 
 def FixDevanagari(Strng, reverse=False):
+    """Dispatches to the Devanagari encode or decode fix routine depending on conversion direction."""
     return _FixDevanagariDecode(Strng) if reverse else _FixDevanagariEncode(Strng)
 
 def AnuChandraEqDeva(Strng):
 
+    """Treats anusvara and chandrabindu as equivalent by converting chandrabindu to anusvara in Devanagari."""
     return AnuChandraEq(Strng, 'Devanagari')
 
 def AnuChandraEq(Strng, script):
+    """Converts the chandrabindu to the anusvara for the given script, treating the two as equivalent."""
     Chandrabindu = GM.CrunchList('AyogavahaMap', script)[0]
     Anusvara = GM.CrunchList('AyogavahaMap', script)[1]
 
@@ -88,6 +93,7 @@ def AnuChandraEq(Strng, script):
     return Strng
 
 def RemoveSchwaHindi(Strng, showschwa=False):
+    """Applies Hindi schwa-deletion rules, dropping the inherent vowel from word-medial and word-final consonants (राम → rām, सबसे → sabse)."""
     VowI = "(" + '|'.join(GM.CrunchSymbols(GM.Vowels,'Devanagari')) + ")"
     VowS = "(" + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, 'Devanagari')) + ")"
     Cons = "(" + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Devanagari')) + ")"
@@ -140,41 +146,50 @@ def RemoveSchwaHindi(Strng, showschwa=False):
     return Strng
 
 def ShowSchwaHindi(Strng):
+    """Marks deleted Hindi schwas with a visible accent instead of silently removing them (rāma → राम॔, viracita → विर॔॔चित॔)."""
     Strng = RemoveSchwaHindi(Strng, True)
     return Strng
 
 def devanagariuttara(Strng):
 
+    """Selects the Uttara Devanagari letterform style (rendering-style marker; does not alter the text)."""
     return Strng
 
 def devanagarinepali(Strng):
 
+    """Selects the Nepali Devanagari letterform style (rendering-style marker; does not alter the text)."""
     return Strng
 
 def devanagaribalbodh(Strng):
 
+    """Selects the Balbodh Devanagari letterform style (rendering-style marker; does not alter the text)."""
     return Strng
 
 def devanagarijain(Strng):
 
+    """Selects the Jain Devanagari letterform style (rendering-style marker; does not alter the text)."""
     return Strng
 
 def DevanagariAnusvara(Strng):
+    """Converts nasal consonants to anusvara for nasalization (पञ्चगङ्गा → पंचगंगा)."""
     from .. import PostProcess
 
     return PostProcess.NasalToAnusvara(Strng, 'Devanagari')
 
 def jainomDevangari(Strng):
+    """Replaces the standard OM sign with the Jain OM character (ॐ → ꣽ)."""
     Strng = Strng.replace('ॐ', 'ꣽ')
 
     return Strng
 
 def DevanagariACandra(Strng):
+    """Replaces the candra E vowel letter with the short A-candra letter (ऍ → ॲ)."""
     Strng = Strng.replace('ऍ', 'ॲ')
 
     return Strng
 
 def DevanagariPrishtamatra(Strng, reverse = False):
+    """Converts between standard and Prishthamatra (right-side matra) vowel-sign orthography (के कै को कौ ↔ कॎ कॎे कॎा कॎो)."""
     if not reverse:
         Strng = Strng.replace('े','ॎ')
         Strng = Strng.replace('ै','ॎे')

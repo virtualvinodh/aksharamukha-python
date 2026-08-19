@@ -13,6 +13,7 @@ from aksharamukha.ScriptMap.EastIndic import TaiTham
 
 def _FixTaiThamEncode(Strng):
 
+    """Applies Tai Tham-specific subjoining of ra/la, the mai kang lai and great-sa ligatures, tall-A vowel forms, and conjunct reordering when encoding."""
     from .. import PostProcess
     vir = TaiTham.ViramaMap[0]
     Cons = [vir+x for x in [TaiTham.ConsonantMap[x] for x in [26,27]]] # /ra/ and /la/
@@ -52,6 +53,7 @@ def _FixTaiThamEncode(Strng):
 
 def _FixTaiThamDecode(Strng):
 
+    """Reverses Tai Tham subjoining, ligature, and tall-A vowel fixes back to standard consonant-plus-virama sequences when decoding."""
     from .. import PostProcess
     vir = TaiTham.ViramaMap[0]
     Cons = [vir+x for x in [TaiTham.ConsonantMap[x] for x in [26,27]]] # /ra/ and /la/
@@ -80,5 +82,6 @@ def _FixTaiThamDecode(Strng):
 
 def FixTaiTham(Strng,reverse=False):
 
+    """Dispatches to the Tai Tham encode or decode fix-up routine based on the reverse flag."""
     from .. import PostProcess
     return _FixTaiThamDecode(Strng) if reverse else _FixTaiThamEncode(Strng)

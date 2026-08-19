@@ -20,6 +20,7 @@ from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.MainIndic import Malayalam
 
 def _FixMalayalamEncode(Strng):
+    """Converts chillu consonants to their Unicode chillu codepoints and retains Malayalam dandas and numerals when encoding into Malayalam."""
     from .. import PostProcess
     Strng = PostProcess.MalayalamChillu(Strng, False)
 
@@ -37,6 +38,7 @@ def _FixMalayalamEncode(Strng):
     return Strng
 
 def _FixMalayalamDecode(Strng):
+    """Expands chillu codepoints and archaic chillu letters back to consonant-plus-virama form and restores dandas/numerals when decoding out of Malayalam."""
     from .. import PostProcess
     Strng = PostProcess.MalayalamChillu(Strng, True)
 
@@ -58,14 +60,17 @@ def _FixMalayalamDecode(Strng):
     return Strng
 
 def FixMalayalam(Strng, reverse=False):
+    """Dispatches to the Malayalam encode or decode fix-up routine based on the reverse flag."""
     return _FixMalayalamDecode(Strng) if reverse else _FixMalayalamEncode(Strng)
 
 def ShowChillus(Strng):
+    """Displays chillu consonants with an explicit transliteration marker instead of collapsing them, e.g. ധർമൻ → /dharˍmanˍ/ not /dharman/."""
     from .. import PostProcess
 
     return PostProcess.MalayalamChillu(Strng, True, True)
 
 def MalayalamHalfu(Strng):
+    """Transcribes a word-final bare virama as the samvrutokara (extra-short u) sound, e.g. അവൻ അവന്‌ → avan avanŭ."""
     consu = '[കചടതറനണരലവഴളറ]'
     vir = GM.CrunchSymbols(GM.VowelSigns, 'Malayalam')[0]
     consAll = "(" + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Malayalam')) + ")"
@@ -75,6 +80,7 @@ def MalayalamHalfu(Strng):
     return Strng
 
 def MalayalamTranscribe(Strng):
+    """Phonetically transcribes Malayalam script, applying intervocalic/nasal consonant voicing and other sandhi rules, e.g. കൊടുങ്കാട് → kŏḍuṅgāḍŭ."""
     Strng = MalayalamHalfu(Strng)
 
     script = "Malayalam"
@@ -128,6 +134,7 @@ def MalayalamTranscribe(Strng):
     return Strng
 
 def MalayalamPrakrit_pre(Strng):
+    """Reverses gemination marks and converts the Prakrit anusvara-above character to a regular anusvara before Prakrit-specific processing."""
     from .. import PostProcess
     ## Reverse Gemination
     Strng = PostProcess.ReverseGeminationSign(Strng, 'Malayalam')
@@ -136,9 +143,11 @@ def MalayalamPrakrit_pre(Strng):
     return Strng
 
 def tradOrtho(Strng):
+    """Traditional Malayalam orthography option, currently a no-op passthrough, e.g. തു തൂ → തു തൂ."""
     return Strng
 
 def dotReph(Strng):
+    """Converts ra-virama before a consonant into the dot-reph character, e.g. ധർമ → ധൎമ."""
     ListC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Malayalam"))) + ')'
 
     Strng = re.sub('(?<!്)' + 'ർ' + ListC,'ൎ' + r'\1', Strng)
@@ -147,12 +156,14 @@ def dotReph(Strng):
     return Strng
 
 def archaicAIAU(Strng):
+    """Uses archaic vowel forms for long ī and au, e.g. ഈ കൗ → ൟ കൌ."""
     Strng = Strng.replace('ൗ', 'ൌ')
     Strng = Strng.replace('ഈ', 'ൟ')
 
     return Strng
 
 def MalayalamPrakrit_post(Strng):
+    """Converts anusvara to the Prakrit anusvara-above character and inserts gemination marks after Prakrit-specific processing."""
     from .. import PostProcess
     ## Replace Anusvara with Anusvara above
     Strng = Strng.replace("ം", "ഀ")
@@ -161,6 +172,7 @@ def MalayalamPrakrit_post(Strng):
     return Strng
 
 def historicChillu(Strng):
+    """Converts consonant-plus-virama sequences to historic/archaic chillu letters, e.g. ൿ ൔ ൕ ൖ."""
     chilluArch = ['\u0D54', '\u0D55', '\u0D56', '\u0D7F']
     chilluArchhVir = ['മ്', 'യ്', 'ഴ്', 'ക്']
 
@@ -176,16 +188,19 @@ def historicChillu(Strng):
 def MalayalamLineVirama(Strng):
     #ListC = '(' + '|'.join(GM.CrunchSymbols(GM.CharactersNV,'Malayalam') + ['ഽ']) + ')'
     #Strng = re.sub('\u0D4D'+'(?!'+ListC +')', '\u0D3B', Strng)
+    """Uses the line-form (vertical bar) virama instead of the standard virama, e.g. ക് → ക഻."""
     Strng = Strng.replace('\u0D4D', '\u0D3B')
 
     return Strng
 
 def MalayalamCircVirama(Strng):
+    """Uses the circle-form virama instead of the standard virama, e.g. ക് → ക഼."""
     Strng = Strng.replace('\u0D4D', '\u0D3C')
 
     return Strng
 
 def RephaDoubleMalayalam(Strng):
+    """Geminates the consonant following a reph/dot-reph, e.g. ധർമ → ധർമ്മ."""
     repha = '[ർൎ]'
 
     Target = 'Malayalam'

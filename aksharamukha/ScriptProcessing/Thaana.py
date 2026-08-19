@@ -12,6 +12,7 @@ from .. import GeneralMap as GM
 
 def _FixThaanaEncode(Strng):
 
+    """Applies Thaana encoding fixes: gemination-sign insertion, removal of redundant inherent-vowel sign before vowel signs, and Arabic-to-Thaana punctuation mapping."""
     from .. import PostProcess
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Thaana'))
     VowelVS = '|'.join(GM.CrunchSymbols(GM.VowelSigns,'Thaana'))
@@ -32,6 +33,7 @@ def _FixThaanaEncode(Strng):
 
 def _FixThaanaDecode(Strng):
 
+    """Reverses Thaana encoding fixes: approximates Arabic-loan consonants to native Thaana letters, inserts sukun on bare consonants, restores the inherent-vowel sign before vowel signs, and reverses gemination/punctuation mapping."""
     from .. import PostProcess
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Thaana'))
     VowelVS = '|'.join(GM.CrunchSymbols(GM.VowelSigns,'Thaana'))
@@ -65,5 +67,6 @@ def _FixThaanaDecode(Strng):
 
 def FixThaana(Strng, reverse=False):
 
+    """Dispatches to the Thaana encode or decode fix routine depending on the reverse flag."""
     from .. import PostProcess
     return _FixThaanaDecode(Strng) if reverse else _FixThaanaEncode(Strng)

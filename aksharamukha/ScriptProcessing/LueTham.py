@@ -11,5 +11,6 @@ import re
 
 def FixLueTham(Strng, reverse=False):
 
+    """Applies the shared Tai Tham family fix-up, without ra-haam swap, for Lue Tham script conversion."""
     from .. import ConvertFix as CF
     return CF._FixTaiThamFamily(Strng, reverse, ['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ'], marker_cleanup=False, ra_haam_swap=False)

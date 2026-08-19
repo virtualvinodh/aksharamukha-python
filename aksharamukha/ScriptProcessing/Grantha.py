@@ -18,9 +18,11 @@ import re
 import functools
 
 def FixGrantha(Strng, reverse=False):
+    """Dispatches to the Grantha encode or decode fix-up routine based on the reverse flag."""
     return _FixGranthaDecode(Strng) if reverse else _FixGranthaEncode(Strng)
 
 def _FixGranthaEncode(Strng):
+    """Maps accent and anusvara-variant marks to Grantha-specific Unicode codepoints and inserts a ZWNJ after visarga-virama when encoding."""
     Strng = Strng.replace('॑', '᳴')
     Strng = Strng.replace('᳚', '॑')
     Strng = Strng.replace('ꣳ', '𑍞')
@@ -30,6 +32,7 @@ def _FixGranthaEncode(Strng):
     return Strng
 
 def _FixGranthaDecode(Strng):
+    """Reverses the Grantha-specific accent, anusvara, and ZWNJ mappings applied during encoding when decoding back to the internal representation."""
     Strng = Strng.replace('𑌼𑍍\u200C', '𑌼𑍍')
     Strng = Strng.replace('॑', '᳚')
     Strng = Strng.replace('᳴', '॑')
@@ -39,11 +42,13 @@ def _FixGranthaDecode(Strng):
     return Strng
 
 def GranthaOldau(Strng):
+    """Uses the old Grantha AU vowel sign, e.g. 𑌕𑍗 → 𑌕𑍌."""
     Strng = Strng.replace('𑍗', '𑍌')
 
     return Strng
 
 def GranthaPrakrit(Strng):
+    """Applies Prakrit orthography for Grantha, converting anusvara to the anusvara-above form except word-initially, e.g. 𑌬𑍁𑌦𑍍𑌧𑌂 → 𑌬𑍁𑌂𑌧𑌀."""
     from .. import PostProcess
     ## Replace Anusvara with Anusvara above
     Strng = Strng.replace("𑌂", "𑌀")
@@ -60,10 +65,13 @@ def GranthaPrakrit(Strng):
 
 def granthafinal(Strng):
 
+    """Other Grantha final forms option, currently a no-op passthrough, e.g. 𑌦𑌿𑌕𑍍 → 𑌦𑌿𑌕𑍍."""
     return Strng
 
 def granthaserif(Strng):
+    """Noto Serif Grantha rendering option, currently a no-op passthrough, e.g. 𑌬𑍁𑌦𑍍𑌧𑌂 → 𑌬𑍁𑌦𑍍𑌧𑌂."""
     return Strng
 
 def egrantamil(Strng):
+    """E-Grantamil encoding option, currently a no-op passthrough."""
     return Strng

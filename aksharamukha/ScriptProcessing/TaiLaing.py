@@ -6,6 +6,7 @@
 import re
 
 def _FixTaiLaingEncode(Strng):
+    """Converts virama+medial ra/ya/wa sequences into their dedicated Tai Laing medial signs and reorders medial-sign combinations to the correct rendering order."""
     Strng = Strng.replace('်ꩺ', 'ြ')
     Strng = Strng.replace('်ယ', 'ျ')
     Strng = Strng.replace('်ဝ', 'ႂ')
@@ -21,6 +22,7 @@ def _FixTaiLaingEncode(Strng):
     return Strng
 
 def _FixTaiLaingDecode(Strng):
+    """Reverses medial-sign ordering and expands the Tai Laing medial ra/ya/wa signs back to virama+consonant sequences."""
     Strng = Strng.replace("\u103B\u103C", "\u103C\u103B")
     Strng = Strng.replace("\u103B\u103D", "\u103D\u103B")
     Strng = Strng.replace("\u103Cႂ", "ႂ\u103C")
@@ -32,4 +34,5 @@ def _FixTaiLaingDecode(Strng):
     return Strng
 
 def FixTaiLaing(Strng, reverse=False):
+    """Dispatches to the Tai Laing encode or decode fix routine depending on conversion direction."""
     return _FixTaiLaingDecode(Strng) if reverse else _FixTaiLaingEncode(Strng)

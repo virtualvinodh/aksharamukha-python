@@ -7,6 +7,7 @@
 import re
 
 def _FixMarchenEncode(Strng):
+    """Converts glottal-stop-prefixed consonant markers into their dedicated Marchen subjoined letters and strips leftover marker characters."""
     subjoinCons = '𑱲 𑱳 𑱴 𑱵 𑱶 𑱷 𑱸 𑱹 𑱺 𑱻 𑱼 𑱽 𑱾 𑱿 𑲀 𑲁 𑲂 𑲃 𑲄 𑲅 𑲆 𑲇 𑲉 𑲊 𑲋 𑲌 𑲍 𑲎'.split(' ')
     subjoined = '𑲒 𑲓 𑲔 𑲕 𑲖 𑲗 𑲘 𑲙 𑲚 𑲛 𑲜 𑲝 𑲞 𑲟 𑲠 𑲡 𑲢 𑲣 𑲤 𑲥 𑲦 𑲧 𑲩 𑲪 𑲫 𑲬 𑲭 𑲮'.split(' ')
 
@@ -20,6 +21,7 @@ def _FixMarchenEncode(Strng):
     return Strng
 
 def _FixMarchenDecode(Strng):
+    """Converts Sanskrit tsa-series letters to their ja-series equivalents and expands Marchen subjoined letters back into glottal-marker+consonant sequences."""
     subjoinCons = '𑱲 𑱳 𑱴 𑱵 𑱶 𑱷 𑱸 𑱹 𑱺 𑱻 𑱼 𑱽 𑱾 𑱿 𑲀 𑲁 𑲂 𑲃 𑲄 𑲅 𑲆 𑲇 𑲉 𑲊 𑲋 𑲌 𑲍 𑲎'.split(' ')
     subjoined = '𑲒 𑲓 𑲔 𑲕 𑲖 𑲗 𑲘 𑲙 𑲚 𑲛 𑲜 𑲝 𑲞 𑲟 𑲠 𑲡 𑲢 𑲣 𑲤 𑲥 𑲦 𑲧 𑲩 𑲪 𑲫 𑲬 𑲭 𑲮'.split(' ')
 
@@ -35,9 +37,11 @@ def _FixMarchenDecode(Strng):
     return Strng
 
 def FixMarchen(Strng, reverse=False):
+    """Dispatches to the Marchen encode or decode fix routine based on the reverse flag."""
     return _FixMarchenDecode(Strng) if reverse else _FixMarchenEncode(Strng)
 
 def MarchenSanskritPalatals(Strng):
+    """Renders Sanskrit palatal consonants using the tsa-series Marchen letters instead of the ja-series, e.g. 𑲂 𑲃 𑲄 𑲄𑲮 → 𑱶 𑱷 𑱸 𑱸𑲮."""
     tsaSeries = ['\U00011C82', '\U00011C83', '\U00011C84']
     jaSereis =  ['\U00011C76', '\U00011C77', '\U00011C78']
 

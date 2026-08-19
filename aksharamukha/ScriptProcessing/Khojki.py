@@ -12,6 +12,7 @@ import re
 
 def _FixKhojkiEncode(Strng):
 
+    """Converts approximated Sindhi consonant sequences to their dedicated Khojki characters, inserts the gemination sign, moves shadda after its consonant, reorders shadda+nukta, and encodes spaces as the Khojki word separator."""
     from .. import PostProcess
     sindhi = ['\U0001120B', '\U00011211', '\U0001121C', '\U00011222']
     sindhiapprox = ['ˍ\U0001120A', 'ˍ\U00011210', 'ˍ\U00011216', 'ˍ\U00011221']
@@ -31,6 +32,7 @@ def _FixKhojkiEncode(Strng):
 
 def _FixKhojkiDecode(Strng):
 
+    """Reverses the word separator, Sindhi consonant substitution, shadda/nukta ordering, and gemination sign transformations applied when encoding Khojki."""
     from .. import PostProcess
     sindhi = ['\U0001120B', '\U00011211', '\U0001121C', '\U00011222']
     sindhiapprox = ['ˍ\U0001120A', 'ˍ\U00011210', 'ˍ\U00011216', 'ˍ\U00011221']
@@ -50,11 +52,13 @@ def _FixKhojkiDecode(Strng):
 
 def FixKhojki(Strng, reverse=False):
 
+    """Dispatches to the Khojki encode or decode fix routine based on the reverse flag."""
     from .. import PostProcess
     return _FixKhojkiDecode(Strng) if reverse else _FixKhojkiEncode(Strng)
 
 def KhojkiRRI(Strng):
 
+    """Decomposes the Khojki vocalic RI/RII ligature characters into their constituent letter sequences."""
     from .. import PostProcess
     Strng = Strng.replace('\U00011241', '\U00011235\U00011226\U0001122D')
     Strng = Strng.replace('\U00011240', '\U00011202')
@@ -63,6 +67,7 @@ def KhojkiRRI(Strng):
 
 def KhojkiQa(Strng):
 
+    """Uses the dedicated Khojki qa ligature instead of ka+nukta, e.g. 𑈈𑈶 → 𑈿."""
     from .. import PostProcess
     Strng = Strng.replace('𑈈𑈶', '\U0001123F')
 
@@ -70,6 +75,7 @@ def KhojkiQa(Strng):
 
 def KhojkiRetainSpace(Strng):
 
+    """Replaces the Khojki word-separator character with a plain space."""
     from .. import PostProcess
     Strng = Strng.replace('\U0001123A', ' ')
 

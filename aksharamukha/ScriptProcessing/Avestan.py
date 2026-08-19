@@ -8,6 +8,7 @@ from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.Roman import Avestan
 
 def _FixAvestanEncode(Strng):
+    """Applies Avestan orthographic fixes: aM/AM ligatures, ya/va to long ii/uu after vowels or consonants, and TTE/BHA/ZHA/NGVA/AO ligature substitutions."""
     extraCons = ["\U00010B33","\U00010B32","\U00010B1D","\U00010B12", '𐬣', '𐬝']
     ListC = "|".join(GM.CrunchSymbols(GM.Consonants, "Avestan")+extraCons)
     ListV = "|".join(GM.CrunchSymbols(GM.Vowels,"Avestan"))
@@ -38,6 +39,7 @@ def _FixAvestanEncode(Strng):
     return Strng
 
 def _FixAvestanDecode(Strng):
+    """Reverses Avestan orthographic fixes, expanding the aM/AM, ii/uu, and TTE/BHA/ZHA/NGVA/AO ligatures back into their component sequences."""
     extraCons = ["\U00010B33","\U00010B32","\U00010B1D","\U00010B12", '𐬣', '𐬝']
     ListC = "|".join(GM.CrunchSymbols(GM.Consonants, "Avestan")+extraCons)
     ListV = "|".join(GM.CrunchSymbols(GM.Vowels,"Avestan"))
@@ -72,4 +74,5 @@ def _FixAvestanDecode(Strng):
     return Strng
 
 def FixAvestan(Strng, reverse=False):
+    """Dispatches to the Avestan encode or decode fix routine depending on the reverse flag."""
     return _FixAvestanDecode(Strng) if reverse else _FixAvestanEncode(Strng)

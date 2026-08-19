@@ -7,6 +7,7 @@
 import re
 
 def _FixShanEncode(Strng):
+    """Encodes Shan script: forms ြ/ျ/ဝ medial ligatures from virama clusters, reorders medials, and fixes the shya conjunct."""
     Strng = Strng.replace('်ရ', 'ြ')
     Strng = Strng.replace('်ယ', 'ျ')
     Strng = Strng.replace('်ဝ', '\u1082')
@@ -26,6 +27,7 @@ def _FixShanEncode(Strng):
 
 def _FixShanDecode(Strng):
     ## Reverse the order of the medials
+    """Reverses Shan encoding: expands medial ligatures back to virama+consonant clusters and restores medial order."""
     Strng = re.sub('([ျြွ])' + '(ှ)', r'\2\1', Strng)
     Strng = Strng.replace("\u103B\u103C", "\u103C\u103B")
     Strng = Strng.replace("\u103B\u103D", "\u103D\u103B")
@@ -43,12 +45,14 @@ def _FixShanDecode(Strng):
     return Strng
 
 def FixShan(Strng, reverse=False):
+    """Dispatches to the Shan encode or decode fix routine depending on conversion direction."""
     return _FixShanDecode(Strng) if reverse else _FixShanEncode(Strng)
 
 def segmentShanSyllables(Strng):
     # segment text into syllables
 
     # https://github.com/ye-kyaw-thu/myWord/blob/main/syl_segment.py
+    """Segments Shan text into syllables by inserting spaces at syllable boundaries - လႅင်းမုၼ်းမႂ်ႇ → လႅင်း မုၼ်း မႂ်ႇ."""
     myConsonant = r"ၵၶၷꧠငၸꧡꩡꧢၺꩦꩧꩨꩩꧣတထၻꩪၼပၽၿꧤမယရလဝသႁꩮၹၾႀဢ"
     otherChar = r"႞႟႐-႙၊။!-/:-@[-`{-~\s"
     ssSymbol = r'္'

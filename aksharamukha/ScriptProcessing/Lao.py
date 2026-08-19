@@ -12,6 +12,7 @@ import re
 
 def _FixLaoEncode(Strng):
 
+    """Applies Lao encoding fixes: maps aspirate consonants marked with a pseudo-nukta to their unaspirated forms, reverses vowel-sign order, transcribes tone/vowel spelling, and merges AA+Anusvara into the AM ligature."""
     from .. import ConvertFix as CF
 
     Strng = Strng.replace("ທ\uEB0A", "ດ")
@@ -33,6 +34,7 @@ def _FixLaoEncode(Strng):
 
 def _FixLaoDecode(Strng):
 
+    """Reverses Lao encoding fixes: restores aspirate consonants from their unaspirated pseudo-nukta forms, restores vowel-sign order, reverses transcription, and splits the AM ligature back to AA+Anusvara."""
     from .. import ConvertFix as CF
     Strng = Strng.replace("ດ", "ທ\uEB0A")
     Strng = Strng.replace('ບ', "ປ\uEB0A")
@@ -60,11 +62,13 @@ def _FixLaoDecode(Strng):
 
 def FixLao(Strng,reverse=False):
 
+    """Dispatches to the Lao encode or decode fix routine depending on the reverse flag."""
     from .. import ConvertFix as CF
     return _FixLaoDecode(Strng) if reverse else _FixLaoEncode(Strng)
 
 def LaoTranscribe(Strng,reverse=False):
 
+    """Applies or reverses Lao short-a/conjunct-a transcription rules via the shared Thai/Lao transcription routine."""
     from .. import ConvertFix as CF
     from .. import PostProcess as pp
 
@@ -79,6 +83,7 @@ def LaoTranscribe(Strng,reverse=False):
 
 def LaoNative(Strng):
 
+    """Nativizes Lao spelling by simplifying doubled aspirate/sibilant consonant clusters: ພຸທທັງ ຄັຈຈາມິ ສັພພັງ → ພຸດທັງ ຄັຈສາມິ ສັບພັງ."""
     from .. import ConvertFix as CF
 
     Strng = re.sub('ຕ([ເແໂໄ]?)ຕ', 'ດ' + r'\1' + 'ຕ', Strng)

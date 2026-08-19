@@ -14,6 +14,7 @@ import re
 from .. import GeneralMap as GM
 
 def _FixDivesAkuruEncode(Strng):
+    """Converts explicit virama+consonant into subjoining virama and forms special ra/ya conjuncts (repha, subjoined ya) for Dives Akuru."""
     target = 'DivesAkuru'
 
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target)+['\U00011926'])
@@ -38,6 +39,7 @@ def _FixDivesAkuruEncode(Strng):
     return Strng
 
 def _FixDivesAkuruDecode(Strng):
+    """Reverses Dives Akuru homorganic nasal signs, subjoining virama, alternate ya, and repha/subjoined-ya conjuncts back to explicit sequences."""
     target = 'DivesAkuru'
 
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target)+['\U00011926'])
@@ -76,6 +78,7 @@ def _FixDivesAkuruDecode(Strng):
     return Strng
 
 def FixDivesAkuru(Strng, reverse=False):
+    """Dispatches to the Dives Akuru encode or decode fix-up routine based on the reverse flag."""
     return _FixDivesAkuruDecode(Strng) if reverse else _FixDivesAkuruEncode(Strng)
 
 def DivesAkuruAlternateIndVowels_pre(Strng):
@@ -84,6 +87,7 @@ def DivesAkuruAlternateIndVowels_pre(Strng):
 
     # replace ind. vow with /y/
 
+    """Collapses y-based vowel sequences (e.g. 𑤥𑤰) into their standalone Dives Akuru independent vowel letters (e.g. 𑤁)."""
     vow = "𑤁 𑤂 𑤃 𑤄 𑤅 𑤆 𑤆𑤵 𑤉 𑤀".split(" ")
     vowy = "𑤥𑤰 𑤥𑤱 𑤥𑤲 𑤥𑤳 𑤥𑤴 𑤥𑤵 𑤥𑤷 𑤥𑤸 𑤥".split(" ")
 
@@ -94,6 +98,7 @@ def DivesAkuruAlternateIndVowels_pre(Strng):
 
 def DivesAkuruAlternateIndVowels_post(Strng):
     # use alt /y/
+    """Expands standalone Dives Akuru independent vowels into y-based sequences and switches to the alternate ya glyph (e.g. 𑤁→𑤥𑤰)."""
     Strng = Strng.replace("\U00011925", "\U00011926")
 
     # replace ind. vow with /y/
@@ -107,6 +112,7 @@ def DivesAkuruAlternateIndVowels_post(Strng):
     return Strng
 
 def DivesAkuruHomoOrganNasal(Strng):
+    """Uses the homorganic nasal sign in place of virama+nasal before a matching consonant, e.g. 𑤐𑤾𑤎 → 𑤿𑤎."""
     homoNasal = '\U0001193F'
 
     Strng = re.sub('(𑤐\U0001193E)(?=[𑤌𑤍𑤎𑤏])', homoNasal, Strng)
@@ -119,6 +125,7 @@ def DivesAkuruHomoOrganNasal(Strng):
     return Strng
 
 def UseAlternateYA(Strng):
+    """Uses the alternate Dives Akuru ya glyph in place of the standard one, 𑤥 → 𑤦."""
     Strng = Strng.replace("\U00011925", "\U00011926")
 
     return Strng

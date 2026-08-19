@@ -25,6 +25,7 @@ from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.EastIndic import Thai
 
 def FixThai(Strng,reverse=False,ctx=None):
+    """Dispatches Thai fix logic: reverses vowel sign order, resolves digraph conjuncts, and optionally applies phonetic transcription."""
     from .. import PostProcess
     Strng = ThaiReverseVowelSigns(Strng,reverse)
     Strng = ThaiDigraphConjuncts(Strng,reverse)
@@ -38,6 +39,7 @@ def FixThai(Strng,reverse=False,ctx=None):
     return Strng
 
 def ThaiReverseVowelSigns(Strng,reverse=False):
+    """Reorders leading Thai vowel signs to/from consonant-first internal order and forms the AM/IM ligatures (◌ํ, ◌ึ)."""
     from .. import ConvertFix as CF
 #    EAIO = "".join(Thai.VowelSignMap[9:12])
 #    cons = "|".join(GM.CrunchSymbols(GM.Consonants, "Thai"))
@@ -56,6 +58,7 @@ def ThaiReverseVowelSigns(Strng,reverse=False):
     return Strng
 
 def ThaiDigraphConjuncts(Strng,reverse=False):
+    """Reorders vowel-consonant-virama-consonant sequences to form Thai digraph conjunct clusters, or reverses them."""
     EAIO = "".join(Thai.VowelSignMap[9:12])
     cons = "|".join(GM.CrunchSymbols(GM.Consonants, "Thai"))
     yrlvh = "|".join(GM.CrunchSymbols(GM.Consonants, "Thai")[25:29] + GM.CrunchSymbols(GM.Consonants, "Thai")[32:33])
@@ -76,9 +79,11 @@ def ThaiDigraphConjuncts(Strng,reverse=False):
 
 def ThaiOrthography(Strng):
 
+    """Marks text as standard Thai orthography - e.g. พุทธะ."""
     return Strng
 
 def ThaiPhonetic(Strng):
+    """Converts to Thai phonetic transcription: ด→ท, บ→พ, marks aspirated ก/จ with a dot-below, and strips nikkhahit/tone marks - e.g. ตะต͜ระ ราจ̥ะ."""
     Strng = Strng.replace('ด', 'ท')
     Strng = Strng.replace('บ', 'พ')
     Strng = Strng.replace('ก\u0325', 'ค')
@@ -92,6 +97,7 @@ def ThaiPhonetic(Strng):
     return Strng
 
 def ThaiSajjhayaOrthography_pre(Strng):
+    """Pre-processes text for Thai Sajjhāya orthography by converting anusvara/tone marks to the subscript virama sign and dropping the short-a conjunct."""
     Script = "Thai"
 
     #cons = "|".join(GM.CrunchSymbols(GM.Consonants, Script)+GM.CrunchList('VowelMap',Script)[0:1])
@@ -107,12 +113,14 @@ def ThaiSajjhayaOrthography_pre(Strng):
     return Strng
 
 def ThaiSajjhayawithA_pre(Strng):
+    """Strips the short-a sign then applies the Thai Sajjhāya orthography pre-processing."""
     Strng = Strng.replace('ะ', '')
     Strng = ThaiSajjhayaOrthography_pre(Strng)
 
     return Strng
 
 def ThaiNativeConsonants(Strng):
+    """Converts to native Thai phonetic consonant forms - พุทฺธตฺว → บุดธะต͜วะ."""
     Strng = Strng.replace('ท', 'ด')
     Strng = Strng.replace('พ', 'บ')
     Strng = Strng.replace("\u0E36","\u0E34\u0E4D")
@@ -148,6 +156,7 @@ def ThaiNativeConsonants(Strng):
 
 def ThaiSajjhayaOrthography_post(Strng, Script = "Thai"):
     ## reverse digraphs
+    """Post-processes Thai (or Lao Pali) text into Sajjhāya orthography, inserting joiners between consonant clusters and reordering digraphs."""
     Strng = ThaiReverseVowelSigns(Strng, True)
     Strng = ThaiDigraphConjuncts(Strng, True)
     Strng = ThaiReverseVowelSigns(Strng)
@@ -198,6 +207,7 @@ def ThaiSajjhayaOrthography_post(Strng, Script = "Thai"):
     return Strng
 
 def ThaiSajjhayawithA_post(Strng):
+    """Post-processes text into nativized Sajjhāya-with-a orthography by applying transcription with anusvara restoration."""
     Strng = ThaiSajjhayaOrthography_post(Strng)
     Strng = Strng.replace('ัง','ังฺ')
     Strng = ThaiTranscription(Strng, anusvaraChange = True)
@@ -213,6 +223,7 @@ def ThaiSajjhayawithA_post(Strng):
     return Strng
 
 def ThaiTranscription(Strng, anusvaraChange = True):
+    """Converts Thai script to phonetic transcription orthography by reversing digraphs and applying short-a insertion rules - พุทฺธ → พุทธะ."""
     from .. import PostProcess
 
     ## reverse digraphs
@@ -249,6 +260,7 @@ def ThaiTranscription(Strng, anusvaraChange = True):
     return Strng
 
 def ThaiVisargaSaraA(Strng):
+    """Converts the visarga-style ห์ marker back into the short-a sign ะ - นมัห์ → นมะ."""
     Strng = Strng.replace('ห์','ะ')
 
     return Strng

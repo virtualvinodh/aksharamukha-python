@@ -13,6 +13,7 @@ from aksharamukha.ScriptMap.MainIndic import Gurmukhi
 
 def _FixGurmukhiLoCEncode(Strng):
 
+    """Corrects ru/lu vowel signs, collapses a doubled ava sign into parenthesized ā, inserts the gemination sign, retains Indic numerals, and expands addak+Vedic-svara sequences for LoC Gurmukhi encoding."""
     from .. import ConvertFix as CF
 
     from .. import PostProcess
@@ -36,6 +37,7 @@ def _FixGurmukhiLoCEncode(Strng):
 
 def _FixGurmukhiLoCDecode(Strng):
 
+    """Reverses ru/lu correction, restores the doubled ava sign from parenthesized ā, retains Indic numerals, and reverses the gemination sign for LoC Gurmukhi decoding."""
     from .. import ConvertFix as CF
 
     from .. import PostProcess
@@ -58,6 +60,7 @@ def _FixGurmukhiLoCDecode(Strng):
 
 def FixGurmukhiLoC(Strng,reverse=False):
 
+    """Dispatches to the Gurmukhi LoC encode or decode fix routine based on the reverse flag."""
     from .. import ConvertFix as CF
 
     from .. import PostProcess

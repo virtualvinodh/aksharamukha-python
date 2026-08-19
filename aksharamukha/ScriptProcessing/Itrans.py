@@ -12,6 +12,7 @@
 import re
 
 def swapEeItrans_pre(Strng):
+    """Pre-processing step that temporarily swaps ITRANS 'e'/'o' and '^e'/'^o' markers to disambiguate short and long e/o vowels before conversion."""
     Strng = Strng.replace('^e', 'X@X@')
     Strng = Strng.replace('e', '^e')
     Strng = Strng.replace('X@X@','e')
@@ -23,6 +24,7 @@ def swapEeItrans_pre(Strng):
     return Strng
 
 def swapEeItrans_post(Strng):
+    """Post-processing step that restores ITRANS e/o vowel distinctions, mapping short vowels to lowercase and long vowels to uppercase E/O."""
     Strng = Strng.replace('^e', 'X@X@')
     Strng = Strng.replace('e', 'E')
     Strng = Strng.replace('X@X@', 'e')
@@ -34,6 +36,7 @@ def swapEeItrans_post(Strng):
     return Strng
 
 def readableItrans(Strng):
+    """Converts to readable ITRANS style: gR^ihalakShmI → gRRihalaxmii."""
     pairsReadable = [('R^i','RRi'), ('R^I','RRii'), ('',''), ('',''), ('A', 'aa'), ('I', 'ii'), ('U', 'uu'), ('Ch', 'chh'), ('kSh','x'), ('M', '.m')]
 
     for x, y in pairsReadable:

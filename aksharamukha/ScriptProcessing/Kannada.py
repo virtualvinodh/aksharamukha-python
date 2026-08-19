@@ -13,6 +13,7 @@ from .. import GeneralMap as GM
 
 def _FixKannadaEncode(Strng):
 
+    """Retains Indic dandas and inserts a ZWNJ before a nukta after virama (except before pha/ja) when encoding into Kannada."""
     from .. import PostProcess
     Strng = PostProcess.RetainDandasIndic(Strng, 'Kannada', True)
     #Strng = PostProcess.RetainIndicNumerals(Strng, 'Kannada', True)
@@ -23,6 +24,7 @@ def _FixKannadaEncode(Strng):
 
 def _FixKannadaDecode(Strng):
 
+    """Restores Indic dandas to their generic forms when decoding out of Kannada script."""
     from .. import PostProcess
     Strng = PostProcess.RetainDandasIndic(Strng, 'Kannada')
 
@@ -30,11 +32,13 @@ def _FixKannadaDecode(Strng):
 
 def FixKannada(Strng, reverse=False):
 
+    """Dispatches to the Kannada encode or decode fix-up routine based on the reverse flag."""
     from .. import PostProcess
     return _FixKannadaDecode(Strng) if reverse else _FixKannadaEncode(Strng)
 
 def KannadaSpacingCandrabindu(Strng):
 
+    """Uses the spacing candrabindu form instead of the combining one, e.g. ಯಹಾಁ → ಯಹಾಀ."""
     from .. import PostProcess
     Strng = Strng.replace('\u0C81', '\u0C80')
 
@@ -42,6 +46,7 @@ def KannadaSpacingCandrabindu(Strng):
 
 def KannadaNotRepha(Strng):
 
+    """Prevents ra-virama before a consonant from forming a visual repha ligature, e.g. ಧರ್ಮ → ಧರ‍್ಮ."""
     from .. import PostProcess
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Kannada')) + ")"
 
@@ -51,6 +56,7 @@ def KannadaNotRepha(Strng):
 
 def KannadaNakaraPollu(Strng):
 
+    """Converts word-final na-virama to the special Kannada nakaara pollu character, e.g. ಭಗವನ್ → ಭಗವೝ."""
     from .. import PostProcess
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Kannada')) + ")"
 

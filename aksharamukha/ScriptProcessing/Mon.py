@@ -11,6 +11,7 @@ import re
 
 def _FixMonEncode(Strng):
 
+    """Applies Burmese base fixes plus Mon-specific medial consonant signs and nga/nya letter disambiguation for encoding."""
     from .. import ConvertFix as CF
     pairs = [('င', 'ၚ'),('ဉ', 'ည'), ('ဈ', 'ၛ')]
 
@@ -53,6 +54,7 @@ def _FixMonEncode(Strng):
 
 def _FixMonDecode(Strng):
 
+    """Reverses Mon medial consonant signs and nga/nya disambiguation back to Burmese-style virama sequences."""
     from .. import ConvertFix as CF
     pairs = [('င', 'ၚ'),('ဉ', 'ည'), ('ဈ', 'ၛ')]
 
@@ -82,5 +84,6 @@ def _FixMonDecode(Strng):
 
 def FixMon(Strng, reverse=False):
 
+    """Dispatches to the Mon encode or decode fix-up routine based on the reverse flag."""
     from .. import ConvertFix as CF
     return _FixMonDecode(Strng) if reverse else _FixMonEncode(Strng)

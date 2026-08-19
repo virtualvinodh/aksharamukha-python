@@ -11,6 +11,7 @@ import re
 
 def _FixAssameseEncode(Strng):
 
+    """Applies the khanda-ta fix and converts standard ra to the Assamese ra form (ৰ) when encoding into Assamese."""
     from .. import PostProcess
     Ra = "\u09B0"
     AssRa = "\u09F0"
@@ -23,6 +24,7 @@ def _FixAssameseEncode(Strng):
 
 def _FixAssameseDecode(Strng):
 
+    """Reverses the khanda-ta fix and converts the Assamese ra form (ৰ) back to standard ra when decoding out of Assamese."""
     from .. import PostProcess
     Ra = "\u09B0"
     AssRa = "\u09F0"
@@ -35,5 +37,6 @@ def _FixAssameseDecode(Strng):
 
 def FixAssamese(Strng,reverse=False):
 
+    """Dispatches to the Assamese encode or decode fix routine based on the reverse flag."""
     from .. import PostProcess
     return _FixAssameseDecode(Strng) if reverse else _FixAssameseEncode(Strng)

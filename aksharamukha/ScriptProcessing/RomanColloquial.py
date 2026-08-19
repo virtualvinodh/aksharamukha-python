@@ -11,5 +11,6 @@ import re
 
 def FixRomanColloquial(Strng, reverse = False):
 
+    """Delegates to the shared readable/colloquial Roman transliteration routine with colloquial-style rendering enabled."""
     from .. import ConvertFix as CF
     return CF._FixRomanReadableColloquial(Strng, reverse, colloquial=True)

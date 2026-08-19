@@ -7,6 +7,7 @@
 import re
 
 def HatrDalethResh(Strng):
+    """Disambiguates the Hatran letter daleth-resh (𐣣) by expanding it into its [d-r] transliteration form."""
     Strng = Strng.replace('𐣣', '[\uEA06-\uEA01]') # resh yin
 
     return Strng

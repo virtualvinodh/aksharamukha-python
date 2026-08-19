@@ -14,6 +14,7 @@ from aksharamukha.ScriptMap.MainIndic import Gurmukhi
 
 def _FixGurmukhiEncode(Strng):
 
+    """Applies Gurmukhi encoding fixes: RU/LU vowel correction, doubled Aunkar to bracketed AA, gemination-sign insertion, Indic-numeral retention, and Vedic svara consonant doubling."""
     from .. import ConvertFix as CF
 
     from .. import PreProcess as PP
@@ -39,6 +40,7 @@ def _FixGurmukhiEncode(Strng):
 
 def _FixGurmukhiDecode(Strng):
 
+    """Reverses Gurmukhi encoding fixes: RU/LU vowel correction, Indic numerals, gemination sign, nn/mm-halant normalization, Tippi-to-Bindu, and Yakaash conjuncts."""
     from .. import ConvertFix as CF
 
     from .. import PreProcess as PP
@@ -64,6 +66,7 @@ def _FixGurmukhiDecode(Strng):
 
 def FixGurmukhi(Strng,reverse=False):
 
+    """Dispatches to the Gurmukhi encode or decode fix routine depending on the reverse flag."""
     from .. import ConvertFix as CF
 
     from .. import PreProcess as PP
@@ -73,6 +76,7 @@ def FixGurmukhi(Strng,reverse=False):
 
 def SchwaFinalGurmukhi(Strng):
 
+    """Deletes the schwa only in word-final position: ਰਾਮ → rām."""
     from .. import ConvertFix as CF
 
     from .. import PreProcess as PP
@@ -85,6 +89,7 @@ def SchwaFinalGurmukhi(Strng):
 
 def GurmukhiCandrabindu(Strng):
 
+    """Replaces the Gurmukhi candrabindu sign (ਁ) with anusvara (ਂ), since Gurmukhi does not distinguish them."""
     from .. import ConvertFix as CF
 
     from .. import PreProcess as PP
@@ -96,6 +101,7 @@ def GurmukhiCandrabindu(Strng):
 
 def GurmukhiYakaash(Strng, reverse=False):
 
+    """Applies (or reverses) the Yakaash ligature: ਕ੍ਯ → ਕੵ."""
     from .. import ConvertFix as CF
 
     from .. import PreProcess as PP
@@ -109,6 +115,7 @@ def GurmukhiYakaash(Strng, reverse=False):
     return Strng
 
 def GurmukhiTippiBindu(Strng): # Check this Function
+    """Converts Gurmukhi Bindu (ਂ) to Tippi (ੰ) after specific consonants, vowels, and vowel signs where Tippi is conventional."""
     Bindi = Gurmukhi.AyogavahaMap[1];
     Tippi = '\u0A70'
     ListTippi = '|'.join(GM.CrunchSymbols(GM.Consonants, 'Gurmukhi')+[Gurmukhi.VowelMap[x] for x in [0,2,4]]
@@ -126,6 +133,7 @@ def GurmukhiTippiBindu(Strng): # Check this Function
 
 def GurmukhiTippiGemination(Strng):
 
+    """Replaces the Addak gemination mark (ੱ) with Tippi before ਨ or ਮ, reflecting pronunciation of geminated nasals."""
     from .. import ConvertFix as CF
 
     from .. import PreProcess as PP

@@ -12,6 +12,7 @@ import re
 
 def _FixArabEncode(Strng, Source):
 
+    """Applies Perso-Arabic punctuation normalization when encoding text into Arabic script."""
     from .. import ConvertFix as CF
     Strng = CF.PersoArabicPuntuation(Strng, False)
     pass
@@ -21,6 +22,7 @@ def _FixArabEncode(Strng, Source):
 
 def _FixArabDecode(Strng, Source):
 
+    """Reverses Perso-Arabic punctuation, normalizes alef/tatweel, and reorders shadda-kasra when decoding from Arabic."""
     from .. import ConvertFix as CF
     Strng = CF.PersoArabicPuntuation(Strng, True)
     Strng = Strng.replace('آ', 'آ').replace('ـ', '')
@@ -31,11 +33,13 @@ def _FixArabDecode(Strng, Source):
 
 def FixArab(Strng, Source, reverse=False):
 
+    """Dispatches to the Arabic encode or decode fix routine depending on conversion direction."""
     from .. import ConvertFix as CF
     return _FixArabDecode(Strng, Source) if reverse else _FixArabEncode(Strng, Source)
 
 def ArabicGimelJa(Strng):
 
+    """Represents /g/ using ڨ instead of jim ج - /ج/ as /g/."""
     from .. import ConvertFix as CF
     Strng = Strng.replace("ج", "ڨ")
 
@@ -43,6 +47,7 @@ def ArabicGimelJa(Strng):
 
 def ArabRemoveAdditions(Strng):
 
+    """Reverts extended Arabic letters back to their standard base forms: ڨ→ج, ڤ→ف, پ→ف."""
     from .. import ConvertFix as CF
     Strng = Strng.replace('ڨ', 'ج').replace('ڤ', 'ف').replace('پ', 'ف')
 
@@ -50,6 +55,7 @@ def ArabRemoveAdditions(Strng):
 
 def arabicRemoveAdditionsPhonetic(Strng):
 
+    """Maps extended phonetic letters to their nearest standard Arabic equivalents - /g j p b/ → /غ ج ب ب/ not /ج ج ف ب/."""
     from .. import ConvertFix as CF
 
     Strng = Strng.replace('ڨ', 'غ').replace('ڤ', 'ف').replace('پ', 'ب')
@@ -58,6 +64,7 @@ def arabicRemoveAdditionsPhonetic(Strng):
 
 def ArabAtoAleph(Strng):
 
+    """Converts hamza-carrying alif أ back to plain alif ا - أ/a/ to Alif /ا/."""
     from .. import ConvertFix as CF
     Strng = Strng.replace('أ', 'ا')
 

@@ -11,6 +11,7 @@ import re
 
 def _FixTagbanwaEncode(Strng):
 
+    """Inserts the gemination sign for doubled consonants when encoding into Tagbanwa."""
     from .. import PostProcess
     Strng = PostProcess.InsertGeminationSign(Strng, 'Tagbanwa')
 
@@ -18,6 +19,7 @@ def _FixTagbanwaEncode(Strng):
 
 def _FixTagbanwaDecode(Strng):
 
+    """No-op decode fix for Tagbanwa; no additional corrections are currently applied."""
     from .. import PostProcess
     pass
 
@@ -25,5 +27,6 @@ def _FixTagbanwaDecode(Strng):
 
 def FixTagbanwa(Strng, reverse=False):
 
+    """Dispatches to the Tagbanwa encode or decode fix routine based on the reverse flag."""
     from .. import PostProcess
     return _FixTagbanwaDecode(Strng) if reverse else _FixTagbanwaEncode(Strng)

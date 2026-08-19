@@ -13,6 +13,7 @@ from .. import GeneralMap as GM
 
 def _FixTeluguEncode(Strng):
 
+    """Retains Indic dandas and numerals when encoding into Telugu script."""
     from .. import PostProcess
     Strng = PostProcess.RetainDandasIndic(Strng, 'Telugu', True)
     Strng = PostProcess.RetainIndicNumerals(Strng, 'Telugu', True)
@@ -21,6 +22,7 @@ def _FixTeluguEncode(Strng):
 
 def _FixTeluguDecode(Strng):
 
+    """Restores Indic dandas and numerals and normalizes candrabindu to arasunna when decoding out of Telugu script."""
     from .. import PostProcess
     Strng = PostProcess.RetainIndicNumerals(Strng, 'Telugu')
     Strng = PostProcess.RetainDandasIndic(Strng, 'Telugu')
@@ -30,11 +32,13 @@ def _FixTeluguDecode(Strng):
 
 def FixTelugu(Strng, reverse=False):
 
+    """Dispatches to the Telugu encode or decode fix-up routine based on the reverse flag."""
     from .. import PostProcess
     return _FixTeluguDecode(Strng) if reverse else _FixTeluguEncode(Strng)
 
 def TeluguRemoveNukta(Strng):
 
+    """Removes the nukta combining mark from Telugu text."""
     from .. import PostProcess
     Strng = Strng.replace('\u0C3C', '')
 
@@ -42,6 +46,7 @@ def TeluguRemoveNukta(Strng):
 
 def TeluguRemoveAeAo(Strng):
 
+    """Removes the candra-sign-plus-ZWSP sequence used to mark short e/o vowels in Telugu."""
     from .. import PostProcess
     Strng = Strng.replace('\u0952\u200B', '')
 
@@ -49,6 +54,7 @@ def TeluguRemoveAeAo(Strng):
 
 def TeluguNakaraPollu(Strng):
 
+    """Converts word-final na-virama to the special Telugu nakaara pollu character, e.g. భగవన్ → భగవౝ."""
     from .. import PostProcess
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Telugu')) + ")"
 
@@ -58,12 +64,14 @@ def TeluguNakaraPollu(Strng):
 
 def TeluguTamilZha(Strng):
 
+    """Tamil-style zha rendering option for Telugu, currently a no-op passthrough, e.g. ఆఴ్వార్ → ఆఴ్వార్."""
     from .. import PostProcess
 
     return Strng
 
 def TeluguTamilRra(Strng):
 
+    """Renders Tamil-style rra/tra/ndra conjuncts using the Telugu ౘ character, e.g. ఆఱ్ఱు → ఆౘ్ౘు."""
     from .. import PostProcess
     Strng = Strng.replace('ఱ్ఱ', 'ౘ్ౘ')
     Strng = Strng.replace('ట్ర', 'ౘ్ౘ')
@@ -73,6 +81,7 @@ def TeluguTamilRra(Strng):
 
 def TeluguReph(Strng):
 
+    """Inserts a ZWNJ after ra-virama before a consonant to render it as a Telugu repha (valapala gilaka), e.g. ధర్మ → ధర్‍మ."""
     from .. import PostProcess
     consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Telugu')) + ')'
     Strng = re.sub('ర్' + consonants, 'ర్‍' + r'\1', Strng)
@@ -82,6 +91,7 @@ def TeluguReph(Strng):
 
 def TeluguArasunnaChandrabindu(Strng):
 
+    """Treats the Telugu arasunna character as chandrabindu, e.g. హూఀ → హూఁ."""
     from .. import PostProcess
     Strng = Strng.replace('ఀ', 'ఁ')
 

@@ -25,6 +25,7 @@
 import re
 
 def _FixLaoPaliEncode(Strng, ctx):
+    """Encodes Lao Pali text: reverses vowel sign order, optionally applies phonetic transcription, and ligates AA+anusvara into the AM vowel sign."""
     from .. import ConvertFix as CF
     Strng = CF.ReverseVowelSigns(Strng,"LaoPali",False)
 
@@ -39,6 +40,7 @@ def _FixLaoPaliEncode(Strng, ctx):
     return Strng
 
 def _FixLaoPaliDecode(Strng, ctx):
+    """Decodes Lao Pali text: restores vowel sign order, optionally applies phonetic transcription, and expands the AM vowel sign back into AA+anusvara."""
     from .. import ConvertFix as CF
     Strng = CF.ReverseVowelSigns(Strng,"LaoPali",True)
 
@@ -54,9 +56,11 @@ def _FixLaoPaliDecode(Strng, ctx):
     return Strng
 
 def FixLaoPali(Strng,reverse=False,ctx=None):
+    """Dispatches to the Lao Pali encode or decode fix routine depending on conversion direction."""
     return _FixLaoPaliDecode(Strng, ctx) if reverse else _FixLaoPaliEncode(Strng, ctx)
 
 def LaoPaliTranscribe(Strng,reverse=False, anusvaraChange = True):
+    """Converts between orthographic and colloquial Lao phonetic transcription using the short-a and conjunct short-a signs."""
     from .. import PostProcess as pp
     shortA, conjA = '\u0EB0', '\u0EB1'
 
@@ -69,9 +73,11 @@ def LaoPaliTranscribe(Strng,reverse=False, anusvaraChange = True):
 
 def LaoTranscription_pre(Strng):
 
+    """Placeholder pre-processing step for Lao transcription mode; currently a no-op."""
     return Strng
 
 def LaoPhonetic_pre(Strng):
+    """Applies Lao phonetic normalization before conversion: ດ→ທ, ບ→ພ, drops the nikkhahit off ງໍ, and strips a combining mark."""
     Strng = Strng.replace('ດ', 'ທ')
     Strng = Strng.replace('ບ', 'ພ')
     Strng = Strng.replace('ງໍ', 'ງ')
@@ -81,6 +87,7 @@ def LaoPhonetic_pre(Strng):
     return Strng
 
 def LaoSajhayaOrthography(Strng):
+    """Renders Pali Sajjhāya orthography in Lao script by converting virama/tone marks to the subjoining sign - e.g. ພຸທ໌ຘ."""
     Strng = Strng.replace('ັງ', 'ັງ຺')
 
     Strng = re.sub('([ເໂໄ])(.๎)([ຍຣລວຨຩສຫຬ])', r'\2\1\3', Strng)
@@ -92,12 +99,14 @@ def LaoSajhayaOrthography(Strng):
     return Strng
 
 def LaoSajhayaOrthographywithA(Strng):
+    """Renders nativized Lao Sajjhāya orthography by stripping the short-a sign before applying Sajjhāya formatting - e.g. ພຸທ໌ຘະ."""
     Strng = Strng.replace('ະ', '')
     Strng = LaoSajhayaOrthography(Strng)
 
     return Strng
 
 def LaoTranscription_post(Strng):
+    """Post-processing step that applies Lao Pali transcription and removes the short-a sign before a final virama-like mark."""
     Strng = LaoPaliTranscribe(Strng)
 
     Strng = Strng.replace('ະ໌', '໌')
@@ -105,6 +114,7 @@ def LaoTranscription_post(Strng):
     return Strng
 
 def LaoPhonetic_post(Strng):
+    """Post-processes Lao phonetic text: reorders subjoined y/r/l/v/h consonants, reapplies transcription, and restores native consonant letters (ທ→ດ, ພ→ບ)."""
     Strng = re.sub('(\u0EBA)([ໂເໄ]?)([ຍຣລວຫ])', '\u035C'+ r'\2\3', Strng)
     Strng = re.sub('([ຍຣລວຫ])' + '\u035C' + '([ໂເໄ]?)' + r'\1', r'\1' + '\u0EBA' + r'\2\1', Strng)
 
@@ -126,6 +136,7 @@ def LaoPhonetic_post(Strng):
     return Strng
 
 def LaoSajjhaya(Strng):
+    """Converts Lao text to Pali Sajjhāya orthography and reorders vowel-consonant-tone clusters - ພຸທ຺ຘ → ພຸທ໌ຘ."""
     from .. import PostProcess
     Strng = PostProcess.ThaiSajjhayaOrthography(Strng, Script = "LaoPali")
 
@@ -134,6 +145,7 @@ def LaoSajjhaya(Strng):
     return Strng
 
 def LaoSajjhayawithA(Strng):
+    """Converts Lao text to nativized Sajjhāya orthography with the inherent vowel restored - ພຸທ຺ຘໍ → ພຸທ໌ຘັງ."""
     Strng = LaoSajjhaya(Strng)
 
     # The below logic is for Thai yamakkan. Use Thai Yamakkan not to break it

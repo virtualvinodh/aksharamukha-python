@@ -10,6 +10,7 @@
 
 
 def _FixThaaEncode(Strng, Source):
+    """Applies Perso-Arabic punctuation fixes when encoding into Thaana."""
     from .. import ConvertFix as CF
     Strng = CF.PersoArabicPuntuation(Strng, False)
     pass
@@ -18,6 +19,7 @@ def _FixThaaEncode(Strng, Source):
     return Strng
 
 def _FixThaaDecode(Strng, Source):
+    """Applies Perso-Arabic punctuation fixes when decoding out of Thaana."""
     from .. import ConvertFix as CF
     Strng = CF.PersoArabicPuntuation(Strng, True)
     pass
@@ -25,4 +27,5 @@ def _FixThaaDecode(Strng, Source):
     return Strng
 
 def FixThaa(Strng, Source, reverse=False):
+    """Dispatches to the Thaana encode or decode fix routine based on the reverse flag."""
     return _FixThaaDecode(Strng, Source) if reverse else _FixThaaEncode(Strng, Source)

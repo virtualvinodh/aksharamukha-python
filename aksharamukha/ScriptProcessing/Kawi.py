@@ -16,9 +16,11 @@ from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.EastIndic import Kawi
 
 def FixKawi(Strng, reverse=False):
+    """Dispatches to the Kawi encode or decode fix routine depending on the reverse flag."""
     return _FixKawiDecode(Strng) if reverse else _FixKawiEncode(Strng)
 
 def _FixKawiEncode(Strng):
+    """Applies Kawi encoding rules: subjoining virama+consonant, ra-repha formation, and disambiguating the tall-A vowel sign after specific consonant clusters."""
     target = 'Kawi'
 
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target))
@@ -53,6 +55,7 @@ def _FixKawiEncode(Strng):
     return Strng
 
 def _FixKawiDecode(Strng):
+    """Reverses Kawi encoding rules: expands subjoining virama and repha, normalizes alternate tall-A, decomposes JÑA and independent i/u/e vowels, and splits alternate ai/au ligatures."""
     target = 'Kawi'
 
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target))
@@ -82,6 +85,7 @@ def _FixKawiDecode(Strng):
     return Strng
 
 def KawiMoveRepha_pre(Strng):
+    """Moves the Kawi repha (superscript RA) mark from before to after the consonant/vowel cluster it modifies, for correct rendering order."""
     tgt = 'Kawi'
     repha = '\U00011F02'
 
@@ -95,20 +99,24 @@ def KawiMoveRepha_pre(Strng):
 
 def KawiAltAiAU(Strng):
     #  Alt ai, alt au
+    """Uses the alternate AI/AU vowel form: 𑼒𑼿 𑼒𑼿𑼴 → 𑼒𑼾𑼾 𑼒𑼾𑼾𑼴."""
     Strng = Strng.replace('\U00011F3F', '\U00011F3E\U00011F3E')
 
     return Strng
 
 def KawiArchaicJNA(Strng):
+    """Uses the archaic JÑA conjunct form: 𑼙𑽂𑼛 → 𑼳."""
     Strng = Strng.replace('𑼙𑽂𑼛', '\U00011F33')
     return Strng
 
 def KawiDecomposedVowel(Strng):
+    """Uses decomposed independent vowel forms: 𑼅 𑼇 𑼉 → 𑼄𑼴 𑼆𑼴 𑼈𑼴."""
     Strng = Strng.replace('\U00011F05', '\U00011F04\U00011F34').replace('\U00011F07', '\U00011F06\U00011F34').replace('\U00011F09', '\U00011F08\U00011F34')
 
     return Strng
 
 def KawiMoveRepha_post(Strng):
+    """Moves the Kawi repha (superscript RA) mark from after back to before the consonant/vowel cluster it modifies, reversing the rendering-order adjustment."""
     tgt = 'Kawi'
     repha = '\U00011F02'
 

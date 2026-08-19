@@ -11,6 +11,7 @@ import re
 
 def _FixKhomThaiEncode(Strng):
 
+    """Encodes Khom Thai orthography: expands the โ ligature, reverses vowel sign order, and reorders sara-ai/repha clusters around subscript consonants."""
     from .. import ConvertFix as CF
     Strng = Strng.replace('โ','เา')
     Strng = CF.ThaiReverseVowelSigns(Strng,False)
@@ -28,6 +29,7 @@ def _FixKhomThaiEncode(Strng):
 
 def _FixKhomThaiDecode(Strng):
 
+    """Reverses Khom Thai encoding fixes: restores vowel sign order and collapses เา back into the โ ligature."""
     from .. import ConvertFix as CF
     Strng = re.sub('(ใ)(.\u0E3A)(.\u0E3A)', r'\2\3\1', Strng)
     Strng = re.sub('(ใ)(.\u0E3A)', r'\2\1', Strng)
@@ -41,5 +43,6 @@ def _FixKhomThaiDecode(Strng):
 
 def FixKhomThai(Strng, reverse=False):
 
+    """Dispatches to the Khom Thai encode or decode fix routine depending on conversion direction."""
     from .. import ConvertFix as CF
     return _FixKhomThaiDecode(Strng) if reverse else _FixKhomThaiEncode(Strng)

@@ -11,5 +11,6 @@ import re
 
 def FixKhmerLoC(Strng,reverse=False):
 
+    """Applies the shared Khmer fix-up logic (via ConvertFix.FixKhmer) targeting the Library of Congress romanization scheme."""
     from .. import ConvertFix as CF
     return CF.FixKhmer(Strng, reverse, target="KhmerLoC")

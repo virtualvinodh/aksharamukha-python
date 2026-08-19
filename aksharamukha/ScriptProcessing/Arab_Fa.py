@@ -12,6 +12,7 @@ import re
 
 def FixArab_Fa(Strng, Source, reverse=False):
 
+    """Applies the shared Perso-Arabic script fixes (via ConvertFix.FixArab) used for Farsi text."""
     from .. import ConvertFix as CF
     Strng = CF.FixArab(Strng, Source, reverse)
 
@@ -19,6 +20,7 @@ def FixArab_Fa(Strng, Source, reverse=False):
 
 def persianPaGaFaJa(Strng):
 
+    """Converts Persian-specific letters pe and gaf to Arabic fa and jim (/p g/ پ گ → /f j/ ف ج)."""
     from .. import ConvertFix as CF
     Strng = Strng.replace('پ', 'ف').replace('گ', 'ج')
 

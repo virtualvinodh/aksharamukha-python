@@ -11,5 +11,6 @@ import re
 
 def FixUrdu(Strng, reverse=False):
 
+    """Core Urdu encode/decode logic: delegate to the shared Shahmukhi orthography fixer."""
     from .. import ConvertFix as CF
     return CF.FixUrduShahmukhi("Urdu", Strng, reverse)

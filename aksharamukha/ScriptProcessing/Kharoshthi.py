@@ -6,11 +6,13 @@
 import re
 
 def FixKharoshthi(Strng, reverse=False):
+    """Converts decimal numerals in the text to or from Kharoshthi numeral notation."""
     Strng = KharoshthiNumerals(Strng, reverse)
 
     return Strng
 
 def KharoshthiNumerals(Strng, reverse=False):
+    """Finds decimal numbers in the text and converts them to Kharoshthi additive numerals, or reverses Kharoshthi digits back to decimal."""
     Numbers = sorted(map(int,re.findall("\d+", Strng)),reverse=True)
 
     if not reverse:
@@ -39,6 +41,7 @@ def KharoshthiNumerals(Strng, reverse=False):
     return Strng
 
 def kharoshthiNumber(Strng):
+    """Converts a single integer into its Kharoshthi additive numeral representation using thousand/hundred/twenty/ten/unit signs."""
     one = '𐩀'
     two = '𐩁'
     three = '𐩂'

@@ -12,6 +12,7 @@ from aksharamukha.ScriptMap.EastIndic import Makasar
 
 def _FixMakasarEncode(Strng):
 
+    """Inserts the gemination sign and collapses a doubled Makasar consonant into a single consonant plus the killer sign (Anka)."""
     from .. import PostProcess
     ListC = "|".join(Makasar.ConsonantMap)
     #ListV = "|".join(Makasar.VowelSignMap)
@@ -28,6 +29,7 @@ def _FixMakasarEncode(Strng):
 
 def _FixMakasarDecode(Strng):
 
+    """Expands the Makasar killer sign (Anka) marking a doubled consonant back into the repeated consonant sequence."""
     from .. import PostProcess
     ListC = "|".join(Makasar.ConsonantMap)
     #ListV = "|".join(Makasar.VowelSignMap)
@@ -42,5 +44,6 @@ def _FixMakasarDecode(Strng):
 
 def FixMakasar(Strng, reverse=False):
 
+    """Dispatches to the Makasar encode or decode fix-up routine based on the reverse flag."""
     from .. import PostProcess
     return _FixMakasarDecode(Strng) if reverse else _FixMakasarEncode(Strng)

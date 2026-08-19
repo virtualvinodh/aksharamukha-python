@@ -8,6 +8,7 @@ import re
 from .. import GeneralMap as GM
 
 def _FixHebrewEncode(Strng):
+    """Builds surface Hebrew script from the internal representation: inserts default patah, fixes nasal assimilation before certain consonants, reorders dagesh/vowel diacritics, marks gemination with dagesh, and applies final letter forms."""
     vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew')) + ')'
     consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Hebrew')+['צּ','גּ']) + ')'
 
@@ -94,6 +95,7 @@ def _FixHebrewEncode(Strng):
     return Strng
 
 def _FixHebrewDecode(Strng):
+    """Reconstructs the internal representation from surface Hebrew script: restores final letters to medial forms, reorders diacritics, approximates missing consonant/vowel distinctions, expands dagesh gemination, and resolves shva na versus shva nach."""
     vowelsigns = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Hebrew')) + ')'
     consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Hebrew')+['צּ','גּ']) + ')'
 
@@ -215,15 +217,18 @@ def _FixHebrewDecode(Strng):
     return Strng
 
 def FixHebrew(Strng, reverse = False):
+    """Dispatches to the Hebrew encode or decode fix routine based on the reverse flag."""
     return _FixHebrewDecode(Strng) if reverse else _FixHebrewEncode(Strng)
 
 def holamlong(Strng):
+    """Writes holam as vav+holam to denote a long /o/ rather than a bare holam."""
     Strng = Strng.replace('ֹּ','ֹּ')
     Strng = re.sub('(?<!ו)ֹ', 'וֹ', Strng)
 
     return Strng
 
 def novowelshebrewIndic(Strng):
+    """Produces unpointed (vowel-less) Hebrew text for Indic-sourced input, defaulting consonants without an explicit vowel sign to a bare patah."""
     Strng = novowelshebrewSemitic(Strng)
 
     finals = ['ך', 'ם', 'ן', 'ף', 'ץ', 'ףּ', 'ךּ']
@@ -236,17 +241,20 @@ def novowelshebrewIndic(Strng):
     return Strng
 
 def novowelshebrewSemitic(Strng):
+    """Adds a dagesh to the ambiguous begadkefat letters (ב פ כ) so they read as plosives rather than fricatives when niqqud is absent, e.g. ב פ כ → k p b not v f ḵ."""
     Strng = Strng.replace('כ', 'כּ').replace('פ', 'פּ').replace( 'ב', 'בּ')
     Strng = Strng.replace('ך', 'ךּ').replace('ף','ףּ')
 
     return Strng
 
 def shvanakhall(Strng):
+    """Appends a marker that forces every shva in the text to be treated as shva nach (silent) rather than shva na."""
     Strng = Strng + ' \u0BDE'
 
     return Strng
 
 def removeNikkud(Strng):
+    """Strips all niqqud (vowel-point) diacritics such as patach, kamatz, hiriq, and dagesh from the text."""
     nikkuds = ["\u05B7","\u05B8","\u05B4","\u05B4י","\u05BB", "\u05C2", "\u05C1",\
     "\u05B6","\u05B5","\u05B9","וֹ","\u05B1","\u05B2","\u05B3","\u05BC","\u05B0", "\u05C7"]
 
@@ -256,6 +264,7 @@ def removeNikkud(Strng):
     return Strng
 
 def HebrewVetVav(Strng):
+    """Converts vav to vet after short vowels when not followed by a dagesh, and normalizes bet+holam sequences."""
     shortVowels = '(' + '|'.join(['\u05B7', '\u05B8', '\u05B4', '\u05BB', '\u05B5', '\u05B6', '\u05B9', '\u05B0']) + ')'
 
     Strng = re.sub(shortVowels + '(' + 'ו' + ')' + '(?!\u05BC)', r'\1' + 'ב', Strng)
@@ -267,16 +276,19 @@ def HebrewVetVav(Strng):
     return Strng
 
 def HeberewQoph(Strng):
+    """Represents geminated/emphatic kaf using qof instead, e.g. כּ ← ק."""
     Strng = Strng.replace('כּ', 'ק').replace('ךּ', 'ק')
 
     return Strng
 
 def HebewShortO(Strng):
+    """Marks short /o/ with kamatz katan instead of holam when the holam is not preceded by vav, e.g. לֹ ← לׇ."""
     Strng = re.sub('(?<!ו)\u05B9', '\u05C7', Strng)
 
     return Strng
 
 def HebrewnonFinalShort(Strng):
+    """Marks a short vowel on a word-final letter by temporarily inserting a helper heh, then restores the corresponding final (sofit) consonant form once resolved."""
     finals = ['ך', 'ם', 'ן', 'ף', 'ץ', 'ףּ', 'ךּ']
     finalCons = ['כ', 'מ', 'נ', 'פ', 'צ', 'פּ', 'כּ']
 

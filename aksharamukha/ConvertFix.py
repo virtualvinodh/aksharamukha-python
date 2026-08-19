@@ -12,18 +12,21 @@ import re
 ### Rewrite all ListC, ListV as sorted(List,key=len,reverse=True)
 
 def lenSort(x,y):
+    """Comparator for sorting candidate strings by descending length of their first element."""
     if(len(x[0]) > len(y[0])):
         return -1
     else:
         return 0
 
 def OriyaIPAFixPre(Strng):
+    """Rewrites Oriya anusvara/visarga to nasal-consonant/h sequences before generic IPA conversion."""
     Strng = Strng.replace('ଂ', 'ଙ୍')
     Strng = Strng.replace('ଃ', 'ହ୍')
 
     return Strng
 
 def SinhalaIPAFix(Strng):
+    """Realizes schwa as open ʌ (rather than ə) after 1-3 leading consonants in Sinhala IPA output."""
     consonants = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'IPA')) + ')'
 
     Strng = re.sub('^' + consonants + '(ə)', r'\1ʌ', Strng)
@@ -39,6 +42,7 @@ def SinhalaIPAFix(Strng):
     return Strng
 
 def OriyaIPAFix(Strng):
+    """Applies Oriya-specific phonetic realizations to IPA output: schwa->ɔ, affricate/retroflex simplification, vowel-length collapsing."""
     Strng = Strng.replace('ə', 'ɔ')
     Strng = Strng.replace('j', 'd͡ʒ')
     Strng = Strng.replace('\u1E8F', 'j')
@@ -63,6 +67,7 @@ def OriyaIPAFix(Strng):
 
 def VedicSvarasLatinIndic(Strng, Source):
     ## Vedic Svaras
+    """Converts Latin-encoded Vedic svara/anunasika escape sequences (\\m+, \\`, etc.) into Indic Vedic accent marks, reordering svara after the ayogavaha."""
     Strng = Strng.replace('{\\m+}', 'ꣳ')
     Strng = Strng.replace('\\m++', 'ꣴ')
     Strng = Strng.replace('\\m+', 'ꣳ')
@@ -87,6 +92,7 @@ def VedicSvarasLatinIndic(Strng, Source):
     return Strng
 
 def VedicSvarsIndicLatin(Strng):
+    """Reverses Indic Vedic accent marks and anunasika ligatures back into their Latin escape-sequence notation."""
     Strng = Strng.replace('᳚', '\\"')
     Strng = Strng.replace('॑', '\\\'')
     Strng = Strng.replace('॒', '\\_')
@@ -96,6 +102,7 @@ def VedicSvarsIndicLatin(Strng):
     return Strng
 
 def VedicSvarasOthers(Strng, Target):
+    """Renders Vedic svara escape sequences as arrow symbols and anunasika ligatures for scripts without dedicated accent diacritics."""
     Strng = Strng.replace('\\"','↑↑').replace("\\_", '↓').replace("\\\'",'↑')
     anu = GM.CrunchList('AyogavahaMap', Target)[1]
     Strng = Strng.replace('\\m++', 'ꣴ')
@@ -106,6 +113,7 @@ def VedicSvarasOthers(Strng, Target):
     return Strng
 
 def VedicSvarasDiacrtics(Strng, Target):
+    """Converts Vedic svara escape sequences into Unicode combining diacritics for diacritic-based Roman targets (IAST/ISO/Titus)."""
     Strng = Strng.replace('\\\'', '̍')
     Strng = Strng.replace('\\"', '̎')
     Strng = Strng.replace('\\_', '̱')
@@ -129,6 +137,7 @@ def VedicSvarasDiacrtics(Strng, Target):
     return Strng
 
 def VedicSvarasCyrillic(Strng, Target):
+    """Converts Vedic svara escape sequences into combining diacritics/ligatures for RussianCyrillic output."""
     Strng = Strng.replace('\\\'', '̍')
     Strng = Strng.replace('\\"', '̎')
     Strng = Strng.replace('\\_', '̱')
@@ -148,6 +157,7 @@ def VedicSvarasCyrillic(Strng, Target):
     return Strng
 
 def VedicSvarasNonDiacritic(Strng):
+    """Reverses Vedic combining diacritics and anunasika ligatures back into their escape-sequence notation."""
     Strng = Strng.replace('̍', '\\\'')
     Strng = Strng.replace('̎', '\\"')
     Strng = Strng.replace('̱', '\\_')
@@ -166,6 +176,7 @@ def FixRomanOutput(Strng,Target):
     # Input: क् क्अ क का कृ क्ह ब़् ब़ ब़ो भ् भ भा कि कइ कई
     # Output: kʌ× kʌ×a kʌ kʌā kʌr̥ kʌ×hʌ bʌ̄× bʌ̄ bʌ̄ō bhʌ× bhʌ bhʌā kʌi kʌṿi kʌṿī
 
+    """Shapes generic Roman-script output shared across all Latin romanization targets: schwa/virama joiner insertion, nukta reordering, and related spacing fixes."""
     Schwa = '\uF000'
     DepV = '\u1E7F'
 
@@ -228,6 +239,7 @@ def FixRomanOutput(Strng,Target):
 
 def FixVedic(Strng, Target):
     # Alternate Vedic Forms
+    """Dispatches Vedic accent-marker normalization to the right target-specific handler (diacritic/IPA/RomanReadable/Cyrillic/plain) based on Target."""
     Strng = Strng.replace('{\\m+}', '\\m+')
     Strng = Strng.replace('\\`', '\\_') ## Alternate form of Anudatta
     Strng = Strng.replace('\\\'\'', '\\"') ## Alternate form of Dirdha udatta
@@ -264,6 +276,7 @@ def FixVedic(Strng, Target):
 
 # PostFile ? why not fix !?
 def PostFixRomanOutput(Strng,Source,Target):
+    """Top-level post-fix dispatcher for all Roman targets: applies FixVedic then per-target/per-source special cases (Kashmiri vowels, IPA, Santali, Avestan, SoraSompeng, WarangCiti, Wancho, Mro, RomanReadable/Colloquial Tamil/Oriya/Bengali tweaks, IAST/ISO diaeresis)."""
     Strng = Strng.replace("\u02BD","")
 
     Strng = FixVedic(Strng, Target)
@@ -353,6 +366,7 @@ def PostFixRomanOutput(Strng,Source,Target):
     return Strng
 
 def FixSemiticOutput(Strng,Source,Target):
+    """Dispatches to the target Semitic script's own Fix<Target> function by name, looked up via globals()."""
     Strng = Strng.replace('\u02DE', '') ## dummy
     try:
         Strng = globals()["Fix"+Target.replace('-','_')](Strng, Source)
@@ -365,6 +379,7 @@ def FixSemiticOutput(Strng,Source,Target):
 # Fixing the Indic Ouput for the standard corrections
 # Indic Fix are mandatory corrections to the immediate ouput.
 def FixIndicOutput(Strng,Source,Target,ctx=None):
+    """Top-level post-fix dispatcher for Indic targets: calls Fix<Target>, shifts diacritics past vowel signs, and renders Vedic accent marks as arrows for non-Vedic-native scripts."""
     vir = GM.CrunchList('ViramaMap', Target)[0]
 
     Strng = Strng.replace(vir + '_', vir)
@@ -497,6 +512,7 @@ from .ScriptProcessing.Gurmukhi import _FixGurmukhiEncode, _FixGurmukhiDecode, F
 # Fix ru', ru'',lu',lu'' in Tamil & Gurmukhi
 # रुʼ -> ऋ, रूʼ -> ॠ, लुʼ -> ऌ, लूʼ -> ॡ
 def CorrectRuLu(Strng,Target,reverse=False):
+    """Converts ra/la + u/U vowel sign + apostrophe sequences into the vocalic r̥/r̥̄/l̥/l̥̄ letters, or reverses that."""
     ra = GM.CrunchList('ConsonantMap', Target)[26]
     la = GM.CrunchList('ConsonantMap', Target)[27]
     uuu = GM.CrunchSymbols(GM.VowelSigns,Target)[4:6] #Vowel Signs u & U
@@ -514,6 +530,7 @@ def CorrectRuLu(Strng,Target,reverse=False):
 
 #Shift Diacritics after vowel signs
 def ShiftDiacritics(Strng,Target,reverse=False):
+    """Reorders a following combining diacritic to sit before the vowel sign it modifies, or reverses that ordering."""
     VS = '|'.join(GM.CrunchSymbols(GM.VowelSigns,Target))
     Diac = '|'.join(GM.Diacritics)
 
@@ -583,6 +600,7 @@ from .ScriptProcessing.Burmese import _FixBurmeseEncode, _FixBurmeseDecode, FixB
 # a + r + ka -> a<repha>ka
 # r +ya -> rya (no repha if syllable first)
 def AddRepha(Strng,Script,Repha,reverse=False):
+    """Contracts a consonant/vowel followed by ra+virama into the Repha glyph, or expands Repha back to ra+virama."""
     vir = GM.CrunchSymbols(GM.VowelSigns,Script)[0]
     ra = GM.CrunchSymbols(GM.Consonants,Script)[26]
 
@@ -651,6 +669,7 @@ from .ScriptProcessing.Shahmukhi import FixShahmukhi
 
 # Urdu - Shadda, Final E
 def _FixUrduShahmukhiEncode(Target, Strng):
+    """Encodes Urdu/Shahmukhi-specific orthography: hamza insertion between vowels, nun-ghunna marking, short-vowel/virama cleanup."""
     Strng = Strng.replace('\u02BD','')
 
     vir = GM.CrunchSymbols(GM.VowelSigns,Target)[0]
@@ -790,6 +809,7 @@ def _FixUrduShahmukhiEncode(Target, Strng):
     return Strng
 
 def _FixUrduShahmukhiDecode(Target, Strng):
+    """Decodes Urdu/Shahmukhi text back toward the internal representation: normalizes Arabic-borrowed letters to their closest Indic-Perso-Arabic counterparts, chaschmee-ha and retroflex handling."""
     Strng = Strng.replace('\u02BD','')
 
     vir = GM.CrunchSymbols(GM.VowelSigns,Target)[0]
@@ -943,12 +963,14 @@ def _FixUrduShahmukhiDecode(Target, Strng):
     return Strng
 
 def FixUrduShahmukhi(Target, Strng,reverse=False):
+    """Dispatches to the Urdu/Shahmukhi encode or decode function depending on the reverse flag."""
     return _FixUrduShahmukhiDecode(Target, Strng) if reverse else _FixUrduShahmukhiEncode(Target, Strng)
 
 
 def PersoArabicPuntuation(Strng, reverse=False):
     # Punctuation
     # print("Trying to reverse thigns")
+    """Swaps ASCII punctuation (, ? ; .) for their Perso-Arabic forms (، ؟ ؛ ۔), or reverses that."""
     if (not reverse):
         for x,y in zip([',','?',';'],['،','؟','؛']):
             Strng = Strng.replace(x,y)
@@ -988,6 +1010,7 @@ from .ScriptProcessing.Tibetan import _FixTibetanEncode, _FixTibetanDecode, FixT
 # Other Indic scripts follow logical order ; k + <e> => <e>k
 # Swapping Vowel Signs for conversion
 def ReverseVowelSigns(Strng,Script,reverse=False):
+    """Reorders leading vowel signs to/from consonant-first internal order, generically across scripts (with extra consonant sets for Thai/Lao)."""
     EAIO = "|".join(sorted(GM.CrunchSymbols(GM.VowelSignsNV,Script)[9:12]+GM.CrunchSymbols(GM.VowelSignsNV,Script)[17:],key=len,reverse=True))
     cons = "|".join(GM.CrunchSymbols(GM.Consonants,Script))
     a = GM.CrunchSymbols(GM.Vowels,Script)[0].split()[0]
@@ -1067,6 +1090,7 @@ from .ScriptProcessing.SoraSompeng import _FixSoraSompengEncode, _FixSoraSompeng
 # algorithm; Colloquial differs only in dropping the apostrophe marker that
 # Readable keeps, and stripping underscores at the end.
 def _FixRomanReadableColloquial(Strng, reverse, colloquial):
+    """Applies nasal-assimilation spelling rules (anusvara realized as ng/ny/m by context) for the RomanReadable/RomanColloquial romanization schemes."""
     if not reverse:
         Strng = Strng.replace('\\n', '\uE001')
         Strng = re.sub('([aiueo])nj([aeiou])', r'\1' + 'ny' + r'\2', Strng)
@@ -1206,6 +1230,7 @@ from .ScriptProcessing.Arab import _FixArabEncode, _FixArabDecode, FixArab
 from .ScriptProcessing.Thaa import _FixThaaEncode, _FixThaaDecode, FixThaa
 
 def FixArab_Ph(Strng, Source, reverse=False):
+    """Delegates entirely to FixArab - the Perso-Arabic phonetic source variant reuses standard Arabic script logic unchanged."""
     return FixArab(Strng, Source, reverse)
 
 # Arab-Fa's own logic now lives in ScriptProcessing/Arab_Fa.py -
@@ -1276,6 +1301,7 @@ from .ScriptProcessing.LaoTham import FixLaoTham
 # KhuenTham does an unconditional ra-haam/lue-karan swap in both
 # directions; LueTham has neither extra step.
 def _FixTaiThamFamily(Strng, reverse, tall_a_cons, marker_cleanup, ra_haam_swap):
+    """Shared Tai Tham-family orthography logic (tall-A vowel placement, ra-haam/lue-karan marker handling), parametrized per dialect (ThamLoC/LueTham/etc)."""
     Strng = FixTaiTham(Strng, reverse)
 
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'TaiTham'))

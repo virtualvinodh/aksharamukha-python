@@ -10,6 +10,7 @@ from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.MainIndic import TamilGrantha, Tamil
 
 def _FixTamilGranthaEncode(Strng):
+    """Reorders Tamil Grantha pre-base vowel signs (e/E/ai, o/O/au) to precede their consonant using joiner marks, matching Tamil script visual ordering."""
     ListC = '|'.join(GM.CrunchSymbols(GM.Consonants, 'TamilGrantha'))
     ListEAI = '|'.join(TamilGrantha.VowelSignMap[9:11]+TamilGrantha.SouthVowelSignMap[0:1])
     ListOAU = TamilGrantha.VowelSignMap[11:13]+TamilGrantha.SouthVowelSignMap[1:2]
@@ -28,6 +29,7 @@ def _FixTamilGranthaEncode(Strng):
     return Strng
 
 def _FixTamilGranthaDecode(Strng):
+    """Reverses the Tamil Grantha pre-base vowel-sign reordering, restoring consonant+vowel-sign order from the joiner-marked visual sequence."""
     ListC = '|'.join(GM.CrunchSymbols(GM.Consonants, 'TamilGrantha'))
     ListEAI = '|'.join(TamilGrantha.VowelSignMap[9:11]+TamilGrantha.SouthVowelSignMap[0:1])
     ListOAU = TamilGrantha.VowelSignMap[11:13]+TamilGrantha.SouthVowelSignMap[1:2]
@@ -43,4 +45,5 @@ def _FixTamilGranthaDecode(Strng):
     return Strng
 
 def FixTamilGrantha(Strng, reverse=False):
+    """Dispatches to the Tamil Grantha encode or decode fix routine depending on the reverse flag."""
     return _FixTamilGranthaDecode(Strng) if reverse else _FixTamilGranthaEncode(Strng)

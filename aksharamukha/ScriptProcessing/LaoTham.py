@@ -11,6 +11,7 @@ import re
 
 def FixLaoTham(Strng, reverse=False):
 
+    """Applies the shared Tai Tham script orthographic fixes (via ConvertFix.FixTaiTham) used for the Lao Tham variant."""
     from .. import ConvertFix as CF
     Strng = CF.FixTaiTham(Strng, reverse)
 

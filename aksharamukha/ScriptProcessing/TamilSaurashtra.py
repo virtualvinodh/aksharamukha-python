@@ -9,6 +9,7 @@ from .. import GeneralMap as GM
 from aksharamukha.ScriptMap.MainIndic import Tamil
 
 def SaurastraHaaruColonTamil(Strng):
+    """Represents Saurashtra haaru with a colon in Tamil-script text - நீ: → ꢥꢴꢷ."""
     Strng = Strng.replace('ன', 'ந')
 
     ListVS = '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Tamil'))
@@ -22,6 +23,7 @@ def SaurastraHaaruColonTamil(Strng):
     return Strng
 
 def SaurastraHaaruColon(Strng):
+    """Converts Saurashtra haaru into a colon representation - ꢥꢴꢷ → நீ:."""
     vir = Tamil.ViramaMap[0]
     ha = Tamil.ConsonantMap[-1]
 

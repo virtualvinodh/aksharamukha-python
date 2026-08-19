@@ -21,6 +21,7 @@ import re
 from aksharamukha.ScriptMap.MainIndic import Sinhala
 
 def _FixSinhalaEncode(Strng):
+    """Forms default Sinhala conjuncts, retains native numerals, and merges the ja-nya conjunct and doubled-a (ආ) notation."""
     from .. import PostProcess
     Strng = SinhalaDefaultConjuncts(Strng)
 
@@ -34,6 +35,7 @@ def _FixSinhalaEncode(Strng):
     return Strng
 
 def _FixSinhalaDecode(Strng):
+    """Reverses Sinhala conjunct formation, numeral retention, the ja-nya conjunct, and doubled-a notation, and strips ZWJ joiners."""
     from .. import PostProcess
     Strng = SinhalaDefaultConjuncts(Strng)
 
@@ -48,9 +50,11 @@ def _FixSinhalaDecode(Strng):
     return Strng
 
 def FixSinhala(Strng, reverse=False):
+    """Dispatches to the Sinhala encode or decode fix-up routine based on the reverse flag."""
     return _FixSinhalaDecode(Strng) if reverse else _FixSinhalaEncode(Strng)
 
 def SinhalaDefaultConjuncts(Strng):
+    """Inserts ZWJ to form default Sinhala consonant conjuncts before ya/ra and other special consonant clusters."""
     vir = Sinhala.ViramaMap[0]
     YR = '|'.join(Sinhala.ConsonantMap[25:27])
 
@@ -68,6 +72,7 @@ def SinhalaDefaultConjuncts(Strng):
     return Strng
 
 def SinhalaPali_post(Strng, reverse = False):
+    """Swaps Sinhala long e/o vowel forms with the Southern short-vowel equivalents used for Pali, or reverses the swap."""
     EOLong = Sinhala.VowelMap[10:11]+Sinhala.VowelMap[12:13]+Sinhala.VowelSignMap[9:10]+Sinhala.VowelSignMap[11:12]
     EOShort = Sinhala.SouthVowelMap+Sinhala.SouthVowelSignMap
 
@@ -80,11 +85,13 @@ def SinhalaPali_post(Strng, reverse = False):
     return Strng
 
 def SinhalaPali_pre(Strng):
+    """Pre-converts Southern short e/o vowel forms to standard Sinhala long vowel forms before processing Pali text."""
     Strng = SinhalaPali_post(Strng, reverse=True)
 
     return Strng
 
 def SinhalaConjuncts(Strng):
+    """Enables full Sinhala conjunct formation by inserting ZWJ between all consonant clusters, e.g. බුද්ධස්ස → බුද්‍ධස‍්ස."""
     ListC = Sinhala.ConsonantMap + [Sinhala.SouthConsonantMap[0]]
     vir = Sinhala.ViramaMap[0]
     ZWJ ="\u200D"
@@ -106,6 +113,7 @@ def SinhalaConjuncts(Strng):
     return Strng
 
 def SinhalaChandrbinduAnusvara(Strng):
+    """Converts the Sinhala chandrabindu sign into the anusvara sign."""
     Strng = Strng.replace('\u0D81', '\u0D82')
 
     return Strng

@@ -11,6 +11,7 @@ import re
 
 def _FixLimbuLoCEncode(Strng):
 
+    """Applies the shared Limbu orthographic fix routine when encoding into Limbu for the LoC romanization."""
     from .. import ConvertFix as CF
     Strng = CF.FixLimbu(Strng, False)
 
@@ -18,6 +19,7 @@ def _FixLimbuLoCEncode(Strng):
 
 def _FixLimbuLoCDecode(Strng):
 
+    """Applies the shared Limbu orthographic fix routine when decoding out of Limbu, then maps glottal-stop and length markers to LoC-specific symbols."""
     from .. import ConvertFix as CF
     Strng = CF.FixLimbu(Strng, True)
     Strng = Strng.replace('ʔ', '᤹')
@@ -27,5 +29,6 @@ def _FixLimbuLoCDecode(Strng):
 
 def FixLimbuLoC(Strng, reverse=False):
 
+    """Dispatches to the Limbu LoC encode or decode fix routine based on the reverse flag."""
     from .. import ConvertFix as CF
     return _FixLimbuLoCDecode(Strng) if reverse else _FixLimbuLoCEncode(Strng)

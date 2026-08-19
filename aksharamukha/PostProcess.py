@@ -19,6 +19,7 @@ import functools
 ## But before the post-processing steps
 ## removes extranous/artificial diacritics introduced
 def default(Strng, langage=""):
+    """Strips internal token/placeholder characters (U+F001, U+05CC, doubled okina, U+05CD, U+02C2) used during specialized processing."""
     Strng = Strng.replace("\uF001", "").replace("\u05CC", "").\
         replace("ʻʻ", "").replace('\u05CD', '').replace('\u02C2', '') ## remove token characters for specialized processing
 
@@ -27,6 +28,7 @@ def default(Strng, langage=""):
 ## This is processing that's done after the post-processing steps
 ## It's catch all function for all misc stuff
 def defaultPost(src, tgt, Strng, nativize, preoptions, postoptions):
+    """Applies shared post-processing: numeral/danda retention per postoptions, then normalizes pipe/danda punctuation for the target script."""
     Strng = Strng.replace('\u034F', '') ## remove token characters for specialized processing
 
     ## Fix Dandas & Numerals
@@ -75,6 +77,7 @@ from .ScriptProcessing.Sinhala import SinhalaDefaultConjuncts, SinhalaPali_post 
 from .ScriptProcessing.RomanLoC import LoCMarc8
 
 def AnusvaraAsN(Strng):
+    """Anusvara as n - m' -> n'."""
     Strng = Strng.replace('m\u034F', 'n')
     return Strng
 
@@ -96,11 +99,13 @@ from .ScriptProcessing.Telugu import TeluguRemoveNukta, TeluguRemoveAeAo, Telugu
 #testcase todo
 def syriacVowelsBelow(Strng):
 
+    """No-op placeholder (reserved for lowering Syriac vowel diacritics below the line)."""
     return Strng
 
 #testcase todo
 def syriacWesternOToU(Strng):
 
+    """No-op placeholder (reserved for Western Syriac o-to-u vowel shift)."""
     return Strng
 
 #testcase todo
@@ -111,6 +116,7 @@ from .ScriptProcessing.Dogra import olddogra, DograShaKha
 
 #testcase todo
 def ISO259Target(Strng):
+    """Converts intermediate Hebrew romanization to ISO 259 conventions (b/p/k dotted, v->b, f->p, s-caron variants, a->a-ring, e->e-cedilla, o/u macron to circumflex forms)."""
     replacements = [('b', 'ḃ'), ('p', 'ṗ'), ('k', 'k̇'), ('ḵ', 'k'), ('v', 'b'), ('f', 'p'), ('꞉', '\u0307'),\
          ('š̪', 'ś'), ('š̮', 'š'), ('š', 's̀'),
         ('ā', 'å'), ('e', 'ȩ'), ('ō', 'ŵ'), ('ū', 'ẇ'), ('\u033D', '°'), ('ĕ', 'ḝ')
@@ -125,6 +131,7 @@ def ISO259Target(Strng):
 
 #testcase todo
 def HebrewSBLTarget(Strng):
+    """Converts intermediate Hebrew romanization to SBL academic style (v->b-line-below, f->p-macron, d->d-line-below, g->g-line-below, t->t-line-below, o->o-circumflex, etc., undone when geminated)."""
     replacements = [('v', 'ḇ'), ('f', 'p̄'), ('d', 'ḏ'), ('ḏ꞉', 'd'), \
         ('g', 'ḡ'), ('ḡ꞉', 'g'),\
             ('t', 'ṯ'), ('ṯ꞉', 't'),
@@ -153,25 +160,30 @@ from .ScriptProcessing.HebrewSBL import removetddash
 #testcase todo
 def ISO259Source(Strng):
 
+    """No-op placeholder (reserved for ISO 259 Hebrew romanization source-side processing)."""
     return Strng
 
 #testcase todo
 def ISO233Source(Strng):
 
+    """No-op placeholder (reserved for ISO 233 Arabic romanization source-side processing)."""
     return Strng
 
 #testcase todo
 def HebrewSBLSource(Strng):
 
+    """No-op placeholder (reserved for SBL Hebrew romanization source-side processing)."""
     return Strng
 
 #testcase todo
 def PersianDMGSBLSource(Strng):
 
+    """No-op placeholder (reserved for Persian DMG romanization source-side processing)."""
     return Strng
 
 #testcase todo
 def ISO233Target(Strng):
+    """Converts intermediate Arabic romanization to ISO 233 conventions (j/g->g-caron, h-diaeresis->t-diaeresis, nunation marks aN/iN/uN -> accented vowels, etc.)."""
     replacements = [('j', 'ǧ'), ('g', 'ǧ'), ('ḧ', 'ẗ'), ('ḫ', 'ẖ'), ('a̮', 'ỳ'), ('ˀ', 'ˈ'), \
         ('aⁿ', 'á'), ('iⁿ', 'í'), ('uⁿ', 'ú'), ('ā̂', 'ʾâ'), ('\u033D', '')]
 
@@ -182,6 +194,7 @@ def ISO233Target(Strng):
 
 #todo add to frontend
 def inherentAO(Strng):
+    """inherent /a/ as /o-circumflex/."""
     Strng = Strng.replace('a', 'ô')
 
     return Strng
@@ -193,6 +206,7 @@ from .ScriptProcessing.Bengali import BengaliOldRA, BengaliConjunctVB, khandatab
 
 #testcase todo
 def PersianDMGTarget(Strng):
+    """Converts intermediate Persian romanization to DMG (Deutsche Morgenlandische Gesellschaft) conventions (d-line->z-line, d-dot->z-dot, t-line->s-line-below, j->g-caron, y-macron->ye)."""
     replacements = [('ḏ', 'ẕ'), ('ḍ', 'ż'), ('ṯ', 's̱'), ('j', 'ǧ'), ('ˀ','ʼ'), ('ʔ', 'ʼ'), ('ȳ', 'ye'), ("ā̂", "ā"), ('\u033D', '')]
 
     for x, y in replacements:
@@ -202,6 +216,7 @@ def PersianDMGTarget(Strng):
 
 #testcase todo
 def arabizeLatn(Strng, target='semitic'):
+    """Converts generic Roman Semitic transliteration into Arabic-specific conventions, resolving hamza after consonants into a/a-macron/a-circumflex and normalizing glottal-stop marks."""
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
     # opt 1
@@ -248,6 +263,7 @@ def arabizeLatn(Strng, target='semitic'):
 #trigger - UI prompt to show "preserve source" must be enabled for this option
 #testcase todo
 def BengaliSwitchYaYYa(Strng):
+    """ya -> yya-with-nukta & yya-with-nukta -> ya (swaps the plain and nuktaed Bengali ya letters)."""
     Strng = re.sub('(?<!\u09CD)য', '@#$', Strng)
     Strng = re.sub('য়', 'য', Strng)
     Strng = Strng.replace('@#$', 'য়')
@@ -256,6 +272,7 @@ def BengaliSwitchYaYYa(Strng):
 
 #testcase todo
 def AlephMaterLectionis(Strng, target='semitic'):
+    """Aleph as mater lectionis - k+hamza -> k+a-macron (inserts long a after a consonant followed by hamza)."""
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
     # opt 1
@@ -265,6 +282,7 @@ def AlephMaterLectionis(Strng, target='semitic'):
 
 #testcase todo
 def urduizeLatn(Strng, target='semitic'):
+    """Converts generic Roman Semitic transliteration into Urdu-specific conventions, resolving hamza into a/a-circumflex and normalizing glottal-stop marks to hamza."""
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
     # opt 1
@@ -293,6 +311,7 @@ def urduizeLatn(Strng, target='semitic'):
 
 #testcase todo
 def syricizeLatn(Strng, target='semitic'):
+    """Converts generic Roman Semitic transliteration into Syriac-specific conventions by expanding word-initial long a/e vowels back into hamza plus short vowel."""
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
     # opt 3
@@ -310,6 +329,7 @@ def syricizeLatn(Strng, target='semitic'):
 #testcase todo
 def hebraizeLatn(Strng, target='semitic'):
     #print('Hebraizing Latin')
+    """Converts generic Roman Semitic transliteration into Hebrew-specific conventions by inserting aleph before word-initial vowels."""
     if target != 'indic':
         Strng = LatnInitialVowels(Strng, 'ʾ')
 
@@ -317,6 +337,7 @@ def hebraizeLatn(Strng, target='semitic'):
 
 #testcase todo
 def syriacRoman(Strng):
+    """Syriac convention - v gh-dotless kh f -> b-line g-line k-line p-macron."""
     Strng = Strng.replace('v', 'ḇ').replace('ġ','ḡ').replace('ḫ','ḵ').replace('f','p̄')
 
     return Strng
@@ -337,6 +358,7 @@ from .ScriptProcessing.Arab import ArabRemoveAdditions, arabicRemoveAdditionsPho
 #testcase todo
 #testcase todo
 def removeSemiticLetters(Strng):
+    """Neutralizes emphatic/interdental Semitic consonant letters to plain Latin approximations (t-dot->t, h-dot->h, d-dot/d-line/z-dot->z, w->v, ayin->hamza, s-dot->s)."""
     Strng = Strng.replace('ṭ', 't').replace('ḥ', 'h').replace('ḍ', 'z').replace('ḏ', 'z').replace('ẓ', 'z')\
         .replace('w', 'v').replace('ʿ', 'ʾ').replace('ṣ', 's')
 
@@ -350,6 +372,7 @@ from .ScriptProcessing.Hebrew import removeNikkud, HebrewVetVav, HeberewQoph, He
 
 #testcase todo
 def LatnInitialVowels(Strng, initLetter=''):
+    """Replaces word-initial long-vowel forms (a-circumflex, i-macron-circumflex, etc.) with a leading marker letter plus the corresponding plain vowel; helper for the *izeLatn functions."""
     initVow = 'â ā̂ î ī̂ û ū̂ ê ē̂ âŷ ô ō̂ âŵ'.split(' ')
     nonInitVow = 'a ā i ī u ū e ē aŷ o ō aŵ'.split(' ')
 
@@ -364,24 +387,28 @@ def LatnInitialVowels(Strng, initLetter=''):
 
 #testcase todo
 def removeMajliyana(Strng):
+    """Remove Majliyana - strips the underline diacritic marking Majliyana (palatalized) Syriac consonants."""
     Strng = Strng.replace('\u0330', '')
 
     return Strng
 
 #testcase todo
 def removeRukkaka(Strng):
+    """Remove Rukkaka - strips the soft/spirantization (rukkakha) dot from Syriac letters."""
     Strng = Strng.replace('\u0741', '')
 
     return Strng
 
 #testcase todo
 def removeQussaya(Strng):
+    """Remove Qussaya - strips the hard/occlusive (qushshaya) dot from Syriac letters."""
     Strng = Strng.replace('\u0742', '')
 
     return Strng
 
 #testcase todo
 def removeVowelsSyriac(Strng):
+    """Remove Vowel Diacritics - strips all Syriac vowel point combining marks."""
     Strng = re.sub('[\u0732\u0735\u073C\u0738\u0739\u073F]', '', Strng)
 
     Strng = re.sub('[ّܰܶܺܽܳ]', '', Strng)
@@ -390,6 +417,7 @@ def removeVowelsSyriac(Strng):
 
 #testcase todo
 def removeDiacriticsArabic(Strng):
+    """Remove Harakat - ghandi-with-marks -> ghandi (strips sukun, fatha, kasra, damma diacritics)."""
     diacrtics = ["\u0652", "\u064E", "\u0650", "\u064F"]
 
     for diacritic in diacrtics:
@@ -399,6 +427,7 @@ def removeDiacriticsArabic(Strng):
 
 #testcase todo
 def removeSukunEnd(Strng):
+    """Remove Sukun at end of words - hind-with-final-sukun -> hind (drops word-final sukun mark)."""
     Strng = re.sub('(\u0652)(\W|$)', r'\2', Strng)
 
     return Strng
@@ -412,31 +441,37 @@ from .ScriptProcessing.Arab_Fa import persianPaGaFaJa
 #testcase todo
 def removeDiacriticsPersian(Strng):
 
+    """No-op placeholder (reserved for stripping Persian diacritics)."""
     return Strng
 
 #testcase todo
 def removeDiacriticsSyriac(Strng):
 
+    """No-op placeholder (reserved for stripping Syriac diacritics)."""
     return Strng
 
 #testcase todo
 def useKtivMale(Strng):
 
+    """No-op placeholder (reserved for switching Hebrew to ktiv male full spelling)."""
     return Strng
 
 #testcase todo
 def PhoneticMapping(Strng):
 
+    """No-op placeholder (reserved for phonetic remapping)."""
     return Strng
 
 #testcase todo
 def ArabicGimelGaGha(Strng):
+    """Replaces Arabic jim with ghayn (renders Hebrew/Semitic 'ga' sound as Arabic 'gha')."""
     Strng = Strng.replace('ج', 'غ')
 
     return Strng
 
 #testcase todo
 def ArabicGimelPaBa(Strng):
+    """Replaces Arabic fa with ba (renders Hebrew/Semitic 'pa' sound as Arabic 'ba')."""
     Strng = Strng.replace('ف', 'ب')
 
     return Strng
@@ -444,6 +479,7 @@ def ArabicGimelPaBa(Strng):
 #testcase todo
 def BurmeseRomanLoCSource(Strng):
     # remove marking for pure virama
+    """Reverses LoC Burmese romanization conventions back to native encoding: drops pure-virama marker, restores superscript-Ga to subjoined y/r/v/h, reassembles vowel+diacritic sequences, undoes glottal-stop marking."""
     Strng = Strng.replace('ʻ', '')
 
     # restore superscript Ga into normal subjoined y, r , v, h
@@ -483,6 +519,7 @@ def BurmeseRomanLoCSource(Strng):
 #testcase todo
 def removeSegmentSpacesBurmese(Strng):
     # segment text into syllables
+    """Join syllables - le thai pyo' -> merged Burmese syllable string (removes spaces inserted between segmented syllables)."""
     import regex
 
     Strng = regex.sub('(\p{L}\p{M}*) (\p{L})', r'\1\2', Strng)
@@ -491,22 +528,26 @@ def removeSegmentSpacesBurmese(Strng):
     return Strng
 
 def UseAlternateo1(Strng):
+    """Long-o vowel sequence -> single alternate o vowel sign glyph."""
     Strng = Strng.replace('ᩮᩣ', 'ᩰ')
 
     return Strng
 
 
 def UseAlternateo2(Strng):
+    """Pali /o/ - alternate o vowel sign glyph -> the two-part long-o vowel sequence."""
     Strng = Strng.replace('ᩰ', 'ᩮᩣ')
 
     return Strng
 
 #ThamLoC
 def ThamLoCRomanLoCTarget(Strng):
+    """No-op placeholder (reserved for Tai Tham LoC romanization target-side processing)."""
     return Strng
 
 def ThamLoCRomanLoCSource(Strng):
     #cryptogammic dot to Sakot
+    """Converts Tai Tham LoC romanization back to native encoding: maps cryptogrammic dot to sakot, fixes the aiy vowel+consonant sequence."""
     Strng = Strng.replace('\u1A7F', '᩠')
 
     #fixing aiy
@@ -516,6 +557,7 @@ def ThamLoCRomanLoCSource(Strng):
 
 # khmer
 def KhmerLoCRomanLoCTarget(Strng):
+    """Normalizes Khmer LoC romanization output: NFC-normalizes, repositions consonant-modifier marks before certain vowels, fixes the 'oh' sequence, collapses double spaces."""
     import unicodedata
     Strng = unicodedata.normalize('NFC', Strng)
 
@@ -532,6 +574,7 @@ def KhmerLoCRomanLoCTarget(Strng):
     return Strng
 
 def KhmerLoCRomanLoCSource(Strng):
+    """Reorders Khmer LoC romanization diacritics (bantoc, tone marks) relative to base consonants/vowels, marks subbase-form consonant modifiers, and strips the virama."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Khmer'))
     ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,'Khmer'))
     ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,'Khmer'))
@@ -558,6 +601,7 @@ def KhmerLoCRomanLoCSource(Strng):
 
 # shan
 def ShanLoCRomanLoCTarget(Strng):
+    """Reorders Shan LoC romanization glottal-stop and tone-mark combining diacritics relative to the preceding vowel/consonant."""
     Strng = re.sub('(ʻ)([\u0310\u0322])', r'\2\1', Strng)
     Strng = re.sub('(ō)([\u0310\u0322]?)(ʻ)', r'\1\2', Strng)
 
@@ -565,6 +609,7 @@ def ShanLoCRomanLoCTarget(Strng):
 
 def ShanLoCRomanLoCSource(Strng):
     # restrore special yrvh
+    """Restores Shan LoC romanization conventions to native Shan script: undoes subjoined y/r/v marking, strips pure-vowel and glottal markers, reverses ai, and resolves open/closed vowel-consonant ambiguity."""
     yrv = Burmese.ConsonantMap[25:27] + Burmese.ConsonantMap[28:29]
     vir = '်'
     yrvsub = ['\u103B','\u103C','\u1082']
@@ -598,6 +643,7 @@ def ShanLoCRomanLoCSource(Strng):
 def BurmeseRomanLoCTarget(Strng):
     #print(Strng)
     # mark tone
+    """Applies Library of Congress Burmese romanization target conventions: marks tone, folds 'au+glottal' to 'o+glottal', renders visarga as a tone mark, and substitutes a few adhoc lexical characters."""
     Strng = Strng.replace('˳', 'ʹ')
 
     # mark depaend au -> o'
@@ -627,6 +673,7 @@ def BurmeseRomanLoCTarget(Strng):
 ### Add new consonants here when added to gimeltra_data
 #testcase todo
 def insertARomanSemitic(Strng):
+    """Inserts an inherent /a/ after Semitic consonants (and gemination marks) that are not already followed by an explicit vowel."""
     Strng = Strng.replace('\u02BD', '')
     consonantsAll = '(' + '|'.join(sorted(GM.SemiticConsonants, key = len, reverse=True)) + ')'
     #above does not ocntain semitic consonants
@@ -646,6 +693,7 @@ def insertARomanSemitic(Strng):
 # Semitic Target
 #testcase todo
 def FixSemiticRoman(Strng, Target):
+    """Fixes Roman Semitic gemination notation (consonant+virama+same consonant -> gemination sign for Arabic-target output) and reorders emphatic-consonant nukta-equivalent markers around their vowel."""
     vir = '\u033D'
     Strng = re.sub('ō̂̄̂', 'ō̂', Strng)
 
@@ -679,16 +727,19 @@ def FixSemiticRoman(Strng, Target):
 #testcase todo
 def estrangelasyriac(Strng):
 
+    """No-op placeholder (reserved for Estrangela Syriac font-variant handling)."""
     return Strng
 
 #testcase todo
 def easternsyriac(Strng):
 
+    """No-op placeholder (reserved for Eastern Syriac font-variant handling)."""
     return Strng
 
 #testcase todo
 def westernsyriac(Strng):
 
+    """No-op placeholder (reserved for Western Syriac font-variant handling)."""
     return Strng
 
 
@@ -703,6 +754,7 @@ from .ScriptProcessing.Itrans import swapEeItrans_post as swapEeItrans, readable
 
 #todo change UI example : haMpi  ha~pi hA~s hAMs hU~ hUM -> hampi hAA hAs
 def NasalTilde(Strng):
+    """Use tilde for nasalization - kaM ka~ kaMka ka~ka -> ka-tilde ka-tilde kanka kaka (converts anusvara/nasal marks to a combining tilde)."""
     Strng = AnusvaratoNasalASTISO(Strng)
     Strng = re.sub('(m̐|ṃ|ṁ)', '\u0303', Strng)
 
@@ -711,21 +763,25 @@ def NasalTilde(Strng):
 #todo feature
 def siddhamBija(Strng):
 
+    """No-op placeholder (reserved for Siddham bija/seed-syllable rendering)."""
     return Strng
 
 #todo feature
 def verticalKana(Strng):
 
+    """Vertical text (no-op placeholder; vertical layout is not yet implemented here)."""
     return Strng
 
 #todo feature
 def verticalSiddham(Strng):
 
+    """No-op placeholder (reserved for vertical Siddham text layout)."""
     return Strng
 
 #todo testcase
 def vtobJapanese(txt):
 
+    """/v/ -> /b/ - vino -> bino (merges v-row kana into b-row for nativized Japanese output)."""
     return txt
 
 #todo testcase
@@ -741,16 +797,19 @@ from .ScriptProcessing.Sogo import SogoReshAyinDaleth_post as SogoReshAyinDaleth
 #todo testcase
 def arabPaFa(Strng):
 
+    """Replaces Arabic pe with fa (renders Persian/Urdu 'pa' sound as Arabic 'fa')."""
     return Strng.replace('پ','ف')
 
 
 #todo testcase
 def arabChaSa(Strng):
 
+    """Replaces Arabic che with sin (renders Persian/Urdu 'cha' sound as Arabic 'sa')."""
     return Strng.replace('چ', 'س')
 
 #todo testcase
 def gainGimel(Strng):
+    """Marked ayin (dagesh-like dot) -> Hebrew gimel (renders Semitic ghayin as Hebrew ga)."""
     return Strng.replace('עׄ','ג')
 
 #todo testcase
@@ -763,6 +822,7 @@ from .ScriptProcessing.Hebr_Ar import gainGimel, tavTwodot, tavThreedot
 #todo testcase
 #todo testcase
 def tokushuon(txt):
+   """Applies Japanese tokushuon (special loanword kana) spelling conventions, e.g. si->suxi, zi->zuxi, yi->ixi, fy->fux, nye->nixe, and context-sensitive hu/hye expansions."""
    txt = txt.replace('si', 'suxi').replace('zi', 'zuxi')
    txt = txt.replace('yi','ixi')
    txt = txt.replace('fy', 'fux')
@@ -782,6 +842,7 @@ def tokushuon(txt):
 # comparison against the pre-extraction implementation plus the full suite.
 
 def _japanese_pivot_to_romankana(src, txt):
+    """Pivots Japanese text through Telugu/ISO/Inter intermediate scripts en route to a RomanKana representation."""
     from . import Convert
     txt = Convert.convertScript(txt, src, "Telugu")
 
@@ -794,6 +855,7 @@ def _japanese_pivot_to_romankana(src, txt):
 
 def _japanese_visarga_nasalization_punctuation(txt):
     # Visarga
+    """Expands visarga into vowel-echoed h, assimilates nasal consonants before homorganic stops, and converts ASCII punctuation to Japanese full-width punctuation."""
     txt = re.sub('([aiueo])' + r'\1' + 'H', r'\1' + r'\1' + 'h' + r'\1', txt)
 
     txt = re.sub('([aiueo])H', r'\1' + 'h' + r'\1', txt)
@@ -811,6 +873,7 @@ def _japanese_visarga_nasalization_punctuation(txt):
     return txt
 
 def _japanese_empirical_consonant_fixes(txt, postoptions):
+    """Applies empirical consonant-cluster fixes for naturalized Japanese romanization (tr/dr->tor/dor, tya/dya/sya palatalization spellings, di/du/ti/tu epenthetic vowels, ye/vye handling)."""
     if 'vtobJapanese' in postoptions:
         txt = txt.replace('v', 'b')
 
@@ -830,6 +893,7 @@ def _japanese_empirical_consonant_fixes(txt, postoptions):
     return txt
 
 def _japanese_nativize_branch_fix(txt, nativize):
+    """Branches Japanese post-processing on the nativize flag: resolves r/k gemination marks and applies tokushuon when not nativized, or simplifies yi/ye/wu/wo/she spellings when nativized."""
     if not nativize:
         txt = re.sub('(r)(r\u309A)', 'rur\u309A', txt)
         txt = re.sub('(r\u309A)(r\u309A)', 'rr' + '\u309A', txt)
@@ -851,6 +915,7 @@ def _japanese_nativize_branch_fix(txt, nativize):
     return txt
 
 def _japanese_encode_to_kana(txt, tgt, nativize):
+    """Encodes intermediate romanized Japanese text into Hiragana or Katakana via kana2roman, handling consonant/vowel gemination and choonpu (long-vowel) marks."""
     from aksharamukha.ScriptMap.NonIndic import kana2roman
 
     if tgt == 'Hiragana':
@@ -899,6 +964,7 @@ def _japanese_encode_to_kana(txt, tgt, nativize):
     return txt
 
 def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
+    """Runs the full Japanese post-processing pipeline (pivot to RomanKana, punctuation/nasalization fixes, consonant fixes, nativize branch, kana encoding) to produce Hiragana/Katakana output."""
     from . import Convert
 
     txt = _japanese_pivot_to_romankana(src, txt)
@@ -911,6 +977,7 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
 
     return txt
 def urduRemoveInherent(Strng):
+    """Remove all inherent /a/ - hndvstan -> not hanadavasatana (strips non-word-initial short a vowels for Urdu rendering)."""
     Strng = re.sub('\Ba', '', Strng)
 
     return Strng
@@ -918,17 +985,20 @@ def urduRemoveInherent(Strng):
 #todo testcase
 def HiraganaaunotDipthong(Strng):
 
+    """No-op placeholder (reserved for preventing au from being read as a Hiragana diphthong)."""
     return Strng
 
 #not used
 def IASTISONasalTilde(Strng):
 
+    """No-op placeholder (reserved for IAST/ISO nasalization tilde handling)."""
     return Strng
 
 #todo testcase
 #todo testcase
 #todo testcase
 def HebrewKatevMalei(Strng):
+    """Replaces Hebrew qamats and patach vowel points with aleph, producing ktiv male (full/plene) spelling."""
     Strng = Strng.replace('ָ', 'א') # long aa
     Strng = Strng.replace('ַ', 'א') # short a
 
@@ -942,12 +1012,14 @@ from .ScriptProcessing.Gurmukhi import GurmukhiCandrabindu, GurmukhiYakaash, Gur
 
 #misnomer
 def mDotAboveToBelow(Strng):
+    """m-dot-below -> m-dot-above."""
     Strng = Strng.replace('ṃ', 'ṁ')
 
     return Strng
 
 #misnomer
 def mDotBelowToAbove(Strng):
+    """Converts dot-above anusvara back to dot-below (inverse of mDotAboveToBelow)."""
     Strng = Strng.replace('ṁ', 'ṃ')
 
     return Strng
@@ -987,12 +1059,14 @@ from .ScriptProcessing.KhamtiShan import KhamiShanMyanmarNumerals, KhamtiShanRa
 from .ScriptProcessing.Grantha import GranthaOldau, GranthaPrakrit, granthafinal, granthaserif, egrantamil
 
 def Dot2Dandas(Strng):
+    """Converts double and single full-stop dots into Devanagari danda punctuation (.. -> double danda, . -> danda)."""
     Strng = Strng.replace('..', '॥')
     Strng = Strng.replace('.', '।')
 
     return Strng
 
 def Dot2Pipes(Strng):
+    """Converts double and single full-stop dots into ASCII pipe punctuation (.. -> ||, . -> |)."""
     Strng = Strng.replace('..', '||')
     Strng = Strng.replace('.', '|')
 
@@ -1045,16 +1119,19 @@ from .ScriptProcessing.Marchen import MarchenSanskritPalatals
 from .ScriptProcessing.ZanabazarSquare import ZanabazarSanskritPalatals, ZanzabarSpaceTsheg, ZanabazarSquareContextual, ZanabazarSquareAiAu, ZanabazarSquareMongolianFinal
 
 def KhandaTaRomanLoC(Strng):
+    """Converts LoC romanized t-line into the Bengali khanda ta letter."""
     Strng = Strng.replace('ṯ', 'ৎ')
 
     return Strng
 
 # reverse these in preprocess
 def RomanLoCVaWa(Strng):
+    """Replaces v with w, per LoC romanization convention for scripts where va is rendered as w."""
     Strng = Strng.replace('v', 'w')
     return Strng
 
 def RomanLoCSasha(Strng):
+    """Replaces s-dot-below (sa) with sh, per LoC romanization convention."""
     Strng = Strng.replace('ṣ', 'sh')
     return Strng
 
@@ -1063,6 +1140,7 @@ def RomanLoCSasha(Strng):
 from .ScriptProcessing.IAST import RomanLoCSLaDotLaUnderscore_post as RomanLoCSLaDotLaUnderscore
 
 def RomanLoCLaUnderscoreDoubleDot(Strng):
+    """Replaces l-line-below with l-double-underdot, per LoC romanization convention."""
     Strng = Strng.replace('ḻ', 'l̤')
 
     return Strng
@@ -1084,6 +1162,7 @@ from .ScriptProcessing.Kawi import KawiAltAiAU, KawiArchaicJNA, KawiDecomposedVo
 from .ScriptProcessing.Javanese import JavaneseArchaicJNA, JavaneseAvowels, JavaneseMoveRepha_post as JavaneseMoveRepha
 
 def TibetanLoCRomanLoCFix(Strng):
+    """Fixes Tibetan LoC romanization: drops the modifier apostrophe on t/n unless followed by s/y respectively, and joins j_h into jh."""
     Strng = re.sub('tʹ(?!s)', 't', Strng)
     Strng = re.sub('nʹ(?!y)', 'n', Strng)
     Strng = re.sub('j_h', 'jh', Strng)
@@ -1101,11 +1180,13 @@ from .ScriptProcessing.RomanLoCJavanese import JavaneseSimplified
 from .ScriptProcessing.RomanLoCBalinese import BalineseSimplified
 
 def BalineseRomanLoCFix(Strng):
+    """Fixes Balinese LoC romanization diacritics: h-diaeresis -> h, ng-diaeresis -> apostrophe-like sign."""
     Strng = Strng.replace('ḧ', 'h').replace('ng̈', '‘')
 
     return Strng
 
 def JavaneseRomanLoCFix(Strng):
+    """Fixes Javanese LoC romanization diacritics: h-diaeresis -> h, ng-diaeresis -> apostrophe-like sign."""
     Strng = Strng.replace('ḧ', 'h').replace('ng̈', '‘')
 
     return Strng
@@ -1115,6 +1196,7 @@ def JavaneseRomanLoCFix(Strng):
 from .ScriptProcessing.Balinese import BalineseArchaicJNA, BalineseAvowels, BalineseMoveRepha_post as BalineseMoveRepha
 
 def BalineseJavaneseMoveRepha(Strng, tgt, reph):
+    """Repositions the Balinese/Javanese repha (pre-base r) sign to follow the consonant cluster (and any anusvara-type sign) it modifies."""
     repha = '(' + reph + ')'
 
     cons = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, tgt)) + ')'
@@ -1129,6 +1211,7 @@ def BalineseJavaneseMoveRepha(Strng, tgt, reph):
     return Strng
 
 def GurmukhiRomanLoCFix(Strng):
+    """Converts nasalized m before homorganic stops into the corresponding nasal consonant (velar/palatal/retroflex/dental/labial) for Gurmukhi LoC romanization."""
     Strng = re.sub('(m̆|ṃ)(k|g)', 'ṅ' + r'\2', Strng)
     Strng = re.sub('(m̆|ṃ)(c|j)', 'ñ' + r'\2', Strng)
     Strng = re.sub('(m̆|ṃ)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
@@ -1138,21 +1221,25 @@ def GurmukhiRomanLoCFix(Strng):
     return Strng
 
 def DevanagariRomanLoCFix(Strng):
+    """Fixes Devanagari LoC romanization diaeresis-marked digraphs: g-h-diaeresis -> g-underdot h-underdot, t-diaeresis -> t-underdot, s-diaeresis -> s-underdot, h-diaeresis -> h-underdot."""
     Strng = Strng.replace('gḧ', 'g̳h̳').replace('ṭ̈', 't̤').replace('s̈', 's̤')\
         .replace('ḧ', 'h̤')
 
     return Strng
 
 def MalayalamRomanLoCFix(Strng):
+    """Fixes Malayalam LoC romanization: doubled r-line -> doubled t-line, u-breve -> a-overdot."""
     Strng = Strng.replace('ṟṟ', 'ṯṯ')
     Strng = Strng.replace('ŭ', 'ȧ')
     return Strng
 
 def MalayalamNTA(Strng):
+    """Converts the n+ra sequence into n+t-line (Malayalam nta orthographic convention)."""
     Strng = Strng.replace('nṟ', 'nṯ')
     return Strng
 
 def MalayalamTTNTA(Strng):
+    """Doubled ra (tta) & n+ra (nta) -> t-line doubled & n+t-line."""
     Strng = Strng.replace('ṟṟ', 'ṯṯ')
     Strng = Strng.replace('nṟ', 'nṯ')
     return Strng
@@ -1160,6 +1247,7 @@ def MalayalamTTNTA(Strng):
 def SinhalaSannakaNasalization(Strng):
     #Strng = Strng.replace('ṁ', 'ṃ')
 
+    """Converts Sinhala prenasalized n-breve/m-breve before homorganic consonants into the corresponding nasal consonant (velar/palatal/retroflex/dental/labial)."""
     Strng = re.sub('(n̆)(k|g)', 'ṅ' + r'\2', Strng)
     Strng = re.sub('(n̆)(c|j)', 'ñ' + r'\2', Strng)
     Strng = re.sub('(n̆)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
@@ -1171,6 +1259,7 @@ def SinhalaSannakaNasalization(Strng):
 def RomanLoCChandrabindu(Strng):
     #Strng = Strng.replace('ṁ', 'ṃ')
 
+    """Converts chandrabindu-marked m before consonants into chandrabindu-marked n, per LoC romanization convention."""
     Strng = re.sub('(m̐)(k|g)', 'n̐' + r'\2', Strng)
     Strng = re.sub('(m̐)(c|j)', 'n̐' + r'\2', Strng)
     Strng = re.sub('(m̐)(ṭ|ḍ)', 'n̐' + r'\2', Strng)
@@ -1182,6 +1271,7 @@ def RomanLoCChandrabindu(Strng):
 def AnusvaratoNasalASTISO(Strng):
     #Strng = Strng.replace('ṁ', 'ṃ')
 
+    """Anusvara to nasal - gam-ga -> gan-ga (converts anusvara before homorganic consonants into the matching nasal consonant)."""
     Strng = re.sub('(ṃ|ṁ)(k|g)', 'ṅ' + r'\2', Strng)
     Strng = re.sub('(ṃ|ṁ)(c|j)', 'ñ' + r'\2', Strng)
     Strng = re.sub('(ṃ|ṁ)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
@@ -1201,9 +1291,11 @@ from .ScriptProcessing.RussianCyrillic import CyrillicPali_post as CyrillicPali,
 from .ScriptProcessing.Ranjana import ranjanalantsa, ranjanawartu
 
 def TaiKuen(Strng):
+    """No-op placeholder (reserved for Tai Kuen script-specific post-processing)."""
     return Strng
 
 def TaiThamLao(Strng):
+    """No-op placeholder (reserved for Tai Tham Lao-variant post-processing)."""
     return Strng
 
 # Newa's own logic now lives in ScriptProcessing/Newa.py -
@@ -1229,6 +1321,7 @@ from .ScriptProcessing.Siddham import UseAlternateI1, UseAlternateI2, UseAlterna
 from .ScriptProcessing.WarangCiti import WarangCitiModernOrthogaphy
 
 def MultaniAbjad(Strng):
+    """Simplifies Multani abjad-style orthography by dropping vowels between consonants in CVC/consonant-cluster contexts, matching its abjad (consonant-only) spelling convention."""
     ListAll = "(" + "|".join(GM.CrunchSymbols(GM.Characters, 'Multani') + ["𑊓", "𑊍"]) + ")"
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Multani') + ["𑊓", "𑊍"]) + ")"
     ListV = "(" + "|".join(GM.CrunchSymbols(GM.Vowels, 'Multani') + ["𑊓", "𑊍"]) + ")"
@@ -1259,6 +1352,7 @@ from .ScriptProcessing.Limbu import LimbuSpellingSaI_post as LimbuSpellingSaI, L
 from .ScriptProcessing.Malayalam import tradOrtho, dotReph, archaicAIAU, MalayalamPrakrit_post as MalayalamPrakrit, historicChillu, MalayalamLineVirama, MalayalamCircVirama, RephaDoubleMalayalam
 
 def siddhamap(Strng):
+    """No-op placeholder (reserved for Siddham-specific post-processing)."""
     return Strng
 
 # Bhaiksuki's own logic now lives in ScriptProcessing/Bhaiksuki.py -
@@ -1272,6 +1366,7 @@ from .ScriptProcessing.Bhaiksuki import BhaiksukiRetainSpace
 from .ScriptProcessing.Kaithi import KaithiRetainSpace
 
 def MedievalTamilOrthography(Strng):
+    """Restores medieval/pre-reform Tamil orthography for the e/o vowel signs (splits modern e/o/ee/oo forms into their older two-part equivalents)."""
     OldEO = ['எ்', 'ெ்', 'ஒ்', 'ெ்ா', 'எ', 'ெ', 'ஒ', 'ொ']
     NewEO = ['எ', 'ெ', 'ஒ', 'ொ', 'ஏ', 'ே', 'ஓ', 'ோ']
 
@@ -1282,9 +1377,11 @@ def MedievalTamilOrthography(Strng):
 
 def AmbigousTamilOrthography(Strng):
 
+    """No-op placeholder (reserved for resolving ambiguous Tamil orthography)."""
     return Strng
 
 def ModiRemoveLong(Strng):
+    """Converts long vowel signs and independent vowels in Modi script (i, u, r-vocalic and their vowel-sign forms) to their short equivalents."""
     Strng = Strng.replace('𑘂', '𑘃')
     Strng = Strng.replace('𑘅','𑘄')
     Strng = Strng.replace('𑘱', '𑘲')
@@ -1312,6 +1409,7 @@ from .ScriptProcessing.DevanagariLimbu import LimbuDevanagariConvention_post as 
 from .ScriptProcessing.Nandinagari import NandinagariPrishtamatra
 
 def ThaanaRemoveHistorical(Strng):
+    """Replaces the historical Thaana letter naa (retroflex n) with the modern noonu letter."""
     return Strng.replace('ޱ','ނ')
 
 # Oriya's own logic now lives in ScriptProcessing/Oriya.py -
@@ -1320,6 +1418,7 @@ def ThaanaRemoveHistorical(Strng):
 from .ScriptProcessing.Oriya import OriyaVaAlt, OriyaYYA, OriyaVa
 
 def MalayalamremoveHistorical(Strng):
+    """Replaces the historical Malayalam na letter with the modern na, and the virama-joined na-chillu sequence with the standalone chillu-n."""
     Strng = Strng.replace('\u0D29','\u0D28')
     Strng = Strng.replace('ന‍്', 'ൻ')
 
@@ -1328,6 +1427,7 @@ def MalayalamremoveHistorical(Strng):
     ## Insert Gemination Sign
 
 def MeeteiMayekremoveHistorical(Strng):
+    """Replaces historical/obsolete Meetei Mayek letters and the diaeresis-marked cheitap ee/oo sequences with their modern equivalents."""
     removePairs = [('ꫢ', 'ꯆ'), ('ꫣ', 'ꯅ'), ('ꫤ','ꯇ'), ('ꫥ','ꯊ'), ('ꫦ','ꯗ'), ('ꫧ','ꯙ'), ('ꫨ','ꯅ'),
                    ('ꫩ','ꯁ'), ('ꫪ','ꯁ'), ('\uAAF5','ꯍ꯭'), ('ꯑꫫ','ꯏ'), ('ꯑꫬ','ꯎ'), ('ꫫ','ꯤ'), ('ꫬ','ꯨ')]
 
@@ -1337,12 +1437,14 @@ def MeeteiMayekremoveHistorical(Strng):
     return Strng
 
 def TamilSHADisable(Strng):
+    """Replaces Tamil sha (Grantha letter) with sa followed by a superscript '2' marker, disabling the dedicated sha glyph."""
     return Strng.replace("ஶ", "ஸ²")
 
 # കൽന് കത്ല് ക്ഷേത്ര് കൻല് - Check this
 
 def MalayalamChillu(Strng, reverse=False, preserve=False):
 
+    """Forms Malayalam chillu (pure, vowelless) consonant letters from consonant+virama in appropriate contexts, or reverses chillus back to consonant+virama when reverse=True."""
     Chillus=['\u0D7A','\u0D7B','\u0D7C','\u0D7D','\u0D7E', 'ഩ‍്']
 
     ListC = '(' + '|'.join(GM.CrunchSymbols(GM.CharactersNV,'Malayalam') + ['ഽ']) + ')'
@@ -1388,6 +1490,7 @@ def MalayalamChillu(Strng, reverse=False, preserve=False):
 
 def RemoveSchwa(Strng,Target):
 
+    """Inserts an explicit virama after script consonants that are not already followed by a vowel sign, suppressing the inherent /a/ (schwa) reading."""
     vir = GM.CrunchSymbols(GM.VowelSigns,Target)[0] + GM.CrunchSymbols(GM.VowelSigns,Target)[0]
     ListC = '|'.join(GM.CrunchSymbols(GM.Consonants,Target))
     ListV = '|'.join(GM.CrunchSymbols(GM.Vowels,Target))
@@ -1403,6 +1506,7 @@ def RemoveSchwa(Strng,Target):
 
 def InsertGeminationSign(Strng,Target): #Fix this
 
+    """Replaces consonant+virama+identical-consonant (and consonant+virama+its aspirated counterpart) sequences with a dedicated gemination sign."""
     vir = GM.CrunchSymbols(GM.VowelSigns,Target)[0]
     ConUnAsp = [GM.CrunchList('ConsonantMap', Target)[x] for x in [0,2,5,7,10,12,15,17,20,22,4,9,14,19,24,25,26,27,28,29,30,31,32]]
     ConUnAsp = ConUnAsp + GM.CrunchList('SouthConsonantMap',Target) + GM.CrunchList('NuktaConsonantMap',Target)
@@ -1418,6 +1522,7 @@ def InsertGeminationSign(Strng,Target): #Fix this
 
 def ReverseGeminationSign(Strng,Target): #Fix this
 
+    """Expands a dedicated gemination sign back into consonant+virama+consonant (or its aspirated counterpart), inverse of InsertGeminationSign."""
     vir = GM.CrunchSymbols(GM.VowelSigns,Target)[0]
     ConUnAsp = [GM.CrunchList('ConsonantMap', Target)[x] for x in [0,2,5,7,10,12,15,17,20,22,4,9,14,19,24,25,26,27,28,29,30,31,32]]
     ConUnAsp = ConUnAsp + GM.CrunchList('SouthConsonantMap',Target) + GM.CrunchList('NuktaConsonantMap',Target)
@@ -1436,6 +1541,7 @@ def ReverseGeminationSign(Strng,Target): #Fix this
 
 def KhandaTa(Strng,Target, reverse=False): #Check for Bhakt - Khanda Ta not formed
 
+    """Forms the Bengali khanda ta (cluster-final ta, U+09CE) from ta+virama when not followed by a joining consonant, or reverses khanda ta back to ta+virama when reverse=True."""
     ta = GM.CrunchSymbols(GM.Consonants, Target)[15]
     khandata = '\u09CE'
     vir = GM.CrunchSymbols(GM.VowelSigns,Target)[0]
@@ -1451,6 +1557,7 @@ def KhandaTa(Strng,Target, reverse=False): #Check for Bhakt - Khanda Ta not form
 
 def NasalToAnusvara(Strng,Target):
 
+    """Converts a homorganic nasal consonant followed by virama and a same-varga consonant into anusvara plus that consonant."""
     ListN = [GM.CrunchSymbols(GM.Consonants, Target)[x] for x in [4,9,14,19,24]]
     ListC = [
              '|'.join(GM.CrunchList('ConsonantMap', Target)[0:4]),
@@ -1475,6 +1582,7 @@ def NasalToAnusvara(Strng,Target):
     return Strng
 
 def AnusvaraToNasal(Strng,Target):
+    """Converts anusvara followed by a homorganic consonant into the corresponding nasal consonant plus virama (inverse of NasalToAnusvara)."""
     nukta = GM.CrunchList('NuktaMap', Target)[0]
 
     ListN = [GM.CrunchSymbols(GM.Consonants, Target)[x] for x in [4,9,14,19,24]]
@@ -1497,6 +1605,7 @@ def AnusvaraToNasal(Strng,Target):
     return Strng
 
 def MalayalamAnusvaraNasal(Strng):
+    """Converts anusvara to/from homorganic nasal consonants for Malayalam-specific consonant clusters, accounting for chillu letters."""
     ListCAll = '(' + '|'.join(GM.CrunchSymbols(GM.Characters, 'Malayalam')) + ')'
 
     ListNNasal = [Malayalam.ConsonantMap[x] for x in [4,9,14,19,24]]
@@ -1530,6 +1639,7 @@ def MalayalamAnusvaraNasal(Strng):
 ## Check Namna, ramya -> Malayalam; fix
 def MToAnusvara(Strng,Target):
 
+    """Converts a word/syllable-final labial nasal consonant (ma+virama) not followed by another consonant into anusvara."""
     M = GM.CrunchList('ConsonantMap', Target)[24] + GM.CrunchList('ViramaMap',Target)[0]
     vir = GM.CrunchList('ViramaMap',Target)[0]
     Anusvara = GM.CrunchList('AyogavahaMap',Target)[1]
@@ -1549,9 +1659,11 @@ def MToAnusvara(Strng,Target):
     return Strng
 
 def BengaliYYA(Strng):
+    """ya everywhere - yayati yajna -> nukta-ya-yati nukta-yajna (replaces every plain ya with nuktaed yya in Bengali)."""
     return YYAEverywhere(Strng, 'Bengali')
 
 def YYAEverywhere(Strng, Target):
+    """Replaces every occurrence of the plain ya consonant with the nukta-marked yya (antahstha ya) in the given target script."""
     Ya = GM.CrunchList('ConsonantMap', Target)[25]
     YYa = GM.CrunchList('NuktaConsonantMap',Target)[7]
 
@@ -1560,6 +1672,7 @@ def YYAEverywhere(Strng, Target):
     return Strng
 
 def YaToYYa(Strng,Target):
+    """Converts ya into the nukta-marked yya (antahstha ya) after a preceding letter, for scripts (Assamese, Bengali, Oriya, Chakma) that distinguish the two."""
     YYa = GM.CrunchList('NuktaConsonantMap',Target)[7]
 
     ListC = '|'.join(GM.CrunchSymbols(GM.Characters, Target)+[GM.CrunchList('SignMap',Target)[0]] + ['ৰ'])
@@ -1629,6 +1742,7 @@ def YaToYYa(Strng,Target):
 
 def VaToBa(Strng,Target):
 
+    """Replaces va with ba, for target scripts where the va and ba consonants have historically merged."""
     va = GM.CrunchSymbols(GM.Consonants, Target)[28]
     ba = GM.CrunchSymbols(GM.Consonants, Target)[22]
 
@@ -1642,11 +1756,13 @@ def VaToBa(Strng,Target):
 
 def tbadiff(Strng,Target):
 
+    """Restores the khanda-ta+ba sequence to ta+virama+ba, distinguishing it from the regular khanda-ta merger."""
     Strng = Strng.replace('ৎব', 'ত্ব')
 
     return Strng
 
 def RetainDandasIndic(Strng, Target, reverse=False):
+    """Converts roman '.'/'..'  full stops to native single/double danda punctuation, or reverses danda back to '.'/'..' when reverse=True."""
     Dandas = GM.CrunchList('SignMap', Target)[1:3]
 
     if not reverse:
@@ -1659,6 +1775,7 @@ def RetainDandasIndic(Strng, Target, reverse=False):
     return Strng
 
 def RetainIndicNumerals(Strng,Target, reverse=False):
+    """Converts Western Arabic digits to the target script's native numerals, or reverses native numerals back to Arabic digits when reverse=True."""
     NativeNumerals = GM.CrunchList('NumeralMap', Target)
     ArabicNumerals = GM.CrunchList('NumeralMap', 'ISO')
 
@@ -1672,6 +1789,7 @@ def RetainIndicNumerals(Strng,Target, reverse=False):
     return Strng
 
 def RetainRomanNumerals(Strng,Target, reverse=False):
+    """Converts the target script's native numerals to Western Arabic digits, or reverses Arabic digits back to native numerals when reverse=True."""
     NativeNumerals = GM.CrunchList('NumeralMap', Target)
     ArabicNumerals = GM.CrunchList('NumeralMap', 'ISO')
 
@@ -1685,54 +1803,70 @@ def RetainRomanNumerals(Strng,Target, reverse=False):
     return Strng
 
 def indicNumerals(Strng):
+    """No-op placeholder (reserved for the indicNumerals post-option; numeral conversion is handled by RetainIndicNumerals)."""
     return Strng
 
 def romanFullStop(Strng):
+    """No-op placeholder (reserved for the romanFullStop post-option; danda conversion is handled by RetainDandasIndic)."""
     return Strng
 
 def indicDandas(Strng):
+    """No-op placeholder (reserved for the indicDandas post-option)."""
     return Strng
 
 def romanNumerals(Strng):
+    """No-op placeholder (reserved for the romanNumerals post-option; numeral conversion is handled by RetainRomanNumerals)."""
     return Strng
 
 def RetainTeluguDanda(Strng):
+    """Converts roman full stops to Telugu danda punctuation."""
     return RetainDandasIndic(Strng, 'Telugu')
 
 def RetainTeluguNumerals(Strng):
+    """Converts Western Arabic digits to Telugu numerals."""
     return RetainIndicNumerals(Strng, 'Telugu')
 
 def RetainTamilDanda(Strng):
+    """Converts roman full stops to Tamil danda punctuation."""
     return RetainDandasIndic(Strng, 'Tamil')
 
 def RetainTamilNumerals(Strng):
+    """Converts Western Arabic digits to Tamil numerals."""
     return RetainIndicNumerals(Strng, 'Tamil')
 
 def RetainKannadaDanda(Strng):
+    """Converts roman full stops to Kannada danda punctuation."""
     return RetainDandasIndic(Strng, 'Kannada')
 
 def RetainKannadaNumerals(Strng):
+    """Converts Western Arabic digits to Kannada numerals."""
     return RetainIndicNumerals(Strng, 'Kannada')
 
 def RetainMalayalamDanda(Strng):
+    """Converts roman full stops to Malayalam danda punctuation."""
     return RetainDandasIndic(Strng, 'Malayalam')
 
 def RetainMalayalamNumerals(Strng):
+    """Converts Western Arabic digits to Malayalam numerals."""
     return RetainIndicNumerals(Strng, 'Malayalam')
 
 def RetainGujaratiDanda(Strng):
+    """Converts roman full stops to Gujarati danda punctuation."""
     return RetainDandasIndic(Strng, 'Gujarati')
 
 def RetainGurmukhiNumerals(Strng):
+    """Converts Western Arabic digits to Gurmukhi numerals."""
     return RetainIndicNumerals(Strng, 'Gurmukhi')
 
 def RemoveDiacritics(Strng):
+    """Strips a generic set of removable diacritic marks (GM.DiacriticsRemovable) from the string."""
     for x in GM.DiacriticsRemovable:
         Strng = Strng.replace(x,'')
 
     return Strng
 
 def RemoveDiacriticsTamil(Strng):
+    """Strips Tamil-specific removable diacritic marks (GM.DiacriticsRemovableTamil) from the string."""
     for x in GM.DiacriticsRemovableTamil:
         Strng = Strng.replace(x,'')
 
@@ -1740,6 +1874,7 @@ def RemoveDiacriticsTamil(Strng):
 
 def SaurashtraHaru(Strng):
 
+    """Replaces specific Saurashtra consonant+virama+ha clusters with the dedicated haru (below-base h) sign."""
     ListC = '|'.join([Saurashtra.ConsonantMap[x] for x in [19,24,26,27]])
     vir = Saurashtra.ViramaMap[0]
     ha = Saurashtra.ConsonantMap[32]
@@ -1749,11 +1884,13 @@ def SaurashtraHaru(Strng):
     return Strng
 
 def IASTPali(Strng):
+    """Converts the IAST underlined-l (l with line below) used for retroflex l to the standard Pali l-underdot."""
     Strng = Strng.replace('l̤', 'ḷ')
 
     return Strng
 
 def UrduAlternateUU(Strng):
+    """Intended to replace a short-u+wow sequence with wow+hamza-below as an alternate Urdu spelling; the search string is a literal backslash-escaped text, not an actual Unicode sequence, so this currently has no effect."""
     Strng = Strng.replace("\\u064F\\u0648","\u0648\u0657")
 
     return Strng
@@ -1762,6 +1899,7 @@ def ThaiLaoTranscription(Strng,Script,shortA,shortAconj,reverse=False, anusvaraC
     ## For Native lao: aMDa give an'da as intermediate (N doesn't exist in Native Lao )
     ## Hence issues with nasal conversion
 
+    """Bidirectionally converts between segmented Thai/Lao/LaoPali script forms and unsegmented encoded text: inserts/removes the inherent short-a vowel and its conjunct form, handles anusvara-to-nasal conversion, reorders pre-posed vowels around consonant+virama clusters, and fixes r/l vowel-swap and special consonant-cluster spellings (e.g. prahlada, sarva)."""
     Strng = Strng.replace("\u02BD","")
 
     cons = "|".join(GM.CrunchSymbols(GM.Consonants, Script)+GM.CrunchList('VowelMap',Script)[0:1])
@@ -1844,11 +1982,13 @@ def ThaiLaoTranscription(Strng,Script,shortA,shortAconj,reverse=False, anusvaraC
     return Strng
 
 def ThamTallADisable(Strng):
+    """Disable explicit Tall -a - collapses the tall-a vowel sign to the regular a vowel sign, letting the font choose the visual form."""
     Strng = Strng.replace('\u1A64', '\u1A63')
 
     return Strng
 
 def ThamTallAOthers(Strng):
+    """Tall -a with ca/ba/ra/bha - applies the Tai Tham tall-a vowel sign after these four consonants via FixTallA."""
     TallACons = '|'.join(['ᨧ', 'ᨻ', 'ᩁ', 'ᨽ']) ## ca ba ra bha
 
     Strng = FixTallA(Strng, TallACons)
@@ -1858,6 +1998,7 @@ def ThamTallAOthers(Strng):
 #start here
 
 def ThamShiftMaiKangLai(Strng):
+    """Shift Mai Kang Lai - repositions the Tai Tham mai kang lai sign to follow the vowel/diacritic it modifies instead of preceding it."""
     Strng = re.sub('(\u1A58)(.)', r'\2\1', Strng)
     ListV = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns,'TaiTham') + ['ᩤ']) + ')'
 
@@ -1872,6 +2013,7 @@ def ThamShiftMaiKangLai(Strng):
 
 # not used
 def FixTallA(Strng, TallACons):
+    """Introduces the Tai Tham tall-a vowel sign after specified base or subjoined consonants (including through consonant clusters), and reverses it for consonants with protruding subjoined forms."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'TaiTham'))
     Sub =['\u1A55','\u1A56'] # Subjoined Forms of /ra/ and /la/
 
@@ -1899,6 +2041,7 @@ def FixTallA(Strng, TallACons):
 def AvestanConventions(Strng):
     # Fix Nasalization, hma etc
 
+    """Applies Avestan orthographic conventions: inserts nasalization before consonant clusters, softens word-final a before n/m, marks retroflex n before velars/dentals, selects consonant allophones before ii/uu vowels, and picks the ta variant by following context."""
     extraCons = ["\U00010B33","\U00010B32","\U00010B1D","\U00010B12", '𐬣', '𐬝']
     ListC = "|".join(GM.CrunchSymbols(GM.Consonants, "Avestan")+extraCons)
     ListV = "|".join(GM.CrunchSymbols(GM.Vowels,"Avestan"))
@@ -1945,23 +2088,27 @@ def AvestanConventions(Strng):
 
 # not used
 def TaiThamO(Strng):
+    """Merges the Tai Tham e-vowel-sign + aa-vowel-sign sequence into the single dedicated o vowel sign."""
     Strng = Strng.replace("\u1A6E\u1A63","\u1A70")
 
     return Strng
 
 # not used
 def TaiThamHighNga(Strng):
+    """Replaces the low-register Tai Tham nga consonant with its high-register variant."""
     Strng = Strng.replace('\u1A58','\u1A59')
 
     return Strng
 
 # not used
 def TaiThamMoveNnga(Strng):
+    """Repositions the Tai Tham high-register nga sign to follow the character it attaches to."""
     Strng = re.sub('(.)(\u1A58)',r'\2\1',Strng) # Probably its u1A59
 
     return Strng
 
 def UrduRemoveShortVowels(Strng):
+    """Remove short vowels - hindustan-with-marks -> hindustan (strips sukun, fatha, kasra, damma, and the Urdu small-v diacritics)."""
     ShortVowels = ['\u0652','\u064E','\u0650','\u064F', '\u0658']
 
     for vow in ShortVowels:
@@ -1972,10 +2119,12 @@ def UrduRemoveShortVowels(Strng):
 def LatinPipes(Strng):
     ###
 
+    """No-op placeholder (reserved for converting pipe punctuation in Latin-script output)."""
     return Strng
 
 # not used
 def PhagsPaRearrange(Strng,Target):
+    """Inserts virama before word-final 'Phags-pa consonants (marked by trailing spaces), then converts remaining spaces and Mongolian-style punctuation into 'Phags-pa segment markers."""
     vir = GM.CrunchList('ViramaMap', Target)[0]
     ListC = '|'.join(GM.CrunchSymbols(GM.Consonants,Target))
     ListV = '|'.join(GM.CrunchSymbols(GM.Vowels,Target))
@@ -1989,6 +2138,7 @@ def PhagsPaRearrange(Strng,Target):
 
 # not used
 def DevanagariAVowels(Strng):
+    """Decomposes old-style independent Devanagari vowel letters into the inherent-a consonant carrier plus the corresponding dependent vowel sign."""
     oldVowels = Devanagari.VowelMap[2:12]+Devanagari.SouthVowelMap[:1]
     a = Devanagari.VowelMap[0]
     newAVowels = [a+x for x in Devanagari.VowelSignMap[1:11]+Devanagari.SouthVowelSignMap[:1]]
@@ -2001,6 +2151,7 @@ def DevanagariAVowels(Strng):
 # not used
 def AnusvaraToNasalIPA(Strng):
 
+    """Converts the IPA nasalization diacritic before stops into the corresponding homorganic nasal consonant (velar/palatal/dental/retroflex), including after a length mark."""
     Strng = Strng.replace("̃k","ŋk")
     Strng = Strng.replace("̃g","ŋg")
 
@@ -2030,6 +2181,7 @@ def AnusvaraToNasalIPA(Strng):
 # not used
 def IPARemoveCross(Strng):
 
+    """Removes the multiplication-sign (x) marker character from IPA output."""
     Strng = Strng.replace('×','')
 
     return Strng
@@ -2037,9 +2189,11 @@ def IPARemoveCross(Strng):
 # not used
 def ChakmaAVowels(Strng):
 
+    """No-op placeholder (reserved for Chakma inherent-vowel handling)."""
     return Strng
 
 def swapEe(Strng):
+    """E/O for long, e/o for short - swaps the case convention of the e and o vowel placeholders so uppercase marks the long vowel."""
     Strng = Strng.replace('E', 'X@X@')
     Strng = Strng.replace('e', 'E')
     Strng = Strng.replace('X@X@', 'e')
@@ -2051,6 +2205,7 @@ def swapEe(Strng):
     return Strng
 
 def capitalizeSentence(Strng):
+    """Capitalizes the first letter of each sentence (after start of string, ./?/!, newline, or quote-opened line) and after an '@' marker."""
     Strng = re.sub(r"(\A\w)|"+            # start of string
              "(?<!\.\w)([\.?!]\s*)\w|"+     # after a ?/!/. and a space,
              "\w(?:\.\w)|"+

@@ -13,19 +13,23 @@ from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 ### Use escape char in all functions
 
 def ItransLL(Strng):
+    """Placeholder pre-processing hook for the ITRANS-LL scheme (currently a no-op passthrough)."""
     return Strng
 
 def RomanLoCChandrabindu(Strng):
+    """Normalize candrabindu written as n̐ to m̐ for Library of Congress romanization."""
     Strng = re.sub('n̐', 'm̐', Strng)
 
     return Strng
 
 def BalineseRomanLoCFix(Strng):
+    """Replace the left single quotation mark placeholder with ng̈ in Balinese LoC romanization."""
     Strng = Strng.replace('‘', 'ng̈')
 
     return Strng
 
 def JavaneseRomanLoCFix(Strng):
+    """Replace the left single quotation mark placeholder with ng̈ in Javanese LoC romanization."""
     Strng = Strng.replace('‘', 'ng̈')
 
     return Strng
@@ -35,14 +39,17 @@ def JavaneseRomanLoCFix(Strng):
 from .ScriptProcessing.RomanLoCDevanagari import HindiMarathiRomanLoCFix_pre as HindiMarathiRomanLoCFix
 
 def RomanLoCLaUnderscoreDoubleDot(Strng):
+    """Convert ḻ to l̤ (or back to ḻ) for Library of Congress romanization depending on direction; note: the forward variant (line 37) is missing its return statement, a likely bug."""
     Strng = Strng.replace('ḻ', 'l̤')
 
 # reverse these in preprocess
 def RomanLoCVaWa(Strng):
+    """Replace w with v for Library of Congress romanization, reflecting the va/wa merger."""
     Strng = Strng.replace('w', 'v')
     return Strng
 
 def RomanLoCSasha(Strng):
+    """Replace sh with ṣ for Library of Congress romanization."""
     Strng = Strng.replace('sh', 'ṣ')
 
     return Strng
@@ -52,42 +59,50 @@ def RomanLoCSasha(Strng):
 from .ScriptProcessing.IAST import RomanLoCSLaDotLaUnderscore_pre as RomanLoCSLaDotLaUnderscore, joinVowelConsIAST
 
 def RomanLoCLaUnderscoreDoubleDot(Strng):
+    """Convert ḻ to l̤ (or back to ḻ) for Library of Congress romanization depending on direction; note: the forward variant (line 37) is missing its return statement, a likely bug."""
     Strng = Strng.replace('l̤', 'ḻ')
 
     return Strng
 
 def MalayalamRomanLoCFix(Strng):
+    """Normalize ṯṯ to ṟṟ and ȧ to ŭ in Malayalam Library of Congress romanization."""
     Strng = Strng.replace('ṯṯ', 'ṟṟ')
     Strng = Strng.replace('ȧ', 'ŭ')
     return Strng
 
 def DevanagariRomanLoCFix(Strng):
+    """Normalize nukta-marked digraphs (g̳h̳, t̤, s̤, h̤) to their LoC diacritic forms for Devanagari romanization."""
     Strng = Strng.replace('g̳h̳', 'gḧ').replace('t̤', 'ṭ̈').replace('s̤', 's̈')\
         .replace('h̤', 'ḧ')
 
     return Strng
 
 def IASTLDotRetroflex(Strng):
+    """Convert IAST ḷ (retroflex l) to l̤ for Library of Congress-style romanization."""
     Strng = Strng.replace('ḷ', 'l̤')
 
     return Strng
 
 def ArchaicJnaSimplifyRomanLOC(Strng):
+    """Simplify the archaic Javanese jnya glyph ꦘ to the standard nya glyph ꦚ."""
     Strng = Strng.replace('ꦘ', 'ꦚ')
     return Strng
 
 def KhandaTaRomanLoC(Strng):
+    """Render Bengali khanda ta (ৎ) as ṯ in Library of Congress romanization."""
     Strng = Strng.replace('ৎ', 'ṯ')
 
     return Strng
 
 def TibetanLoCRomanLoCFix(Strng):
+    """Insert LoC prime marks after bare t and n consonants not already followed by a diacritic, for Tibetan romanization."""
     Strng = re.sub('t(?![ʹhs])', 'tʹ', Strng)
     Strng = re.sub('n(?![ʹy])', 'nʹ', Strng)
 
     return Strng
 
 def BalineseJavaneseMoveRepha(Strng, tgt, reph):
+    """Reposition the repha (pre-base r) sign to follow its consonant cluster and vowel sign in Balinese/Javanese script."""
     repha = '(' + reph + ')'
 
     cons = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, tgt)) + ')'
@@ -128,10 +143,12 @@ from .ScriptProcessing.Oriya import OriyaSubojinedVa, OriyaTargetVa
 from .ScriptProcessing.Bengali import BengaliSubojinedVa, BengaliTargetVa
 
 def RetainDevangariDanda(Strng):
+    """Temporarily substitute Devanagari danda/double danda with placeholder box-drawing characters to protect them from further processing."""
     Strng = Strng.replace('।', '│').replace('॥', '┃')
     return Strng
 
 def RetainPipeDanda(Strng, src):
+    """Convert pipe-notated danda/double-danda and periods into placeholder characters to protect them during processing."""
     Strng = Strng.replace("।", "|").replace("॥", "||")
     Strng = Strng.replace(".", "●")
     Strng = Strng.replace("||", "┃").replace("|", "│")
@@ -140,6 +157,7 @@ def RetainPipeDanda(Strng, src):
 
 #ThamLoC
 def ThamLoCRomanLoCTarget(Strng):
+    """Apply Tai Tham LoC target-side vowel fixes for o/eo/aiy/koi/au sequences, the lue-karan sign, and vowel-killer marking."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ThamLoC'))
 
     #Fix o
@@ -169,6 +187,7 @@ def ThamLoCRomanLoCTarget(Strng):
     return Strng
 
 def ThamLoCRomanLoCSource(Strng):
+    """Insert a modifier-letter apostrophe before consonants following bare vowels, and expand ʻ to a+vowel-killer, for Tai Tham LoC source text."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ThamLoCRomanLoC'))
     ListV ='|'.join(GM.CrunchSymbols(GM.Vowels,'ThamLoCRomanLoC'))
 
@@ -185,6 +204,7 @@ def ThamLoCRomanLoCSource(Strng):
 from .ScriptProcessing.Khmer import KhmerWordSplit
 
 def KhmerLoCRomanLoCTarget(Strng):
+    """Apply Khmer LoC target-side fixes: mark the im vowel, reposition the bantoc sign, tag subscript consonant modifiers, reorder tone marks, normalize oya to oy, and drop decorative punctuation."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Khmer'))
     ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,'Khmer'))
     ListA ='|'.join(GM.CrunchSymbols(GM.CombiningSigns,'Khmer'))
@@ -214,6 +234,7 @@ def KhmerLoCRomanLoCTarget(Strng):
     return Strng
 
 def KhmerLoCRomanLoCSource(Strng):
+    """Denormalize precomposed diacritic vowels to NFD and fix apostrophe/oaḥ sequences for Khmer LoC source text."""
     listdenormalize = ['å', 'ẙ', 'à', 'á', 'é', 'í', 'ó', 'ú', 'à', 'è', 'ì', 'ò', 'ù', 'ă']
 
     for let in listdenormalize:
@@ -227,6 +248,7 @@ def KhmerLoCRomanLoCSource(Strng):
 # shan
 def ShanLoCRomanLoCTarget(Strng):
     #preserve ႂ်
+    """Apply Shan LoC target-side normalization: unify /aa/ vowel spellings, merge asat+virama, reorder subjoined consonants, and mark glottal-stop a and pure viramas."""
     Strng = Strng.replace('ႂ်', '\u036E')
 
     # Shan normalize /aa/
@@ -268,10 +290,12 @@ from .ScriptProcessing.KhuenTham import KhuenRaHaamKaren
 
 def ShanLoCRomanLoCSource(Strng):
 
+    """Placeholder Shan LoC source-side hook (currently a no-op passthrough)."""
     return Strng
 
 def BurmeseRomanLoCSource(Strng):
     # adhoc chars
+    """Normalize LoC Burmese romanization source text: expand ad hoc letter codes to Burmese punctuation, fix visarga/diacritic characters, convert comma/period to danda marks, and simplify o-quote sequences to au."""
     chars_misc = {
         "e*": "၏",
         'n*': "၌",
@@ -310,12 +334,14 @@ def BurmeseRomanLoCSource(Strng):
 
 def paliTham(Strng):
 
+    """Placeholder Pali-in-Tai-Tham pre-processing hook (currently a no-op passthrough)."""
     return Strng
 
 def segmentThamSyllabes(Strng):
     # segment text into syllables
 
     # https://github.com/ye-kyaw-thu/myWord/blob/main/syl_segment.py
+    """Segment Tai Tham text into syllables by inserting a space before each syllable-initial consonant."""
     myConsonant = r"ᨠ-ᩌ"
     otherChar = r"ᩍ-ᩔ!-/:-@[-`{-~\s"
     ssSymbol = r'᩠'
@@ -339,6 +365,7 @@ from .ScriptProcessing.Shan import segmentShanSyllables
 
 def BurmeseRomanLoCTarget(Strng):
     # asat + virma to just virama
+    """Apply Burmese LoC target-side normalization: merge asat+virama, reorder subjoined consonants, mark glottal-stop a and pure viramas, and convert dependent vowel+diacritic sequences to independent vowels."""
     Strng = Strng.replace('\u103A\u1039', '\u1039')
 
     # swap iu -> ui
@@ -381,10 +408,12 @@ def BurmeseRomanLoCTarget(Strng):
     return Strng
 
 def insertViramaSyriac(Strng):
+    """Append a private-use marker signaling that Syriac consonants lacking vowel signs should be read as pure consonants (e.g. lâylēyn ← ܠܐܲܝܠܹܝܢ)."""
     Strng += "\uF001"
     return Strng
 
 def BengaliSwitchYaYYa(Strng):
+    """Swap Bengali ya (য) and yya (য়) so that ya maps to ẏa and yya maps to ya."""
     Strng = re.sub('(?<!\u09CD)য', '@#$', Strng)
     Strng = re.sub('য়', 'য', Strng)
     Strng = Strng.replace('@#$', 'য়')
@@ -394,6 +423,7 @@ def BengaliSwitchYaYYa(Strng):
 
 def removeFinalSchwaArab(Strng):
     #print('here', Strng)
+    """Assume an implicit sukun (vowellessness) on word-final Arabic consonants lacking a diacritic (e.g. ʾl×muḥīṭ ʾl×hin×diy×꞉ ← الْمُحِيط الْهِنْدِيّ)."""
     diacrtics = ["\u0652", "\u064E", "\u0650", "\u064F"]
     Strng = re.sub('([\u0628-\u0647])(?![\u0652\u064E\u0650\u064F\u0651\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
     Strng = re.sub('([\u0628-\u0647]\u0651)(?![\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
@@ -408,12 +438,14 @@ def removeFinalSchwaArab(Strng):
     return Strng
 
 def AlephMaterLectionis(Strng, target='semitic'):
+    """Mark aleph as a mater lectionis for long vowels (e.g. kʾ → kā)."""
     Strng += "\u05CD"
 
     return Strng
 
 # Indic Target
 def FixSemiticRoman(Strng, Source):
+    """Post-process romanized Semitic-script output: resolve aleph/ayin approximations, duplicate geminated consonants, dispatch to script-specific fixups (Arabic/Urdu/Syriac/Hebrew), delete schwas, and map Semitic-specific letters to their Indic-equivalent romanization."""
     vir = '\u033D'
 
     if "\u05CD" in Strng:
@@ -527,6 +559,7 @@ def FixSemiticRoman(Strng, Source):
     return Strng
 
 def perisanizeArab(Strng):
+    """Convert Arabic-style kaf and ye (ك ي) to their Persian forms (ک ی)."""
     arabKafYe = 'ك ي'.split(' ')
     persKafYe = 'ک ی'.split(' ')
 
@@ -537,6 +570,7 @@ def perisanizeArab(Strng):
 
 def ArabizePersian(Strng):
     ## how to deal with ga
+    """Convert Persian-style kaf and ye (ک ی) back to their Arabic forms (ك ي)."""
     arabKafYe = 'ك ي'.split(' ')
     persKafYe = 'ک ی'.split(' ')
 
@@ -546,6 +580,7 @@ def ArabizePersian(Strng):
     return Strng
 
 def semiticizeUrdu(Strng):
+    """Convert Urdu-specific letters (ے ڈ ٹ ہ) to their generic Arabic/Semitic equivalents (ي د ت ه) and strip the do-chashme-he (ھ)."""
     urduSpecific = 'ے ڈ ٹ ہ'.split(' ')
     semitic = 'ي د ت ه'.split(' ')
 
@@ -562,20 +597,24 @@ def semiticizeUrdu(Strng):
 from .ScriptProcessing.Malayalam import ShowChillus, MalayalamHalfu, MalayalamTranscribe, MalayalamPrakrit_pre as MalayalamPrakrit
 
 def ShowKhandaTa(Strng):
+    """Render Bengali khanda ta as full consonant plus below-line virama marker (ৎ → ত্ˍ), e.g. উৎকল → utˍkala."""
     Strng = Strng.replace('ৎ', 'ত্ˍ')
 
     return Strng
 
 def eiaudipthongs(Strng):
 
+    """Option flag indicating /ou/ and /ei/ should be read as diphthongs rather than as ē and ō (handled elsewhere; a no-op here)."""
     return Strng
 
 def wasvnukta(Strng):
 
+    """Option flag indicating /w/ should be rendered as nukta-marked v̈ (handled elsewhere; a no-op here)."""
     return Strng
 
 def default(Strng):
 
+    """Default no-op pre-processing option that passes the string through unchanged."""
     return Strng
 
 # Sogd's own logic now lives in ScriptProcessing/Sogd.py -
@@ -602,6 +641,7 @@ from .ScriptProcessing.Phli import PhliWawAyinResh
 from .ScriptProcessing.Hatr import HatrDalethResh
 
 def retainLatin(Strng, reverse=False):
+    """Temporarily map plain Latin letters to private-use codepoints to shield them from script conversion, with a reverse flag to restore them."""
     latn_basic_lower = 'a b c d e f g h i j k l m n o p q r s t u v w x y z ḥ ṭ ṣ ʾ ʿ š ā ī ū ē ō'
     latn_basic_upper = latn_basic_lower.upper()
     latn_all = latn_basic_lower + latn_basic_upper
@@ -632,10 +672,12 @@ def _get_kakasi():
     # pykakasi.kakasi() was previously constructed fresh on every single
     # Hiragana/Katakana->other conversion - real, measurable per-call cost
     # for no benefit, since the converter itself holds no per-call state.
+    """Lazily construct and return a cached pykakasi kana-to-Hepburn romanization converter instance."""
     import pykakasi
     return pykakasi.kakasi()
 
 def _japanese_kakasi_romanize(txt):
+    """Convert lowered internal ISO-romanized text to Devanagari, then run it through pykakasi to produce space-joined Hepburn romanization."""
     from . import Convert
 
     kks = _get_kakasi()
@@ -652,6 +694,7 @@ def _japanese_kakasi_romanize(txt):
     return txt
 
 def _japanese_normalize_romanization(txt, preoptions):
+    """Normalize kakasi's Hepburn romanization output into aksharamukha's internal scheme: merge long vowels, convert digraphs (ch/sh), apply nasalization rules, and honor eiaudipthongs/wasvnukta options."""
     if 'eiaudipthongs' in preoptions:
         txt = txt.replace('ou', 'o\u02BDu').replace('ei', 'e\u02BDi')
 
@@ -682,6 +725,7 @@ def _japanese_normalize_romanization(txt, preoptions):
     return txt
 
 def JapanesePreProcess(src, txt, preoptions):
+    """Preprocess Japanese Hiragana/Katakana input by romanizing it via kakasi and normalizing the result into aksharamukha's internal representation."""
     if src == 'Hiragana' or src == 'Katakana':
         # preserve roman words
         txt = _japanese_kakasi_romanize(txt)
@@ -700,6 +744,7 @@ from .ScriptProcessing.ISO import longEOISO, joinVowelConsISO
 
 def SanskritLexicaizeHK(Strng):
 
+    """Placeholder pre-processing hook for lexicalizing Sanskrit in Harvard-Kyoto (currently a no-op passthrough)."""
     return Strng
 
 # Thai's own logic now lives in ScriptProcessing/Thai.py -
@@ -724,6 +769,7 @@ from .ScriptProcessing.Chakma import ChakmaPali_pre as ChakmaPali
 from .ScriptProcessing.Takri import TakriArchaicKha_pre as TakriArchaicKha
 
 def UrduShortNotShown(Strng):
+    """Mark that Urdu short vowels are not written, appending a flag consumed by later processing to suppress short-vowel signs."""
     Strng += "\u02BB\u02BB"
 
     return Strng
@@ -738,6 +784,7 @@ from .ScriptProcessing.Devanagari import AnuChandraEqDeva, AnuChandraEq, RemoveS
 from .ScriptProcessing.Tamil import TamilNumeralSub, TamilTranscribeCommon, TamilTranscribe, TamilTranscribeDialect
 
 def swapEe(Strng):
+    """Swap the case convention for E/e and O/o so uppercase marks the long vowel and lowercase marks the short vowel."""
     Strng = Strng.replace('E', 'X@X@')
     Strng = Strng.replace('e', 'E')
     Strng = Strng.replace('X@X@','e')
@@ -761,14 +808,17 @@ from .ScriptProcessing.Grantha import egrantamil
 from .ScriptProcessing.Siddham import siddhammukta
 
 def TaiKuen(Strng):
+    """Placeholder Tai Khuen pre-processing hook (currently a no-op passthrough)."""
     return Strng
 
 def TaiThamLao(Strng):
+    """Placeholder Tai Tham Lao pre-processing hook (currently a no-op passthrough)."""
     return Strng
 
 # consider adding an optional NUkta to the post consonantal position
 # consider adding an optional NUkta to the post consonantal position
 def RemoveFinal(Strng, Target):
+    """Delete the inherent schwa vowel from a word-final consonant (e.g. kama → kam) for the given target script, with special-casing for Khmer and Bengali."""
     if Target == 'Bengali':
         Strng = PostProcess.KhandaTa(Strng, Target, True)
 
@@ -815,18 +865,21 @@ from .ScriptProcessing.Gujarati import SchwaFinalGujarati
 
 def SchwaFinalBengali(Strng):
 
+    """Delete the word-final inherent schwa vowel in Bengali (e.g. রাম → rām)."""
     Strng = RemoveFinal(Strng, 'Bengali')
 
     return Strng
 
 def SchwaFinalKhmerLoC(Strng):
 
+    """Delete the word-final inherent schwa vowel for Khmer Library of Congress romanization."""
     Strng = RemoveFinal(Strng, 'KhmerLoC')
 
     return Strng
 
 def SchwaFinalKhmer(Strng):
 
+    """Delete the word-final inherent schwa vowel for Khmer script output."""
     Strng = RemoveFinal(Strng, 'Khmer')
 
     return Strng
@@ -837,6 +890,7 @@ def SchwaFinalKhmer(Strng):
 from .ScriptProcessing.WarangCiti import SchwaFinalWarangCiti
 
 def siddhamUnicode(Strng):
+    """Placeholder Siddham Unicode pre-processing hook (currently a no-op passthrough)."""
     return Strng
 
 # DevanagariLimbu's own logic now lives in ScriptProcessing/DevanagariLimbu.py -
@@ -849,6 +903,7 @@ from .ScriptProcessing.Limbu import LimbuSpellingSaI_pre as LimbuSpellingSaI
 
 
 def removeChillus(Strng):
+    """Expand Malayalam chillu letters (ൺ ൻ ർ ൽ ൾ) into their base consonant plus virama form."""
     Chillus=['\u0D7A','\u0D7B','\u0D7C','\u0D7D','\u0D7E']
 
     vir = Malayalam.ViramaMap[0]
@@ -870,6 +925,7 @@ def removeChillus(Strng):
 from .ScriptProcessing.Sinhala import SinhalaPali_pre as SinhalaPali
 
 def IASTPali(Strng):
+    """Convert IAST ḷ (retroflex l) to l̤ for Pali romanization."""
     Strng = Strng.replace('ḷ', 'l̤')
 
     return Strng
@@ -880,6 +936,7 @@ from .ScriptProcessing.RussianCyrillic import CyrillicPali_pre as CyrillicPali
 
 def GranthaPrakrit(Strng):
     ## Reverse Gemination
+    """Apply Prakrit-style Grantha orthography: reverse the gemination sign and substitute the anusvara form (𑌬𑍁𑌦𑍍𑌧𑌂 → 𑌬𑍁𑌂𑌧𑌀)."""
     Strng = PostProcess.ReverseGeminationSign(Strng, 'Grantha')
 
     Strng = Strng.replace("𑌀", "𑌂")
@@ -887,6 +944,7 @@ def GranthaPrakrit(Strng):
     return Strng
 
 def RomanPreFix(Strng,Source):
+    """Insert explicit dependent-vowel and virama markers after bare consonants in romanized source text so it matches the internal consonant-vowel representation, handling nukta placement."""
     DepV = '\u1E7F'
     Asp = '\u02B0'
 
@@ -915,6 +973,7 @@ def RomanPreFix(Strng,Source):
     return Strng
 
 def joinVowelCons(Strng, script):
+    """Merge space-separated consonant+vowel and consonant+consonant sequences back together for the given script."""
     consonantsAll = '(' + '|'.join(sorted(GM.CrunchSymbols(GM.Consonants, script), key = len, reverse=True)) + ')'
     vowelsAll = '(' + '|'.join(sorted(GM.CrunchSymbols(GM.Vowels, script), key = len, reverse=True)) + ')'
 
@@ -924,6 +983,7 @@ def joinVowelCons(Strng, script):
     return Strng
 
 def PreProcess(Strng,Source,Target,postoptions,preoptions):
+    """Master pre-processing dispatcher: apply source-script-specific normalizations (case folding, punctuation, alternate schemes like ITRANS/Baraha, diacritic reordering, Unicode normalization) before script conversion begins."""
     if SR.get(Source).is_roman_diacritic or Source == 'Latn':
         Strng = Strng.lower()
 
@@ -1055,11 +1115,13 @@ def PreProcess(Strng,Source,Target,postoptions,preoptions):
     return Strng
 
 def ISO259Target(Strng):
+    """Substitute Hebrew aleph (א) and geresh (׳) with their ISO 259 romanization symbols (ʾ, ’)."""
     Strng = Strng.replace('א', 'ʾ').replace('׳', '’')
 
     return Strng
 
 def ISO233Target(Strng):
+    """Substitute Arabic hamza letters (أ ء إ) with their ISO 233 romanization symbols (ˈʾ, ¦, ˌʾ)."""
     replacements = [('أ', 'ˈʾ'), ('ء', '¦'), ('إ', 'ˌʾ')]
 
     for x, y in replacements:
@@ -1068,6 +1130,7 @@ def ISO233Target(Strng):
     return Strng
 
 def PersianDMGTarget(Strng):
+    """Substitute Persian alef (ا) with the DMG romanization symbol ʾ."""
     replacements = [('ا', 'ʾ')]
 
     for x, y in replacements:
@@ -1076,6 +1139,7 @@ def PersianDMGTarget(Strng):
     return Strng
 
 def ISO233Source(Strng):
+    """Reverse ISO 233 romanization symbols back to Arabic hamza letters and normalize additional consonant/vowel spellings (j/g → ǧ, etc.) on the source side."""
     replacements = [('أ', 'ˈʾ'), ('ء', '¦'), ('إ', 'ˌʾ')]
 
     for x, y in replacements:
@@ -1090,11 +1154,13 @@ def ISO233Source(Strng):
     return Strng
 
 def HebrewSBLTarget(Strng):
+    """Substitute Hebrew aleph (א) and geresh (׳) with their SBL romanization symbols (ʾ, ’)."""
     Strng = Strng.replace('א', 'ʾ').replace('׳', '’')
 
     return Strng
 
 def HebrewSBLSource(Strng):
+    """Reverse SBL Hebrew romanization symbols back to Hebrew letters, restoring begadkefat spirantization and vowel-length distinctions."""
     Strng = Strng.replace('ʾ', 'א',).replace('’', '׳')
     Strng = Strng.replace('\u0307\u00B0', '\u00B0\u0307')
 
@@ -1111,6 +1177,7 @@ def HebrewSBLSource(Strng):
     return Strng
 
 def ISO259Source(Strng):
+    """Reverse ISO 259 Hebrew romanization symbols back to Hebrew letters, restoring begadkefat forms and gemination marks via Unicode decomposition."""
     Strng = Strng.replace('ʾ', 'א',).replace('’', '׳')
     Strng = Strng.replace('\u0307\u00B0', '\u00B0\u0307')
 
@@ -1130,9 +1197,11 @@ def ISO259Source(Strng):
 
 def UnSupThaana(Strng):
 
+    """Placeholder Thaana pre-processing hook for unsupported characters (currently a no-op passthrough)."""
     return Strng
 
 def RemoveJoiners(Strng):
+    """Strip zero-width joiner and zero-width non-joiner characters from the string."""
     Strng = Strng.replace("\u200D", "")
     Strng = Strng.replace("\u200C", "")
 
@@ -1152,6 +1221,7 @@ def normalize(Strng,Source):
     #nuktaDecom = [u"क़",u"ख़",u"ग़",u"ज़",u"ड़",u"ढ़",u"फ़",u"य़",u"ਲ਼",u"ਸ਼",u"ਖ਼",u"ਗ਼",u"ਜ਼",u"ਫ਼",u"ড়",u"ঢ়",u"য়",u"ଡ଼",u"ଢ଼"]
     #nuktaPrecom = [u"क़",u"ख़",u"ग़",u"ज़",u"ड़",u"ढ़",u"फ़",u"य़",u"ਲ਼",u"ਸ਼",u"ਖ਼",u"ਗ਼",u"ਜ਼",u"ਫ਼",u"ড়",u"ঢ়",u"য়",u"ଡ଼",u"ଢ଼"]
 
+    """Normalize Unicode variants across supported scripts: precompose nukta consonants and vowel signs, fold decomposed/alternate spellings to canonical forms, and standardize script-specific quirks (chillus, ligatures, danda, vowel-sign ordering) before conversion."""
     nuktaDecom = ["\u0915\u093C","\u0916\u093C","\u0917\u093C","\u091C\u093C","\u0921\u093C","\u0922\u093C","\u092B\u093C","\u092F\u093C","\u0A32\u0A3C","\u0A38\u0A3C","\u0A16\u0A3C","\u0A17\u0A3C","\u0A1C\u0A3C","\u0A2B\u0A3C","\u09A1\u09BC","\u09A2\u09BC","\u09AF\u09BC","\u0B21\u0B3C","\u0B22\u0B3C"]
     nuktaPrecom = ["\u0958","\u0959","\u095A","\u095B","\u095C","\u095D","\u095E","\u095F","\u0A33","\u0A36","\u0A59","\u0A5A","\u0A5B","\u0A5E","\u09DC","\u09DD","\u09DF","\u0B5C","\u0B5D"]
 
@@ -1320,6 +1390,7 @@ def normalize(Strng,Source):
 
 # Remove ZWJ/ZWNJ characters
 def removeZW(Strng):
+    """Remove zero-width non-joiner and zero-width joiner characters (note: the .replace() calls here are missing their replacement argument and will raise a TypeError, a likely bug)."""
     Strng = Strng.replace("\u200C").replace("\u200D")
 
     return Strng
@@ -1330,6 +1401,7 @@ def removeZW(Strng):
 from .ScriptProcessing.PhagsPa import PhagsPaArrange
 
 def IPAIndic(Strng):
+    """Simplify IPA vowels ʊ and ɛ to u and e respectively (note: the function returns None instead of the string, a likely bug)."""
     Strng = Strng.replace("ʊ","u")
     Strng = Strng.replace("ɛ","e")
 

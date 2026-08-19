@@ -12,11 +12,13 @@ import re
 
 def FixRomanReadable(Strng, reverse = False):
 
+    """Delegates to the shared readable/colloquial Roman transliteration routine with standard readable-style rendering."""
     from .. import ConvertFix as CF
     return CF._FixRomanReadableColloquial(Strng, reverse, colloquial=False)
 
 def RomanReadableLongEO(Strng):
 
+    """Alternates long/short e and o vowel notation: e' e o' o → e ae o oa."""
     from .. import ConvertFix as CF
 
     Strng = Strng.replace('o', 'oa')

@@ -7,6 +7,7 @@
 import re
 
 def LoCMarc8(Strng):
+    """Decomposes combining diacritics into MARC-8-compatible NFD form and swaps the ring-above for a dot-above."""
     import unicodedata
     Strng = unicodedata.normalize('NFD', Strng)
     Strng = Strng.replace('\u02DA', '\u02D9')
