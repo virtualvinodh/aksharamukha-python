@@ -1315,44 +1315,9 @@ from .ScriptProcessing.Ugar import _FixUgarEncode, _FixUgarDecode, FixUgar
 # consolidated there (batch migration).
 from .ScriptProcessing.Sogd import _FixSogdEncode, _FixSogdDecode, FixSogd
 
-def _FixMalayalamEncode(Strng):
-    Strng = PostProcess.MalayalamChillu(Strng, False)
-
-    Strng = PostProcess.RetainDandasIndic(Strng, 'Malayalam', True)
-    Strng = PostProcess.RetainIndicNumerals(Strng, 'Malayalam', True)
-
-    # fix n2ra
-    #Strng = Strng.replace('ன்ற')
-
-    Chillus=['\u0D7A','\u0D7B','\u0D7C','\u0D7D','\u0D7E', 'ഩ‍്']
-
-    Anu = GM.CrunchSymbols(GM.CombiningSigns,'Malayalam')[1]
-
-
-    return Strng
-
-def _FixMalayalamDecode(Strng):
-    Strng = PostProcess.MalayalamChillu(Strng, True)
-
-    Strng = PostProcess.RetainIndicNumerals(Strng, 'Malayalam')
-    Strng = PostProcess.RetainDandasIndic(Strng, 'Malayalam')
-
-    #Fix Arachaic chillus
-    chilluArch = ['\u0D54', '\u0D55', '\u0D56', '\u0D7F']
-    chilluArchhVir = ['മ്', 'യ്', 'ഴ്', 'ക്']
-
-    for ch, chvir in zip(chilluArch, chilluArchhVir):
-        Strng = Strng.replace(ch, chvir)
-
-    Chillus=['\u0D7A','\u0D7B','\u0D7C','\u0D7D','\u0D7E', 'ഩ‍്']
-
-    Anu = GM.CrunchSymbols(GM.CombiningSigns,'Malayalam')[1]
-
-
-    return Strng
-
-def FixMalayalam(Strng, reverse=False):
-    return _FixMalayalamDecode(Strng) if reverse else _FixMalayalamEncode(Strng)
+# Malayalam's own logic now lives in ScriptProcessing/Malayalam.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Malayalam import _FixMalayalamEncode, _FixMalayalamDecode, FixMalayalam
 
 # Telugu's own logic now lives in ScriptProcessing/Telugu.py -
 # consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s

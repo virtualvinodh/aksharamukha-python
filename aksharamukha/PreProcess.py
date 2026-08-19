@@ -557,9 +557,9 @@ def semiticizeUrdu(Strng):
 
     return Strng
 
-def ShowChillus(Strng):
-
-    return PostProcess.MalayalamChillu(Strng, True, True)
+# Malayalam's own logic now lives in ScriptProcessing/Malayalam.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Malayalam import ShowChillus, MalayalamHalfu, MalayalamTranscribe, MalayalamPrakrit_pre as MalayalamPrakrit
 
 def ShowKhandaTa(Strng):
     Strng = Strng.replace('ৎ', 'ত্ˍ')
@@ -600,68 +600,6 @@ from .ScriptProcessing.Phli import PhliWawAyinResh
 # consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Hatr import HatrDalethResh
-
-def MalayalamHalfu(Strng):
-    consu = '[കചടതറനണരലവഴളറ]'
-    vir = GM.CrunchSymbols(GM.VowelSigns, 'Malayalam')[0]
-    consAll = "(" + '|'.join(GM.CrunchSymbols(GM.Consonants, 'Malayalam')) + ")"
-
-    Strng = re.sub('(?<=' + consu + ')' + '(' + vir + ')' + '(?!' +  consAll + ')', r'\2' + 'ു്', Strng)
-
-    return Strng
-
-def MalayalamTranscribe(Strng):
-    Strng = MalayalamHalfu(Strng)
-
-    script = "Malayalam"
-
-    ListC = GM.CrunchList('ConsonantMap',script)
-    ListSC = GM.CrunchList('SouthConsonantMap',script)
-    vir = GM.CrunchSymbols(GM.VowelSigns, script)[0]
-
-    ConUnVoiced = [ListC[x] for x in [0,5,10,15,20]]
-    ConVoicedJ =  [ListC[x] for x in [2,7,12,17,22]]
-    ConVoicedS =  [ListC[x] for x in [2,5,12,17,22]]
-
-    ConNasalsAll = '|'.join([ListC[x] for x in [4, 9, 14, 19, 24]])
-    conNasalCa = '|'.join([ListC[x] for x in [9]])
-    ConNasalsGroup = [ConNasalsAll, conNasalCa, ConNasalsAll, ConNasalsAll, ConNasalsAll]
-
-    ConMedials = '|'.join(ListC[25:28]+ListSC[0:2]+ListSC[3:4])
-    Vowels = '|'.join(GM.CrunchSymbols(GM.Vowels+GM.VowelSignsNV, script))
-    Aytham = GM.CrunchList('Aytham',script)[0]
-    Consonants = '|'.join(GM.CrunchSymbols(GM.Consonants,script))
-
-    NRA =ListSC[3] + vir + ListSC[2]
-    NDRA = ListC[14] + vir + ListC[12] + vir + ListC[26]
-
-    ### Check Siva Siva Mails
-    ### Do something about Eyelash ra in Transliterated text
-
-    for i in range(len(ConUnVoiced)):
-        pass
-        #Strng = re.sub('('+Vowels+Consonants+')'+ConUnVoiced[i]+'('+Vowels+Consonants+')',r'\1'+ConVoicedS[i]+r'\2',Strng)
-        Strng = re.sub('('+Vowels+'|'+Consonants+'|'+Aytham+')'+ConUnVoiced[i]+'(?!'+vir+')',r'\1'+ConVoicedS[i],Strng)
-        Strng = re.sub('('+ConVoicedS[i]+')'+ConUnVoiced[i]+'(?!'+vir+')',r'\1'+ConVoicedS[i],Strng)
-
-        # Nasals + Unvoiced -> voiced
-        # Rule applied even if spaced -> ulakaJ cuRRu -> ulakaJ juRRu; cenJu -> senju
-        # Strng = re.sub('('+ConNasalsSpace+')'+'('+vir+')'+'( ?)'+ConUnVoiced[i],r'\1\2\3'+ConVoicedJ[i],Strng)
-
-        # Only without space : vampu -> vambu;  varim panam -> varim panam
-        Strng = re.sub('('+ConNasalsGroup[i]+')'+'('+vir+')'+ConUnVoiced[i],r'\1\2'+ConVoicedJ[i],Strng)
-
-        # Medials + Unvoiced -> Voiced
-        Strng = re.sub('('+ConMedials+')'+'('+vir+')'+ConUnVoiced[i]+'(?!'+vir+')',r'\1\2'+ConVoicedS[i],Strng)
-
-    #RRA NRA
-
-    Strng = Strng.replace('റ്റ', 'ട്ട').replace('ന്റ', 'ണ്ഡ')
-
-    #anusvara with m
-    Strng = Strng.replace('ം', 'മ്')
-
-    return Strng
 
 def retainLatin(Strng, reverse=False):
     latn_basic_lower = 'a b c d e f g h i j k l m n o p q r s t u v w x y z ḥ ṭ ṣ ʾ ʿ š ā ī ū ē ō'
@@ -939,13 +877,6 @@ def IASTPali(Strng):
 # RussianCyrillic's own logic now lives in ScriptProcessing/RussianCyrillic.py -
 # consolidated there (batch migration).
 from .ScriptProcessing.RussianCyrillic import CyrillicPali_pre as CyrillicPali
-
-def MalayalamPrakrit(Strng):
-    ## Reverse Gemination
-    Strng = PostProcess.ReverseGeminationSign(Strng, 'Malayalam')
-    Strng = Strng.replace("ഀ", "ം")
-
-    return Strng
 
 def GranthaPrakrit(Strng):
     ## Reverse Gemination

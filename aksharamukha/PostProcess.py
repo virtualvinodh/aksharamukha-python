@@ -1254,8 +1254,9 @@ from .ScriptProcessing.Sundanese import SundaneseHistoricConjuncts, SundaneseRem
 # consolidated there (batch migration).
 from .ScriptProcessing.Limbu import LimbuSpellingSaI_post as LimbuSpellingSaI, LimburemoveHistorical
 
-def tradOrtho(Strng):
-    return Strng
+# Malayalam's own logic now lives in ScriptProcessing/Malayalam.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Malayalam import tradOrtho, dotReph, archaicAIAU, MalayalamPrakrit_post as MalayalamPrakrit, historicChillu, MalayalamLineVirama, MalayalamCircVirama, RephaDoubleMalayalam
 
 def siddhamap(Strng):
     return Strng
@@ -1318,30 +1319,9 @@ def ThaanaRemoveHistorical(Strng):
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Oriya import OriyaVaAlt, OriyaYYA, OriyaVa
 
-def dotReph(Strng):
-    ListC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Malayalam"))) + ')'
-
-    Strng = re.sub('(?<!്)' + 'ർ' + ListC,'ൎ' + r'\1', Strng)
-    Strng = re.sub('(?<!്)' +'ര്' + ListC,'ൎ' + r'\1', Strng)
-
-    return Strng
-
-def archaicAIAU(Strng):
-    Strng = Strng.replace('ൗ', 'ൌ')
-    Strng = Strng.replace('ഈ', 'ൟ')
-
-    return Strng
-
 def MalayalamremoveHistorical(Strng):
     Strng = Strng.replace('\u0D29','\u0D28')
     Strng = Strng.replace('ന‍്', 'ൻ')
-
-    return Strng
-
-def MalayalamPrakrit(Strng):
-    ## Replace Anusvara with Anusvara above
-    Strng = Strng.replace("ം", "ഀ")
-    Strng = InsertGeminationSign(Strng, 'Malayalam')
 
     return Strng
 
@@ -1403,31 +1383,6 @@ def MalayalamChillu(Strng, reverse=False, preserve=False):
         else:
             for x,y in zip(Chillus, ConVir):
                 Strng = Strng.replace(x, y) ## Fix the reversal of characters of this
-
-    return Strng
-
-def historicChillu(Strng):
-    chilluArch = ['\u0D54', '\u0D55', '\u0D56', '\u0D7F']
-    chilluArchhVir = ['മ്', 'യ്', 'ഴ്', 'ക്']
-
-    ListC = '(' + '|'.join(GM.CrunchSymbols(GM.CharactersNV,'Malayalam') + ['ഽ']) + ')'
-
-    vir = Malayalam.ViramaMap[0]
-
-    for ch, chvir in zip(chilluArch, chilluArchhVir):
-        Strng = re.sub('(?<!' + vir + ')' + chvir + '(?!' + ListC + ')', ch, Strng)
-
-    return Strng
-
-def MalayalamLineVirama(Strng):
-    #ListC = '(' + '|'.join(GM.CrunchSymbols(GM.CharactersNV,'Malayalam') + ['ഽ']) + ')'
-    #Strng = re.sub('\u0D4D'+'(?!'+ListC +')', '\u0D3B', Strng)
-    Strng = Strng.replace('\u0D4D', '\u0D3B')
-
-    return Strng
-
-def MalayalamCircVirama(Strng):
-    Strng = Strng.replace('\u0D4D', '\u0D3C')
 
     return Strng
 
@@ -1901,30 +1856,6 @@ def ThamTallAOthers(Strng):
     return Strng
 
 #start here
-
-def RephaDoubleMalayalam(Strng):
-    repha = '[ർൎ]'
-
-    Target = 'Malayalam'
-
-    vir = GM.CrunchSymbols(GM.VowelSigns,Target)[0]
-    ConUnAsp = [GM.CrunchList('ConsonantMap', Target)[x] for x in [0,2,5,7,10,12,15,17,20,22,4,9,14,19,24,25,28,29,31]]
-    ConUnAsp = ConUnAsp + ['ള']
-    ConAsp   = [GM.CrunchList('ConsonantMap', Target)[x] for x in [1,3,6,8,11,13,16,18,21]]
-
-    # don't replace after virma
-    # arka -> arkka but arkya -> arkya
-    Strng = re.sub('(' + repha + ')' + '('+'|'.join(ConUnAsp)+')' +'(?!' + vir +')', r'\1\2' + vir + r'\2', Strng)
-
-    # ardha -> arddha but ardya -> ardya
-    for i in range(len(ConAsp)):
-        Strng = re.sub('(' + repha + ')' + '(' + ConAsp [i] +')' +'(?!' + vir +')', r'\1' +  ConUnAsp[i] + vir + r'\2', Strng)
-
-    # Dot reph with ya
-
-    # Strng = Strng.replace('ൎയ', 'ൎയ്യ')
-
-    return Strng
 
 def ThamShiftMaiKangLai(Strng):
     Strng = re.sub('(\u1A58)(.)', r'\2\1', Strng)
