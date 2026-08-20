@@ -1,0 +1,487 @@
+kind,name,classification,reason,evidence
+pre,AlephMaterLectionis,frontend,,ScriptMixin.js
+pre,AnuChandraEq,internal,,aksharamukha\ScriptProcessing\Devanagari.py:88
+pre,AnuChandraEqDeva,frontend,,ScriptMixin.js
+pre,ArabicGimelJa,frontend,,ScriptMixin.js
+pre,ArabizePersian,internal,,"aksharamukha\transliterate.py:448,458"
+pre,ArchaicJnaSimplifyRomanLOC,none,,
+pre,AssameseToRomanLocPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,BalineseJavaneseMoveRepha,internal,,"aksharamukha\PostProcess.py:975; aksharamukha\ScriptProcessing\Balinese.py:60,82"
+pre,BalineseMoveRepha,frontend,,ScriptMixin.js
+pre,BengaliSubojinedVa,frontend,,ScriptMixin.js
+pre,BengaliSwitchYaYYa,frontend,,ScriptMixin.js
+pre,BengaliTargetVa,frontend,,ScriptMixin.js
+pre,BengaliToRomanLocPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,BurmeseToRomanLocPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,ChakmaPali,frontend,,ScriptMixin.js
+pre,CyrillicPali,frontend,,ScriptMixin.js
+pre,DivesAkuruAlternateIndVowels,frontend,,ScriptMixin.js
+pre,FixSemiticRoman,internal,,"aksharamukha\Convert.py:336,364; aksharamukha\PostProcess.py:499"
+pre,GranthaPrakrit,frontend,,ScriptMixin.js
+pre,HatrDalethResh,frontend,,ScriptMixin.js
+pre,HebrewSBLSource,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+pre,HebrewSBLTarget,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+pre,HindiMarathiRomanLoCFix,frontend,,ScriptMixin.js
+pre,IASTLDotRetroflex,none,,
+pre,IASTPali,frontend,,ScriptMixin.js
+pre,IPAIndic,none,,
+pre,ISO233Source,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+pre,ISO233Target,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+pre,ISO259Source,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+pre,ISO259Target,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+pre,ItransLL,frontend,,ScriptMixin.js
+pre,JapanesePreProcess,internal,,aksharamukha\transliterate.py:567
+pre,JavaneseMoveRepha,frontend,,ScriptMixin.js
+pre,KawiMoveRepha,frontend,,ScriptMixin.js
+pre,KhandaTaRomanLoC,none,,
+pre,KhmerLoCToRomanLocPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,KhmerWordSplit,frontend,,ScriptMixin.js
+pre,KhuenRaHaamKaren,frontend,,ScriptMixin.js
+pre,LaoPhonetic,frontend,,ScriptMixin.js
+pre,LaoSajhayaOrthography,frontend,,ScriptMixin.js
+pre,LaoSajhayaOrthographywithA,frontend,,ScriptMixin.js
+pre,LaoTranscription,frontend,,ScriptMixin.js
+pre,LimbuDevanagariConvention,frontend,,ScriptMixin.js
+pre,LimbuSpellingSaI,frontend,,ScriptMixin.js
+pre,MalayalamHalfu,frontend,,ScriptMixin.js
+pre,MalayalamPrakrit,frontend,,ScriptMixin.js
+pre,MalayalamTranscribe,frontend,,ScriptMixin.js
+pre,OriyaSubojinedVa,frontend,,ScriptMixin.js
+pre,OriyaTargetVa,frontend,,ScriptMixin.js
+pre,PersianDMGSource,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+pre,PersianDMGTarget,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+pre,PhagsPaArrange,test_only,,aksharamukha\test\regression\promote_direct_call_options.py:110
+pre,PhliWawAyinResh,frontend,,ScriptMixin.js
+pre,PhlpMemQoph,frontend,,ScriptMixin.js
+pre,PhlpWawAyinResh,frontend,,ScriptMixin.js
+pre,PreProcess,internal,,aksharamukha\transliterate.py:689
+pre,RemoveFinal,internal,,"aksharamukha\PreProcess.py:650,657,664; aksharamukha\ScriptProcessing\Gujarati.py:48"
+pre,RemoveJoiners,internal,,"aksharamukha\Convert.py:207,248"
+pre,RemoveSchwaHindi,frontend,,ScriptMixin.js
+pre,RetainDevangariDanda,frontend,,ScriptMixin.js
+pre,RetainPipeDanda,internal,,aksharamukha\transliterate.py:239
+pre,RomanLoCChandrabindu,none,,
+pre,RomanLoCLaUnderscoreDoubleDot,internal,,aksharamukha\PostProcess.py:937; aksharamukha\PreProcess.py:34
+pre,RomanLoCSLaDotLaUnderscore,frontend,,ScriptMixin.js
+pre,RomanLoCSasha,internal,,aksharamukha\PostProcess.py:928
+pre,RomanLoCVaWa,internal,,aksharamukha\PostProcess.py:923
+pre,RomanLocToAssamesePre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToBalinesePre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToBengaliPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToBurmesePre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToDevanagariPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToGujaratiPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToJavanesePre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToKannadaPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToKhmerLoCPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToKhuenThamPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToMalayalamPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToOriyaPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToShanLoCPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToSinhalaPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToTeluguPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanLocToThamLoCPre,internal,,aksharamukha\ScriptProcessing\KhuenTham.py:42
+pre,RomanLocToTibetanLoCPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,RomanPreFix,internal,,aksharamukha\Convert.py:141
+pre,SanskritLexicaizeHK,none,,
+pre,SaurastraHaaruColonTamil,frontend,,ScriptMixin.js
+pre,SchwaFinalBengali,frontend,,ScriptMixin.js
+pre,SchwaFinalGujarati,frontend,,ScriptMixin.js
+pre,SchwaFinalGurmukhi,frontend,,ScriptMixin.js
+pre,SchwaFinalKhmer,none,,
+pre,SchwaFinalKhmerLoC,internal,,"aksharamukha\ScriptProcessing\KhmerLoC.py:61,77"
+pre,SchwaFinalWarangCiti,frontend,,ScriptMixin.js
+pre,ShanLoCToRomanLocPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,ShowChillus,frontend,,ScriptMixin.js
+pre,ShowKhandaTa,frontend,,ScriptMixin.js
+pre,SinhalaPali,frontend,,ScriptMixin.js
+pre,SogdReshAyin,frontend,,ScriptMixin.js
+pre,SogoReshAyinDaleth,frontend,,ScriptMixin.js
+pre,TaiKuen,frontend,,ScriptMixin.js
+pre,TaiThamLao,frontend,,ScriptMixin.js
+pre,TakriArchaicKha,frontend,,ScriptMixin.js
+pre,TamilNumeralSub,frontend,,ScriptMixin.js
+pre,TamilTranscribe,frontend,,ScriptMixin.js
+pre,TamilTranscribeCommon,internal,,"aksharamukha\ScriptProcessing\Tamil.py:195,201"
+pre,TamilTranscribeDialect,frontend,,ScriptMixin.js
+pre,ThaiOrthography,frontend,,ScriptMixin.js
+pre,ThaiPhonetic,frontend,,ScriptMixin.js
+pre,ThaiSajjhayaOrthography,frontend,,ScriptMixin.js
+pre,ThaiSajjhayawithA,frontend,,ScriptMixin.js
+pre,ThamLoCToRomanLocPre,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+pre,TibetanLoCToRomanLocPre,internal,,aksharamukha\ScriptProcessing\TibetanLoC.py:36
+pre,UnSupThaana,none,,
+pre,UrduShortNotShown,frontend,,ScriptMixin.js
+pre,_fix_udatta_avagraha,internal,,aksharamukha\PreProcess.py:769
+pre,_japanese_kakasi_romanize,internal,,aksharamukha\PreProcess.py:512
+pre,_japanese_normalize_romanization,internal,,aksharamukha\PreProcess.py:513
+pre,_normalize_alternate_schemes,internal,,aksharamukha\PreProcess.py:767
+pre,_normalize_unicode_forms,internal,,aksharamukha\PreProcess.py:768
+pre,default,internal,,"aksharamukha\transliterate.py:707,708"
+pre,egrantamil,frontend,,ScriptMixin.js
+pre,eiaudipthongs,frontend,,ScriptMixin.js
+pre,holamlong,frontend,,ScriptMixin.js
+pre,insertViramaSyriac,frontend,,ScriptMixin.js
+pre,joinVowelCons,internal,,aksharamukha\ScriptProcessing\IAST.py:51; aksharamukha\ScriptProcessing\ISO.py:26
+pre,joinVowelConsIAST,frontend,,ScriptMixin.js
+pre,joinVowelConsISO,frontend,,ScriptMixin.js
+pre,longEOISO,frontend,,ScriptMixin.js
+pre,novowelshebrewIndic,frontend,,ScriptMixin.js
+pre,novowelshebrewSemitic,frontend,,ScriptMixin.js
+pre,paliTham,none,,
+pre,perisanizeArab,internal,,"aksharamukha\transliterate.py:463,468"
+pre,removeChillus,none,,
+pre,removeFinalSchwaArab,frontend,,ScriptMixin.js
+pre,removeZW,none,,
+pre,retainLatin,internal,,"aksharamukha\transliterate.py:564,651"
+pre,segmentBurmeseSyllables,frontend,,ScriptMixin.js
+pre,segmentShanSyllables,frontend,,ScriptMixin.js
+pre,segmentThamSyllabes,frontend,,ScriptMixin.js
+pre,semiticizeUrdu,internal,,"aksharamukha\transliterate.py:447,453"
+pre,shvanakhall,frontend,,ScriptMixin.js
+pre,siddhamUnicode,internal,,aksharamukha\transliterate.py:147
+pre,siddhammukta,frontend,,ScriptMixin.js
+pre,swapEe,frontend,,ScriptMixin.js
+pre,swapEeItrans,frontend,,ScriptMixin.js
+pre,wasvnukta,frontend,,ScriptMixin.js
+post,AhomClosed,internal,,aksharamukha\PostOptions.py:31
+post,AlephMaterLectionis,frontend,,ScriptMixin.js
+post,AmbigousTamilOrthography,none,,
+post,AnusvaraAsN,frontend,,ScriptMixin.js
+post,AnusvaraToNasal,internal,,"aksharamukha\PostOptions.py:23,26,27,64; aksharamukha\PostProcess.py:1660"
+post,AnusvaraToNasalIPA,none,,
+post,AnusvaratoNasalASTISO,frontend,,ScriptMixin.js
+post,ArabAtoAleph,frontend,,ScriptMixin.js
+post,ArabRemoveAdditions,internal,,aksharamukha\PostOptions.py:39
+post,ArabicGimelGaGha,none,,
+post,ArabicGimelPaBa,none,,
+post,AssameseToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,AvestanConventions,internal,,aksharamukha\PostOptions.py:34
+post,BalineseArchaicJNA,frontend,,ScriptMixin.js
+post,BalineseAvowels,frontend,,ScriptMixin.js
+post,BalineseJavaneseMoveRepha,internal,,"aksharamukha\PreProcess.py:79; aksharamukha\ScriptProcessing\Balinese.py:60,82"
+post,BalineseMoveRepha,frontend,,ScriptMixin.js
+post,BalineseSimplified,frontend,,ScriptMixin.js
+post,BalineseToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,BengaliConjunctVB,internal,,"aksharamukha\PostOptions.py:64,66"
+post,BengaliIntervocalicDDA,frontend,,ScriptMixin.js
+post,BengaliOldRA,frontend,,ScriptMixin.js
+post,BengaliRaBa,frontend,,ScriptMixin.js
+post,BengaliSwitchYaYYa,frontend,,ScriptMixin.js
+post,BengaliToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,BengaliYYA,frontend,,ScriptMixin.js
+post,BhaiksukiRetainSpace,frontend,,ScriptMixin.js
+post,BurmeseToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,ChakmaAVowels,none,,
+post,ChakmaEnableAllConjuncts,frontend,,ScriptMixin.js
+post,ChakmaGemination,internal,,"aksharamukha\ScriptProcessing\Chakma.py:50,63,125,151"
+post,ChakmaPali,frontend,,ScriptMixin.js
+post,ChakmaVowelsIndependent,frontend,,ScriptMixin.js
+post,ContextualLLa,frontend,,ScriptMixin.js
+post,CyrillicPali,frontend,,ScriptMixin.js
+post,DevanagariACandra,frontend,,ScriptMixin.js
+post,DevanagariAVowels,none,,
+post,DevanagariAnusvara,frontend,,ScriptMixin.js
+post,DevanagariPrishtamatra,frontend,,ScriptMixin.js
+post,DevanagariToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,DivesAkuruAlternateIndVowels,frontend,,ScriptMixin.js
+post,DivesAkuruHomoOrganNasal,frontend,,ScriptMixin.js
+post,DograShaKha,frontend,,ScriptMixin.js
+post,Dot2Dandas,frontend,,ScriptMixin.js
+post,Dot2Pipes,internal,,aksharamukha\transliterate.py:246
+post,FinalNNa,frontend,,ScriptMixin.js
+post,FixSemiticRoman,internal,,"aksharamukha\Convert.py:336,364; aksharamukha\PreProcess.py:228"
+post,FixTallA,internal,,aksharamukha\PostProcess.py:1728; aksharamukha\ScriptProcessing\TaiTham.py:46
+post,GranthaOldau,frontend,,ScriptMixin.js
+post,GranthaPrakrit,frontend,,ScriptMixin.js
+post,GujaratiToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,GurmukhiCandrabindu,internal,,aksharamukha\PostOptions.py:29
+post,GurmukhiLoCToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,GurmukhiTippiBindu,internal,,aksharamukha\PostOptions.py:29
+post,GurmukhiTippiGemination,internal,,aksharamukha\PostOptions.py:29
+post,GurmukhiYakaash,frontend,,ScriptMixin.js
+post,HeberewQoph,frontend,,ScriptMixin.js
+post,HebewShortO,frontend,,ScriptMixin.js
+post,HebrewKatevMalei,none,,
+post,HebrewSBLSource,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+post,HebrewSBLTarget,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+post,HebrewVetVav,internal,,aksharamukha\PostOptions.py:21
+post,HebrewnonFinalShort,internal,,aksharamukha\PostOptions.py:21
+post,HindiMarathiRomanLoCFix,frontend,,ScriptMixin.js
+post,HiraganaaunotDipthong,none,,
+post,IASTISONasalTilde,none,,
+post,IASTPali,frontend,,ScriptMixin.js
+post,IPARemoveCross,none,,
+post,ISO233Source,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+post,ISO233Target,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+post,ISO259Source,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+post,ISO259Target,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+post,InsertGeminationSign,internal,,aksharamukha\ScriptProcessing\Buginese.py:23; aksharamukha\ScriptProcessing\Buhid.py:18
+post,JapanesePostProcess,internal,,aksharamukha\transliterate.py:572
+post,JavaneseArchaicJNA,frontend,,ScriptMixin.js
+post,JavaneseAvowels,frontend,,ScriptMixin.js
+post,JavaneseMoveRepha,frontend,,ScriptMixin.js
+post,JavaneseSimplified,frontend,,ScriptMixin.js
+post,JavaneseToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,KaithiRetainSpace,frontend,,ScriptMixin.js
+post,KannadaNakaraPollu,frontend,,ScriptMixin.js
+post,KannadaNotRepha,frontend,,ScriptMixin.js
+post,KannadaSpacingCandrabindu,frontend,,ScriptMixin.js
+post,KannadaToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,KawiAltAiAU,frontend,,ScriptMixin.js
+post,KawiArchaicJNA,frontend,,ScriptMixin.js
+post,KawiDecomposedVowel,frontend,,ScriptMixin.js
+post,KawiMoveRepha,frontend,,ScriptMixin.js
+post,KhamiShanMyanmarNumerals,frontend,,ScriptMixin.js
+post,KhamtiShanRa,frontend,,ScriptMixin.js
+post,KhandaTa,internal,,"aksharamukha\PreProcess.py:604; aksharamukha\ScriptProcessing\Assamese.py:21,34"
+post,KhandaTaRomanLoC,none,,
+post,KhmerLoCToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,KhojkiQa,frontend,,ScriptMixin.js
+post,KhojkiRRI,internal,,aksharamukha\PostOptions.py:19
+post,KhojkiRetainSpace,frontend,,ScriptMixin.js
+post,LaoNative,frontend,,ScriptMixin.js
+post,LaoPhonetic,frontend,,ScriptMixin.js
+post,LaoSajjhaya,frontend,,ScriptMixin.js
+post,LaoSajjhayawithA,frontend,,ScriptMixin.js
+post,LaoTranscription,frontend,,ScriptMixin.js
+post,LatinPipes,none,,
+post,LatnInitialVowels,internal,,"aksharamukha\PostProcess.py:203,260,279,288"
+post,LimbuDevanagariConvention,frontend,,ScriptMixin.js
+post,LimbuSpellingSaI,frontend,,ScriptMixin.js
+post,LimburemoveHistorical,internal,,aksharamukha\PostOptions.py:25
+post,LoCMarc8,frontend,,ScriptMixin.js
+post,MToAnusvara,internal,,"aksharamukha\PostOptions.py:16,17,22"
+post,MalayalamAnusvaraNasal,internal,,aksharamukha\PostOptions.py:22
+post,MalayalamChillu,internal,,"aksharamukha\ScriptProcessing\Malayalam.py:27,45,74"
+post,MalayalamCircVirama,frontend,,ScriptMixin.js
+post,MalayalamLineVirama,frontend,,ScriptMixin.js
+post,MalayalamNTA,none,,
+post,MalayalamPrakrit,frontend,,ScriptMixin.js
+post,MalayalamTTNTA,frontend,,ScriptMixin.js
+post,MalayalamToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,MalayalamremoveHistorical,internal,,aksharamukha\PostOptions.py:22
+post,MarchenSanskritPalatals,frontend,,ScriptMixin.js
+post,MedievalTamilOrthography,frontend,,ScriptMixin.js
+post,MeeteiMayekremoveHistorical,internal,,aksharamukha\PostOptions.py:24
+post,ModiRemoveLong,internal,,aksharamukha\PostOptions.py:37
+post,MongolianSyllabize,frontend,,ScriptMixin.js
+post,MultaniAbjad,internal,,aksharamukha\PostOptions.py:36
+post,NandinagariPrishtamatra,frontend,,ScriptMixin.js
+post,NasalTilde,frontend,,ScriptMixin.js
+post,NasalToAnusvara,internal,,"aksharamukha\PostOptions.py:16,17,20; aksharamukha\ScriptProcessing\Devanagari.py:183"
+post,NewaDisableRepha,frontend,,ScriptMixin.js
+post,NewaMurmurConsonants,frontend,,ScriptMixin.js
+post,NewaSpecialTa,frontend,,ScriptMixin.js
+post,OriyaToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,OriyaVa,internal,,aksharamukha\PostOptions.py:27
+post,OriyaVaAlt,frontend,,ScriptMixin.js
+post,OriyaYYA,frontend,,ScriptMixin.js
+post,PersianDMGSource,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+post,PersianDMGTarget,internal,"semiticISO dynamic dispatch (transliterate.py _resolve_semitic_iso_pivot, name built via string concat)",
+post,PhagsPaRearrange,test_only,,aksharamukha\test\regression\promote_direct_call_options.py:102
+post,PhagsPaSeal,frontend,,ScriptMixin.js
+post,PhagsPaTib,frontend,,ScriptMixin.js
+post,PhoneticMapping,none,,
+post,RemoveDiacritics,internal,,"aksharamukha\transliterate.py:611,635,637"
+post,RemoveDiacriticsTamil,internal,,"aksharamukha\transliterate.py:613,637"
+post,RemoveSchwa,test_only,,aksharamukha\test\regression\promote_direct_call_options.py:100
+post,RephaDoubleMalayalam,frontend,,ScriptMixin.js
+post,RetainDandasIndic,internal,,"aksharamukha\PostProcess.py:53,1559,1567,1575; aksharamukha\ScriptProcessing\Gujarati.py:20,30"
+post,RetainGujaratiDanda,frontend,,ScriptMixin.js
+post,RetainGurmukhiNumerals,frontend,,ScriptMixin.js
+post,RetainIndicNumerals,internal,,"aksharamukha\PostProcess.py:49,51,1563,1571; aksharamukha\ScriptProcessing\Gurmukhi.py:32,54"
+post,RetainKannadaDanda,frontend,,ScriptMixin.js
+post,RetainKannadaNumerals,frontend,,ScriptMixin.js
+post,RetainMalayalamDanda,frontend,,ScriptMixin.js
+post,RetainMalayalamNumerals,frontend,,ScriptMixin.js
+post,RetainRomanNumerals,test_only,,aksharamukha\test\regression\promote_direct_call_options.py:94
+post,RetainTamilDanda,frontend,,ScriptMixin.js
+post,RetainTamilNumerals,frontend,,ScriptMixin.js
+post,RetainTeluguDanda,frontend,,ScriptMixin.js
+post,RetainTeluguNumerals,frontend,,ScriptMixin.js
+post,ReverseGeminationSign,internal,,"aksharamukha\PreProcess.py:720; aksharamukha\ScriptProcessing\Grantha.py:69,72"
+post,RomanLoCChandrabindu,none,,
+post,RomanLoCLaUnderscoreDoubleDot,internal,,"aksharamukha\PreProcess.py:34,54"
+post,RomanLoCSLaDotLaUnderscore,frontend,,ScriptMixin.js
+post,RomanLoCSasha,internal,,aksharamukha\PreProcess.py:44
+post,RomanLoCVaWa,internal,,aksharamukha\PreProcess.py:39
+post,RomanLocToAssamesePost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,RomanLocToBengaliPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,RomanLocToBurmesePost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,RomanLocToKhmerLoCPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,RomanLocToShanLoCPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,RomanLocToTeluguPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,RomanLocToThamLoCPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,RomanReadableLongEO,frontend,,ScriptMixin.js
+post,SaurashtraHaru,internal,,aksharamukha\PostOptions.py:30
+post,SaurastraHaaruColon,frontend,,ScriptMixin.js
+post,ShanLoCToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,ShowSchwaHindi,frontend,,ScriptMixin.js
+post,SinhalaChandrbinduAnusvara,internal,,aksharamukha\PostOptions.py:18
+post,SinhalaConjuncts,frontend,,ScriptMixin.js
+post,SinhalaDefaultConjuncts,internal,,"aksharamukha\ScriptProcessing\Sinhala.py:28,42"
+post,SinhalaPali,frontend,,ScriptMixin.js
+post,SinhalaSannakaNasalization,internal,,aksharamukha\ScriptProcessing\SinhalaLoC.py:23
+post,SinhalaToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,SogdReshAyin,frontend,,ScriptMixin.js
+post,SogoReshAyinDaleth,frontend,,ScriptMixin.js
+post,SoyomboFinals,frontend,,ScriptMixin.js
+post,SoyomboInitials,frontend,,ScriptMixin.js
+post,SoyomboSanskritPalatals,frontend,,ScriptMixin.js
+post,SoyomboSpaceTscheg,frontend,,ScriptMixin.js
+post,SoyomboSyllabize,frontend,,ScriptMixin.js
+post,SundaneseHistoricConjuncts,frontend,,ScriptMixin.js
+post,SundaneseRemoveHistoric,internal,,aksharamukha\PostOptions.py:35
+post,TaiKuen,frontend,,ScriptMixin.js
+post,TaiThamHighNga,none,,
+post,TaiThamLao,frontend,,ScriptMixin.js
+post,TaiThamMoveNnga,none,,
+post,TaiThamO,none,,
+post,TakriArchaicKha,frontend,,ScriptMixin.js
+post,TakriRemoveGemination,frontend,,ScriptMixin.js
+post,TamilAddFirstVarga,frontend,,ScriptMixin.js
+post,TamilDisableSHA,frontend,,ScriptMixin.js
+post,TamilExtendedAnusvara,frontend,,ScriptMixin.js
+post,TamilExtendedNNA,frontend,,ScriptMixin.js
+post,TamilGranthaVisarga,frontend,,ScriptMixin.js
+post,TamilNaToNNa,internal,,aksharamukha\PostOptions.py:23
+post,TamilOmDisable,frontend,,ScriptMixin.js
+post,TamilRemoveApostrophe,frontend,,ScriptMixin.js
+post,TamilRemoveNumbers,frontend,,ScriptMixin.js
+post,TamilSHADisable,none,,
+post,TamilStyleUUCore,frontend,,ScriptMixin.js
+post,TamilStyleUUOther,frontend,,ScriptMixin.js
+post,TamilSubScript,frontend,,ScriptMixin.js
+post,TamilpredictDentaNa,internal,,aksharamukha\PostOptions.py:23
+post,TamilpredictDentaNaExtended,internal,,aksharamukha\ScriptProcessing\TamilExtended.py:259
+post,TeluguArasunnaChandrabindu,frontend,,ScriptMixin.js
+post,TeluguNakaraPollu,frontend,,ScriptMixin.js
+post,TeluguRemoveAeAo,internal,,aksharamukha\PostOptions.py:16
+post,TeluguRemoveNukta,internal,,aksharamukha\PostOptions.py:16
+post,TeluguReph,frontend,,ScriptMixin.js
+post,TeluguTamilRra,frontend,,ScriptMixin.js
+post,TeluguTamilZha,frontend,,ScriptMixin.js
+post,TeluguToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,ThaanaRemoveHistorical,internal,,aksharamukha\PostOptions.py:33
+post,ThaiLaoTranscription,internal,,"aksharamukha\ScriptProcessing\Lao.py:78,80; aksharamukha\ScriptProcessing\LaoPali.py:70,72"
+post,ThaiNativeConsonants,frontend,,ScriptMixin.js
+post,ThaiSajjhayaOrthography,frontend,,ScriptMixin.js
+post,ThaiSajjhayawithA,frontend,,ScriptMixin.js
+post,ThaiTranscription,frontend,,ScriptMixin.js
+post,ThaiVisargaSaraA,frontend,,ScriptMixin.js
+post,ThamLoCToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,ThamShiftMaiKangLai,frontend,,ScriptMixin.js
+post,ThamTallADisable,frontend,,ScriptMixin.js
+post,ThamTallAOthers,frontend,,ScriptMixin.js
+post,TibetanLoCToRomanLocPost,internal,"LoC dynamic dispatch (transliterate.py _apply_loc_option, name built via string concat)",
+post,TibetanNada,frontend,,ScriptMixin.js
+post,TibetanRemoveBa,internal,,aksharamukha\PostOptions.py:32
+post,TibetanRemoveVirama,internal,,aksharamukha\PostOptions.py:32
+post,TibetanSanskritPalatals,frontend,,ScriptMixin.js
+post,TibetanSyllabize,frontend,,ScriptMixin.js
+post,TibetanTsheg,frontend,,ScriptMixin.js
+post,UrduAlternateUU,none,,
+post,UrduRemoveShortVowels,frontend,,ScriptMixin.js
+post,UseAlternateI1,frontend,,ScriptMixin.js
+post,UseAlternateI2,frontend,,ScriptMixin.js
+post,UseAlternateII,frontend,,ScriptMixin.js
+post,UseAlternateU,frontend,,ScriptMixin.js
+post,UseAlternateVSU,frontend,,ScriptMixin.js
+post,UseAlternateVSUU,frontend,,ScriptMixin.js
+post,UseAlternateYA,frontend,,ScriptMixin.js
+post,UseAlternateo1,frontend,,ScriptMixin.js
+post,UseAlternateo2,frontend,,ScriptMixin.js
+post,VaToBa,internal,,aksharamukha\PostOptions.py:66; aksharamukha\ScriptProcessing\Tibetan.py:167
+post,WarangCitiModernOrthogaphy,internal,,aksharamukha\PostOptions.py:38
+post,YYAEverywhere,internal,,aksharamukha\PostProcess.py:1399; aksharamukha\ScriptProcessing\Oriya.py:62
+post,YaToYYa,internal,,"aksharamukha\PostOptions.py:26,27,28,64"
+post,ZanabazarSanskritPalatals,frontend,,ScriptMixin.js
+post,ZanabazarSquareAiAu,frontend,,ScriptMixin.js
+post,ZanabazarSquareContextual,frontend,,ScriptMixin.js
+post,ZanabazarSquareMongolianFinal,frontend,,ScriptMixin.js
+post,ZanzabarSpaceTsheg,frontend,,ScriptMixin.js
+post,_applyPunctuationNumeralOptions,internal,,aksharamukha\transliterate.py:655
+post,_convertCleanup,internal,,aksharamukha\Convert.py:104
+post,_finalCleanup,internal,,aksharamukha\transliterate.py:656
+post,_japanese_empirical_consonant_fixes,internal,,aksharamukha\PostProcess.py:773
+post,_japanese_encode_to_kana,internal,,aksharamukha\PostProcess.py:775
+post,_japanese_nativize_branch_fix,internal,,aksharamukha\PostProcess.py:774
+post,_japanese_pivot_to_romankana,internal,,aksharamukha\PostProcess.py:771
+post,_japanese_visarga_nasalization_punctuation,internal,,aksharamukha\PostProcess.py:772
+post,alephAyinLatnAlternate,frontend,,ScriptMixin.js
+post,alephAyinLatnAlternate2,frontend,,ScriptMixin.js
+post,arabChaSa,none,,
+post,arabPaFa,none,,
+post,arabicRemoveAdditionsPhonetic,frontend,,ScriptMixin.js
+post,arabizeLatn,internal,,aksharamukha\PostOptions.py:45; aksharamukha\PreProcess.py:249
+post,archaicAIAU,frontend,,ScriptMixin.js
+post,capitalizeSentence,frontend,,ScriptMixin.js
+post,devanagaribalbodh,frontend,,ScriptMixin.js
+post,devanagarijain,frontend,,ScriptMixin.js
+post,devanagarinepali,frontend,,ScriptMixin.js
+post,devanagariuttara,frontend,,ScriptMixin.js
+post,dotReph,frontend,,ScriptMixin.js
+post,easternsyriac,frontend,,ScriptMixin.js
+post,egrantamil,frontend,,ScriptMixin.js
+post,estrangelasyriac,frontend,,ScriptMixin.js
+post,gainGimel,frontend,,ScriptMixin.js
+post,granthafinal,frontend,,ScriptMixin.js
+post,granthaserif,frontend,,ScriptMixin.js
+post,hebraizeLatn,internal,,"aksharamukha\PostOptions.py:50,51; aksharamukha\PreProcess.py:256"
+post,historicChillu,frontend,,ScriptMixin.js
+post,indicDandas,internal,,aksharamukha\transliterate.py:237
+post,indicNumerals,internal,,aksharamukha\PostProcess.py:50
+post,inherentAO,frontend,,ScriptMixin.js
+post,insertARomanSemitic,internal,,aksharamukha\Convert.py:343
+post,jainomDevangari,frontend,,ScriptMixin.js
+post,kawitan,frontend,,ScriptMixin.js
+post,khandatabatova,frontend,,ScriptMixin.js
+post,mDotAboveToBelow,frontend,,ScriptMixin.js
+post,nepaldevafont,frontend,,ScriptMixin.js
+post,noLongEO,frontend,,ScriptMixin.js
+post,olddogra,frontend,,ScriptMixin.js
+post,oldtamilortho,frontend,,ScriptMixin.js
+post,persianPaGaFaJa,frontend,,ScriptMixin.js
+post,ranjanalantsa,frontend,,ScriptMixin.js
+post,ranjanawartu,frontend,,ScriptMixin.js
+post,readableItrans,frontend,,ScriptMixin.js
+post,removeDiacritics,frontend,,ScriptMixin.js
+post,removeDiacriticsArabic,frontend,,ScriptMixin.js
+post,removeDiacriticsPersian,none,,
+post,removeDiacriticsSyriac,none,,
+post,removeMajliyana,frontend,,ScriptMixin.js
+post,removeNikkud,frontend,,ScriptMixin.js
+post,removePaliAhom,frontend,,ScriptMixin.js
+post,removeQussaya,frontend,,ScriptMixin.js
+post,removeRukkaka,frontend,,ScriptMixin.js
+post,removeSegmentSpacesBurmese,frontend,,ScriptMixin.js
+post,removeSemiticLetters,internal,,aksharamukha\PreProcess.py:237
+post,removeSukunEnd,frontend,,ScriptMixin.js
+post,removeVowelsSyriac,frontend,,ScriptMixin.js
+post,removetddash,frontend,,ScriptMixin.js
+post,romanFullStop,internal,,aksharamukha\PostProcess.py:52
+post,romanNumerals,internal,,aksharamukha\PostProcess.py:48
+post,siddhamBija,none,,
+post,siddhamap,frontend,,ScriptMixin.js
+post,siddhammukta,frontend,,ScriptMixin.js
+post,sundapura,frontend,,ScriptMixin.js
+post,swapEe,frontend,,ScriptMixin.js
+post,swapEeItrans,frontend,,ScriptMixin.js
+post,syriacRoman,frontend,,ScriptMixin.js
+post,syriacVowelsBelow,none,,
+post,syriacWesternOToU,none,,
+post,syricizeLatn,internal,,aksharamukha\PostOptions.py:49; aksharamukha\PreProcess.py:254
+post,tavThreedot,frontend,,ScriptMixin.js
+post,tavTwodot,frontend,,ScriptMixin.js
+post,tbadiff,test_only,,aksharamukha\test\regression\promote_direct_call_options.py:101
+post,tibetandbumed,frontend,,ScriptMixin.js
+post,tokushuon,internal,,"aksharamukha\PostProcess.py:705,730,738,754"
+post,tradOrtho,frontend,,ScriptMixin.js
+post,urduRemoveInherent,frontend,,ScriptMixin.js
+post,urduizeLatn,internal,,"aksharamukha\PostOptions.py:46,47,48; aksharamukha\PreProcess.py:252"
+post,useKtivMale,none,,
+post,verticalKana,frontend,,ScriptMixin.js
+post,verticalSiddham,frontend,,ScriptMixin.js
+post,vtobJapanese,frontend,,ScriptMixin.js
+post,westernsyriac,frontend,,ScriptMixin.js

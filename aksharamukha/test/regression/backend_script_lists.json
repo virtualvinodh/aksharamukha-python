@@ -243,7 +243,6 @@
  "EastIndic": [
   "DivesAkuru",
   "TibetanLoC",
-  "BatakLoC",
   "ThamLoC",
   "KhmerLoC",
   "ShanLoC",
@@ -292,7 +291,6 @@
   "BurmeseALALC"
  ],
  "Roman": [
-  "BatakLoCRomanLoC",
   "GurmukhiLoCRomanLoC",
   "TibetanLoCRomanLoC",
   "LimbuLoCRomanLoC",
@@ -305,9 +303,6 @@
   "BatakPakpakRomanLoC",
   "BatakSimaRomanLoC",
   "BatakTobaRomanLoC",
-  "GurmukhiRomanLoC",
-  "TibetanRomanLoC",
-  "LimbuRomanLoC",
   "KannadaRomanLoC",
   "TeluguRomanLoC",
   "SinhalaRomanLoC",
@@ -365,7 +360,6 @@
   "IASTPali",
   "ISOPali",
   "BurmeseRomanLoC",
-  "ISOLOC",
   "RomanSemitic",
   "ShanLoCRomanLoC",
   "KhmerLoCRomanLoC"
@@ -406,7 +400,6 @@
   "Malayalam",
   "Sinhala",
   "Telugu",
-  "Kannada",
   "Oriya",
   "Assamese",
   "Bengali",

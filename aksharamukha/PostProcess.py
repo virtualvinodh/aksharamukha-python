@@ -10,6 +10,641 @@ from . import ConvertFix as CF
 import re
 import functools
 
+# ============================================================
+# Frontend-facing options - selectable in the real Aksharamukha
+# frontend UI today (confirmed against aksharamukha-front's
+# ScriptMixin.js, not inferred). A user can pick these directly.
+# ============================================================
+
+
+## Ahom ##
+
+## Arabic ##
+
+## Assamese ##
+
+## Avestan ##
+
+# Khojki's own logic now lives in ScriptProcessing/Khojki.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Khojki import KhojkiQa, KhojkiRetainSpace
+
+# Ahom's own logic now lives in ScriptProcessing/Ahom.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Ahom import removePaliAhom
+
+# Sinhala's own logic now lives in ScriptProcessing/Sinhala.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Sinhala import SinhalaPali_post as SinhalaPali, SinhalaConjuncts
+
+# RomanLoC's own logic now lives in ScriptProcessing/RomanLoC.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.RomanLoC import LoCMarc8
+
+def AnusvaraAsN(Strng):
+    """Anusvara as n - m' -> n'."""
+    Strng = Strng.replace('m\u034F', 'n')
+    return Strng
+
+#show Schwa
+# Devanagari's own logic now lives in ScriptProcessing/Devanagari.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Devanagari import ShowSchwaHindi, devanagariuttara, devanagarinepali, devanagaribalbodh, devanagarijain, DevanagariAnusvara, jainomDevangari, DevanagariACandra, DevanagariPrishtamatra
+
+# Kannada's own logic now lives in ScriptProcessing/Kannada.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Kannada import KannadaSpacingCandrabindu, KannadaNotRepha, KannadaNakaraPollu
+
+# Telugu's own logic now lives in ScriptProcessing/Telugu.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Telugu import TeluguNakaraPollu, TeluguTamilZha, TeluguTamilRra, TeluguReph, TeluguArasunnaChandrabindu
+
+#testcase todo
+# Dogra's own logic now lives in ScriptProcessing/Dogra.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Dogra import olddogra, DograShaKha
+from .ScriptProcessing.HebrewSBL import removetddash
+
+#todo add to frontend
+def inherentAO(Strng):
+    """inherent /a/ as /o-circumflex/."""
+    Strng = Strng.replace('a', 'ô')
+
+    return Strng
+
+# Bengali's own logic now lives in ScriptProcessing/Bengali.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Bengali import BengaliOldRA, khandatabatova, BengaliRaBa, BengaliIntervocalicDDA
+
+#trigger - UI prompt to show "preserve source" must be enabled for this option
+#testcase todo
+def BengaliSwitchYaYYa(Strng):
+    """ya -> yya-with-nukta & yya-with-nukta -> ya (swaps the plain and nuktaed Bengali ya letters)."""
+    Strng = re.sub('(?<!\u09CD)য', '@#$', Strng)
+    Strng = re.sub('য়', 'য', Strng)
+    Strng = Strng.replace('@#$', 'য়')
+
+    return Strng
+
+#testcase todo
+def AlephMaterLectionis(Strng, target='semitic'):
+    """Aleph as mater lectionis - k+hamza -> k+a-macron (inserts long a after a consonant followed by hamza)."""
+    cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
+
+    # opt 1
+    Strng = re.sub(cons + '(ʾ)', r'\1' + 'ā', Strng)
+
+    return Strng
+
+#testcase todo
+def syriacRoman(Strng):
+    """Syriac convention - v gh-dotless kh f -> b-line g-line k-line p-macron."""
+    Strng = Strng.replace('v', 'ḇ').replace('ġ','ḡ').replace('ḫ','ḵ').replace('f','p̄')
+
+    return Strng
+
+#testcase todo
+# Latn's own logic now lives in ScriptProcessing/Latn.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Latn import alephAyinLatnAlternate, alephAyinLatnAlternate2
+
+#testcase todo
+#testcase todo
+# Arab's own logic now lives in ScriptProcessing/Arab.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Arab import arabicRemoveAdditionsPhonetic, ArabAtoAleph
+
+#testcase todo
+# Hebrew's own logic now lives in ScriptProcessing/Hebrew.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Hebrew import removeNikkud, HeberewQoph, HebewShortO
+
+#testcase todo
+def removeMajliyana(Strng):
+    """Remove Majliyana - strips the underline diacritic marking Majliyana (palatalized) Syriac consonants."""
+    Strng = Strng.replace('\u0330', '')
+
+    return Strng
+
+#testcase todo
+def removeRukkaka(Strng):
+    """Remove Rukkaka - strips the soft/spirantization (rukkakha) dot from Syriac letters."""
+    Strng = Strng.replace('\u0741', '')
+
+    return Strng
+
+#testcase todo
+def removeQussaya(Strng):
+    """Remove Qussaya - strips the hard/occlusive (qushshaya) dot from Syriac letters."""
+    Strng = Strng.replace('\u0742', '')
+
+    return Strng
+
+#testcase todo
+def removeVowelsSyriac(Strng):
+    """Remove Vowel Diacritics - strips all Syriac vowel point combining marks."""
+    Strng = re.sub('[\u0732\u0735\u073C\u0738\u0739\u073F]', '', Strng)
+
+    Strng = re.sub('[ّܰܶܺܽܳ]', '', Strng)
+
+    return Strng
+
+#testcase todo
+def removeDiacriticsArabic(Strng):
+    """Remove Harakat - ghandi-with-marks -> ghandi (strips sukun, fatha, kasra, damma diacritics)."""
+    diacrtics = ["\u0652", "\u064E", "\u0650", "\u064F"]
+
+    for diacritic in diacrtics:
+        Strng = Strng.replace(diacritic, '')
+
+    return Strng
+
+#testcase todo
+def removeSukunEnd(Strng):
+    """Remove Sukun at end of words - hind-with-final-sukun -> hind (drops word-final sukun mark)."""
+    Strng = re.sub('(\u0652)(\W|$)', r'\2', Strng)
+
+    return Strng
+
+#testcase todo
+# Arab-Fa's own logic now lives in ScriptProcessing/Arab_Fa.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Arab_Fa import persianPaGaFaJa
+
+#testcase todo
+def removeSegmentSpacesBurmese(Strng):
+    # segment text into syllables
+    """Join syllables - le thai pyo' -> merged Burmese syllable string (removes spaces inserted between segmented syllables)."""
+    import regex
+
+    Strng = regex.sub('(\p{L}\p{M}*) (\p{L})', r'\1\2', Strng)
+    Strng = regex.sub('(\p{L}\p{M}*) (\p{L})', r'\1\2', Strng)
+
+    return Strng
+
+def UseAlternateo1(Strng):
+    """Long-o vowel sequence -> single alternate o vowel sign glyph."""
+    Strng = Strng.replace('ᩮᩣ', 'ᩰ')
+
+    return Strng
+
+def UseAlternateo2(Strng):
+    """Pali /o/ - alternate o vowel sign glyph -> the two-part long-o vowel sequence."""
+    Strng = Strng.replace('ᩰ', 'ᩮᩣ')
+
+    return Strng
+
+#testcase todo
+#testcase todo
+def estrangelasyriac(Strng):
+
+    """No-op placeholder (reserved for Estrangela Syriac font-variant handling)."""
+    return Strng
+
+#testcase todo
+def easternsyriac(Strng):
+
+    """No-op placeholder (reserved for Eastern Syriac font-variant handling)."""
+    return Strng
+
+#testcase todo
+def westernsyriac(Strng):
+
+    """No-op placeholder (reserved for Western Syriac font-variant handling)."""
+    return Strng
+
+# Pallava's own logic now lives in ScriptProcessing/Pallava.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Pallava import kawitan, sundapura
+
+# Itrans's own logic now lives in ScriptProcessing/Itrans.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Itrans import swapEeItrans_post as swapEeItrans, readableItrans
+
+#todo change UI example : haMpi  ha~pi hA~s hAMs hU~ hUM -> hampi hAA hAs
+def NasalTilde(Strng):
+    """Use tilde for nasalization - kaM ka~ kaMka ka~ka -> ka-tilde ka-tilde kanka kaka (converts anusvara/nasal marks to a combining tilde)."""
+    Strng = AnusvaratoNasalASTISO(Strng)
+    Strng = re.sub('(m̐|ṃ|ṁ)', '\u0303', Strng)
+
+    return Strng
+
+#todo feature
+def verticalKana(Strng):
+
+    """Vertical text (no-op placeholder; vertical layout is not yet implemented here)."""
+    return Strng
+
+#todo feature
+def verticalSiddham(Strng):
+
+    """No-op placeholder (reserved for vertical Siddham text layout)."""
+    return Strng
+
+#todo testcase
+def vtobJapanese(txt):
+
+    """/v/ -> /b/ - vino -> bino (merges v-row kana into b-row for nativized Japanese output)."""
+    return txt
+
+#todo testcase
+# Sogd's own logic now lives in ScriptProcessing/Sogd.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Sogd import SogdReshAyin_post as SogdReshAyin
+
+#todo testcase
+# Sogo's own logic now lives in ScriptProcessing/Sogo.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Sogo import SogoReshAyinDaleth_post as SogoReshAyinDaleth
+
+#todo testcase
+def gainGimel(Strng):
+    """Marked ayin (dagesh-like dot) -> Hebrew gimel (renders Semitic ghayin as Hebrew ga)."""
+    return Strng.replace('עׄ','ג')
+
+#todo testcase
+# Hebr-Ar's own logic now lives in ScriptProcessing/Hebr_Ar.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Hebr_Ar import gainGimel, tavTwodot, tavThreedot
+def urduRemoveInherent(Strng):
+    """Remove all inherent /a/ - hndvstan -> not hanadavasatana (strips non-word-initial short a vowels for Urdu rendering)."""
+    Strng = re.sub('\Ba', '', Strng)
+
+    return Strng
+from .ScriptProcessing.Gurmukhi import GurmukhiYakaash
+
+#misnomer
+def mDotAboveToBelow(Strng):
+    """m-dot-below -> m-dot-above."""
+    Strng = Strng.replace('ṃ', 'ṁ')
+
+    return Strng
+
+#todo : ISOPali postoptions empty todo
+
+# ISO's own logic now lives in ScriptProcessing/ISO.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.ISO import noLongEO
+
+# TamilExtended's own logic now lives in ScriptProcessing/TamilExtended.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.TamilExtended import TamilStyleUUCore, TamilStyleUUOther, TamilExtendedNNA, TamilExtendedAnusvara
+
+# Tamil's post-options (and its default-bundle TamilNaToNNa/
+# TamilpredictDentaNa) now live in ScriptProcessing/Tamil.py, consolidated
+# there with its Fix logic and pre-options too. Re-exported here so
+# Options.py's getmembers(PostProcess, isfunction) discovery still finds
+# them, and so PostOptions.py's default bundle for Tamil keeps resolving.
+from .ScriptProcessing.Tamil import ContextualLLa, FinalNNa, TamilAddFirstVarga, TamilDisableSHA, TamilGranthaVisarga, TamilOmDisable, TamilRemoveApostrophe, TamilRemoveNumbers, TamilSubScript, oldtamilortho
+
+# Thai's own logic now lives in ScriptProcessing/Thai.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Thai import ThaiNativeConsonants, ThaiSajjhayaOrthography_post as ThaiSajjhayaOrthography, ThaiSajjhayawithA_post as ThaiSajjhayawithA, ThaiTranscription, ThaiVisargaSaraA
+
+# KhamtiShan's own logic now lives in ScriptProcessing/KhamtiShan.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.KhamtiShan import KhamiShanMyanmarNumerals, KhamtiShanRa
+
+# Grantha's own logic now lives in ScriptProcessing/Grantha.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Grantha import GranthaOldau, GranthaPrakrit, granthafinal, granthaserif, egrantamil
+
+def Dot2Dandas(Strng):
+    """Converts double and single full-stop dots into Devanagari danda punctuation (.. -> double danda, . -> danda)."""
+    Strng = Strng.replace('..', '॥')
+    Strng = Strng.replace('.', '।')
+
+    return Strng
+
+# TamilSaurashtra's own logic now lives in ScriptProcessing/TamilSaurashtra.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.TamilSaurashtra import SaurastraHaaruColon
+
+# Takri's own logic now lives in ScriptProcessing/Takri.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Takri import TakriArchaicKha_post as TakriArchaicKha, TakriRemoveGemination
+
+# Mongolian's own logic now lives in ScriptProcessing/Mongolian.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Mongolian import MongolianSyllabize
+
+# Tibetan's own logic now lives in ScriptProcessing/Tibetan.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Tibetan import TibetanSyllabize, TibetanSanskritPalatals, tibetandbumed, TibetanNada, TibetanTsheg
+
+# Soyombo's own logic now lives in ScriptProcessing/Soyombo.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Soyombo import SoyomboSyllabize, SoyomboSanskritPalatals, SoyomboFinals, SoyomboInitials, SoyomboSpaceTscheg
+
+# PhagsPa's own logic now lives in ScriptProcessing/PhagsPa.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.PhagsPa import PhagsPaTib, PhagsPaSeal
+
+# RomanReadable's own logic now lives in ScriptProcessing/RomanReadable.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.RomanReadable import RomanReadableLongEO
+
+# Marchen's own logic now lives in ScriptProcessing/Marchen.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Marchen import MarchenSanskritPalatals
+
+# ZanabazarSquare's own logic now lives in ScriptProcessing/ZanabazarSquare.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.ZanabazarSquare import ZanabazarSanskritPalatals, ZanzabarSpaceTsheg, ZanabazarSquareContextual, ZanabazarSquareAiAu, ZanabazarSquareMongolianFinal
+
+# IAST's own logic now lives in ScriptProcessing/IAST.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.IAST import RomanLoCSLaDotLaUnderscore_post as RomanLoCSLaDotLaUnderscore
+
+# DevanagariLoC's own logic now lives in ScriptProcessing/DevanagariLoC.py -
+# consolidated there (LoC redesign; renamed from RomanLoCDevanagari.py).
+from .ScriptProcessing.DevanagariLoC import HindiMarathiRomanLoCFix_post as HindiMarathiRomanLoCFix
+
+# DivesAkuru's own logic now lives in ScriptProcessing/DivesAkuru.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.DivesAkuru import DivesAkuruAlternateIndVowels_post as DivesAkuruAlternateIndVowels, DivesAkuruHomoOrganNasal, UseAlternateYA
+
+# Kawi's own logic now lives in ScriptProcessing/Kawi.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Kawi import KawiAltAiAU, KawiArchaicJNA, KawiDecomposedVowel, KawiMoveRepha_post as KawiMoveRepha
+
+# Javanese's own logic now lives in ScriptProcessing/Javanese.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Javanese import JavaneseArchaicJNA, JavaneseAvowels, JavaneseMoveRepha_post as JavaneseMoveRepha
+
+# JavaneseLoC's own logic now lives in ScriptProcessing/JavaneseLoC.py -
+# consolidated there (LoC redesign; renamed from RomanLoCJavanese.py).
+from .ScriptProcessing.JavaneseLoC import JavaneseSimplified
+
+# BalineseLoC's own logic now lives in ScriptProcessing/BalineseLoC.py -
+# consolidated there (LoC redesign; renamed from RomanLoCBalinese.py).
+from .ScriptProcessing.BalineseLoC import BalineseSimplified
+
+# Balinese's own logic now lives in ScriptProcessing/Balinese.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Balinese import BalineseArchaicJNA, BalineseAvowels, BalineseMoveRepha_post as BalineseMoveRepha
+
+def MalayalamTTNTA(Strng):
+    """Doubled ra (tta) & n+ra (nta) -> t-line doubled & n+t-line."""
+    Strng = Strng.replace('ṟṟ', 'ṯṯ')
+    Strng = Strng.replace('nṟ', 'nṯ')
+    return Strng
+
+def AnusvaratoNasalASTISO(Strng):
+    #Strng = Strng.replace('ṁ', 'ṃ')
+
+    """Anusvara to nasal - gam-ga -> gan-ga (converts anusvara before homorganic consonants into the matching nasal consonant)."""
+    Strng = re.sub('(ṃ|ṁ)(k|g)', 'ṅ' + r'\2', Strng)
+    Strng = re.sub('(ṃ|ṁ)(c|j)', 'ñ' + r'\2', Strng)
+    Strng = re.sub('(ṃ|ṁ)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
+    Strng = re.sub('(ṃ|ṁ)(t|d)', 'n' + r'\2', Strng)
+    Strng = re.sub('(ṃ|ṁ)(p|b)', 'm' + r'\2', Strng)
+
+    return Strng
+
+# RussianCyrillic's own logic now lives in ScriptProcessing/RussianCyrillic.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.RussianCyrillic import CyrillicPali_post as CyrillicPali, removeDiacritics
+
+# Ranjana's own logic now lives in ScriptProcessing/Ranjana.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Ranjana import ranjanalantsa, ranjanawartu
+
+def TaiKuen(Strng):
+    """No-op placeholder (reserved for Tai Kuen script-specific post-processing)."""
+    return Strng
+
+def TaiThamLao(Strng):
+    """No-op placeholder (reserved for Tai Tham Lao-variant post-processing)."""
+    return Strng
+
+# Newa's own logic now lives in ScriptProcessing/Newa.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Newa import nepaldevafont, NewaMurmurConsonants, NewaSpecialTa, NewaDisableRepha
+
+# Chakma's own logic now lives in ScriptProcessing/Chakma.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Chakma import ChakmaPali_post as ChakmaPali, ChakmaEnableAllConjuncts, ChakmaVowelsIndependent
+
+# LaoPali's own logic now lives in ScriptProcessing/LaoPali.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.LaoPali import LaoTranscription_post as LaoTranscription, LaoPhonetic_post as LaoPhonetic, LaoSajjhaya, LaoSajjhayawithA
+
+# Siddham's own logic now lives in ScriptProcessing/Siddham.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Siddham import UseAlternateI1, UseAlternateI2, UseAlternateII, UseAlternateU, UseAlternateVSU, UseAlternateVSUU, siddhammukta
+
+# Lao's own logic now lives in ScriptProcessing/Lao.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Lao import LaoNative
+
+# Sundanese's own logic now lives in ScriptProcessing/Sundanese.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Sundanese import SundaneseHistoricConjuncts
+
+# Limbu's own logic now lives in ScriptProcessing/Limbu.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Limbu import LimbuSpellingSaI_post as LimbuSpellingSaI
+
+# Malayalam's own logic now lives in ScriptProcessing/Malayalam.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.Malayalam import tradOrtho, dotReph, archaicAIAU, MalayalamPrakrit_post as MalayalamPrakrit, historicChillu, MalayalamLineVirama, MalayalamCircVirama, RephaDoubleMalayalam
+
+def siddhamap(Strng):
+    """No-op placeholder (reserved for Siddham-specific post-processing)."""
+    return Strng
+
+# Bhaiksuki's own logic now lives in ScriptProcessing/Bhaiksuki.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Bhaiksuki import BhaiksukiRetainSpace
+
+# Kaithi's own logic now lives in ScriptProcessing/Kaithi.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Kaithi import KaithiRetainSpace
+
+def MedievalTamilOrthography(Strng):
+    """Restores medieval/pre-reform Tamil orthography for the e/o vowel signs (splits modern e/o/ee/oo forms into their older two-part equivalents)."""
+    OldEO = ['எ்', 'ெ்', 'ஒ்', 'ெ்ா', 'எ', 'ெ', 'ஒ', 'ொ']
+    NewEO = ['எ', 'ெ', 'ஒ', 'ொ', 'ஏ', 'ே', 'ஓ', 'ோ']
+
+    for x,y in zip(NewEO, OldEO):
+        Strng = Strng.replace(x,y)
+
+    return Strng
+
+# DevanagariLimbu's own logic now lives in ScriptProcessing/DevanagariLimbu.py -
+# consolidated there (batch migration).
+from .ScriptProcessing.DevanagariLimbu import LimbuDevanagariConvention_post as LimbuDevanagariConvention
+
+# Nandinagari's own logic now lives in ScriptProcessing/Nandinagari.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Nandinagari import NandinagariPrishtamatra
+
+# Oriya's own logic now lives in ScriptProcessing/Oriya.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Oriya import OriyaVaAlt, OriyaYYA
+
+def BengaliYYA(Strng):
+    """ya everywhere - yayati yajna -> nukta-ya-yati nukta-yajna (replaces every plain ya with nuktaed yya in Bengali)."""
+    return YYAEverywhere(Strng, 'Bengali')
+
+def RetainTeluguDanda(Strng):
+    """Converts roman full stops to Telugu danda punctuation."""
+    return RetainDandasIndic(Strng, 'Telugu')
+
+def RetainTeluguNumerals(Strng):
+    """Converts Western Arabic digits to Telugu numerals."""
+    return RetainIndicNumerals(Strng, 'Telugu')
+
+def RetainTamilDanda(Strng):
+    """Converts roman full stops to Tamil danda punctuation."""
+    return RetainDandasIndic(Strng, 'Tamil')
+
+def RetainTamilNumerals(Strng):
+    """Converts Western Arabic digits to Tamil numerals."""
+    return RetainIndicNumerals(Strng, 'Tamil')
+
+def RetainKannadaDanda(Strng):
+    """Converts roman full stops to Kannada danda punctuation."""
+    return RetainDandasIndic(Strng, 'Kannada')
+
+def RetainKannadaNumerals(Strng):
+    """Converts Western Arabic digits to Kannada numerals."""
+    return RetainIndicNumerals(Strng, 'Kannada')
+
+def RetainMalayalamDanda(Strng):
+    """Converts roman full stops to Malayalam danda punctuation."""
+    return RetainDandasIndic(Strng, 'Malayalam')
+
+def RetainMalayalamNumerals(Strng):
+    """Converts Western Arabic digits to Malayalam numerals."""
+    return RetainIndicNumerals(Strng, 'Malayalam')
+
+def RetainGujaratiDanda(Strng):
+    """Converts roman full stops to Gujarati danda punctuation."""
+    return RetainDandasIndic(Strng, 'Gujarati')
+
+def RetainGurmukhiNumerals(Strng):
+    """Converts Western Arabic digits to Gurmukhi numerals."""
+    return RetainIndicNumerals(Strng, 'Gurmukhi')
+
+def IASTPali(Strng):
+    """Converts the IAST underlined-l (l with line below) used for retroflex l to the standard Pali l-underdot."""
+    Strng = Strng.replace('l̤', 'ḷ')
+
+    return Strng
+
+def ThamTallADisable(Strng):
+    """Disable explicit Tall -a - collapses the tall-a vowel sign to the regular a vowel sign, letting the font choose the visual form."""
+    Strng = Strng.replace('\u1A64', '\u1A63')
+
+    return Strng
+
+def ThamTallAOthers(Strng):
+    """Tall -a with ca/ba/ra/bha - applies the Tai Tham tall-a vowel sign after these four consonants via FixTallA."""
+    TallACons = '|'.join(['ᨧ', 'ᨻ', 'ᩁ', 'ᨽ']) ## ca ba ra bha
+
+    Strng = FixTallA(Strng, TallACons)
+
+    return Strng
+
+#start here
+
+def ThamShiftMaiKangLai(Strng):
+    """Shift Mai Kang Lai - repositions the Tai Tham mai kang lai sign to follow the vowel/diacritic it modifies instead of preceding it."""
+    Strng = re.sub('(\u1A58)(.)', r'\2\1', Strng)
+    ListV = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns,'TaiTham') + ['ᩤ']) + ')'
+
+    Strng = re.sub('(\u1A58)([\u1A55\u1A56])', r'\2\1', Strng)
+    Strng = re.sub('(\u1A58)(\u1A60.)', r'\2\1', Strng)
+    Strng = re.sub('(\u1A58)' + ListV, r'\2\1', Strng)
+    Strng = re.sub('(\u1A58)' + ListV, r'\2\1', Strng)
+
+    #Strng = Strng.replace('\u1A63\u1A58', '\u1A58\u1A63')
+
+    return Strng
+
+def UrduRemoveShortVowels(Strng):
+    """Remove short vowels - hindustan-with-marks -> hindustan (strips sukun, fatha, kasra, damma, and the Urdu small-v diacritics)."""
+    ShortVowels = ['\u0652','\u064E','\u0650','\u064F', '\u0658']
+
+    for vow in ShortVowels:
+        Strng = Strng.replace(vow,"")
+
+    return Strng
+
+def swapEe(Strng):
+    """E/O for long, e/o for short - swaps the case convention of the e and o vowel placeholders so uppercase marks the long vowel."""
+    Strng = Strng.replace('E', 'X@X@')
+    Strng = Strng.replace('e', 'E')
+    Strng = Strng.replace('X@X@', 'e')
+
+    Strng = Strng.replace('O', 'X@X@')
+    Strng = Strng.replace('o', 'O')
+    Strng = Strng.replace('X@X@', 'o')
+
+    return Strng
+
+def capitalizeSentence(Strng):
+    """Capitalizes the first letter of each sentence (after start of string, ./?/!, newline, or quote-opened line) and after an '@' marker."""
+    Strng = re.sub(r"(\A\w)|"+            # start of string
+             "(?<!\.\w)([\.?!]\s*)\w|"+     # after a ?/!/. and a space,
+             "\w(?:\.\w)|"+
+             "(\n)\w|"+               # start/middle of acronym
+             "(\n(\"|\“|\'|\‘))\w|"+
+             "(?<=\w\.)\w",               # end of acronym
+             lambda x: x.group().upper(),
+             Strng)
+
+    Strng = re.sub(r"(@)(.)", lambda x: x.groups()[1].upper(), Strng)
+
+    return Strng
+
+# ============================================================
+# Internal-only options - not exposed in the frontend UI, but
+# genuinely used: called directly by other backend code (Convert.py,
+# ConvertFix.py, PostOptions.py/PreOptions.py's default-option
+# tables, transliterate.py's LoC/semiticISO dynamic dispatch, or
+# another option function), or proven working by a real test
+# fixture even though nothing currently calls it. Still reachable
+# via the generic pre_options=[name]/post_options=[name] API even
+# when nothing internal calls it, since every function here is
+# registered by Options.py's reflection regardless of section.
+# ============================================================
+
+
 ### Rewrite all ListC, ListV as sorted(List,key=len,reverse=True).
 ### Consider Adding Options to ignore Nukta etc for Gujarati bengali by default
 
@@ -73,77 +708,16 @@ def _finalCleanup(Strng, tgt):
     Strng = Strng.replace( "●", ".",)
 
     return Strng
-
-## Ahom ##
-
-## Arabic ##
-
-## Assamese ##
-
-## Avestan ##
-
-# Khojki's own logic now lives in ScriptProcessing/Khojki.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Khojki import KhojkiRRI, KhojkiQa, KhojkiRetainSpace
-
-# Ahom's own logic now lives in ScriptProcessing/Ahom.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Ahom import removePaliAhom, AhomClosed
-
-# Sinhala's own logic now lives in ScriptProcessing/Sinhala.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Sinhala import SinhalaDefaultConjuncts, SinhalaPali_post as SinhalaPali, SinhalaConjuncts, SinhalaChandrbinduAnusvara
-
-# RomanLoC's own logic now lives in ScriptProcessing/RomanLoC.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.RomanLoC import LoCMarc8
-
-def AnusvaraAsN(Strng):
-    """Anusvara as n - m' -> n'."""
-    Strng = Strng.replace('m\u034F', 'n')
-    return Strng
-
-#show Schwa
-# Devanagari's own logic now lives in ScriptProcessing/Devanagari.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Devanagari import ShowSchwaHindi, devanagariuttara, devanagarinepali, devanagaribalbodh, devanagarijain, DevanagariAnusvara, jainomDevangari, DevanagariACandra, DevanagariPrishtamatra
-
-# Kannada's own logic now lives in ScriptProcessing/Kannada.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Kannada import KannadaSpacingCandrabindu, KannadaNotRepha, KannadaNakaraPollu
-
-# Telugu's own logic now lives in ScriptProcessing/Telugu.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Telugu import TeluguRemoveNukta, TeluguRemoveAeAo, TeluguNakaraPollu, TeluguTamilZha, TeluguTamilRra, TeluguReph, TeluguArasunnaChandrabindu
-
-#testcase todo
-def syriacVowelsBelow(Strng):
-
-    """No-op placeholder (reserved for lowering Syriac vowel diacritics below the line)."""
-    return Strng
-
-#testcase todo
-def syriacWesternOToU(Strng):
-
-    """No-op placeholder (reserved for Western Syriac o-to-u vowel shift)."""
-    return Strng
-
-#testcase todo
-# Dogra's own logic now lives in ScriptProcessing/Dogra.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Dogra import olddogra, DograShaKha
+from .ScriptProcessing.Khojki import KhojkiRRI
+from .ScriptProcessing.Ahom import AhomClosed
+from .ScriptProcessing.Sinhala import SinhalaDefaultConjuncts, SinhalaChandrbinduAnusvara
+from .ScriptProcessing.Telugu import TeluguRemoveNukta, TeluguRemoveAeAo
 
 #testcase todo
 # HebrewSBL's own logic now lives in ScriptProcessing/HebrewSBL.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.HebrewSBL import removetddash, HebrewToHebrewSBLPost as HebrewSBLTarget, HebrewSBLToHebrewPost as HebrewSBLSource
+from .ScriptProcessing.HebrewSBL import HebrewToHebrewSBLPost as HebrewSBLTarget, HebrewSBLToHebrewPost as HebrewSBLSource
 
 # ISO259/ISO233/PersianDMG's Target/Source logic (part of
 # GeneralMap.semiticISO's pseudo-script romanization pivot) now lives
@@ -155,18 +729,7 @@ from .ScriptProcessing.HebrewSBL import removetddash, HebrewToHebrewSBLPost as H
 from .ScriptProcessing.ISO259 import HebrewToISO259Post as ISO259Target, ISO259ToHebrewPost as ISO259Source
 from .ScriptProcessing.ISO233 import ArabToISO233Post as ISO233Target, ISO233ToArabPost as ISO233Source
 from .ScriptProcessing.PersianDMG import ArabFaToPersianDMGPost as PersianDMGTarget, PersianDMGToArabFaPost as PersianDMGSource
-
-#todo add to frontend
-def inherentAO(Strng):
-    """inherent /a/ as /o-circumflex/."""
-    Strng = Strng.replace('a', 'ô')
-
-    return Strng
-
-# Bengali's own logic now lives in ScriptProcessing/Bengali.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Bengali import BengaliOldRA, BengaliConjunctVB, khandatabatova, BengaliRaBa, BengaliIntervocalicDDA
+from .ScriptProcessing.Bengali import BengaliConjunctVB
 
 #testcase todo
 def arabizeLatn(Strng, target='semitic'):
@@ -211,26 +774,6 @@ def arabizeLatn(Strng, target='semitic'):
     Strng = re.sub('(ā)([iau])(ⁿ)', r'\2\3', Strng)
 
     #print('Arabized string is', Strng)
-
-    return Strng
-
-#trigger - UI prompt to show "preserve source" must be enabled for this option
-#testcase todo
-def BengaliSwitchYaYYa(Strng):
-    """ya -> yya-with-nukta & yya-with-nukta -> ya (swaps the plain and nuktaed Bengali ya letters)."""
-    Strng = re.sub('(?<!\u09CD)য', '@#$', Strng)
-    Strng = re.sub('য়', 'য', Strng)
-    Strng = Strng.replace('@#$', 'য়')
-
-    return Strng
-
-#testcase todo
-def AlephMaterLectionis(Strng, target='semitic'):
-    """Aleph as mater lectionis - k+hamza -> k+a-macron (inserts long a after a consonant followed by hamza)."""
-    cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
-
-    # opt 1
-    Strng = re.sub(cons + '(ʾ)', r'\1' + 'ā', Strng)
 
     return Strng
 
@@ -288,26 +831,7 @@ def hebraizeLatn(Strng, target='semitic'):
         Strng = LatnInitialVowels(Strng, 'ʾ')
 
     return Strng
-
-#testcase todo
-def syriacRoman(Strng):
-    """Syriac convention - v gh-dotless kh f -> b-line g-line k-line p-macron."""
-    Strng = Strng.replace('v', 'ḇ').replace('ġ','ḡ').replace('ḫ','ḵ').replace('f','p̄')
-
-    return Strng
-
-#testcase todo
-# Latn's own logic now lives in ScriptProcessing/Latn.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Latn import alephAyinLatnAlternate, alephAyinLatnAlternate2
-
-#testcase todo
-#testcase todo
-# Arab's own logic now lives in ScriptProcessing/Arab.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Arab import ArabRemoveAdditions, arabicRemoveAdditionsPhonetic, ArabAtoAleph
+from .ScriptProcessing.Arab import ArabRemoveAdditions
 
 #testcase todo
 #testcase todo
@@ -317,12 +841,7 @@ def removeSemiticLetters(Strng):
         .replace('w', 'v').replace('ʿ', 'ʾ').replace('ṣ', 's')
 
     return Strng
-
-#testcase todo
-# Hebrew's own logic now lives in ScriptProcessing/Hebrew.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Hebrew import removeNikkud, HebrewVetVav, HeberewQoph, HebewShortO, HebrewnonFinalShort
+from .ScriptProcessing.Hebrew import HebrewVetVav, HebrewnonFinalShort
 
 #testcase todo
 def LatnInitialVowels(Strng, initLetter=''):
@@ -340,123 +859,9 @@ def LatnInitialVowels(Strng, initLetter=''):
     return Strng
 
 #testcase todo
-def removeMajliyana(Strng):
-    """Remove Majliyana - strips the underline diacritic marking Majliyana (palatalized) Syriac consonants."""
-    Strng = Strng.replace('\u0330', '')
-
-    return Strng
-
-#testcase todo
-def removeRukkaka(Strng):
-    """Remove Rukkaka - strips the soft/spirantization (rukkakha) dot from Syriac letters."""
-    Strng = Strng.replace('\u0741', '')
-
-    return Strng
-
-#testcase todo
-def removeQussaya(Strng):
-    """Remove Qussaya - strips the hard/occlusive (qushshaya) dot from Syriac letters."""
-    Strng = Strng.replace('\u0742', '')
-
-    return Strng
-
-#testcase todo
-def removeVowelsSyriac(Strng):
-    """Remove Vowel Diacritics - strips all Syriac vowel point combining marks."""
-    Strng = re.sub('[\u0732\u0735\u073C\u0738\u0739\u073F]', '', Strng)
-
-    Strng = re.sub('[ّܰܶܺܽܳ]', '', Strng)
-
-    return Strng
-
-#testcase todo
-def removeDiacriticsArabic(Strng):
-    """Remove Harakat - ghandi-with-marks -> ghandi (strips sukun, fatha, kasra, damma diacritics)."""
-    diacrtics = ["\u0652", "\u064E", "\u0650", "\u064F"]
-
-    for diacritic in diacrtics:
-        Strng = Strng.replace(diacritic, '')
-
-    return Strng
-
-#testcase todo
-def removeSukunEnd(Strng):
-    """Remove Sukun at end of words - hind-with-final-sukun -> hind (drops word-final sukun mark)."""
-    Strng = re.sub('(\u0652)(\W|$)', r'\2', Strng)
-
-    return Strng
-
-#testcase todo
-# Arab-Fa's own logic now lives in ScriptProcessing/Arab_Fa.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Arab_Fa import persianPaGaFaJa
-
-#testcase todo
-def removeDiacriticsPersian(Strng):
-
-    """No-op placeholder (reserved for stripping Persian diacritics)."""
-    return Strng
-
-#testcase todo
-def removeDiacriticsSyriac(Strng):
-
-    """No-op placeholder (reserved for stripping Syriac diacritics)."""
-    return Strng
-
-#testcase todo
-def useKtivMale(Strng):
-
-    """No-op placeholder (reserved for switching Hebrew to ktiv male full spelling)."""
-    return Strng
-
-#testcase todo
-def PhoneticMapping(Strng):
-
-    """No-op placeholder (reserved for phonetic remapping)."""
-    return Strng
-
-#testcase todo
-def ArabicGimelGaGha(Strng):
-    """Replaces Arabic jim with ghayn (renders Hebrew/Semitic 'ga' sound as Arabic 'gha')."""
-    Strng = Strng.replace('ج', 'غ')
-
-    return Strng
-
-#testcase todo
-def ArabicGimelPaBa(Strng):
-    """Replaces Arabic fa with ba (renders Hebrew/Semitic 'pa' sound as Arabic 'ba')."""
-    Strng = Strng.replace('ف', 'ب')
-
-    return Strng
-
-#testcase todo
 # BurmeseLoC's own LoC logic now lives in ScriptProcessing/BurmeseLoC.py -
 # consolidated there (LoC redesign).
 from .ScriptProcessing.BurmeseLoC import BurmeseToRomanLocPost, RomanLocToBurmesePost
-
-#testcase todo
-def removeSegmentSpacesBurmese(Strng):
-    # segment text into syllables
-    """Join syllables - le thai pyo' -> merged Burmese syllable string (removes spaces inserted between segmented syllables)."""
-    import regex
-
-    Strng = regex.sub('(\p{L}\p{M}*) (\p{L})', r'\1\2', Strng)
-    Strng = regex.sub('(\p{L}\p{M}*) (\p{L})', r'\1\2', Strng)
-
-    return Strng
-
-def UseAlternateo1(Strng):
-    """Long-o vowel sequence -> single alternate o vowel sign glyph."""
-    Strng = Strng.replace('ᩮᩣ', 'ᩰ')
-
-    return Strng
-
-def UseAlternateo2(Strng):
-    """Pali /o/ - alternate o vowel sign glyph -> the two-part long-o vowel sequence."""
-    Strng = Strng.replace('ᩰ', 'ᩮᩣ')
-
-    return Strng
 
 #ThamLoC
 # ThamLoC's own LoC logic now lives in ScriptProcessing/ThamLoC.py -
@@ -526,99 +931,6 @@ def FixSemiticRoman(Strng, Target):
     #print('Strng is ' + Strng)
 
     return Strng
-
-#testcase todo
-#testcase todo
-def estrangelasyriac(Strng):
-
-    """No-op placeholder (reserved for Estrangela Syriac font-variant handling)."""
-    return Strng
-
-#testcase todo
-def easternsyriac(Strng):
-
-    """No-op placeholder (reserved for Eastern Syriac font-variant handling)."""
-    return Strng
-
-#testcase todo
-def westernsyriac(Strng):
-
-    """No-op placeholder (reserved for Western Syriac font-variant handling)."""
-    return Strng
-
-# Pallava's own logic now lives in ScriptProcessing/Pallava.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Pallava import kawitan, sundapura
-
-# Itrans's own logic now lives in ScriptProcessing/Itrans.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Itrans import swapEeItrans_post as swapEeItrans, readableItrans
-
-#todo change UI example : haMpi  ha~pi hA~s hAMs hU~ hUM -> hampi hAA hAs
-def NasalTilde(Strng):
-    """Use tilde for nasalization - kaM ka~ kaMka ka~ka -> ka-tilde ka-tilde kanka kaka (converts anusvara/nasal marks to a combining tilde)."""
-    Strng = AnusvaratoNasalASTISO(Strng)
-    Strng = re.sub('(m̐|ṃ|ṁ)', '\u0303', Strng)
-
-    return Strng
-
-#todo feature
-def siddhamBija(Strng):
-
-    """No-op placeholder (reserved for Siddham bija/seed-syllable rendering)."""
-    return Strng
-
-#todo feature
-def verticalKana(Strng):
-
-    """Vertical text (no-op placeholder; vertical layout is not yet implemented here)."""
-    return Strng
-
-#todo feature
-def verticalSiddham(Strng):
-
-    """No-op placeholder (reserved for vertical Siddham text layout)."""
-    return Strng
-
-#todo testcase
-def vtobJapanese(txt):
-
-    """/v/ -> /b/ - vino -> bino (merges v-row kana into b-row for nativized Japanese output)."""
-    return txt
-
-#todo testcase
-# Sogd's own logic now lives in ScriptProcessing/Sogd.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Sogd import SogdReshAyin_post as SogdReshAyin
-
-#todo testcase
-# Sogo's own logic now lives in ScriptProcessing/Sogo.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Sogo import SogoReshAyinDaleth_post as SogoReshAyinDaleth
-
-#todo testcase
-def arabPaFa(Strng):
-
-    """Replaces Arabic pe with fa (renders Persian/Urdu 'pa' sound as Arabic 'fa')."""
-    return Strng.replace('پ','ف')
-
-#todo testcase
-def arabChaSa(Strng):
-
-    """Replaces Arabic che with sin (renders Persian/Urdu 'cha' sound as Arabic 'sa')."""
-    return Strng.replace('چ', 'س')
-
-#todo testcase
-def gainGimel(Strng):
-    """Marked ayin (dagesh-like dot) -> Hebrew gimel (renders Semitic ghayin as Hebrew ga)."""
-    return Strng.replace('עׄ','ג')
-
-#todo testcase
-# Hebr-Ar's own logic now lives in ScriptProcessing/Hebr_Ar.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Hebr_Ar import gainGimel, tavTwodot, tavThreedot
 
 #todo testcase
 #todo testcase
@@ -777,92 +1089,19 @@ def JapanesePostProcess(src, tgt, txt, nativize, postoptions):
     txt = Convert.convertScript(txt, "Inter", "ISO")
 
     return txt
-def urduRemoveInherent(Strng):
-    """Remove all inherent /a/ - hndvstan -> not hanadavasatana (strips non-word-initial short a vowels for Urdu rendering)."""
-    Strng = re.sub('\Ba', '', Strng)
-
-    return Strng
-
-#todo testcase
-def HiraganaaunotDipthong(Strng):
-
-    """No-op placeholder (reserved for preventing au from being read as a Hiragana diphthong)."""
-    return Strng
-
-#not used
-def IASTISONasalTilde(Strng):
-
-    """No-op placeholder (reserved for IAST/ISO nasalization tilde handling)."""
-    return Strng
-
-#todo testcase
-#todo testcase
-#todo testcase
-def HebrewKatevMalei(Strng):
-    """Replaces Hebrew qamats and patach vowel points with aleph, producing ktiv male (full/plene) spelling."""
-    Strng = Strng.replace('ָ', 'א') # long aa
-    Strng = Strng.replace('ַ', 'א') # short a
-
-    return Strng
 
 #todo testcase
 # Gurmukhi's own logic now lives in ScriptProcessing/Gurmukhi.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Gurmukhi import GurmukhiCandrabindu, GurmukhiYakaash, GurmukhiTippiBindu, GurmukhiTippiGemination
-
-#misnomer
-def mDotAboveToBelow(Strng):
-    """m-dot-below -> m-dot-above."""
-    Strng = Strng.replace('ṃ', 'ṁ')
-
-    return Strng
+from .ScriptProcessing.Gurmukhi import GurmukhiCandrabindu, GurmukhiTippiBindu, GurmukhiTippiGemination
 
 #misnomer
 # MalayalamLoC's own LoC logic now lives in ScriptProcessing/MalayalamLoC.py -
 # consolidated there (LoC redesign).
 from .ScriptProcessing.MalayalamLoC import MalayalamToRomanLocPost
-
-#todo : ISOPali postoptions empty todo
-
-# ISO's own logic now lives in ScriptProcessing/ISO.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.ISO import noLongEO
-
-# TamilExtended's own logic now lives in ScriptProcessing/TamilExtended.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.TamilExtended import TamilStyleUUCore, TamilStyleUUOther, TamilpredictDentaNaExtended, TamilExtendedNNA, TamilExtendedAnusvara
-
-# Tamil's post-options (and its default-bundle TamilNaToNNa/
-# TamilpredictDentaNa) now live in ScriptProcessing/Tamil.py, consolidated
-# there with its Fix logic and pre-options too. Re-exported here so
-# Options.py's getmembers(PostProcess, isfunction) discovery still finds
-# them, and so PostOptions.py's default bundle for Tamil keeps resolving.
-from .ScriptProcessing.Tamil import (TamilNaToNNa, TamilpredictDentaNa, ContextualLLa,
-    FinalNNa, TamilAddFirstVarga, TamilDisableSHA, TamilGranthaVisarga, TamilOmDisable,
-    TamilRemoveApostrophe, TamilRemoveNumbers, TamilSubScript, oldtamilortho)
-
-# Thai's own logic now lives in ScriptProcessing/Thai.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Thai import ThaiNativeConsonants, ThaiSajjhayaOrthography_post as ThaiSajjhayaOrthography, ThaiSajjhayawithA_post as ThaiSajjhayawithA, ThaiTranscription, ThaiVisargaSaraA
-
-# KhamtiShan's own logic now lives in ScriptProcessing/KhamtiShan.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.KhamtiShan import KhamiShanMyanmarNumerals, KhamtiShanRa
-
-# Grantha's own logic now lives in ScriptProcessing/Grantha.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Grantha import GranthaOldau, GranthaPrakrit, granthafinal, granthaserif, egrantamil
-
-def Dot2Dandas(Strng):
-    """Converts double and single full-stop dots into Devanagari danda punctuation (.. -> double danda, . -> danda)."""
-    Strng = Strng.replace('..', '॥')
-    Strng = Strng.replace('.', '।')
-
-    return Strng
+from .ScriptProcessing.TamilExtended import TamilpredictDentaNaExtended
+from .ScriptProcessing.Tamil import TamilNaToNNa, TamilpredictDentaNa
 
 def Dot2Pipes(Strng):
     """Converts double and single full-stop dots into ASCII pipe punctuation (.. -> ||, . -> |)."""
@@ -870,54 +1109,7 @@ def Dot2Pipes(Strng):
     Strng = Strng.replace('.', '|')
 
     return Strng
-
-# TamilSaurashtra's own logic now lives in ScriptProcessing/TamilSaurashtra.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.TamilSaurashtra import SaurastraHaaruColon
-
-# Takri's own logic now lives in ScriptProcessing/Takri.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Takri import TakriArchaicKha_post as TakriArchaicKha, TakriRemoveGemination
-
-# Mongolian's own logic now lives in ScriptProcessing/Mongolian.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Mongolian import MongolianSyllabize
-
-# Tibetan's own logic now lives in ScriptProcessing/Tibetan.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Tibetan import TibetanSyllabize, TibetanSanskritPalatals, tibetandbumed, TibetanNada, TibetanTsheg, TibetanRemoveVirama, TibetanRemoveBa
-
-# Soyombo's own logic now lives in ScriptProcessing/Soyombo.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Soyombo import SoyomboSyllabize, SoyomboSanskritPalatals, SoyomboFinals, SoyomboInitials, SoyomboSpaceTscheg
-
-# PhagsPa's own logic now lives in ScriptProcessing/PhagsPa.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.PhagsPa import PhagsPaTib, PhagsPaSeal
-
-# RomanReadable's own logic now lives in ScriptProcessing/RomanReadable.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.RomanReadable import RomanReadableLongEO
-
-# Marchen's own logic now lives in ScriptProcessing/Marchen.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Marchen import MarchenSanskritPalatals
-
-# ZanabazarSquare's own logic now lives in ScriptProcessing/ZanabazarSquare.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.ZanabazarSquare import ZanabazarSanskritPalatals, ZanzabarSpaceTsheg, ZanabazarSquareContextual, ZanabazarSquareAiAu, ZanabazarSquareMongolianFinal
-
-# RomanLoC's own LoC logic now lives in ScriptProcessing/RomanLoC.py -
-# consolidated there (LoC redesign).
-from .ScriptProcessing.RomanLoC import RomanLoCChandrabindu_post as RomanLoCChandrabindu, KhandaTaRomanLoC_post as KhandaTaRomanLoC
+from .ScriptProcessing.Tibetan import TibetanRemoveVirama, TibetanRemoveBa
 
 # reverse these in preprocess
 def RomanLoCVaWa(Strng):
@@ -930,47 +1122,18 @@ def RomanLoCSasha(Strng):
     Strng = Strng.replace('ṣ', 'sh')
     return Strng
 
-# IAST's own logic now lives in ScriptProcessing/IAST.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.IAST import RomanLoCSLaDotLaUnderscore_post as RomanLoCSLaDotLaUnderscore
-
 def RomanLoCLaUnderscoreDoubleDot(Strng):
     """Replaces l-line-below with l-double-underdot, per LoC romanization convention."""
     Strng = Strng.replace('ḻ', 'l̤')
 
     return Strng
-
-# DevanagariLoC's own logic now lives in ScriptProcessing/DevanagariLoC.py -
-# consolidated there (LoC redesign; renamed from RomanLoCDevanagari.py).
-from .ScriptProcessing.DevanagariLoC import HindiMarathiRomanLoCFix_post as HindiMarathiRomanLoCFix, DevanagariToRomanLocPost
-
-# DivesAkuru's own logic now lives in ScriptProcessing/DivesAkuru.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.DivesAkuru import DivesAkuruAlternateIndVowels_post as DivesAkuruAlternateIndVowels, DivesAkuruHomoOrganNasal, UseAlternateYA
-
-# Kawi's own logic now lives in ScriptProcessing/Kawi.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Kawi import KawiAltAiAU, KawiArchaicJNA, KawiDecomposedVowel, KawiMoveRepha_post as KawiMoveRepha
-
-# Javanese's own logic now lives in ScriptProcessing/Javanese.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Javanese import JavaneseArchaicJNA, JavaneseAvowels, JavaneseMoveRepha_post as JavaneseMoveRepha
+from .ScriptProcessing.DevanagariLoC import DevanagariToRomanLocPost
 
 # TibetanLoC's own LoC logic now lives in ScriptProcessing/TibetanLoC.py -
 # consolidated there (LoC redesign).
 from .ScriptProcessing.TibetanLoC import TibetanLoCToRomanLocPost
-
-# JavaneseLoC's own logic now lives in ScriptProcessing/JavaneseLoC.py -
-# consolidated there (LoC redesign; renamed from RomanLoCJavanese.py).
-from .ScriptProcessing.JavaneseLoC import JavaneseSimplified, JavaneseToRomanLocPost
-
-# BalineseLoC's own logic now lives in ScriptProcessing/BalineseLoC.py -
-# consolidated there (LoC redesign; renamed from RomanLoCBalinese.py).
-from .ScriptProcessing.BalineseLoC import BalineseSimplified, BalineseToRomanLocPost
-
-# Balinese's own logic now lives in ScriptProcessing/Balinese.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Balinese import BalineseArchaicJNA, BalineseAvowels, BalineseMoveRepha_post as BalineseMoveRepha
+from .ScriptProcessing.JavaneseLoC import JavaneseToRomanLocPost
+from .ScriptProcessing.BalineseLoC import BalineseToRomanLocPost
 
 def BalineseJavaneseMoveRepha(Strng, tgt, reph):
     """Repositions the Balinese/Javanese repha (pre-base r) sign to follow the consonant cluster (and any anusvara-type sign) it modifies."""
@@ -991,66 +1154,10 @@ def BalineseJavaneseMoveRepha(Strng, tgt, reph):
 # consolidated there (LoC redesign).
 from .ScriptProcessing.GurmukhiLoC import GurmukhiLoCToRomanLocPost
 
-def MalayalamNTA(Strng):
-    """Converts the n+ra sequence into n+t-line (Malayalam nta orthographic convention)."""
-    Strng = Strng.replace('nṟ', 'nṯ')
-    return Strng
-
-def MalayalamTTNTA(Strng):
-    """Doubled ra (tta) & n+ra (nta) -> t-line doubled & n+t-line."""
-    Strng = Strng.replace('ṟṟ', 'ṯṯ')
-    Strng = Strng.replace('nṟ', 'nṯ')
-    return Strng
-
 # Sinhala's own LoC logic now lives in ScriptProcessing/Sinhala.py -
 # consolidated there (LoC redesign).
 from .ScriptProcessing.Sinhala import SinhalaSannakaNasalization
-
-def AnusvaratoNasalASTISO(Strng):
-    #Strng = Strng.replace('ṁ', 'ṃ')
-
-    """Anusvara to nasal - gam-ga -> gan-ga (converts anusvara before homorganic consonants into the matching nasal consonant)."""
-    Strng = re.sub('(ṃ|ṁ)(k|g)', 'ṅ' + r'\2', Strng)
-    Strng = re.sub('(ṃ|ṁ)(c|j)', 'ñ' + r'\2', Strng)
-    Strng = re.sub('(ṃ|ṁ)(ṭ|ḍ)', 'ṇ' + r'\2', Strng)
-    Strng = re.sub('(ṃ|ṁ)(t|d)', 'n' + r'\2', Strng)
-    Strng = re.sub('(ṃ|ṁ)(p|b)', 'm' + r'\2', Strng)
-
-    return Strng
-
-# RussianCyrillic's own logic now lives in ScriptProcessing/RussianCyrillic.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.RussianCyrillic import CyrillicPali_post as CyrillicPali, removeDiacritics
-
-# Ranjana's own logic now lives in ScriptProcessing/Ranjana.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Ranjana import ranjanalantsa, ranjanawartu
-
-def TaiKuen(Strng):
-    """No-op placeholder (reserved for Tai Kuen script-specific post-processing)."""
-    return Strng
-
-def TaiThamLao(Strng):
-    """No-op placeholder (reserved for Tai Tham Lao-variant post-processing)."""
-    return Strng
-
-# Newa's own logic now lives in ScriptProcessing/Newa.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Newa import nepaldevafont, NewaMurmurConsonants, NewaSpecialTa, NewaDisableRepha
-
-# Chakma's own logic now lives in ScriptProcessing/Chakma.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Chakma import ChakmaPali_post as ChakmaPali, ChakmaEnableAllConjuncts, ChakmaVowelsIndependent, ChakmaGemination
-
-# LaoPali's own logic now lives in ScriptProcessing/LaoPali.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.LaoPali import LaoTranscription_post as LaoTranscription, LaoPhonetic_post as LaoPhonetic, LaoSajjhaya, LaoSajjhayawithA
-
-# Siddham's own logic now lives in ScriptProcessing/Siddham.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Siddham import UseAlternateI1, UseAlternateI2, UseAlternateII, UseAlternateU, UseAlternateVSU, UseAlternateVSUU, siddhammukta
+from .ScriptProcessing.Chakma import ChakmaGemination
 
 # WarangCiti's own logic now lives in ScriptProcessing/WarangCiti.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
@@ -1068,53 +1175,8 @@ def MultaniAbjad(Strng):
     Strng = re.sub(ListV + ListC + ListV, r'\1\2', Strng)
 
     return Strng
-
-# Lao's own logic now lives in ScriptProcessing/Lao.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Lao import LaoNative
-
-# Sundanese's own logic now lives in ScriptProcessing/Sundanese.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Sundanese import SundaneseHistoricConjuncts, SundaneseRemoveHistoric
-
-# Limbu's own logic now lives in ScriptProcessing/Limbu.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Limbu import LimbuSpellingSaI_post as LimbuSpellingSaI, LimburemoveHistorical
-
-# Malayalam's own logic now lives in ScriptProcessing/Malayalam.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Malayalam import tradOrtho, dotReph, archaicAIAU, MalayalamPrakrit_post as MalayalamPrakrit, historicChillu, MalayalamLineVirama, MalayalamCircVirama, RephaDoubleMalayalam
-
-def siddhamap(Strng):
-    """No-op placeholder (reserved for Siddham-specific post-processing)."""
-    return Strng
-
-# Bhaiksuki's own logic now lives in ScriptProcessing/Bhaiksuki.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Bhaiksuki import BhaiksukiRetainSpace
-
-# Kaithi's own logic now lives in ScriptProcessing/Kaithi.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Kaithi import KaithiRetainSpace
-
-def MedievalTamilOrthography(Strng):
-    """Restores medieval/pre-reform Tamil orthography for the e/o vowel signs (splits modern e/o/ee/oo forms into their older two-part equivalents)."""
-    OldEO = ['எ்', 'ெ்', 'ஒ்', 'ெ்ா', 'எ', 'ெ', 'ஒ', 'ொ']
-    NewEO = ['எ', 'ெ', 'ஒ', 'ொ', 'ஏ', 'ே', 'ஓ', 'ோ']
-
-    for x,y in zip(NewEO, OldEO):
-        Strng = Strng.replace(x,y)
-
-    return Strng
-
-def AmbigousTamilOrthography(Strng):
-
-    """No-op placeholder (reserved for resolving ambiguous Tamil orthography)."""
-    return Strng
+from .ScriptProcessing.Sundanese import SundaneseRemoveHistoric
+from .ScriptProcessing.Limbu import LimburemoveHistorical
 
 def ModiRemoveLong(Strng):
     """Converts long vowel signs and independent vowels in Modi script (i, u, r-vocalic and their vowel-sign forms) to their short equivalents."""
@@ -1135,23 +1197,10 @@ def ModiRemoveLong(Strng):
 
     return Strng
 
-# DevanagariLimbu's own logic now lives in ScriptProcessing/DevanagariLimbu.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.DevanagariLimbu import LimbuDevanagariConvention_post as LimbuDevanagariConvention
-
-# Nandinagari's own logic now lives in ScriptProcessing/Nandinagari.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Nandinagari import NandinagariPrishtamatra
-
 def ThaanaRemoveHistorical(Strng):
     """Replaces the historical Thaana letter naa (retroflex n) with the modern noonu letter."""
     return Strng.replace('ޱ','ނ')
-
-# Oriya's own logic now lives in ScriptProcessing/Oriya.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Oriya import OriyaVaAlt, OriyaYYA, OriyaVa
+from .ScriptProcessing.Oriya import OriyaVa
 
 def MalayalamremoveHistorical(Strng):
     """Replaces the historical Malayalam na letter with the modern na, and the virama-joined na-chillu sequence with the standalone chillu-n."""
@@ -1171,10 +1220,6 @@ def MeeteiMayekremoveHistorical(Strng):
         Strng = Strng.replace(x,y)
 
     return Strng
-
-def TamilSHADisable(Strng):
-    """Replaces Tamil sha (Grantha letter) with sa followed by a superscript '2' marker, disabling the dedicated sha glyph."""
-    return Strng.replace("ஶ", "ஸ²")
 
 # കൽന് കത്ല് ക്ഷേത്ര് കൻല് - Check this
 
@@ -1394,10 +1439,6 @@ def MToAnusvara(Strng,Target):
 
     return Strng
 
-def BengaliYYA(Strng):
-    """ya everywhere - yayati yajna -> nukta-ya-yati nukta-yajna (replaces every plain ya with nuktaed yya in Bengali)."""
-    return YYAEverywhere(Strng, 'Bengali')
-
 def YYAEverywhere(Strng, Target):
     """Replaces every occurrence of the plain ya consonant with the nukta-marked yya (antahstha ya) in the given target script."""
     Ya = GM.CrunchList('ConsonantMap', Target)[25]
@@ -1554,46 +1595,6 @@ def romanNumerals(Strng):
     """No-op placeholder (reserved for the romanNumerals post-option; numeral conversion is handled by RetainRomanNumerals)."""
     return Strng
 
-def RetainTeluguDanda(Strng):
-    """Converts roman full stops to Telugu danda punctuation."""
-    return RetainDandasIndic(Strng, 'Telugu')
-
-def RetainTeluguNumerals(Strng):
-    """Converts Western Arabic digits to Telugu numerals."""
-    return RetainIndicNumerals(Strng, 'Telugu')
-
-def RetainTamilDanda(Strng):
-    """Converts roman full stops to Tamil danda punctuation."""
-    return RetainDandasIndic(Strng, 'Tamil')
-
-def RetainTamilNumerals(Strng):
-    """Converts Western Arabic digits to Tamil numerals."""
-    return RetainIndicNumerals(Strng, 'Tamil')
-
-def RetainKannadaDanda(Strng):
-    """Converts roman full stops to Kannada danda punctuation."""
-    return RetainDandasIndic(Strng, 'Kannada')
-
-def RetainKannadaNumerals(Strng):
-    """Converts Western Arabic digits to Kannada numerals."""
-    return RetainIndicNumerals(Strng, 'Kannada')
-
-def RetainMalayalamDanda(Strng):
-    """Converts roman full stops to Malayalam danda punctuation."""
-    return RetainDandasIndic(Strng, 'Malayalam')
-
-def RetainMalayalamNumerals(Strng):
-    """Converts Western Arabic digits to Malayalam numerals."""
-    return RetainIndicNumerals(Strng, 'Malayalam')
-
-def RetainGujaratiDanda(Strng):
-    """Converts roman full stops to Gujarati danda punctuation."""
-    return RetainDandasIndic(Strng, 'Gujarati')
-
-def RetainGurmukhiNumerals(Strng):
-    """Converts Western Arabic digits to Gurmukhi numerals."""
-    return RetainIndicNumerals(Strng, 'Gurmukhi')
-
 def RemoveDiacritics(Strng):
     """Strips a generic set of removable diacritic marks (GM.DiacriticsRemovable) from the string."""
     for x in GM.DiacriticsRemovable:
@@ -1616,18 +1617,6 @@ def SaurashtraHaru(Strng):
     ha = Saurashtra.ConsonantMap[32]
 
     Strng = re.sub('('+ListC+')'+vir+ha,r'\1'+'\uA8B4',Strng)
-
-    return Strng
-
-def IASTPali(Strng):
-    """Converts the IAST underlined-l (l with line below) used for retroflex l to the standard Pali l-underdot."""
-    Strng = Strng.replace('l̤', 'ḷ')
-
-    return Strng
-
-def UrduAlternateUU(Strng):
-    """Intended to replace a short-u+wow sequence with wow+hamza-below as an alternate Urdu spelling; the search string is a literal backslash-escaped text, not an actual Unicode sequence, so this currently has no effect."""
-    Strng = Strng.replace("\\u064F\\u0648","\u0648\u0657")
 
     return Strng
 
@@ -1715,36 +1704,6 @@ def ThaiLaoTranscription(Strng,Script,shortA,shortAconj,reverse=False, anusvaraC
 
     return Strng
 
-def ThamTallADisable(Strng):
-    """Disable explicit Tall -a - collapses the tall-a vowel sign to the regular a vowel sign, letting the font choose the visual form."""
-    Strng = Strng.replace('\u1A64', '\u1A63')
-
-    return Strng
-
-def ThamTallAOthers(Strng):
-    """Tall -a with ca/ba/ra/bha - applies the Tai Tham tall-a vowel sign after these four consonants via FixTallA."""
-    TallACons = '|'.join(['ᨧ', 'ᨻ', 'ᩁ', 'ᨽ']) ## ca ba ra bha
-
-    Strng = FixTallA(Strng, TallACons)
-
-    return Strng
-
-#start here
-
-def ThamShiftMaiKangLai(Strng):
-    """Shift Mai Kang Lai - repositions the Tai Tham mai kang lai sign to follow the vowel/diacritic it modifies instead of preceding it."""
-    Strng = re.sub('(\u1A58)(.)', r'\2\1', Strng)
-    ListV = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSigns,'TaiTham') + ['ᩤ']) + ')'
-
-    Strng = re.sub('(\u1A58)([\u1A55\u1A56])', r'\2\1', Strng)
-    Strng = re.sub('(\u1A58)(\u1A60.)', r'\2\1', Strng)
-    Strng = re.sub('(\u1A58)' + ListV, r'\2\1', Strng)
-    Strng = re.sub('(\u1A58)' + ListV, r'\2\1', Strng)
-
-    #Strng = Strng.replace('\u1A63\u1A58', '\u1A58\u1A63')
-
-    return Strng
-
 # not used
 def FixTallA(Strng, TallACons):
     """Introduces the Tai Tham tall-a vowel sign after specified base or subjoined consonants (including through consonant clusters), and reverses it for consonants with protruding subjoined forms."""
@@ -1819,6 +1778,157 @@ def AvestanConventions(Strng):
     return Strng
 
 # not used
+def PhagsPaRearrange(Strng,Target):
+    """Inserts virama before word-final 'Phags-pa consonants (marked by trailing spaces), then converts remaining spaces and Mongolian-style punctuation into 'Phags-pa segment markers."""
+    vir = GM.CrunchList('ViramaMap', Target)[0]
+    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants,Target))
+    ListV = '|'.join(GM.CrunchSymbols(GM.Vowels,Target))
+    ListVS = '|'.join(GM.CrunchSymbols(GM.VowelSignsNV,Target))
+
+    Strng = re.sub("(?<!( |"+vir+"))"+"("+ListC+")"+"(?= )",r'\2'+vir,Strng)
+    #print Strng
+
+    Strng = Strng.replace(" ","").replace("᠂"," ").replace("᠃"," ")
+    return Strng
+
+# New LoC (Library of Congress) romanization post-options - see
+# ScriptProcessing/HOW_TO_ADD_LOC.md for the naming convention.
+from .ScriptProcessing.TeluguLoC import TeluguToRomanLocPost, RomanLocToTeluguPost
+from .ScriptProcessing.KannadaLoC import KannadaToRomanLocPost
+from .ScriptProcessing.SinhalaLoC import SinhalaToRomanLocPost
+from .ScriptProcessing.OriyaLoC import OriyaToRomanLocPost
+from .ScriptProcessing.AssameseLoC import AssameseToRomanLocPost, RomanLocToAssamesePost
+from .ScriptProcessing.BengaliLoC import BengaliToRomanLocPost, RomanLocToBengaliPost
+from .ScriptProcessing.GujaratiLoC import GujaratiToRomanLocPost
+
+# ============================================================
+# Unreferenced - no call site found anywhere in the codebase (not
+# the frontend, not internal backend code, not a test fixture) by
+# a full reference scan across every .py file plus the frontend's
+# ScriptMixin.js. NOT a delete list: this session already proved a
+# clean static search can miss a genuinely live dependency (see
+# PostProcess._convertCleanup's doubled-okina/U+02C2 history) - it
+# means nothing was found, not that nothing uses it. Verify with a
+# real remove-and-test pass (full corpus regen + test suite) before
+# treating anything here as safe to delete.
+# ============================================================
+
+
+#testcase todo
+def syriacVowelsBelow(Strng):
+
+    """No-op placeholder (reserved for lowering Syriac vowel diacritics below the line)."""
+    return Strng
+
+#testcase todo
+def syriacWesternOToU(Strng):
+
+    """No-op placeholder (reserved for Western Syriac o-to-u vowel shift)."""
+    return Strng
+
+#testcase todo
+def removeDiacriticsPersian(Strng):
+
+    """No-op placeholder (reserved for stripping Persian diacritics)."""
+    return Strng
+
+#testcase todo
+def removeDiacriticsSyriac(Strng):
+
+    """No-op placeholder (reserved for stripping Syriac diacritics)."""
+    return Strng
+
+#testcase todo
+def useKtivMale(Strng):
+
+    """No-op placeholder (reserved for switching Hebrew to ktiv male full spelling)."""
+    return Strng
+
+#testcase todo
+def PhoneticMapping(Strng):
+
+    """No-op placeholder (reserved for phonetic remapping)."""
+    return Strng
+
+#testcase todo
+def ArabicGimelGaGha(Strng):
+    """Replaces Arabic jim with ghayn (renders Hebrew/Semitic 'ga' sound as Arabic 'gha')."""
+    Strng = Strng.replace('ج', 'غ')
+
+    return Strng
+
+#testcase todo
+def ArabicGimelPaBa(Strng):
+    """Replaces Arabic fa with ba (renders Hebrew/Semitic 'pa' sound as Arabic 'ba')."""
+    Strng = Strng.replace('ف', 'ب')
+
+    return Strng
+
+#todo feature
+def siddhamBija(Strng):
+
+    """No-op placeholder (reserved for Siddham bija/seed-syllable rendering)."""
+    return Strng
+
+#todo testcase
+def arabPaFa(Strng):
+
+    """Replaces Arabic pe with fa (renders Persian/Urdu 'pa' sound as Arabic 'fa')."""
+    return Strng.replace('پ','ف')
+
+#todo testcase
+def arabChaSa(Strng):
+
+    """Replaces Arabic che with sin (renders Persian/Urdu 'cha' sound as Arabic 'sa')."""
+    return Strng.replace('چ', 'س')
+
+#todo testcase
+def HiraganaaunotDipthong(Strng):
+
+    """No-op placeholder (reserved for preventing au from being read as a Hiragana diphthong)."""
+    return Strng
+
+#not used
+def IASTISONasalTilde(Strng):
+
+    """No-op placeholder (reserved for IAST/ISO nasalization tilde handling)."""
+    return Strng
+
+#todo testcase
+#todo testcase
+#todo testcase
+def HebrewKatevMalei(Strng):
+    """Replaces Hebrew qamats and patach vowel points with aleph, producing ktiv male (full/plene) spelling."""
+    Strng = Strng.replace('ָ', 'א') # long aa
+    Strng = Strng.replace('ַ', 'א') # short a
+
+    return Strng
+
+# RomanLoC's own LoC logic now lives in ScriptProcessing/RomanLoC.py -
+# consolidated there (LoC redesign).
+from .ScriptProcessing.RomanLoC import RomanLoCChandrabindu_post as RomanLoCChandrabindu, KhandaTaRomanLoC_post as KhandaTaRomanLoC
+
+def MalayalamNTA(Strng):
+    """Converts the n+ra sequence into n+t-line (Malayalam nta orthographic convention)."""
+    Strng = Strng.replace('nṟ', 'nṯ')
+    return Strng
+
+def AmbigousTamilOrthography(Strng):
+
+    """No-op placeholder (reserved for resolving ambiguous Tamil orthography)."""
+    return Strng
+
+def TamilSHADisable(Strng):
+    """Replaces Tamil sha (Grantha letter) with sa followed by a superscript '2' marker, disabling the dedicated sha glyph."""
+    return Strng.replace("ஶ", "ஸ²")
+
+def UrduAlternateUU(Strng):
+    """Intended to replace a short-u+wow sequence with wow+hamza-below as an alternate Urdu spelling; the search string is a literal backslash-escaped text, not an actual Unicode sequence, so this currently has no effect."""
+    Strng = Strng.replace("\\u064F\\u0648","\u0648\u0657")
+
+    return Strng
+
+# not used
 def TaiThamO(Strng):
     """Merges the Tai Tham e-vowel-sign + aa-vowel-sign sequence into the single dedicated o vowel sign."""
     Strng = Strng.replace("\u1A6E\u1A63","\u1A70")
@@ -1839,33 +1949,10 @@ def TaiThamMoveNnga(Strng):
 
     return Strng
 
-def UrduRemoveShortVowels(Strng):
-    """Remove short vowels - hindustan-with-marks -> hindustan (strips sukun, fatha, kasra, damma, and the Urdu small-v diacritics)."""
-    ShortVowels = ['\u0652','\u064E','\u0650','\u064F', '\u0658']
-
-    for vow in ShortVowels:
-        Strng = Strng.replace(vow,"")
-
-    return Strng
-
 def LatinPipes(Strng):
     ###
 
     """No-op placeholder (reserved for converting pipe punctuation in Latin-script output)."""
-    return Strng
-
-# not used
-def PhagsPaRearrange(Strng,Target):
-    """Inserts virama before word-final 'Phags-pa consonants (marked by trailing spaces), then converts remaining spaces and Mongolian-style punctuation into 'Phags-pa segment markers."""
-    vir = GM.CrunchList('ViramaMap', Target)[0]
-    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants,Target))
-    ListV = '|'.join(GM.CrunchSymbols(GM.Vowels,Target))
-    ListVS = '|'.join(GM.CrunchSymbols(GM.VowelSignsNV,Target))
-
-    Strng = re.sub("(?<!( |"+vir+"))"+"("+ListC+")"+"(?= )",r'\2'+vir,Strng)
-    #print Strng
-
-    Strng = Strng.replace(" ","").replace("᠂"," ").replace("᠃"," ")
     return Strng
 
 # not used
@@ -1924,39 +2011,3 @@ def ChakmaAVowels(Strng):
     """No-op placeholder (reserved for Chakma inherent-vowel handling)."""
     return Strng
 
-def swapEe(Strng):
-    """E/O for long, e/o for short - swaps the case convention of the e and o vowel placeholders so uppercase marks the long vowel."""
-    Strng = Strng.replace('E', 'X@X@')
-    Strng = Strng.replace('e', 'E')
-    Strng = Strng.replace('X@X@', 'e')
-
-    Strng = Strng.replace('O', 'X@X@')
-    Strng = Strng.replace('o', 'O')
-    Strng = Strng.replace('X@X@', 'o')
-
-    return Strng
-
-def capitalizeSentence(Strng):
-    """Capitalizes the first letter of each sentence (after start of string, ./?/!, newline, or quote-opened line) and after an '@' marker."""
-    Strng = re.sub(r"(\A\w)|"+            # start of string
-             "(?<!\.\w)([\.?!]\s*)\w|"+     # after a ?/!/. and a space,
-             "\w(?:\.\w)|"+
-             "(\n)\w|"+               # start/middle of acronym
-             "(\n(\"|\“|\'|\‘))\w|"+
-             "(?<=\w\.)\w",               # end of acronym
-             lambda x: x.group().upper(),
-             Strng)
-
-    Strng = re.sub(r"(@)(.)", lambda x: x.groups()[1].upper(), Strng)
-
-    return Strng
-
-# New LoC (Library of Congress) romanization post-options - see
-# ScriptProcessing/HOW_TO_ADD_LOC.md for the naming convention.
-from .ScriptProcessing.TeluguLoC import TeluguToRomanLocPost, RomanLocToTeluguPost
-from .ScriptProcessing.KannadaLoC import KannadaToRomanLocPost
-from .ScriptProcessing.SinhalaLoC import SinhalaToRomanLocPost
-from .ScriptProcessing.OriyaLoC import OriyaToRomanLocPost
-from .ScriptProcessing.AssameseLoC import AssameseToRomanLocPost, RomanLocToAssamesePost
-from .ScriptProcessing.BengaliLoC import BengaliToRomanLocPost, RomanLocToBengaliPost
-from .ScriptProcessing.GujaratiLoC import GujaratiToRomanLocPost

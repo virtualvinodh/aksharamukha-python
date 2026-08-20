@@ -1,6 +1,6 @@
 {
  "_generated_by": "build_frontend_backend_manifest.js",
- "_generated_at": "2026-08-10T22:51:28.687Z",
+ "_generated_at": "2026-08-20T15:17:38.273Z",
  "_sources": {
   "frontend": "c:\\Users\\vinod\\Projects\\aksharamukha\\aksharamukha-front\\src\\mixins\\ScriptMixin.js",
   "backend_scripts": "GeneralMap.py, via dump_backend_script_lists.py",
@@ -55,22 +55,22 @@
    "Grek"
   ],
   "pre_options": {
-   "total": 129,
-   "working": 114,
-   "working_multi_arg": 11,
+   "total": 117,
+   "working": 101,
+   "working_multi_arg": 12,
    "broken": 4,
    "unknown_to_backend": 0,
    "in_frontend": 69,
-   "not_in_frontend": 60
+   "not_in_frontend": 48
   },
   "post_options": {
-   "total": 327,
-   "working": 305,
-   "working_multi_arg": 21,
+   "total": 292,
+   "working": 268,
+   "working_multi_arg": 23,
    "broken": 0,
    "unknown_to_backend": 1,
    "in_frontend": 183,
-   "not_in_frontend": 144
+   "not_in_frontend": 109
   }
  },
  "scripts": {
@@ -6349,13 +6349,6 @@
    "labels": [],
    "applies_to_scripts": []
   },
-  "ItransLL": {
-   "name": "ItransLL",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "JapanesePreProcess": {
    "name": "JapanesePreProcess",
    "backend_status": "working-multi-arg",
@@ -6644,7 +6637,7 @@
   },
   "RetainDevangariDanda": {
    "name": "RetainDevangariDanda",
-   "backend_status": "working",
+   "backend_status": "working-multi-arg",
    "in_frontend": false,
    "labels": [],
    "applies_to_scripts": []
@@ -6702,13 +6695,6 @@
    "labels": [],
    "applies_to_scripts": []
   },
-  "SanskritLexicaizeHK": {
-   "name": "SanskritLexicaizeHK",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "SaurastraHaaruColonTamil": {
    "name": "SaurastraHaaruColonTamil",
    "backend_status": "working",
@@ -6754,20 +6740,6 @@
     "Gurmukhi"
    ]
   },
-  "SchwaFinalKhmer": {
-   "name": "SchwaFinalKhmer",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "SchwaFinalKhmerLoC": {
-   "name": "SchwaFinalKhmerLoC",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "SchwaFinalWarangCiti": {
    "name": "SchwaFinalWarangCiti",
    "backend_status": "working",
@@ -6778,13 +6750,6 @@
    "applies_to_scripts": [
     "WarangCiti"
    ]
-  },
-  "ShanLoCRomanLoCSource": {
-   "name": "ShanLoCRomanLoCSource",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
   },
   "ShanLoCRomanLoCTarget": {
    "name": "ShanLoCRomanLoCTarget",
@@ -6848,20 +6813,6 @@
    "applies_to_scripts": [
     "Sogo"
    ]
-  },
-  "TaiKuen": {
-   "name": "TaiKuen",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "TaiThamLao": {
-   "name": "TaiThamLao",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
   },
   "TakriArchaicKha": {
    "name": "TakriArchaicKha",
@@ -6979,13 +6930,6 @@
    "labels": [],
    "applies_to_scripts": []
   },
-  "UnSupThaana": {
-   "name": "UnSupThaana",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "UrduShortNotShown": {
    "name": "UrduShortNotShown",
    "backend_status": "working",
@@ -6998,9 +6942,9 @@
     "Shahmukhi"
    ]
   },
-  "default": {
-   "name": "default",
-   "backend_status": "working",
+  "_normalize_unicode_forms": {
+   "name": "_normalize_unicode_forms",
+   "backend_status": "working-multi-arg",
    "in_frontend": false,
    "labels": [],
    "applies_to_scripts": []
@@ -7092,13 +7036,6 @@
     "ISO"
    ]
   },
-  "normalize": {
-   "name": "normalize",
-   "backend_status": "working-multi-arg",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "novowelshebrewIndic": {
    "name": "novowelshebrewIndic",
    "backend_status": "working",
@@ -7120,13 +7057,6 @@
    "applies_to_scripts": [
     "Hebrew"
    ]
-  },
-  "paliTham": {
-   "name": "paliTham",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
   },
   "perisanizeArab": {
    "name": "perisanizeArab",
@@ -7158,13 +7088,6 @@
   "removeZW": {
    "name": "removeZW",
    "backend_status": "broken",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "retainLatin": {
-   "name": "retainLatin",
-   "backend_status": "working",
    "in_frontend": false,
    "labels": [],
    "applies_to_scripts": []
@@ -7222,13 +7145,6 @@
    "applies_to_scripts": [
     "Hebrew"
    ]
-  },
-  "siddhamUnicode": {
-   "name": "siddhamUnicode",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
   },
   "siddhammukta": {
    "name": "siddhammukta",
@@ -7295,13 +7211,6 @@
    "applies_to_scripts": [
     "Latn"
    ]
-  },
-  "AmbigousTamilOrthography": {
-   "name": "AmbigousTamilOrthography",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
   },
   "AnusvaraAsN": {
    "name": "AnusvaraAsN",
@@ -7524,13 +7433,6 @@
   },
   "BurmeseRomanLoCTarget": {
    "name": "BurmeseRomanLoCTarget",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "ChakmaAVowels": {
-   "name": "ChakmaAVowels",
    "backend_status": "working",
    "in_frontend": false,
    "labels": [],
@@ -7807,13 +7709,6 @@
    "labels": [],
    "applies_to_scripts": []
   },
-  "HebrewSBLSource": {
-   "name": "HebrewSBLSource",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "HebrewSBLTarget": {
    "name": "HebrewSBLTarget",
    "backend_status": "working",
@@ -7846,20 +7741,6 @@
     "RomanLoCDevanagari"
    ]
   },
-  "HiraganaaunotDipthong": {
-   "name": "HiraganaaunotDipthong",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "IASTISONasalTilde": {
-   "name": "IASTISONasalTilde",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "IASTPali": {
    "name": "IASTPali",
    "backend_status": "working",
@@ -7874,22 +7755,8 @@
    "labels": [],
    "applies_to_scripts": []
   },
-  "ISO233Source": {
-   "name": "ISO233Source",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "ISO233Target": {
    "name": "ISO233Target",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "ISO259Source": {
-   "name": "ISO259Source",
    "backend_status": "working",
    "in_frontend": false,
    "labels": [],
@@ -8189,13 +8056,6 @@
     "LaoPali"
    ]
   },
-  "LatinPipes": {
-   "name": "LatinPipes",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "LatnInitialVowels": {
    "name": "LatnInitialVowels",
    "backend_status": "working",
@@ -8472,13 +8332,6 @@
     "Oriya"
    ]
   },
-  "PersianDMGSBLSource": {
-   "name": "PersianDMGSBLSource",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "PersianDMGTarget": {
    "name": "PersianDMGTarget",
    "backend_status": "working",
@@ -8514,13 +8367,6 @@
    "applies_to_scripts": [
     "PhagsPa"
    ]
-  },
-  "PhoneticMapping": {
-   "name": "PhoneticMapping",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
   },
   "RemoveDiacritics": {
    "name": "RemoveDiacritics",
@@ -8568,13 +8414,6 @@
    "labels": [],
    "applies_to_scripts": []
   },
-  "RetainGurmukhiNumerals": {
-   "name": "RetainGurmukhiNumerals",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "RetainIndicNumerals": {
    "name": "RetainIndicNumerals",
    "backend_status": "working-multi-arg",
@@ -8589,22 +8428,8 @@
    "labels": [],
    "applies_to_scripts": []
   },
-  "RetainKannadaNumerals": {
-   "name": "RetainKannadaNumerals",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "RetainMalayalamDanda": {
    "name": "RetainMalayalamDanda",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "RetainMalayalamNumerals": {
-   "name": "RetainMalayalamNumerals",
    "backend_status": "working",
    "in_frontend": false,
    "labels": [],
@@ -8624,22 +8449,8 @@
    "labels": [],
    "applies_to_scripts": []
   },
-  "RetainTamilNumerals": {
-   "name": "RetainTamilNumerals",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "RetainTeluguDanda": {
    "name": "RetainTeluguDanda",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "RetainTeluguNumerals": {
-   "name": "RetainTeluguNumerals",
    "backend_status": "working",
    "in_frontend": false,
    "labels": [],
@@ -8883,29 +8694,8 @@
    "labels": [],
    "applies_to_scripts": []
   },
-  "TaiKuen": {
-   "name": "TaiKuen",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "TaiThamHighNga": {
    "name": "TaiThamHighNga",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "TaiThamLao": {
-   "name": "TaiThamLao",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "TaiThamMoveNnga": {
-   "name": "TaiThamMoveNnga",
    "backend_status": "working",
    "in_frontend": false,
    "labels": [],
@@ -9234,13 +9024,6 @@
    "labels": [],
    "applies_to_scripts": []
   },
-  "ThamLoCRomanLoCTarget": {
-   "name": "ThamLoCRomanLoCTarget",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "ThamShiftMaiKangLai": {
    "name": "ThamShiftMaiKangLai",
    "backend_status": "working",
@@ -9356,7 +9139,7 @@
   },
   "UrduAlternateUU": {
    "name": "UrduAlternateUU",
-   "backend_status": "working",
+   "backend_status": "working-multi-arg",
    "in_frontend": false,
    "labels": [],
    "applies_to_scripts": []
@@ -9565,6 +9348,20 @@
     "ZanabazarSquare"
    ]
   },
+  "_convertCleanup": {
+   "name": "_convertCleanup",
+   "backend_status": "working-multi-arg",
+   "in_frontend": false,
+   "labels": [],
+   "applies_to_scripts": []
+  },
+  "_finalCleanup": {
+   "name": "_finalCleanup",
+   "backend_status": "working-multi-arg",
+   "in_frontend": false,
+   "labels": [],
+   "applies_to_scripts": []
+  },
   "alephAyinLatnAlternate": {
    "name": "alephAyinLatnAlternate",
    "backend_status": "working",
@@ -9654,13 +9451,6 @@
    "labels": [],
    "applies_to_scripts": []
   },
-  "defaultPost": {
-   "name": "defaultPost",
-   "backend_status": "working-multi-arg",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "devanagaribalbodh": {
    "name": "devanagaribalbodh",
    "backend_status": "working",
@@ -9716,13 +9506,6 @@
     "Malayalam"
    ]
   },
-  "easternsyriac": {
-   "name": "easternsyriac",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "egrantamil": {
    "name": "egrantamil",
    "backend_status": "working",
@@ -9733,13 +9516,6 @@
    "applies_to_scripts": [
     "Grantha"
    ]
-  },
-  "estrangelasyriac": {
-   "name": "estrangelasyriac",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
   },
   "gainGimel": {
    "name": "gainGimel",
@@ -9774,13 +9550,6 @@
     "Grantha"
    ]
   },
-  "hebraizeLatn": {
-   "name": "hebraizeLatn",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "historicChillu": {
    "name": "historicChillu",
    "backend_status": "working",
@@ -9791,20 +9560,6 @@
    "applies_to_scripts": [
     "Malayalam"
    ]
-  },
-  "indicDandas": {
-   "name": "indicDandas",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "indicNumerals": {
-   "name": "indicNumerals",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
   },
   "inherentAO": {
    "name": "inherentAO",
@@ -9819,13 +9574,6 @@
     "IASTOriya",
     "ISOOriya"
    ]
-  },
-  "insertARomanSemitic": {
-   "name": "insertARomanSemitic",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
   },
   "jainomDevangari": {
    "name": "jainomDevangari",
@@ -10003,20 +9751,6 @@
     "Arab-Fa"
    ]
   },
-  "removeDiacriticsPersian": {
-   "name": "removeDiacriticsPersian",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "removeDiacriticsSyriac": {
-   "name": "removeDiacriticsSyriac",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "removeMajliyana": {
    "name": "removeMajliyana",
    "backend_status": "working",
@@ -10135,34 +9869,6 @@
     "HebrewSBL"
    ]
   },
-  "romanFullStop": {
-   "name": "romanFullStop",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "romanNumerals": {
-   "name": "romanNumerals",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "siddhamBija": {
-   "name": "siddhamBija",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "siddhamap": {
-   "name": "siddhamap",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "siddhammukta": {
    "name": "siddhammukta",
    "backend_status": "working",
@@ -10219,20 +9925,6 @@
     "LatnSyrj",
     "LatnSyrn"
    ]
-  },
-  "syriacVowelsBelow": {
-   "name": "syriacVowelsBelow",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
-  "syriacWesternOToU": {
-   "name": "syriacWesternOToU",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
   },
   "syricizeLatn": {
    "name": "syricizeLatn",
@@ -10320,13 +10012,6 @@
    "labels": [],
    "applies_to_scripts": []
   },
-  "useKtivMale": {
-   "name": "useKtivMale",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
-  },
   "verticalKana": {
    "name": "verticalKana",
    "backend_status": "working",
@@ -10338,13 +10023,6 @@
     "Hiragana",
     "Katakana"
    ]
-  },
-  "verticalSiddham": {
-   "name": "verticalSiddham",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
   },
   "vtobJapanese": {
    "name": "vtobJapanese",
@@ -10358,13 +10036,6 @@
     "Hiragana",
     "Katakana"
    ]
-  },
-  "westernsyriac": {
-   "name": "westernsyriac",
-   "backend_status": "working",
-   "in_frontend": false,
-   "labels": [],
-   "applies_to_scripts": []
   }
  },
  "post_options_radio_groups": {
