@@ -600,6 +600,20 @@ def _run_core_conversion(src, tgt, txt, postoptions, srcOld, tgtOld, ctx):
 
     return tgt, transliteration
 
+def _apply_nativize_defaults(transliteration, src, tgt, postoptions, ctx):
+    # Default post-options for this target (PostOptions.ApplyScriptDefaults),
+    # then generic diacritic stripping - both only make sense when
+    # nativize=True, since they're about producing clean native-script
+    # output rather than preserving every diacritic distinction.
+    transliteration = PostOptions.ApplyScriptDefaults(transliteration, src, tgt, postoptions, ctx)
+    if tgt != 'Latn':
+        if tgt != 'Tamil':
+            transliteration = PostProcess.RemoveDiacritics(transliteration)
+        else:
+            transliteration = PostProcess.RemoveDiacriticsTamil(transliteration)
+
+    return transliteration
+
 def _apply_final_postprocessing(src, tgt, txt, transliteration, nativize, preoptions, postoptions, ctx):
     # src/tgt as they stand for postoptions - re-set here rather than
     # trusting whatever _prepare_for_core_conversion set, since
@@ -614,12 +628,7 @@ def _apply_final_postprocessing(src, tgt, txt, transliteration, nativize, preopt
     #print(transliteration)
 
     if nativize:
-      transliteration =  PostOptions.ApplyScriptDefaults(transliteration, src, tgt, postoptions, ctx)
-      if tgt != 'Latn':
-        if tgt != 'Tamil':
-            transliteration = PostProcess.RemoveDiacritics(transliteration)
-        else:
-            transliteration = PostProcess.RemoveDiacriticsTamil(transliteration)
+      transliteration = _apply_nativize_defaults(transliteration, src, tgt, postoptions, ctx)
 
     #print(transliteration)
 
@@ -643,7 +652,8 @@ def _apply_final_postprocessing(src, tgt, txt, transliteration, nativize, preopt
 
     ## DefaultPostProcess ##
 
-    transliteration = PostProcess.defaultPost(src, tgt, transliteration, nativize, preoptions, postoptions)
+    transliteration = PostProcess._applyPunctuationNumeralOptions(transliteration, tgt, postoptions)
+    transliteration = PostProcess._finalCleanup(transliteration, tgt)
 
     return transliteration
 

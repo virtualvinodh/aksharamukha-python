@@ -127,7 +127,6 @@ GENERIC_PRE = {
 # text to transform, so the generic (Strng, *extra) shape doesn't apply.
 CUSTOM_CALLS = {
     ('post', 'JapanesePostProcess'): lambda text: PostProcess.JapanesePostProcess('IAST', 'Hiragana', text, True, []),
-    ('post', 'defaultPost'): lambda text: PostProcess.defaultPost('Devanagari', 'IAST', text, True, [], []),
     ('pre', 'JapanesePreProcess'): lambda text: PreProcess.JapanesePreProcess('Hiragana', text, []),
 }
 

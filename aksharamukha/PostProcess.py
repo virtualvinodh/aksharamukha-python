@@ -15,22 +15,35 @@ import functools
 
 ## order the functions by script ##
 
-## This is the processing that's done immediately after calling the convert() function
-## But before the post-processing steps
-## removes extranous/artificial diacritics introduced
-def default(Strng, langage=""):
-    """Strips internal token/placeholder characters (U+F001, U+05CC, doubled okina, U+05CD, U+02C2) used during specialized processing."""
-    Strng = Strng.replace("\uF001", "").replace("\u05CC", "").\
-        replace("ʻʻ", "").replace('\u05CD', '').replace('\u02C2', '') ## remove token characters for specialized processing
+def _convertCleanup(Strng):
+    """Strips internal marker/placeholder characters before the text
+    is used further - including as input to another convertScript()
+    call, since a single transliterate.process() call can chain
+    several of them (Itrans's ## split, the Japanese pivot, the
+    src==tgtOld self-conversion case). That's why this runs inside
+    convertScript() itself rather than once at the end like
+    _finalCleanup below - it has to run after every individual
+    conversion step, not just the last one.
+
+    U+F001/U+05CC/U+05CD are markers from the Semitic/Syriac
+    romanization pivot (see PreProcess.insertViramaSyriac,
+    PreProcess.AlephMaterLectionis, and the nativizing-Semitic-to-
+    Indic flag set in transliterate.py's _resolve_semitic_indic_
+    naming). Doubled okina and U+02C2 turned out to still be live too
+    (confirmed the hard way - removing them broke Burmese/Shan
+    RomanLoC and a Saurashtra test) despite no literal source
+    occurrence of either being grep-able - they arise from adjacent
+    single-character insertions combining at runtime, or survive as
+    literal input, not from a hardcoded multi-char marker."""
+    Strng = Strng.replace("\uF001", "").replace("\u05CC", "").replace("ʻʻ", "").replace('\u05CD', '').replace('\u02C2', '')
 
     return Strng
 
-## This is processing that's done after the post-processing steps
-## It's catch all function for all misc stuff
-def defaultPost(src, tgt, Strng, nativize, preoptions, postoptions):
-    """Applies shared post-processing: numeral/danda retention per postoptions, then normalizes pipe/danda punctuation for the target script."""
-    Strng = Strng.replace('\u034F', '') ## remove token characters for specialized processing
-
+def _applyPunctuationNumeralOptions(Strng, tgt, postoptions):
+    """Applies numeral-style and full-stop postoptions the caller
+    explicitly requested (romanNumerals/indicNumerals/romanFullStop) -
+    this is user-requested output formatting, not cleanup (see
+    _finalCleanup below for the unconditional cleanup step)."""
     ## Fix Dandas & Numerals
     if 'romanNumerals' in postoptions:
         Strng = RetainIndicNumerals(Strng,tgt,reverse=True)
@@ -38,6 +51,18 @@ def defaultPost(src, tgt, Strng, nativize, preoptions, postoptions):
         Strng = RetainIndicNumerals(Strng,tgt,reverse=False)
     if 'romanFullStop' in postoptions:
         Strng = RetainDandasIndic(Strng, tgt, reverse=True)
+
+    return Strng
+
+def _finalCleanup(Strng, tgt):
+    """Restores the placeholder characters PreProcess.
+    RetainDevangariDanda/RetainPipeDanda substituted in during pre-
+    processing to shield danda/period characters from the table-
+    driven conversion logic - the reverse half of that shield, run
+    once at the very end of the whole pipeline (unlike
+    _convertCleanup above, which runs after every individual
+    conversion step)."""
+    Strng = Strng.replace('\u034F', '') ## remove token characters for specialized processing
 
     #Devanagari Dandas
     if not SR.get(tgt).is_transliteration:

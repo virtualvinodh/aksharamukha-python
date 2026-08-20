@@ -101,7 +101,7 @@ def convertScript(Strng,Source,Target,ctx=None):
 
     #print(Strng)
 
-    Strng = PP.default(Strng)
+    Strng = PP._convertCleanup(Strng)
 
     return Strng
 
