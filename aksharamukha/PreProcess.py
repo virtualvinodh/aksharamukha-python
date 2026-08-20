@@ -852,9 +852,6 @@ def _normalize_alternate_schemes(Strng, Source, Target):
         ## People use the wrong convention sometimes
         Strng = Strng.replace('ṃ', 'ṁ')
 
-    if Source == "Titus":
-        Strng = Strng
-
     if Source == "ISO" or Source == "IAST" or Source == "Titus" or Source == "RussianCyrillic":
         Strng = Strng.replace('̍', '\\\'')
         Strng = Strng.replace('̎', '\\"')
@@ -864,6 +861,9 @@ def _normalize_alternate_schemes(Strng, Source, Target):
 
         Strng = Strng.replace('г\u0361м', '\\m++')
         Strng = Strng.replace('г\u035Cм', '\\m+')
+
+    if Source in ['IAST', 'ISO', 'ISOPali', 'Titus', 'IASTPali']:
+        Strng = Strng.replace("ü", "uʼ").replace("ǖ", "ūʼ").replace( 'ö', 'aʼ',).replace('ȫ', 'āʼ')
 
     if Source == "Latn" and 'Syr' in Target:
         Strng = Strng.replace('ḇ', 'v').replace('ḡ', 'ḡ').replace('ḵ', 'ḫ').replace('p̄', 'f')
@@ -904,9 +904,6 @@ def _normalize_unicode_forms(Strng, Source):
     if Source not in ["Grantha","TamilGrantha"]:
         for x,y in zip(nuktaDecom,nuktaPrecom):
             Strng = Strng.replace(x,y)
-
-    if Source in ['IAST', 'ISO', 'ISOPali', 'Titus', 'IASTPali']:
-        Strng = Strng.replace("ü", "uʼ").replace("ǖ", "ūʼ").replace( 'ö', 'aʼ',).replace('ȫ', 'āʼ')
 
     if Source in ['IAST', 'ISO', 'ISOPali', 'IASTPali', 'Titus'] or 'RomanLoC' in Source:
         Strng = unicodedata.normalize('NFC', Strng)
