@@ -1,22 +1,16 @@
 # -*- coding: utf-8 -*-
-"""Dev tool: shows the exact function call sequence and intermediate text
-for one real aksharamukha conversion, including hops invisible from
-reading any single function - e.g. Convert.py's _convert_to_semitic
-always pivots a non-Latin source through the RomanSemitic intermediate
-before reaching a semitic target, and the LoC/semiticISO option families
-are dispatched by runtime string concatenation
-(transliterate.py's _apply_loc_option, ConvertFix.py's
+"""Dev tool: pretty-prints transliterate.process(..., trace=True) for one
+conversion - shows the exact function call sequence and intermediate
+text, including hops invisible from reading any single function - e.g.
+Convert.py's _convert_to_semitic always pivots a non-Latin source
+through the RomanSemitic intermediate before reaching a semitic target,
+and the LoC/semiticISO option families are dispatched by runtime string
+concatenation (transliterate.py's _apply_loc_option, ConvertFix.py's
 globals()["Fix"+Target]) rather than a literal call anywhere.
 
-How: monkey-patches every function in PreProcess/PostProcess/ConvertFix/
-Convert/transliterate and every ScriptProcessing/*.py module with a
-logging wrapper (in memory only - nothing is written to any source
-file), runs one real transliterate.process(...) call, and prints the
-nested call tree with the text before/after each step. GeneralMap is
-deliberately not instrumented - its helpers (CrunchSymbols/CrunchList/
-resolve/...) run in tight per-character loops on non-string arguments
-and would drown the trace in noise unrelated to what happened to the
-text.
+The actual instrumentation (aksharamukha/_trace.py) lives in the main
+package, not here - trace=True is a first-class part of
+transliterate.process() now, this script is just a readable CLI over it.
 
 Usage:
     python trace_conversion.py Tamil Sogd "some text"
@@ -25,12 +19,8 @@ Usage:
     python trace_conversion.py Kannada Telugu "some text" --no-nativize --max-depth 6
 """
 import argparse
-import functools
-import importlib
-import inspect
-import pkgutil
-import sys
 import os
+import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
 if REPO not in sys.path:
@@ -44,84 +34,22 @@ def short(x, max_len):
     return s
 
 
-class Tracer:
-    def __init__(self, max_len):
-        self.entries = []
-        self.depth = 0
-        self.seq = 0
-        self.max_len = max_len
-
-    def make_wrapper(self, mod_name, fn):
-        @functools.wraps(fn)
-        def wrapper(*args, **kwargs):
-            self.seq += 1
-            seq = self.seq
-            depth = self.depth
-            arg_str = ', '.join(
-                [short(a, self.max_len) for a in args]
-                + [k + '=' + short(v, self.max_len) for k, v in kwargs.items()]
-            )
-            self.depth += 1
-            try:
-                result = fn(*args, **kwargs)
-                return result
-            finally:
-                self.depth -= 1
-                first_arg_repr = args[0] if args and isinstance(args[0], str) else None
-                result_repr = locals().get('result')
-                changed = isinstance(result_repr, str) and first_arg_repr is not None and result_repr != first_arg_repr
-                self.entries.append({
-                    'seq': seq, 'depth': depth, 'mod': mod_name, 'name': fn.__name__,
-                    'args': arg_str, 'result': short(locals().get('result', '<exception>'), self.max_len),
-                    'changed': changed,
-                })
-        return wrapper
-
-    def instrument_module(self, mod):
-        # Wrap every function-valued attribute in THIS module's own
-        # namespace, regardless of where it was originally defined.
-        # Re-exported names (e.g. PostProcess.py's `from
-        # .ScriptProcessing.Tamil import TamilDisableSHA`) are a separate,
-        # already-bound reference distinct from ScriptProcessing.Tamil's
-        # own copy - dispatch code (Options.py's getattr(PostProcess,
-        # name)) calls THIS module's binding, so it has to be wrapped
-        # here too, not just at its origin definition site.
-        mod_name = mod.__name__
-        for attr_name in list(vars(mod)):
-            if attr_name.startswith('__'):
-                continue
-            fn = getattr(mod, attr_name)
-            if inspect.isfunction(fn) and not getattr(fn, '_is_traced', False):
-                wrapped = self.make_wrapper(mod_name, fn)
-                wrapped._is_traced = True
-                setattr(mod, attr_name, wrapped)
+def format_args(args, kwargs, max_len):
+    parts = [short(a, max_len) for a in args] + [k + '=' + short(v, max_len) for k, v in kwargs.items()]
+    return ', '.join(parts)
 
 
-def instrument_everything(tracer):
-    import aksharamukha  # noqa: F401
-    from aksharamukha import transliterate, Convert, ConvertFix, PreProcess, PostProcess
-    import aksharamukha.ScriptProcessing as SP
-
-    sp_modules = []
-    for _finder, name, _ispkg in pkgutil.iter_modules(SP.__path__):
-        sp_modules.append(importlib.import_module('aksharamukha.ScriptProcessing.' + name))
-
-    for mod in [PreProcess, PostProcess, ConvertFix, Convert, transliterate] + sp_modules:
-        tracer.instrument_module(mod)
-
-    return transliterate
-
-
-def print_trace(entries, changes_only, max_depth):
+def print_trace(entries, changes_only, max_depth, max_len):
     for e in entries:
         if max_depth is not None and e['depth'] > max_depth:
             continue
         if changes_only and not e['changed'] and e['depth'] > 0:
             continue
         mark = '*' if e['changed'] else ' '
-        mod = e['mod'].replace('aksharamukha.', '')
+        mod = e['module'].replace('aksharamukha.', '')
+        args_str = format_args(e['args'], e['kwargs'], max_len)
         print('%s%s[%d] %s.%s(%s) -> %s' % (
-            '  ' * e['depth'], mark, e['seq'], mod, e['name'], e['args'], e['result']))
+            '  ' * e['depth'], mark, e['seq'], mod, e['function'], args_str, short(e['result'], max_len)))
 
 
 def main():
@@ -137,22 +65,22 @@ def main():
     p.add_argument('--max-len', type=int, default=60, help='truncate printed strings to this length')
     args = p.parse_args()
 
-    tracer = Tracer(args.max_len)
-    transliterate = instrument_everything(tracer)
+    from aksharamukha import transliterate
 
     pre_options = [x for x in args.pre.split(',') if x]
     post_options = [x for x in args.post.split(',') if x]
 
-    result = transliterate.process(
+    result, entries = transliterate.process(
         args.source, args.target, args.text,
         nativize=not args.no_nativize,
         post_options=post_options, pre_options=pre_options,
+        trace=True,
     )
 
     print('%s -> %s : %r -> %r' % (args.source, args.target, args.text, result))
-    print('(%d calls traced, %s = text changed)' % (len(tracer.entries), '*'))
+    print('(%d calls traced, * = text changed)' % len(entries))
     print()
-    print_trace(tracer.entries, args.changes_only, args.max_depth)
+    print_trace(entries, args.changes_only, args.max_depth, args.max_len)
 
 
 if __name__ == '__main__':

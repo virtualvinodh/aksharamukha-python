@@ -704,7 +704,26 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     return _apply_final_postprocessing(src, tgt, txt, transliteration, nativize, preoptions, postoptions, ctx)
 
-def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [], param="default"):
+def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [], param="default", trace=False):
+    """trace=True returns (result, trace_entries) instead of just result -
+    trace_entries is the ordered list of every PreProcess/PostProcess/
+    ConvertFix/Convert/transliterate/ScriptProcessing function called
+    along the way, each a dict with seq/depth/module/function/args/
+    kwargs/result/changed. See _trace.py for how (dev tool:
+    test/regression/workbench/trace_conversion.py prints it nicely)."""
+    if not trace:
+        return _process_dispatch(src, tgt, txt, nativize, post_options, pre_options, param)
+
+    from . import _trace
+    tracer = _trace.Tracer()
+    tracer.instrument_everything()
+    try:
+        result = _process_dispatch(src, tgt, txt, nativize, post_options, pre_options, param)
+    finally:
+        tracer.uninstrument()
+    return result, tracer.entries
+
+def _process_dispatch(src, tgt, txt, nativize, post_options, pre_options, param):
     if param == "default":
         return process_default(src, tgt, txt, nativize, post_options, pre_options)
 
