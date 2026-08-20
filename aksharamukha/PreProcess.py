@@ -203,7 +203,6 @@ def BengaliSwitchYaYYa(Strng):
 
     return Strng
 
-
 def removeFinalSchwaArab(Strng):
     #print('here', Strng)
     """Assume an implicit sukun (vowellessness) on word-final Arabic consonants lacking a diacritic (e.g. ʾl×muḥīṭ ʾl×hin×diy×꞉ ← الْمُحِيط الْهِنْدِيّ)."""
@@ -684,7 +683,6 @@ from .ScriptProcessing.DevanagariLimbu import LimbuDevanagariConvention_pre as L
 # consolidated there (batch migration).
 from .ScriptProcessing.Limbu import LimbuSpellingSaI_pre as LimbuSpellingSaI
 
-
 def removeChillus(Strng):
     """Expand Malayalam chillu letters (ൺ ൻ ർ ൽ ൾ) into their base consonant plus virama form."""
     Chillus=['\u0D7A','\u0D7B','\u0D7C','\u0D7D','\u0D7E']
@@ -788,7 +786,6 @@ def PreProcess(Strng,Source,Target,postoptions,preoptions):
     if Source in ["Syrj", "Syrn"]:
         Strng = Strng.replace('\u0323', '\u0742')
 
-
     if Source == 'Itrans':
         sOm = 'OM'
         tOm = 'oM'
@@ -808,7 +805,6 @@ def PreProcess(Strng,Source,Target,postoptions,preoptions):
         Strng = re.sub(punc + sOm + '$', r'\1' + tOm, Strng)
         Strng = re.sub('^' + sOm + '$', tOm, Strng)
 
-
         # kaRRi -> katri etc. not kaVoc.R
         Strng = re.sub('([aAiuUeoEO])([R]){2}([iI])', r'\1'+r'\2'+'_'+r'\2'+r'\3', Strng)
         Strng = re.sub('([aAiuUeoEO])([L]){2}([iI])', r'\1'+r'\2'+'_'+r'\2'+r'\3', Strng)
@@ -825,7 +821,6 @@ def PreProcess(Strng,Source,Target,postoptions,preoptions):
             Strng = Strng.replace(x,y)
 
         Strng = Strng.replace('OM', 'oM')
-
 
     if Source == 'BarahaNorth' or Source == 'BarahaSouth':
         # alternate representations
@@ -897,99 +892,6 @@ def PreProcess(Strng,Source,Target,postoptions,preoptions):
 
     return Strng
 
-def ISO259Target(Strng):
-    """Substitute Hebrew aleph (א) and geresh (׳) with their ISO 259 romanization symbols (ʾ, ’)."""
-    Strng = Strng.replace('א', 'ʾ').replace('׳', '’')
-
-    return Strng
-
-def ISO233Target(Strng):
-    """Substitute Arabic hamza letters (أ ء إ) with their ISO 233 romanization symbols (ˈʾ, ¦, ˌʾ)."""
-    replacements = [('أ', 'ˈʾ'), ('ء', '¦'), ('إ', 'ˌʾ')]
-
-    for x, y in replacements:
-        Strng = Strng.replace(x, y)
-
-    return Strng
-
-def PersianDMGTarget(Strng):
-    """Substitute Persian alef (ا) with the DMG romanization symbol ʾ."""
-    replacements = [('ا', 'ʾ')]
-
-    for x, y in replacements:
-        Strng = Strng.replace(x, y)
-
-    return Strng
-
-def ISO233Source(Strng):
-    """Reverse ISO 233 romanization symbols back to Arabic hamza letters and normalize additional consonant/vowel spellings (j/g → ǧ, etc.) on the source side."""
-    replacements = [('أ', 'ˈʾ'), ('ء', '¦'), ('إ', 'ˌʾ')]
-
-    for x, y in replacements:
-        Strng = Strng.replace(y, x)
-
-    replacements = [('j', 'ǧ'), ('g', 'ǧ'), ('ḧ', 'ẗ'), ('ḫ', 'ẖ'), ('a̮', 'ỳ'), \
-        ('aⁿ', 'á'), ('iⁿ', 'í'), ('uⁿ', 'ú'), ('ā̂', 'ʾâ'), ('ˀ', 'ˈ')]
-
-    for x, y in replacements:
-        Strng = Strng.replace(y, x)
-
-    return Strng
-
-def PersianDMGSource(Strng):
-    """Reverse Persian DMG romanization symbols back to Persian alef and normalize DMG-specific consonant/vowel spellings on the source side."""
-    replacements = [('ا', 'ʾ')]
-    for x, y in replacements:
-        Strng = Strng.replace(y, x)
-
-    replacements = [('ḏ', 'ẕ'), ('ḍ', 'ż'), ('ṯ', 's̱'), ('j', 'ǧ'), ('ˀ','ʼ'), ('ʔ', 'ʼ'), ('ȳ', 'ye'), ("ā̂", "ā"), ('\u033D', '')]
-    for x, y in replacements:
-        Strng = Strng.replace(y, x)
-
-    return Strng
-
-def HebrewSBLTarget(Strng):
-    """Substitute Hebrew aleph (א) and geresh (׳) with their SBL romanization symbols (ʾ, ’)."""
-    Strng = Strng.replace('א', 'ʾ').replace('׳', '’')
-
-    return Strng
-
-def HebrewSBLSource(Strng):
-    """Reverse SBL Hebrew romanization symbols back to Hebrew letters, restoring begadkefat spirantization and vowel-length distinctions."""
-    Strng = Strng.replace('ʾ', 'א',).replace('’', '׳')
-    Strng = Strng.replace('\u0307\u00B0', '\u00B0\u0307')
-
-    replacements = [('v', 'ḇ'), ('f', 'p̄'), ('d꞉', 'd'), ('d', 'ḏ'), \
-        ('g꞉', 'g'), ('g', 'ḡ'), \
-            ('t꞉', 't'), ('t', 'ṯ'),
-         ('š̮', 'š'), ('š̪', 'ś'),
-        ('o', 'ō'), ('ō', 'ô'), ('ū', 'û'), ('\u033D', 'ĕ')
-    ]
-
-    for x, y in replacements:
-        Strng = Strng.replace(y, x)
-
-    return Strng
-
-def ISO259Source(Strng):
-    """Reverse ISO 259 Hebrew romanization symbols back to Hebrew letters, restoring begadkefat forms and gemination marks via Unicode decomposition."""
-    Strng = Strng.replace('ʾ', 'א',).replace('’', '׳')
-    Strng = Strng.replace('\u0307\u00B0', '\u00B0\u0307')
-
-    replacements = [('ḵ', 'k'), ('v', 'b'), ('f', 'p'), ('b', 'ḃ'), ('p', 'ṗ'), ('k', 'k̇'), ('꞉', '\u0307'),\
-        ('š̮', 'š'), ('š', 's̀'), ('š̪', 'ś'),
-        ('ā', 'å'), ('e', 'ȩ'), ('ō', 'ŵ'), ('ū', 'ẇ'), ('\u033D', '°'), ('ĕ', 'ḝ')
-    ]
-
-    for x, y in replacements:
-        Strng = Strng.replace(y, x)
-
-    Strng = unicodedata.normalize('NFD', Strng)
-    Strng = Strng.replace('\u0307', '꞉')
-    Strng = unicodedata.normalize('NFC', Strng)
-
-    return Strng
-
 def UnSupThaana(Strng):
 
     """Placeholder Thaana pre-processing hook for unsupported characters (currently a no-op passthrough)."""
@@ -1006,6 +908,19 @@ def RemoveJoiners(Strng):
 # consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Arab import ArabicGimelJa
+
+# ISO259/ISO233/HebrewSBL/PersianDMG's Target/Source logic (part of
+# GeneralMap.semiticISO's pseudo-script romanization pivot) now lives
+# in ScriptProcessing/ISO259.py, ScriptProcessing/ISO233.py,
+# ScriptProcessing/HebrewSBL.py, ScriptProcessing/PersianDMG.py -
+# consolidated there (batch migration - see ScriptProcessing/Tamil.py
+# for the full rationale/pattern this follows). Re-exported here so
+# Options.py's PreProcess getmembers()'s reflection-based dispatch
+# keeps finding these names.
+from .ScriptProcessing.ISO259 import HebrewToISO259Pre as ISO259Target, ISO259ToHebrewPre as ISO259Source
+from .ScriptProcessing.ISO233 import ArabToISO233Pre as ISO233Target, ISO233ToArabPre as ISO233Source
+from .ScriptProcessing.HebrewSBL import HebrewToHebrewSBLPre as HebrewSBLTarget, HebrewSBLToHebrewPre as HebrewSBLSource
+from .ScriptProcessing.PersianDMG import ArabFaToPersianDMGPre as PersianDMGTarget, PersianDMGToArabFaPre as PersianDMGSource
 
 # Normalize Input
 # ka + <nukta> -> qa etc

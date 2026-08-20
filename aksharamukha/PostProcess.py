@@ -115,82 +115,21 @@ def syriacWesternOToU(Strng):
 from .ScriptProcessing.Dogra import olddogra, DograShaKha
 
 #testcase todo
-def ISO259Target(Strng):
-    """Converts intermediate Hebrew romanization to ISO 259 conventions (b/p/k dotted, v->b, f->p, s-caron variants, a->a-ring, e->e-cedilla, o/u macron to circumflex forms)."""
-    replacements = [('b', 'ḃ'), ('p', 'ṗ'), ('k', 'k̇'), ('ḵ', 'k'), ('v', 'b'), ('f', 'p'), ('꞉', '\u0307'),\
-         ('š̪', 'ś'), ('š̮', 'š'), ('š', 's̀'),
-        ('ā', 'å'), ('e', 'ȩ'), ('ō', 'ŵ'), ('ū', 'ẇ'), ('\u033D', '°'), ('ĕ', 'ḝ')
-    ]
-
-    for x, y in replacements:
-        Strng = Strng.replace(x, y)
-
-    Strng = Strng.replace('\u00B0\u0307', '\u0307\u00B0')
-
-    return Strng
-
-#testcase todo
-def HebrewSBLTarget(Strng):
-    """Converts intermediate Hebrew romanization to SBL academic style (v->b-line-below, f->p-macron, d->d-line-below, g->g-line-below, t->t-line-below, o->o-circumflex, etc., undone when geminated)."""
-    replacements = [('v', 'ḇ'), ('f', 'p̄'), ('d', 'ḏ'), ('ḏ꞉', 'd'), \
-        ('g', 'ḡ'), ('ḡ꞉', 'g'),\
-            ('t', 'ṯ'), ('ṯ꞉', 't'),
-         ('š̪', 'ś'), ('š̮', 'š'),
-        ('ō', 'ô'), ('o', 'ō'), ('ū', 'û'), ('\u033D', 'ĕ')
-    ]
-
-    for x, y in replacements:
-        Strng = Strng.replace(x, y)
-
-    Strng = Strng.replace('ĕ꞉', '꞉ĕ')
-
-    if '\u05CE' in Strng:
-        Strng = Strng.replace('ḏ', 'd').replace('ṯ', 't').replace('ḡ', 'g').replace('\u05CE', '')
-
-    Strng = Strng.replace('\u00B0\u0307', '\u0307\u00B0')
-
-    return Strng
-
-#testcase todo
 # HebrewSBL's own logic now lives in ScriptProcessing/HebrewSBL.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.HebrewSBL import removetddash
+from .ScriptProcessing.HebrewSBL import removetddash, HebrewToHebrewSBLPost as HebrewSBLTarget, HebrewSBLToHebrewPost as HebrewSBLSource
 
-#testcase todo
-def ISO259Source(Strng):
-
-    """No-op placeholder (reserved for ISO 259 Hebrew romanization source-side processing)."""
-    return Strng
-
-#testcase todo
-def ISO233Source(Strng):
-
-    """No-op placeholder (reserved for ISO 233 Arabic romanization source-side processing)."""
-    return Strng
-
-#testcase todo
-def HebrewSBLSource(Strng):
-
-    """No-op placeholder (reserved for SBL Hebrew romanization source-side processing)."""
-    return Strng
-
-#testcase todo
-def PersianDMGSource(Strng):
-
-    """No-op placeholder (reserved for Persian DMG romanization source-side processing)."""
-    return Strng
-
-#testcase todo
-def ISO233Target(Strng):
-    """Converts intermediate Arabic romanization to ISO 233 conventions (j/g->g-caron, h-diaeresis->t-diaeresis, nunation marks aN/iN/uN -> accented vowels, etc.)."""
-    replacements = [('j', 'ǧ'), ('g', 'ǧ'), ('ḧ', 'ẗ'), ('ḫ', 'ẖ'), ('a̮', 'ỳ'), ('ˀ', 'ˈ'), \
-        ('aⁿ', 'á'), ('iⁿ', 'í'), ('uⁿ', 'ú'), ('ā̂', 'ʾâ'), ('\u033D', '')]
-
-    for x, y in replacements:
-        Strng = Strng.replace(x, y)
-
-    return Strng
+# ISO259/ISO233/PersianDMG's Target/Source logic (part of
+# GeneralMap.semiticISO's pseudo-script romanization pivot) now lives
+# in ScriptProcessing/ISO259.py, ScriptProcessing/ISO233.py,
+# ScriptProcessing/PersianDMG.py - consolidated there (batch migration
+# - see ScriptProcessing/Tamil.py for the full rationale/pattern this
+# follows). Re-exported here so Options.py's PostProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.ISO259 import HebrewToISO259Post as ISO259Target, ISO259ToHebrewPost as ISO259Source
+from .ScriptProcessing.ISO233 import ArabToISO233Post as ISO233Target, ISO233ToArabPost as ISO233Source
+from .ScriptProcessing.PersianDMG import ArabFaToPersianDMGPost as PersianDMGTarget, PersianDMGToArabFaPost as PersianDMGSource
 
 #todo add to frontend
 def inherentAO(Strng):
@@ -203,16 +142,6 @@ def inherentAO(Strng):
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Bengali import BengaliOldRA, BengaliConjunctVB, khandatabatova, BengaliRaBa, BengaliIntervocalicDDA
-
-#testcase todo
-def PersianDMGTarget(Strng):
-    """Converts intermediate Persian romanization to DMG (Deutsche Morgenlandische Gesellschaft) conventions (d-line->z-line, d-dot->z-dot, t-line->s-line-below, j->g-caron, y-macron->ye)."""
-    replacements = [('ḏ', 'ẕ'), ('ḍ', 'ż'), ('ṯ', 's̱'), ('j', 'ǧ'), ('ˀ','ʼ'), ('ʔ', 'ʼ'), ('ȳ', 'ye'), ("ā̂", "ā"), ('\u033D', '')]
-
-    for x, y in replacements:
-        Strng = Strng.replace(x, y)
-
-    return Strng
 
 #testcase todo
 def arabizeLatn(Strng, target='semitic'):
@@ -498,7 +427,6 @@ def UseAlternateo1(Strng):
 
     return Strng
 
-
 def UseAlternateo2(Strng):
     """Pali /o/ - alternate o vowel sign glyph -> the two-part long-o vowel sequence."""
     Strng = Strng.replace('ᩰ', 'ᩮᩣ')
@@ -593,7 +521,6 @@ def westernsyriac(Strng):
     """No-op placeholder (reserved for Western Syriac font-variant handling)."""
     return Strng
 
-
 # Pallava's own logic now lives in ScriptProcessing/Pallava.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
@@ -650,7 +577,6 @@ def arabPaFa(Strng):
 
     """Replaces Arabic pe with fa (renders Persian/Urdu 'pa' sound as Arabic 'fa')."""
     return Strng.replace('پ','ف')
-
 
 #todo testcase
 def arabChaSa(Strng):
@@ -755,7 +681,6 @@ def _japanese_nativize_branch_fix(txt, nativize):
     else:
         #txt = txt.replace('v', 'w')
         txt = txt.replace('r\u309A', 'r').replace('k\u309Ak' + '\u309A', 'ng').replace('k\u309A', 'ng')
-
 
         txt = txt.replace('yi', 'i').replace('ye', 'e').replace('wu', 'u')
         txt = txt.replace('wo', 'uxo')
@@ -945,7 +870,6 @@ from .ScriptProcessing.Tibetan import TibetanSyllabize, TibetanSanskritPalatals,
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Soyombo import SoyomboSyllabize, SoyomboSanskritPalatals, SoyomboFinals, SoyomboInitials, SoyomboSpaceTscheg
 
-
 # PhagsPa's own logic now lives in ScriptProcessing/PhagsPa.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
@@ -960,7 +884,6 @@ from .ScriptProcessing.RomanReadable import RomanReadableLongEO
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Marchen import MarchenSanskritPalatals
-
 
 # ZanabazarSquare's own logic now lives in ScriptProcessing/ZanabazarSquare.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
@@ -1070,7 +993,6 @@ def AnusvaratoNasalASTISO(Strng):
 
     return Strng
 
-
 # RussianCyrillic's own logic now lives in ScriptProcessing/RussianCyrillic.py -
 # consolidated there (batch migration).
 from .ScriptProcessing.RussianCyrillic import CyrillicPali_post as CyrillicPali, removeDiacritics
@@ -1119,7 +1041,6 @@ def MultaniAbjad(Strng):
     Strng = re.sub(ListC + ListV + ListC, r'\1\3', Strng)
     Strng = re.sub('('+ ListC + '{2,})' + ListV, r'\1', Strng)
     Strng = re.sub(ListV + ListC + ListV, r'\1\2', Strng)
-
 
     return Strng
 
@@ -1726,7 +1647,6 @@ def ThaiLaoTranscription(Strng,Script,shortA,shortAconj,reverse=False, anusvaraC
         Strng = re.sub("(?<!["+EAIO+"])"+"("+cons+")"+"(?!["+AIUVir+"])",r'\1'+shortA,Strng)
         Strng = re.sub("("+shortA+")"+"(?=("+cons+")"+"("+vir+"))",shortAconj,Strng)
 
-
         # prahlada -> ประหลาทะ
         Strng = Strng.replace(shortAconj + 'ห'+vir, shortA + 'ห'+vir)
         # katra -> กะตระ
@@ -1743,7 +1663,6 @@ def ThaiLaoTranscription(Strng,Script,shortA,shortAconj,reverse=False, anusvaraC
 
         ## Fix sarva --> srrva ; สัรวะ ->
         Strng = Strng.replace(shortAconj + 'ร', 'รร')
-
 
         ## Fix Purevowels
 
@@ -1827,7 +1746,6 @@ def FixTallA(Strng, TallACons):
 
     return Strng
 
-
 def AvestanConventions(Strng):
     # Fix Nasalization, hma etc
 
@@ -1836,7 +1754,6 @@ def AvestanConventions(Strng):
     ListC = "|".join(GM.CrunchSymbols(GM.Consonants, "Avestan")+extraCons)
     ListV = "|".join(GM.CrunchSymbols(GM.Vowels,"Avestan"))
     ListA = "|".join(GM.CrunchSymbols(GM.Vowels + GM.Consonants,"Avestan")+extraCons+ ['𐬄','𐬅'])
-
 
     ii = Avestan.VowelMap[2] * 2
     uu = Avestan.VowelMap[4] * 2
