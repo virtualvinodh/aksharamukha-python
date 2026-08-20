@@ -8,6 +8,7 @@ from .. import GeneralMap as GM
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixGunjalaGondiEncode(Strng):
     """Merges apostrophe-marked vowel-sign sequences into the dedicated Gunjala Gondi combining sign, strips the modifier apostrophes, and drops a trailing virama not followed by a consonant."""
     consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'GunjalaGondi')) + ')'
@@ -23,6 +24,7 @@ def _FixGunjalaGondiEncode(Strng):
 
     return Strng
 
+# internal
 def _FixGunjalaGondiDecode(Strng):
     """Currently a no-op decode fix for Gunjala Gondi; returns the string unchanged."""
     consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'GunjalaGondi')) + ')'
@@ -31,6 +33,7 @@ def _FixGunjalaGondiDecode(Strng):
 
     return Strng
 
+# internal
 def FixGunjalaGondi(Strng, reverse=False):
     """Dispatches to the Gunjala Gondi encode or decode fix routine based on the reverse flag."""
     return _FixGunjalaGondiDecode(Strng) if reverse else _FixGunjalaGondiEncode(Strng)

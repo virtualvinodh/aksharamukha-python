@@ -12,6 +12,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixLaoEncode(Strng):
 
     """Applies Lao encoding fixes: maps aspirate consonants marked with a pseudo-nukta to their unaspirated forms, reverses vowel-sign order, transcribes tone/vowel spelling, and merges AA+Anusvara into the AM ligature."""
@@ -34,6 +35,7 @@ def _FixLaoEncode(Strng):
 
     return Strng
 
+# internal
 def _FixLaoDecode(Strng):
 
     """Reverses Lao encoding fixes: restores aspirate consonants from their unaspirated pseudo-nukta forms, restores vowel-sign order, reverses transcription, and splits the AM ligature back to AA+Anusvara."""
@@ -62,11 +64,13 @@ def _FixLaoDecode(Strng):
 
     return Strng
 
+# internal
 def FixLao(Strng,reverse=False):
 
     """Dispatches to the Lao encode or decode fix routine depending on the reverse flag."""
     return _FixLaoDecode(Strng) if reverse else _FixLaoEncode(Strng)
 
+# internal
 def LaoTranscribe(Strng,reverse=False):
 
     """Applies or reverses Lao short-a/conjunct-a transcription rules via the shared Thai/Lao transcription routine."""
@@ -83,6 +87,7 @@ def LaoTranscribe(Strng,reverse=False):
 
 # ---- Post-processing options ----
 
+# frontend
 def LaoNative(Strng):
 
     """Nativizes Lao spelling by simplifying doubled aspirate/sibilant consonant clusters: ພຸທທັງ ຄັຈຈາມິ ສັພພັງ → ພຸດທັງ ຄັຈສາມິ ສັບພັງ."""

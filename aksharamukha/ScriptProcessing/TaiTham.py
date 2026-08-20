@@ -13,6 +13,7 @@ from aksharamukha.ScriptMap.EastIndic import TaiTham
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixTaiThamEncode(Strng):
 
     """Applies Tai Tham-specific subjoining of ra/la, the mai kang lai and great-sa ligatures, tall-A vowel forms, and conjunct reordering when encoding."""
@@ -53,6 +54,7 @@ def _FixTaiThamEncode(Strng):
 
     return Strng
 
+# internal
 def _FixTaiThamDecode(Strng):
 
     """Reverses Tai Tham subjoining, ligature, and tall-A vowel fixes back to standard consonant-plus-virama sequences when decoding."""
@@ -81,6 +83,7 @@ def _FixTaiThamDecode(Strng):
 
     return Strng
 
+# internal
 def FixTaiTham(Strng,reverse=False):
 
     """Dispatches to the Tai Tham encode or decode fix-up routine based on the reverse flag."""
@@ -88,18 +91,21 @@ def FixTaiTham(Strng,reverse=False):
 
 # ---- Post-processing options ----
 
+# unreferenced
 def TaiThamHighNga(Strng):
     """Replaces the low-register Tai Tham nga consonant with its high-register variant."""
     Strng = Strng.replace('\u1A58','\u1A59')
 
     return Strng
 
+# unreferenced
 def TaiThamMoveNnga(Strng):
     """Repositions the Tai Tham high-register nga sign to follow the character it attaches to."""
     Strng = re.sub('(.)(\u1A58)',r'\2\1',Strng) # Probably its u1A59
 
     return Strng
 
+# unreferenced
 def TaiThamO(Strng):
     """Merges the Tai Tham e-vowel-sign + aa-vowel-sign sequence into the single dedicated o vowel sign."""
     Strng = Strng.replace("\u1A6E\u1A63","\u1A70")

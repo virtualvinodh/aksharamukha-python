@@ -14,6 +14,7 @@ from aksharamukha.ScriptMap.EastIndic import Sundanese
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixSundaneseEncode(Strng):
 
     """Converts ra-virama after a consonant to the Sundanese repha sign and subjoins virama-plus-ya/ra/la into their combining consonant forms when encoding."""
@@ -36,6 +37,7 @@ def _FixSundaneseEncode(Strng):
 
     return Strng
 
+# internal
 def _FixSundaneseDecode(Strng):
 
     """Restores the Sundanese repha sign to ra-plus-virama, reverses historic conjuncts, and expands subjoined consonants back to virama-plus-consonant when decoding."""
@@ -60,6 +62,7 @@ def _FixSundaneseDecode(Strng):
 
     return Strng
 
+# internal
 def FixSundanese(Strng,reverse=False):
 
     """Dispatches to the Sundanese encode or decode fix-up routine based on the reverse flag."""
@@ -67,6 +70,7 @@ def FixSundanese(Strng,reverse=False):
 
 # ---- Post-processing options ----
 
+# frontend
 def SundaneseHistoricConjuncts(Strng, reverse = False):
 
     """Converts to/from archaic Sundanese subjoined-consonant and word-final consonant forms, e.g. ᮊ᮪ᮙ ᮊ᮪ᮝ ᮃᮊ᮪ ᮃᮙ᮪ → ᮊᮬ ᮊᮭ ᮃᮾ ᮃᮿ."""
@@ -88,6 +92,7 @@ def SundaneseHistoricConjuncts(Strng, reverse = False):
 
     return Strng
 
+# internal
 def SundaneseRemoveHistoric(Strng):
 
     """Replaces historic Sundanese vocalic-r/l consonant letters and the archaic pamaeh sign with their modern letter-plus-panyecek combinations."""

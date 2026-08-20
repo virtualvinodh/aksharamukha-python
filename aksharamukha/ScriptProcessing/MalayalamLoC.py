@@ -12,18 +12,21 @@
 # independently re-exported. See ScriptProcessing/HOW_TO_ADD_LOC.md for
 # the naming convention this follows and how to add a new script.
 
+# internal
 def MalayalamRomanLoCFix_pre(Strng):
     """Normalize ṯṯ to ṟṟ and ȧ to ŭ in Malayalam Library of Congress romanization."""
     Strng = Strng.replace('ṯṯ', 'ṟṟ')
     Strng = Strng.replace('ȧ', 'ŭ')
     return Strng
 
+# internal
 def MalayalamRomanLoCFix_post(Strng):
     """Fixes Malayalam LoC romanization: doubled r-line -> doubled t-line, u-breve -> a-overdot."""
     Strng = Strng.replace('ṟṟ', 'ṯṯ')
     Strng = Strng.replace('ŭ', 'ȧ')
     return Strng
 
+# internal
 def mDotBelowToAbove(Strng):
     """Converts dot-above anusvara back to dot-below (inverse of mDotAboveToBelow)."""
     Strng = Strng.replace('ṁ', 'ṃ')
@@ -32,6 +35,7 @@ def mDotBelowToAbove(Strng):
 
 # ---- Pre-processing options ----
 
+# internal
 def RomanLocToMalayalamPre(Strng):
     """Applies candrabindu and Malayalam-specific LoC fixes before converting LoC Roman text to Malayalam."""
     from .RomanLoC import RomanLoCChandrabindu_pre
@@ -42,6 +46,7 @@ def RomanLocToMalayalamPre(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def MalayalamToRomanLocPost(Strng):
     """Applies anusvara-to-nasal, candrabindu, Malayalam-specific, and dot-placement LoC fixes after converting Malayalam to LoC Roman."""
     from .RomanLoC import RomanLoCChandrabindu_post

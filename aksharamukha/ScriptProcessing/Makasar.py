@@ -12,6 +12,7 @@ from aksharamukha.ScriptMap.EastIndic import Makasar
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixMakasarEncode(Strng):
 
     """Inserts the gemination sign and collapses a doubled Makasar consonant into a single consonant plus the killer sign (Anka)."""
@@ -29,6 +30,7 @@ def _FixMakasarEncode(Strng):
 
     return Strng
 
+# internal
 def _FixMakasarDecode(Strng):
 
     """Expands the Makasar killer sign (Anka) marking a doubled consonant back into the repeated consonant sequence."""
@@ -43,6 +45,7 @@ def _FixMakasarDecode(Strng):
 
     return Strng
 
+# internal
 def FixMakasar(Strng, reverse=False):
 
     """Dispatches to the Makasar encode or decode fix-up routine based on the reverse flag."""

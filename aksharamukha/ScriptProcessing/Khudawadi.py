@@ -7,6 +7,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixKhudawadiEncode(Strng):
     """Converts approximated Sindhi implosive-consonant digraphs (e.g. ˍ𑊼) into their precomposed Khudawadi implosive letters when encoding."""
     sindhi = ['𑊽', '𑋃', '𑋉', '𑋕']
@@ -17,6 +18,7 @@ def _FixKhudawadiEncode(Strng):
 
     return Strng
 
+# internal
 def _FixKhudawadiDecode(Strng):
     """Converts precomposed Khudawadi implosive letters back into their approximated Sindhi digraph form when decoding."""
     sindhi = ['𑊽', '𑋃', '𑋉', '𑋕']
@@ -27,6 +29,7 @@ def _FixKhudawadiDecode(Strng):
 
     return Strng
 
+# internal
 def FixKhudawadi(Strng, reverse=False):
     """Dispatches to the Khudawadi encode or decode fix-up routine based on the reverse flag."""
     return _FixKhudawadiDecode(Strng) if reverse else _FixKhudawadiEncode(Strng)

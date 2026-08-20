@@ -8,6 +8,7 @@ from aksharamukha.ScriptMap.MainIndic import MeeteiMayek
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixMeeteiMayekEncode(Strng):
     """Converts eight specific consonant+virama sequences into their dedicated Meetei Mayek final-consonant Unicode characters."""
     vir = MeeteiMayek.ViramaMap[0]
@@ -19,6 +20,7 @@ def _FixMeeteiMayekEncode(Strng):
 
     return Strng
 
+# internal
 def _FixMeeteiMayekDecode(Strng):
     """Expands the dedicated Meetei Mayek final-consonant characters back into their consonant+virama component sequences."""
     vir = MeeteiMayek.ViramaMap[0]
@@ -30,12 +32,14 @@ def _FixMeeteiMayekDecode(Strng):
 
     return Strng
 
+# internal
 def FixMeeteiMayek(Strng,reverse=False):
     """Dispatches to the Meetei Mayek encode or decode fix routine depending on the reverse flag."""
     return _FixMeeteiMayekDecode(Strng) if reverse else _FixMeeteiMayekEncode(Strng)
 
 # ---- Post-processing options ----
 
+# internal
 def MeeteiMayekremoveHistorical(Strng):
     """Replaces historical/obsolete Meetei Mayek letters and the diaeresis-marked cheitap ee/oo sequences with their modern equivalents."""
     removePairs = [('ꫢ', 'ꯆ'), ('ꫣ', 'ꯅ'), ('ꫤ','ꯇ'), ('ꫥ','ꯊ'), ('ꫦ','ꯗ'), ('ꫧ','ꯙ'), ('ꫨ','ꯅ'),

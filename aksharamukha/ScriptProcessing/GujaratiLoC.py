@@ -5,6 +5,7 @@
 
 # ---- Pre-processing options ----
 
+# internal
 def RomanLocToGujaratiPre(Strng):
     """Normalizes candrabindu before converting LoC Roman text to Gujarati."""
     from .RomanLoC import RomanLoCChandrabindu_pre
@@ -14,6 +15,7 @@ def RomanLocToGujaratiPre(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def GujaratiToRomanLocPost(Strng):
     """Applies anusvara-to-nasal and candrabindu LoC fixes after converting Gujarati to LoC Roman."""
     from .RomanLoC import RomanLoCChandrabindu_post

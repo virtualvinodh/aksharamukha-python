@@ -11,6 +11,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def FixLaoTham(Strng, reverse=False):
 
     """Applies the shared Tai Tham script orthographic fixes (via ConvertFix.FixTaiTham) used for the Lao Tham variant."""
@@ -21,12 +22,14 @@ def FixLaoTham(Strng, reverse=False):
 
 # ---- Pre-processing options ----
 
+# frontend
 def TaiThamLao_pre(Strng):
     """Placeholder Tai Tham Lao pre-processing hook (currently a no-op passthrough)."""
     return Strng
 
 # ---- Post-processing options ----
 
+# frontend
 def TaiThamLao_post(Strng):
     """No-op placeholder (reserved for Tai Tham Lao-variant post-processing)."""
     return Strng

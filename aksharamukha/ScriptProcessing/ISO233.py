@@ -12,6 +12,7 @@
 
 # ---- Pre-processing options ----
 
+# internal
 def ArabToISO233Pre(Strng):
     """Substitute Arabic hamza letters (أ ء إ) with their ISO 233 romanization symbols (ˈʾ, ¦, ˌʾ)."""
     replacements = [('أ', 'ˈʾ'), ('ء', '¦'), ('إ', 'ˌʾ')]
@@ -21,6 +22,7 @@ def ArabToISO233Pre(Strng):
 
     return Strng
 
+# internal
 def ISO233ToArabPre(Strng):
     """Reverse ISO 233 romanization symbols back to Arabic hamza letters and normalize additional consonant/vowel spellings (j/g → ǧ, etc.) on the source side."""
     replacements = [('أ', 'ˈʾ'), ('ء', '¦'), ('إ', 'ˌʾ')]
@@ -38,6 +40,7 @@ def ISO233ToArabPre(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def ArabToISO233Post(Strng):
     """Converts intermediate Arabic romanization to ISO 233 conventions (j/g->g-caron, h-diaeresis->t-diaeresis, nunation marks aN/iN/uN -> accented vowels, etc.)."""
     replacements = [('j', 'ǧ'), ('g', 'ǧ'), ('ḧ', 'ẗ'), ('ḫ', 'ẖ'), ('a̮', 'ỳ'), ('ˀ', 'ˈ'), \
@@ -48,6 +51,7 @@ def ArabToISO233Post(Strng):
 
     return Strng
 
+# internal
 def ISO233ToArabPost(Strng):
 
     """No-op placeholder (reserved for ISO 233 Arabic romanization source-side processing)."""

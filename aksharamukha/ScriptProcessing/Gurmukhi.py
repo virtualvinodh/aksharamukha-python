@@ -14,6 +14,7 @@ from aksharamukha.ScriptMap.MainIndic import Gurmukhi
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixGurmukhiEncode(Strng):
 
     """Applies Gurmukhi encoding fixes: RU/LU vowel correction, doubled Aunkar to bracketed AA, gemination-sign insertion, Indic-numeral retention, and Vedic svara consonant doubling."""
@@ -38,6 +39,7 @@ def _FixGurmukhiEncode(Strng):
 
     return Strng
 
+# internal
 def _FixGurmukhiDecode(Strng):
 
     """Reverses Gurmukhi encoding fixes: RU/LU vowel correction, Indic numerals, gemination sign, nn/mm-halant normalization, Tippi-to-Bindu, and Yakaash conjuncts."""
@@ -62,6 +64,7 @@ def _FixGurmukhiDecode(Strng):
 
     return Strng
 
+# internal
 def FixGurmukhi(Strng,reverse=False):
 
     """Dispatches to the Gurmukhi encode or decode fix routine depending on the reverse flag."""
@@ -70,6 +73,7 @@ def FixGurmukhi(Strng,reverse=False):
 
 # ---- Pre-processing options ----
 
+# frontend
 def SchwaFinalGurmukhi(Strng):
 
     """Deletes the schwa only in word-final position: ਰਾਮ → rām."""
@@ -82,6 +86,7 @@ def SchwaFinalGurmukhi(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def GurmukhiCandrabindu(Strng):
 
     """Replaces the Gurmukhi candrabindu sign (ਁ) with anusvara (ਂ), since Gurmukhi does not distinguish them."""
@@ -90,6 +95,7 @@ def GurmukhiCandrabindu(Strng):
 
     return Strng
 
+# frontend
 def GurmukhiYakaash(Strng, reverse=False):
 
     """Applies (or reverses) the Yakaash ligature: ਕ੍ਯ → ਕੵ."""
@@ -101,6 +107,7 @@ def GurmukhiYakaash(Strng, reverse=False):
 
     return Strng
 
+# internal
 def GurmukhiTippiBindu(Strng): # Check this Function
     """Converts Gurmukhi Bindu (ਂ) to Tippi (ੰ) after specific consonants, vowels, and vowel signs where Tippi is conventional."""
     Bindi = Gurmukhi.AyogavahaMap[1];
@@ -118,6 +125,7 @@ def GurmukhiTippiBindu(Strng): # Check this Function
 
     return Strng
 
+# internal
 def GurmukhiTippiGemination(Strng):
 
     """Replaces the Addak gemination mark (ੱ) with Tippi before ਨ or ਮ, reflecting pronunciation of geminated nasals."""

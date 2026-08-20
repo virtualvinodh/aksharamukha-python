@@ -19,6 +19,7 @@ from aksharamukha.ScriptMap.MainIndic import Gurmukhi
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixGurmukhiLoCEncode(Strng):
 
     """Corrects ru/lu vowel signs, collapses a doubled ava sign into parenthesized ā, inserts the gemination sign, retains Indic numerals, and expands addak+Vedic-svara sequences for LoC Gurmukhi encoding."""
@@ -43,6 +44,7 @@ def _FixGurmukhiLoCEncode(Strng):
 
     return Strng
 
+# internal
 def _FixGurmukhiLoCDecode(Strng):
 
     """Reverses ru/lu correction, restores the doubled ava sign from parenthesized ā, retains Indic numerals, and reverses the gemination sign for LoC Gurmukhi decoding."""
@@ -66,6 +68,7 @@ def _FixGurmukhiLoCDecode(Strng):
 
     return Strng
 
+# internal
 def FixGurmukhiLoC(Strng,reverse=False):
 
     """Dispatches to the Gurmukhi LoC encode or decode fix routine based on the reverse flag."""
@@ -74,6 +77,7 @@ def FixGurmukhiLoC(Strng,reverse=False):
 
 # ---- Post-processing options ----
 
+# internal
 def GurmukhiLoCToRomanLocPost(Strng):
     """Converts nasalized m before homorganic stops into the corresponding nasal consonant (velar/palatal/retroflex/dental/labial) for Gurmukhi LoC romanization."""
     Strng = re.sub('(m̆|ṃ)(k|g)', 'ṅ' + r'\2', Strng)

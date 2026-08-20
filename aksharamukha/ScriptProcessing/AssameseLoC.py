@@ -5,6 +5,7 @@
 
 # ---- Pre-processing options ----
 
+# internal
 def AssameseToRomanLocPre(Strng):
     """Applies the Khanda Ta LoC romanization fix before converting Assamese to LoC Roman."""
     from .RomanLoC import KhandaTaRomanLoC_pre
@@ -12,6 +13,7 @@ def AssameseToRomanLocPre(Strng):
 
     return Strng
 
+# internal
 def RomanLocToAssamesePre(Strng):
     """Normalizes candrabindu before converting LoC Roman text to Assamese."""
     from .RomanLoC import RomanLoCChandrabindu_pre
@@ -21,6 +23,7 @@ def RomanLocToAssamesePre(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def AssameseToRomanLocPost(Strng):
     """Normalizes candrabindu after converting Assamese to LoC Roman."""
     from .RomanLoC import RomanLoCChandrabindu_post
@@ -28,6 +31,7 @@ def AssameseToRomanLocPost(Strng):
 
     return Strng
 
+# internal
 def RomanLocToAssamesePost(Strng):
     """Restores the Khanda Ta letter after converting LoC Roman text to Assamese."""
     from .RomanLoC import KhandaTaRomanLoC_post

@@ -14,6 +14,7 @@ from aksharamukha.ScriptMap.MainIndic import Takri
 
 # ---- Pre-processing options ----
 
+# frontend
 def TakriArchaicKha_pre(Strng):
 
     """Temporarily substitutes the archaic Takri kha (𑚋) with a placeholder character before further processing."""
@@ -21,11 +22,13 @@ def TakriArchaicKha_pre(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def TakriArchaicKha_post(Strng):
 
     """Restores the archaic Takri kha (𑚋) from its temporary placeholder character after processing."""
     return Strng.replace('𑚸', '𑚋')
 
+# frontend
 def TakriRemoveGemination(Strng):
 
     """Collapses a geminated consonant (virama followed by the same consonant) into a single consonant, e.g. 𑚄𑚙𑚶𑚙𑚤 → 𑚄𑚙𑚤."""

@@ -10,6 +10,7 @@ from aksharamukha.ScriptMap.EastIndic import ZanabazarSquare
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixZanabazarSquareEncode(Strng):
     """Applies Zanabazar Square encoding fixes: converts virama+consonant to subjoining form and merges the KSSA conjunct sequence into its dedicated character."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ZanabazarSquare'))
@@ -24,6 +25,7 @@ def _FixZanabazarSquareEncode(Strng):
 
     return Strng
 
+# internal
 def _FixZanabazarSquareDecode(Strng):
     """Reverses Zanabazar Square encoding fixes: expands subjoining virama and repha, TSA-series to CA-series consonants, contextual y/r/l/v forms, alternate ai/au, the KSSA conjunct, and the Mongolian final mark."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ZanabazarSquare'))
@@ -62,12 +64,14 @@ def _FixZanabazarSquareDecode(Strng):
 
     return Strng
 
+# internal
 def FixZanabazarSquare(Strng, reverse=False):
     """Dispatches to the Zanabazar Square encode or decode fix routine depending on the reverse flag."""
     return _FixZanabazarSquareDecode(Strng) if reverse else _FixZanabazarSquareEncode(Strng)
 
 # ---- Post-processing options ----
 
+# frontend
 def ZanabazarSanskritPalatals(Strng):
     """Converts TSA-series letters to Sanskrit palatal (CA-series) forms: 𑨣 𑨤 𑨥 → 𑨐 𑨑 𑨒."""
     tsaSeries = ['𑨣', '𑨤', '𑨥']
@@ -78,12 +82,14 @@ def ZanabazarSanskritPalatals(Strng):
 
     return Strng
 
+# frontend
 def ZanzabarSpaceTsheg(Strng):
     """Replaces spaces with the Zanabazar Square tsheg (syllable separator) mark: 𑨝 𑨢𑨆 → 𑨝𑩁𑨢𑨆."""
     Strng = Strng.replace(' ', '\U00011A41')
 
     return Strng
 
+# frontend
 def ZanabazarSquareContextual(Strng):
     """Applies contextual subjoined ya/ra/la/va forms and the repha ligature: 𑨋𑩇𑨪 𑨋𑩇𑨫 𑨋𑩇𑨬 𑨋𑩇𑨭 𑨫𑩇𑨋 → 𑨋𑨻 𑨋𑨼 𑨋𑨽 𑨋𑨾 𑨺𑨋."""
     yrlv = ZanabazarSquare.ConsonantMap[25:29]
@@ -96,6 +102,7 @@ def ZanabazarSquareContextual(Strng):
 
     return Strng
 
+# frontend
 def ZanabazarSquareAiAu(Strng):
     """Uses alternate ai/au vowel ligatures: 𑨀𑨄𑨊 𑨀𑨆𑨊 → 𑨀𑨇 𑨀𑨈."""
     Strng = Strng.replace('\U00011A04\U00011A0A', '\U00011A07')
@@ -103,6 +110,7 @@ def ZanabazarSquareAiAu(Strng):
 
     return Strng
 
+# frontend
 def ZanabazarSquareMongolianFinal(Strng):
     """Uses the Mongolian final consonant mark in place of virama: 𑨀𑨋𑨴 → 𑨀𑨋𑨳."""
     Strng = Strng.replace(ZanabazarSquare.ViramaMap[0], '\U00011A33')

@@ -17,6 +17,7 @@ import re
 
 # ---- Pre-processing options ----
 
+# frontend
 def LimbuDevanagariConvention_pre(Strng):
     """Converts Devanagari short e/o (nukta forms) and visarga to Limbu-convention codepoints (ऎ/ऒ/ॆ/ॊ/꞉) before processing."""
     Strng = Strng.replace('ए़', 'ऎ')
@@ -29,6 +30,7 @@ def LimbuDevanagariConvention_pre(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def LimbuDevanagariConvention_post(Strng):
     """Restores Limbu-convention short e/o and visarga codepoints back to standard Devanagari nukta forms after processing."""
     Strng = Strng.replace('ऎ', 'ए़')

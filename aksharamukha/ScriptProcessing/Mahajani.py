@@ -7,6 +7,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixMahajaniEncode(Strng):
     """Converts the multi-character Mahajani rupee-sign sequence into its single Unicode ligature and strips joiner marks."""
     Strng = Strng.replace('𑅰𑅳ʾ𑅭ʿ𑅑', '\U00011176')
@@ -14,12 +15,14 @@ def _FixMahajaniEncode(Strng):
 
     return Strng
 
+# internal
 def _FixMahajaniDecode(Strng):
     """Expands the Mahajani rupee-sign Unicode ligature back into its multi-character component sequence."""
     Strng = Strng.replace('\U00011176', '𑅰𑅳ʾ𑅭ʿ𑅑')
 
     return Strng
 
+# internal
 def FixMahajani(Strng, reverse=False):
     """Dispatches to the Mahajani encode or decode fix routine depending on the reverse flag."""
     return _FixMahajaniDecode(Strng) if reverse else _FixMahajaniEncode(Strng)

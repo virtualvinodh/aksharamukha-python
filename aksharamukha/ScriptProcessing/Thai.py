@@ -26,6 +26,7 @@ from aksharamukha.ScriptMap.EastIndic import Thai
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def FixThai(Strng,reverse=False,ctx=None):
     """Dispatches Thai fix logic: reverses vowel sign order, resolves digraph conjuncts, and optionally applies phonetic transcription."""
     from .. import PostProcess
@@ -40,6 +41,7 @@ def FixThai(Strng,reverse=False,ctx=None):
 
     return Strng
 
+# internal
 def ThaiReverseVowelSigns(Strng,reverse=False):
     """Reorders leading Thai vowel signs to/from consonant-first internal order and forms the AM/IM ligatures (◌ํ, ◌ึ)."""
     from .. import ConvertFix as CF
@@ -59,6 +61,7 @@ def ThaiReverseVowelSigns(Strng,reverse=False):
 
     return Strng
 
+# internal
 def ThaiDigraphConjuncts(Strng,reverse=False):
     """Reorders vowel-consonant-virama-consonant sequences to form Thai digraph conjunct clusters, or reverses them."""
     EAIO = "".join(Thai.VowelSignMap[9:12])
@@ -81,11 +84,13 @@ def ThaiDigraphConjuncts(Strng,reverse=False):
 
 # ---- Pre-processing options ----
 
+# frontend
 def ThaiOrthography(Strng):
 
     """Marks text as standard Thai orthography - e.g. พุทธะ."""
     return Strng
 
+# frontend
 def ThaiPhonetic(Strng):
     """Converts to Thai phonetic transcription: ด→ท, บ→พ, marks aspirated ก/จ with a dot-below, and strips nikkhahit/tone marks - e.g. ตะต͜ระ ราจ̥ะ."""
     Strng = Strng.replace('ด', 'ท')
@@ -100,6 +105,7 @@ def ThaiPhonetic(Strng):
 
     return Strng
 
+# frontend
 def ThaiSajjhayaOrthography_pre(Strng):
     """Pre-processes text for Thai Sajjhāya orthography by converting anusvara/tone marks to the subscript virama sign and dropping the short-a conjunct."""
     Script = "Thai"
@@ -116,6 +122,7 @@ def ThaiSajjhayaOrthography_pre(Strng):
 
     return Strng
 
+# frontend
 def ThaiSajjhayawithA_pre(Strng):
     """Strips the short-a sign then applies the Thai Sajjhāya orthography pre-processing."""
     Strng = Strng.replace('ะ', '')
@@ -125,6 +132,7 @@ def ThaiSajjhayawithA_pre(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def ThaiNativeConsonants(Strng):
     """Converts to native Thai phonetic consonant forms - พุทฺธตฺว → บุดธะต͜วะ."""
     Strng = Strng.replace('ท', 'ด')
@@ -160,6 +168,7 @@ def ThaiNativeConsonants(Strng):
 
     return Strng
 
+# frontend
 def ThaiSajjhayaOrthography_post(Strng, Script = "Thai"):
     ## reverse digraphs
     """Post-processes Thai (or Lao Pali) text into Sajjhāya orthography, inserting joiners between consonant clusters and reordering digraphs."""
@@ -212,6 +221,7 @@ def ThaiSajjhayaOrthography_post(Strng, Script = "Thai"):
 
     return Strng
 
+# frontend
 def ThaiSajjhayawithA_post(Strng):
     """Post-processes text into nativized Sajjhāya-with-a orthography by applying transcription with anusvara restoration."""
     Strng = ThaiSajjhayaOrthography_post(Strng)
@@ -228,6 +238,7 @@ def ThaiSajjhayawithA_post(Strng):
 
     return Strng
 
+# frontend
 def ThaiTranscription(Strng, anusvaraChange = True):
     """Converts Thai script to phonetic transcription orthography by reversing digraphs and applying short-a insertion rules - พุทฺธ → พุทธะ."""
     from .. import PostProcess
@@ -265,6 +276,7 @@ def ThaiTranscription(Strng, anusvaraChange = True):
 
     return Strng
 
+# frontend
 def ThaiVisargaSaraA(Strng):
     """Converts the visarga-style ห์ marker back into the short-a sign ะ - นมัห์ → นมะ."""
     Strng = Strng.replace('ห์','ะ')

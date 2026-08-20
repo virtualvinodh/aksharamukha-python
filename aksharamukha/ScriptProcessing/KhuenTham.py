@@ -12,6 +12,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def FixKhuenTham(Strng, reverse=False):
 
     """Applies the shared Tai Tham family fix-up, with ra-haam swap enabled, for Khuen Tham script conversion."""
@@ -20,6 +21,7 @@ def FixKhuenTham(Strng, reverse=False):
 
 # ---- Pre-processing options ----
 
+# frontend
 def KhuenRaHaamKaren(Strng):
 
     """Expands ra-haam into an explicit ra consonant sign and reassigns the lue-karan mark to represent ra-haam, e.g. ᨠ᩺ → kar, ᨠ᩼ → k."""
@@ -35,6 +37,7 @@ def KhuenRaHaamKaren(Strng):
 # extra text-marker injection before delegating - see
 # ScriptProcessing/HOW_TO_ADD_LOC.md and ScriptProcessing/ThamLoC.py.
 
+# internal
 def RomanLocToKhuenThamPre(Strng):
     """Injects the Khuen text marker, then applies the shared Tai Tham LoC pre-conversion fix, before converting LoC Roman text to Khuen Tham."""
     from .ThamLoC import RomanLocToThamLoCPre

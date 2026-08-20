@@ -12,6 +12,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixKhojkiEncode(Strng):
 
     """Converts approximated Sindhi consonant sequences to their dedicated Khojki characters, inserts the gemination sign, moves shadda after its consonant, reorders shadda+nukta, and encodes spaces as the Khojki word separator."""
@@ -32,6 +33,7 @@ def _FixKhojkiEncode(Strng):
 
     return Strng
 
+# internal
 def _FixKhojkiDecode(Strng):
 
     """Reverses the word separator, Sindhi consonant substitution, shadda/nukta ordering, and gemination sign transformations applied when encoding Khojki."""
@@ -52,6 +54,7 @@ def _FixKhojkiDecode(Strng):
 
     return Strng
 
+# internal
 def FixKhojki(Strng, reverse=False):
 
     """Dispatches to the Khojki encode or decode fix routine based on the reverse flag."""
@@ -59,6 +62,7 @@ def FixKhojki(Strng, reverse=False):
 
 # ---- Post-processing options ----
 
+# internal
 def KhojkiRRI(Strng):
 
     """Decomposes the Khojki vocalic RI/RII ligature characters into their constituent letter sequences."""
@@ -67,6 +71,7 @@ def KhojkiRRI(Strng):
 
     return Strng
 
+# frontend
 def KhojkiQa(Strng):
 
     """Uses the dedicated Khojki qa ligature instead of ka+nukta, e.g. 𑈈𑈶 → 𑈿."""
@@ -74,6 +79,7 @@ def KhojkiQa(Strng):
 
     return Strng
 
+# frontend
 def KhojkiRetainSpace(Strng):
 
     """Replaces the Khojki word-separator character with a plain space."""

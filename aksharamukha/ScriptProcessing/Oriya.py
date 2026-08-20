@@ -13,6 +13,7 @@ from aksharamukha.ScriptMap.MainIndic import Oriya
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixOriyaEncode(Strng):
 
     """No-op encode fix for Oriya; no additional orthographic corrections are currently applied."""
@@ -20,6 +21,7 @@ def _FixOriyaEncode(Strng):
 
     return Strng
 
+# internal
 def _FixOriyaDecode(Strng):
 
     """Replaces the alternate va character (ଵ) with the standard Oriya va/wa (ୱ) when decoding out of Oriya."""
@@ -27,6 +29,7 @@ def _FixOriyaDecode(Strng):
 
     return Strng
 
+# internal
 def FixOriya(Strng, reverse=False):
 
     """Dispatches to the Oriya encode or decode fix routine based on the reverse flag."""
@@ -34,6 +37,7 @@ def FixOriya(Strng, reverse=False):
 
 # ---- Pre-processing options ----
 
+# frontend
 def OriyaSubojinedVa(Strng):
 
     """Renders subjoined /va/ using ୱ instead of plain ba, e.g. ସ୍ବ ଦ୍ବ → sva dva."""
@@ -41,6 +45,7 @@ def OriyaSubojinedVa(Strng):
 
     return Strng
 
+# frontend
 def OriyaTargetVa(Strng):
 
     """Uses ୱ as the target letter for /va/, e.g. ବ → va."""
@@ -50,17 +55,20 @@ def OriyaTargetVa(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def OriyaVaAlt(Strng):
 
     """Uses the alternate va character ଵ instead of ୱ, e.g. ଭୱତି → ଭଵତି (enable preserve source)."""
     return  Strng.replace('ୱ','ଵ')
 
+# frontend
 def OriyaYYA(Strng):
 
     """Replaces ya with yya (ୟ) everywhere in the text, e.g. ଯୟାତି ଯଜ୍ଞ → ୟୟାତି ୟଜ୍ଞ."""
     from .. import PostProcess
     return PostProcess.YYAEverywhere(Strng, 'Oriya')
 
+# internal
 def OriyaVa(Strng):
 
     """Replaces standalone va with ba (ବ), except when it is subjoined immediately after a virama."""

@@ -16,6 +16,7 @@
 
 import re
 
+# frontend
 def HindiMarathiRomanLoCFix_pre(Strng):
     """Substitutes 'sh'→ṣ, ḷ→ḻ, and l̤→l̳ before Hindi/Marathi Library of Congress romanization."""
     Strng = Strng.replace('sh', 'ṣ')
@@ -24,6 +25,7 @@ def HindiMarathiRomanLoCFix_pre(Strng):
 
     return Strng
 
+# internal
 def DevanagariRomanLoCFix_pre(Strng):
     """Normalize nukta-marked digraphs (g̳h̳, t̤, s̤, h̤) to their LoC diacritic forms for Devanagari romanization."""
     Strng = Strng.replace('g̳h̳', 'gḧ').replace('t̤', 'ṭ̈').replace('s̤', 's̈')\
@@ -31,6 +33,7 @@ def DevanagariRomanLoCFix_pre(Strng):
 
     return Strng
 
+# frontend
 def HindiMarathiRomanLoCFix_post(Strng):
     """Reverses the Hindi/Marathi LoC substitutions: ṣ→'sh', ḻ→ḷ, l̳→l̤."""
     Strng = Strng.replace('ṣ', 'sh')
@@ -39,6 +42,7 @@ def HindiMarathiRomanLoCFix_post(Strng):
 
     return Strng
 
+# internal
 def DevanagariRomanLoCFix_post(Strng):
     """Fixes Devanagari LoC romanization diaeresis-marked digraphs: g-h-diaeresis -> g-underdot h-underdot, t-diaeresis -> t-underdot, s-diaeresis -> s-underdot, h-diaeresis -> h-underdot."""
     Strng = Strng.replace('gḧ', 'g̳h̳').replace('ṭ̈', 't̤').replace('s̈', 's̤')\
@@ -48,6 +52,7 @@ def DevanagariRomanLoCFix_post(Strng):
 
 # ---- Pre-processing options ----
 
+# internal
 def RomanLocToDevanagariPre(Strng):
     """Applies candrabindu and nukta-digraph LoC fixes before converting LoC Roman text to Devanagari."""
     from .RomanLoC import RomanLoCChandrabindu_pre
@@ -58,6 +63,7 @@ def RomanLocToDevanagariPre(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def DevanagariToRomanLocPost(Strng):
     """Applies anusvara-to-nasal, candrabindu, and nukta-digraph LoC fixes after converting Devanagari to LoC Roman."""
     from .RomanLoC import RomanLoCChandrabindu_post

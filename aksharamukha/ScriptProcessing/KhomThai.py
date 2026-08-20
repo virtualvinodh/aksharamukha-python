@@ -11,6 +11,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixKhomThaiEncode(Strng):
 
     """Encodes Khom Thai orthography: expands the โ ligature, reverses vowel sign order, and reorders sara-ai/repha clusters around subscript consonants."""
@@ -29,6 +30,7 @@ def _FixKhomThaiEncode(Strng):
 
     return Strng
 
+# internal
 def _FixKhomThaiDecode(Strng):
 
     """Reverses Khom Thai encoding fixes: restores vowel sign order and collapses เา back into the โ ligature."""
@@ -43,6 +45,7 @@ def _FixKhomThaiDecode(Strng):
 
     return Strng
 
+# internal
 def FixKhomThai(Strng, reverse=False):
 
     """Dispatches to the Khom Thai encode or decode fix routine depending on conversion direction."""

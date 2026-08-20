@@ -7,6 +7,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixWanchoEncode(Strng):
     """Encode romanized input into native Wancho script: convert ASCII tone-mark escapes to tone codepoints, fuse nasalization/anusvara markers with their vowels, and merge digraph/WA ligatures into single codepoints."""
     tonemarks = ['\U0001E2EC', '\U0001E2ED', '\U0001E2EE', '\U0001E2EF']
@@ -41,6 +42,7 @@ def _FixWanchoEncode(Strng):
 
     return Strng
 
+# internal
 def _FixWanchoDecode(Strng):
     """Decode native Wancho script back to its romanized representation: expand tone codepoints to ASCII escapes, split fused nasalization/anusvara vowels into vowel+marker sequences, and expand merged ligatures."""
     tonemarks = ['\U0001E2EC', '\U0001E2ED', '\U0001E2EE', '\U0001E2EF']
@@ -69,6 +71,7 @@ def _FixWanchoDecode(Strng):
 
     return Strng
 
+# internal
 def FixWancho(Strng, reverse=False):
     """Core Wancho encode/decode entry point: encode into Wancho script by default, or decode out of it back to internal representation when reverse=True."""
     return _FixWanchoDecode(Strng) if reverse else _FixWanchoEncode(Strng)

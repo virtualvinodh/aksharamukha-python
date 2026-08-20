@@ -13,6 +13,7 @@ from .. import GeneralMap as GM
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixBengaliEncode(Strng):
 
     """Inserts a ZWNJ before bare ba after a virama, fixes subjoined bva rendered as va-with-nukta, and applies the khanda-ta fix when encoding into Bengali."""
@@ -31,6 +32,7 @@ def _FixBengaliEncode(Strng):
 
     return Strng
 
+# internal
 def _FixBengaliDecode(Strng):
 
     """Reverses the khanda-ta fix when decoding out of Bengali."""
@@ -45,6 +47,7 @@ def _FixBengaliDecode(Strng):
 
     return Strng
 
+# internal
 def FixBengali(Strng, reverse=False):
 
     """Dispatches to the Bengali encode or decode fix routine based on the reverse flag."""
@@ -52,6 +55,7 @@ def FixBengali(Strng, reverse=False):
 
 # ---- Pre-processing options ----
 
+# frontend
 def BengaliSubojinedVa(Strng):
 
     """Renders subjoined /va/ using nukta-ba (ভ়) instead of plain ba, e.g. স্ব দ্ব → sva dva."""
@@ -59,6 +63,7 @@ def BengaliSubojinedVa(Strng):
 
     return Strng
 
+# frontend
 def BengaliTargetVa(Strng):
 
     """Uses nukta-ba (ভ়) as the target letter for /va/, e.g. ব → va."""
@@ -66,6 +71,7 @@ def BengaliTargetVa(Strng):
 
     return Strng
 
+# frontend
 def BengaliSwitchYaYYa_pre(Strng):
     """Swap Bengali ya (য) and yya (য়) so that ya maps to ẏa and yya maps to ya."""
     Strng = re.sub('(?<!\u09CD)য', '@#$', Strng)
@@ -76,6 +82,7 @@ def BengaliSwitchYaYYa_pre(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def BengaliOldRA(Strng):
 
     """Uses the old Bengali ra form (ৰ) instead of the standard ra, e.g. র → ৰ."""
@@ -83,6 +90,7 @@ def BengaliOldRA(Strng):
 
     return Strng
 
+# internal
 def BengaliConjunctVB(Strng):
 
     """Merges ZWNJ-separated virama+ba clusters into a normal conjunct (so kva/kba render alike) and converts khanda-ta+ba to ta+virama+ba."""
@@ -92,6 +100,7 @@ def BengaliConjunctVB(Strng):
 
     return Strng
 
+# frontend
 def khandatabatova(Strng):
 
     """Converts khanda-ta followed by ba (with or without an intervening ZWNJ) into full ta+virama+ba, e.g. ৎব → ত্ব."""
@@ -100,6 +109,7 @@ def khandatabatova(Strng):
 
     return Strng
 
+# frontend
 def BengaliRaBa(Strng):
 
     """Treats ৰ as /b/ and ব as /v/, breaking ra conjuncts and inserting joiners to correctly render bra/bya/bru and rba clusters."""
@@ -117,6 +127,7 @@ def BengaliRaBa(Strng):
 
     return Strng
 
+# frontend
 def BengaliIntervocalicDDA(Strng):
 
     """Converts ড/ঢ to their nukta forms ড়/ঢ় in intervocalic position, e.g. দৃঢ আষাঢ → দৃঢ় আষাঢ়."""
@@ -131,6 +142,7 @@ def BengaliIntervocalicDDA(Strng):
 
     return Strng
 
+# frontend
 def BengaliSwitchYaYYa_post(Strng):
     """ya -> yya-with-nukta & yya-with-nukta -> ya (swaps the plain and nuktaed Bengali ya letters)."""
     Strng = re.sub('(?<!\u09CD)য', '@#$', Strng)
@@ -139,6 +151,7 @@ def BengaliSwitchYaYYa_post(Strng):
 
     return Strng
 
+# frontend
 def BengaliYYA(Strng):
     """ya everywhere - yayati yajna -> nukta-ya-yati nukta-yajna (replaces every plain ya with nuktaed yya in Bengali)."""
     from .. import PostProcess

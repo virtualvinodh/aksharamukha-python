@@ -11,6 +11,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixMonEncode(Strng):
 
     """Applies Burmese base fixes plus Mon-specific medial consonant signs and nga/nya letter disambiguation for encoding."""
@@ -54,6 +55,7 @@ def _FixMonEncode(Strng):
 
     return Strng
 
+# internal
 def _FixMonDecode(Strng):
 
     """Reverses Mon medial consonant signs and nga/nya disambiguation back to Burmese-style virama sequences."""
@@ -84,6 +86,7 @@ def _FixMonDecode(Strng):
 
     return Strng
 
+# internal
 def FixMon(Strng, reverse=False):
 
     """Dispatches to the Mon encode or decode fix-up routine based on the reverse flag."""

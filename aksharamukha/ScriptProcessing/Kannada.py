@@ -13,6 +13,7 @@ from .. import GeneralMap as GM
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixKannadaEncode(Strng):
 
     """Retains Indic dandas and inserts a ZWNJ before a nukta after virama (except before pha/ja) when encoding into Kannada."""
@@ -24,6 +25,7 @@ def _FixKannadaEncode(Strng):
 
     return Strng
 
+# internal
 def _FixKannadaDecode(Strng):
 
     """Restores Indic dandas to their generic forms when decoding out of Kannada script."""
@@ -32,6 +34,7 @@ def _FixKannadaDecode(Strng):
 
     return Strng
 
+# internal
 def FixKannada(Strng, reverse=False):
 
     """Dispatches to the Kannada encode or decode fix-up routine based on the reverse flag."""
@@ -39,6 +42,7 @@ def FixKannada(Strng, reverse=False):
 
 # ---- Post-processing options ----
 
+# frontend
 def KannadaSpacingCandrabindu(Strng):
 
     """Uses the spacing candrabindu form instead of the combining one, e.g. ಯಹಾಁ → ಯಹಾಀ."""
@@ -46,6 +50,7 @@ def KannadaSpacingCandrabindu(Strng):
 
     return Strng
 
+# frontend
 def KannadaNotRepha(Strng):
 
     """Prevents ra-virama before a consonant from forming a visual repha ligature, e.g. ಧರ್ಮ → ಧರ‍್ಮ."""
@@ -55,6 +60,7 @@ def KannadaNotRepha(Strng):
 
     return Strng
 
+# frontend
 def KannadaNakaraPollu(Strng):
 
     """Converts word-final na-virama to the special Kannada nakaara pollu character, e.g. ಭಗವನ್ → ಭಗವೝ."""

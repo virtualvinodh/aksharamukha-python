@@ -8,6 +8,7 @@ from .. import GeneralMap as GM
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _hanifi_rohingya_lookups():
     """Builds regex character-class strings for Hanifi Rohingya consonants and vowels used by the encode/decode fixers."""
     consList = '(' + '|'.join(GM.CrunchSymbols(GM.Consonants, 'HanifiRohingya')+['\U00010D17', '\U00010D19']) + ')'
@@ -18,6 +19,7 @@ def _hanifi_rohingya_lookups():
     consListLookBehind = ''.join(map(lambda x: '(?<!' + x + ')', GM.CrunchSymbols(GM.Consonants, 'HanifiRohingya')))
     return consList, vowList, vowListNotA, consListLookBehind
 
+# internal
 def _FixHanifiRohingyaEncode(Strng):
     """Encodes Hanifi Rohingya orthography: inserts vowel carriers, gemination marks, diphthong signs, tone letters, sukun, and Perso-Arabic punctuation."""
     consList, vowList, vowListNotA, consListLookBehind = _hanifi_rohingya_lookups()
@@ -38,6 +40,7 @@ def _FixHanifiRohingyaEncode(Strng):
 
     return Strng
 
+# internal
 def _FixHanifiRohingyaDecode(Strng):
     """Reverses Hanifi Rohingya encoding: removes vowel carriers, expands gemination and diphthongs, and restores tone marks and punctuation."""
     consList, vowList, vowListNotA, consListLookBehind = _hanifi_rohingya_lookups()
@@ -68,6 +71,7 @@ def _FixHanifiRohingyaDecode(Strng):
 
     return Strng
 
+# internal
 def FixHanifiRohingya(Strng, reverse=False):
     """Dispatches to the Hanifi Rohingya encode or decode fix routine depending on conversion direction."""
     return _FixHanifiRohingyaDecode(Strng) if reverse else _FixHanifiRohingyaEncode(Strng)

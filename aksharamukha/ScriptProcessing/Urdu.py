@@ -11,6 +11,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def FixUrdu(Strng, reverse=False):
 
     """Core Urdu encode/decode logic: delegate to the shared Shahmukhi orthography fixer."""
@@ -19,6 +20,7 @@ def FixUrdu(Strng, reverse=False):
 
 # ---- Pre-processing options ----
 
+# frontend
 def UrduShortNotShown(Strng):
     """Mark that Urdu short vowels are not written, appending a flag consumed by later processing to suppress short-vowel signs."""
     Strng += "\u02BB\u02BB"
@@ -27,12 +29,14 @@ def UrduShortNotShown(Strng):
 
 # ---- Post-processing options ----
 
+# unreferenced
 def UrduAlternateUU(Strng):
     """Intended to replace a short-u+wow sequence with wow+hamza-below as an alternate Urdu spelling; the search string is a literal backslash-escaped text, not an actual Unicode sequence, so this currently has no effect."""
     Strng = Strng.replace("\\u064F\\u0648","\u0648\u0657")
 
     return Strng
 
+# frontend
 def UrduRemoveShortVowels(Strng):
     """Remove short vowels - hindustan-with-marks -> hindustan (strips sukun, fatha, kasra, damma, and the Urdu small-v diacritics)."""
     ShortVowels = ['\u0652','\u064E','\u0650','\u064F', '\u0658']

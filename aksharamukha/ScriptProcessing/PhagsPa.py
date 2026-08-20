@@ -11,6 +11,7 @@ from aksharamukha.ScriptMap.EastIndic import PhagsPa
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixPhagsPaEncode(Strng):
     """Reorders candrabindu and subjoined consonants, removes viramas, and inserts syllable-separating spaces for 'Phags-pa encoding."""
     candraBindu = PhagsPa.AyogavahaMap[0]
@@ -100,6 +101,7 @@ def _FixPhagsPaEncode(Strng):
 
     return Strng
 
+# internal
 def _FixPhagsPaDecode(Strng):
     """Reconstructs viramas between 'Phags-pa syllables, expands aspirate letter markers, and reverses subjoined consonant and candrabindu placement when decoding."""
     candraBindu = PhagsPa.AyogavahaMap[0]
@@ -172,12 +174,14 @@ def _FixPhagsPaDecode(Strng):
 
     return Strng
 
+# internal
 def FixPhagsPa(Strng,reverse=False):
     """Dispatches to the 'Phags-pa encode or decode fix-up routine based on the reverse flag."""
     return _FixPhagsPaDecode(Strng) if reverse else _FixPhagsPaEncode(Strng)
 
 # ---- Pre-processing options ----
 
+# internal (test fixture only)
 def PhagsPaArrange(Strng,Source):
     """Inserts spaces between consonant-vowel syllable clusters when arranging 'Phags-pa output for Indic-derived source scripts."""
     if SR.get(Source).is_indic:
@@ -202,16 +206,19 @@ def PhagsPaArrange(Strng,Source):
 
 # ---- Post-processing options ----
 
+# frontend
 def PhagsPaTib(Strng):
 
     """Selects Tibetan-style 'Phags-pa rendering (currently a no-op placeholder)."""
     return Strng
 
+# frontend
 def PhagsPaSeal(Strng):
 
     """Selects seal-script-style 'Phags-pa rendering (currently a no-op placeholder)."""
     return Strng
 
+# internal (test fixture only)
 def PhagsPaRearrange(Strng,Target):
     """Inserts virama before word-final 'Phags-pa consonants (marked by trailing spaces), then converts remaining spaces and Mongolian-style punctuation into 'Phags-pa segment markers."""
     vir = GM.CrunchList('ViramaMap', Target)[0]

@@ -11,6 +11,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def FixLueTham(Strng, reverse=False):
 
     """Applies the shared Tai Tham family fix-up, without ra-haam swap, for Lue Tham script conversion."""

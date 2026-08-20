@@ -8,11 +8,13 @@ import re
 
 # ---- Post-processing options ----
 
+# frontend
 def ranjanalantsa(Strng):
     """Applies Lantsa Tibetan calligraphic style by replacing the Tibetan syllable separator with a plain space: बुद्धः → བུདྡྷཿ."""
     Strng = Strng.replace('་', ' ')
     return Strng
 
+# frontend
 def ranjanawartu(Strng):
     """Applies Wartu Tibetan calligraphic style by replacing the Tibetan syllable separator with the Wartu mark plus space: बुद्धः → བུདྡྷཿ."""
     Strng = Strng.replace('་', '࿎ ')

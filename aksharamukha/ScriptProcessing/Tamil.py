@@ -30,10 +30,12 @@ from aksharamukha.ScriptMap.MainIndic import Tamil
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def FixTamil(Strng,reverse=False):
     """Dispatches to the Tamil encode or decode fix-up routine based on the reverse flag."""
     return _FixTamilDecode(Strng) if reverse else _FixTamilEncode(Strng)
 
+# internal
 def _FixTamilEncode(Strng):
     """Corrects Tamil vocalic ru/lu forms, retains dandas and native numerals, and reorders superscript diacritics before Vedic accent marks."""
     from .. import ConvertFix as CF
@@ -56,6 +58,7 @@ def _FixTamilEncode(Strng):
 
     return Strng
 
+# internal
 def _FixTamilDecode(Strng):
     """Reverses Tamil vocalic ru/lu correction, danda/numeral retention, and diacritic ordering, and restores grantha visarga and the ஷ² ligature."""
     from .. import ConvertFix as CF
@@ -83,6 +86,7 @@ def _FixTamilDecode(Strng):
 
 # ---- Pre-processing options ----
 
+# frontend
 def TamilNumeralSub(Strng):
     """Converts diacritic digit suffixes into Tamil superscript numerals used to mark Grantha consonants, e.g. க2 க3 க4 → க² க³ க⁴."""
     ListC = '(' + '[கசடதபஜஸ]' + ')'
@@ -104,6 +108,7 @@ def TamilNumeralSub(Strng):
 
     return Strng
 
+# internal
 def TamilTranscribeCommon(Strng, c = 31):
     """Implements shared Tamil phonetic transcription rules: intervocalic/post-nasal consonant voicing, sandhi assimilations, and letter simplifications."""
     script = "Tamil"
@@ -190,12 +195,14 @@ def TamilTranscribeCommon(Strng, c = 31):
 
     return Strng
 
+# frontend
 def TamilTranscribe(Strng):
     """Transcribes Tamil script into its standard spoken pronunciation, e.g. மதம், பேசு → madam, pēsu."""
     Strng = TamilTranscribeCommon(Strng)
 
     return Strng
 
+# frontend
 def TamilTranscribeDialect(Strng):
     """Transcribes Tamil script into its dialectal spoken pronunciation, e.g. மதம், பேசு → madam, pēśu."""
     Strng = TamilTranscribeCommon(Strng, c=29)
@@ -204,6 +211,7 @@ def TamilTranscribeDialect(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def TamilNaToNNa(Strng):
     """Converts dental na (ந) to alveolar ன after vowels, except when followed by த், per Tamil orthographic convention."""
     na = Tamil.ConsonantMap[19]
@@ -229,6 +237,7 @@ def TamilNaToNNa(Strng):
 
     return Strng
 
+# internal
 def TamilpredictDentaNa(Strng):
     """Restores dental na (ந) in place of ன for a hardcoded list of Sanskrit-derived words that conventionally take dental na."""
     listDentalNa = '''னக²
@@ -409,6 +418,7 @@ def TamilpredictDentaNa(Strng):
 
     return Strng
 
+# frontend
 def ContextualLLa(Strng):
     """Contextually converts ல to retroflex ள after specific consonant clusters and in a list of known words, e.g. ப்ரலய → ப்ரளய."""
     ListVS = '|'.join(GM.CrunchSymbols(GM.VowelSigns, 'Tamil'))
@@ -438,6 +448,7 @@ def ContextualLLa(Strng):
 
     return Strng
 
+# frontend
 def FinalNNa(Strng):
     """Restricts alveolar ன to word-final position, converting it to dental ந elsewhere, e.g. ஆனனன் → ஆநநன்."""
     Strng = re.sub('ன', 'ந', Strng)
@@ -448,6 +459,7 @@ def FinalNNa(Strng):
 
     return Strng
 
+# frontend
 def TamilAddFirstVarga(Strng):
     """Marks unvoiced first-varga consonants with a superscript ¹ to distinguish them from voiced/aspirated variants, e.g. தீ³பம் → தீ³ப¹ம்."""
     CM = GM.CrunchList('ConsonantMap','Tamil')
@@ -463,6 +475,7 @@ def TamilAddFirstVarga(Strng):
 
     return Strng
 
+# frontend
 def TamilDisableSHA(Strng):
     """Disables the Tamil letter ஶ, replacing it with ஷ² except within ஶ்ரீ, e.g. ஶ → ஷ²."""
     Strng = Strng.replace('ஶ', 'ஷ²')
@@ -473,22 +486,26 @@ def TamilDisableSHA(Strng):
 
     return Strng
 
+# frontend
 def TamilGranthaVisarga(Strng):
     """Replaces the Tamil pluta-visarga symbol (꞉) with the Grantha visarga character, e.g. நம꞉ → நம𑌃."""
     Strng = Strng.replace('꞉', '𑌃')
 
     return Strng
 
+# frontend
 def TamilOmDisable(Strng):
     """Disables the Tamil Om symbol, expanding it to ஓம், e.g. ௐ → ஓம்."""
     return Strng.replace("ௐ", "ஓம்")
 
+# frontend
 def TamilRemoveApostrophe(Strng):
     """Removes apostrophe diacritics used for aytham/visarga notation, e.g. ருʼம்ʼ → ரும்."""
     Strng = Strng.replace('ʼ', '').replace('ˮ', '')
 
     return Strng
 
+# frontend
 def TamilRemoveNumbers(Strng):
     """Strips diacritic superscript/subscript numerals used to mark Grantha consonants, e.g. க²க³க⁴ → ககக."""
     numerals = ['²', '³', '⁴', '₂', '₃', '₄', '¹', '₁']
@@ -498,6 +515,7 @@ def TamilRemoveNumbers(Strng):
 
     return Strng
 
+# frontend
 def TamilSubScript(Strng):
 
     """Converts superscript diacritic numerals to subscript form, e.g. க²க³க⁴ → க₂க₃க₄."""
@@ -509,10 +527,12 @@ def TamilSubScript(Strng):
 
     return Strng
 
+# frontend
 def oldtamilortho(Strng):
     """Selects old Tamil orthography style (currently a no-op placeholder)."""
     return Strng
 
+# unreferenced
 def TamilSHADisable(Strng):
     """Replaces Tamil sha (Grantha letter) with sa followed by a superscript '2' marker, disabling the dedicated sha glyph."""
     return Strng.replace("ஶ", "ஸ²")

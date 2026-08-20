@@ -10,6 +10,7 @@ from aksharamukha.ScriptMap.EastIndic import Burmese
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixBurmeseEncode(Strng):
     """Encodes Burmese script orthography: converts virama to subjoined forms, inserts kinzi/repha, forms tall-a, reorders medials, and applies script-specific ligatures."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Burmese'))
@@ -86,6 +87,7 @@ def _FixBurmeseEncode(Strng):
 
     return Strng
 
+# internal
 def _FixBurmeseDecode(Strng):
     """Reverses Burmese encoding fixes: expands subjoined consonants, kinzi, repha, tall-a, and medials back to explicit virama sequences."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Burmese'))
@@ -128,12 +130,14 @@ def _FixBurmeseDecode(Strng):
 
     return Strng
 
+# internal
 def FixBurmese(Strng, reverse=False):
     """Dispatches to the Burmese encode or decode fix routine depending on conversion direction."""
     return _FixBurmeseDecode(Strng) if reverse else _FixBurmeseEncode(Strng)
 
 # ---- Pre-processing options ----
 
+# frontend
 def segmentBurmeseSyllables(Strng):
     # segment text into syllables
 

@@ -12,6 +12,7 @@ import re
 
 # ---- Pre-processing options ----
 
+# frontend
 def longEOISO(Strng):
 
     """Treats plain e/o as long vowels by converting them to ē/ō in ISO-15919 transliteration."""
@@ -19,6 +20,7 @@ def longEOISO(Strng):
 
     return Strng
 
+# frontend
 def joinVowelConsISO(Strng):
 
     """Joins a consonant-final word with a following vowel-initial word in ISO-15919 text, e.g. tat tvam asi → tattvamasi."""
@@ -27,6 +29,7 @@ def joinVowelConsISO(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def noLongEO(Strng):
 
     """Converts long ē/ō vowels back to plain e/o in ISO-15919 transliteration."""

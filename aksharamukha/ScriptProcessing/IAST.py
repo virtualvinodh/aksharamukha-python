@@ -20,11 +20,13 @@ from aksharamukha.ScriptMap.Roman import IAST
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixIASTEncode(Strng):
 
     """No-op placeholder for IAST encoding; returns the string unchanged."""
     return Strng
 
+# internal
 def _FixIASTDecode(Strng):
     """Normalizes the alternate IAST anusvara spelling ṁ to the standard m-with-dot-below form."""
     Strng = Strng.replace("ṁ",IAST.AyogavahaMap[1])
@@ -32,12 +34,14 @@ def _FixIASTDecode(Strng):
 
     return Strng
 
+# internal
 def FixIAST(Strng,reverse=False):
     """Dispatches to the IAST encode or decode fix-up routine based on the reverse flag."""
     return _FixIASTDecode(Strng) if reverse else _FixIASTEncode(Strng)
 
 # ---- Pre-processing options ----
 
+# frontend
 def RomanLoCSLaDotLaUnderscore_pre(Strng):
     """Converts the IAST ḻ (la with dot below) to an l+diaeresis-below form and normalizes an l+underscore variant to ḻ, for LoC-style romanization."""
     Strng = Strng.replace('ḻ', 'l̤')
@@ -45,17 +49,20 @@ def RomanLoCSLaDotLaUnderscore_pre(Strng):
 
     return Strng
 
+# frontend
 def joinVowelConsIAST(Strng):
     """Joins separated vowel and consonant word boundaries into single words for IAST, e.g. tat tvam asi → tattvamasi."""
     from .. import PreProcess as PP
     return PP.joinVowelCons(Strng, 'IAST')
 
+# unreferenced
 def IASTLDotRetroflex(Strng):
     """Convert IAST ḷ (retroflex l) to l̤ for Library of Congress-style romanization."""
     Strng = Strng.replace('ḷ', 'l̤')
 
     return Strng
 
+# frontend
 def IASTPali_pre(Strng):
     """Convert IAST ḷ (retroflex l) to l̤ for Pali romanization."""
     Strng = Strng.replace('ḷ', 'l̤')
@@ -64,6 +71,7 @@ def IASTPali_pre(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def RomanLoCSLaDotLaUnderscore_post(Strng):
     """Reverses the LoC-style ḻ diacritic substitution, restoring the standard ḻ representation."""
     Strng = Strng.replace('ḻ', 'l̳')
@@ -71,6 +79,7 @@ def RomanLoCSLaDotLaUnderscore_post(Strng):
 
     return Strng
 
+# frontend
 def IASTPali_post(Strng):
     """Converts the IAST underlined-l (l with line below) used for retroflex l to the standard Pali l-underdot."""
     Strng = Strng.replace('l̤', 'ḷ')

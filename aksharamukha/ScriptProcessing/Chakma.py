@@ -21,6 +21,7 @@ from aksharamukha.ScriptMap.MainIndic import Chakma
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixChakmaEncode(Strng):
     """Inserts the Chakma inherent vowel-A sign (Chakma's default vowel being AA), forms ai/ei ligatures, subjoins virama before y/r/l/n, and applies consonant gemination."""
     listC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Chakma")+Chakma.VowelMap[:1],key=len,reverse=True))+')'
@@ -53,6 +54,7 @@ def _FixChakmaEncode(Strng):
 
     return Strng
 
+# internal
 def _FixChakmaDecode(Strng):
     """Reverses Chakma inherent vowel-A insertion, ai/ei ligature formation, gemination, and y/r/l/n subjoining-virama rules back to their component forms."""
     listC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Chakma")+Chakma.VowelMap[:1],key=len,reverse=True))+')'
@@ -90,12 +92,14 @@ def _FixChakmaDecode(Strng):
 
     return Strng
 
+# internal
 def FixChakma(Strng, reverse=False):
     """Dispatches to the Chakma encode or decode fix routine depending on the reverse flag."""
     return _FixChakmaDecode(Strng) if reverse else _FixChakmaEncode(Strng)
 
 # ---- Pre-processing options ----
 
+# frontend
 def ChakmaPali_pre(Strng):
     """Pre-processes Chakma text for Pali conversion by normalizing Ya/vA consonant forms and inserting the inherent vowel-A sign where absent."""
     Strng = Strng.replace('\U00011147', '𑄤') # Replace Ya
@@ -117,6 +121,7 @@ def ChakmaPali_pre(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def ChakmaPali_post(Strng):
     """Post-processes Chakma Pali text: reverses gemination and Ya/vA substitutions, then maps vowel-A to visarga and subjoined consonants to explicit virama per Pali convention."""
     listC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Chakma")+Chakma.VowelMap[:1],key=len,reverse=True))+')'
@@ -143,6 +148,7 @@ def ChakmaPali_post(Strng):
 
     return Strng
 
+# frontend
 def ChakmaEnableAllConjuncts(Strng):
     """Enables all conjuncts: 𑄇𑄴𑄈𑄧 𑄉𑄴𑄊𑄧 𑄚𑄴𑄖𑄧 → 𑄇𑄳𑄈𑄧 𑄉𑄳𑄊𑄧 𑄚𑄳𑄖𑄧."""
     listC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Chakma")+Chakma.VowelMap[:1],key=len,reverse=True))+')'
@@ -152,6 +158,7 @@ def ChakmaEnableAllConjuncts(Strng):
 
     return Strng
 
+# frontend
 def ChakmaVowelsIndependent(Strng):
     """Enables independent i, u, and e vowel letters: 𑄃𑄨 𑄃𑄪 𑄃𑄬 → 𑄄 𑄅 𑄆."""
     vowelDepA = ["𑄃𑄨", "𑄃𑄪", "𑄃𑄬"]
@@ -162,6 +169,7 @@ def ChakmaVowelsIndependent(Strng):
 
     return Strng
 
+# internal
 def ChakmaGemination(Strng, reverse = False):
     """Applies or reverses Chakma consonant gemination rules involving explicit and subjoining virama forms before vowel signs."""
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Chakma')) + ")"
@@ -186,6 +194,7 @@ def ChakmaGemination(Strng, reverse = False):
 
     return Strng
 
+# unreferenced
 def ChakmaAVowels(Strng):
 
     """No-op placeholder (reserved for Chakma inherent-vowel handling)."""

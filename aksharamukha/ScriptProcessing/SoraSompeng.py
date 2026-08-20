@@ -8,6 +8,7 @@ from .. import GeneralMap as GM
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixSoraSompengEncode(Strng):
     """Drops the inherent schwa marker after consonants and expands a standalone schwa into its full vowel-letter sequence when encoding into Sora Sompeng."""
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'SoraSompeng')) + ')'
@@ -17,6 +18,7 @@ def _FixSoraSompengEncode(Strng):
 
     return Strng
 
+# internal
 def _FixSoraSompengDecode(Strng):
     """Inserts an inherent schwa after consonants not followed by a vowel and collapses specific consonant+schwa+vowel-length sequences when decoding out of Sora Sompeng."""
     ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'SoraSompeng')) + ')'
@@ -31,6 +33,7 @@ def _FixSoraSompengDecode(Strng):
 
     return Strng
 
+# internal
 def FixSoraSompeng(Strng, reverse=False):
     """Dispatches to the Sora Sompeng encode or decode fix routine based on the reverse flag."""
     return _FixSoraSompengDecode(Strng) if reverse else _FixSoraSompengEncode(Strng)

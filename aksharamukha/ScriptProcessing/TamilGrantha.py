@@ -11,6 +11,7 @@ from aksharamukha.ScriptMap.MainIndic import TamilGrantha, Tamil
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixTamilGranthaEncode(Strng):
     """Reorders Tamil Grantha pre-base vowel signs (e/E/ai, o/O/au) to precede their consonant using joiner marks, matching Tamil script visual ordering."""
     ListC = '|'.join(GM.CrunchSymbols(GM.Consonants, 'TamilGrantha'))
@@ -30,6 +31,7 @@ def _FixTamilGranthaEncode(Strng):
 
     return Strng
 
+# internal
 def _FixTamilGranthaDecode(Strng):
     """Reverses the Tamil Grantha pre-base vowel-sign reordering, restoring consonant+vowel-sign order from the joiner-marked visual sequence."""
     ListC = '|'.join(GM.CrunchSymbols(GM.Consonants, 'TamilGrantha'))
@@ -46,6 +48,7 @@ def _FixTamilGranthaDecode(Strng):
 
     return Strng
 
+# internal
 def FixTamilGrantha(Strng, reverse=False):
     """Dispatches to the Tamil Grantha encode or decode fix routine depending on the reverse flag."""
     return _FixTamilGranthaDecode(Strng) if reverse else _FixTamilGranthaEncode(Strng)

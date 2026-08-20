@@ -16,30 +16,35 @@ import re
 
 # ---- Pre-processing options ----
 
+# unreferenced
 def RomanLoCChandrabindu_pre(Strng):
     """Normalize candrabindu written as n̐ to m̐ for Library of Congress romanization."""
     Strng = re.sub('n̐', 'm̐', Strng)
 
     return Strng
 
+# unreferenced
 def KhandaTaRomanLoC_pre(Strng):
     """Render Bengali khanda ta (ৎ) as ṯ in Library of Congress romanization."""
     Strng = Strng.replace('ৎ', 'ṯ')
 
     return Strng
 
+# internal
 def RomanLoCLaUnderscoreDoubleDot_pre(Strng):
     """Convert ḻ to l̤ (or back to ḻ) for Library of Congress romanization depending on direction; note: the forward variant (line 37) is missing its return statement, a likely bug."""
     Strng = Strng.replace('l̤', 'ḻ')
 
     return Strng
 
+# internal
 def RomanLoCSasha_pre(Strng):
     """Replace sh with ṣ for Library of Congress romanization."""
     Strng = Strng.replace('sh', 'ṣ')
 
     return Strng
 
+# internal
 def RomanLoCVaWa_pre(Strng):
     """Replace w with v for Library of Congress romanization, reflecting the va/wa merger."""
     Strng = Strng.replace('w', 'v')
@@ -47,6 +52,7 @@ def RomanLoCVaWa_pre(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def LoCMarc8(Strng):
     """Decomposes combining diacritics into MARC-8-compatible NFD form and swaps the ring-above for a dot-above."""
     import unicodedata
@@ -54,6 +60,7 @@ def LoCMarc8(Strng):
     Strng = Strng.replace('\u02DA', '\u02D9')
     return Strng
 
+# unreferenced
 def RomanLoCChandrabindu_post(Strng):
     #Strng = Strng.replace('ṁ', 'ṃ')
 
@@ -66,23 +73,27 @@ def RomanLoCChandrabindu_post(Strng):
 
     return Strng
 
+# unreferenced
 def KhandaTaRomanLoC_post(Strng):
     """Converts LoC romanized t-line into the Bengali khanda ta letter."""
     Strng = Strng.replace('ṯ', 'ৎ')
 
     return Strng
 
+# internal
 def RomanLoCLaUnderscoreDoubleDot_post(Strng):
     """Replaces l-line-below with l-double-underdot, per LoC romanization convention."""
     Strng = Strng.replace('ḻ', 'l̤')
 
     return Strng
 
+# internal
 def RomanLoCSasha_post(Strng):
     """Replaces s-dot-below (sa) with sh, per LoC romanization convention."""
     Strng = Strng.replace('ṣ', 'sh')
     return Strng
 
+# internal
 def RomanLoCVaWa_post(Strng):
     """Replaces v with w, per LoC romanization convention for scripts where va is rendered as w."""
     Strng = Strng.replace('v', 'w')

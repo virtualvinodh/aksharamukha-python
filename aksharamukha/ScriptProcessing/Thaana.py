@@ -12,6 +12,7 @@ from .. import GeneralMap as GM
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixThaanaEncode(Strng):
 
     """Applies Thaana encoding fixes: gemination-sign insertion, removal of redundant inherent-vowel sign before vowel signs, and Arabic-to-Thaana punctuation mapping."""
@@ -33,6 +34,7 @@ def _FixThaanaEncode(Strng):
 
     return Strng
 
+# internal
 def _FixThaanaDecode(Strng):
 
     """Reverses Thaana encoding fixes: approximates Arabic-loan consonants to native Thaana letters, inserts sukun on bare consonants, restores the inherent-vowel sign before vowel signs, and reverses gemination/punctuation mapping."""
@@ -67,6 +69,7 @@ def _FixThaanaDecode(Strng):
 
     return Strng
 
+# internal
 def FixThaana(Strng, reverse=False):
 
     """Dispatches to the Thaana encode or decode fix routine depending on the reverse flag."""
@@ -74,6 +77,7 @@ def FixThaana(Strng, reverse=False):
 
 # ---- Post-processing options ----
 
+# internal
 def ThaanaRemoveHistorical(Strng):
     """Replaces the historical Thaana letter naa (retroflex n) with the modern noonu letter."""
     return Strng.replace('ޱ','ނ')

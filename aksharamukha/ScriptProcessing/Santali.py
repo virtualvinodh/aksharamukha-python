@@ -7,6 +7,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixSantaliEncode(Strng):
     """Ligates the Santali vowel-modifier+ahad sign combination into its dedicated letter and reorders the gaahlaa+ahad sequence."""
     Strng = Strng.replace('ᱹᱸ', 'ᱺ')
@@ -14,6 +15,7 @@ def _FixSantaliEncode(Strng):
 
     return Strng
 
+# internal
 def _FixSantaliDecode(Strng):
     """Expands the dedicated Santali ligature back to its component signs, maps the gitit sign to an apostrophe, and restores original ahad/gaahlaa order."""
     Strng = Strng.replace('ᱺ', 'ᱹᱸ')
@@ -22,6 +24,7 @@ def _FixSantaliDecode(Strng):
 
     return Strng
 
+# internal
 def FixSantali(Strng, reverse=False):
     """Dispatches to the Santali encode or decode fix routine depending on conversion direction."""
     return _FixSantaliDecode(Strng) if reverse else _FixSantaliEncode(Strng)

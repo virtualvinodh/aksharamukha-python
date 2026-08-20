@@ -17,24 +17,28 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixSogdEncode(Strng, Source):
     """Merges the disambiguated Sogdian letter-plus-marker sequence into its dedicated final-form letter (𐼹² → 𐽄)."""
     Strng = Strng.replace("𐼹²","𐽄")
 
     return Strng
 
+# internal
 def _FixSogdDecode(Strng, Source):
     """No-op placeholder for Sogdian decoding; no reverse transformation is currently applied."""
     pass
 
     return Strng
 
+# internal
 def FixSogd(Strng, Source, reverse=False):
     """Dispatches to the Sogdian encode or decode fix routine depending on conversion direction."""
     return _FixSogdDecode(Strng, Source) if reverse else _FixSogdEncode(Strng, Source)
 
 # ---- Pre-processing options ----
 
+# frontend
 def SogdReshAyin_pre(Strng):
     """Disambiguates the Sogdian Resh-Ayin ligature by expanding it to a bracketed [resh-ayin] marker (𐽀)."""
     Strng = Strng.replace('𐽀', '[\uEA01-\uEA02]') # resh yin
@@ -43,6 +47,7 @@ def SogdReshAyin_pre(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def SogdReshAyin_post(Strng):
     """Merges disambiguated Sogdian resh and ayin letters back into the Resh-Ayin ligature (𐼽 → 𐽀)."""
     Strng = Strng.replace('𐼽', '𐽀')

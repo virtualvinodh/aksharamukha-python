@@ -13,6 +13,7 @@ from .. import GeneralMap as GM
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixTeluguEncode(Strng):
 
     """Retains Indic dandas and numerals when encoding into Telugu script."""
@@ -22,6 +23,7 @@ def _FixTeluguEncode(Strng):
 
     return Strng
 
+# internal
 def _FixTeluguDecode(Strng):
 
     """Restores Indic dandas and numerals and normalizes candrabindu to arasunna when decoding out of Telugu script."""
@@ -32,6 +34,7 @@ def _FixTeluguDecode(Strng):
 
     return Strng
 
+# internal
 def FixTelugu(Strng, reverse=False):
 
     """Dispatches to the Telugu encode or decode fix-up routine based on the reverse flag."""
@@ -39,6 +42,7 @@ def FixTelugu(Strng, reverse=False):
 
 # ---- Post-processing options ----
 
+# internal
 def TeluguRemoveNukta(Strng):
 
     """Removes the nukta combining mark from Telugu text."""
@@ -46,6 +50,7 @@ def TeluguRemoveNukta(Strng):
 
     return Strng
 
+# internal
 def TeluguRemoveAeAo(Strng):
 
     """Removes the candra-sign-plus-ZWSP sequence used to mark short e/o vowels in Telugu."""
@@ -53,6 +58,7 @@ def TeluguRemoveAeAo(Strng):
 
     return Strng
 
+# frontend
 def TeluguNakaraPollu(Strng):
 
     """Converts word-final na-virama to the special Telugu nakaara pollu character, e.g. భగవన్ → భగవౝ."""
@@ -62,12 +68,14 @@ def TeluguNakaraPollu(Strng):
 
     return Strng
 
+# frontend
 def TeluguTamilZha(Strng):
 
     """Tamil-style zha rendering option for Telugu, currently a no-op passthrough, e.g. ఆఴ్వార్ → ఆఴ్వార్."""
 
     return Strng
 
+# frontend
 def TeluguTamilRra(Strng):
 
     """Renders Tamil-style rra/tra/ndra conjuncts using the Telugu ౘ character, e.g. ఆఱ్ఱు → ఆౘ్ౘు."""
@@ -77,6 +85,7 @@ def TeluguTamilRra(Strng):
 
     return Strng
 
+# frontend
 def TeluguReph(Strng):
 
     """Inserts a ZWNJ after ra-virama before a consonant to render it as a Telugu repha (valapala gilaka), e.g. ధర్మ → ధర్‍మ."""
@@ -86,6 +95,7 @@ def TeluguReph(Strng):
 
     return Strng
 
+# frontend
 def TeluguArasunnaChandrabindu(Strng):
 
     """Treats the Telugu arasunna character as chandrabindu, e.g. హూఀ → హూఁ."""

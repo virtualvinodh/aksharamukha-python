@@ -9,6 +9,7 @@ from aksharamukha.ScriptMap.Roman import Avestan
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixAvestanEncode(Strng):
     """Applies Avestan orthographic fixes: aM/AM ligatures, ya/va to long ii/uu after vowels or consonants, and TTE/BHA/ZHA/NGVA/AO ligature substitutions."""
     extraCons = ["\U00010B33","\U00010B32","\U00010B1D","\U00010B12", '𐬣', '𐬝']
@@ -40,6 +41,7 @@ def _FixAvestanEncode(Strng):
 
     return Strng
 
+# internal
 def _FixAvestanDecode(Strng):
     """Reverses Avestan orthographic fixes, expanding the aM/AM, ii/uu, and TTE/BHA/ZHA/NGVA/AO ligatures back into their component sequences."""
     extraCons = ["\U00010B33","\U00010B32","\U00010B1D","\U00010B12", '𐬣', '𐬝']
@@ -75,12 +77,14 @@ def _FixAvestanDecode(Strng):
 
     return Strng
 
+# internal
 def FixAvestan(Strng, reverse=False):
     """Dispatches to the Avestan encode or decode fix routine depending on the reverse flag."""
     return _FixAvestanDecode(Strng) if reverse else _FixAvestanEncode(Strng)
 
 # ---- Post-processing options ----
 
+# internal
 def AvestanConventions(Strng):
     # Fix Nasalization, hma etc
 

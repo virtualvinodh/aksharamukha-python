@@ -11,6 +11,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def FixRomanColloquial(Strng, reverse = False):
 
     """Delegates to the shared readable/colloquial Roman transliteration routine with colloquial-style rendering enabled."""

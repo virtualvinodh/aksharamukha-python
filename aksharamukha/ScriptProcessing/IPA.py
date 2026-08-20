@@ -7,6 +7,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixIPAEncode(Strng):
     """Reorders tilde before the length mark, appends a short echo vowel after visarga-derived h, and fixes a schwa ligature when encoding to IPA."""
     colon_tilde = "\u02D0\u0303"
@@ -20,6 +21,7 @@ def _FixIPAEncode(Strng):
 
     return Strng
 
+# internal
 def _FixIPADecode(Strng):
     """Reverses IPA encoding fixes: restores tilde/length-mark order and removes the visarga echo vowel."""
     colon_tilde = "\u02D0\u0303"
@@ -33,6 +35,7 @@ def _FixIPADecode(Strng):
 
     return Strng
 
+# internal
 def FixIPA(Strng, reverse=False):
     """Dispatches to the IPA encode or decode fix routine depending on conversion direction."""
     return _FixIPADecode(Strng) if reverse else _FixIPAEncode(Strng)

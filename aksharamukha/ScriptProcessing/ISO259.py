@@ -14,12 +14,14 @@ import unicodedata
 
 # ---- Pre-processing options ----
 
+# internal
 def HebrewToISO259Pre(Strng):
     """Substitute Hebrew aleph (א) and geresh (׳) with their ISO 259 romanization symbols (ʾ, ’)."""
     Strng = Strng.replace('א', 'ʾ').replace('׳', '’')
 
     return Strng
 
+# internal
 def ISO259ToHebrewPre(Strng):
     """Reverse ISO 259 Hebrew romanization symbols back to Hebrew letters, restoring begadkefat forms and gemination marks via Unicode decomposition."""
     Strng = Strng.replace('ʾ', 'א',).replace('’', '׳')
@@ -41,6 +43,7 @@ def ISO259ToHebrewPre(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def HebrewToISO259Post(Strng):
     """Converts intermediate Hebrew romanization to ISO 259 conventions (b/p/k dotted, v->b, f->p, s-caron variants, a->a-ring, e->e-cedilla, o/u macron to circumflex forms)."""
     replacements = [('b', 'ḃ'), ('p', 'ṗ'), ('k', 'k̇'), ('ḵ', 'k'), ('v', 'b'), ('f', 'p'), ('꞉', '\u0307'),\
@@ -55,6 +58,7 @@ def HebrewToISO259Post(Strng):
 
     return Strng
 
+# internal
 def ISO259ToHebrewPost(Strng):
 
     """No-op placeholder (reserved for ISO 259 Hebrew romanization source-side processing)."""

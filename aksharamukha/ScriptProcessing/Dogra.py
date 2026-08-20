@@ -8,11 +8,13 @@ import re
 
 # ---- Post-processing options ----
 
+# frontend
 def olddogra(Strng):
 
     """Uses older/alternate Dogra letterforms for select vowel signs - 𑠂 𑠄 𑠈 𑠘 𑠧 → 𑠂 𑠄 𑠈 𑠘 𑠧."""
     return Strng
 
+# frontend
 def DograShaKha(Strng):
     """Replaces Dogra SHA with KHA - 𑠨 → 𑠋."""
     Strng = Strng.replace('𑠨', '𑠋')

@@ -11,6 +11,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixBugineseEncode(Strng):
 
     """Merges prenasalized consonant sequences (e.g. ᨂʾᨀ→ᨃ) into single letters, inserts the gemination sign, and strips glottal-stop markers."""
@@ -26,6 +27,7 @@ def _FixBugineseEncode(Strng):
 
     return Strng
 
+# internal
 def _FixBugineseDecode(Strng):
 
     """Expands merged Buginese prenasalized consonants (e.g. ᨃ→ᨂʾᨀ) back into their component consonant sequences."""
@@ -36,6 +38,7 @@ def _FixBugineseDecode(Strng):
 
     return Strng
 
+# internal
 def FixBuginese(Strng, reverse=False):
 
     """Dispatches to the Buginese encode or decode fix-up routine based on the reverse flag."""

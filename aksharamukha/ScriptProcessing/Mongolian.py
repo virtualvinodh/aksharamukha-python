@@ -9,6 +9,7 @@ from .. import GeneralMap as GM
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixMongolianEncode(Strng):
     """Removes redundant free-variation-selector markers before consonants/vowels, reorders consonant clusters before vowels with the Mongolian bowed-tooth marker, and converts the modifier apostrophe to a zero-width joiner."""
     vowels = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'Mongolian')) + ')'
@@ -27,6 +28,7 @@ def _FixMongolianEncode(Strng):
 
     return Strng
 
+# internal
 def _FixMongolianDecode(Strng):
     """Inserts the free-variation selector after a bare aleph-vowel (ᠠ) when it is not already present."""
     vowels = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'Mongolian')) + ')'
@@ -39,12 +41,14 @@ def _FixMongolianDecode(Strng):
 
     return Strng
 
+# internal
 def FixMongolian(Strng, reverse=False):
     """Dispatches to the Mongolian encode or decode fix routine based on the reverse flag."""
     return _FixMongolianDecode(Strng) if reverse else _FixMongolianEncode(Strng)
 
 # ---- Post-processing options ----
 
+# frontend
 def MongolianSyllabize(Strng):
     """Inserts syllable-boundary spaces between consonant-vowel units in Mongolian text, e.g. ᠮᠠᢏᢈ → ᠮᠠ᠋ ᢏᢈ."""
     vowels = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'Mongolian')+['\u1820']) + ')'

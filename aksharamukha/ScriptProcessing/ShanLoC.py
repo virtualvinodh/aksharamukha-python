@@ -14,6 +14,7 @@ from aksharamukha.ScriptMap.EastIndic import Burmese
 
 # ---- Pre-processing options ----
 
+# internal
 def ShanLoCToRomanLocPre(Strng):
     #preserve ႂ်
     """Apply Shan LoC target-side normalization: unify /aa/ vowel spellings, merge asat+virama, reorder subjoined consonants, and mark glottal-stop a and pure viramas."""
@@ -51,6 +52,7 @@ def ShanLoCToRomanLocPre(Strng):
 
     return Strng
 
+# internal
 def RomanLocToShanLoCPre(Strng):
 
     """Placeholder Shan LoC source-side hook (currently a no-op passthrough)."""
@@ -58,6 +60,7 @@ def RomanLocToShanLoCPre(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def ShanLoCToRomanLocPost(Strng):
     """Reorders Shan LoC romanization glottal-stop and tone-mark combining diacritics relative to the preceding vowel/consonant."""
     Strng = re.sub('(ʻ)([\u0310\u0322])', r'\2\1', Strng)
@@ -65,6 +68,7 @@ def ShanLoCToRomanLocPost(Strng):
 
     return Strng
 
+# internal
 def RomanLocToShanLoCPost(Strng):
     # restrore special yrvh
     """Restores Shan LoC romanization conventions to native Shan script: undoes subjoined y/r/v marking, strips pure-vowel and glottal markers, reverses ai, and resolves open/closed vowel-consonant ambiguity."""

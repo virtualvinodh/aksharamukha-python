@@ -22,6 +22,7 @@ from aksharamukha.ScriptMap.EastIndic import Khmer
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def FixKhmerLoC(Strng,reverse=False):
 
     """Applies the shared Khmer fix-up logic (via ConvertFix.FixKhmer) targeting the Library of Congress romanization scheme."""
@@ -30,6 +31,7 @@ def FixKhmerLoC(Strng,reverse=False):
 
 # ---- Pre-processing options ----
 
+# internal
 def KhmerLoCToRomanLocPre(Strng):
     """Apply Khmer LoC target-side fixes: mark the im vowel, reposition the bantoc sign, tag subscript consonant modifiers, reorder tone marks, normalize oya to oy, and drop decorative punctuation."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Khmer'))
@@ -62,6 +64,7 @@ def KhmerLoCToRomanLocPre(Strng):
 
     return Strng
 
+# internal
 def RomanLocToKhmerLoCPre(Strng):
     """Denormalize precomposed diacritic vowels to NFD and fix apostrophe/oaḥ sequences for Khmer LoC source text."""
     listdenormalize = ['å', 'ẙ', 'à', 'á', 'é', 'í', 'ó', 'ú', 'à', 'è', 'ì', 'ò', 'ù', 'ă']
@@ -74,6 +77,7 @@ def RomanLocToKhmerLoCPre(Strng):
 
     return Strng
 
+# internal
 def SchwaFinalKhmerLoC(Strng):
     """Delete the word-final inherent schwa vowel for Khmer Library of Congress romanization."""
     from .. import PreProcess as PP
@@ -83,6 +87,7 @@ def SchwaFinalKhmerLoC(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def KhmerLoCToRomanLocPost(Strng):
     """Normalizes Khmer LoC romanization output: NFC-normalizes, repositions consonant-modifier marks before certain vowels, fixes the 'oh' sequence, collapses double spaces."""
     import unicodedata
@@ -100,6 +105,7 @@ def KhmerLoCToRomanLocPost(Strng):
 
     return Strng
 
+# internal
 def RomanLocToKhmerLoCPost(Strng):
     """Reorders Khmer LoC romanization diacritics (bantoc, tone marks) relative to base consonants/vowels, marks subbase-form consonant modifiers, and strips the virama."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Khmer'))

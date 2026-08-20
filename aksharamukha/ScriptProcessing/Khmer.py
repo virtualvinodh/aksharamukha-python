@@ -10,6 +10,7 @@ from aksharamukha.ScriptMap.EastIndic import Khmer
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixKhmerEncode(Strng, target):
     """Converts virama+consonant sequences to the subjoining coeng form, introduces the ra-repha ligature, and merges the i vowel sign with anusvara into their ligature."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target))
@@ -28,6 +29,7 @@ def _FixKhmerEncode(Strng, target):
 
     return Strng
 
+# internal
 def _FixKhmerDecode(Strng, target):
     """Expands the subjoining coeng mark back to explicit virama, restores the ra-repha ligature to ra+virama+consonant, and splits the i-anusvara ligature apart."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,target))
@@ -47,12 +49,14 @@ def _FixKhmerDecode(Strng, target):
 
     return Strng
 
+# internal
 def FixKhmer(Strng,reverse=False, target="Khmer"):
     """Dispatches to the Khmer encode or decode fix routine depending on conversion direction."""
     return _FixKhmerDecode(Strng, target) if reverse else _FixKhmerEncode(Strng, target)
 
 # ---- Pre-processing options ----
 
+# frontend
 def KhmerWordSplit(Strng):
     """Segments unspaced Khmer text into words using the khmernltk tokenizer (មនុស្សទាំងអស់ → មនុស្ស ទាំងអស់)."""
     from khmernltk import word_tokenize

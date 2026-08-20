@@ -8,6 +8,7 @@ from .. import GeneralMap as GM
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def FixOldPersian(Strng,reverse=False):
     """Applies Old Persian cuneiform syllable-spelling and numeral-sign conversions, dispatching by conversion direction."""
     Strng = OldPersianSyllable(Strng,reverse)
@@ -15,6 +16,7 @@ def FixOldPersian(Strng,reverse=False):
 
     return Strng
 
+# internal
 def OldPersianSyllable(Strng,reverse=True):
     """Converts Old Persian consonant+vowel-sign sequences into their dedicated CV syllabic cuneiform signs and back, handling word dividers and ambiguous a-vowel readings."""
     ICons = [x+'\U000103A1' for x in ['\U000103AD','\U000103B6','\U000103A9','\U000103BA','\U000103AB','\U000103B4','\U000103BC']]
@@ -70,6 +72,7 @@ def OldPersianSyllable(Strng,reverse=True):
 
     return Strng
 
+# internal
 def OldPersianNumeral(Strng,reverse=False):
     """Converts decimal numbers to Old Persian cuneiform numeral signs (hundred/twenty/ten/two/one units) and back."""
     One = '\U000103D1'

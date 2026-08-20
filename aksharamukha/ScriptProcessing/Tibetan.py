@@ -14,6 +14,7 @@ from aksharamukha.ScriptMap.EastIndic import Tibetan
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixTibetanEncode(Strng, swapNative):
 
     """Converts consonant+virama sequences to subjoined Tibetan letters, fixes wa-zur/ya-zur/ra-zur subjoined clusters, encodes spaces as tsheg, maps decomposed dzha+nukta to za, and converts ASCII brackets to Tibetan bracket forms."""
@@ -46,6 +47,7 @@ def _FixTibetanEncode(Strng, swapNative):
 
     return Strng
 
+# internal
 def _FixTibetanDecode(Strng, swapNative):
 
     """Expands subjoined Tibetan letters back to consonant+virama sequences, normalizes decomposed aspirate conjuncts, restores vocalic ri/li clusters, converts tsheg back to space, restores bracket forms, and optionally swaps native Tibetan letters for their Sanskrit-transliteration equivalents."""
@@ -95,6 +97,7 @@ def _FixTibetanDecode(Strng, swapNative):
 
     return Strng
 
+# internal
 def FixTibetan(Strng,reverse=False, swapNative = True):
 
     """Dispatches to the Tibetan encode or decode fix routine based on the reverse flag, optionally swapping native Tibetan letter forms."""
@@ -102,6 +105,7 @@ def FixTibetan(Strng,reverse=False, swapNative = True):
 
 # ---- Post-processing options ----
 
+# frontend
 def TibetanSyllabize(Strng):
 
     """Inserts tsheg (syllable-separator dots) between Tibetan syllables, e.g. བོདྷིསཏྟྭ → བོ་དྷི་ས་ཏྟྭ."""
@@ -123,6 +127,7 @@ def TibetanSyllabize(Strng):
 
     return Strng
 
+# frontend
 def TibetanSanskritPalatals(Strng):
 
     """Renders Sanskrit palatal consonants using the native Tibetan ca-series letters instead of the tsa-series, e.g. ཙ ཚ ཛ ཛྷ → ཅ ཆ ཇ ཇྷ."""
@@ -134,11 +139,13 @@ def TibetanSanskritPalatals(Strng):
 
     return Strng
 
+# frontend
 def tibetandbumed(Strng):
 
     """Placeholder for rendering Tibetan in Dbu Med (Ume) cursive style; currently returns the string unchanged."""
     return Strng
 
+# frontend
 def TibetanNada(Strng):
 
     """Replaces the bindu-with-nada sign with the plain anusvara sign, e.g. ཨྃ → ཨྂ."""
@@ -146,6 +153,7 @@ def TibetanNada(Strng):
 
     return Strng
 
+# frontend
 def TibetanTsheg(Strng):
 
     """Replaces the tsheg syllable separator with a plain space, e.g. ན་མོ → ན མོ."""
@@ -153,6 +161,7 @@ def TibetanTsheg(Strng):
 
     return Strng
 
+# internal
 def TibetanRemoveVirama(Strng):
 
     """Strips the explicit Tibetan virama sign from the text."""
@@ -160,6 +169,7 @@ def TibetanRemoveVirama(Strng):
 
     return Strng
 
+# internal
 def TibetanRemoveBa(Strng):
 
     """Converts va to ba throughout, including within ra-zur and wa-zur subjoined clusters."""

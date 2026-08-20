@@ -11,6 +11,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixBuhidEncode(Strng):
 
     """Inserts the Buhid gemination sign into the string when encoding into Buhid script."""
@@ -19,6 +20,7 @@ def _FixBuhidEncode(Strng):
 
     return Strng
 
+# internal
 def _FixBuhidDecode(Strng):
 
     """No-op decode step for Buhid script; gemination-sign removal is currently unimplemented."""
@@ -26,6 +28,7 @@ def _FixBuhidDecode(Strng):
 
     return Strng
 
+# internal
 def FixBuhid(Strng, reverse=False):
 
     """Dispatches to the Buhid encode or decode fix-up routine based on the reverse flag."""

@@ -12,6 +12,7 @@
 
 # ---- Pre-processing options ----
 
+# internal
 def ArabFaToPersianDMGPre(Strng):
     """Substitute Persian alef (ا) with the DMG romanization symbol ʾ."""
     replacements = [('ا', 'ʾ')]
@@ -21,6 +22,7 @@ def ArabFaToPersianDMGPre(Strng):
 
     return Strng
 
+# internal
 def PersianDMGToArabFaPre(Strng):
     """Reverse Persian DMG romanization symbols back to Persian alef and normalize DMG-specific consonant/vowel spellings on the source side."""
     replacements = [('ا', 'ʾ')]
@@ -35,6 +37,7 @@ def PersianDMGToArabFaPre(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def ArabFaToPersianDMGPost(Strng):
     """Converts intermediate Persian romanization to DMG (Deutsche Morgenlandische Gesellschaft) conventions (d-line->z-line, d-dot->z-dot, t-line->s-line-below, j->g-caron, y-macron->ye)."""
     replacements = [('ḏ', 'ẕ'), ('ḍ', 'ż'), ('ṯ', 's̱'), ('j', 'ǧ'), ('ˀ','ʼ'), ('ʔ', 'ʼ'), ('ȳ', 'ye'), ("ā̂", "ā"), ('\u033D', '')]
@@ -44,6 +47,7 @@ def ArabFaToPersianDMGPost(Strng):
 
     return Strng
 
+# internal
 def PersianDMGToArabFaPost(Strng):
 
     """No-op placeholder (reserved for Persian DMG romanization source-side processing)."""

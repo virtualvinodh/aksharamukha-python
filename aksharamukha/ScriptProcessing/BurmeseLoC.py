@@ -14,6 +14,7 @@ from aksharamukha.ScriptMap.EastIndic import Burmese
 
 # ---- Pre-processing options ----
 
+# internal
 def BurmeseToRomanLocPre(Strng):
     # asat + virma to just virama
     """Apply Burmese LoC target-side normalization: merge asat+virama, reorder subjoined consonants, mark glottal-stop a and pure viramas, and convert dependent vowel+diacritic sequences to independent vowels."""
@@ -58,6 +59,7 @@ def BurmeseToRomanLocPre(Strng):
 
     return Strng
 
+# internal
 def RomanLocToBurmesePre(Strng):
     # adhoc chars
     """Normalize LoC Burmese romanization source text: expand ad hoc letter codes to Burmese punctuation, fix visarga/diacritic characters, convert comma/period to danda marks, and simplify o-quote sequences to au."""
@@ -99,6 +101,7 @@ def RomanLocToBurmesePre(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def BurmeseToRomanLocPost(Strng):
     #print(Strng)
     # mark tone
@@ -129,6 +132,7 @@ def BurmeseToRomanLocPost(Strng):
 
     return Strng
 
+# internal
 def RomanLocToBurmesePost(Strng):
     # remove marking for pure virama
     """Reverses LoC Burmese romanization conventions back to native encoding: drops pure-virama marker, restores superscript-Ga to subjoined y/r/v/h, reassembles vowel+diacritic sequences, undoes glottal-stop marking."""

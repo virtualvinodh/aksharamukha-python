@@ -5,6 +5,7 @@
 
 # ---- Pre-processing options ----
 
+# internal
 def RomanLocToTeluguPre(Strng):
     """Normalizes candrabindu before converting LoC Roman text to Telugu."""
     from .RomanLoC import RomanLoCChandrabindu_pre
@@ -14,6 +15,7 @@ def RomanLocToTeluguPre(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def TeluguToRomanLocPost(Strng):
     """Applies anusvara-to-nasal and candrabindu LoC fixes after converting Telugu to LoC Roman."""
     from .RomanLoC import RomanLoCChandrabindu_post
@@ -23,6 +25,7 @@ def TeluguToRomanLocPost(Strng):
 
     return Strng
 
+# internal
 def RomanLocToTeluguPost(Strng):
     """Restores the arasunna-chandrabindu form after converting LoC Roman text to Telugu."""
     from .Telugu import TeluguArasunnaChandrabindu

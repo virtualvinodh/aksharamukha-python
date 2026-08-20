@@ -19,10 +19,12 @@ import functools
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def FixGrantha(Strng, reverse=False):
     """Dispatches to the Grantha encode or decode fix-up routine based on the reverse flag."""
     return _FixGranthaDecode(Strng) if reverse else _FixGranthaEncode(Strng)
 
+# internal
 def _FixGranthaEncode(Strng):
     """Maps accent and anusvara-variant marks to Grantha-specific Unicode codepoints and inserts a ZWNJ after visarga-virama when encoding."""
     Strng = Strng.replace('॑', '᳴')
@@ -33,6 +35,7 @@ def _FixGranthaEncode(Strng):
 
     return Strng
 
+# internal
 def _FixGranthaDecode(Strng):
     """Reverses the Grantha-specific accent, anusvara, and ZWNJ mappings applied during encoding when decoding back to the internal representation."""
     Strng = Strng.replace('𑌼𑍍\u200C', '𑌼𑍍')
@@ -45,10 +48,12 @@ def _FixGranthaDecode(Strng):
 
 # ---- Pre-processing options ----
 
+# frontend
 def egrantamil(Strng):
     """E-Grantamil encoding option, currently a no-op passthrough."""
     return Strng
 
+# frontend
 def GranthaPrakrit_pre(Strng):
     ## Reverse Gemination
     """Apply Prakrit-style Grantha orthography: reverse the gemination sign and substitute the anusvara form (𑌬𑍁𑌦𑍍𑌧𑌂 → 𑌬𑍁𑌂𑌧𑌀)."""
@@ -61,12 +66,14 @@ def GranthaPrakrit_pre(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def GranthaOldau(Strng):
     """Uses the old Grantha AU vowel sign, e.g. 𑌕𑍗 → 𑌕𑍌."""
     Strng = Strng.replace('𑍗', '𑍌')
 
     return Strng
 
+# frontend
 def GranthaPrakrit(Strng):
     """Applies Prakrit orthography for Grantha, converting anusvara to the anusvara-above form except word-initially, e.g. 𑌬𑍁𑌦𑍍𑌧𑌂 → 𑌬𑍁𑌂𑌧𑌀."""
     from .. import PostProcess
@@ -83,11 +90,13 @@ def GranthaPrakrit(Strng):
 
     return Strng
 
+# frontend
 def granthafinal(Strng):
 
     """Other Grantha final forms option, currently a no-op passthrough, e.g. 𑌦𑌿𑌕𑍍 → 𑌦𑌿𑌕𑍍."""
     return Strng
 
+# frontend
 def granthaserif(Strng):
     """Noto Serif Grantha rendering option, currently a no-op passthrough, e.g. 𑌬𑍁𑌦𑍍𑌧𑌂 → 𑌬𑍁𑌦𑍍𑌧𑌂."""
     return Strng

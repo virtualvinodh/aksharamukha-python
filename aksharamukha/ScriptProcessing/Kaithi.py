@@ -8,12 +8,14 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixKaithiEncode(Strng):
     """Replaces spaces with the Kaithi word separator ⸱ when encoding."""
     Strng = Strng.replace(' ', '⸱')
 
     return Strng
 
+# internal
 def _FixKaithiDecode(Strng):
     """Replaces the Kaithi word separator ⸱ with a space when decoding."""
     Strng = Strng.replace("⸱",' ')
@@ -21,12 +23,14 @@ def _FixKaithiDecode(Strng):
 
     return Strng
 
+# internal
 def FixKaithi(Strng, reverse=False):
     """Dispatches to the Kaithi encode or decode fix routine depending on conversion direction."""
     return _FixKaithiDecode(Strng) if reverse else _FixKaithiEncode(Strng)
 
 # ---- Post-processing options ----
 
+# frontend
 def KaithiRetainSpace(Strng):
     """Restores plain spaces in place of the Kaithi word separator ⸱."""
     Strng = Strng.replace('⸱', ' ')

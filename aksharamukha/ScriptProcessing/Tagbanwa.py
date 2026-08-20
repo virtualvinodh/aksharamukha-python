@@ -11,6 +11,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixTagbanwaEncode(Strng):
 
     """Inserts the gemination sign for doubled consonants when encoding into Tagbanwa."""
@@ -19,6 +20,7 @@ def _FixTagbanwaEncode(Strng):
 
     return Strng
 
+# internal
 def _FixTagbanwaDecode(Strng):
 
     """No-op decode fix for Tagbanwa; no additional corrections are currently applied."""
@@ -26,6 +28,7 @@ def _FixTagbanwaDecode(Strng):
 
     return Strng
 
+# internal
 def FixTagbanwa(Strng, reverse=False):
 
     """Dispatches to the Tagbanwa encode or decode fix routine based on the reverse flag."""

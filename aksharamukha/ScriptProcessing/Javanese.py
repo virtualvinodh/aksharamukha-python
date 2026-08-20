@@ -16,6 +16,7 @@ from aksharamukha.ScriptMap.EastIndic import Javanese
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixJavaneseEncode(Strng):
     """Inserts the Javanese repha and converts virama+ra/ya sequences into the subjoining cakra/pengkal forms when encoding."""
     from .. import ConvertFix as CF
@@ -32,6 +33,7 @@ def _FixJavaneseEncode(Strng):
 
     return Strng
 
+# internal
 def _FixJavaneseDecode(Strng):
     """Removes the Javanese repha, expands the archaic jña and ra agung letters, restores subjoining cakra/pengkal forms to virama+consonant, and reverses a-based vowel spellings."""
     from .. import ConvertFix as CF
@@ -60,12 +62,14 @@ def _FixJavaneseDecode(Strng):
 
     return Strng
 
+# internal
 def FixJavanese(Strng,reverse=False):
     """Dispatches to the Javanese encode or decode fix routine depending on conversion direction."""
     return _FixJavaneseDecode(Strng) if reverse else _FixJavaneseEncode(Strng)
 
 # ---- Pre-processing options ----
 
+# frontend
 def JavaneseMoveRepha_pre(Strng):
     """Pre-processing step that repositions the Javanese repha sign (ꦂ) relative to its base consonant."""
     from .. import PreProcess as PP
@@ -73,11 +77,13 @@ def JavaneseMoveRepha_pre(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def JavaneseArchaicJNA(Strng):
     """Converts the archaic jña conjunct to its dedicated Javanese letter (ꦗ꧀ꦚ → ꦘ)."""
     Strng = Strng.replace('ꦗ꧀ꦚ', 'ꦘ')
     return Strng
 
+# frontend
 def JavaneseAvowels(Strng):
     """Uses a-based independent vowel spellings instead of dedicated vowel letters (e.g. ꦆ ꦇ ꦈ ꦈꦴ → ꦄꦶ ꦄꦷ ꦄꦸ ꦄꦹ)."""
     vowelsA = ['ꦄꦶ', 'ꦄꦷ', 'ꦄꦸ', 'ꦄꦹ', 'ꦄꦽ', 'ꦄ꧀ꦉꦴ', 'ꦄ꧀ꦭꦼ', 'ꦄ꧀ꦭꦼꦴ', 'ꦄꦺ', 'ꦄꦻ', 'ꦄꦺꦴ', 'ꦄꦻꦴ']
@@ -88,6 +94,7 @@ def JavaneseAvowels(Strng):
 
     return Strng
 
+# frontend
 def JavaneseMoveRepha_post(Strng):
     """Post-processing step that repositions the Javanese repha sign (ꦂ) back to its rendered position."""
     from .. import PostProcess

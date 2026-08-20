@@ -10,6 +10,7 @@ from aksharamukha.ScriptMap.MainIndic import Newa
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixNewaEncode(Strng):
     """Placeholder Newa encode fixer; repha insertion after ra+virama is currently disabled (commented out)."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Newa'))
@@ -20,22 +21,26 @@ def _FixNewaEncode(Strng):
 
     return Strng
 
+# internal
 def _FixNewaDecode(Strng):
     """No-op Newa decode fixer; currently performs no transformation."""
     pass
 
     return Strng
 
+# internal
 def FixNewa(Strng, reverse=False):
     """Dispatches to the Newa encode or decode fix routine depending on conversion direction."""
     return _FixNewaDecode(Strng) if reverse else _FixNewaEncode(Strng)
 
 # ---- Post-processing options ----
 
+# frontend
 def nepaldevafont(Strng):
     """Marks output for rendering with a Devanagari-based Newa font - 𑐧𑐸𑐡𑑂𑐢𑑅 → बुद्धः."""
     return Strng
 
+# frontend
 def NewaMurmurConsonants(Strng):
     """Converts ha+virama+consonant clusters into dedicated murmured (breathy-voiced) consonant letters."""
     murmur = ['𑐓','𑐙','𑐤', '𑐪', '𑐭', '𑐯']
@@ -46,6 +51,7 @@ def NewaMurmurConsonants(Strng):
 
     return Strng
 
+# frontend
 def NewaSpecialTa(Strng):
 
     """Inserts a ZWJ after ta+virama to force the special conjunct ta form - 𑐟𑑂𑐥𑐟𑑂𑐩𑐟𑑂𑐰 → 𑐟𑑂‍𑐥𑐟𑑂‍𑐩𑐟𑑂‍𑐰."""
@@ -53,6 +59,7 @@ def NewaSpecialTa(Strng):
 
     return Strng
 
+# frontend
 def NewaDisableRepha(Strng):
     """Inserts a ZWJ after ra+virama to suppress the repha form - 𑐢𑐬𑑂𑐩 → 𑐢𑐬𑑂‍𑐩."""
     Strng = Strng.replace('𑐬𑑂', '𑐬𑑂\u200D')

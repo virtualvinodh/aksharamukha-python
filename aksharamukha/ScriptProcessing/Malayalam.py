@@ -21,6 +21,7 @@ from aksharamukha.ScriptMap.MainIndic import Malayalam
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixMalayalamEncode(Strng):
     """Converts chillu consonants to their Unicode chillu codepoints and retains Malayalam dandas and numerals when encoding into Malayalam."""
     from .. import PostProcess
@@ -39,6 +40,7 @@ def _FixMalayalamEncode(Strng):
 
     return Strng
 
+# internal
 def _FixMalayalamDecode(Strng):
     """Expands chillu codepoints and archaic chillu letters back to consonant-plus-virama form and restores dandas/numerals when decoding out of Malayalam."""
     from .. import PostProcess
@@ -61,18 +63,21 @@ def _FixMalayalamDecode(Strng):
 
     return Strng
 
+# internal
 def FixMalayalam(Strng, reverse=False):
     """Dispatches to the Malayalam encode or decode fix-up routine based on the reverse flag."""
     return _FixMalayalamDecode(Strng) if reverse else _FixMalayalamEncode(Strng)
 
 # ---- Pre-processing options ----
 
+# frontend
 def ShowChillus(Strng):
     """Displays chillu consonants with an explicit transliteration marker instead of collapsing them, e.g. ധർമൻ → /dharˍmanˍ/ not /dharman/."""
     from .. import PostProcess
 
     return PostProcess.MalayalamChillu(Strng, True, True)
 
+# frontend
 def MalayalamHalfu(Strng):
     """Transcribes a word-final bare virama as the samvrutokara (extra-short u) sound, e.g. അവൻ അവന്‌ → avan avanŭ."""
     consu = '[കചടതറനണരലവഴളറ]'
@@ -83,6 +88,7 @@ def MalayalamHalfu(Strng):
 
     return Strng
 
+# frontend
 def MalayalamTranscribe(Strng):
     """Phonetically transcribes Malayalam script, applying intervocalic/nasal consonant voicing and other sandhi rules, e.g. കൊടുങ്കാട് → kŏḍuṅgāḍŭ."""
     Strng = MalayalamHalfu(Strng)
@@ -137,6 +143,7 @@ def MalayalamTranscribe(Strng):
 
     return Strng
 
+# frontend
 def MalayalamPrakrit_pre(Strng):
     """Reverses gemination marks and converts the Prakrit anusvara-above character to a regular anusvara before Prakrit-specific processing."""
     from .. import PostProcess
@@ -148,10 +155,12 @@ def MalayalamPrakrit_pre(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def tradOrtho(Strng):
     """Traditional Malayalam orthography option, currently a no-op passthrough, e.g. തു തൂ → തു തൂ."""
     return Strng
 
+# frontend
 def dotReph(Strng):
     """Converts ra-virama before a consonant into the dot-reph character, e.g. ധർമ → ധൎമ."""
     ListC = '('+"|".join(sorted(GM.CrunchSymbols(GM.Consonants,"Malayalam"))) + ')'
@@ -161,6 +170,7 @@ def dotReph(Strng):
 
     return Strng
 
+# frontend
 def archaicAIAU(Strng):
     """Uses archaic vowel forms for long ī and au, e.g. ഈ കൗ → ൟ കൌ."""
     Strng = Strng.replace('ൗ', 'ൌ')
@@ -168,6 +178,7 @@ def archaicAIAU(Strng):
 
     return Strng
 
+# frontend
 def MalayalamPrakrit_post(Strng):
     """Converts anusvara to the Prakrit anusvara-above character and inserts gemination marks after Prakrit-specific processing."""
     from .. import PostProcess
@@ -177,6 +188,7 @@ def MalayalamPrakrit_post(Strng):
 
     return Strng
 
+# frontend
 def historicChillu(Strng):
     """Converts consonant-plus-virama sequences to historic/archaic chillu letters, e.g. ൿ ൔ ൕ ൖ."""
     chilluArch = ['\u0D54', '\u0D55', '\u0D56', '\u0D7F']
@@ -191,6 +203,7 @@ def historicChillu(Strng):
 
     return Strng
 
+# frontend
 def MalayalamLineVirama(Strng):
     #ListC = '(' + '|'.join(GM.CrunchSymbols(GM.CharactersNV,'Malayalam') + ['ഽ']) + ')'
     #Strng = re.sub('\u0D4D'+'(?!'+ListC +')', '\u0D3B', Strng)
@@ -199,12 +212,14 @@ def MalayalamLineVirama(Strng):
 
     return Strng
 
+# frontend
 def MalayalamCircVirama(Strng):
     """Uses the circle-form virama instead of the standard virama, e.g. ക് → ക഼."""
     Strng = Strng.replace('\u0D4D', '\u0D3C')
 
     return Strng
 
+# frontend
 def RephaDoubleMalayalam(Strng):
     """Geminates the consonant following a reph/dot-reph, e.g. ധർമ → ധർമ്മ."""
     repha = '[ർൎ]'
@@ -230,6 +245,7 @@ def RephaDoubleMalayalam(Strng):
 
     return Strng
 
+# internal
 def MalayalamAnusvaraNasal(Strng):
     """Converts anusvara to/from homorganic nasal consonants for Malayalam-specific consonant clusters, accounting for chillu letters."""
     ListCAll = '(' + '|'.join(GM.CrunchSymbols(GM.Characters, 'Malayalam')) + ')'
@@ -262,6 +278,7 @@ def MalayalamAnusvaraNasal(Strng):
 
     return Strng
 
+# internal
 def MalayalamChillu(Strng, reverse=False, preserve=False):
 
     """Forms Malayalam chillu (pure, vowelless) consonant letters from consonant+virama in appropriate contexts, or reverses chillus back to consonant+virama when reverse=True."""
@@ -308,17 +325,20 @@ def MalayalamChillu(Strng, reverse=False, preserve=False):
 
     return Strng
 
+# unreferenced
 def MalayalamNTA(Strng):
     """Converts the n+ra sequence into n+t-line (Malayalam nta orthographic convention)."""
     Strng = Strng.replace('nṟ', 'nṯ')
     return Strng
 
+# frontend
 def MalayalamTTNTA(Strng):
     """Doubled ra (tta) & n+ra (nta) -> t-line doubled & n+t-line."""
     Strng = Strng.replace('ṟṟ', 'ṯṯ')
     Strng = Strng.replace('nṟ', 'nṯ')
     return Strng
 
+# internal
 def MalayalamremoveHistorical(Strng):
     """Replaces the historical Malayalam na letter with the modern na, and the virama-joined na-chillu sequence with the standalone chillu-n."""
     Strng = Strng.replace('\u0D29','\u0D28')

@@ -8,6 +8,7 @@ import re
 
 # ---- Post-processing options ----
 
+# frontend
 def removetddash(Strng):
     """Removes the SBL spirant marks on ḏ ṯ ḡ and marks the plain stops with a modifier colon instead - ḏ ṯ ḡ → d t g & d t g → d꞉ t꞉ g꞉."""
     Strng += '\u05CE'
@@ -27,12 +28,14 @@ def removetddash(Strng):
 
 # ---- Pre-processing options ----
 
+# internal
 def HebrewToHebrewSBLPre(Strng):
     """Substitute Hebrew aleph (א) and geresh (׳) with their SBL romanization symbols (ʾ, ’)."""
     Strng = Strng.replace('א', 'ʾ').replace('׳', '’')
 
     return Strng
 
+# internal
 def HebrewSBLToHebrewPre(Strng):
     """Reverse SBL Hebrew romanization symbols back to Hebrew letters, restoring begadkefat spirantization and vowel-length distinctions."""
     Strng = Strng.replace('ʾ', 'א',).replace('’', '׳')
@@ -52,6 +55,7 @@ def HebrewSBLToHebrewPre(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def HebrewToHebrewSBLPost(Strng):
     """Converts intermediate Hebrew romanization to SBL academic style (v->b-line-below, f->p-macron, d->d-line-below, g->g-line-below, t->t-line-below, o->o-circumflex, etc., undone when geminated)."""
     replacements = [('v', 'ḇ'), ('f', 'p̄'), ('d', 'ḏ'), ('ḏ꞉', 'd'), \
@@ -73,6 +77,7 @@ def HebrewToHebrewSBLPost(Strng):
 
     return Strng
 
+# internal
 def HebrewSBLToHebrewPost(Strng):
 
     """No-op placeholder (reserved for SBL Hebrew romanization source-side processing)."""

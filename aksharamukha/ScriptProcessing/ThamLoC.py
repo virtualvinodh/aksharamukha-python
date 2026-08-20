@@ -20,6 +20,7 @@ from .. import GeneralMap as GM
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def FixThamLoC(Strng, reverse=False):
 
     """Core Tai Tham (LoC variant) encode/decode logic: delegate to the shared Tai Tham family fixer with marker cleanup enabled and ra-haam swapping disabled."""
@@ -28,6 +29,7 @@ def FixThamLoC(Strng, reverse=False):
 
 # ---- Pre-processing options ----
 
+# internal
 def ThamLoCToRomanLocPre(Strng):
     """Apply Tai Tham LoC target-side vowel fixes for o/eo/aiy/koi/au sequences, the lue-karan sign, and vowel-killer marking."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ThamLoC'))
@@ -58,6 +60,7 @@ def ThamLoCToRomanLocPre(Strng):
 
     return Strng
 
+# internal
 def RomanLocToThamLoCPre(Strng):
     """Insert a modifier-letter apostrophe before consonants following bare vowels, and expand ʻ to a+vowel-killer, for Tai Tham LoC source text."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ThamLoCRomanLoC'))
@@ -72,10 +75,12 @@ def RomanLocToThamLoCPre(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def ThamLoCToRomanLocPost(Strng):
     """No-op placeholder (reserved for Tai Tham LoC romanization target-side processing)."""
     return Strng
 
+# internal
 def RomanLocToThamLoCPost(Strng):
     #cryptogammic dot to Sakot
     """Converts Tai Tham LoC romanization back to native encoding: maps cryptogrammic dot to sakot, fixes the aiy vowel+consonant sequence."""

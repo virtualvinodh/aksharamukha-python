@@ -16,6 +16,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def FixTibetanLoC(Strng,reverse=False):
 
     """Core Tibetan (LoC romanization variant) encode/decode logic: delegate to the shared Tibetan fixer without native-form swapping."""
@@ -24,6 +25,7 @@ def FixTibetanLoC(Strng,reverse=False):
 
 # ---- Pre-processing options ----
 
+# internal
 def TibetanLoCToRomanLocPre(Strng):
     """Insert LoC prime marks after bare t and n consonants not already followed by a diacritic, for Tibetan romanization."""
     Strng = re.sub('t(?![ʹhs])', 'tʹ', Strng)
@@ -31,12 +33,14 @@ def TibetanLoCToRomanLocPre(Strng):
 
     return Strng
 
+# internal
 def RomanLocToTibetanLoCPre(Strng):
     """Thin alias for TibetanLoCToRomanLocPre - the same prime-mark fix is reused unchanged for both directions."""
     return TibetanLoCToRomanLocPre(Strng)
 
 # ---- Post-processing options ----
 
+# internal
 def TibetanLoCToRomanLocPost(Strng):
     """Fixes Tibetan LoC romanization: drops the modifier apostrophe on t/n unless followed by s/y respectively, and joins j_h into jh."""
     Strng = re.sub('tʹ(?!s)', 't', Strng)

@@ -12,6 +12,7 @@ from .. import GeneralMap as GM
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixSharadaEncode(Strng):
 
     """Applies the Assamese khanda-ta fix and inserts a ZWNJ between virama- or nukta-marked consonants and a following nukta letter when encoding into Sharada."""
@@ -41,6 +42,7 @@ def _FixSharadaEncode(Strng):
 
     return Strng
 
+# internal
 def _FixSharadaDecode(Strng):
 
     """Reverses the Assamese khanda-ta fix when decoding out of Sharada; other corrections are currently disabled."""
@@ -67,6 +69,7 @@ def _FixSharadaDecode(Strng):
 
     return Strng
 
+# internal
 def FixSharada(Strng,reverse=False):
 
     """Dispatches to the Sharada encode or decode fix routine based on the reverse flag."""

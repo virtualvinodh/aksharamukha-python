@@ -5,6 +5,7 @@
 
 # ---- Pre-processing options ----
 
+# internal
 def RomanLocToSinhalaPre(Strng):
     """Normalizes candrabindu before converting LoC Roman text to Sinhala."""
     from .RomanLoC import RomanLoCChandrabindu_pre
@@ -14,6 +15,7 @@ def RomanLocToSinhalaPre(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def SinhalaToRomanLocPost(Strng):
     """Applies anusvara-to-nasal, prenasalization, and candrabindu LoC fixes after converting Sinhala to LoC Roman."""
     from .RomanLoC import RomanLoCChandrabindu_post

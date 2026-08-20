@@ -10,6 +10,7 @@ from aksharamukha.ScriptMap.MainIndic import Tamil
 
 # ---- Pre-processing options ----
 
+# frontend
 def SaurastraHaaruColonTamil(Strng):
     """Represents Saurashtra haaru with a colon in Tamil-script text - நீ: → ꢥꢴꢷ."""
     Strng = Strng.replace('ன', 'ந')
@@ -26,6 +27,7 @@ def SaurastraHaaruColonTamil(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def SaurastraHaaruColon(Strng):
     """Converts Saurashtra haaru into a colon representation - ꢥꢴꢷ → நீ:."""
     vir = Tamil.ViramaMap[0]

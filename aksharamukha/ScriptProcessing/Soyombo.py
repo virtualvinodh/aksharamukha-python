@@ -9,6 +9,7 @@ from .. import GeneralMap as GM
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixSoyomboEncode(Strng):
     """Encodes Soyombo script: forms the KSSA ligature, fixes shka, marks gemination, applies final consonant forms, and drops trailing viramas."""
     finVir = ['\U00011A5E\U00011A99','\U00011A5C\U00011A99','\U00011A60\U00011A99','\U00011A6D\U00011A99','\U00011A6F\U00011A99','\U00011A72\U00011A99','\U00011A74\U00011A99','\U00011A7C\U00011A99','\U00011A7D\U00011A99','\U00011A7F\U00011A99','\U00011A81\U00011A99']
@@ -34,6 +35,7 @@ def _FixSoyomboEncode(Strng):
 
     return Strng
 
+# internal
 def _FixSoyomboDecode(Strng):
     """Reverses Soyombo encoding: expands the KSSA ligature, gemination marks, and final consonant forms back to their base sequences."""
     finVir = ['\U00011A5E\U00011A99','\U00011A5C\U00011A99','\U00011A60\U00011A99','\U00011A6D\U00011A99','\U00011A6F\U00011A99','\U00011A72\U00011A99','\U00011A74\U00011A99','\U00011A7C\U00011A99','\U00011A7D\U00011A99','\U00011A7F\U00011A99','\U00011A81\U00011A99']
@@ -65,12 +67,14 @@ def _FixSoyomboDecode(Strng):
 
     return Strng
 
+# internal
 def FixSoyombo(Strng, reverse=False):
     """Dispatches to the Soyombo encode or decode fix routine depending on conversion direction."""
     return _FixSoyomboDecode(Strng) if reverse else _FixSoyomboEncode(Strng)
 
 # ---- Post-processing options ----
 
+# frontend
 def SoyomboSyllabize(Strng):
     """Splits Soyombo text into syllables by inserting spaces between syllable units - 𑩲𑩖𑩮𑩑𑪁𑩫𑪘𑪙𑩾 → 𑩲𑩖 𑩮𑩑 𑪁 𑩫𑪘𑪙𑩾."""
     vowels = '(' + '|'.join(GM.CrunchSymbols(GM.Vowels, 'Soyombo')) + ')'
@@ -93,6 +97,7 @@ def SoyomboSyllabize(Strng):
 
     return Strng
 
+# frontend
 def SoyomboSanskritPalatals(Strng):
     """Uses Sanskrit-style palatal letters instead of the Mongolian tsa series - 𑩵 𑩶 𑩷 → 𑩡 𑩢 𑩣."""
     tsaSeries = ['𑩵','𑩶','𑩷']
@@ -103,11 +108,13 @@ def SoyomboSanskritPalatals(Strng):
 
     return Strng
 
+# frontend
 def SoyomboFinals(Strng):
 
     """Uses dedicated Mongolian final-consonant signs - ak ag ad → 𑩐𑪋 𑩐𑪊 𑩐𑪍."""
     return Strng
 
+# frontend
 def SoyomboInitials(Strng):
     """Uses the initial forms of ra, la, and sa - 𑩼𑪙𑩫 𑩽𑪙𑩫 𑪁𑪙𑩫 → 𑪆𑩫 𑪇𑩫 𑪉𑩫."""
     viraCon = ['\U00011A7C\U00011A99', '\U00011A7D\U00011A99', '\U00011A81\U00011A99']
@@ -118,6 +125,7 @@ def SoyomboInitials(Strng):
 
     return Strng
 
+# frontend
 def SoyomboSpaceTscheg(Strng):
     """Replaces spaces with the Soyombo tsheg syllable separator - 𑩯 𑩴𑩖 → 𑩯𑪚𑩴𑩖."""
     Strng = Strng.replace(' ', '\U00011A9A')

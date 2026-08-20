@@ -5,6 +5,7 @@
 
 # ---- Pre-processing options ----
 
+# internal
 def BengaliToRomanLocPre(Strng):
     """Applies the Khanda Ta and subjoined-va LoC fixes before converting Bengali to LoC Roman."""
     from .RomanLoC import KhandaTaRomanLoC_pre
@@ -14,6 +15,7 @@ def BengaliToRomanLocPre(Strng):
 
     return Strng
 
+# internal
 def RomanLocToBengaliPre(Strng):
     """Normalizes candrabindu before converting LoC Roman text to Bengali."""
     from .RomanLoC import RomanLoCChandrabindu_pre
@@ -23,6 +25,7 @@ def RomanLocToBengaliPre(Strng):
 
 # ---- Post-processing options ----
 
+# internal
 def BengaliToRomanLocPost(Strng):
     """Normalizes candrabindu after converting Bengali to LoC Roman."""
     from .RomanLoC import RomanLoCChandrabindu_post
@@ -30,6 +33,7 @@ def BengaliToRomanLocPost(Strng):
 
     return Strng
 
+# internal
 def RomanLocToBengaliPost(Strng):
     """Restores the Khanda Ta letter after converting LoC Roman text to Bengali."""
     from .RomanLoC import KhandaTaRomanLoC_post

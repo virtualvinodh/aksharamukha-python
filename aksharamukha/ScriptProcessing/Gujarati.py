@@ -12,6 +12,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixGujaratiEncode(Strng):
 
     """Retains Indic dandas and merges nukta-marked ja/sha into the dedicated Gujarati letter ૹ when encoding."""
@@ -22,6 +23,7 @@ def _FixGujaratiEncode(Strng):
 
     return Strng
 
+# internal
 def _FixGujaratiDecode(Strng):
 
     """Retains Indic dandas and expands the Gujarati letter ૹ back into nukta-marked ja/sha when decoding."""
@@ -32,6 +34,7 @@ def _FixGujaratiDecode(Strng):
 
     return Strng
 
+# internal
 def FixGujarati(Strng, reverse=False):
 
     """Dispatches to the Gujarati encode or decode fix routine depending on conversion direction."""
@@ -40,6 +43,7 @@ def FixGujarati(Strng, reverse=False):
 
 # ---- Pre-processing options ----
 
+# frontend
 def SchwaFinalGujarati(Strng):
 
     """Deletes the inherent schwa only at the end of a word - राम → rām."""

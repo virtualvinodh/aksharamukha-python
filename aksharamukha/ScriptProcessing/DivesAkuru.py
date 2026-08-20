@@ -15,6 +15,7 @@ from .. import GeneralMap as GM
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixDivesAkuruEncode(Strng):
     """Converts explicit virama+consonant into subjoining virama and forms special ra/ya conjuncts (repha, subjoined ya) for Dives Akuru."""
     target = 'DivesAkuru'
@@ -40,6 +41,7 @@ def _FixDivesAkuruEncode(Strng):
 
     return Strng
 
+# internal
 def _FixDivesAkuruDecode(Strng):
     """Reverses Dives Akuru homorganic nasal signs, subjoining virama, alternate ya, and repha/subjoined-ya conjuncts back to explicit sequences."""
     target = 'DivesAkuru'
@@ -79,12 +81,14 @@ def _FixDivesAkuruDecode(Strng):
 
     return Strng
 
+# internal
 def FixDivesAkuru(Strng, reverse=False):
     """Dispatches to the Dives Akuru encode or decode fix-up routine based on the reverse flag."""
     return _FixDivesAkuruDecode(Strng) if reverse else _FixDivesAkuruEncode(Strng)
 
 # ---- Pre-processing options ----
 
+# frontend
 def DivesAkuruAlternateIndVowels_pre(Strng):
     # use alt /y/
     #Strng = Strng.replace("\U00011925", "\U00011926")
@@ -102,6 +106,7 @@ def DivesAkuruAlternateIndVowels_pre(Strng):
 
 # ---- Post-processing options ----
 
+# frontend
 def DivesAkuruAlternateIndVowels_post(Strng):
     # use alt /y/
     """Expands standalone Dives Akuru independent vowels into y-based sequences and switches to the alternate ya glyph (e.g. 𑤁→𑤥𑤰)."""
@@ -117,6 +122,7 @@ def DivesAkuruAlternateIndVowels_post(Strng):
 
     return Strng
 
+# frontend
 def DivesAkuruHomoOrganNasal(Strng):
     """Uses the homorganic nasal sign in place of virama+nasal before a matching consonant, e.g. 𑤐𑤾𑤎 → 𑤿𑤎."""
     homoNasal = '\U0001193F'
@@ -130,6 +136,7 @@ def DivesAkuruHomoOrganNasal(Strng):
 
     return Strng
 
+# frontend
 def UseAlternateYA(Strng):
     """Uses the alternate Dives Akuru ya glyph in place of the standard one, 𑤥 → 𑤦."""
     Strng = Strng.replace("\U00011925", "\U00011926")

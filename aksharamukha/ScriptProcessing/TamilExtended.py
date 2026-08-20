@@ -15,6 +15,7 @@ from aksharamukha.ScriptMap.MainIndic import TamilExtended
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixTamilExtendedEncode(Strng):
 
     """Normalizes the ksha and shra conjuncts, uses the older-style AU vowel sign, and repositions zero-width joiners relative to Vedic svara marks when encoding Tamil-Grantha extended text."""
@@ -27,6 +28,7 @@ def _FixTamilExtendedEncode(Strng):
 
     return Strng
 
+# internal
 def _FixTamilExtendedDecode(Strng):
 
     """Repositions zero-width joiners relative to Vedic svara marks and inserts a ZWNJ after every virama when decoding Tamil-Grantha extended text."""
@@ -37,6 +39,7 @@ def _FixTamilExtendedDecode(Strng):
 
     return Strng
 
+# internal
 def FixTamilExtended(Strng, reverse=False):
 
     """Dispatches to the Tamil-Grantha extended encode or decode fix routine depending on conversion direction."""
@@ -44,6 +47,7 @@ def FixTamilExtended(Strng, reverse=False):
 
 # ---- Post-processing options ----
 
+# frontend
 def TamilStyleUUCore(Strng):
 
     """Applies the core-Grantha style for u/ū vowel signs by inserting a ZWJ after certain consonants (ഗുബൂഫുഭൂ → ഗ‍ുബ‍ൂഫ‍ുഭ‍ൂ)."""
@@ -51,6 +55,7 @@ def TamilStyleUUCore(Strng):
 
     return Strng
 
+# frontend
 def TamilStyleUUOther(Strng):
 
     """Applies the Tamilized-Grantha style for u/ū vowel signs on sibilants, ha, and the shra conjunct by inserting a ZWJ (ജൂസുഷുഹൂ → ജ‍ൂസ‍ുഷ‍ുഹ‍ൂ)."""
@@ -61,6 +66,7 @@ def TamilStyleUUOther(Strng):
 
     return Strng
 
+# internal
 def TamilpredictDentaNaExtended(Strng):
 
     """Corrects ambiguous nna/dental-na spellings back to dental na for a hardcoded list of known Sanskrit-derived words in Tamil-Grantha extended text."""
@@ -238,6 +244,7 @@ def TamilpredictDentaNaExtended(Strng):
 
     return Strng
 
+# frontend
 def TamilExtendedNNA(Strng):
 
     """Contextually converts dental na to nna per Tamil spelling rules, then fixes known exceptions via the hardcoded word list (ഗജാനനന്‌ → ഗജാഩഩഩ്‌)."""
@@ -260,6 +267,7 @@ def TamilExtendedNNA(Strng):
 
     return Strng
 
+# frontend
 def TamilExtendedAnusvara(Strng):
 
     """Converts anusvara to homorganic nasal consonants and word-final anusvara to a plain म് to avoid anusvara spelling (സംഘം → സങ്‌ഘമ്)."""

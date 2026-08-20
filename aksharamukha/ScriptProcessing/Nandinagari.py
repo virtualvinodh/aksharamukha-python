@@ -12,6 +12,7 @@ import re
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixNandinagariEncode(Strng):
 
     """No-op placeholder for Nandinagari encoding; returns the string unchanged."""
@@ -19,6 +20,7 @@ def _FixNandinagariEncode(Strng):
 
     return Strng
 
+# internal
 def _FixNandinagariDecode(Strng):
 
     """Reverses the Nandinagari prishtamatra (right-side vowel matra) substitution when decoding."""
@@ -27,6 +29,7 @@ def _FixNandinagariDecode(Strng):
 
     return Strng
 
+# internal
 def FixNandinagari(Strng, reverse=False):
 
     """Dispatches to the Nandinagari encode or decode fix-up routine based on the reverse flag."""
@@ -34,6 +37,7 @@ def FixNandinagari(Strng, reverse=False):
 
 # ---- Post-processing options ----
 
+# frontend
 def NandinagariPrishtamatra(Strng, reverse = False):
 
     """Converts Nandinagari vowel signs to the prishtamatra orthographic style, e.g. 𑦮𑧚 𑦮𑧜 𑦮𑧛 𑦮𑧝 → 𑦮𑧤 𑦮𑧤𑧑 𑦮𑧤𑧚 𑦮𑧤𑧜."""

@@ -10,6 +10,7 @@ from aksharamukha.ScriptMap.MainIndic import Ahom
 
 # ---- Fix (encode/decode conversion logic) ----
 
+# internal
 def _FixAhomEncode(Strng):
     """Reorders Ahom vowel signs and anusvara into correct visual order and merges two consonant+vowel sequences into single ligature characters."""
     ListVS = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, 'Ahom')) + ')'
@@ -24,6 +25,7 @@ def _FixAhomEncode(Strng):
 
     return Strng
 
+# internal
 def _FixAhomDecode(Strng):
     """Reverses Ahom encoding fixes: splits merged ligatures, reconstructs closed-syllable e/o forms, and restores vowel-before-anusvara order."""
     ListVS = '(' + '|'.join(GM.CrunchSymbols(GM.VowelSignsNV, 'Ahom')) + ')'
@@ -48,12 +50,14 @@ def _FixAhomDecode(Strng):
 
     return Strng
 
+# internal
 def FixAhom(Strng, reverse=False):
     """Dispatches to the Ahom encode or decode fix-up routine based on the reverse flag."""
     return _FixAhomDecode(Strng) if reverse else _FixAhomEncode(Strng)
 
 # ---- Post-processing options ----
 
+# frontend
 def removePaliAhom(Strng):
     """Replaces Pali-specific Ahom characters with their standard non-Pali equivalents, e.g. 𑝁 𑝂 𑝃 𑝄 𑝅 𑝆 → 𑜄 𑜌 𑜓 𑜔 𑜃 𑜎."""
     pali = "𑝁 𑝂 𑝃 𑝄 𑝅 𑝆".split(" ")
@@ -64,6 +68,7 @@ def removePaliAhom(Strng):
 
     return Strng
 
+# internal
 def AhomClosed(Strng):
     """Converts open Ahom vowel signs for i, u, e, and o into their closed-syllable forms before a final consonant or anusvara."""
     vir = Ahom.ViramaMap[0]
