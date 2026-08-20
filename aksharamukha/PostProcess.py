@@ -83,15 +83,6 @@ def inherentAO(Strng):
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Bengali import BengaliOldRA, khandatabatova, BengaliRaBa, BengaliIntervocalicDDA
 
-#trigger - UI prompt to show "preserve source" must be enabled for this option
-#testcase todo
-def BengaliSwitchYaYYa(Strng):
-    """ya -> yya-with-nukta & yya-with-nukta -> ya (swaps the plain and nuktaed Bengali ya letters)."""
-    Strng = re.sub('(?<!\u09CD)য', '@#$', Strng)
-    Strng = re.sub('য়', 'য', Strng)
-    Strng = Strng.replace('@#$', 'য়')
-
-    return Strng
 
 #testcase todo
 def AlephMaterLectionis(Strng, target='semitic'):
@@ -408,11 +399,6 @@ from .ScriptProcessing.BalineseLoC import BalineseSimplified
 # consolidated there (batch migration).
 from .ScriptProcessing.Balinese import BalineseArchaicJNA, BalineseAvowels, BalineseMoveRepha_post as BalineseMoveRepha
 
-def MalayalamTTNTA(Strng):
-    """Doubled ra (tta) & n+ra (nta) -> t-line doubled & n+t-line."""
-    Strng = Strng.replace('ṟṟ', 'ṯṯ')
-    Strng = Strng.replace('nṟ', 'nṯ')
-    return Strng
 
 def AnusvaratoNasalASTISO(Strng):
     #Strng = Strng.replace('ṁ', 'ṃ')
@@ -439,9 +425,6 @@ def TaiKuen(Strng):
     """No-op placeholder (reserved for Tai Kuen script-specific post-processing)."""
     return Strng
 
-def TaiThamLao(Strng):
-    """No-op placeholder (reserved for Tai Tham Lao-variant post-processing)."""
-    return Strng
 
 # Newa's own logic now lives in ScriptProcessing/Newa.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
@@ -516,9 +499,6 @@ from .ScriptProcessing.Nandinagari import NandinagariPrishtamatra
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.Oriya import OriyaVaAlt, OriyaYYA
 
-def BengaliYYA(Strng):
-    """ya everywhere - yayati yajna -> nukta-ya-yati nukta-yajna (replaces every plain ya with nuktaed yya in Bengali)."""
-    return YYAEverywhere(Strng, 'Bengali')
 
 def RetainTeluguDanda(Strng):
     """Converts roman full stops to Telugu danda punctuation."""
@@ -560,11 +540,6 @@ def RetainGurmukhiNumerals(Strng):
     """Converts Western Arabic digits to Gurmukhi numerals."""
     return RetainIndicNumerals(Strng, 'Gurmukhi')
 
-def IASTPali(Strng):
-    """Converts the IAST underlined-l (l with line below) used for retroflex l to the standard Pali l-underdot."""
-    Strng = Strng.replace('l̤', 'ḷ')
-
-    return Strng
 
 def ThamTallADisable(Strng):
     """Disable explicit Tall -a - collapses the tall-a vowel sign to the regular a vowel sign, letting the font choose the visual form."""
@@ -596,14 +571,6 @@ def ThamShiftMaiKangLai(Strng):
 
     return Strng
 
-def UrduRemoveShortVowels(Strng):
-    """Remove short vowels - hindustan-with-marks -> hindustan (strips sukun, fatha, kasra, damma, and the Urdu small-v diacritics)."""
-    ShortVowels = ['\u0652','\u064E','\u0650','\u064F', '\u0658']
-
-    for vow in ShortVowels:
-        Strng = Strng.replace(vow,"")
-
-    return Strng
 
 def swapEe(Strng):
     """E/O for long, e/o for short - swaps the case convention of the e and o vowel placeholders so uppercase marks the long vowel."""
@@ -843,20 +810,6 @@ def removeSemiticLetters(Strng):
     return Strng
 from .ScriptProcessing.Hebrew import HebrewVetVav, HebrewnonFinalShort
 
-#testcase todo
-def LatnInitialVowels(Strng, initLetter=''):
-    """Replaces word-initial long-vowel forms (a-circumflex, i-macron-circumflex, etc.) with a leading marker letter plus the corresponding plain vowel; helper for the *izeLatn functions."""
-    initVow = 'â ā̂ î ī̂ û ū̂ ê ē̂ âŷ ô ō̂ âŵ'.split(' ')
-    nonInitVow = 'a ā i ī u ū e ē aŷ o ō aŵ'.split(' ')
-
-    for x, y in zip(initVow, nonInitVow):
-        Strng = Strng.replace(x, initLetter+y)
-
-    Strng = Strng.replace('\u0302', '')
-
-    Strng = re.sub('\u033d', '', Strng)
-    #Strng = 'Vinodh'
-    return Strng
 
 #testcase todo
 # BurmeseLoC's own LoC logic now lives in ScriptProcessing/BurmeseLoC.py -
@@ -1111,22 +1064,8 @@ def Dot2Pipes(Strng):
     return Strng
 from .ScriptProcessing.Tibetan import TibetanRemoveVirama, TibetanRemoveBa
 
-# reverse these in preprocess
-def RomanLoCVaWa(Strng):
-    """Replaces v with w, per LoC romanization convention for scripts where va is rendered as w."""
-    Strng = Strng.replace('v', 'w')
-    return Strng
 
-def RomanLoCSasha(Strng):
-    """Replaces s-dot-below (sa) with sh, per LoC romanization convention."""
-    Strng = Strng.replace('ṣ', 'sh')
-    return Strng
 
-def RomanLoCLaUnderscoreDoubleDot(Strng):
-    """Replaces l-line-below with l-double-underdot, per LoC romanization convention."""
-    Strng = Strng.replace('ḻ', 'l̤')
-
-    return Strng
 from .ScriptProcessing.DevanagariLoC import DevanagariToRomanLocPost
 
 # TibetanLoC's own LoC logic now lives in ScriptProcessing/TibetanLoC.py -
@@ -1164,17 +1103,6 @@ from .ScriptProcessing.Chakma import ChakmaGemination
 # reflection-based dispatch keeps finding these names.
 from .ScriptProcessing.WarangCiti import WarangCitiModernOrthogaphy
 
-def MultaniAbjad(Strng):
-    """Simplifies Multani abjad-style orthography by dropping vowels between consonants in CVC/consonant-cluster contexts, matching its abjad (consonant-only) spelling convention."""
-    ListAll = "(" + "|".join(GM.CrunchSymbols(GM.Characters, 'Multani') + ["𑊓", "𑊍"]) + ")"
-    ListC = "(" + "|".join(GM.CrunchSymbols(GM.Consonants, 'Multani') + ["𑊓", "𑊍"]) + ")"
-    ListV = "(" + "|".join(GM.CrunchSymbols(GM.Vowels, 'Multani') + ["𑊓", "𑊍"]) + ")"
-
-    Strng = re.sub(ListC + ListV + ListC, r'\1\3', Strng)
-    Strng = re.sub('('+ ListC + '{2,})' + ListV, r'\1', Strng)
-    Strng = re.sub(ListV + ListC + ListV, r'\1\2', Strng)
-
-    return Strng
 from .ScriptProcessing.Sundanese import SundaneseRemoveHistoric
 from .ScriptProcessing.Limbu import LimburemoveHistorical
 
@@ -1197,77 +1125,14 @@ def ModiRemoveLong(Strng):
 
     return Strng
 
-def ThaanaRemoveHistorical(Strng):
-    """Replaces the historical Thaana letter naa (retroflex n) with the modern noonu letter."""
-    return Strng.replace('ޱ','ނ')
 from .ScriptProcessing.Oriya import OriyaVa
 
-def MalayalamremoveHistorical(Strng):
-    """Replaces the historical Malayalam na letter with the modern na, and the virama-joined na-chillu sequence with the standalone chillu-n."""
-    Strng = Strng.replace('\u0D29','\u0D28')
-    Strng = Strng.replace('ന‍്', 'ൻ')
-
-    return Strng
 
     ## Insert Gemination Sign
 
-def MeeteiMayekremoveHistorical(Strng):
-    """Replaces historical/obsolete Meetei Mayek letters and the diaeresis-marked cheitap ee/oo sequences with their modern equivalents."""
-    removePairs = [('ꫢ', 'ꯆ'), ('ꫣ', 'ꯅ'), ('ꫤ','ꯇ'), ('ꫥ','ꯊ'), ('ꫦ','ꯗ'), ('ꫧ','ꯙ'), ('ꫨ','ꯅ'),
-                   ('ꫩ','ꯁ'), ('ꫪ','ꯁ'), ('\uAAF5','ꯍ꯭'), ('ꯑꫫ','ꯏ'), ('ꯑꫬ','ꯎ'), ('ꫫ','ꯤ'), ('ꫬ','ꯨ')]
-
-    for x,y in removePairs:
-        Strng = Strng.replace(x,y)
-
-    return Strng
 
 # കൽന് കത്ല് ക്ഷേത്ര് കൻല് - Check this
 
-def MalayalamChillu(Strng, reverse=False, preserve=False):
-
-    """Forms Malayalam chillu (pure, vowelless) consonant letters from consonant+virama in appropriate contexts, or reverses chillus back to consonant+virama when reverse=True."""
-    Chillus=['\u0D7A','\u0D7B','\u0D7C','\u0D7D','\u0D7E', 'ഩ‍്']
-
-    ListC = '(' + '|'.join(GM.CrunchSymbols(GM.CharactersNV,'Malayalam') + ['ഽ']) + ')'
-
-    vir = Malayalam.ViramaMap[0]
-    ConVir =[
-             Malayalam.ConsonantMap[14]+vir,
-             Malayalam.ConsonantMap[19]+vir,
-             Malayalam.ConsonantMap[26]+vir,
-             Malayalam.ConsonantMap[27]+vir,
-             Malayalam.SouthConsonantMap[0]+vir,
-             'ഩ്'
-            ]
-
-    ## may be include ha ?
-    CList = [
-            Malayalam.ConsonantMap[10:15]+Malayalam.ConsonantMap[24:26]+Malayalam.ConsonantMap[28:29],
-            Malayalam.ConsonantMap[15:20]+Malayalam.ConsonantMap[24:27]+Malayalam.ConsonantMap[28:29]+['റ'],
-            Malayalam.ConsonantMap[25:27],
-            Malayalam.ConsonantMap[20:21] + Malayalam.ConsonantMap[24:26] + Malayalam.ConsonantMap[27:29],
-            Malayalam.SouthConsonantMap[0:1]+Malayalam.ConsonantMap[25:27],
-            Malayalam.ConsonantMap[15:20]+Malayalam.ConsonantMap[24:27]+Malayalam.ConsonantMap[28:29]+['റ']
-            ]
-
-    if not reverse:
-        for i in range(len(Chillus)):
-            #print '(?<!'+'['+vir+''.join(Chillus)+']'+')'+'('+ConVir[i]+')'+'(?!['+''.join(CList[i])+'])'
-            Strng = re.sub(ListC + GM.VedicSvaras + '('+ConVir[i]+')'+'(?!['+''.join(CList[i])+'])',r'\1\2' + Chillus[i],Strng)
-            Strng = re.sub(ListC + GM.VedicSvaras + '('+ConVir[i]+')'+'(?=(['+''.join(CList[i])+'])' + vir + r'\4' + ')',r'\1\2' + Chillus[i],Strng)
-
-        ## remove _ appearing due to the preserve chillu option
-        Strng = re.sub('(?<!ത്)ˍ', '', Strng)
-
-    else:
-        if preserve:
-            for x,y in zip(Chillus, ConVir):
-                Strng = Strng.replace(x, y +'ˍ') ## Fix the reversal of characters of this
-        else:
-            for x,y in zip(Chillus, ConVir):
-                Strng = Strng.replace(x, y) ## Fix the reversal of characters of this
-
-    return Strng
 
 def RemoveSchwa(Strng,Target):
 
@@ -1385,37 +1250,6 @@ def AnusvaraToNasal(Strng,Target):
 
     return Strng
 
-def MalayalamAnusvaraNasal(Strng):
-    """Converts anusvara to/from homorganic nasal consonants for Malayalam-specific consonant clusters, accounting for chillu letters."""
-    ListCAll = '(' + '|'.join(GM.CrunchSymbols(GM.Characters, 'Malayalam')) + ')'
-
-    ListNNasal = [Malayalam.ConsonantMap[x] for x in [4,9,14,19,24]]
-    ListCNasal = [
-             '|'.join(Malayalam.ConsonantMap[0:1]),
-             '|'.join(Malayalam.ConsonantMap[5:8]),
-             '|'.join(Malayalam.ConsonantMap[10:14]),
-             '|'.join(Malayalam.ConsonantMap[15:19]),
-             '|'.join(Malayalam.ConsonantMap[20:21]),
-            ]
-
-    ListNAnu = [Malayalam.ConsonantMap[x] for x in [4,24]]
-    ListCAnu = [
-             '|'.join(Malayalam.ConsonantMap[1:4]),
-             '|'.join(Malayalam.ConsonantMap[21:24]),
-            ]
-
-    vir = Malayalam.ViramaMap[0]
-    Anu = Malayalam.AyogavahaMap[1]
-
-    Chillus=['\u0D7A','\u0D7B','\u0D7C','\u0D7D','\u0D7E', 'ഩ‍്']
-
-    for i in range(len(ListNNasal)):
-        Strng = re.sub('('+Anu+')'+'('+ListCNasal[i]+')',ListNNasal[i]+vir+r'\2',Strng)
-
-    for i in range(len(ListNAnu)):
-        Strng = re.sub(ListCAll + GM.VedicSvaras + '(?<!' + vir + ')'+'(?<![' + ".".join(Chillus) + '])(?<!' + vir +')' + '('+ListNAnu[i]+')'+'('+vir+')'+'('+ListCAnu[i]+')',r'\1\2'+Anu+r'\5',Strng)
-
-    return Strng
 
 ## Check Namna, ramya -> Malayalam; fix
 def MToAnusvara(Strng,Target):
@@ -1609,16 +1443,6 @@ def RemoveDiacriticsTamil(Strng):
 
     return Strng
 
-def SaurashtraHaru(Strng):
-
-    """Replaces specific Saurashtra consonant+virama+ha clusters with the dedicated haru (below-base h) sign."""
-    ListC = '|'.join([Saurashtra.ConsonantMap[x] for x in [19,24,26,27]])
-    vir = Saurashtra.ViramaMap[0]
-    ha = Saurashtra.ConsonantMap[32]
-
-    Strng = re.sub('('+ListC+')'+vir+ha,r'\1'+'\uA8B4',Strng)
-
-    return Strng
 
 def ThaiLaoTranscription(Strng,Script,shortA,shortAconj,reverse=False, anusvaraChange=True):
     ## For Native lao: aMDa give an'da as intermediate (N doesn't exist in Native Lao )
@@ -1730,66 +1554,7 @@ def FixTallA(Strng, TallACons):
 
     return Strng
 
-def AvestanConventions(Strng):
-    # Fix Nasalization, hma etc
 
-    """Applies Avestan orthographic conventions: inserts nasalization before consonant clusters, softens word-final a before n/m, marks retroflex n before velars/dentals, selects consonant allophones before ii/uu vowels, and picks the ta variant by following context."""
-    extraCons = ["\U00010B33","\U00010B32","\U00010B1D","\U00010B12", '𐬣', '𐬝']
-    ListC = "|".join(GM.CrunchSymbols(GM.Consonants, "Avestan")+extraCons)
-    ListV = "|".join(GM.CrunchSymbols(GM.Vowels,"Avestan"))
-    ListA = "|".join(GM.CrunchSymbols(GM.Vowels + GM.Consonants,"Avestan")+extraCons+ ['𐬄','𐬅'])
-
-    ii = Avestan.VowelMap[2] * 2
-    uu = Avestan.VowelMap[4] * 2
-    i = Avestan.VowelMap[2]
-    a = Avestan.VowelMap[0]
-
-    kha = Avestan.ConsonantMap[1]
-    nga = Avestan.ConsonantMap[4]
-    ya = Avestan.ConsonantMap[25]
-    va = Avestan.ConsonantMap[28]
-    ta = Avestan.ConsonantMap[15]
-    tha = Avestan.ConsonantMap[16]
-    dha = Avestan.ConsonantMap[18]
-    na = Avestan.ConsonantMap[19]
-    ma = Avestan.ConsonantMap[24]
-    kb = "|".join([Avestan.ConsonantMap[0], Avestan.ConsonantMap[22]])
-    nna = Avestan.ConsonantMap[14]
-    sha = Avestan.ConsonantMap[29]
-
-    VelarDental = "|".join(Avestan.ConsonantMap[0:4]+Avestan.ConsonantMap[15:19])
-
-    Strng = Strng.replace(nga+i, '𐬣'+ i)
-
-    ## Conventions from AVestan Combined Grammer
-
-    Strng = re.sub(a + '([' + na + ma + '])' + '(?!' +  ListA + ')', '𐬆' + r'\1' , Strng) ## Soft -Ta end of words
-
-    Strng = re.sub("("+na+")"+"("+VelarDental+")",nna+r'\2',Strng) ##
-
-    Strng = re.sub("("+kha+")"+"(?="+ii+")","\U00010B12",Strng)
-    Strng = re.sub("("+sha+")"+"(?="+ii+")","\U00010B33",Strng)
-
-    Strng = re.sub("("+tha+"|"+dha+")"+"("+uu+")",r'\1'"𐬡",Strng)
-
-    Strng = re.sub("("+ta+")"+"(?!"+"(("+ListV+")"+"|"+"("+ListC+"))"+")","\U00010B1D",Strng)
-    Strng = re.sub("("+ta+")"+"(?="+"("+kb+")"+")",'\U00010B1D',Strng)
-
-    return Strng
-
-# not used
-def PhagsPaRearrange(Strng,Target):
-    """Inserts virama before word-final 'Phags-pa consonants (marked by trailing spaces), then converts remaining spaces and Mongolian-style punctuation into 'Phags-pa segment markers."""
-    vir = GM.CrunchList('ViramaMap', Target)[0]
-    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants,Target))
-    ListV = '|'.join(GM.CrunchSymbols(GM.Vowels,Target))
-    ListVS = '|'.join(GM.CrunchSymbols(GM.VowelSignsNV,Target))
-
-    Strng = re.sub("(?<!( |"+vir+"))"+"("+ListC+")"+"(?= )",r'\2'+vir,Strng)
-    #print Strng
-
-    Strng = Strng.replace(" ","").replace("᠂"," ").replace("᠃"," ")
-    return Strng
 
 # New LoC (Library of Congress) romanization post-options - see
 # ScriptProcessing/HOW_TO_ADD_LOC.md for the naming convention.
@@ -1850,19 +1615,7 @@ def PhoneticMapping(Strng):
     """No-op placeholder (reserved for phonetic remapping)."""
     return Strng
 
-#testcase todo
-def ArabicGimelGaGha(Strng):
-    """Replaces Arabic jim with ghayn (renders Hebrew/Semitic 'ga' sound as Arabic 'gha')."""
-    Strng = Strng.replace('ج', 'غ')
 
-    return Strng
-
-#testcase todo
-def ArabicGimelPaBa(Strng):
-    """Replaces Arabic fa with ba (renders Hebrew/Semitic 'pa' sound as Arabic 'ba')."""
-    Strng = Strng.replace('ف', 'ب')
-
-    return Strng
 
 #todo feature
 def siddhamBija(Strng):
@@ -1894,60 +1647,21 @@ def IASTISONasalTilde(Strng):
     """No-op placeholder (reserved for IAST/ISO nasalization tilde handling)."""
     return Strng
 
-#todo testcase
-#todo testcase
-#todo testcase
-def HebrewKatevMalei(Strng):
-    """Replaces Hebrew qamats and patach vowel points with aleph, producing ktiv male (full/plene) spelling."""
-    Strng = Strng.replace('ָ', 'א') # long aa
-    Strng = Strng.replace('ַ', 'א') # short a
-
-    return Strng
 
 # RomanLoC's own LoC logic now lives in ScriptProcessing/RomanLoC.py -
 # consolidated there (LoC redesign).
 from .ScriptProcessing.RomanLoC import RomanLoCChandrabindu_post as RomanLoCChandrabindu, KhandaTaRomanLoC_post as KhandaTaRomanLoC
 
-def MalayalamNTA(Strng):
-    """Converts the n+ra sequence into n+t-line (Malayalam nta orthographic convention)."""
-    Strng = Strng.replace('nṟ', 'nṯ')
-    return Strng
 
 def AmbigousTamilOrthography(Strng):
 
     """No-op placeholder (reserved for resolving ambiguous Tamil orthography)."""
     return Strng
 
-def TamilSHADisable(Strng):
-    """Replaces Tamil sha (Grantha letter) with sa followed by a superscript '2' marker, disabling the dedicated sha glyph."""
-    return Strng.replace("ஶ", "ஸ²")
 
-def UrduAlternateUU(Strng):
-    """Intended to replace a short-u+wow sequence with wow+hamza-below as an alternate Urdu spelling; the search string is a literal backslash-escaped text, not an actual Unicode sequence, so this currently has no effect."""
-    Strng = Strng.replace("\\u064F\\u0648","\u0648\u0657")
 
-    return Strng
 
-# not used
-def TaiThamO(Strng):
-    """Merges the Tai Tham e-vowel-sign + aa-vowel-sign sequence into the single dedicated o vowel sign."""
-    Strng = Strng.replace("\u1A6E\u1A63","\u1A70")
 
-    return Strng
-
-# not used
-def TaiThamHighNga(Strng):
-    """Replaces the low-register Tai Tham nga consonant with its high-register variant."""
-    Strng = Strng.replace('\u1A58','\u1A59')
-
-    return Strng
-
-# not used
-def TaiThamMoveNnga(Strng):
-    """Repositions the Tai Tham high-register nga sign to follow the character it attaches to."""
-    Strng = re.sub('(.)(\u1A58)',r'\2\1',Strng) # Probably its u1A59
-
-    return Strng
 
 def LatinPipes(Strng):
     ###
@@ -1955,17 +1669,6 @@ def LatinPipes(Strng):
     """No-op placeholder (reserved for converting pipe punctuation in Latin-script output)."""
     return Strng
 
-# not used
-def DevanagariAVowels(Strng):
-    """Decomposes old-style independent Devanagari vowel letters into the inherent-a consonant carrier plus the corresponding dependent vowel sign."""
-    oldVowels = Devanagari.VowelMap[2:12]+Devanagari.SouthVowelMap[:1]
-    a = Devanagari.VowelMap[0]
-    newAVowels = [a+x for x in Devanagari.VowelSignMap[1:11]+Devanagari.SouthVowelSignMap[:1]]
-
-    for x,y in zip(oldVowels,newAVowels):
-        Strng = Strng.replace(x,y)
-
-    return Strng
 
 # not used
 def AnusvaraToNasalIPA(Strng):
@@ -2005,9 +1708,63 @@ def IPARemoveCross(Strng):
 
     return Strng
 
-# not used
-def ChakmaAVowels(Strng):
 
-    """No-op placeholder (reserved for Chakma inherent-vowel handling)."""
-    return Strng
+from .ScriptProcessing.Arab import ArabicGimelGaGha
 
+from .ScriptProcessing.Arab import ArabicGimelPaBa
+
+from .ScriptProcessing.Avestan import AvestanConventions
+
+from .ScriptProcessing.Bengali import BengaliSwitchYaYYa_post as BengaliSwitchYaYYa
+
+from .ScriptProcessing.Bengali import BengaliYYA
+
+from .ScriptProcessing.Chakma import ChakmaAVowels
+
+from .ScriptProcessing.Devanagari import DevanagariAVowels
+
+from .ScriptProcessing.Hebrew import HebrewKatevMalei
+
+from .ScriptProcessing.IAST import IASTPali_post as IASTPali
+
+from .ScriptProcessing.Latn import LatnInitialVowels
+
+from .ScriptProcessing.Malayalam import MalayalamAnusvaraNasal
+
+from .ScriptProcessing.Malayalam import MalayalamChillu
+
+from .ScriptProcessing.Malayalam import MalayalamNTA
+
+from .ScriptProcessing.Malayalam import MalayalamTTNTA
+
+from .ScriptProcessing.Malayalam import MalayalamremoveHistorical
+
+from .ScriptProcessing.MeeteiMayek import MeeteiMayekremoveHistorical
+
+from .ScriptProcessing.Multani import MultaniAbjad
+
+from .ScriptProcessing.PhagsPa import PhagsPaRearrange
+
+from .ScriptProcessing.RomanLoC import RomanLoCLaUnderscoreDoubleDot_post as RomanLoCLaUnderscoreDoubleDot
+
+from .ScriptProcessing.RomanLoC import RomanLoCSasha_post as RomanLoCSasha
+
+from .ScriptProcessing.RomanLoC import RomanLoCVaWa_post as RomanLoCVaWa
+
+from .ScriptProcessing.Saurashtra import SaurashtraHaru
+
+from .ScriptProcessing.TaiTham import TaiThamHighNga
+
+from .ScriptProcessing.LaoTham import TaiThamLao_post as TaiThamLao
+
+from .ScriptProcessing.TaiTham import TaiThamMoveNnga
+
+from .ScriptProcessing.TaiTham import TaiThamO
+
+from .ScriptProcessing.Tamil import TamilSHADisable
+
+from .ScriptProcessing.Thaana import ThaanaRemoveHistorical
+
+from .ScriptProcessing.Urdu import UrduAlternateUU
+
+from .ScriptProcessing.Urdu import UrduRemoveShortVowels

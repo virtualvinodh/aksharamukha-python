@@ -185,3 +185,9 @@ def ChakmaGemination(Strng, reverse = False):
 
 
     return Strng
+
+def ChakmaAVowels(Strng):
+
+    """No-op placeholder (reserved for Chakma inherent-vowel handling)."""
+    return Strng
+

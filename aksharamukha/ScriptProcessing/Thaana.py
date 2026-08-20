@@ -71,3 +71,10 @@ def FixThaana(Strng, reverse=False):
 
     """Dispatches to the Thaana encode or decode fix routine depending on the reverse flag."""
     return _FixThaanaDecode(Strng) if reverse else _FixThaanaEncode(Strng)
+
+# ---- Post-processing options ----
+
+def ThaanaRemoveHistorical(Strng):
+    """Replaces the historical Thaana letter naa (retroflex n) with the modern noonu letter."""
+    return Strng.replace('ޱ','ނ')
+

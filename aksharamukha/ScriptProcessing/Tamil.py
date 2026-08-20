@@ -512,3 +512,8 @@ def TamilSubScript(Strng):
 def oldtamilortho(Strng):
     """Selects old Tamil orthography style (currently a no-op placeholder)."""
     return Strng
+
+def TamilSHADisable(Strng):
+    """Replaces Tamil sha (Grantha letter) with sa followed by a superscript '2' marker, disabling the dedicated sha glyph."""
+    return Strng.replace("ஶ", "ஸ²")
+

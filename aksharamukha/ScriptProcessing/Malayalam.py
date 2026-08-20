@@ -229,3 +229,100 @@ def RephaDoubleMalayalam(Strng):
     # Strng = Strng.replace('ൎയ', 'ൎയ്യ')
 
     return Strng
+
+def MalayalamAnusvaraNasal(Strng):
+    """Converts anusvara to/from homorganic nasal consonants for Malayalam-specific consonant clusters, accounting for chillu letters."""
+    ListCAll = '(' + '|'.join(GM.CrunchSymbols(GM.Characters, 'Malayalam')) + ')'
+
+    ListNNasal = [Malayalam.ConsonantMap[x] for x in [4,9,14,19,24]]
+    ListCNasal = [
+             '|'.join(Malayalam.ConsonantMap[0:1]),
+             '|'.join(Malayalam.ConsonantMap[5:8]),
+             '|'.join(Malayalam.ConsonantMap[10:14]),
+             '|'.join(Malayalam.ConsonantMap[15:19]),
+             '|'.join(Malayalam.ConsonantMap[20:21]),
+            ]
+
+    ListNAnu = [Malayalam.ConsonantMap[x] for x in [4,24]]
+    ListCAnu = [
+             '|'.join(Malayalam.ConsonantMap[1:4]),
+             '|'.join(Malayalam.ConsonantMap[21:24]),
+            ]
+
+    vir = Malayalam.ViramaMap[0]
+    Anu = Malayalam.AyogavahaMap[1]
+
+    Chillus=['\u0D7A','\u0D7B','\u0D7C','\u0D7D','\u0D7E', 'ഩ‍്']
+
+    for i in range(len(ListNNasal)):
+        Strng = re.sub('('+Anu+')'+'('+ListCNasal[i]+')',ListNNasal[i]+vir+r'\2',Strng)
+
+    for i in range(len(ListNAnu)):
+        Strng = re.sub(ListCAll + GM.VedicSvaras + '(?<!' + vir + ')'+'(?<![' + ".".join(Chillus) + '])(?<!' + vir +')' + '('+ListNAnu[i]+')'+'('+vir+')'+'('+ListCAnu[i]+')',r'\1\2'+Anu+r'\5',Strng)
+
+    return Strng
+
+def MalayalamChillu(Strng, reverse=False, preserve=False):
+
+    """Forms Malayalam chillu (pure, vowelless) consonant letters from consonant+virama in appropriate contexts, or reverses chillus back to consonant+virama when reverse=True."""
+    Chillus=['\u0D7A','\u0D7B','\u0D7C','\u0D7D','\u0D7E', 'ഩ‍്']
+
+    ListC = '(' + '|'.join(GM.CrunchSymbols(GM.CharactersNV,'Malayalam') + ['ഽ']) + ')'
+
+    vir = Malayalam.ViramaMap[0]
+    ConVir =[
+             Malayalam.ConsonantMap[14]+vir,
+             Malayalam.ConsonantMap[19]+vir,
+             Malayalam.ConsonantMap[26]+vir,
+             Malayalam.ConsonantMap[27]+vir,
+             Malayalam.SouthConsonantMap[0]+vir,
+             'ഩ്'
+            ]
+
+    ## may be include ha ?
+    CList = [
+            Malayalam.ConsonantMap[10:15]+Malayalam.ConsonantMap[24:26]+Malayalam.ConsonantMap[28:29],
+            Malayalam.ConsonantMap[15:20]+Malayalam.ConsonantMap[24:27]+Malayalam.ConsonantMap[28:29]+['റ'],
+            Malayalam.ConsonantMap[25:27],
+            Malayalam.ConsonantMap[20:21] + Malayalam.ConsonantMap[24:26] + Malayalam.ConsonantMap[27:29],
+            Malayalam.SouthConsonantMap[0:1]+Malayalam.ConsonantMap[25:27],
+            Malayalam.ConsonantMap[15:20]+Malayalam.ConsonantMap[24:27]+Malayalam.ConsonantMap[28:29]+['റ']
+            ]
+
+    if not reverse:
+        for i in range(len(Chillus)):
+            #print '(?<!'+'['+vir+''.join(Chillus)+']'+')'+'('+ConVir[i]+')'+'(?!['+''.join(CList[i])+'])'
+            Strng = re.sub(ListC + GM.VedicSvaras + '('+ConVir[i]+')'+'(?!['+''.join(CList[i])+'])',r'\1\2' + Chillus[i],Strng)
+            Strng = re.sub(ListC + GM.VedicSvaras + '('+ConVir[i]+')'+'(?=(['+''.join(CList[i])+'])' + vir + r'\4' + ')',r'\1\2' + Chillus[i],Strng)
+
+        ## remove _ appearing due to the preserve chillu option
+        Strng = re.sub('(?<!ത്)ˍ', '', Strng)
+
+    else:
+        if preserve:
+            for x,y in zip(Chillus, ConVir):
+                Strng = Strng.replace(x, y +'ˍ') ## Fix the reversal of characters of this
+        else:
+            for x,y in zip(Chillus, ConVir):
+                Strng = Strng.replace(x, y) ## Fix the reversal of characters of this
+
+    return Strng
+
+def MalayalamNTA(Strng):
+    """Converts the n+ra sequence into n+t-line (Malayalam nta orthographic convention)."""
+    Strng = Strng.replace('nṟ', 'nṯ')
+    return Strng
+
+def MalayalamTTNTA(Strng):
+    """Doubled ra (tta) & n+ra (nta) -> t-line doubled & n+t-line."""
+    Strng = Strng.replace('ṟṟ', 'ṯṯ')
+    Strng = Strng.replace('nṟ', 'nṯ')
+    return Strng
+
+def MalayalamremoveHistorical(Strng):
+    """Replaces the historical Malayalam na letter with the modern na, and the virama-joined na-chillu sequence with the standalone chillu-n."""
+    Strng = Strng.replace('\u0D29','\u0D28')
+    Strng = Strng.replace('ന‍്', 'ൻ')
+
+    return Strng
+

@@ -18,3 +18,16 @@ def FixLaoTham(Strng, reverse=False):
     Strng = CF.FixTaiTham(Strng, reverse)
 
     return Strng
+
+# ---- Pre-processing options ----
+
+def TaiThamLao_pre(Strng):
+    """Placeholder Tai Tham Lao pre-processing hook (currently a no-op passthrough)."""
+    return Strng
+
+# ---- Post-processing options ----
+
+def TaiThamLao_post(Strng):
+    """No-op placeholder (reserved for Tai Tham Lao-variant post-processing)."""
+    return Strng
+

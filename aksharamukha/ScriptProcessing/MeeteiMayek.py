@@ -33,3 +33,16 @@ def _FixMeeteiMayekDecode(Strng):
 def FixMeeteiMayek(Strng,reverse=False):
     """Dispatches to the Meetei Mayek encode or decode fix routine depending on the reverse flag."""
     return _FixMeeteiMayekDecode(Strng) if reverse else _FixMeeteiMayekEncode(Strng)
+
+# ---- Post-processing options ----
+
+def MeeteiMayekremoveHistorical(Strng):
+    """Replaces historical/obsolete Meetei Mayek letters and the diaeresis-marked cheitap ee/oo sequences with their modern equivalents."""
+    removePairs = [('ꫢ', 'ꯆ'), ('ꫣ', 'ꯅ'), ('ꫤ','ꯇ'), ('ꫥ','ꯊ'), ('ꫦ','ꯗ'), ('ꫧ','ꯙ'), ('ꫨ','ꯅ'),
+                   ('ꫩ','ꯁ'), ('ꫪ','ꯁ'), ('\uAAF5','ꯍ꯭'), ('ꯑꫫ','ꯏ'), ('ꯑꫬ','ꯎ'), ('ꫫ','ꯤ'), ('ꫬ','ꯨ')]
+
+    for x,y in removePairs:
+        Strng = Strng.replace(x,y)
+
+    return Strng
+

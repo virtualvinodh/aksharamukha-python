@@ -211,3 +211,17 @@ def PhagsPaSeal(Strng):
 
     """Selects seal-script-style 'Phags-pa rendering (currently a no-op placeholder)."""
     return Strng
+
+def PhagsPaRearrange(Strng,Target):
+    """Inserts virama before word-final 'Phags-pa consonants (marked by trailing spaces), then converts remaining spaces and Mongolian-style punctuation into 'Phags-pa segment markers."""
+    vir = GM.CrunchList('ViramaMap', Target)[0]
+    ListC = '|'.join(GM.CrunchSymbols(GM.Consonants,Target))
+    ListV = '|'.join(GM.CrunchSymbols(GM.Vowels,Target))
+    ListVS = '|'.join(GM.CrunchSymbols(GM.VowelSignsNV,Target))
+
+    Strng = re.sub("(?<!( |"+vir+"))"+"("+ListC+")"+"(?= )",r'\2'+vir,Strng)
+    #print Strng
+
+    Strng = Strng.replace(" ","").replace("᠂"," ").replace("᠃"," ")
+    return Strng
+

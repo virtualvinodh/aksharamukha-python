@@ -28,6 +28,23 @@ def KhandaTaRomanLoC_pre(Strng):
 
     return Strng
 
+def RomanLoCLaUnderscoreDoubleDot_pre(Strng):
+    """Convert ḻ to l̤ (or back to ḻ) for Library of Congress romanization depending on direction; note: the forward variant (line 37) is missing its return statement, a likely bug."""
+    Strng = Strng.replace('l̤', 'ḻ')
+
+    return Strng
+
+def RomanLoCSasha_pre(Strng):
+    """Replace sh with ṣ for Library of Congress romanization."""
+    Strng = Strng.replace('sh', 'ṣ')
+
+    return Strng
+
+def RomanLoCVaWa_pre(Strng):
+    """Replace w with v for Library of Congress romanization, reflecting the va/wa merger."""
+    Strng = Strng.replace('w', 'v')
+    return Strng
+
 # ---- Post-processing options ----
 
 def LoCMarc8(Strng):
@@ -54,3 +71,20 @@ def KhandaTaRomanLoC_post(Strng):
     Strng = Strng.replace('ṯ', 'ৎ')
 
     return Strng
+
+def RomanLoCLaUnderscoreDoubleDot_post(Strng):
+    """Replaces l-line-below with l-double-underdot, per LoC romanization convention."""
+    Strng = Strng.replace('ḻ', 'l̤')
+
+    return Strng
+
+def RomanLoCSasha_post(Strng):
+    """Replaces s-dot-below (sa) with sh, per LoC romanization convention."""
+    Strng = Strng.replace('ṣ', 'sh')
+    return Strng
+
+def RomanLoCVaWa_post(Strng):
+    """Replaces v with w, per LoC romanization convention for scripts where va is rendered as w."""
+    Strng = Strng.replace('v', 'w')
+    return Strng
+

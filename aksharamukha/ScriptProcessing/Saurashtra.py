@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-# Saurashtra's own Fix logic, consolidated out of ConvertFix.py (batch migration -
-# see ScriptProcessing/Tamil.py for the full rationale/pattern this follows).
+# Saurashtra's own Fix/post-option logic, consolidated out of
+# ConvertFix.py/PostProcess.py (batch migration - see
+# ScriptProcessing/Tamil.py for the full rationale/pattern this follows).
 
 import re
+from aksharamukha.ScriptMap.MainIndic import Saurashtra
 
 # ---- Fix (encode/decode conversion logic) ----
 
@@ -22,3 +24,17 @@ def _FixSaurashtraDecode(Strng):
 def FixSaurashtra(Strng, reverse=False):
     """Dispatches to the Saurashtra encode or decode fix-up routine based on the reverse flag."""
     return _FixSaurashtraDecode(Strng) if reverse else _FixSaurashtraEncode(Strng)
+
+# ---- Post-processing options ----
+
+def SaurashtraHaru(Strng):
+
+    """Replaces specific Saurashtra consonant+virama+ha clusters with the dedicated haru (below-base h) sign."""
+    ListC = '|'.join([Saurashtra.ConsonantMap[x] for x in [19,24,26,27]])
+    vir = Saurashtra.ViramaMap[0]
+    ha = Saurashtra.ConsonantMap[32]
+
+    Strng = re.sub('('+ListC+')'+vir+ha,r'\1'+'\uA8B4',Strng)
+
+    return Strng
+

@@ -14,6 +14,7 @@
 
 import re
 from .. import GeneralMap as GM
+from aksharamukha.ScriptMap.MainIndic import Devanagari
 
 # ---- Fix (encode/decode conversion logic) ----
 
@@ -208,3 +209,15 @@ def DevanagariPrishtamatra(Strng, reverse = False):
         Strng = Strng.replace('ॎ', 'े')
 
     return Strng
+
+def DevanagariAVowels(Strng):
+    """Decomposes old-style independent Devanagari vowel letters into the inherent-a consonant carrier plus the corresponding dependent vowel sign."""
+    oldVowels = Devanagari.VowelMap[2:12]+Devanagari.SouthVowelMap[:1]
+    a = Devanagari.VowelMap[0]
+    newAVowels = [a+x for x in Devanagari.VowelSignMap[1:11]+Devanagari.SouthVowelSignMap[:1]]
+
+    for x,y in zip(oldVowels,newAVowels):
+        Strng = Strng.replace(x,y)
+
+    return Strng
+

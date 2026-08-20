@@ -49,6 +49,16 @@ def egrantamil(Strng):
     """E-Grantamil encoding option, currently a no-op passthrough."""
     return Strng
 
+def GranthaPrakrit_pre(Strng):
+    ## Reverse Gemination
+    """Apply Prakrit-style Grantha orthography: reverse the gemination sign and substitute the anusvara form (𑌬𑍁𑌦𑍍𑌧𑌂 → 𑌬𑍁𑌂𑌧𑌀)."""
+    from .. import PostProcess
+    Strng = PostProcess.ReverseGeminationSign(Strng, 'Grantha')
+
+    Strng = Strng.replace("𑌀", "𑌂")
+
+    return Strng
+
 # ---- Post-processing options ----
 
 def GranthaOldau(Strng):

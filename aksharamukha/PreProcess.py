@@ -18,9 +18,6 @@ from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 
 ### Use escape char in all functions
 
-def ItransLL(Strng):
-    """Placeholder pre-processing hook for the ITRANS-LL scheme (currently a no-op passthrough)."""
-    return Strng
 
 # DevanagariLoC's own logic now lives in ScriptProcessing/DevanagariLoC.py -
 # consolidated there (LoC redesign; renamed from RomanLoCDevanagari.py).
@@ -102,13 +99,6 @@ def insertViramaSyriac(Strng):
     Strng += "\uF001"
     return Strng
 
-def BengaliSwitchYaYYa(Strng):
-    """Swap Bengali ya (য) and yya (য়) so that ya maps to ẏa and yya maps to ya."""
-    Strng = re.sub('(?<!\u09CD)য', '@#$', Strng)
-    Strng = re.sub('য়', 'য', Strng)
-    Strng = Strng.replace('@#$', 'য়')
-
-    return Strng
 
 def removeFinalSchwaArab(Strng):
     #print('here', Strng)
@@ -205,11 +195,6 @@ from .ScriptProcessing.Chakma import ChakmaPali_pre as ChakmaPali
 # consolidated there (batch migration).
 from .ScriptProcessing.Takri import TakriArchaicKha_pre as TakriArchaicKha
 
-def UrduShortNotShown(Strng):
-    """Mark that Urdu short vowels are not written, appending a flag consumed by later processing to suppress short-vowel signs."""
-    Strng += "\u02BB\u02BB"
-
-    return Strng
 
 # Devanagari's own logic now lives in ScriptProcessing/Devanagari.py -
 # consolidated there (batch migration).
@@ -248,9 +233,6 @@ def TaiKuen(Strng):
     """Placeholder Tai Khuen pre-processing hook (currently a no-op passthrough)."""
     return Strng
 
-def TaiThamLao(Strng):
-    """Placeholder Tai Tham Lao pre-processing hook (currently a no-op passthrough)."""
-    return Strng
 
 # Gurmukhi's own logic now lives in ScriptProcessing/Gurmukhi.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
@@ -286,24 +268,11 @@ from .ScriptProcessing.Limbu import LimbuSpellingSaI_pre as LimbuSpellingSaI
 # consolidated there (batch migration).
 from .ScriptProcessing.Sinhala import SinhalaPali_pre as SinhalaPali
 
-def IASTPali(Strng):
-    """Convert IAST ḷ (retroflex l) to l̤ for Pali romanization."""
-    Strng = Strng.replace('ḷ', 'l̤')
-
-    return Strng
 
 # RussianCyrillic's own logic now lives in ScriptProcessing/RussianCyrillic.py -
 # consolidated there (batch migration).
 from .ScriptProcessing.RussianCyrillic import CyrillicPali_pre as CyrillicPali
 
-def GranthaPrakrit(Strng):
-    ## Reverse Gemination
-    """Apply Prakrit-style Grantha orthography: reverse the gemination sign and substitute the anusvara form (𑌬𑍁𑌦𑍍𑌧𑌂 → 𑌬𑍁𑌂𑌧𑌀)."""
-    Strng = PostProcess.ReverseGeminationSign(Strng, 'Grantha')
-
-    Strng = Strng.replace("𑌀", "𑌂")
-
-    return Strng
 
 # Arab's own logic now lives in ScriptProcessing/Arab.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
@@ -332,27 +301,9 @@ from .ScriptProcessing.BalineseLoC import RomanLocToBalinesePre
 from .ScriptProcessing.JavaneseLoC import RomanLocToJavanesePre
 from .ScriptProcessing.DevanagariLoC import RomanLocToDevanagariPre
 
-def RomanLoCLaUnderscoreDoubleDot(Strng):
-    """Convert ḻ to l̤ (or back to ḻ) for Library of Congress romanization depending on direction; note: the forward variant (line 37) is missing its return statement, a likely bug."""
-    Strng = Strng.replace('ḻ', 'l̤')
 
-# reverse these in preprocess
-def RomanLoCVaWa(Strng):
-    """Replace w with v for Library of Congress romanization, reflecting the va/wa merger."""
-    Strng = Strng.replace('w', 'v')
-    return Strng
 
-def RomanLoCSasha(Strng):
-    """Replace sh with ṣ for Library of Congress romanization."""
-    Strng = Strng.replace('sh', 'ṣ')
 
-    return Strng
-
-def RomanLoCLaUnderscoreDoubleDot(Strng):
-    """Convert ḻ to l̤ (or back to ḻ) for Library of Congress romanization depending on direction; note: the forward variant (line 37) is missing its return statement, a likely bug."""
-    Strng = Strng.replace('l̤', 'ḻ')
-
-    return Strng
 
 # MalayalamLoC's own LoC logic now lives in ScriptProcessing/MalayalamLoC.py -
 # consolidated there (LoC redesign).
@@ -528,16 +479,6 @@ def perisanizeArab(Strng):
 
     return Strng
 
-def ArabizePersian(Strng):
-    ## how to deal with ga
-    """Convert Persian-style kaf and ye (ک ی) back to their Arabic forms (ك ي)."""
-    arabKafYe = 'ك ي'.split(' ')
-    persKafYe = 'ک ی'.split(' ')
-
-    for x, y in zip(arabKafYe, persKafYe):
-        Strng = Strng.replace(y, x)
-
-    return Strng
 
 def semiticizeUrdu(Strng):
     """Convert Urdu-specific letters (ے ڈ ٹ ہ) to their generic Arabic/Semitic equivalents (ي د ت ه) and strip the do-chashme-he (ھ)."""
@@ -1106,11 +1047,6 @@ from .ScriptProcessing.KhuenTham import RomanLocToKhuenThamPre
 # consolidated there (LoC redesign).
 from .ScriptProcessing.RomanLoC import RomanLoCChandrabindu_pre as RomanLoCChandrabindu, KhandaTaRomanLoC_pre as KhandaTaRomanLoC
 
-def IASTLDotRetroflex(Strng):
-    """Convert IAST ḷ (retroflex l) to l̤ for Library of Congress-style romanization."""
-    Strng = Strng.replace('ḷ', 'l̤')
-
-    return Strng
 
 def ArchaicJnaSimplifyRomanLOC(Strng):
     """Simplify the archaic Javanese jnya glyph ꦘ to the standard nya glyph ꦚ."""
@@ -1171,3 +1107,24 @@ def IPAIndic(Strng):
 
     return
 
+from .ScriptProcessing.Arab import ArabizePersian
+
+from .ScriptProcessing.Bengali import BengaliSwitchYaYYa_pre as BengaliSwitchYaYYa
+
+from .ScriptProcessing.Grantha import GranthaPrakrit_pre as GranthaPrakrit
+
+from .ScriptProcessing.IAST import IASTLDotRetroflex
+
+from .ScriptProcessing.IAST import IASTPali_pre as IASTPali
+
+from .ScriptProcessing.Itrans import ItransLL
+
+from .ScriptProcessing.RomanLoC import RomanLoCLaUnderscoreDoubleDot_pre as RomanLoCLaUnderscoreDoubleDot
+
+from .ScriptProcessing.RomanLoC import RomanLoCSasha_pre as RomanLoCSasha
+
+from .ScriptProcessing.RomanLoC import RomanLoCVaWa_pre as RomanLoCVaWa
+
+from .ScriptProcessing.LaoTham import TaiThamLao_pre as TaiThamLao
+
+from .ScriptProcessing.Urdu import UrduShortNotShown

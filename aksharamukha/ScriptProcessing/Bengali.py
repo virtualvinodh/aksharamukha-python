@@ -66,6 +66,14 @@ def BengaliTargetVa(Strng):
 
     return Strng
 
+def BengaliSwitchYaYYa_pre(Strng):
+    """Swap Bengali ya (য) and yya (য়) so that ya maps to ẏa and yya maps to ya."""
+    Strng = re.sub('(?<!\u09CD)য', '@#$', Strng)
+    Strng = re.sub('য়', 'য', Strng)
+    Strng = Strng.replace('@#$', 'য়')
+
+    return Strng
+
 # ---- Post-processing options ----
 
 def BengaliOldRA(Strng):
@@ -122,3 +130,17 @@ def BengaliIntervocalicDDA(Strng):
         Strng = re.sub('('+ListC+')'+ GM.VedicSvaras + x,r'\1\2'+y,Strng)
 
     return Strng
+
+def BengaliSwitchYaYYa_post(Strng):
+    """ya -> yya-with-nukta & yya-with-nukta -> ya (swaps the plain and nuktaed Bengali ya letters)."""
+    Strng = re.sub('(?<!\u09CD)য', '@#$', Strng)
+    Strng = re.sub('য়', 'য', Strng)
+    Strng = Strng.replace('@#$', 'য়')
+
+    return Strng
+
+def BengaliYYA(Strng):
+    """ya everywhere - yayati yajna -> nukta-ya-yati nukta-yajna (replaces every plain ya with nuktaed yya in Bengali)."""
+    from .. import PostProcess
+    return PostProcess.YYAEverywhere(Strng, 'Bengali')
+

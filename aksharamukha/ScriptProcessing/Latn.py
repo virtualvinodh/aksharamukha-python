@@ -52,3 +52,18 @@ def alephAyinLatnAlternate2(Strng):
     Strng = Strng.replace('ʾ', 'ʔ').replace('ʿ', 'ʕ')
 
     return Strng
+
+def LatnInitialVowels(Strng, initLetter=''):
+    """Replaces word-initial long-vowel forms (a-circumflex, i-macron-circumflex, etc.) with a leading marker letter plus the corresponding plain vowel; helper for the *izeLatn functions."""
+    initVow = 'â ā̂ î ī̂ û ū̂ ê ē̂ âŷ ô ō̂ âŵ'.split(' ')
+    nonInitVow = 'a ā i ī u ū e ē aŷ o ō aŵ'.split(' ')
+
+    for x, y in zip(initVow, nonInitVow):
+        Strng = Strng.replace(x, initLetter+y)
+
+    Strng = Strng.replace('\u0302', '')
+
+    Strng = re.sub('\u033d', '', Strng)
+    #Strng = 'Vinodh'
+    return Strng
+

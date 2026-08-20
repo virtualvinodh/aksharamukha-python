@@ -324,3 +324,11 @@ def HebrewnonFinalShort(Strng):
         #Strng = re.sub('(' + s + ')' + '(׳?)' + '(?!' + consonantsAll + ')', r'\1\2' + 'א', Strng )
 
     return Strng
+
+def HebrewKatevMalei(Strng):
+    """Replaces Hebrew qamats and patach vowel points with aleph, producing ktiv male (full/plene) spelling."""
+    Strng = Strng.replace('ָ', 'א') # long aa
+    Strng = Strng.replace('ַ', 'א') # short a
+
+    return Strng
+

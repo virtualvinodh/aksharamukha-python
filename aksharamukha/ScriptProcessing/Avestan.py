@@ -78,3 +78,53 @@ def _FixAvestanDecode(Strng):
 def FixAvestan(Strng, reverse=False):
     """Dispatches to the Avestan encode or decode fix routine depending on the reverse flag."""
     return _FixAvestanDecode(Strng) if reverse else _FixAvestanEncode(Strng)
+
+# ---- Post-processing options ----
+
+def AvestanConventions(Strng):
+    # Fix Nasalization, hma etc
+
+    """Applies Avestan orthographic conventions: inserts nasalization before consonant clusters, softens word-final a before n/m, marks retroflex n before velars/dentals, selects consonant allophones before ii/uu vowels, and picks the ta variant by following context."""
+    extraCons = ["\U00010B33","\U00010B32","\U00010B1D","\U00010B12", '𐬣', '𐬝']
+    ListC = "|".join(GM.CrunchSymbols(GM.Consonants, "Avestan")+extraCons)
+    ListV = "|".join(GM.CrunchSymbols(GM.Vowels,"Avestan"))
+    ListA = "|".join(GM.CrunchSymbols(GM.Vowels + GM.Consonants,"Avestan")+extraCons+ ['𐬄','𐬅'])
+
+    ii = Avestan.VowelMap[2] * 2
+    uu = Avestan.VowelMap[4] * 2
+    i = Avestan.VowelMap[2]
+    a = Avestan.VowelMap[0]
+
+    kha = Avestan.ConsonantMap[1]
+    nga = Avestan.ConsonantMap[4]
+    ya = Avestan.ConsonantMap[25]
+    va = Avestan.ConsonantMap[28]
+    ta = Avestan.ConsonantMap[15]
+    tha = Avestan.ConsonantMap[16]
+    dha = Avestan.ConsonantMap[18]
+    na = Avestan.ConsonantMap[19]
+    ma = Avestan.ConsonantMap[24]
+    kb = "|".join([Avestan.ConsonantMap[0], Avestan.ConsonantMap[22]])
+    nna = Avestan.ConsonantMap[14]
+    sha = Avestan.ConsonantMap[29]
+
+    VelarDental = "|".join(Avestan.ConsonantMap[0:4]+Avestan.ConsonantMap[15:19])
+
+    Strng = Strng.replace(nga+i, '𐬣'+ i)
+
+    ## Conventions from AVestan Combined Grammer
+
+    Strng = re.sub(a + '([' + na + ma + '])' + '(?!' +  ListA + ')', '𐬆' + r'\1' , Strng) ## Soft -Ta end of words
+
+    Strng = re.sub("("+na+")"+"("+VelarDental+")",nna+r'\2',Strng) ##
+
+    Strng = re.sub("("+kha+")"+"(?="+ii+")","\U00010B12",Strng)
+    Strng = re.sub("("+sha+")"+"(?="+ii+")","\U00010B33",Strng)
+
+    Strng = re.sub("("+tha+"|"+dha+")"+"("+uu+")",r'\1'"𐬡",Strng)
+
+    Strng = re.sub("("+ta+")"+"(?!"+"(("+ListV+")"+"|"+"("+ListC+"))"+")","\U00010B1D",Strng)
+    Strng = re.sub("("+ta+")"+"(?="+"("+kb+")"+")",'\U00010B1D',Strng)
+
+    return Strng
+

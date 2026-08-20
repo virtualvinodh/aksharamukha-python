@@ -47,6 +47,17 @@ def ArabicGimelJa(Strng):
 
     return Strng
 
+def ArabizePersian(Strng):
+    ## how to deal with ga
+    """Convert Persian-style kaf and ye (ک ی) back to their Arabic forms (ك ي)."""
+    arabKafYe = 'ك ي'.split(' ')
+    persKafYe = 'ک ی'.split(' ')
+
+    for x, y in zip(arabKafYe, persKafYe):
+        Strng = Strng.replace(y, x)
+
+    return Strng
+
 # ---- Post-processing options ----
 
 def ArabRemoveAdditions(Strng):
@@ -71,3 +82,16 @@ def ArabAtoAleph(Strng):
 
 
     return Strng
+
+def ArabicGimelGaGha(Strng):
+    """Replaces Arabic jim with ghayn (renders Hebrew/Semitic 'ga' sound as Arabic 'gha')."""
+    Strng = Strng.replace('ج', 'غ')
+
+    return Strng
+
+def ArabicGimelPaBa(Strng):
+    """Replaces Arabic fa with ba (renders Hebrew/Semitic 'pa' sound as Arabic 'ba')."""
+    Strng = Strng.replace('ف', 'ب')
+
+    return Strng
+

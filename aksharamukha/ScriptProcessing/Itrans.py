@@ -25,6 +25,10 @@ def swapEeItrans_pre(Strng):
 
     return Strng
 
+def ItransLL(Strng):
+    """Placeholder pre-processing hook for the ITRANS-LL scheme (currently a no-op passthrough)."""
+    return Strng
+
 # ---- Post-processing options ----
 
 def swapEeItrans_post(Strng):

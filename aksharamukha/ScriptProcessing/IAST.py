@@ -50,6 +50,18 @@ def joinVowelConsIAST(Strng):
     from .. import PreProcess as PP
     return PP.joinVowelCons(Strng, 'IAST')
 
+def IASTLDotRetroflex(Strng):
+    """Convert IAST ḷ (retroflex l) to l̤ for Library of Congress-style romanization."""
+    Strng = Strng.replace('ḷ', 'l̤')
+
+    return Strng
+
+def IASTPali_pre(Strng):
+    """Convert IAST ḷ (retroflex l) to l̤ for Pali romanization."""
+    Strng = Strng.replace('ḷ', 'l̤')
+
+    return Strng
+
 # ---- Post-processing options ----
 
 def RomanLoCSLaDotLaUnderscore_post(Strng):
@@ -58,3 +70,10 @@ def RomanLoCSLaDotLaUnderscore_post(Strng):
     Strng = Strng.replace('l̤', 'ḻ')
 
     return Strng
+
+def IASTPali_post(Strng):
+    """Converts the IAST underlined-l (l with line below) used for retroflex l to the standard Pali l-underdot."""
+    Strng = Strng.replace('l̤', 'ḷ')
+
+    return Strng
+
