@@ -31,6 +31,21 @@ verification noise.
   contains a stray double `??` (`'(??<![ମବ])'`), likely a typo for a
   single `?` negative lookbehind marker.
 
+- **`Urdu` -> `Arab` maps Peh (پ) to Feh (ف) instead of Beh (ب)** -
+  found while checking whether `transliterate.py`'s commented-out
+  Urdu/Shahmukhi/Arab/Arab-Fa normalization block (see
+  `_resolve_semitic_indic_naming`) was still needed. Reproduction:
+  `transliterate.process('Urdu', 'Arab', 'پانی')` ("paani", water)
+  comes out as `فاني` ("faani") - the Urdu/Persian-only letter پ
+  (Peh, has no standard Arabic equivalent) becomes ف (Feh) rather
+  than the linguistically expected ب (Beh), the nearest standard
+  Arabic letter. Root cause not traced - Arab/Urdu aren't handled by
+  the usual `ScriptMap/{MainIndic,EastIndic,NonIndic,Roman}`
+  character-list files (no literal `ك`/`پ`/`ف` found anywhere under
+  `ScriptMap/`), so this likely routes through the Semitic-specific
+  dispatch path rather than a per-script map worth grep-ing for
+  directly.
+
 ## Fixed since this file was written
 
 - **`PersianDMG` -> `Arab-Fa` (reverse direction) used to crash** -

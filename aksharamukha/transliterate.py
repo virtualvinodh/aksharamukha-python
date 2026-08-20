@@ -424,6 +424,24 @@ def _resolve_semitic_indic_naming(src, tgt, txt, preoptions, postoptions, nativi
     #    tgt = 'Arab-Fa'
 
     ## recheck this the logic is missing :: This is not required
+    ##
+    ## Verified (2026-08-20) this block is genuinely dead, not a missing
+    ## feature: the kaf/ye swap (ArabizePersian/perisanizeArab) and Urdu-
+    ## letter normalization (semiticizeUrdu) it would apply automatically
+    ## are already happening correctly today, without this code ever
+    ## running - live-tested all of Urdu<->Arab, Urdu<->Arab-Fa,
+    ## Arab<->Arab-Fa, Shahmukhi<->Arab, plus an Urdu-specific-letter
+    ## case (tth/ddal/yeh-barree/heh-goal all normalize correctly for an
+    ## Arab target, and correctly stay untouched for a Hindi target,
+    ## which needs them to distinguish retroflex consonants). So this
+    ## functionality got absorbed elsewhere (per-script character
+    ## maps/Fix logic, the pattern used throughout this codebase) at some
+    ## point after this block was written and commented out. The three
+    ## PreProcess functions it calls (semiticizeUrdu, ArabizePersian,
+    ## perisanizeArab) are still alive and independently selectable as
+    ## manual pre-options - only this automatic dispatch is obsolete.
+    ## Left in place (not deleted) since it costs nothing dead and
+    ## documents the history; safe to delete if it gets in the way.
     """if src in ['Urdu', 'Shahmukhi'] and tgt == 'Arab':
         #print('Semiticizing Urdu')
         txt = PreProcess.semiticizeUrdu(txt)
