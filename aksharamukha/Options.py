@@ -71,17 +71,25 @@ def _accepts_ctx(fn):
         return False
 
 
-def call_pre_option(name, txt, ctx=None):
+def call_pre_option(name, txt, *extra, ctx=None):
     # Unknown name -> AttributeError, matching the getattr() failure mode
     # this replaces (a typo'd pre_options entry should fail loudly, not
     # silently no-op - see GeneralMap.resolve's optional=False default,
     # which this mirrors for the same reason).
+    #
+    # *extra mirrors call_post_option below - added for PreOptions.
+    # ApplyPreProcessing (the pre-processing counterpart to PostOptions.
+    # ApplyScriptDefaults), which needs to call pre-options that take more
+    # than just txt. The general pre_options=[name] list a caller supplies
+    # still only ever passes txt - there's no way to smuggle extra
+    # positional args through a bare string, same as call_post_option's
+    # *extra is unused by the equivalent postoptions=[name] list.
     fn = _PRE_OPTION_FUNCS.get(name)
     if fn is None:
         raise AttributeError("module 'aksharamukha.PreProcess' has no attribute '" + name + "'")
     if ctx is not None and _accepts_ctx(fn):
-        return fn(txt, ctx=ctx)
-    return fn(txt)
+        return fn(txt, *extra, ctx=ctx)
+    return fn(txt, *extra)
 
 
 def call_post_option(name, txt, *extra, ctx=None):

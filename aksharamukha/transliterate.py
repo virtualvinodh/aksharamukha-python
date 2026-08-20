@@ -1,6 +1,6 @@
 from aksharamukha import GeneralMap
 from aksharamukha.gimeltra import Transliterator
-from . import Convert,PostOptions,PostProcess,PreProcess
+from . import Convert,PostOptions,PostProcess,PreProcess,PreOptions
 from . import ConvertFix
 from . import ScriptRegistry as SR
 from . import Options
@@ -536,6 +536,17 @@ def _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativiz
     # convert() call.
     ctx.src = src
     ctx.tgt = tgt
+
+    # Default preoptions for this target, applied before the caller's own
+    # explicit preoptions - the pre-conversion counterpart to
+    # _apply_final_postprocessing's PostOptions.ApplyScriptDefaults call,
+    # same ordering (defaults first, explicit choices can still act after).
+    # Unlike ApplyScriptDefaults this isn't nativize-gated: its defaults
+    # would be about source-side syllable/notation structure, not native-
+    # script diacritic simplification, so there's no equivalent reason to
+    # skip it when nativize=False. No-op today - PreOptions.py's default
+    # table is empty, see its own comment for why.
+    txt = PreOptions.ApplyPreProcessing(txt, src, tgt, preoptions, ctx)
 
     for options in preoptions:
       txt = Options.call_pre_option(options, txt, ctx=ctx)
