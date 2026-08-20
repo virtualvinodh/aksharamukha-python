@@ -7,7 +7,6 @@ import string
 import unicodedata
 import functools
 from . import PostProcess
-from . import ConvertFix as CF
 from aksharamukha.ScriptMap.EastIndic import PhagsPa, Burmese, Khmer
 from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 ### Use escape char in all functions
@@ -765,6 +764,14 @@ def joinVowelCons(Strng, script):
 
 def PreProcess(Strng,Source,Target,postoptions,preoptions):
     """Master pre-processing dispatcher: apply source-script-specific normalizations (case folding, punctuation, alternate schemes like ITRANS/Baraha, diacritic reordering, Unicode normalization) before script conversion begins."""
+    Strng = _normalize_alternate_schemes(Strng, Source, Target)
+    Strng = _normalize_unicode_forms(Strng, Source)
+    Strng = _fix_udatta_avagraha(Strng, Source, Target)
+
+    return Strng
+
+def _normalize_alternate_schemes(Strng, Source, Target):
+    """Normalize alternate transliteration-scheme spellings and script-specific escape conventions (ITRANS/Velthuis/Baraha alternate forms, IAST/ISO/Titus diacritic and Vedic-accent notation, Syriac/Warang Citi/Hebrew-Arabic script quirks) before the main Unicode normalization pass."""
     if SR.get(Source).is_roman_diacritic or Source == 'Latn':
         Strng = Strng.lower()
 
@@ -849,7 +856,14 @@ def PreProcess(Strng,Source,Target,postoptions,preoptions):
         Strng = Strng
 
     if Source == "ISO" or Source == "IAST" or Source == "Titus" or Source == "RussianCyrillic":
-        Strng = CF.VedicSvarasNonDiacritic(Strng)
+        Strng = Strng.replace('̍', '\\\'')
+        Strng = Strng.replace('̎', '\\"')
+        Strng = Strng.replace('̱', '\\_')
+        Strng = Strng.replace('gͫ̄', '\\m++')
+        Strng = Strng.replace('gͫ', '\\m+')
+
+        Strng = Strng.replace('г\u0361м', '\\m++')
+        Strng = Strng.replace('г\u035Cм', '\\m+')
 
     if Source == "Latn" and 'Syr' in Target:
         Strng = Strng.replace('ḇ', 'v').replace('ḡ', 'ḡ').replace('ḵ', 'ḫ').replace('p̄', 'f')
@@ -874,57 +888,9 @@ def PreProcess(Strng,Source,Target,postoptions,preoptions):
         for char, char_var in dot_var:
             Strng = Strng.replace(char_var, char)
 
-    ## Normalize Input Strings
-
-    Strng = normalize(Strng,Source)
-
-    ## Remove unsupported letters and replace with supported ones
-
-    #Fix Udata + Avagraha combination
-    # नमो॑ऽयम् --> namo̍​'yam
-    if SR.get(Source).is_indic and SR.get(Target).is_transliteration:
-        udatta = '\u0951'
-        avagrahaSrc = GM.CrunchList('SignMap', Source)[0]
-        avagrahaTgt = GM.CrunchList('SignMap', Target)[0]
-
-        if avagrahaTgt == "'":
-            Strng = Strng.replace(udatta + avagrahaSrc, udatta + '\u200B' + avagrahaSrc)
-
     return Strng
 
-def UnSupThaana(Strng):
-
-    """Placeholder Thaana pre-processing hook for unsupported characters (currently a no-op passthrough)."""
-    return Strng
-
-def RemoveJoiners(Strng):
-    """Strip zero-width joiner and zero-width non-joiner characters from the string."""
-    Strng = Strng.replace("\u200D", "")
-    Strng = Strng.replace("\u200C", "")
-
-    return Strng
-
-# Arab's own logic now lives in ScriptProcessing/Arab.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Arab import ArabicGimelJa
-
-# ISO259/ISO233/HebrewSBL/PersianDMG's Target/Source logic (part of
-# GeneralMap.semiticISO's pseudo-script romanization pivot) now lives
-# in ScriptProcessing/ISO259.py, ScriptProcessing/ISO233.py,
-# ScriptProcessing/HebrewSBL.py, ScriptProcessing/PersianDMG.py -
-# consolidated there (batch migration - see ScriptProcessing/Tamil.py
-# for the full rationale/pattern this follows). Re-exported here so
-# Options.py's PreProcess getmembers()'s reflection-based dispatch
-# keeps finding these names.
-from .ScriptProcessing.ISO259 import HebrewToISO259Pre as ISO259Target, ISO259ToHebrewPre as ISO259Source
-from .ScriptProcessing.ISO233 import ArabToISO233Pre as ISO233Target, ISO233ToArabPre as ISO233Source
-from .ScriptProcessing.HebrewSBL import HebrewToHebrewSBLPre as HebrewSBLTarget, HebrewSBLToHebrewPre as HebrewSBLSource
-from .ScriptProcessing.PersianDMG import ArabFaToPersianDMGPre as PersianDMGTarget, PersianDMGToArabFaPre as PersianDMGSource
-
-# Normalize Input
-# ka + <nukta> -> qa etc
-def normalize(Strng,Source):
+def _normalize_unicode_forms(Strng, Source):
 
     # Replace Decomposed Nukta Characters by pre-composed Nukta consonants
 
@@ -1097,6 +1063,50 @@ def normalize(Strng,Source):
     Strng = Strng.replace('𑌾𑍇', '𑍋')
 
     return Strng
+
+def _fix_udatta_avagraha(Strng, Source, Target):
+    """Fixes the udatta + avagraha combination (see the example in the comment below) by inserting a zero-width space between them when the target's avagraha symbol is a plain apostrophe, so it does not get misread as part of the accent mark."""
+    #Fix Udata + Avagraha combination
+    # नमो॑ऽयम् --> namo̍​'yam
+    if SR.get(Source).is_indic and SR.get(Target).is_transliteration:
+        udatta = '\u0951'
+        avagrahaSrc = GM.CrunchList('SignMap', Source)[0]
+        avagrahaTgt = GM.CrunchList('SignMap', Target)[0]
+
+        if avagrahaTgt == "'":
+            Strng = Strng.replace(udatta + avagrahaSrc, udatta + '\u200B' + avagrahaSrc)
+
+    return Strng
+
+def UnSupThaana(Strng):
+
+    """Placeholder Thaana pre-processing hook for unsupported characters (currently a no-op passthrough)."""
+    return Strng
+
+def RemoveJoiners(Strng):
+    """Strip zero-width joiner and zero-width non-joiner characters from the string."""
+    Strng = Strng.replace("\u200D", "")
+    Strng = Strng.replace("\u200C", "")
+
+    return Strng
+
+# Arab's own logic now lives in ScriptProcessing/Arab.py -
+# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
+# reflection-based dispatch keeps finding these names.
+from .ScriptProcessing.Arab import ArabicGimelJa
+
+# ISO259/ISO233/HebrewSBL/PersianDMG's Target/Source logic (part of
+# GeneralMap.semiticISO's pseudo-script romanization pivot) now lives
+# in ScriptProcessing/ISO259.py, ScriptProcessing/ISO233.py,
+# ScriptProcessing/HebrewSBL.py, ScriptProcessing/PersianDMG.py -
+# consolidated there (batch migration - see ScriptProcessing/Tamil.py
+# for the full rationale/pattern this follows). Re-exported here so
+# Options.py's PreProcess getmembers()'s reflection-based dispatch
+# keeps finding these names.
+from .ScriptProcessing.ISO259 import HebrewToISO259Pre as ISO259Target, ISO259ToHebrewPre as ISO259Source
+from .ScriptProcessing.ISO233 import ArabToISO233Pre as ISO233Target, ISO233ToArabPre as ISO233Source
+from .ScriptProcessing.HebrewSBL import HebrewToHebrewSBLPre as HebrewSBLTarget, HebrewSBLToHebrewPre as HebrewSBLSource
+from .ScriptProcessing.PersianDMG import ArabFaToPersianDMGPre as PersianDMGTarget, PersianDMGToArabFaPre as PersianDMGSource
 
 # Remove ZWJ/ZWNJ characters
 def removeZW(Strng):

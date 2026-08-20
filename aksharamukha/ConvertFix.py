@@ -156,20 +156,6 @@ def VedicSvarasCyrillic(Strng, Target):
 
     return Strng
 
-def VedicSvarasNonDiacritic(Strng):
-    """Reverses Vedic combining diacritics and anunasika ligatures back into their escape-sequence notation."""
-    Strng = Strng.replace('̍', '\\\'')
-    Strng = Strng.replace('̎', '\\"')
-    Strng = Strng.replace('̱', '\\_')
-    Strng = Strng.replace('gͫ̄', '\\m++')
-    Strng = Strng.replace('gͫ', '\\m+')
-
-    Strng = Strng.replace('г\u0361м', '\\m++')
-    Strng = Strng.replace('г\u035Cм', '\\m+')
-
-
-    return Strng
-
 def FixRomanOutput(Strng,Target):
 
     # Input:Devanagari & Output:ISO
