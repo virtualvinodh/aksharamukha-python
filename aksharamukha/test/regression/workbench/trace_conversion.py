@@ -40,7 +40,12 @@ def format_args(args, kwargs, max_len):
 
 
 def print_trace(entries, changes_only, max_depth, max_len):
-    for e in entries:
+    # Tracer appends each entry when the call RETURNS (its finally block),
+    # so list order is completion order - a function with many nested
+    # children ends up listed after all of them, despite being invoked
+    # first. seq is assigned at call time, so sorting by it recovers true
+    # invocation (processing) order.
+    for e in sorted(entries, key=lambda e: e['seq']):
         if max_depth is not None and e['depth'] > max_depth:
             continue
         if changes_only and not e['changed'] and e['depth'] > 0:
