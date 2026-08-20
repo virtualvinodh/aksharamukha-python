@@ -936,6 +936,18 @@ def ISO233Source(Strng):
 
     return Strng
 
+def PersianDMGSource(Strng):
+    """Reverse Persian DMG romanization symbols back to Persian alef and normalize DMG-specific consonant/vowel spellings on the source side."""
+    replacements = [('ا', 'ʾ')]
+    for x, y in replacements:
+        Strng = Strng.replace(y, x)
+
+    replacements = [('ḏ', 'ẕ'), ('ḍ', 'ż'), ('ṯ', 's̱'), ('j', 'ǧ'), ('ˀ','ʼ'), ('ʔ', 'ʼ'), ('ȳ', 'ye'), ("ā̂", "ā"), ('\u033D', '')]
+    for x, y in replacements:
+        Strng = Strng.replace(y, x)
+
+    return Strng
+
 def HebrewSBLTarget(Strng):
     """Substitute Hebrew aleph (א) and geresh (׳) with their SBL romanization symbols (ʾ, ’)."""
     Strng = Strng.replace('א', 'ʾ').replace('׳', '’')

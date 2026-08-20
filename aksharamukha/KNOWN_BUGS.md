@@ -31,6 +31,30 @@ verification noise.
   contains a stray double `??` (`'(??<![ମବ])'`), likely a typo for a
   single `?` negative lookbehind marker.
 
+## Fixed since this file was written
+
+- **`PersianDMG` -> `Arab-Fa` (reverse direction) used to crash** -
+  `transliterate.py`'s `_resolve_semitic_iso_pivot()` looks up
+  `<pseudo-target> + 'Source'` (e.g. `'PersianDMGSource'`) as both a
+  pre- and post-option whenever the source is one of the 4
+  `GeneralMap.semiticISO` pseudo-scripts. `ISO259Source`,
+  `ISO233Source`, and `HebrewSBLSource` all existed (in both
+  `PreProcess.py` and `PostProcess.py`), but `PersianDMGSource` didn't
+  exist anywhere - `PreProcess.py` had no Persian entry at all, and
+  `PostProcess.py` had a same-shaped no-op placeholder but misnamed
+  `PersianDMGSBLSource` (leftover from being copy-pasted off the
+  `HebrewSBLSource` block above it, "SBL" never stripped out). Fixed
+  by adding a real `PersianDMGSource` to `PreProcess.py` (built the
+  same way `ISO233Source` reverses `ISO233Target`: undo its own
+  pre-stage swap, then undo `PostProcess.py`'s post-stage
+  substitutions), renaming `PersianDMGSBLSource` ->
+  `PersianDMGSource` in `PostProcess.py`, and adding a
+  `_verify_semitic_iso_consistency()` assertion at import time in
+  `transliterate.py` so a future 5th `semiticISO` entry missing either
+  half fails at import instead of crashing deep in
+  `Options.call_pre_option`/`call_post_option` the first time a real
+  conversion hits it.
+
 ## Frontend-label / code-direction mismatches
 
 Not necessarily bugs in the *code* - could equally be a stale/wrong

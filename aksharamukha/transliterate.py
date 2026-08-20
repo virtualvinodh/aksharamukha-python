@@ -378,6 +378,22 @@ def _resolve_semitic_iso_pivot(src, tgt, txt, preoptions, postoptions, nativize)
 
     return src, tgt, txt, preoptions, postoptions, nativize
 
+def _verify_semitic_iso_consistency():
+    # Unlike LoC's per-script options (mostly optional, hasattr()-checked
+    # at dispatch time), every GeneralMap.semiticISO entry unconditionally
+    # needs all four Target/Source functions - _resolve_semitic_iso_pivot
+    # above always appends both, with no existence guard. Fail at import
+    # time instead of deep inside Options.call_pre_option/call_post_option
+    # the first time a real conversion hits a missing one (as PersianDMG
+    # did - see KNOWN_BUGS.md).
+    for name in GeneralMap.semiticISO:
+        for suffix in ('Target', 'Source'):
+            fname = name + suffix
+            assert hasattr(PreProcess, fname), 'PreProcess.' + fname + ' is missing'
+            assert hasattr(PostProcess, fname), 'PostProcess.' + fname + ' is missing'
+
+_verify_semitic_iso_consistency()
+
 def _resolve_semitic_indic_naming(src, tgt, txt, preoptions, postoptions, nativize):
     ## Semitic Switches - Add Shahmukhi/Sindhi later
     IndicSemiticMapping = { 'Hebrew': 'Hebr', 'Thaana': 'Thaa', 'Urdu': 'Arab-Ur', 'Shahmukhi': 'Arab-Pa'}

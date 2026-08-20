@@ -176,7 +176,7 @@ def HebrewSBLSource(Strng):
     return Strng
 
 #testcase todo
-def PersianDMGSBLSource(Strng):
+def PersianDMGSource(Strng):
 
     """No-op placeholder (reserved for Persian DMG romanization source-side processing)."""
     return Strng
