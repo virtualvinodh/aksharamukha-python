@@ -4,6 +4,34 @@ A loop for adding real test coverage without hand-editing JSON: fill in a
 CSV, run a script, review the results in a CSV, mark the ones you want,
 merge them into the real fixtures.
 
+## Tracing one conversion: `trace_conversion.py`
+
+Separate from the CSV loop below - a standalone CLI for "what actually
+happens, step by step, for this specific (source, target, text)". It
+monkey-patches every PreProcess/PostProcess/ConvertFix/Convert/
+transliterate function and every ScriptProcessing/*.py function with a
+logging wrapper (in memory only, nothing written to disk), runs one real
+`transliterate.process(...)` call, and prints the nested call tree with
+the text before/after each step - including hops that are invisible from
+reading any single function, like `Convert._convert_to_semitic` always
+routing a non-Latin source through the `RomanSemitic` intermediate before
+reaching a semitic target, or the LoC/semiticISO option families being
+dispatched by runtime string concatenation rather than a literal call
+anywhere.
+
+```
+python trace_conversion.py Tamil Sogd "some text"
+python trace_conversion.py Devanagari IAST "some text" --changes-only
+python trace_conversion.py Tamil RomanLoC "some text" --pre TamilNumeralSub --post TamilOmDisable
+```
+
+`--changes-only` hides no-op calls (most of the ~600 registered options
+are identity functions for any given input - only the ones that actually
+match do something); `--max-depth N` hides deeply-nested calls;
+`--max-len N` controls how much of each string gets printed before
+truncation. Meant for short diagnostic strings, not paragraph-length
+input - the per-call logging overhead adds up.
+
 ## Web UI
 
 `python app.py` starts a local Flask server (opens your browser to it
