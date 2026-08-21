@@ -4,12 +4,14 @@
 # ConvertFix.py/PreProcess.py/PostProcess.py (batch migration - see
 # ScriptProcessing/Tamil.py for the full rationale/pattern this follows).
 #
-# egrantamil is independently defined in both PreProcess.py and
-# PostProcess.py, but both are truly identical no-op stubs (`return
-# Strng` - no calls at all), unlike this session's other pre/post
-# collisions. No bare-call-resolution risk (see Balinese.py/Javanese.py
-# for where that risk IS real), so defined once here and re-exported
-# unsuffixed to both modules.
+# egrantamil is needed under both the pre and post option surfaces, but
+# both are truly identical no-op stubs (`return Strng` - no calls at
+# all), unlike this session's other pre/post collisions. No
+# bare-call-resolution risk (see Balinese.py/Javanese.py for where that
+# risk IS real), so defined once under Pre-processing options below,
+# with a thin egrantamil_post delegate under Post-processing options
+# (Options.py's _post-suffix auto-strip registers that under the bare
+# egrantamil name too - no re-export needed).
 #
 # InsertGeminationSign/ReverseGeminationSign stay shared (also used by
 # Malayalam and Gurmukhi), called via PostProcess. as before.
@@ -65,6 +67,11 @@ def GranthaPrakrit_pre(Strng):
     return Strng
 
 # ---- Post-processing options ----
+
+# frontend
+def egrantamil_post(Strng):
+    """Thin post-side delegate for egrantamil - identical no-op either direction; can't be a second top-level `def egrantamil` in this file, so Options.py's _post-suffix auto-strip registers this under the bare egrantamil name for post too."""
+    return egrantamil(Strng)
 
 # frontend
 def GranthaOldau(Strng):

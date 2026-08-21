@@ -1,9 +1,15 @@
 import pytest
-from aksharamukha import transliterate, GeneralMap, PostProcess, PreProcess
+from aksharamukha import transliterate, GeneralMap, Options
 
 target_scripts = GeneralMap.IndicScripts + GeneralMap.Roman + GeneralMap.SemiticScripts
 source_texts = ['heart', 'lalitavistara']
-post_options = (d for d in dir(PostProcess) if '__' not in d)
+# Options.POST_OPTIONS/PRE_OPTIONS (below), not dir(PostProcess/PreProcess):
+# dir() only sees names bound directly in that module's own namespace, so
+# it silently drops every option whose only re-export line was removed
+# once Options.py's auto-discovery started finding ScriptProcessing options
+# on its own (see Options.py's docstring) - dir()'s parametrize list would
+# quietly shrink instead of failing loudly.
+post_options = sorted(Options.POST_OPTIONS)
 
 reversible_scripts = GeneralMap.ReversibleScripts + GeneralMap.RomanReversible
 
@@ -153,7 +159,7 @@ class TestPostOptions:
         except KeyError:
             assert 1 == 1
 
-pre_options = (d for d in dir(PreProcess) if '__' not in d)
+pre_options = sorted(Options.PRE_OPTIONS)
 
 class TestPreOptions:
     @pytest.mark.parametrize("pre_options", pre_options)

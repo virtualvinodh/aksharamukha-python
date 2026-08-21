@@ -4,10 +4,12 @@
 # ConvertFix.py/PreProcess.py/PostProcess.py (batch migration - see
 # ScriptProcessing/Tamil.py for the full rationale/pattern this follows).
 #
-# siddhammukta is independently defined in both PreProcess.py and
-# PostProcess.py, but both are truly identical no-op stubs (`return
-# Strng`, no calls) - defined once here and re-exported unsuffixed to
-# both, same reasoning as Grantha.py's egrantamil.
+# siddhammukta is needed under both the pre and post option surfaces,
+# but both are truly identical no-op stubs (`return Strng`, no calls) -
+# defined once under Pre-processing options below, with a thin
+# siddhammukta_post delegate under Post-processing options (Options.py's
+# _post-suffix auto-strip registers that under the bare siddhammukta
+# name too - no re-export needed), same as Grantha.py's egrantamil.
 
 # ---- Fix (encode/decode conversion logic) ----
 
@@ -44,6 +46,11 @@ def siddhammukta(Strng):
     return Strng
 
 # ---- Post-processing options ----
+
+# frontend
+def siddhammukta_post(Strng):
+    """Thin post-side delegate for siddhammukta - identical no-op either direction; can't be a second top-level `def siddhammukta` in this file, so Options.py's _post-suffix auto-strip registers this under the bare siddhammukta name for post too."""
+    return siddhammukta(Strng)
 
 # frontend
 def UseAlternateI1(Strng):

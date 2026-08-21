@@ -7,38 +7,25 @@
 # script, <Script>LoC.py).
 #
 # HindiMarathiRomanLoCFix_pre/_post is a genuinely standalone option
-# (never part of the auto-applied RomanLoC default bundle) - still
-# independently re-exported under its own unsuffixed name, same as
-# before. DevanagariRomanLoCFix_pre/_post, by contrast, WAS part of the
-# default bundle - it's now purely internal, called only from
-# RomanLocToDevanagariPre/DevanagariToRomanLocPost below, no longer
-# independently re-exported.
+# (never part of the auto-applied RomanLoC default bundle) - defined
+# under the Pre-/Post-processing options headers below so Options.py's
+# auto-discovery finds it directly, no re-export needed.
+# DevanagariRomanLoCFix_pre/_post, by contrast, WAS part of the default
+# bundle - it's purely internal, called only from
+# RomanLocToDevanagariPre/DevanagariToRomanLocPost, so it's kept ahead
+# of any options header (Options.py's scan only registers functions
+# that appear at or after the first recognized header) to stay
+# unregistered, same as before.
 
 import re
 
-# frontend
-def HindiMarathiRomanLoCFix_pre(Strng):
-    """Substitutes 'sh'→ṣ, ḷ→ḻ, and l̤→l̳ before Hindi/Marathi Library of Congress romanization."""
-    Strng = Strng.replace('sh', 'ṣ')
-    Strng = Strng.replace('ḷ', 'ḻ')
-    Strng = Strng.replace('l̤', 'l̳')
-
-    return Strng
+# ---- Fix (encode/decode conversion logic) ----
 
 # internal
 def DevanagariRomanLoCFix_pre(Strng):
     """Normalize nukta-marked digraphs (g̳h̳, t̤, s̤, h̤) to their LoC diacritic forms for Devanagari romanization."""
     Strng = Strng.replace('g̳h̳', 'gḧ').replace('t̤', 'ṭ̈').replace('s̤', 's̈')\
         .replace('h̤', 'ḧ')
-
-    return Strng
-
-# frontend
-def HindiMarathiRomanLoCFix_post(Strng):
-    """Reverses the Hindi/Marathi LoC substitutions: ṣ→'sh', ḻ→ḷ, l̳→l̤."""
-    Strng = Strng.replace('ṣ', 'sh')
-    Strng = Strng.replace('ḻ', 'ḷ')
-    Strng = Strng.replace('l̳', 'l̤')
 
     return Strng
 
@@ -52,6 +39,15 @@ def DevanagariRomanLoCFix_post(Strng):
 
 # ---- Pre-processing options ----
 
+# frontend
+def HindiMarathiRomanLoCFix_pre(Strng):
+    """Substitutes 'sh'→ṣ, ḷ→ḻ, and l̤→l̳ before Hindi/Marathi Library of Congress romanization."""
+    Strng = Strng.replace('sh', 'ṣ')
+    Strng = Strng.replace('ḷ', 'ḻ')
+    Strng = Strng.replace('l̤', 'l̳')
+
+    return Strng
+
 # internal
 def RomanLocToDevanagariPre(Strng):
     """Applies candrabindu and nukta-digraph LoC fixes before converting LoC Roman text to Devanagari."""
@@ -62,6 +58,15 @@ def RomanLocToDevanagariPre(Strng):
     return Strng
 
 # ---- Post-processing options ----
+
+# frontend
+def HindiMarathiRomanLoCFix_post(Strng):
+    """Reverses the Hindi/Marathi LoC substitutions: ṣ→'sh', ḻ→ḷ, l̳→l̤."""
+    Strng = Strng.replace('ṣ', 'sh')
+    Strng = Strng.replace('ḻ', 'ḷ')
+    Strng = Strng.replace('l̳', 'l̤')
+
+    return Strng
 
 # internal
 def DevanagariToRomanLocPost(Strng):

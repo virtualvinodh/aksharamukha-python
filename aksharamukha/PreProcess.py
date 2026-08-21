@@ -19,54 +19,16 @@ from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 ### Use escape char in all functions
 
 
-# DevanagariLoC's own logic now lives in ScriptProcessing/DevanagariLoC.py -
-# consolidated there (LoC redesign; renamed from RomanLoCDevanagari.py).
-from .ScriptProcessing.DevanagariLoC import HindiMarathiRomanLoCFix_pre as HindiMarathiRomanLoCFix
-
-# IAST's own logic now lives in ScriptProcessing/IAST.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.IAST import RomanLoCSLaDotLaUnderscore_pre as RomanLoCSLaDotLaUnderscore, joinVowelConsIAST
-
-# DivesAkuru's own logic now lives in ScriptProcessing/DivesAkuru.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.DivesAkuru import DivesAkuruAlternateIndVowels_pre as DivesAkuruAlternateIndVowels
-
-# Kawi's own logic now lives in ScriptProcessing/Kawi.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Kawi import KawiMoveRepha_pre as KawiMoveRepha
-
 # Javanese's own logic now lives in ScriptProcessing/Javanese.py -
 # consolidated there (batch migration).
 from .ScriptProcessing.Javanese import JavaneseMoveRepha_pre as JavaneseMoveRepha
 
-# Balinese's own logic now lives in ScriptProcessing/Balinese.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Balinese import BalineseMoveRepha_pre as BalineseMoveRepha
-
-# Oriya's own logic now lives in ScriptProcessing/Oriya.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Oriya import OriyaSubojinedVa, OriyaTargetVa
-
-# Bengali's own logic now lives in ScriptProcessing/Bengali.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Bengali import BengaliSubojinedVa, BengaliTargetVa
 
 def RetainDevangariDanda(Strng):
     """Temporarily substitute Devanagari danda/double danda with placeholder box-drawing characters to protect them from further processing."""
     Strng = Strng.replace('।', '│').replace('॥', '┃')
     return Strng
 
-# Khmer's own logic now lives in ScriptProcessing/Khmer.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Khmer import KhmerWordSplit
-
-# KhuenTham's own logic now lives in ScriptProcessing/KhuenTham.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.KhuenTham import KhuenRaHaamKaren
 
 def segmentThamSyllabes(Strng):
     # segment text into syllables
@@ -84,15 +46,6 @@ def segmentThamSyllabes(Strng):
 
     return Strng
 
-# Burmese's own logic now lives in ScriptProcessing/Burmese.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Burmese import segmentBurmeseSyllables
-
-# Shan's own logic now lives in ScriptProcessing/Shan.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Shan import segmentShanSyllables
 
 def insertViramaSyriac(Strng):
     """Append a private-use marker signaling that Syriac consonants lacking vowel signs should be read as pure consonants (e.g. lâylēyn ← ܠܐܲܝܠܹܝܢ)."""
@@ -122,9 +75,6 @@ def AlephMaterLectionis(Strng, target='semitic'):
 
     return Strng
 
-# Malayalam's own logic now lives in ScriptProcessing/Malayalam.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Malayalam import ShowChillus, MalayalamHalfu, MalayalamTranscribe, MalayalamPrakrit_pre as MalayalamPrakrit
 
 def ShowKhandaTa(Strng):
     """Render Bengali khanda ta as full consonant plus below-line virama marker (ৎ → ত্ˍ), e.g. উৎকল → utˍkala."""
@@ -142,68 +92,11 @@ def wasvnukta(Strng):
     """Option flag indicating /w/ should be rendered as nukta-marked v̈ (handled elsewhere; a no-op here)."""
     return Strng
 
-# Sogd's own logic now lives in ScriptProcessing/Sogd.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Sogd import SogdReshAyin_pre as SogdReshAyin
-
-# Sogo's own logic now lives in ScriptProcessing/Sogo.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Sogo import SogoReshAyinDaleth_pre as SogoReshAyinDaleth
-
-# Phlp's own logic now lives in ScriptProcessing/Phlp.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Phlp import PhlpMemQoph, PhlpWawAyinResh
-
-# Phli's own logic now lives in ScriptProcessing/Phli.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Phli import PhliWawAyinResh
-
-# Hatr's own logic now lives in ScriptProcessing/Hatr.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Hatr import HatrDalethResh
-# Hebrew's own logic now lives in ScriptProcessing/Hebrew.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Hebrew import holamlong, novowelshebrewIndic, novowelshebrewSemitic, shvanakhall
-
-# ISO's own logic now lives in ScriptProcessing/ISO.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.ISO import longEOISO, joinVowelConsISO
 
 # Thai's own logic now lives in ScriptProcessing/Thai.py -
 # consolidated there (batch migration).
-from .ScriptProcessing.Thai import ThaiOrthography, ThaiPhonetic, ThaiSajjhayaOrthography_pre as ThaiSajjhayaOrthography, ThaiSajjhayawithA_pre as ThaiSajjhayawithA
+from .ScriptProcessing.Thai import ThaiSajjhayaOrthography_pre as ThaiSajjhayaOrthography
 
-# LaoPali's own logic now lives in ScriptProcessing/LaoPali.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.LaoPali import LaoTranscription_pre as LaoTranscription, LaoPhonetic_pre as LaoPhonetic, LaoSajhayaOrthography, LaoSajhayaOrthographywithA
-
-# TamilSaurashtra's own logic now lives in ScriptProcessing/TamilSaurashtra.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.TamilSaurashtra import SaurastraHaaruColonTamil
-
-# Chakma's own logic now lives in ScriptProcessing/Chakma.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Chakma import ChakmaPali_pre as ChakmaPali
-
-# Takri's own logic now lives in ScriptProcessing/Takri.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Takri import TakriArchaicKha_pre as TakriArchaicKha
-
-
-# Devanagari's own logic now lives in ScriptProcessing/Devanagari.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Devanagari import AnuChandraEqDeva, RemoveSchwaHindi
-
-# Tamil's pre-options now live in ScriptProcessing/Tamil.py, consolidated
-# there with its Fix logic and post-options too. Re-exported here so
-# Options.py's getmembers(PreProcess, isfunction) discovery still finds them.
-from .ScriptProcessing.Tamil import TamilNumeralSub, TamilTranscribe, TamilTranscribeDialect
 
 def swapEe(Strng):
     """Swap the case convention for E/e and O/o so uppercase marks the long vowel and lowercase marks the short vowel."""
@@ -217,32 +110,11 @@ def swapEe(Strng):
 
     return Strng
 
-# Itrans's own logic now lives in ScriptProcessing/Itrans.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Itrans import swapEeItrans_pre as swapEeItrans
-
-# Grantha's own logic now lives in ScriptProcessing/Grantha.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Grantha import egrantamil
-
-# Siddham's own logic now lives in ScriptProcessing/Siddham.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Siddham import siddhammukta
 
 def TaiKuen(Strng):
     """Placeholder Tai Khuen pre-processing hook (currently a no-op passthrough)."""
     return Strng
 
-
-# Gurmukhi's own logic now lives in ScriptProcessing/Gurmukhi.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Gurmukhi import SchwaFinalGurmukhi
-
-# Gujarati's own logic now lives in ScriptProcessing/Gujarati.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Gujarati import SchwaFinalGujarati
 
 def SchwaFinalBengali(Strng):
 
@@ -251,33 +123,6 @@ def SchwaFinalBengali(Strng):
 
     return Strng
 
-# WarangCiti's own logic now lives in ScriptProcessing/WarangCiti.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.WarangCiti import SchwaFinalWarangCiti
-
-# DevanagariLimbu's own logic now lives in ScriptProcessing/DevanagariLimbu.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.DevanagariLimbu import LimbuDevanagariConvention_pre as LimbuDevanagariConvention
-
-# Limbu's own logic now lives in ScriptProcessing/Limbu.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Limbu import LimbuSpellingSaI_pre as LimbuSpellingSaI
-
-# Sinhala's own logic now lives in ScriptProcessing/Sinhala.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Sinhala import SinhalaPali_pre as SinhalaPali
-
-
-# RussianCyrillic's own logic now lives in ScriptProcessing/RussianCyrillic.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.RussianCyrillic import CyrillicPali_pre as CyrillicPali
-
-
-# Arab's own logic now lives in ScriptProcessing/Arab.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Arab import ArabicGimelJa
 
 # ============================================================
 # Internal-only options - not exposed in the frontend UI, but
@@ -291,27 +136,6 @@ from .ScriptProcessing.Arab import ArabicGimelJa
 # registered by Options.py's reflection regardless of section.
 # ============================================================
 
-
-# BalineseLoC's own LoC logic now lives in ScriptProcessing/BalineseLoC.py -
-# consolidated there (LoC redesign).
-from .ScriptProcessing.BalineseLoC import RomanLocToBalinesePre
-
-# JavaneseLoC's own LoC logic now lives in ScriptProcessing/JavaneseLoC.py -
-# consolidated there (LoC redesign).
-from .ScriptProcessing.JavaneseLoC import RomanLocToJavanesePre
-from .ScriptProcessing.DevanagariLoC import RomanLocToDevanagariPre
-
-
-
-
-
-# MalayalamLoC's own LoC logic now lives in ScriptProcessing/MalayalamLoC.py -
-# consolidated there (LoC redesign).
-from .ScriptProcessing.MalayalamLoC import RomanLocToMalayalamPre
-
-# TibetanLoC's own LoC logic now lives in ScriptProcessing/TibetanLoC.py -
-# consolidated there (LoC redesign).
-from .ScriptProcessing.TibetanLoC import TibetanLoCToRomanLocPre, RomanLocToTibetanLoCPre
 
 def BalineseJavaneseMoveRepha(Strng, tgt, reph):
     """Reposition the repha (pre-base r) sign to follow its consonant cluster and vowel sign in Balinese/Javanese script."""
@@ -336,23 +160,6 @@ def RetainPipeDanda(Strng, src):
 
     return Strng
 
-#ThamLoC
-# ThamLoC's own LoC logic now lives in ScriptProcessing/ThamLoC.py -
-# consolidated there (LoC redesign).
-from .ScriptProcessing.ThamLoC import ThamLoCToRomanLocPre, RomanLocToThamLoCPre
-
-# KhmerLoC's own LoC logic now lives in ScriptProcessing/KhmerLoC.py -
-# consolidated there (LoC redesign).
-from .ScriptProcessing.KhmerLoC import KhmerLoCToRomanLocPre, RomanLocToKhmerLoCPre
-
-# shan
-# ShanLoC's own LoC logic now lives in ScriptProcessing/ShanLoC.py -
-# consolidated there (LoC redesign).
-from .ScriptProcessing.ShanLoC import ShanLoCToRomanLocPre, RomanLocToShanLoCPre
-
-# BurmeseLoC's own LoC logic now lives in ScriptProcessing/BurmeseLoC.py -
-# consolidated there (LoC redesign).
-from .ScriptProcessing.BurmeseLoC import BurmeseToRomanLocPre, RomanLocToBurmesePre
 
 # Indic Target
 def FixSemiticRoman(Strng, Source):
@@ -590,8 +397,6 @@ def JapanesePreProcess(src, txt, preoptions):
         txt = _japanese_normalize_romanization(txt, preoptions)
 
     return txt
-from .ScriptProcessing.Devanagari import AnuChandraEq
-from .ScriptProcessing.Tamil import TamilTranscribeCommon
 
 # consider adding an optional NUkta to the post consonantal position
 # consider adding an optional NUkta to the post consonantal position
@@ -1009,21 +814,6 @@ def RemoveJoiners(Strng):
 # needed here, Options.py's auto-discovery strips the _pre suffix and
 # finds them under their bare dispatch name on its own.
 
-# PhagsPa's own logic now lives in ScriptProcessing/PhagsPa.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.PhagsPa import PhagsPaArrange
-
-# New LoC (Library of Congress) romanization pre-options - see
-# ScriptProcessing/HOW_TO_ADD_LOC.md for the naming convention.
-from .ScriptProcessing.TeluguLoC import RomanLocToTeluguPre
-from .ScriptProcessing.KannadaLoC import RomanLocToKannadaPre
-from .ScriptProcessing.SinhalaLoC import RomanLocToSinhalaPre
-from .ScriptProcessing.OriyaLoC import RomanLocToOriyaPre
-from .ScriptProcessing.AssameseLoC import AssameseToRomanLocPre, RomanLocToAssamesePre
-from .ScriptProcessing.BengaliLoC import BengaliToRomanLocPre, RomanLocToBengaliPre
-from .ScriptProcessing.GujaratiLoC import RomanLocToGujaratiPre
-from .ScriptProcessing.KhuenTham import RomanLocToKhuenThamPre
 
 # ============================================================
 # Unreferenced - no call site found anywhere in the codebase (not
@@ -1036,11 +826,6 @@ from .ScriptProcessing.KhuenTham import RomanLocToKhuenThamPre
 # real remove-and-test pass (full corpus regen + test suite) before
 # treating anything here as safe to delete.
 # ============================================================
-
-
-# RomanLoC's own LoC logic now lives in ScriptProcessing/RomanLoC.py -
-# consolidated there (LoC redesign).
-from .ScriptProcessing.RomanLoC import RomanLoCChandrabindu_pre as RomanLoCChandrabindu, KhandaTaRomanLoC_pre as KhandaTaRomanLoC
 
 
 def ArchaicJnaSimplifyRomanLOC(Strng):
@@ -1102,24 +887,4 @@ def IPAIndic(Strng):
 
     return
 
-from .ScriptProcessing.Arab import ArabizePersian
 
-from .ScriptProcessing.Bengali import BengaliSwitchYaYYa_pre as BengaliSwitchYaYYa
-
-from .ScriptProcessing.Grantha import GranthaPrakrit_pre as GranthaPrakrit
-
-from .ScriptProcessing.IAST import IASTLDotRetroflex
-
-from .ScriptProcessing.IAST import IASTPali_pre as IASTPali
-
-from .ScriptProcessing.Itrans import ItransLL
-
-from .ScriptProcessing.RomanLoC import RomanLoCLaUnderscoreDoubleDot_pre as RomanLoCLaUnderscoreDoubleDot
-
-from .ScriptProcessing.RomanLoC import RomanLoCSasha_pre as RomanLoCSasha
-
-from .ScriptProcessing.RomanLoC import RomanLoCVaWa_pre as RomanLoCVaWa
-
-from .ScriptProcessing.LaoTham import TaiThamLao_pre as TaiThamLao
-
-from .ScriptProcessing.Urdu import UrduShortNotShown
