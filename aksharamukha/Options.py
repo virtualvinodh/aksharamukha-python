@@ -20,19 +20,109 @@ transliterate.convert_default(), run on every single conversion call:
    now warn on any unrecognized name instead of ignoring it.
 """
 
+import ast
 import functools
+import importlib
 import inspect
+import io
+import pkgutil
 import warnings
 from inspect import getmembers, isfunction
 from . import PreProcess, PostProcess
+from . import ScriptProcessing as _SP
+
+# '# ---- Pre-processing options ----' / '# ---- Post-processing options
+# ----' mark a function as belonging to that script's option surface -
+# the same convention every ScriptProcessing/<Script>.py file already
+# uses (established by the batch migration that consolidated each
+# script's Fix/option logic into its own file; verified identical
+# across all 128 files, no variant spellings). Scanning for it here
+# means a new option just needs to be written under the right header in
+# the right script's file - no `from .ScriptProcessing.X import name`
+# re-export line into PreProcess.py/PostProcess.py required just to
+# make this module's reflection see it. (A re-export is still needed
+# for a name that has to be directly reachable as PreProcess.name/
+# PostProcess.name for some other reason, e.g. a genuinely
+# multi-script-shared helper like PostProcess.ThaiLaoTranscription,
+# called from Thai.py/Lao.py/LaoPali.py alike - those stay defined
+# directly in PreProcess.py/PostProcess.py, never move into one
+# script's file, so this scan never sees them either way.)
+_SECTION_KIND = {
+    '# ---- Pre-processing options ----': 'pre',
+    '# ---- Post-processing options ----': 'post',
+}
+
+
+def _scriptprocessing_option_funcs():
+    """{name: fn} for every function found under a Pre-processing/Post-
+    processing options header in any ScriptProcessing/<Script>.py file,
+    for each kind - the ACTUAL source of truth for "is this a pre/post
+    option", now read directly instead of inferred from what happens to
+    be re-exported. Raises ImportError at import time (not silently,
+    not just when someone happens to use the colliding name) if the
+    same name is defined under the same kind's header in two different
+    scripts' files - previously this ambiguity was implicitly resolved
+    by whichever `from .ScriptProcessing.X import name` re-export line
+    happened to run last, silently overwriting the other in PreProcess.
+    py's/PostProcess.py's namespace."""
+    funcs = {'pre': {}, 'post': {}}
+    owner = {'pre': {}, 'post': {}}
+
+    for _finder, mod_name, _ispkg in pkgutil.iter_modules(_SP.__path__):
+        module = importlib.import_module('aksharamukha.ScriptProcessing.' + mod_name)
+        src = io.open(module.__file__, encoding='utf-8').read()
+        lines = src.splitlines()
+        tree = ast.parse(src)
+
+        headers = []  # (lineno, kind_or_None-for-the-Fix-header)
+        for i, line in enumerate(lines, 1):
+            stripped = line.strip()
+            if stripped in _SECTION_KIND:
+                headers.append((i, _SECTION_KIND[stripped]))
+            elif stripped.startswith('# ----'):
+                headers.append((i, None))
+
+        def kind_at(lineno):
+            current = None
+            for header_line, kind in headers:
+                if header_line <= lineno:
+                    current = kind
+                else:
+                    break
+            return current
+
+        for node in tree.body:
+            if not isinstance(node, ast.FunctionDef):
+                continue
+            kind = kind_at(node.lineno)
+            if kind is None:
+                continue
+            name = node.name
+            if name in owner[kind] and owner[kind][name] != mod_name:
+                raise ImportError(
+                    "%s-option '%s' is defined in both ScriptProcessing/%s.py and "
+                    "ScriptProcessing/%s.py - option names must be unique across "
+                    "scripts; rename one of them." % (kind, name, owner[kind][name], mod_name)
+                )
+            funcs[kind][name] = getattr(module, name)
+            owner[kind][name] = mod_name
+
+    return funcs['pre'], funcs['post']
+
+
+_sp_pre_funcs, _sp_post_funcs = _scriptprocessing_option_funcs()
 
 # Real function references, resolved once at import time, instead of a bare
 # name string re-resolved via getattr() on every single dispatch call (the
 # "stringly-typed options" pattern - see MARKERS.md/the code audit, pattern
 # 05). PRE_OPTIONS/POST_OPTIONS are derived from these dicts' keys so the
-# two can never drift apart.
-_PRE_OPTION_FUNCS = dict(getmembers(PreProcess, isfunction))
-_POST_OPTION_FUNCS = dict(getmembers(PostProcess, isfunction))
+# two can never drift apart. The ScriptProcessing-sourced dicts come first,
+# so a function directly defined in PreProcess.py/PostProcess.py (a
+# deliberately shared, multi-script helper, or simply a still-unmigrated
+# one) can still shadow a same-named ScriptProcessing entry if it ever
+# needs to - matches the priority the getmembers() scan alone already had.
+_PRE_OPTION_FUNCS = {**_sp_pre_funcs, **dict(getmembers(PreProcess, isfunction))}
+_POST_OPTION_FUNCS = {**_sp_post_funcs, **dict(getmembers(PostProcess, isfunction))}
 
 PRE_OPTIONS = frozenset(_PRE_OPTION_FUNCS)
 POST_OPTIONS = frozenset(_POST_OPTION_FUNCS)
