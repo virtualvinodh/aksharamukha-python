@@ -8,6 +8,12 @@ Latin source through the RomanSemitic intermediate before reaching a
 semitic target, and the LoC/semiticISO option families are dispatched
 by runtime string concatenation rather than a literal call anywhere.
 
+Most steps in a real conversion don't change anything - a given text
+only triggers a handful of the ~600 registered options. output_params:
+only lists the fields that actually differ from input_params: (omitted
+entirely when nothing tracked changed), instead of repeating every
+field whether or not it moved.
+
 Only calls that actually take the text being converted as one of their
 parameters are shown (by name - Strng/transliteration/txt/text, found
 anywhere in the signature, not just position 0) - a helper keyed on
@@ -88,6 +94,31 @@ def decode_return_tuple(function, result):
     return fields, text_value
 
 
+def params_diff(call_e, return_e, max_len):
+    """Only the STATE_FIELDS (+ any extra fields like tgtOld/srcOld from
+    a decoded return tuple) that actually differ between this step's
+    call and return - '' if nothing tracked changed. Prefers the
+    function's own decoded return-tuple state (authoritative, straight
+    from its actual return value) when RETURN_SHAPES recognizes it;
+    otherwise falls back to the general running-state snapshot _trace.py
+    keeps on every call/return regardless of function (so a step whose
+    only effect was mutating ConversionContext, say, still shows it -
+    not just the 9 functions with a known tuple shape)."""
+    state_fields, _ = decode_return_tuple(return_e['function'], return_e['result'])
+    candidate = {k: repr(v) for k, v in state_fields.items()} if state_fields is not None else return_e['state']
+    call_state = call_e['state']
+    diffs = [(name, value) for name, value in candidate.items() if call_state.get(name) != value]
+    if not diffs:
+        return ''
+    order = {name: i for i, name in enumerate(STATE_FIELDS)}
+    diffs.sort(key=lambda kv: order.get(kv[0], len(STATE_FIELDS)))
+    return ', '.join('%s=%s' % (name, truncate(value, max_len)) for name, value in diffs)
+
+
+def step_changed(call_e, return_e, max_len):
+    return return_e['changed'] or bool(params_diff(call_e, return_e, max_len))
+
+
 def print_open(indent, step_no, mod, e, max_len):
     print('%s-> step %d: %s.%s' % (indent, step_no, mod, e['function']))
     params = format_params(e['state'], max_len)
@@ -96,18 +127,15 @@ def print_open(indent, step_no, mod, e, max_len):
     print('%s     input  = %s' % (indent, truncate(repr(e['text_in']), max_len)))
 
 
-def print_close(indent, step_no, mod, e, max_len, arrow='<-'):
+def print_close(indent, step_no, mod, call_e, return_e, max_len, arrow='<-'):
     if arrow == '<-':
-        print('%s<- step %d: %s.%s' % (indent, step_no, mod, e['function']))
-    state_fields, text_value = decode_return_tuple(e['function'], e['result'])
-    if state_fields is not None:
-        state_str = ', '.join('%s=%s' % (name, truncate(repr(value), max_len)) for name, value in state_fields.items())
-        if state_str:
-            print('%s     output_params: %s' % (indent, state_str))
-        output_value = text_value
-    else:
-        output_value = e['result']
-    mark = '  *changed*' if e['changed'] else ''
+        print('%s<- step %d: %s.%s' % (indent, step_no, mod, return_e['function']))
+    diff = params_diff(call_e, return_e, max_len)
+    if diff:
+        print('%s     output_params: %s' % (indent, diff))
+    _, text_value = decode_return_tuple(return_e['function'], return_e['result'])
+    output_value = text_value if text_value is not None else return_e['result']
+    mark = '  *changed*' if return_e['changed'] else ''
     print('%s     output = %s%s' % (indent, truncate(repr(output_value), max_len), mark))
     print()
 
@@ -125,10 +153,17 @@ def print_trace(entries, changes_only, max_depth, max_len):
     # stack so a step keeps the same number at both ends regardless of
     # what else is interleaved - makes the nesting visible again, the
     # way a real call-stack trace would.
+    #
+    # --changes-only used to filter on text change alone (return_e
+    # ['changed']), which silently dropped steps that only changed
+    # PARAMS with the text unchanged - e.g. the LoC pre/post-option
+    # registration, or ConversionContext.src/tgt getting set - real,
+    # meaningful pipeline state transitions, not "nothing happened".
+    # step_changed() catches both.
     entries = sorted(entries, key=lambda e: e['seq'])
     mod_of = lambda e: e['module'].replace('aksharamukha.', '')
     step_no = 0
-    call_stack = []  # step_no (or None if this call wasn't shown), one per open call
+    call_stack = []  # (step_no or None, call_event), one per open call
 
     for e in entries:
         depth_ok = max_depth is None or e['depth'] <= max_depth
@@ -142,19 +177,19 @@ def print_trace(entries, changes_only, max_depth, max_len):
                 this_step = step_no
                 print_open(indent, this_step, mod_of(e), e, max_len)
                 print()
-            call_stack.append(this_step)
+            call_stack.append((this_step, e))
         else:
-            this_step = call_stack.pop()
+            this_step, call_e = call_stack.pop()
             if changes_only:
-                if not depth_ok or e['text_param'] is None or not e['changed']:
+                if not depth_ok or e['text_param'] is None or not step_changed(call_e, e, max_len):
                     continue
                 step_no += 1
-                print_open(indent, step_no, mod_of(e), e, max_len)
-                print_close(indent, step_no, mod_of(e), e, max_len, arrow=None)
+                print_open(indent, step_no, mod_of(e), call_e, max_len)
+                print_close(indent, step_no, mod_of(e), call_e, e, max_len, arrow=None)
             else:
                 if this_step is None:
                     continue
-                print_close(indent, this_step, mod_of(e), e, max_len)
+                print_close(indent, this_step, mod_of(e), call_e, e, max_len)
 
 
 def main():
@@ -165,7 +200,7 @@ def main():
     p.add_argument('--pre', default='', help='comma-separated pre-option names')
     p.add_argument('--post', default='', help='comma-separated post-option names')
     p.add_argument('--no-nativize', action='store_true')
-    p.add_argument('--changes-only', action='store_true', help='only show steps that actually changed the text')
+    p.add_argument('--changes-only', action='store_true', help='only show steps that changed the text or a tracked param')
     p.add_argument('--max-depth', type=int, default=None, help='hide calls nested deeper than this')
     p.add_argument('--max-len', type=int, default=120, help='truncate printed strings to this length')
     args = p.parse_args()
