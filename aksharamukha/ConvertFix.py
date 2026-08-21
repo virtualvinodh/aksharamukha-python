@@ -391,18 +391,8 @@ def FixIndicOutput(Strng,Source,Target,ctx=None):
     return Strng
 
 
-# Tamil's Fix logic now lives in ScriptProcessing/Tamil.py (consolidated
-# there with its pre/post-options too - see that file's header comment for
-# why the cross-module imports there are whole-module style, not
-# `from .X import name`). Re-exported here so GM.resolve's getattr(CF,
-# "FixTamil", ...) dispatch in Convert.py keeps working unchanged.
-
-
 # Correct Ru'', Lu'' -> R, lR
 # Tippi/Bindu
-# Gurmukhi's own logic now lives in ScriptProcessing/Gurmukhi.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
 
 # Fix ru', ru'',lu',lu'' in Tamil & Gurmukhi
 # रुʼ -> ऋ, रूʼ -> ॠ, लुʼ -> ऌ, लूʼ -> ॡ
@@ -445,20 +435,12 @@ def ShiftDiacritics(Strng,Target,reverse=False):
 
 
 # Move Vowel Signs
-# TamilGrantha's own logic now lives in ScriptProcessing/TamilGrantha.py -
-# consolidated there (batch migration).
 
 
 # Khmer - Subjoining Consonants and Repha
-# Khmer's own logic now lives in ScriptProcessing/Khmer.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
 
 
 # Burmese - Tall A + Subjoning Consonants
-# Burmese's own logic now lives in ScriptProcessing/Burmese.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
 
 # Add Repha (Bali,Java,Sundanese)
 # a + r + ka -> a<repha>ka
@@ -485,20 +467,12 @@ def AddRepha(Strng,Script,Repha,reverse=False):
 
 
 # Balinese Repha
-# Balinese's own logic now lives in ScriptProcessing/Balinese.py -
-# consolidated there (batch migration).
 
 # Javanese - Reppha & Subjoining ra & ya
-# DivesAkuru's own logic now lives in ScriptProcessing/DivesAkuru.py -
-# consolidated there (batch migration).
 
 # Javanese - Reppha & Subjoining ra & ya
-# Kawi's own logic now lives in ScriptProcessing/Kawi.py -
-# consolidated there (batch migration).
 
 # Javanese - Reppha & Subjoining ra & ya
-# Javanese's own logic now lives in ScriptProcessing/Javanese.py -
-# consolidated there (batch migration).
 
 
 # Urdu - Shadda, Final E
@@ -816,15 +790,9 @@ def PersoArabicPuntuation(Strng, reverse=False):
 
 ### Anusvara to Nasal for Thanaa - Consider Add
 # ThaanaVowelSign A
-# Thaana's own Fix logic now lives in ScriptProcessing/Thaana.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixThaana", ...) dispatch keeps working.
 
 
 # Tibetan Subjoining Consnants
-# Tibetan's own logic now lives in ScriptProcessing/Tibetan.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
 
 # Thai, Lao follow visual ordering of Vowels signs ; <e> + k => <e>k
 # Other Indic scripts follow logical order ; k + <e> => <e>k
@@ -855,16 +823,11 @@ def ReverseVowelSigns(Strng,Script,reverse=False):
 
 # Re-arrange Vowels Signs /E/, /AI/, /O/ for digraph <dv>, <mh> etc
 # e.g dve -> เทฺว instead of ทฺเว
-# OldPersian's own Fix logic now lives in ScriptProcessing/OldPersian.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixOldPersian", ...) dispatch keeps working.
 
 # Syllabization of Persian
 # d<a> +i -> d<i> + i
 # d<a> + u -> d<u> + u
 # Convert numbers into Persinal Numeral System
-# Sinhala's own logic now lives in ScriptProcessing/Sinhala.py -
-# consolidated there (batch migration).
 
 
 # FixRomanReadable and FixRomanColloquial share the same nasal-assimilation
@@ -909,35 +872,19 @@ def _FixRomanReadableColloquial(Strng, reverse, colloquial):
 
 
 #Subojined & Final
-# Limbu's own logic now lives in ScriptProcessing/Limbu.py -
-# consolidated there (batch migration).
 
 
 #Subjoined, final and la-ligatures
 # Fix aH -> a ;
-# Lepcha's own Fix logic now lives in ScriptProcessing/Lepcha.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixLepcha", ...) dispatch keeps working.
 
 # Repha & Subjoined
-# Sundanese's own logic now lives in ScriptProcessing/Sundanese.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
 
 # Repha & Subjoined
-# Rejang's own Fix logic now lives in ScriptProcessing/Rejang.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixRejang", ...) dispatch keeps working.
 
 # Chakmaa VS A and Subjoined
-# Chakma's own logic now lives in ScriptProcessing/Chakma.py -
-# consolidated there (batch migration).
 
 
 # Rearrange PhagsPa Letters ; Subjoined Letters ;
-# PhagsPa's own logic now lives in ScriptProcessing/PhagsPa.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
 
 # Meetei Mayek Final
 # Think of a-k-ka vers a-ka+vir-ka, also ag to ak. (Virama extends to second letter... ag could be replaced by ak..
@@ -951,15 +898,9 @@ def _FixRomanReadableColloquial(Strng, reverse, colloquial):
 
 
 # Cham Final & Subjoined
-# Cham's own Fix logic now lives in ScriptProcessing/Cham.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixCham", ...) dispatch keeps working.
 
 # Subjoined Consonants in Tai Tham
 # Mai Kang Lai - /ng/
-# TaiTham's own Fix logic now lives in ScriptProcessing/TaiTham.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixTaiTham", ...) dispatch keeps working.
 
 
 # FixThamLoC/FixLueTham/FixKhuenTham share the same "Tall A" regex logic;
@@ -1002,8 +943,5 @@ def _FixTaiThamFamily(Strng, reverse, tall_a_cons, marker_cleanup, ra_haam_swap)
 # Transcription for Pali Lao
 # Assamese and Bengali have the same mapping file duplicated
 # Replace Bengali /ra/ with Assamese /ra/
-# Bengali's own logic now lives in ScriptProcessing/Bengali.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
 
 
