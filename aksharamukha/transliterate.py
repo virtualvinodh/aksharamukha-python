@@ -709,10 +709,25 @@ def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [],
     trace_entries is every PreProcess/PostProcess/ConvertFix/Convert/
     transliterate/ScriptProcessing function call along the way, as two
     events per call (in true chronological order, sort by 'seq'): a
-    'call' event (seq/depth/module/function/args/kwargs) logged when
-    invoked, and a 'return' event (seq/depth/module/function/result/
-    changed) logged when it returns - separate because the result isn't
-    known until later, often much later. See _trace.py for how (dev
+    'call' event logged when invoked and a 'return' event logged when
+    it returns - separate because the result isn't known until later,
+    often much later. Both carry:
+      - module/function/seq/depth
+      - text_param/text_in: the name and value of whichever parameter
+        is actually the text being converted (Strng/txt/text, found by
+        name anywhere in the signature) - None/None if this call has no
+        text argument at all, e.g. Convert._om_boundary_class(Source)
+        (a regex-builder keyed on a script name, not text)
+      - state: the current best-known snapshot (as of this event) of
+        src/tgt/pre_options/post_options/nativize/ctx, as repr strings
+        - not just what THIS call's own parameters happen to include,
+        but everything tracked so far, since these are threaded through
+        the whole convert() chain and stay relevant across calls that
+        don't re-bind them all by name
+    'call' additionally carries args/kwargs (the raw call); 'return'
+    carries result and changed (True only when text_param was found and
+    the returned string differs from text_in - never guessed from a
+    tuple return, see _trace.py for why). See _trace.py for how (dev
     tool: test/regression/workbench/trace_conversion.py prints it
     nicely)."""
     if not trace:

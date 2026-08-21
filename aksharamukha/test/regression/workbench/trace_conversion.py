@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 """Dev tool: pretty-prints transliterate.process(..., trace=True) for one
-conversion - shows the exact function call sequence and intermediate
-text, including hops invisible from reading any single function - e.g.
-Convert.py's _convert_to_semitic always pivots a non-Latin source
-through the RomanSemitic intermediate before reaching a semitic target,
-and the LoC/semiticISO option families are dispatched by runtime string
-concatenation (transliterate.py's _apply_loc_option, ConvertFix.py's
-globals()["Fix"+Target]) rather than a literal call anywhere.
+conversion - one block per step, each showing the function, its current
+src/tgt/pre_options/post_options/nativize/ConversionContext, and its
+text input/output - including hops invisible from reading any single
+function, e.g. Convert.py's _convert_to_semitic always pivots a non-
+Latin source through the RomanSemitic intermediate before reaching a
+semitic target, and the LoC/semiticISO option families are dispatched
+by runtime string concatenation rather than a literal call anywhere.
+
+Only calls that actually take the text being converted as one of their
+parameters are shown (by name - Strng/txt/text, found anywhere in the
+signature, not just position 0) - a helper keyed on something else,
+e.g. Convert._om_boundary_class(Source) (a regex-builder keyed on a
+script name), isn't a text-transforming step and would just be noise.
 
 The actual instrumentation (aksharamukha/_trace.py) lives in the main
 package, not here - trace=True is a first-class part of
@@ -26,57 +32,76 @@ REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.d
 if REPO not in sys.path:
     sys.path.insert(0, REPO)
 
-
-def short(x, max_len):
-    s = repr(x)
-    if len(s) > max_len:
-        s = s[:max_len] + '...'
-    return s
+STATE_FIELDS = ('src', 'tgt', 'pre_options', 'post_options', 'nativize', 'ctx')
 
 
-def format_args(args, kwargs, max_len):
-    parts = [short(a, max_len) for a in args] + [k + '=' + short(v, max_len) for k, v in kwargs.items()]
-    return ', '.join(parts)
+def truncate(s, max_len):
+    return s if len(s) <= max_len else s[:max_len] + '...'
+
+
+def format_params(state, max_len):
+    return ', '.join('%s=%s' % (f, truncate(state[f], max_len)) for f in STATE_FIELDS if f in state)
+
+
+def print_open(indent, step_no, mod, e, max_len):
+    print('%s-> step %d: %s.%s' % (indent, step_no, mod, e['function']))
+    params = format_params(e['state'], max_len)
+    if params:
+        print('%s     params: %s' % (indent, params))
+    print('%s     input  = %s' % (indent, truncate(repr(e['text_in']), max_len)))
+
+
+def print_close(indent, step_no, mod, e, max_len, arrow='<-'):
+    if arrow == '<-':
+        print('%s<- step %d: %s.%s' % (indent, step_no, mod, e['function']))
+    mark = '  *changed*' if e['changed'] else ''
+    print('%s     output = %s%s' % (indent, truncate(repr(e['result']), max_len), mark))
+    print()
 
 
 def print_trace(entries, changes_only, max_depth, max_len):
-    # Each call produces a 'call' event (args, known when invoked) and a
-    # separate later 'return' event (result, only known once every
-    # nested call it makes has already run) - sorting by seq and printing
-    # both, in place, is what actually matches processing order. A call
-    # and its matching return are always properly nested (the wrapper
-    # pushes 'call' right before running the function and appends
-    # 'return' right after it comes back), so a simple stack pairs them
-    # regardless of depth: --changes-only uses the pairing to fold a
-    # changed call back into one "args -> result" summary line, printed
-    # at the RETURN's seq (the only point where both halves are true).
+    # A call's args are known when it's invoked; its result is only
+    # known later, once every nested call it makes has already run - so
+    # an outer function is invoked FIRST but finishes LAST. Printing
+    # only completed (return) events in a flat list hides that: it looks
+    # like sibling steps in sequence when one is actually a PARENT that
+    # opened long before, with the other running nested inside it (this
+    # is exactly what made ConvertFix.FixIndicOutput's internal
+    # ShiftDiacritics call look like a preceding sibling step instead of
+    # a child). Showing both '->' (call) and '<-' (return) - paired by a
+    # stack so a step keeps the same number at both ends regardless of
+    # what else is interleaved - makes the nesting visible again, the
+    # way a real call-stack trace would.
     entries = sorted(entries, key=lambda e: e['seq'])
-    call_stack = []
     mod_of = lambda e: e['module'].replace('aksharamukha.', '')
+    step_no = 0
+    call_stack = []  # step_no (or None if this call wasn't shown), one per open call
 
     for e in entries:
+        depth_ok = max_depth is None or e['depth'] <= max_depth
+        indent = '  ' * e['depth']
+
         if e['event'] == 'call':
-            call_stack.append(e)
-            if changes_only:
-                continue
-            if max_depth is not None and e['depth'] > max_depth:
-                continue
-            args_str = format_args(e['args'], e['kwargs'], max_len)
-            print('%s> [%d] %s.%s(%s)' % ('  ' * e['depth'], e['seq'], mod_of(e), e['function'], args_str))
+            show = depth_ok and e['text_param'] is not None and not changes_only
+            this_step = None
+            if show:
+                step_no += 1
+                this_step = step_no
+                print_open(indent, this_step, mod_of(e), e, max_len)
+                print()
+            call_stack.append(this_step)
         else:
-            call_e = call_stack.pop()
-            if max_depth is not None and e['depth'] > max_depth:
-                continue
-            if changes_only and not e['changed'] and e['depth'] > 0:
-                continue
-            mark = '*' if e['changed'] else ' '
+            this_step = call_stack.pop()
             if changes_only:
-                args_str = format_args(call_e['args'], call_e['kwargs'], max_len)
-                print('%s%s[%d] %s.%s(%s) -> %s' % (
-                    '  ' * e['depth'], mark, e['seq'], mod_of(e), e['function'], args_str, short(e['result'], max_len)))
+                if not depth_ok or e['text_param'] is None or not e['changed']:
+                    continue
+                step_no += 1
+                print_open(indent, step_no, mod_of(e), e, max_len)
+                print_close(indent, step_no, mod_of(e), e, max_len, arrow=None)
             else:
-                print('%s< %s[%d] %s.%s() -> %s' % (
-                    '  ' * e['depth'], mark, e['seq'], mod_of(e), e['function'], short(e['result'], max_len)))
+                if this_step is None:
+                    continue
+                print_close(indent, this_step, mod_of(e), e, max_len)
 
 
 def main():
@@ -87,9 +112,9 @@ def main():
     p.add_argument('--pre', default='', help='comma-separated pre-option names')
     p.add_argument('--post', default='', help='comma-separated post-option names')
     p.add_argument('--no-nativize', action='store_true')
-    p.add_argument('--changes-only', action='store_true', help='hide no-op calls (depth 0 always shown)')
+    p.add_argument('--changes-only', action='store_true', help='only show steps that actually changed the text')
     p.add_argument('--max-depth', type=int, default=None, help='hide calls nested deeper than this')
-    p.add_argument('--max-len', type=int, default=60, help='truncate printed strings to this length')
+    p.add_argument('--max-len', type=int, default=120, help='truncate printed strings to this length')
     args = p.parse_args()
 
     from aksharamukha import transliterate
@@ -105,7 +130,7 @@ def main():
     )
 
     print('%s -> %s : %r -> %r' % (args.source, args.target, args.text, result))
-    print('(%d calls traced, * = text changed)' % len(entries))
+    print('(%d calls traced)' % (len(entries) // 2))
     print()
     print_trace(entries, args.changes_only, args.max_depth, args.max_len)
 
