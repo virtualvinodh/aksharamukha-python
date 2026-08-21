@@ -1,18 +1,26 @@
 # -*- coding: utf-8 -*-
-"""Runtime call tracing behind transliterate.process(..., trace=True).
-Monkey-patches every function in PreProcess/PostProcess/ConvertFix/
-Convert/transliterate and every ScriptProcessing/*.py module with a
-logging wrapper for the duration of one traced call, then restores the
-originals - so an ordinary (trace=False) call pays zero overhead.
-GeneralMap is deliberately excluded: its helpers (CrunchSymbols/
-CrunchList/resolve/...) run in tight per-character loops on non-string
-arguments and would drown the trace in noise unrelated to what happened
-to the text.
+"""Runtime call tracing behind transliterate.debug(). Two halves:
 
-Not thread-safe / not reentrant: instrumentation patches shared module
-state for the duration of the call. Don't run two trace=True
-conversions concurrently, or call process(..., trace=True) recursively
-from within an already-traced call.
+1. Tracer - monkey-patches every function in PreProcess/PostProcess/
+   ConvertFix/Convert/transliterate and every ScriptProcessing/*.py
+   module with a logging wrapper for the duration of one traced call,
+   then restores the originals - so an ordinary (non-debug) call pays
+   zero overhead. GeneralMap is deliberately excluded: its helpers
+   (CrunchSymbols/CrunchList/resolve/...) run in tight per-character
+   loops on non-string arguments and would drown the trace in noise
+   unrelated to what happened to the text.
+
+   Not thread-safe / not reentrant: instrumentation patches shared
+   module state for the duration of the call. Don't run two debug()
+   conversions concurrently, or call debug() recursively from within
+   an already-traced call.
+
+2. print_trace() and its helpers - format a Tracer's collected entries
+   into readable step-by-step output. Lives here (not in a dev-only
+   script) because transliterate.debug() calls it directly - see
+   RETURN_SHAPES below for the one place this pulls in hand-verified,
+   can-go-stale-safely knowledge in exchange for much more readable
+   output.
 """
 import functools
 import importlib
@@ -181,3 +189,206 @@ class Tracer:
         for mod, attr_name, original_fn in self._patches:
             setattr(mod, attr_name, original_fn)
         self._patches = []
+
+
+# ---- formatting: turns a Tracer's entries into readable step output ----
+
+STATE_FIELDS = ('src', 'tgt', 'pre_options', 'post_options', 'nativize', 'ctx')
+
+# transliterate.py's _resolve_*/_apply_*/_prepare_*/_run_* stage
+# functions each return a tuple - but NOT in their own declared
+# parameter order or even a consistent subset of it (see
+# TEXT_PARAM_NAMES's comment above for the bug that came from assuming
+# otherwise). These shapes are the ACTUAL return statement of each
+# function, read directly from transliterate.py, not inferred - if any
+# of these functions' return statement changes, this goes stale and the
+# label just won't apply (falls back to the plain repr below), it won't
+# silently mislabel anything. The text-carrying field (txt, or
+# transliteration for _run_core_conversion) is pulled out of the tuple
+# and shown on its own output = line, same spot/label as every other
+# function's text result - the rest becomes output_params:, mirroring
+# input_params: on the call side.
+RETURN_SHAPES = {
+    '_apply_indic_dandas_preoption': ('txt', 'pre_options', 'post_options'),
+    '_resolve_loc_when_source_is_loc_script': ('src', 'tgt', 'txt', 'pre_options', 'post_options', 'nativize'),
+    '_resolve_loc_when_target_is_loc_script': ('src', 'tgt', 'txt', 'pre_options', 'post_options', 'nativize'),
+    '_resolve_loc_dispatch': ('src', 'tgt', 'txt', 'pre_options', 'post_options', 'nativize'),
+    '_resolve_semitic_iso_pivot': ('src', 'tgt', 'txt', 'pre_options', 'post_options', 'nativize'),
+    '_resolve_semitic_indic_naming': ('src', 'tgt', 'txt', 'pre_options', 'post_options', 'nativize', 'tgtOld'),
+    '_apply_target_renaming_postoptions': ('src', 'tgt', 'txt', 'pre_options', 'post_options', 'nativize'),
+    '_prepare_for_core_conversion': ('src', 'tgt', 'txt', 'srcOld'),
+    '_run_core_conversion': ('tgt', 'transliteration'),
+}
+TEXT_FIELD_NAMES = ('txt', 'transliteration')
+
+
+def truncate(s, max_len):
+    return s if len(s) <= max_len else s[:max_len] + '...'
+
+
+def format_params(state, max_len):
+    return ', '.join('%s=%s' % (f, truncate(state[f], max_len)) for f in STATE_FIELDS if f in state)
+
+
+def decode_return_tuple(function, result):
+    """(state_fields, text_value) for a known RETURN_SHAPES function
+    whose result actually matches that shape - state_fields is an
+    ordered dict of everything except the text field; (None, None) if
+    this function/result isn't a recognized shape (caller falls back to
+    treating result as the text value directly)."""
+    shape = RETURN_SHAPES.get(function)
+    if not shape or not isinstance(result, tuple) or len(result) != len(shape):
+        return None, None
+    fields = dict(zip(shape, result))
+    text_value = None
+    for name in TEXT_FIELD_NAMES:
+        if name in fields:
+            text_value = fields.pop(name)
+            break
+    return fields, text_value
+
+
+def params_diff(call_e, return_e, max_len):
+    """Only the STATE_FIELDS (+ any extra fields like tgtOld/srcOld from
+    a decoded return tuple) that actually differ between this step's
+    call and return - '' if nothing tracked changed. Prefers the
+    function's own decoded return-tuple state (authoritative, straight
+    from its actual return value) when RETURN_SHAPES recognizes it;
+    otherwise falls back to the general running-state snapshot the
+    Tracer keeps on every call/return regardless of function (so a step
+    whose only effect was mutating ConversionContext, say, still shows
+    it - not just the 9 functions with a known tuple shape)."""
+    state_fields, _ = decode_return_tuple(return_e['function'], return_e['result'])
+    candidate = {k: repr(v) for k, v in state_fields.items()} if state_fields is not None else return_e['state']
+    call_state = call_e['state']
+    diffs = [(name, value) for name, value in candidate.items() if call_state.get(name) != value]
+    if not diffs:
+        return ''
+    order = {name: i for i, name in enumerate(STATE_FIELDS)}
+    diffs.sort(key=lambda kv: order.get(kv[0], len(STATE_FIELDS)))
+    return ', '.join('%s=%s' % (name, truncate(value, max_len)) for name, value in diffs)
+
+
+def text_changed(return_e):
+    """True if the text this step is actually about differs between
+    input and output. The Tracer's own 'changed' flag can never be True
+    for any of the 9 RETURN_SHAPES functions - they always return a
+    tuple, never a bare string, and the Tracer deliberately doesn't
+    guess a tuple's contents (see TEXT_PARAM_NAMES's comment). Decode
+    the tuple here, where RETURN_SHAPES' hand-verified knowledge
+    actually lives, and compare the extracted text field instead.
+    Caught by a user noticing _run_core_conversion - which really does
+    turn Burmese into Latin - was silently missing from a changed-only
+    view entirely."""
+    if return_e['changed']:
+        return True
+    _, text_value = decode_return_tuple(return_e['function'], return_e['result'])
+    if isinstance(text_value, str) and isinstance(return_e['text_in'], str):
+        return text_value != return_e['text_in']
+    return False
+
+
+def step_changed(call_e, return_e, max_len):
+    return text_changed(return_e) or bool(params_diff(call_e, return_e, max_len))
+
+
+def print_open(indent, step_no, mod, e, max_len):
+    print('%s-> step %d: %s.%s' % (indent, step_no, mod, e['function']))
+    params = format_params(e['state'], max_len)
+    if params:
+        print('%s     input_params: %s' % (indent, params))
+    print('%s     input  = %s' % (indent, truncate(repr(e['text_in']), max_len)))
+
+
+def print_close(indent, step_no, mod, call_e, return_e, max_len, arrow='<-'):
+    if arrow == '<-':
+        print('%s<- step %d: %s.%s' % (indent, step_no, mod, return_e['function']))
+    diff = params_diff(call_e, return_e, max_len)
+    if diff:
+        print('%s     *output_params: %s' % (indent, diff))
+    _, text_value = decode_return_tuple(return_e['function'], return_e['result'])
+    output_value = text_value if text_value is not None else return_e['result']
+    star = '*' if text_changed(return_e) else ' '
+    print('%s     %soutput = %s' % (indent, star, truncate(repr(output_value), max_len)))
+    print()
+
+
+def _print_trace_events(entries, max_depth, max_len, should_show):
+    # A call's args are known when it's invoked; its result is only
+    # known later, once every nested call it makes has already run - so
+    # an outer function is invoked FIRST but finishes LAST. A single
+    # merged block (input+output together, positioned by call time) was
+    # tried for the changed-only view, but for any WRAPPING step -
+    # _process_dispatch, convert, etc, which can't return before
+    # everything nested inside them completes - that meant showing the
+    # final answer at the very top of the list, before any of the steps
+    # that produce it. Showing '->' (call) and '<-' (return) as
+    # separate lines, each at its own true seq, fixes this for good: a
+    # step's output is only ever printed once it's actually known.
+    # Paired by a stack so a step keeps the same number at both ends
+    # regardless of what's interleaved - this also makes nesting
+    # visible (ConvertFix.FixIndicOutput calling ShiftDiacritics
+    # internally shows as parent-then-nested-child, not two flat
+    # siblings). Step numbers are assigned at call time, so a parent
+    # always has a lower number than the children nested inside it -
+    # only the position of the '<-' line itself is in return order,
+    # because that's genuinely when a nested call finishes.
+    entries = sorted(entries, key=lambda e: e['seq'])
+    mod_of = lambda e: e['module'].replace('aksharamukha.', '')
+    step_no = 0
+    call_stack = []  # (step_no or None, call_event), one per open call
+
+    for e in entries:
+        depth_ok = max_depth is None or e['depth'] <= max_depth
+        indent = '  ' * e['depth']
+
+        if e['event'] == 'call':
+            show = depth_ok and e['text_param'] is not None and should_show(e)
+            this_step = None
+            if show:
+                step_no += 1
+                this_step = step_no
+                print_open(indent, this_step, mod_of(e), e, max_len)
+                print()
+            call_stack.append((this_step, e))
+        else:
+            this_step, call_e = call_stack.pop()
+            if this_step is None:
+                continue
+            print_close(indent, this_step, mod_of(e), call_e, e, max_len)
+
+
+def print_trace_full(entries, max_depth, max_len):
+    _print_trace_events(entries, max_depth, max_len, should_show=lambda e: True)
+
+
+def print_trace_changes(entries, max_depth, max_len):
+    # "Changed" isn't knowable until a call's return is seen (need the
+    # result to compare against the input) - but the full trace is
+    # already sitting in memory, not a live stream, so a first pass can
+    # determine which call/return pairs changed before the real
+    # (shared, seq-ordered) printing pass decides what to show.
+    sorted_entries = sorted(entries, key=lambda e: e['seq'])
+
+    call_stack = []
+    changed_call_ids = set()
+    for e in sorted_entries:
+        if e['event'] == 'call':
+            call_stack.append(e)
+            continue
+        call_e = call_stack.pop()
+        if max_depth is not None and e['depth'] > max_depth:
+            continue
+        if e['text_param'] is None:
+            continue
+        if step_changed(call_e, e, max_len):
+            changed_call_ids.add(id(call_e))
+
+    _print_trace_events(entries, max_depth, max_len, should_show=lambda e: id(e) in changed_call_ids)
+
+
+def print_trace(entries, changes_only, max_depth=None, max_len=120):
+    if changes_only:
+        print_trace_changes(entries, max_depth, max_len)
+    else:
+        print_trace_full(entries, max_depth, max_len)

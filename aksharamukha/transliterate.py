@@ -704,39 +704,32 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
     return _apply_final_postprocessing(src, tgt, txt, transliteration, nativize, preoptions, postoptions, ctx)
 
-def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [], param="default", trace=False):
-    """trace=True returns (result, trace_entries) instead of just result -
-    trace_entries is every PreProcess/PostProcess/ConvertFix/Convert/
-    transliterate/ScriptProcessing function call along the way, as two
-    events per call (in true chronological order, sort by 'seq'): a
-    'call' event logged when invoked and a 'return' event logged when
-    it returns - separate because the result isn't known until later,
-    often much later. Both carry:
-      - module/function/seq/depth
-      - text_param/text_in: the name and value of whichever parameter
-        is actually the text being converted (Strng/transliteration/
-        txt/text, in that priority order and found by name anywhere in
-        the signature - transliteration outranks txt/text since
-        _apply_final_postprocessing has both, and txt there is just the
-        untouched original kept for one special case, not what the
-        function itself transforms) - None/None if this call has no
-        text argument at all, e.g. Convert._om_boundary_class(Source)
-        (a regex-builder keyed on a script name, not text)
-      - state: the current best-known snapshot (as of this event) of
-        src/tgt/pre_options/post_options/nativize/ctx, as repr strings
-        - not just what THIS call's own parameters happen to include,
-        but everything tracked so far, since these are threaded through
-        the whole convert() chain and stay relevant across calls that
-        don't re-bind them all by name
-    'call' additionally carries args/kwargs (the raw call); 'return'
-    carries result and changed (True only when text_param was found and
-    the returned string differs from text_in - never guessed from a
-    tuple return, see _trace.py for why). See _trace.py for how (dev
-    tool: test/regression/workbench/trace_conversion.py prints it
-    nicely)."""
-    if not trace:
-        return _process_dispatch(src, tgt, txt, nativize, post_options, pre_options, param)
+def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [], param="default"):
+    return _process_dispatch(src, tgt, txt, nativize, post_options, pre_options, param)
 
+def debug(src, tgt, txt, nativize = True, post_options = [], pre_options = [], param="default",
+          changes_only=False, max_depth=None, max_len=120):
+    """Same call shape as process() - prints a step-by-step trace of
+    this conversion to stdout as it runs, then returns the result (just
+    like process() does; nothing about process() itself changes, this
+    is a separate entry point). Each step shows the function, its
+    current src/tgt/pre_options/post_options/nativize/ConversionContext,
+    and its text input/output - including hops invisible from reading
+    any single function, e.g. Convert.py's _convert_to_semitic always
+    pivots a non-Latin source through the RomanSemitic intermediate
+    before reaching a semitic target, and the LoC/semiticISO option
+    families are dispatched by runtime string concatenation rather than
+    a literal call anywhere.
+
+    changes_only=True shows only the steps that actually changed the
+    text or a tracked param (most of the ~600 registered options are a
+    no-op for any given input) - still call/return split, never a
+    single block merging a wrapping step's already-known input with
+    its not-yet-known output.
+
+    max_depth hides calls nested deeper than that; max_len truncates
+    printed strings. See _trace.py for the instrumentation and
+    formatting this calls."""
     from . import _trace
     tracer = _trace.Tracer()
     tracer.instrument_everything()
@@ -744,7 +737,11 @@ def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [],
         result = _process_dispatch(src, tgt, txt, nativize, post_options, pre_options, param)
     finally:
         tracer.uninstrument()
-    return result, tracer.entries
+    print('%s -> %s : %r -> %r' % (src, tgt, txt, result))
+    print('(%d calls traced)' % (len(tracer.entries) // 2))
+    print()
+    _trace.print_trace(tracer.entries, changes_only, max_depth, max_len)
+    return result
 
 def _process_dispatch(src, tgt, txt, nativize, post_options, pre_options, param):
     if param == "default":
