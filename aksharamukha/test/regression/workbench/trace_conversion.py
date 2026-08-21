@@ -132,15 +132,15 @@ def print_close(indent, step_no, mod, call_e, return_e, max_len, arrow='<-'):
         print('%s<- step %d: %s.%s' % (indent, step_no, mod, return_e['function']))
     diff = params_diff(call_e, return_e, max_len)
     if diff:
-        print('%s     output_params: %s' % (indent, diff))
+        print('%s     *output_params: %s' % (indent, diff))
     _, text_value = decode_return_tuple(return_e['function'], return_e['result'])
     output_value = text_value if text_value is not None else return_e['result']
-    mark = '  *changed*' if return_e['changed'] else ''
-    print('%s     output = %s%s' % (indent, truncate(repr(output_value), max_len), mark))
+    star = '*' if return_e['changed'] else ' '
+    print('%s     %soutput = %s' % (indent, star, truncate(repr(output_value), max_len)))
     print()
 
 
-def print_trace(entries, changes_only, max_depth, max_len):
+def print_trace_full(entries, max_depth, max_len):
     # A call's args are known when it's invoked; its result is only
     # known later, once every nested call it makes has already run - so
     # an outer function is invoked FIRST but finishes LAST. Printing
@@ -152,14 +152,10 @@ def print_trace(entries, changes_only, max_depth, max_len):
     # a child). Showing both '->' (call) and '<-' (return) - paired by a
     # stack so a step keeps the same number at both ends regardless of
     # what else is interleaved - makes the nesting visible again, the
-    # way a real call-stack trace would.
-    #
-    # --changes-only used to filter on text change alone (return_e
-    # ['changed']), which silently dropped steps that only changed
-    # PARAMS with the text unchanged - e.g. the LoC pre/post-option
-    # registration, or ConversionContext.src/tgt getting set - real,
-    # meaningful pipeline state transitions, not "nothing happened".
-    # step_changed() catches both.
+    # way a real call-stack trace would. Step numbers are assigned at
+    # call time, so a parent always has a lower number than the children
+    # nested inside it - only the position of the '<-' line itself is in
+    # return order, because that's genuinely when a nested call finishes.
     entries = sorted(entries, key=lambda e: e['seq'])
     mod_of = lambda e: e['module'].replace('aksharamukha.', '')
     step_no = 0
@@ -170,7 +166,7 @@ def print_trace(entries, changes_only, max_depth, max_len):
         indent = '  ' * e['depth']
 
         if e['event'] == 'call':
-            show = depth_ok and e['text_param'] is not None and not changes_only
+            show = depth_ok and e['text_param'] is not None
             this_step = None
             if show:
                 step_no += 1
@@ -180,16 +176,54 @@ def print_trace(entries, changes_only, max_depth, max_len):
             call_stack.append((this_step, e))
         else:
             this_step, call_e = call_stack.pop()
-            if changes_only:
-                if not depth_ok or e['text_param'] is None or not step_changed(call_e, e, max_len):
-                    continue
-                step_no += 1
-                print_open(indent, step_no, mod_of(e), call_e, max_len)
-                print_close(indent, step_no, mod_of(e), call_e, e, max_len, arrow=None)
-            else:
-                if this_step is None:
-                    continue
-                print_close(indent, this_step, mod_of(e), call_e, e, max_len)
+            if this_step is None:
+                continue
+            print_close(indent, this_step, mod_of(e), call_e, e, max_len)
+
+
+def print_trace_changes(entries, max_depth, max_len):
+    # "Changed" isn't knowable until a call's return is seen (need the
+    # result to compare against the input), so a single pass can't print
+    # in call order directly - the natural position to notice a change
+    # is at the RETURN, which is exactly backwards from reading order
+    # for nested calls (a child's return happens before its parent's).
+    # But the full trace is already sitting in memory, not a live
+    # stream, so: pass 1 collects every call/return pair that changed
+    # (matched via a stack - call/return nesting is always well-formed
+    # regardless of depth), pass 2 sorts those pairs by call time and
+    # prints them - a parent step now always appears before the
+    # children nested inside it, matching normal top-down reading,
+    # while indentation (still call_e['depth'], unaffected by which
+    # steps got filtered out) keeps the nesting visible.
+    entries = sorted(entries, key=lambda e: e['seq'])
+    mod_of = lambda e: e['module'].replace('aksharamukha.', '')
+
+    call_stack = []
+    changed_pairs = []
+    for e in entries:
+        if e['event'] == 'call':
+            call_stack.append(e)
+            continue
+        call_e = call_stack.pop()
+        if max_depth is not None and e['depth'] > max_depth:
+            continue
+        if e['text_param'] is None:
+            continue
+        if step_changed(call_e, e, max_len):
+            changed_pairs.append((call_e, e))
+
+    changed_pairs.sort(key=lambda pair: pair[0]['seq'])
+    for step_no, (call_e, return_e) in enumerate(changed_pairs, 1):
+        indent = '  ' * call_e['depth']
+        print_open(indent, step_no, mod_of(return_e), call_e, max_len)
+        print_close(indent, step_no, mod_of(return_e), call_e, return_e, max_len, arrow=None)
+
+
+def print_trace(entries, changes_only, max_depth, max_len):
+    if changes_only:
+        print_trace_changes(entries, max_depth, max_len)
+    else:
+        print_trace_full(entries, max_depth, max_len)
 
 
 def main():
