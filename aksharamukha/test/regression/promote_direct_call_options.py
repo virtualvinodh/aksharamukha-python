@@ -28,7 +28,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..')))
 
-from aksharamukha import PreProcess, PostProcess, ConvertFix, transliterate  # noqa: E402
+from aksharamukha import PreProcess, PostProcess, ConvertFix, Options, transliterate  # noqa: E402
 import generate_golden as gg  # noqa: E402
 
 
@@ -70,8 +70,8 @@ def _extract_join_assign(fn, var_name):
     raise ValueError('%s not found in %s' % (var_name, fn.__name__))
 
 
-JAVANESE_REPHA_POST = _extract_call_arg(PostProcess.JavaneseMoveRepha, 2)
-JAVANESE_REPHA_PRE = _extract_call_arg(PreProcess.JavaneseMoveRepha, 2)
+JAVANESE_REPHA_POST = _extract_call_arg(Options._POST_OPTION_FUNCS['JavaneseMoveRepha'], 2)
+JAVANESE_REPHA_PRE = _extract_call_arg(Options._PRE_OPTION_FUNCS['JavaneseMoveRepha'], 2)
 TALL_A_CONS = _extract_join_assign(ConvertFix._FixTaiThamEncode, 'TallACons')
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -95,7 +95,7 @@ GENERIC_POST = {
                                                              # external caller found - included for shape parity
     'ThaiLaoTranscription': ('Thai', 'ะ', 'ั', True),  # ConvertFix.py:2016 (FixThai) - exact escapes from the call site
     'FixTallA': (TALL_A_CONS,),                             # ConvertFix.py:3293-3295 (ThaiDigraphConjuncts) - va da dha ga, extracted via ast
-    'BalineseJavaneseMoveRepha': ('Javanese', JAVANESE_REPHA_POST),  # PostProcess.py:1936 (JavaneseMoveRepha), extracted via ast
+    'BalineseJavaneseMoveRepha': ('Javanese', JAVANESE_REPHA_POST),  # ScriptProcessing/Javanese.py (JavaneseMoveRepha), extracted via ast
     'FixSemiticRoman': ('Arab',),                           # Convert.py:323 - PostProcess.FixSemiticRoman(Strng, Target)
     'RemoveSchwa': ('Devanagari',),                          # no external caller found; correct 2-arg shape confirmed by signature only
     'tbadiff': ('Bengali',),                                 # no external caller found; Target param is unused in the body

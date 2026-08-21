@@ -181,7 +181,6 @@ def urduRemoveInherent(Strng):
     Strng = re.sub('\Ba', '', Strng)
 
     return Strng
-from .ScriptProcessing.Gurmukhi import GurmukhiYakaash
 
 #misnomer
 def mDotAboveToBelow(Strng):
@@ -206,11 +205,6 @@ def Dot2Dandas(Strng):
     return Strng
 
 
-# Javanese's own logic now lives in ScriptProcessing/Javanese.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Javanese import JavaneseMoveRepha_post as JavaneseMoveRepha
-
-
 def AnusvaratoNasalASTISO(Strng):
     #Strng = Strng.replace('ṁ', 'ṃ')
 
@@ -229,12 +223,6 @@ def TaiKuen(Strng):
     return Strng
 
 
-# Sundanese's own logic now lives in ScriptProcessing/Sundanese.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Sundanese import SundaneseHistoricConjuncts
-
-
 def siddhamap(Strng):
     """No-op placeholder (reserved for Siddham-specific post-processing)."""
     return Strng
@@ -249,12 +237,6 @@ def MedievalTamilOrthography(Strng):
         Strng = Strng.replace(x,y)
 
     return Strng
-
-
-# Nandinagari's own logic now lives in ScriptProcessing/Nandinagari.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Nandinagari import NandinagariPrishtamatra
 
 
 def RetainTeluguDanda(Strng):
@@ -1363,8 +1345,4 @@ def IPARemoveCross(Strng):
 
 
 from .ScriptProcessing.Latn import LatnInitialVowels
-
-
-from .ScriptProcessing.Malayalam import MalayalamChillu
-
 

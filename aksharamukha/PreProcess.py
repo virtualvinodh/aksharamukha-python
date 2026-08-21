@@ -18,12 +18,6 @@ from aksharamukha.ScriptMap.MainIndic import Tamil, Malayalam, Limbu, Chakma
 
 ### Use escape char in all functions
 
-
-# Javanese's own logic now lives in ScriptProcessing/Javanese.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Javanese import JavaneseMoveRepha_pre as JavaneseMoveRepha
-
-
 def RetainDevangariDanda(Strng):
     """Temporarily substitute Devanagari danda/double danda with placeholder box-drawing characters to protect them from further processing."""
     Strng = Strng.replace('।', '│').replace('॥', '┃')

@@ -60,7 +60,7 @@ def _FixGurmukhiDecode(Strng):
     Strng = Strng.replace('ੰਮ','ਮ੍ਮ')
     # Replace Tippi by Bindu
     Strng = Strng.replace('\u0A70','\u0A02')
-    Strng = PostProcess.GurmukhiYakaash(Strng, True)
+    Strng = GurmukhiYakaash(Strng, True)
 
     return Strng
 

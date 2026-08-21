@@ -9,11 +9,12 @@
 # suffixed _pre/_post here (neither calls the other, so no cross-call
 # rename needed, unlike some other collision pairs).
 #
-# MalayalamChillu/RetainDandasIndic/RetainIndicNumerals/
-# ReverseGeminationSign/InsertGeminationSign all stay behind in
-# PostProcess.py (genuinely shared/generic, or - for MalayalamChillu -
-# also used by ShowChillus here) - calls to them stay/become qualified,
-# each needing a local PostProcess import.
+# RetainDandasIndic/RetainIndicNumerals/ReverseGeminationSign/
+# InsertGeminationSign stay behind in PostProcess.py (genuinely shared/
+# generic, used by several scripts) - calls to them stay qualified,
+# each needing a local PostProcess import. MalayalamChillu is defined
+# below (also used by ShowChillus) - calls to it are bare, no import
+# needed.
 
 import re
 from .. import GeneralMap as GM
@@ -25,7 +26,7 @@ from aksharamukha.ScriptMap.MainIndic import Malayalam
 def _FixMalayalamEncode(Strng):
     """Converts chillu consonants to their Unicode chillu codepoints and retains Malayalam dandas and numerals when encoding into Malayalam."""
     from .. import PostProcess
-    Strng = PostProcess.MalayalamChillu(Strng, False)
+    Strng = MalayalamChillu(Strng, False)
 
     Strng = PostProcess.RetainDandasIndic(Strng, 'Malayalam', True)
     Strng = PostProcess.RetainIndicNumerals(Strng, 'Malayalam', True)
@@ -44,7 +45,7 @@ def _FixMalayalamEncode(Strng):
 def _FixMalayalamDecode(Strng):
     """Expands chillu codepoints and archaic chillu letters back to consonant-plus-virama form and restores dandas/numerals when decoding out of Malayalam."""
     from .. import PostProcess
-    Strng = PostProcess.MalayalamChillu(Strng, True)
+    Strng = MalayalamChillu(Strng, True)
 
     Strng = PostProcess.RetainIndicNumerals(Strng, 'Malayalam')
     Strng = PostProcess.RetainDandasIndic(Strng, 'Malayalam')
@@ -73,9 +74,7 @@ def FixMalayalam(Strng, reverse=False):
 # frontend
 def ShowChillus(Strng):
     """Displays chillu consonants with an explicit transliteration marker instead of collapsing them, e.g. ധർമൻ → /dharˍmanˍ/ not /dharman/."""
-    from .. import PostProcess
-
-    return PostProcess.MalayalamChillu(Strng, True, True)
+    return MalayalamChillu(Strng, True, True)
 
 # frontend
 def MalayalamHalfu(Strng):

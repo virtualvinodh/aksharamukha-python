@@ -24,8 +24,7 @@ def _FixNandinagariEncode(Strng):
 def _FixNandinagariDecode(Strng):
 
     """Reverses the Nandinagari prishtamatra (right-side vowel matra) substitution when decoding."""
-    from .. import PostProcess
-    Strng = PostProcess.NandinagariPrishtamatra(Strng, reverse=True)
+    Strng = NandinagariPrishtamatra(Strng, reverse=True)
 
     return Strng
 

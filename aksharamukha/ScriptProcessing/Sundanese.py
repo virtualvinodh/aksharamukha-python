@@ -41,7 +41,6 @@ def _FixSundaneseEncode(Strng):
 def _FixSundaneseDecode(Strng):
 
     """Restores the Sundanese repha sign to ra-plus-virama, reverses historic conjuncts, and expands subjoined consonants back to virama-plus-consonant when decoding."""
-    from .. import PostProcess
     vir = Sundanese.ViramaMap[0]
 
     r = Sundanese.ConsonantMap[26] + vir
@@ -51,7 +50,7 @@ def _FixSundaneseDecode(Strng):
 
     # Reverse above
     Strng = Strng.replace('\u1B81',r)
-    Strng = PostProcess.SundaneseHistoricConjuncts(Strng, True)
+    Strng = SundaneseHistoricConjuncts(Strng, True)
 
     yrl = [vir+x for x in Sundanese.ConsonantMap[25:28]]
     yrlSub = ['\u1BA1','\u1BA2','\u1BA3']
