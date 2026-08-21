@@ -159,22 +159,27 @@ def print_close(indent, step_no, mod, call_e, return_e, max_len, arrow='<-'):
     print()
 
 
-def print_trace_full(entries, max_depth, max_len):
+def _print_trace_events(entries, max_depth, max_len, should_show):
     # A call's args are known when it's invoked; its result is only
     # known later, once every nested call it makes has already run - so
-    # an outer function is invoked FIRST but finishes LAST. Printing
-    # only completed (return) events in a flat list hides that: it looks
-    # like sibling steps in sequence when one is actually a PARENT that
-    # opened long before, with the other running nested inside it (this
-    # is exactly what made ConvertFix.FixIndicOutput's internal
-    # ShiftDiacritics call look like a preceding sibling step instead of
-    # a child). Showing both '->' (call) and '<-' (return) - paired by a
-    # stack so a step keeps the same number at both ends regardless of
-    # what else is interleaved - makes the nesting visible again, the
-    # way a real call-stack trace would. Step numbers are assigned at
-    # call time, so a parent always has a lower number than the children
-    # nested inside it - only the position of the '<-' line itself is in
-    # return order, because that's genuinely when a nested call finishes.
+    # an outer function is invoked FIRST but finishes LAST. A single
+    # merged block (input+output together, positioned by call time) was
+    # tried for --changes-only, but for any WRAPPING step -
+    # _process_dispatch, convert, etc, which can't return before
+    # everything nested inside them completes - that meant showing the
+    # final answer at the very top of the list, before any of the steps
+    # that produce it (the same class of bug as the very first version
+    # of this tool, just narrower). Showing '->' (call) and '<-'
+    # (return) as separate lines, each at its own true seq, fixes this
+    # for good: a step's output is only ever printed once it's actually
+    # known. Paired by a stack so a step keeps the same number at both
+    # ends regardless of what's interleaved - this also makes nesting
+    # visible (ConvertFix.FixIndicOutput calling ShiftDiacritics
+    # internally shows as parent-then-nested-child, not two flat
+    # siblings). Step numbers are assigned at call time, so a parent
+    # always has a lower number than the children nested inside it -
+    # only the position of the '<-' line itself is in return order,
+    # because that's genuinely when a nested call finishes.
     entries = sorted(entries, key=lambda e: e['seq'])
     mod_of = lambda e: e['module'].replace('aksharamukha.', '')
     step_no = 0
@@ -185,7 +190,7 @@ def print_trace_full(entries, max_depth, max_len):
         indent = '  ' * e['depth']
 
         if e['event'] == 'call':
-            show = depth_ok and e['text_param'] is not None
+            show = depth_ok and e['text_param'] is not None and should_show(e)
             this_step = None
             if show:
                 step_no += 1
@@ -200,26 +205,21 @@ def print_trace_full(entries, max_depth, max_len):
             print_close(indent, this_step, mod_of(e), call_e, e, max_len)
 
 
+def print_trace_full(entries, max_depth, max_len):
+    _print_trace_events(entries, max_depth, max_len, should_show=lambda e: True)
+
+
 def print_trace_changes(entries, max_depth, max_len):
     # "Changed" isn't knowable until a call's return is seen (need the
-    # result to compare against the input), so a single pass can't print
-    # in call order directly - the natural position to notice a change
-    # is at the RETURN, which is exactly backwards from reading order
-    # for nested calls (a child's return happens before its parent's).
-    # But the full trace is already sitting in memory, not a live
-    # stream, so: pass 1 collects every call/return pair that changed
-    # (matched via a stack - call/return nesting is always well-formed
-    # regardless of depth), pass 2 sorts those pairs by call time and
-    # prints them - a parent step now always appears before the
-    # children nested inside it, matching normal top-down reading,
-    # while indentation (still call_e['depth'], unaffected by which
-    # steps got filtered out) keeps the nesting visible.
-    entries = sorted(entries, key=lambda e: e['seq'])
-    mod_of = lambda e: e['module'].replace('aksharamukha.', '')
+    # result to compare against the input) - but the full trace is
+    # already sitting in memory, not a live stream, so a first pass can
+    # determine which call/return pairs changed before the real
+    # (shared, seq-ordered) printing pass decides what to show.
+    sorted_entries = sorted(entries, key=lambda e: e['seq'])
 
     call_stack = []
-    changed_pairs = []
-    for e in entries:
+    changed_call_ids = set()
+    for e in sorted_entries:
         if e['event'] == 'call':
             call_stack.append(e)
             continue
@@ -229,13 +229,9 @@ def print_trace_changes(entries, max_depth, max_len):
         if e['text_param'] is None:
             continue
         if step_changed(call_e, e, max_len):
-            changed_pairs.append((call_e, e))
+            changed_call_ids.add(id(call_e))
 
-    changed_pairs.sort(key=lambda pair: pair[0]['seq'])
-    for step_no, (call_e, return_e) in enumerate(changed_pairs, 1):
-        indent = '  ' * call_e['depth']
-        print_open(indent, step_no, mod_of(return_e), call_e, max_len)
-        print_close(indent, step_no, mod_of(return_e), call_e, return_e, max_len, arrow=None)
+    _print_trace_events(entries, max_depth, max_len, should_show=lambda e: id(e) in changed_call_ids)
 
 
 def print_trace(entries, changes_only, max_depth, max_len):
