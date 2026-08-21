@@ -26,8 +26,8 @@ from aksharamukha.ScriptMap.EastIndic import Khmer
 def FixKhmerLoC(Strng,reverse=False):
 
     """Applies the shared Khmer fix-up logic (via ConvertFix.FixKhmer) targeting the Library of Congress romanization scheme."""
-    from .. import ConvertFix as CF
-    return CF.FixKhmer(Strng, reverse, target="KhmerLoC")
+    from .. import Options
+    return Options.call_fix('FixKhmer', Strng, reverse, target="KhmerLoC")
 
 # ---- Pre-processing options ----
 

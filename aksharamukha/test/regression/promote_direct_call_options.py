@@ -72,7 +72,7 @@ def _extract_join_assign(fn, var_name):
 
 JAVANESE_REPHA_POST = _extract_call_arg(Options._POST_OPTION_FUNCS['JavaneseMoveRepha'], 2)
 JAVANESE_REPHA_PRE = _extract_call_arg(Options._PRE_OPTION_FUNCS['JavaneseMoveRepha'], 2)
-TALL_A_CONS = _extract_join_assign(ConvertFix._FixTaiThamEncode, 'TallACons')
+TALL_A_CONS = _extract_join_assign(Options.FIX_FUNCS['_FixTaiThamEncode'], 'TallACons')
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TEST_TEXTS_DIR = os.path.abspath(os.path.join(HERE, '..', 'test_texts'))

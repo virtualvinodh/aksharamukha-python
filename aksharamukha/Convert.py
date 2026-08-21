@@ -3,6 +3,7 @@
 from . import GeneralMap as GM, PreProcess as PrP, ConvertFix as CF
 from . import PostProcess as PP
 from . import ScriptRegistry as SR
+from . import Options
 import aksharamukha.FallBack as FB
 import string
 import re
@@ -107,7 +108,7 @@ def convertScript(Strng,Source,Target,ctx=None):
 
 def _convert_latin_to_indic(Strng, Source, Target, ctx):
     DepV = '\u1E7F'
-    Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
+    Strng = Options.call_fix("Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
 
    #short u
     if Source in ['IAST', 'ISO', 'ISOPali', 'Titus']:
@@ -186,7 +187,7 @@ def _convert_latin_to_indic(Strng, Source, Target, ctx):
     return Strng
 
 def _convert_latin_to_latin(Strng, Source, Target, ctx):
-    Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
+    Strng = Options.call_fix("Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
 
     ScriptAll = GM.Vowels+GM.Consonants+GM.CombiningSigns+GM.Numerals+GM.Signs+GM.Aytham
 
@@ -207,7 +208,7 @@ def _convert_indic_to_indic(Strng, Source, Target, ctx):
     Strng = PrP.RemoveJoiners(Strng)
 
     Strng = CF.ShiftDiacritics(Strng,Source,reverse=True)
-    Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
+    Strng = Options.call_fix("Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
 
     punc = _om_boundary_class(Source)
 
@@ -248,7 +249,7 @@ def _convert_indic_to_latin(Strng, Source, Target, ctx):
     Strng = PrP.RemoveJoiners(Strng)
     Strng = CF.ShiftDiacritics(Strng, Source, reverse=True)
     #print(Strng)
-    Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
+    Strng = Options.call_fix("Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
     #print(Strng)
     sOm, tOm = GM.CrunchList('OmMap', Source)[0],GM.CrunchList('OmMap', Target)[0]
 
@@ -296,7 +297,7 @@ def _convert_indic_to_latin(Strng, Source, Target, ctx):
     return Strng
 
 def _convert_semitic_to_semitic(Strng, Source, Target, ctx):
-    Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,Source,reverse=True,optional=True,ctx=ctx)
+    Strng = Options.call_fix("Fix"+Source.replace('-','_'),Strng,Source,reverse=True,optional=True,ctx=ctx)
 
     tr = gimeltra.Transliterator()
 
@@ -353,7 +354,7 @@ def _convert_to_semitic(Strng, Source, Target, ctx):
     return Strng
 
 def _convert_semitic_to_other(Strng, Source, Target, ctx):
-    Strng = GM.resolve(CF,"Fix"+Source.replace('-','_'),Strng,Source,reverse=True,optional=True,ctx=ctx)
+    Strng = Options.call_fix("Fix"+Source.replace('-','_'),Strng,Source,reverse=True,optional=True,ctx=ctx)
 
     tr = gimeltra.Transliterator()
 

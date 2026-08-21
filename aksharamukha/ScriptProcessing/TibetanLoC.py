@@ -20,8 +20,8 @@ import re
 def FixTibetanLoC(Strng,reverse=False):
 
     """Core Tibetan (LoC romanization variant) encode/decode logic: delegate to the shared Tibetan fixer without native-form swapping."""
-    from .. import ConvertFix as CF
-    return CF.FixTibetan(Strng,reverse, swapNative=False)
+    from .. import Options
+    return Options.call_fix('FixTibetan', Strng,reverse, swapNative=False)
 
 # ---- Pre-processing options ----
 

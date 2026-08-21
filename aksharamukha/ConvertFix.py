@@ -263,6 +263,7 @@ def FixVedic(Strng, Target):
 # PostFile ? why not fix !?
 def PostFixRomanOutput(Strng,Source,Target):
     """Top-level post-fix dispatcher for all Roman targets: applies FixVedic then per-target/per-source special cases (Kashmiri vowels, IPA, Santali, Avestan, SoraSompeng, WarangCiti, Wancho, Mro, RomanReadable/Colloquial Tamil/Oriya/Bengali tweaks, IAST/ISO diaeresis)."""
+    from . import Options
     Strng = Strng.replace("\u02BD","")
 
     Strng = FixVedic(Strng, Target)
@@ -277,28 +278,28 @@ def PostFixRomanOutput(Strng,Source,Target):
         Strng = SinhalaIPAFix(Strng)
 
     if Target == "IPA":
-        Strng = FixIPA(Strng)
+        Strng = Options.call_fix('FixIPA', Strng)
 
     if Target == 'Santali':
-        Strng = FixSantali(Strng)
+        Strng = Options.call_fix('FixSantali', Strng)
 
     if Target == "Avestan":
-        Strng = FixAvestan(Strng)
+        Strng = Options.call_fix('FixAvestan', Strng)
 
     if Target == "SoraSompeng":
-        Strng = FixSoraSompeng(Strng)
+        Strng = Options.call_fix('FixSoraSompeng', Strng)
 
     if Target == "WarangCiti":
-        Strng = FixWarangCiti(Strng)
+        Strng = Options.call_fix('FixWarangCiti', Strng)
 
     if Target == "Wancho":
-        Strng = FixWancho(Strng)
+        Strng = Options.call_fix('FixWancho', Strng)
 
     if Target == "Mro":
-        Strng = FixMro(Strng)
+        Strng = Options.call_fix('FixMro', Strng)
 
     if Target == "RomanReadable":
-        Strng = FixRomanReadable(Strng)
+        Strng = Options.call_fix('FixRomanReadable', Strng)
         if Source == 'Tamil':
             Strng = Strng.replace('t', 'th').replace("d", "dh").replace("h'","")
 
@@ -312,7 +313,7 @@ def PostFixRomanOutput(Strng,Source,Target):
         if Source == 'Bengali':
             Strng = Strng.replace('m\'', "ng")
 
-        Strng = FixRomanColloquial(Strng)
+        Strng = Options.call_fix('FixRomanColloquial', Strng)
 
 
     if Target == "IAST" or Target == "IASTPali":
@@ -333,10 +334,10 @@ def PostFixRomanOutput(Strng,Source,Target):
         Strng = Strng.replace("\\a;", "\\\'")
 
     if Target == "HanifiRohingya":
-        Strng = FixHanifiRohingya(Strng)
+        Strng = Options.call_fix('FixHanifiRohingya', Strng)
 
     if Target == "Mongolian":
-        Strng = FixMongolian(Strng)
+        Strng = Options.call_fix('FixMongolian', Strng)
 
     if Target == "Itrans":
         Strng = re.sub('([aAiIuUeo])(RR)(i|I)', r'\1'+'R_L' + r'\3', Strng)
@@ -352,13 +353,10 @@ def PostFixRomanOutput(Strng,Source,Target):
     return Strng
 
 def FixSemiticOutput(Strng,Source,Target):
-    """Dispatches to the target Semitic script's own Fix<Target> function by name, looked up via globals()."""
+    """Dispatches to the target Semitic script's own Fix<Target> function by name, looked up via Options.FIX_FUNCS."""
+    from . import Options
     Strng = Strng.replace('\u02DE', '') ## dummy
-    try:
-        Strng = globals()["Fix"+Target.replace('-','_')](Strng, Source)
-    except KeyError:
-        pass
-        #print("Fix"+Target+" doesn't exist")
+    Strng = Options.call_fix("Fix"+Target.replace('-','_'), Strng, Source, optional=True)
 
     return Strng
 
@@ -366,25 +364,16 @@ def FixSemiticOutput(Strng,Source,Target):
 # Indic Fix are mandatory corrections to the immediate ouput.
 def FixIndicOutput(Strng,Source,Target,ctx=None):
     """Top-level post-fix dispatcher for Indic targets: calls Fix<Target>, shifts diacritics past vowel signs, and renders Vedic accent marks as arrows for non-Vedic-native scripts."""
+    from . import Options
     vir = GM.CrunchList('ViramaMap', Target)[0]
 
     Strng = Strng.replace(vir + '_', vir)
 
-    try:
-        fn = globals()["Fix"+Target]
-        # ctx passed only to functions that declare it (e.g. FixThai/
-        # FixLaoPali, for transcription_mode) - everything else keeps its
-        # existing (Strng) call unchanged. Mirrors GM.resolve()'s own
-        # ctx-passing rule; can't use resolve() itself here since this
-        # dispatch resolves through globals() (a dict), not a module
-        # object, so there's no getattr() target to hand it.
-        if ctx is not None and GM.accepts_ctx(fn):
-            Strng = fn(Strng, ctx=ctx)
-        else:
-            Strng = fn(Strng)
-    except KeyError:
-        pass
-        #print #"Fix"+Target+" doesn't exist"
+    # ctx passed only to functions that declare it (e.g. FixThai/
+    # FixLaoPali, for transcription_mode) - everything else keeps its
+    # existing (Strng) call unchanged. Options.call_fix already checks
+    # this internally (same _accepts_ctx() check GM.resolve() uses).
+    Strng = Options.call_fix("Fix"+Target, Strng, optional=True, ctx=ctx)
 
     Strng = Strng.replace('\u02BD','')
     # Shifting Vowel Signs and Diacritics
@@ -401,99 +390,19 @@ def FixIndicOutput(Strng,Source,Target,ctx=None):
 
     return Strng
 
-# Hebr's own logic now lives in ScriptProcessing/Hebr.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Hebr import _FixHebrEncode, _FixHebrDecode, FixHebr
-
-# Hebrew's own logic now lives in ScriptProcessing/Hebrew.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Hebrew import _FixHebrewEncode, _FixHebrewDecode, FixHebrew
-
-
-# Mongolian's own logic now lives in ScriptProcessing/Mongolian.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Mongolian import _FixMongolianEncode, _FixMongolianDecode, FixMongolian
-
-# HanifiRohingya's own Fix logic now lives in ScriptProcessing/HanifiRohingya.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixHanifiRohingya", ...) dispatch keeps working.
-from .ScriptProcessing.HanifiRohingya import _hanifi_rohingya_lookups, _FixHanifiRohingyaEncode, _FixHanifiRohingyaDecode, FixHanifiRohingya
-
-# MasaramGondi's own Fix logic now lives in ScriptProcessing/MasaramGondi.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixMasaramGondi", ...) dispatch keeps working.
-from .ScriptProcessing.MasaramGondi import _FixMasaramGondiEncode, _FixMasaramGondiDecode, FixMasaramGondi
-
-
-# GunjalaGondi's own Fix logic now lives in ScriptProcessing/GunjalaGondi.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixGunjalaGondi", ...) dispatch keeps working.
-from .ScriptProcessing.GunjalaGondi import _FixGunjalaGondiEncode, _FixGunjalaGondiDecode, FixGunjalaGondi
-
-# Soyombo's own logic now lives in ScriptProcessing/Soyombo.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Soyombo import _FixSoyomboEncode, _FixSoyomboDecode, FixSoyombo
-
-# Kharoshthi's own Fix logic now lives in ScriptProcessing/Kharoshthi.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixKharoshthi", ...) dispatch keeps working.
-from .ScriptProcessing.Kharoshthi import FixKharoshthi, KharoshthiNumerals, kharoshthiNumber
-
-# Marchen's own logic now lives in ScriptProcessing/Marchen.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Marchen import _FixMarchenEncode, _FixMarchenDecode, FixMarchen
-
-# Mro's own Fix logic now lives in ScriptProcessing/Mro.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixMro", ...) dispatch keeps working.
-from .ScriptProcessing.Mro import _FixMroEncode, _FixMroDecode, FixMro
-
-# Wancho's own Fix logic now lives in ScriptProcessing/Wancho.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixWancho", ...) dispatch keeps working.
-from .ScriptProcessing.Wancho import _FixWanchoEncode, _FixWanchoDecode, FixWancho
-
-# Siddham's own logic now lives in ScriptProcessing/Siddham.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Siddham import FixSiddham, _FixSiddhamEncode, _FixSiddhamDecode
-
-# Bhaiksuki's own logic now lives in ScriptProcessing/Bhaiksuki.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Bhaiksuki import _FixBhaiksukiEncode, _FixBhaiksukiDecode, FixBhaiksuki
-
-# Khudawadi's own Fix logic now lives in ScriptProcessing/Khudawadi.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixKhudawadi", ...) dispatch keeps working.
-from .ScriptProcessing.Khudawadi import _FixKhudawadiEncode, _FixKhudawadiDecode, FixKhudawadi
 
 # Tamil's Fix logic now lives in ScriptProcessing/Tamil.py (consolidated
 # there with its pre/post-options too - see that file's header comment for
 # why the cross-module imports there are whole-module style, not
 # `from .X import name`). Re-exported here so GM.resolve's getattr(CF,
 # "FixTamil", ...) dispatch in Convert.py keeps working unchanged.
-from .ScriptProcessing.Tamil import FixTamil, _FixTamilEncode, _FixTamilDecode
 
-# Oriya's own logic now lives in ScriptProcessing/Oriya.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Oriya import _FixOriyaEncode, _FixOriyaDecode, FixOriya
-
-# GurmukhiLoC's own Fix logic now lives in ScriptProcessing/GurmukhiLoC.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixGurmukhiLoC", ...) dispatch keeps working.
-from .ScriptProcessing.GurmukhiLoC import _FixGurmukhiLoCEncode, _FixGurmukhiLoCDecode, FixGurmukhiLoC
 
 # Correct Ru'', Lu'' -> R, lR
 # Tippi/Bindu
 # Gurmukhi's own logic now lives in ScriptProcessing/Gurmukhi.py -
 # consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
 # reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Gurmukhi import _FixGurmukhiEncode, _FixGurmukhiDecode, FixGurmukhi
 
 # Fix ru', ru'',lu',lu'' in Tamil & Gurmukhi
 # रुʼ -> ऋ, रूʼ -> ॠ, लुʼ -> ऌ, लूʼ -> ॡ
@@ -535,52 +444,21 @@ def ShiftDiacritics(Strng,Target,reverse=False):
     return Strng
 
 
-# TamilExtended's own logic now lives in ScriptProcessing/TamilExtended.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.TamilExtended import _FixTamilExtendedEncode, _FixTamilExtendedDecode, FixTamilExtended
-
 # Move Vowel Signs
 # TamilGrantha's own logic now lives in ScriptProcessing/TamilGrantha.py -
 # consolidated there (batch migration).
-from .ScriptProcessing.TamilGrantha import _FixTamilGranthaEncode, _FixTamilGranthaDecode, FixTamilGrantha
 
-# KhmerLoC's own Fix logic now lives in ScriptProcessing/KhmerLoC.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixKhmerLoC", ...) dispatch keeps working.
-from .ScriptProcessing.KhmerLoC import FixKhmerLoC
 
 # Khmer - Subjoining Consonants and Repha
 # Khmer's own logic now lives in ScriptProcessing/Khmer.py -
 # consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
 # reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Khmer import _FixKhmerEncode, _FixKhmerDecode, FixKhmer
 
-# KhamtiShan's own logic now lives in ScriptProcessing/KhamtiShan.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.KhamtiShan import _FixKhamtiShanEncode, _FixKhamtiShanDecode, FixKhamtiShan
-
-# TaiLaing's own Fix logic now lives in ScriptProcessing/TaiLaing.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixTaiLaing", ...) dispatch keeps working.
-from .ScriptProcessing.TaiLaing import _FixTaiLaingEncode, _FixTaiLaingDecode, FixTaiLaing
-
-# Shan's own logic now lives in ScriptProcessing/Shan.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Shan import _FixShanEncode, _FixShanDecode, FixShan
-
-# Mon's own Fix logic now lives in ScriptProcessing/Mon.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixMon", ...) dispatch keeps working.
-from .ScriptProcessing.Mon import _FixMonEncode, _FixMonDecode, FixMon
 
 # Burmese - Tall A + Subjoning Consonants
 # Burmese's own logic now lives in ScriptProcessing/Burmese.py -
 # consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
 # reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Burmese import _FixBurmeseEncode, _FixBurmeseDecode, FixBurmese
 
 # Add Repha (Bali,Java,Sundanese)
 # a + r + ka -> a<repha>ka
@@ -605,53 +483,23 @@ def AddRepha(Strng,Script,Repha,reverse=False):
 
     return Strng
 
-# Tagbanwa's own Fix logic now lives in ScriptProcessing/Tagbanwa.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixTagbanwa", ...) dispatch keeps working.
-from .ScriptProcessing.Tagbanwa import _FixTagbanwaEncode, _FixTagbanwaDecode, FixTagbanwa
-
-# Buhid's own Fix logic now lives in ScriptProcessing/Buhid.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixBuhid", ...) dispatch keeps working.
-from .ScriptProcessing.Buhid import _FixBuhidEncode, _FixBuhidDecode, FixBuhid
-
-# Buginese's own Fix logic now lives in ScriptProcessing/Buginese.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixBuginese", ...) dispatch keeps working.
-from .ScriptProcessing.Buginese import _FixBugineseEncode, _FixBugineseDecode, FixBuginese
-
 
 # Balinese Repha
 # Balinese's own logic now lives in ScriptProcessing/Balinese.py -
 # consolidated there (batch migration).
-from .ScriptProcessing.Balinese import _FixBalineseEncode, _FixBalineseDecode, FixBalinese
 
 # Javanese - Reppha & Subjoining ra & ya
 # DivesAkuru's own logic now lives in ScriptProcessing/DivesAkuru.py -
 # consolidated there (batch migration).
-from .ScriptProcessing.DivesAkuru import _FixDivesAkuruEncode, _FixDivesAkuruDecode, FixDivesAkuru
 
 # Javanese - Reppha & Subjoining ra & ya
 # Kawi's own logic now lives in ScriptProcessing/Kawi.py -
 # consolidated there (batch migration).
-from .ScriptProcessing.Kawi import FixKawi, _FixKawiEncode, _FixKawiDecode
 
 # Javanese - Reppha & Subjoining ra & ya
 # Javanese's own logic now lives in ScriptProcessing/Javanese.py -
 # consolidated there (batch migration).
-from .ScriptProcessing.Javanese import _FixJavaneseEncode, _FixJavaneseDecode, FixJavanese
 
-
-# Urdu's own Fix logic now lives in ScriptProcessing/Urdu.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixUrdu", ...) dispatch keeps working.
-from .ScriptProcessing.Urdu import FixUrdu
-
-
-# Shahmukhi's own Fix logic now lives in ScriptProcessing/Shahmukhi.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixShahmukhi", ...) dispatch keeps working.
-from .ScriptProcessing.Shahmukhi import FixShahmukhi
 
 # Urdu - Shadda, Final E
 def _FixUrduShahmukhiEncode(Target, Strng):
@@ -768,9 +616,6 @@ def _FixUrduShahmukhiEncode(Target, Strng):
         Strng = re.sub('(ن|م|ی|ر|ل|و)(\u0652)(ہ)',r'\1'+'\u06BE', Strng)
 
     # Fix word-final ha
-
-
-
 
 
 #    for i in range(len(ConAsp)):
@@ -974,23 +819,12 @@ def PersoArabicPuntuation(Strng, reverse=False):
 # Thaana's own Fix logic now lives in ScriptProcessing/Thaana.py -
 # consolidated there (batch migration). Re-exported here so
 # GM.resolve's getattr(CF, "FixThaana", ...) dispatch keeps working.
-from .ScriptProcessing.Thaana import _FixThaanaEncode, _FixThaanaDecode, FixThaana
 
-# Saurashtra's own Fix logic now lives in ScriptProcessing/Saurashtra.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixSaurashtra", ...) dispatch keeps working.
-from .ScriptProcessing.Saurashtra import _FixSaurashtraEncode, _FixSaurashtraDecode, FixSaurashtra
-
-# TibetanLoC's own Fix logic now lives in ScriptProcessing/TibetanLoC.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixTibetanLoC", ...) dispatch keeps working.
-from .ScriptProcessing.TibetanLoC import FixTibetanLoC
 
 # Tibetan Subjoining Consnants
 # Tibetan's own logic now lives in ScriptProcessing/Tibetan.py -
 # consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
 # reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Tibetan import _FixTibetanEncode, _FixTibetanDecode, FixTibetan
 
 # Thai, Lao follow visual ordering of Vowels signs ; <e> + k => <e>k
 # Other Indic scripts follow logical order ; k + <e> => <e>k
@@ -1018,40 +852,12 @@ def ReverseVowelSigns(Strng,Script,reverse=False):
 
     return Strng
 
-# KhomThai's own Fix logic now lives in ScriptProcessing/KhomThai.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixKhomThai", ...) dispatch keeps working.
-from .ScriptProcessing.KhomThai import _FixKhomThaiEncode, _FixKhomThaiDecode, FixKhomThai
-
-# Thai's own logic now lives in ScriptProcessing/Thai.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Thai import FixThai, ThaiReverseVowelSigns, ThaiDigraphConjuncts
-
-# LaoPali's own logic now lives in ScriptProcessing/LaoPali.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.LaoPali import _FixLaoPaliEncode, _FixLaoPaliDecode, FixLaoPali, LaoPaliTranscribe
-
-# Makasar's own Fix logic now lives in ScriptProcessing/Makasar.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixMakasar", ...) dispatch keeps working.
-from .ScriptProcessing.Makasar import _FixMakasarEncode, _FixMakasarDecode, FixMakasar
-
-# Avestan's own Fix logic now lives in ScriptProcessing/Avestan.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixAvestan", ...) dispatch keeps working.
-from .ScriptProcessing.Avestan import _FixAvestanEncode, _FixAvestanDecode, FixAvestan
-
-# Lao's own logic now lives in ScriptProcessing/Lao.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Lao import _FixLaoEncode, _FixLaoDecode, FixLao, LaoTranscribe
 
 # Re-arrange Vowels Signs /E/, /AI/, /O/ for digraph <dv>, <mh> etc
 # e.g dve -> เทฺว instead of ทฺเว
 # OldPersian's own Fix logic now lives in ScriptProcessing/OldPersian.py -
 # consolidated there (batch migration). Re-exported here so
 # GM.resolve's getattr(CF, "FixOldPersian", ...) dispatch keeps working.
-from .ScriptProcessing.OldPersian import FixOldPersian, OldPersianSyllable, OldPersianNumeral
 
 # Syllabization of Persian
 # d<a> +i -> d<i> + i
@@ -1059,17 +865,6 @@ from .ScriptProcessing.OldPersian import FixOldPersian, OldPersianSyllable, OldP
 # Convert numbers into Persinal Numeral System
 # Sinhala's own logic now lives in ScriptProcessing/Sinhala.py -
 # consolidated there (batch migration).
-from .ScriptProcessing.Sinhala import _FixSinhalaEncode, _FixSinhalaDecode, FixSinhala
-
-# Santali's own Fix logic now lives in ScriptProcessing/Santali.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixSantali", ...) dispatch keeps working.
-from .ScriptProcessing.Santali import _FixSantaliEncode, _FixSantaliDecode, FixSantali
-
-# SoraSompeng's own Fix logic now lives in ScriptProcessing/SoraSompeng.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixSoraSompeng", ...) dispatch keeps working.
-from .ScriptProcessing.SoraSompeng import _FixSoraSompengEncode, _FixSoraSompengDecode, FixSoraSompeng
 
 
 # FixRomanReadable and FixRomanColloquial share the same nasal-assimilation
@@ -1112,172 +907,60 @@ def _FixRomanReadableColloquial(Strng, reverse, colloquial):
 
     return Strng
 
-# RomanReadable's own logic now lives in ScriptProcessing/RomanReadable.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.RomanReadable import FixRomanReadable
-
-# RomanColloquial's own Fix logic now lives in ScriptProcessing/RomanColloquial.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixRomanColloquial", ...) dispatch keeps working.
-from .ScriptProcessing.RomanColloquial import FixRomanColloquial
-
-
-# WarangCiti's own logic now lives in ScriptProcessing/WarangCiti.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.WarangCiti import _FixWarangCitiEncode, _FixWarangCitiDecode, FixWarangCiti
-
-# LimbuLoC's own Fix logic now lives in ScriptProcessing/LimbuLoC.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixLimbuLoC", ...) dispatch keeps working.
-from .ScriptProcessing.LimbuLoC import _FixLimbuLoCEncode, _FixLimbuLoCDecode, FixLimbuLoC
 
 #Subojined & Final
 # Limbu's own logic now lives in ScriptProcessing/Limbu.py -
 # consolidated there (batch migration).
-from .ScriptProcessing.Limbu import _FixLimbuEncode, _FixLimbuDecode, FixLimbu
 
-
-# Devanagari's own logic now lives in ScriptProcessing/Devanagari.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Devanagari import _FixDevanagariEncode, _FixDevanagariDecode, FixDevanagari
-
-# Kaithi's own logic now lives in ScriptProcessing/Kaithi.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Kaithi import _FixKaithiEncode, _FixKaithiDecode, FixKaithi
-
-# Lao2's own Fix logic now lives in ScriptProcessing/Lao2.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixLao2", ...) dispatch keeps working.
-from .ScriptProcessing.Lao2 import FixLao2
-
-# Nandinagari's own logic now lives in ScriptProcessing/Nandinagari.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Nandinagari import _FixNandinagariEncode, _FixNandinagariDecode, FixNandinagari
 
 #Subjoined, final and la-ligatures
 # Fix aH -> a ;
 # Lepcha's own Fix logic now lives in ScriptProcessing/Lepcha.py -
 # consolidated there (batch migration). Re-exported here so
 # GM.resolve's getattr(CF, "FixLepcha", ...) dispatch keeps working.
-from .ScriptProcessing.Lepcha import _FixLepchaEncode, _FixLepchaDecode, FixLepcha
 
 # Repha & Subjoined
 # Sundanese's own logic now lives in ScriptProcessing/Sundanese.py -
 # consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
 # reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Sundanese import _FixSundaneseEncode, _FixSundaneseDecode, FixSundanese
 
 # Repha & Subjoined
 # Rejang's own Fix logic now lives in ScriptProcessing/Rejang.py -
 # consolidated there (batch migration). Re-exported here so
 # GM.resolve's getattr(CF, "FixRejang", ...) dispatch keeps working.
-from .ScriptProcessing.Rejang import _FixRejangEncode, _FixRejangDecode, FixRejang
 
 # Chakmaa VS A and Subjoined
 # Chakma's own logic now lives in ScriptProcessing/Chakma.py -
 # consolidated there (batch migration).
-from .ScriptProcessing.Chakma import _FixChakmaEncode, _FixChakmaDecode, FixChakma
 
-# IAST's own logic now lives in ScriptProcessing/IAST.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.IAST import _FixIASTEncode, _FixIASTDecode, FixIAST
-
-# IPA's own Fix logic now lives in ScriptProcessing/IPA.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixIPA", ...) dispatch keeps working.
-from .ScriptProcessing.IPA import _FixIPAEncode, _FixIPADecode, FixIPA
 
 # Rearrange PhagsPa Letters ; Subjoined Letters ;
 # PhagsPa's own logic now lives in ScriptProcessing/PhagsPa.py -
 # consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
 # reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.PhagsPa import _FixPhagsPaEncode, _FixPhagsPaDecode, FixPhagsPa
 
 # Meetei Mayek Final
 # Think of a-k-ka vers a-ka+vir-ka, also ag to ak. (Virama extends to second letter... ag could be replaced by ak..
 # since a+ga+vir woould orthographically wrong (it has no following consonant to extend to), considered replacing a+g+virama with a+k
 
-# Latn's own logic now lives in ScriptProcessing/Latn.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Latn import _FixLatnEncode, _FixLatnDecode, FixLatn
-
-# Arab's own logic now lives in ScriptProcessing/Arab.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Arab import _FixArabEncode, _FixArabDecode, FixArab
-
-# Thaa's own logic now lives in ScriptProcessing/Thaa.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Thaa import _FixThaaEncode, _FixThaaDecode, FixThaa
-
-def FixArab_Ph(Strng, Source, reverse=False):
-    """Delegates entirely to FixArab - the Perso-Arabic phonetic source variant reuses standard Arabic script logic unchanged."""
-    return FixArab(Strng, Source, reverse)
-
-# Arab-Fa's own logic now lives in ScriptProcessing/Arab_Fa.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Arab_Fa import FixArab_Fa
-
-# Arab_Ur's own logic now lives in ScriptProcessing/Arab_Ur.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Arab_Ur import _FixArab_UrEncode, _FixArab_UrDecode, FixArab_Ur
-
-# Ugar's own Fix logic now lives in ScriptProcessing/Ugar.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixUgar", ...) dispatch keeps working.
-from .ScriptProcessing.Ugar import _FixUgarEncode, _FixUgarDecode, FixUgar
-
-# Sogd's own logic now lives in ScriptProcessing/Sogd.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Sogd import _FixSogdEncode, _FixSogdDecode, FixSogd
-
-# Malayalam's own logic now lives in ScriptProcessing/Malayalam.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Malayalam import _FixMalayalamEncode, _FixMalayalamDecode, FixMalayalam
-
-# Telugu's own logic now lives in ScriptProcessing/Telugu.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Telugu import _FixTeluguEncode, _FixTeluguDecode, FixTelugu
-
-# MeeteiMayek's own Fix logic now lives in ScriptProcessing/MeeteiMayek.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixMeeteiMayek", ...) dispatch keeps working.
-from .ScriptProcessing.MeeteiMayek import _FixMeeteiMayekEncode, _FixMeeteiMayekDecode, FixMeeteiMayek
 
 ## Reverse not working
 ## For other batak writings as well
 
 ## Consider replacement of Anusvara by Nasal for East Asian Sripts which don't ahve a Sanskrit writing Tradition
 
-# BatakSima's own Fix logic now lives in ScriptProcessing/BatakSima.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixBatakSima", ...) dispatch keeps working.
-from .ScriptProcessing.BatakSima import _FixBatakSimaEncode, _FixBatakSimaDecode, FixBatakSima
 
 # Cham Final & Subjoined
 # Cham's own Fix logic now lives in ScriptProcessing/Cham.py -
 # consolidated there (batch migration). Re-exported here so
 # GM.resolve's getattr(CF, "FixCham", ...) dispatch keeps working.
-from .ScriptProcessing.Cham import _FixChamEncode, _FixChamDecode, FixCham
 
 # Subjoined Consonants in Tai Tham
 # Mai Kang Lai - /ng/
 # TaiTham's own Fix logic now lives in ScriptProcessing/TaiTham.py -
 # consolidated there (batch migration). Re-exported here so
 # GM.resolve's getattr(CF, "FixTaiTham", ...) dispatch keeps working.
-from .ScriptProcessing.TaiTham import _FixTaiThamEncode, _FixTaiThamDecode, FixTaiTham
 
-# LaoTham's own Fix logic now lives in ScriptProcessing/LaoTham.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixLaoTham", ...) dispatch keeps working.
-from .ScriptProcessing.LaoTham import FixLaoTham
 
 # FixThamLoC/FixLueTham/FixKhuenTham share the same "Tall A" regex logic;
 # they differ in the TaiTham consonant list used for the Tall A match
@@ -1288,7 +971,8 @@ from .ScriptProcessing.LaoTham import FixLaoTham
 # directions; LueTham has neither extra step.
 def _FixTaiThamFamily(Strng, reverse, tall_a_cons, marker_cleanup, ra_haam_swap):
     """Shared Tai Tham-family orthography logic (tall-A vowel placement, ra-haam/lue-karan marker handling), parametrized per dialect (ThamLoC/LueTham/etc)."""
-    Strng = FixTaiTham(Strng, reverse)
+    from . import Options
+    Strng = Options.call_fix('FixTaiTham', Strng, reverse)
 
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'TaiTham'))
     if not reverse:
@@ -1314,20 +998,6 @@ def _FixTaiThamFamily(Strng, reverse, tall_a_cons, marker_cleanup, ra_haam_swap)
 
     return Strng
 
-# ThamLoC's own Fix logic now lives in ScriptProcessing/ThamLoC.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixThamLoC", ...) dispatch keeps working.
-from .ScriptProcessing.ThamLoC import FixThamLoC
-
-# LueTham's own Fix logic now lives in ScriptProcessing/LueTham.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixLueTham", ...) dispatch keeps working.
-from .ScriptProcessing.LueTham import FixLueTham
-
-# KhuenTham's own logic now lives in ScriptProcessing/KhuenTham.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.KhuenTham import FixKhuenTham
 
 # Transcription for Pali Lao
 # Assamese and Bengali have the same mapping file duplicated
@@ -1335,60 +1005,5 @@ from .ScriptProcessing.KhuenTham import FixKhuenTham
 # Bengali's own logic now lives in ScriptProcessing/Bengali.py -
 # consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
 # reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Bengali import _FixBengaliEncode, _FixBengaliDecode, FixBengali
 
-# Assamese's own Fix logic now lives in ScriptProcessing/Assamese.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixAssamese", ...) dispatch keeps working.
-from .ScriptProcessing.Assamese import _FixAssameseEncode, _FixAssameseDecode, FixAssamese
-
-# Sharada's own Fix logic now lives in ScriptProcessing/Sharada.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixSharada", ...) dispatch keeps working.
-from .ScriptProcessing.Sharada import _FixSharadaEncode, _FixSharadaDecode, FixSharada
-
-# Kannada's own logic now lives in ScriptProcessing/Kannada.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Kannada import _FixKannadaEncode, _FixKannadaDecode, FixKannada
-
-# Grantha's own logic now lives in ScriptProcessing/Grantha.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Grantha import FixGrantha, _FixGranthaEncode, _FixGranthaDecode
-
-# Mahajani's own Fix logic now lives in ScriptProcessing/Mahajani.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixMahajani", ...) dispatch keeps working.
-from .ScriptProcessing.Mahajani import _FixMahajaniEncode, _FixMahajaniDecode, FixMahajani
-
-# Ahom's own logic now lives in ScriptProcessing/Ahom.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Ahom import _FixAhomEncode, _FixAhomDecode, FixAhom
-
-# Multani's own Fix logic now lives in ScriptProcessing/Multani.py -
-# consolidated there (batch migration). Re-exported here so
-# GM.resolve's getattr(CF, "FixMultani", ...) dispatch keeps working.
-from .ScriptProcessing.Multani import _FixMultaniEncode, _FixMultaniDecode, FixMultani
-
-
-# Gujarati's own logic now lives in ScriptProcessing/Gujarati.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Gujarati import _FixGujaratiEncode, _FixGujaratiDecode, FixGujarati
-
-# ZanabazarSquare's own logic now lives in ScriptProcessing/ZanabazarSquare.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.ZanabazarSquare import _FixZanabazarSquareEncode, _FixZanabazarSquareDecode, FixZanabazarSquare
-
-# Khojki's own logic now lives in ScriptProcessing/Khojki.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Khojki import _FixKhojkiEncode, _FixKhojkiDecode, FixKhojki
-
-# Newa's own logic now lives in ScriptProcessing/Newa.py -
-# consolidated there (batch migration). Re-exported here so GM.resolve(CF, 'FixX', ...)'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.Newa import _FixNewaEncode, _FixNewaDecode, FixNewa
 

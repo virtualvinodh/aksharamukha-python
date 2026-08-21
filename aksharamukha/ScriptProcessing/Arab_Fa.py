@@ -16,8 +16,8 @@ import re
 def FixArab_Fa(Strng, Source, reverse=False):
 
     """Applies the shared Perso-Arabic script fixes (via ConvertFix.FixArab) used for Farsi text."""
-    from .. import ConvertFix as CF
-    Strng = CF.FixArab(Strng, Source, reverse)
+    from .. import Options
+    Strng = Options.call_fix('FixArab', Strng, Source, reverse)
 
     return Strng
 

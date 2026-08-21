@@ -15,13 +15,13 @@ import re
 def _FixMonEncode(Strng):
 
     """Applies Burmese base fixes plus Mon-specific medial consonant signs and nga/nya letter disambiguation for encoding."""
-    from .. import ConvertFix as CF
+    from .. import Options
     pairs = [('င', 'ၚ'),('ဉ', 'ည'), ('ဈ', 'ၛ')]
 
     for x, y in pairs:
         Strng = Strng.replace(y, x)
 
-    Strng = CF.FixBurmese(Strng, False)
+    Strng = Options.call_fix('FixBurmese', Strng, False)
 
     Strng = Strng.replace('ည', '\uE001') #
 
@@ -59,13 +59,13 @@ def _FixMonEncode(Strng):
 def _FixMonDecode(Strng):
 
     """Reverses Mon medial consonant signs and nga/nya disambiguation back to Burmese-style virama sequences."""
-    from .. import ConvertFix as CF
+    from .. import Options
     pairs = [('င', 'ၚ'),('ဉ', 'ည'), ('ဈ', 'ၛ')]
 
     for x, y in pairs:
         Strng = Strng.replace(y, x)
 
-    Strng = CF.FixBurmese(Strng, True)
+    Strng = Options.call_fix('FixBurmese', Strng, True)
 
     Strng = Strng.replace('ည', '\uE001') #
 

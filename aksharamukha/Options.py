@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Precomputed, validated pre/post-option name sets.
+"""Precomputed, validated pre/post-option and Fix-function name sets.
 
 Replaces two problems that used to live inline in
 transliterate.convert_default(), run on every single conversion call:
@@ -18,6 +18,17 @@ transliterate.convert_default(), run on every single conversion call:
    no-ops"), live in the default API path every transliterate.process()
    call goes through. normalize_pre_options/normalize_post_options below
    now warn on any unrecognized name instead of ignoring it.
+
+A third dispatch surface - Fix<Target>/Fix<Source> functions, the
+per-script encode/decode fix-up step ConvertFix.py's/Convert.py's
+FixSemiticOutput/FixIndicOutput/GM.resolve() call sites look up by a
+name built from the script itself - is auto-discovered by the exact
+same ScriptProcessing scan below and exposed as FIX_FUNCS/call_fix(),
+for the same reason: those call sites used to do getattr()/globals()
+lookups against ConvertFix.py's own namespace, which only worked
+because every ScriptProcessing/<Script>.py file's Fix<Script> function
+was also re-exported there - a dead weight, easy-to-forget dependency
+this removes entirely.
 """
 
 import ast
@@ -50,6 +61,7 @@ from . import ScriptProcessing as _SP
 _SECTION_KIND = {
     '# ---- Pre-processing options ----': 'pre',
     '# ---- Post-processing options ----': 'post',
+    '# ---- Fix (encode/decode conversion logic) ----': 'fix',
 }
 
 # A function named X_pre (under a Pre-processing options header) or
@@ -70,27 +82,32 @@ _SECTION_KIND = {
 _KIND_SUFFIX = {'pre': '_pre', 'post': '_post'}
 
 
-def _scriptprocessing_option_funcs():
-    """{name: fn} for every function found under a Pre-processing/Post-
-    processing options header in any ScriptProcessing/<Script>.py file,
-    for each kind - the ACTUAL source of truth for "is this a pre/post
-    option", now read directly instead of inferred from what happens to
-    be re-exported. Raises ImportError at import time (not silently,
-    not just when someone happens to use the colliding name) if the
-    same name - raw OR suffix-stripped - is defined under the same
-    kind's header in two different scripts' files - previously this
-    ambiguity was implicitly resolved by whichever `from
-    .ScriptProcessing.X import name` re-export line happened to run
-    last, silently overwriting the other in PreProcess.py's/
-    PostProcess.py's namespace."""
-    funcs = {'pre': {}, 'post': {}}
-    owner = {'pre': {}, 'post': {}}
+def _scriptprocessing_funcs():
+    """{name: fn} for every function found under a Pre-processing options/
+    Post-processing options/Fix header in any ScriptProcessing/<Script>.py
+    file, for each kind - the ACTUAL source of truth for "is this a pre/
+    post-option or Fix function", now read directly instead of inferred
+    from what happens to be re-exported. Raises ImportError at import
+    time (not silently, not just when someone happens to use the
+    colliding name) if the same name - raw OR suffix-stripped - is
+    defined under the same kind's header in two different scripts'
+    files - previously this ambiguity was implicitly resolved by
+    whichever `from .ScriptProcessing.X import name` re-export line
+    happened to run last, silently overwriting the other in
+    PreProcess.py's/PostProcess.py's/ConvertFix.py's namespace.
+
+    The Fix kind has no _pre/_post suffix convention to strip (there's
+    only ever one Fix<Script> per script, no same-file direction
+    collision to disambiguate) - every Fix-kind name is registered
+    as-is."""
+    funcs = {'pre': {}, 'post': {}, 'fix': {}}
+    owner = {'pre': {}, 'post': {}, 'fix': {}}
 
     def register(kind, name, mod_name, fn):
         if name in owner[kind] and owner[kind][name] != mod_name:
             raise ImportError(
-                "%s-option '%s' is defined in both ScriptProcessing/%s.py and "
-                "ScriptProcessing/%s.py - option names must be unique across "
+                "%s '%s' is defined in both ScriptProcessing/%s.py and "
+                "ScriptProcessing/%s.py - names must be unique across "
                 "scripts; rename one of them." % (kind, name, owner[kind][name], mod_name)
             )
         funcs[kind][name] = fn
@@ -102,7 +119,7 @@ def _scriptprocessing_option_funcs():
         lines = src.splitlines()
         tree = ast.parse(src)
 
-        headers = []  # (lineno, kind_or_None-for-the-Fix-header)
+        headers = []  # (lineno, kind_or_None-for-an-unrecognized-header)
         for i, line in enumerate(lines, 1):
             stripped = line.strip()
             if stripped in _SECTION_KIND:
@@ -128,14 +145,14 @@ def _scriptprocessing_option_funcs():
             name = node.name
             fn = getattr(module, name)
             register(kind, name, mod_name, fn)
-            suffix = _KIND_SUFFIX[kind]
-            if name.endswith(suffix) and len(name) > len(suffix):
+            suffix = _KIND_SUFFIX.get(kind)
+            if suffix and name.endswith(suffix) and len(name) > len(suffix):
                 register(kind, name[:-len(suffix)], mod_name, fn)
 
-    return funcs['pre'], funcs['post']
+    return funcs['pre'], funcs['post'], funcs['fix']
 
 
-_sp_pre_funcs, _sp_post_funcs = _scriptprocessing_option_funcs()
+_sp_pre_funcs, _sp_post_funcs, _sp_fix_funcs = _scriptprocessing_funcs()
 
 # Real function references, resolved once at import time, instead of a bare
 # name string re-resolved via getattr() on every single dispatch call (the
@@ -151,6 +168,18 @@ _POST_OPTION_FUNCS = {**_sp_post_funcs, **dict(getmembers(PostProcess, isfunctio
 
 PRE_OPTIONS = frozenset(_PRE_OPTION_FUNCS)
 POST_OPTIONS = frozenset(_POST_OPTION_FUNCS)
+
+# Fix<Target>/Fix<Source> functions - ConvertFix.py's/Convert.py's
+# per-script encode/decode fix-up dispatch, looked up by a name built at
+# the call site ("Fix"+Target). No ConvertFix.py getmembers() fallback
+# merged in here (unlike PRE/POST_OPTION_FUNCS above): every real
+# Fix<Script> function already lives in ScriptProcessing/<Script>.py -
+# the handful of functions still directly in ConvertFix.py (FixVedic,
+# FixSemiticOutput, FixIndicOutput, FixRomanOutput, FixUrduShahmukhi)
+# are shared dispatchers/helpers, not per-script entries this dict is
+# meant to hold, and are called directly by their own name, never
+# through this registry.
+FIX_FUNCS = _sp_fix_funcs
 
 _PRE_OPTIONS_LOWER = {name.lower(): name for name in PRE_OPTIONS}
 _POST_OPTIONS_LOWER = {name.lower(): name for name in POST_OPTIONS}
@@ -214,3 +243,24 @@ def call_post_option(name, txt, *extra, ctx=None):
     if ctx is not None and _accepts_ctx(fn):
         return fn(txt, *extra, ctx=ctx)
     return fn(txt, *extra)
+
+
+def call_fix(name, txt, *extra, optional=False, ctx=None, **kwargs):
+    # Unlike call_pre_option/call_post_option, defaults to optional=False
+    # ->AttributeError being the CALLER's explicit opt-in (optional=True),
+    # not the default - most Fix<Script> lookups (ConvertFix.py's
+    # FixSemiticOutput/FixIndicOutput, Convert.py's several dispatch
+    # stages) are deliberately optional: most scripts have no Fix-stage
+    # override at all, so a miss there is normal, not a typo to warn
+    # about. Mirrors GeneralMap.resolve()'s optional= flag - same
+    # semantics, now backed by FIX_FUNCS instead of getattr() on a raw
+    # module, so a name only reachable via ScriptProcessing auto-
+    # discovery (no ConvertFix.py re-export) is still found.
+    fn = FIX_FUNCS.get(name)
+    if fn is None:
+        if optional:
+            return txt
+        raise AttributeError("no such Fix function '" + name + "'")
+    if ctx is not None and _accepts_ctx(fn):
+        kwargs = dict(kwargs, ctx=ctx)
+    return fn(txt, *extra, **kwargs)
