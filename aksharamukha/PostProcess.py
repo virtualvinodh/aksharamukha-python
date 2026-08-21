@@ -681,21 +681,13 @@ from .ScriptProcessing.Sinhala import SinhalaDefaultConjuncts, SinhalaChandrbind
 from .ScriptProcessing.Telugu import TeluguRemoveNukta, TeluguRemoveAeAo
 
 #testcase todo
-# HebrewSBL's own logic now lives in ScriptProcessing/HebrewSBL.py -
-# consolidated there (batch migration). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.HebrewSBL import HebrewToHebrewSBLPost as HebrewSBLTarget, HebrewSBLToHebrewPost as HebrewSBLSource
-
-# ISO259/ISO233/PersianDMG's Target/Source logic (part of
-# GeneralMap.semiticISO's pseudo-script romanization pivot) now lives
-# in ScriptProcessing/ISO259.py, ScriptProcessing/ISO233.py,
-# ScriptProcessing/PersianDMG.py - consolidated there (batch migration
-# - see ScriptProcessing/Tamil.py for the full rationale/pattern this
-# follows). Re-exported here so Options.py's PostProcess getmembers()'s
-# reflection-based dispatch keeps finding these names.
-from .ScriptProcessing.ISO259 import HebrewToISO259Post as ISO259Target, ISO259ToHebrewPost as ISO259Source
-from .ScriptProcessing.ISO233 import ArabToISO233Post as ISO233Target, ISO233ToArabPost as ISO233Source
-from .ScriptProcessing.PersianDMG import ArabFaToPersianDMGPost as PersianDMGTarget, PersianDMGToArabFaPost as PersianDMGSource
+# HebrewSBL/ISO259/ISO233/PersianDMG's Target/Source logic (part of
+# GeneralMap.semiticISO's pseudo-script romanization pivot) lives in
+# ScriptProcessing/HebrewSBL.py, ScriptProcessing/ISO259.py,
+# ScriptProcessing/ISO233.py, ScriptProcessing/PersianDMG.py, named
+# directly as HebrewSBLTarget_post/ISO259Source_post/etc. - no
+# re-export needed here, Options.py's auto-discovery strips the _post
+# suffix and finds them under their bare dispatch name on its own.
 from .ScriptProcessing.Bengali import BengaliConjunctVB
 
 #testcase todo

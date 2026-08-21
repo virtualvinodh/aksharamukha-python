@@ -20,23 +20,26 @@ def removetddash(Strng):
 
 # HebrewSBL is also one of GeneralMap.semiticISO's 4 pseudo-scripts
 # (never a real registered script - dispatched by transliterate.py's
-# _resolve_semitic_iso_pivot). The four functions below were
-# consolidated out of PreProcess.py/PostProcess.py the same way as
-# ISO259.py/ISO233.py/PersianDMG.py, and re-exported into
-# PreProcess.py/PostProcess.py under the original HebrewSBLTarget/
-# HebrewSBLSource names so that mechanism keeps working unchanged.
+# _resolve_semitic_iso_pivot), which looks these up by the
+# dynamically-constructed name HebrewSBLTarget/HebrewSBLSource - named
+# directly as that here (with the _pre/_post suffix every same-name-
+# both-directions option in this codebase uses, since Python doesn't
+# allow two top-level `def HebrewSBLTarget` in one file) rather than
+# via a `... as HebrewSBLTarget` re-export alias, so Options.py's
+# auto-discovery (which strips that exact suffix) finds them with no
+# re-export needed at all.
 
 # ---- Pre-processing options ----
 
 # internal
-def HebrewToHebrewSBLPre(Strng):
+def HebrewSBLTarget_pre(Strng):
     """Substitute Hebrew aleph (א) and geresh (׳) with their SBL romanization symbols (ʾ, ’)."""
     Strng = Strng.replace('א', 'ʾ').replace('׳', '’')
 
     return Strng
 
 # internal
-def HebrewSBLToHebrewPre(Strng):
+def HebrewSBLSource_pre(Strng):
     """Reverse SBL Hebrew romanization symbols back to Hebrew letters, restoring begadkefat spirantization and vowel-length distinctions."""
     Strng = Strng.replace('ʾ', 'א',).replace('’', '׳')
     Strng = Strng.replace('\u0307\u00B0', '\u00B0\u0307')
@@ -56,7 +59,7 @@ def HebrewSBLToHebrewPre(Strng):
 # ---- Post-processing options ----
 
 # internal
-def HebrewToHebrewSBLPost(Strng):
+def HebrewSBLTarget_post(Strng):
     """Converts intermediate Hebrew romanization to SBL academic style (v->b-line-below, f->p-macron, d->d-line-below, g->g-line-below, t->t-line-below, o->o-circumflex, etc., undone when geminated)."""
     replacements = [('v', 'ḇ'), ('f', 'p̄'), ('d', 'ḏ'), ('ḏ꞉', 'd'), \
         ('g', 'ḡ'), ('ḡ꞉', 'g'),\
@@ -78,7 +81,7 @@ def HebrewToHebrewSBLPost(Strng):
     return Strng
 
 # internal
-def HebrewSBLToHebrewPost(Strng):
+def HebrewSBLSource_post(Strng):
 
     """No-op placeholder (reserved for SBL Hebrew romanization source-side processing)."""
     return Strng

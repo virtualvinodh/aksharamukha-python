@@ -1002,17 +1002,12 @@ def RemoveJoiners(Strng):
     return Strng
 
 # ISO259/ISO233/HebrewSBL/PersianDMG's Target/Source logic (part of
-# GeneralMap.semiticISO's pseudo-script romanization pivot) now lives
-# in ScriptProcessing/ISO259.py, ScriptProcessing/ISO233.py,
-# ScriptProcessing/HebrewSBL.py, ScriptProcessing/PersianDMG.py -
-# consolidated there (batch migration - see ScriptProcessing/Tamil.py
-# for the full rationale/pattern this follows). Re-exported here so
-# Options.py's PreProcess getmembers()'s reflection-based dispatch
-# keeps finding these names.
-from .ScriptProcessing.ISO259 import HebrewToISO259Pre as ISO259Target, ISO259ToHebrewPre as ISO259Source
-from .ScriptProcessing.ISO233 import ArabToISO233Pre as ISO233Target, ISO233ToArabPre as ISO233Source
-from .ScriptProcessing.HebrewSBL import HebrewToHebrewSBLPre as HebrewSBLTarget, HebrewSBLToHebrewPre as HebrewSBLSource
-from .ScriptProcessing.PersianDMG import ArabFaToPersianDMGPre as PersianDMGTarget, PersianDMGToArabFaPre as PersianDMGSource
+# GeneralMap.semiticISO's pseudo-script romanization pivot) lives in
+# ScriptProcessing/ISO259.py, ScriptProcessing/ISO233.py,
+# ScriptProcessing/HebrewSBL.py, ScriptProcessing/PersianDMG.py, named
+# directly as ISO259Target_pre/ISO259Source_pre/etc. - no re-export
+# needed here, Options.py's auto-discovery strips the _pre suffix and
+# finds them under their bare dispatch name on its own.
 
 # PhagsPa's own logic now lives in ScriptProcessing/PhagsPa.py -
 # consolidated there (batch migration). Re-exported here so Options.py's PreProcess getmembers()'s
