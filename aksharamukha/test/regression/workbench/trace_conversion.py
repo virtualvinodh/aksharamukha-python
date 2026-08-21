@@ -9,10 +9,11 @@ semitic target, and the LoC/semiticISO option families are dispatched
 by runtime string concatenation rather than a literal call anywhere.
 
 Only calls that actually take the text being converted as one of their
-parameters are shown (by name - Strng/txt/text, found anywhere in the
-signature, not just position 0) - a helper keyed on something else,
-e.g. Convert._om_boundary_class(Source) (a regex-builder keyed on a
-script name), isn't a text-transforming step and would just be noise.
+parameters are shown (by name - Strng/transliteration/txt/text, found
+anywhere in the signature, not just position 0) - a helper keyed on
+something else, e.g. Convert._om_boundary_class(Source) (a regex-
+builder keyed on a script name), isn't a text-transforming step and
+would just be noise.
 
 The actual instrumentation (aksharamukha/_trace.py) lives in the main
 package, not here - trace=True is a first-class part of

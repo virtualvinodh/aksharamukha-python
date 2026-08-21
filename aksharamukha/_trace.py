@@ -29,7 +29,21 @@ import pkgutil
 # (Source) - a regex-builder keyed on a SCRIPT NAME) has no text
 # argument at all, and is left out of the text-level trace for that
 # reason, not because nothing happened.
-TEXT_PARAM_NAMES = ('Strng', 'txt', 'text')
+#
+# Order matters: it's a priority list, not just a membership set. Two
+# late-stage functions in transliterate.py - _apply_nativize_defaults
+# and _apply_final_postprocessing - use `transliteration` for the value
+# actually being transformed through the rest of their body, while
+# _apply_final_postprocessing ALSO keeps the untouched original as
+# `txt` (needed for exactly one special case, a Tamil->IPA external API
+# call - see its body). Scanning txt/text before transliteration picked
+# the wrong one there: comparing the ORIGINAL Burmese input against the
+# already-fully-converted Latin output produced a false "changed" that
+# had nothing to do with what this function itself did. `transliteration`
+# has to outrank `txt`/`text` for that reason - caught by the user
+# reading a step whose displayed input was still in the source script
+# right before the final output.
+TEXT_PARAM_NAMES = ('Strng', 'transliteration', 'txt', 'text')
 
 # Pipeline state threaded through transliterate.py's convert() chain,
 # tracked from CALL arguments only (bound by name via inspect.signature,

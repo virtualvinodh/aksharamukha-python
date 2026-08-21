@@ -714,8 +714,12 @@ def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [],
     often much later. Both carry:
       - module/function/seq/depth
       - text_param/text_in: the name and value of whichever parameter
-        is actually the text being converted (Strng/txt/text, found by
-        name anywhere in the signature) - None/None if this call has no
+        is actually the text being converted (Strng/transliteration/
+        txt/text, in that priority order and found by name anywhere in
+        the signature - transliteration outranks txt/text since
+        _apply_final_postprocessing has both, and txt there is just the
+        untouched original kept for one special case, not what the
+        function itself transforms) - None/None if this call has no
         text argument at all, e.g. Convert._om_boundary_class(Source)
         (a regex-builder keyed on a script name, not text)
       - state: the current best-known snapshot (as of this event) of
