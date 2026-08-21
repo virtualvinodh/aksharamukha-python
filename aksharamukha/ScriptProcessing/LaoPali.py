@@ -154,8 +154,8 @@ def LaoPhonetic_post(Strng):
 # frontend
 def LaoSajjhaya(Strng):
     """Converts Lao text to Pali Sajjhāya orthography and reorders vowel-consonant-tone clusters - ພຸທ຺ຘ → ພຸທ໌ຘ."""
-    from .. import PostProcess
-    Strng = PostProcess.ThaiSajjhayaOrthography(Strng, Script = "LaoPali")
+    from .. import Options
+    Strng = Options.call_post_option('ThaiSajjhayaOrthography', Strng, 'LaoPali')
 
     Strng = re.sub('([ເໂໄ])(.)(\u0ECE)', r'\2\3\1', Strng)
 

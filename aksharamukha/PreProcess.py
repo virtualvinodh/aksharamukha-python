@@ -87,11 +87,6 @@ def wasvnukta(Strng):
     return Strng
 
 
-# Thai's own logic now lives in ScriptProcessing/Thai.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Thai import ThaiSajjhayaOrthography_pre as ThaiSajjhayaOrthography
-
-
 def swapEe(Strng):
     """Swap the case convention for E/e and O/o so uppercase marks the long vowel and lowercase marks the short vowel."""
     Strng = Strng.replace('E', 'X@X@')

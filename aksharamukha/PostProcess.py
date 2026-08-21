@@ -191,12 +191,6 @@ def mDotAboveToBelow(Strng):
 
 #todo : ISOPali postoptions empty todo
 
-
-# Thai's own logic now lives in ScriptProcessing/Thai.py -
-# consolidated there (batch migration).
-from .ScriptProcessing.Thai import ThaiSajjhayaOrthography_post as ThaiSajjhayaOrthography
-
-
 def Dot2Dandas(Strng):
     """Converts double and single full-stop dots into Devanagari danda punctuation (.. -> double danda, . -> danda)."""
     Strng = Strng.replace('..', '॥')
@@ -419,6 +413,7 @@ def _finalCleanup(Strng, tgt):
 #testcase todo
 def arabizeLatn(Strng, target='semitic'):
     """Converts generic Roman Semitic transliteration into Arabic-specific conventions, resolving hamza after consonants into a/a-macron/a-circumflex and normalizing glottal-stop marks."""
+    from . import Options
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
     # opt 1
@@ -448,7 +443,7 @@ def arabizeLatn(Strng, target='semitic'):
          Strng = re.sub('[ˀ]', '', Strng)
 
     if target != 'indic':
-        Strng = LatnInitialVowels(Strng, 'ʾ') ## Check this
+        Strng = Options.call_post_option('LatnInitialVowels', Strng, 'ʾ') ## Check this
 
     if target != 'indic':
         Strng = re.sub('ʼʾ', 'ʼ', Strng)
@@ -465,6 +460,7 @@ def arabizeLatn(Strng, target='semitic'):
 #testcase todo
 def urduizeLatn(Strng, target='semitic'):
     """Converts generic Roman Semitic transliteration into Urdu-specific conventions, resolving hamza into a/a-circumflex and normalizing glottal-stop marks to hamza."""
+    from . import Options
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
     # opt 1
@@ -485,7 +481,7 @@ def urduizeLatn(Strng, target='semitic'):
         Strng = re.sub('\u033d', '', Strng)
 
     if target != 'indic':
-        Strng = LatnInitialVowels(Strng)
+        Strng = Options.call_post_option('LatnInitialVowels', Strng)
 
     Strng = re.sub('(ā)([iau])(ⁿ)', r'\2\3', Strng)
 
@@ -494,6 +490,7 @@ def urduizeLatn(Strng, target='semitic'):
 #testcase todo
 def syricizeLatn(Strng, target='semitic'):
     """Converts generic Roman Semitic transliteration into Syriac-specific conventions by expanding word-initial long a/e vowels back into hamza plus short vowel."""
+    from . import Options
     cons = '(' + '|'.join(GM.SemiticConsonants) + ')'
 
     # opt 3
@@ -504,7 +501,7 @@ def syricizeLatn(Strng, target='semitic'):
         Strng = re.sub("ē̂", "ʾē", Strng)
 
     if target != 'indic':
-        Strng = LatnInitialVowels(Strng)
+        Strng = Options.call_post_option('LatnInitialVowels', Strng)
 
     return Strng
 
@@ -512,8 +509,9 @@ def syricizeLatn(Strng, target='semitic'):
 def hebraizeLatn(Strng, target='semitic'):
     #print('Hebraizing Latin')
     """Converts generic Roman Semitic transliteration into Hebrew-specific conventions by inserting aleph before word-initial vowels."""
+    from . import Options
     if target != 'indic':
-        Strng = LatnInitialVowels(Strng, 'ʾ')
+        Strng = Options.call_post_option('LatnInitialVowels', Strng, 'ʾ')
 
     return Strng
 
@@ -1342,7 +1340,4 @@ def IPARemoveCross(Strng):
     Strng = Strng.replace('×','')
 
     return Strng
-
-
-from .ScriptProcessing.Latn import LatnInitialVowels
 
