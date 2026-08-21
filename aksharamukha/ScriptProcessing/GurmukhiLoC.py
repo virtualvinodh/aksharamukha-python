@@ -5,7 +5,7 @@
 # convention this follows and how to add a new script. Gurmukhi is one
 # of the scripts with a genuinely different LoC character mapping
 # (bindi<->tippi, etc.), hence the separate 'GurmukhiLoC' pivot.
-# GurmukhiLoCToRomanLocPost has no RomanLocTo-direction counterpart -
+# GurmukhiLoCToRomanLoc_post has no RomanLocTo-direction counterpart -
 # not every script needs all four functions.
 #
 # PostProcess/ConvertFix are imported LOCALLY inside each function that
@@ -78,7 +78,7 @@ def FixGurmukhiLoC(Strng,reverse=False):
 # ---- Post-processing options ----
 
 # internal
-def GurmukhiLoCToRomanLocPost(Strng):
+def GurmukhiLoCToRomanLoc_post(Strng):
     """Converts nasalized m before homorganic stops into the corresponding nasal consonant (velar/palatal/retroflex/dental/labial) for Gurmukhi LoC romanization."""
     Strng = re.sub('(m̆|ṃ)(k|g)', 'ṅ' + r'\2', Strng)
     Strng = re.sub('(m̆|ṃ)(c|j)', 'ñ' + r'\2', Strng)

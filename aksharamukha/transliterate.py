@@ -251,8 +251,8 @@ def _apply_indic_dandas_preoption(src, tgt, txt, preoptions, postoptions):
 # ScriptProcessing/HOW_TO_ADD_LOC.md for the naming convention and how
 # to add a new script. Every LoC-enabled script gets up to 4 functions,
 # auto-discovered purely by name - no registry/dict to maintain:
-#   <Script>ToRomanLocPre / <Script>ToRomanLocPost   (native -> LoC Roman)
-#   RomanLocTo<Script>Pre / RomanLocTo<Script>Post   (LoC Roman -> native)
+#   <Script>ToRomanLoc_pre / <Script>ToRomanLoc_post   (native -> LoC Roman)
+#   RomanLocTo<Script>_pre / RomanLocTo<Script>_post   (LoC Roman -> native)
 # None are mandatory - most scripts only need one or two. For scripts
 # that share a pivot (KhuenTham/TaiTham/LaoTham/LueTham all route
 # through 'ThamLoC'), the lookup tries the script's own name first, then
@@ -264,13 +264,17 @@ def _loc_option_names(script, to_roman, direction):
     """Candidate function names for a script's LoC pre/post option, own
     name first then pivot name as fallback. to_roman=True for the
     native->Roman direction, False for Roman->native. direction is
-    'Pre' or 'Post'."""
+    'Pre' or 'Post' (matched against Options.PRE_OPTIONS/POST_OPTIONS
+    by _apply_loc_option below; lowercased here to build the _pre/_post
+    suffix every same-name-both-directions option in this codebase
+    uses)."""
     names = [script]
     pivot = SR.get(script).loc_pivot_name
     if pivot and pivot != script:
         names.append(pivot)
+    suffix = '_' + direction.lower()
     for name in names:
-        yield (name + 'ToRomanLoc' + direction) if to_roman else ('RomanLocTo' + name + direction)
+        yield (name + 'ToRomanLoc' + suffix) if to_roman else ('RomanLocTo' + name + suffix)
 
 def _apply_loc_option(script, to_roman, direction, options_list, prepend):
     # Checked against Options.PRE_OPTIONS/POST_OPTIONS (which already

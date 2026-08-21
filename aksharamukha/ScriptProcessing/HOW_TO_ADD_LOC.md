@@ -27,14 +27,18 @@ In `ScriptProcessing/<Script>LoC.py` (create the file if it doesn't
 exist yet), define any of:
 
 ```python
-def <Script>ToRomanLocPre(Strng):   # runs on native text, before conversion to Roman
-def <Script>ToRomanLocPost(Strng):  # runs on the Roman output, after conversion
-def RomanLocTo<Script>Pre(Strng):   # runs on incoming Roman text, before conversion to native
-def RomanLocTo<Script>Post(Strng):  # runs on the native output, after conversion
+def <Script>ToRomanLoc_pre(Strng):   # runs on native text, before conversion to Roman
+def <Script>ToRomanLoc_post(Strng):  # runs on the Roman output, after conversion
+def RomanLocTo<Script>_pre(Strng):   # runs on incoming Roman text, before conversion to native
+def RomanLocTo<Script>_post(Strng):  # runs on the native output, after conversion
 ```
 
+(The `_pre`/`_post` suffix is the same convention used everywhere else
+in this codebase for a same-name option split across both directions -
+see `Options.py`'s auto-discovery docstring.)
+
 None are mandatory. Most scripts only need one or two - e.g. Balinese
-only needs `RomanLocToBalinesePre`/`BalineseToRomanLocPost` (a pair of
+only needs `RomanLocToBalinese_pre`/`BalineseToRomanLoc_post` (a pair of
 diacritic fixes), while Tibetan needs all four but two of them happen to
 share one underlying implementation.
 
@@ -59,7 +63,7 @@ through the single `'ThamLoC'` pivot (`ScriptProcessing/ThamLoC.py`).
 For these, the lookup tries the script's own name first, then falls
 back to the shared pivot name. So three of the four scripts get the
 shared behavior automatically for free (define nothing), while the
-fourth (KhuenTham) defines its own `RomanLocToKhuenThamPre` in
+fourth (KhuenTham) defines its own `RomanLocToKhuenTham_pre` in
 `ScriptProcessing/KhuenTham.py` that does its own extra step and then
 delegates to the shared pivot-level function. See that file for the
 exact pattern if you need it.
@@ -70,6 +74,6 @@ Tamil and Malayalam's LoC romanization is close enough to plain ISO
 15919 that neither has its own `<Script>RomanLoC.py` character-map
 table - they fall back to `ISO`/`ISO233` automatically, the same
 fallback used for any script with no LoC association at all. Malayalam
-still defines its own `ToRomanLocPost`/`RomanLocToPre` functions on top
-of that fallback (see `ScriptProcessing/MalayalamLoC.py`); Tamil defines
-none.
+still defines its own `MalayalamToRomanLoc_post`/`RomanLocToMalayalam_pre`
+functions on top of that fallback (see
+`ScriptProcessing/MalayalamLoC.py`); Tamil defines none.

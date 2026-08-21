@@ -8,7 +8,7 @@
 # MalayalamRomanLoCFix_pre/_post and mDotBelowToAbove were all part of
 # the auto-applied RomanLoC default bundle (never independently
 # selectable elsewhere) - now purely internal, called only from
-# RomanLocToMalayalamPre/MalayalamToRomanLocPost below, no longer
+# RomanLocToMalayalam_pre/MalayalamToRomanLoc_post below, no longer
 # independently re-exported. See ScriptProcessing/HOW_TO_ADD_LOC.md for
 # the naming convention this follows and how to add a new script.
 
@@ -36,7 +36,7 @@ def mDotBelowToAbove(Strng):
 # ---- Pre-processing options ----
 
 # internal
-def RomanLocToMalayalamPre(Strng):
+def RomanLocToMalayalam_pre(Strng):
     """Applies candrabindu and Malayalam-specific LoC fixes before converting LoC Roman text to Malayalam."""
     from .RomanLoC import RomanLoCChandrabindu_pre
     Strng = RomanLoCChandrabindu_pre(Strng)
@@ -47,7 +47,7 @@ def RomanLocToMalayalamPre(Strng):
 # ---- Post-processing options ----
 
 # internal
-def MalayalamToRomanLocPost(Strng):
+def MalayalamToRomanLoc_post(Strng):
     """Applies anusvara-to-nasal, candrabindu, Malayalam-specific, and dot-placement LoC fixes after converting Malayalam to LoC Roman."""
     from .RomanLoC import RomanLoCChandrabindu_post
     from .. import PostProcess

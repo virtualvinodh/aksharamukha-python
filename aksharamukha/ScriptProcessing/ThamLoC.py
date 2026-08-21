@@ -5,9 +5,9 @@
 # this same 'ThamLoC' identity. See ScriptProcessing/HOW_TO_ADD_LOC.md
 # for the naming convention this follows and how to add a new script.
 # FixThamLoC delegates to the shared ConvertFix._FixTaiThamFamily.
-# KhuenTham additionally overrides RomanLocToKhuenThamPre in its own
+# KhuenTham additionally overrides RomanLocToKhuenTham_pre in its own
 # file (ScriptProcessing/KhuenTham.py) to inject its extra text marker
-# before delegating to RomanLocToThamLoCPre here.
+# before delegating to RomanLocToThamLoC_pre here.
 #
 # PostProcess/ConvertFix are imported LOCALLY inside each function that
 # needs them (not at module level) - required to avoid a load-order-
@@ -30,7 +30,7 @@ def FixThamLoC(Strng, reverse=False):
 # ---- Pre-processing options ----
 
 # internal
-def ThamLoCToRomanLocPre(Strng):
+def ThamLoCToRomanLoc_pre(Strng):
     """Apply Tai Tham LoC target-side vowel fixes for o/eo/aiy/koi/au sequences, the lue-karan sign, and vowel-killer marking."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ThamLoC'))
 
@@ -61,7 +61,7 @@ def ThamLoCToRomanLocPre(Strng):
     return Strng
 
 # internal
-def RomanLocToThamLoCPre(Strng):
+def RomanLocToThamLoC_pre(Strng):
     """Insert a modifier-letter apostrophe before consonants following bare vowels, and expand ʻ to a+vowel-killer, for Tai Tham LoC source text."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'ThamLoCRomanLoC'))
     ListV ='|'.join(GM.CrunchSymbols(GM.Vowels,'ThamLoCRomanLoC'))
@@ -76,12 +76,12 @@ def RomanLocToThamLoCPre(Strng):
 # ---- Post-processing options ----
 
 # internal
-def ThamLoCToRomanLocPost(Strng):
+def ThamLoCToRomanLoc_post(Strng):
     """No-op placeholder (reserved for Tai Tham LoC romanization target-side processing)."""
     return Strng
 
 # internal
-def RomanLocToThamLoCPost(Strng):
+def RomanLocToThamLoC_post(Strng):
     #cryptogammic dot to Sakot
     """Converts Tai Tham LoC romanization back to native encoding: maps cryptogrammic dot to sakot, fixes the aiy vowel+consonant sequence."""
     Strng = Strng.replace('\u1A7F', '᩠')

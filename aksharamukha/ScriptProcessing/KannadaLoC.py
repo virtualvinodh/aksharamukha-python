@@ -6,7 +6,7 @@
 # ---- Pre-processing options ----
 
 # internal
-def RomanLocToKannadaPre(Strng):
+def RomanLocToKannada_pre(Strng):
     """Normalizes candrabindu before converting LoC Roman text to Kannada."""
     from .RomanLoC import RomanLoCChandrabindu_pre
     Strng = RomanLoCChandrabindu_pre(Strng)
@@ -16,7 +16,7 @@ def RomanLocToKannadaPre(Strng):
 # ---- Post-processing options ----
 
 # internal
-def KannadaToRomanLocPost(Strng):
+def KannadaToRomanLoc_post(Strng):
     """Applies anusvara-to-nasal and candrabindu LoC fixes after converting Kannada to LoC Roman."""
     from .RomanLoC import RomanLoCChandrabindu_post
     from .. import PostProcess

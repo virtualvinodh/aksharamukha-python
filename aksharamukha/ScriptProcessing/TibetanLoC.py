@@ -3,7 +3,7 @@
 # TibetanLoC's Fix logic and LoC (Library of Congress) romanization
 # logic. See ScriptProcessing/HOW_TO_ADD_LOC.md for the naming
 # convention this follows and how to add a new script.
-# RomanLocToTibetanLoCPre is a thin alias to TibetanLoCToRomanLocPre -
+# RomanLocToTibetanLoC_pre is a thin alias to TibetanLoCToRomanLoc_pre -
 # the original underlying fix (inserting prime marks after bare t/n) is
 # genuinely reused unchanged in both directions.
 #
@@ -26,7 +26,7 @@ def FixTibetanLoC(Strng,reverse=False):
 # ---- Pre-processing options ----
 
 # internal
-def TibetanLoCToRomanLocPre(Strng):
+def TibetanLoCToRomanLoc_pre(Strng):
     """Insert LoC prime marks after bare t and n consonants not already followed by a diacritic, for Tibetan romanization."""
     Strng = re.sub('t(?![ʹhs])', 'tʹ', Strng)
     Strng = re.sub('n(?![ʹy])', 'nʹ', Strng)
@@ -34,14 +34,14 @@ def TibetanLoCToRomanLocPre(Strng):
     return Strng
 
 # internal
-def RomanLocToTibetanLoCPre(Strng):
-    """Thin alias for TibetanLoCToRomanLocPre - the same prime-mark fix is reused unchanged for both directions."""
-    return TibetanLoCToRomanLocPre(Strng)
+def RomanLocToTibetanLoC_pre(Strng):
+    """Thin alias for TibetanLoCToRomanLoc_pre - the same prime-mark fix is reused unchanged for both directions."""
+    return TibetanLoCToRomanLoc_pre(Strng)
 
 # ---- Post-processing options ----
 
 # internal
-def TibetanLoCToRomanLocPost(Strng):
+def TibetanLoCToRomanLoc_post(Strng):
     """Fixes Tibetan LoC romanization: drops the modifier apostrophe on t/n unless followed by s/y respectively, and joins j_h into jh."""
     Strng = re.sub('tʹ(?!s)', 't', Strng)
     Strng = re.sub('nʹ(?!y)', 'n', Strng)

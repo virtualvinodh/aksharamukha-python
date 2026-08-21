@@ -5,7 +5,7 @@
 # convention this follows and how to add a new script. FixKhmerLoC
 # delegates to the shared ConvertFix.FixKhmer.
 #
-# KhmerLoCToRomanLocPre also folds in SchwaFinalKhmerLoC (deleting the
+# KhmerLoCToRomanLoc_pre also folds in SchwaFinalKhmerLoC (deleting the
 # word-final inherent schwa), absorbed here from PreProcess.py since it
 # was only ever applied for KhmerLoC.
 #
@@ -32,7 +32,7 @@ def FixKhmerLoC(Strng,reverse=False):
 # ---- Pre-processing options ----
 
 # internal
-def KhmerLoCToRomanLocPre(Strng):
+def KhmerLoCToRomanLoc_pre(Strng):
     """Apply Khmer LoC target-side fixes: mark the im vowel, reposition the bantoc sign, tag subscript consonant modifiers, reorder tone marks, normalize oya to oy, and drop decorative punctuation."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Khmer'))
     ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,'Khmer'))
@@ -65,7 +65,7 @@ def KhmerLoCToRomanLocPre(Strng):
     return Strng
 
 # internal
-def RomanLocToKhmerLoCPre(Strng):
+def RomanLocToKhmerLoC_pre(Strng):
     """Denormalize precomposed diacritic vowels to NFD and fix apostrophe/oaḥ sequences for Khmer LoC source text."""
     listdenormalize = ['å', 'ẙ', 'à', 'á', 'é', 'í', 'ó', 'ú', 'à', 'è', 'ì', 'ò', 'ù', 'ă']
 
@@ -88,7 +88,7 @@ def SchwaFinalKhmerLoC(Strng):
 # ---- Post-processing options ----
 
 # internal
-def KhmerLoCToRomanLocPost(Strng):
+def KhmerLoCToRomanLoc_post(Strng):
     """Normalizes Khmer LoC romanization output: NFC-normalizes, repositions consonant-modifier marks before certain vowels, fixes the 'oh' sequence, collapses double spaces."""
     import unicodedata
     Strng = unicodedata.normalize('NFC', Strng)
@@ -106,7 +106,7 @@ def KhmerLoCToRomanLocPost(Strng):
     return Strng
 
 # internal
-def RomanLocToKhmerLoCPost(Strng):
+def RomanLocToKhmerLoC_post(Strng):
     """Reorders Khmer LoC romanization diacritics (bantoc, tone marks) relative to base consonants/vowels, marks subbase-form consonant modifiers, and strips the virama."""
     ListC ='|'.join(GM.CrunchSymbols(GM.Consonants,'Khmer'))
     ListV ='|'.join(GM.CrunchSymbols(GM.VowelSigns,'Khmer'))

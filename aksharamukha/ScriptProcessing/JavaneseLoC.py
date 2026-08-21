@@ -11,7 +11,7 @@ import re
 # ---- Pre-processing options ----
 
 # internal
-def RomanLocToJavanesePre(Strng):
+def RomanLocToJavanese_pre(Strng):
     """Replace the left single quotation mark placeholder with ng̈ in Javanese LoC romanization."""
     Strng = Strng.replace('‘', 'ng̈')
 
@@ -26,7 +26,7 @@ def JavaneseSimplified(Strng):
     return Strng
 
 # internal
-def JavaneseToRomanLocPost(Strng):
+def JavaneseToRomanLoc_post(Strng):
     """Fixes Javanese LoC romanization diacritics: h-diaeresis -> h, ng-diaeresis -> apostrophe-like sign."""
     Strng = Strng.replace('ḧ', 'h').replace('ng̈', '‘')
 

@@ -12,7 +12,7 @@
 # auto-discovery finds it directly, no re-export needed.
 # DevanagariRomanLoCFix_pre/_post, by contrast, WAS part of the default
 # bundle - it's purely internal, called only from
-# RomanLocToDevanagariPre/DevanagariToRomanLocPost, so it's kept ahead
+# RomanLocToDevanagari_pre/DevanagariToRomanLoc_post, so it's kept ahead
 # of any options header (Options.py's scan only registers functions
 # that appear at or after the first recognized header) to stay
 # unregistered, same as before.
@@ -49,7 +49,7 @@ def HindiMarathiRomanLoCFix_pre(Strng):
     return Strng
 
 # internal
-def RomanLocToDevanagariPre(Strng):
+def RomanLocToDevanagari_pre(Strng):
     """Applies candrabindu and nukta-digraph LoC fixes before converting LoC Roman text to Devanagari."""
     from .RomanLoC import RomanLoCChandrabindu_pre
     Strng = RomanLoCChandrabindu_pre(Strng)
@@ -69,7 +69,7 @@ def HindiMarathiRomanLoCFix_post(Strng):
     return Strng
 
 # internal
-def DevanagariToRomanLocPost(Strng):
+def DevanagariToRomanLoc_post(Strng):
     """Applies anusvara-to-nasal, candrabindu, and nukta-digraph LoC fixes after converting Devanagari to LoC Roman."""
     from .RomanLoC import RomanLoCChandrabindu_post
     from .. import PostProcess

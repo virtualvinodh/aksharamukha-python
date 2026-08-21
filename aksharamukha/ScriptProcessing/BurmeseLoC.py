@@ -2,8 +2,8 @@
 
 # Burmese's LoC (Library of Congress) romanization logic. See
 # ScriptProcessing/HOW_TO_ADD_LOC.md for the naming convention this
-# follows (BurmeseToRomanLocPre/Post run native->LoC-Roman;
-# RomanLocToBurmesePre/Post run LoC-Roman->native) and how to add a new
+# follows (BurmeseToRomanLoc_pre/_post run native->LoC-Roman;
+# RomanLocToBurmese_pre/_post run LoC-Roman->native) and how to add a new
 # script. Burmese has no separate LoC character-map pivot (unlike
 # Gurmukhi/Tibetan/etc.) - it converts directly from plain Burmese.
 
@@ -15,7 +15,7 @@ from aksharamukha.ScriptMap.EastIndic import Burmese
 # ---- Pre-processing options ----
 
 # internal
-def BurmeseToRomanLocPre(Strng):
+def BurmeseToRomanLoc_pre(Strng):
     # asat + virma to just virama
     """Apply Burmese LoC target-side normalization: merge asat+virama, reorder subjoined consonants, mark glottal-stop a and pure viramas, and convert dependent vowel+diacritic sequences to independent vowels."""
     Strng = Strng.replace('\u103A\u1039', '\u1039')
@@ -60,7 +60,7 @@ def BurmeseToRomanLocPre(Strng):
     return Strng
 
 # internal
-def RomanLocToBurmesePre(Strng):
+def RomanLocToBurmese_pre(Strng):
     # adhoc chars
     """Normalize LoC Burmese romanization source text: expand ad hoc letter codes to Burmese punctuation, fix visarga/diacritic characters, convert comma/period to danda marks, and simplify o-quote sequences to au."""
     chars_misc = {
@@ -102,7 +102,7 @@ def RomanLocToBurmesePre(Strng):
 # ---- Post-processing options ----
 
 # internal
-def BurmeseToRomanLocPost(Strng):
+def BurmeseToRomanLoc_post(Strng):
     #print(Strng)
     # mark tone
     """Applies Library of Congress Burmese romanization target conventions: marks tone, folds 'au+glottal' to 'o+glottal', renders visarga as a tone mark, and substitutes a few adhoc lexical characters."""
@@ -133,7 +133,7 @@ def BurmeseToRomanLocPost(Strng):
     return Strng
 
 # internal
-def RomanLocToBurmesePost(Strng):
+def RomanLocToBurmese_post(Strng):
     # remove marking for pure virama
     """Reverses LoC Burmese romanization conventions back to native encoding: drops pure-virama marker, restores superscript-Ga to subjoined y/r/v/h, reassembles vowel+diacritic sequences, undoes glottal-stop marking."""
     Strng = Strng.replace('ʻ', '')

@@ -38,10 +38,10 @@ def KhuenRaHaamKaren(Strng):
 # ScriptProcessing/HOW_TO_ADD_LOC.md and ScriptProcessing/ThamLoC.py.
 
 # internal
-def RomanLocToKhuenThamPre(Strng):
+def RomanLocToKhuenTham_pre(Strng):
     """Injects the Khuen text marker, then applies the shared Tai Tham LoC pre-conversion fix, before converting LoC Roman text to Khuen Tham."""
-    from .ThamLoC import RomanLocToThamLoCPre
+    from .ThamLoC import RomanLocToThamLoC_pre
     Strng = Strng + '\u02BE'  # indicator for Khuen text
-    Strng = RomanLocToThamLoCPre(Strng)
+    Strng = RomanLocToThamLoC_pre(Strng)
 
     return Strng

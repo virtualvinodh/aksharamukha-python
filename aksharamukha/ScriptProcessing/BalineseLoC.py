@@ -11,7 +11,7 @@ import re
 # ---- Pre-processing options ----
 
 # internal
-def RomanLocToBalinesePre(Strng):
+def RomanLocToBalinese_pre(Strng):
     """Replace the left single quotation mark placeholder with ng̈ in Balinese LoC romanization."""
     Strng = Strng.replace('‘', 'ng̈')
 
@@ -25,7 +25,7 @@ def BalineseSimplified(Strng):
     return Strng
 
 # internal
-def BalineseToRomanLocPost(Strng):
+def BalineseToRomanLoc_post(Strng):
     """Fixes Balinese LoC romanization diacritics: h-diaeresis -> h, ng-diaeresis -> apostrophe-like sign."""
     Strng = Strng.replace('ḧ', 'h').replace('ng̈', '‘')
 
