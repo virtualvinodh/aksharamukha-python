@@ -28,23 +28,36 @@ class Tracer:
         self._patches = []  # (module, attr_name, original_fn), for uninstrument()
 
     def _make_wrapper(self, mod_name, fn):
+        # Logs 'call' and 'return' as two separate events, not one entry
+        # covering both - a call's args are known when it's invoked, but
+        # its result is only known later (after every nested call it makes
+        # has already run). Bundling both onto one call-time-ordered entry
+        # means an outer function - invoked first, but returning last -
+        # shows its final result on the very first line of the trace,
+        # before anything has actually been computed from the reader's
+        # point of view. Two events, both carrying the true seq of when
+        # they actually happened, avoids that.
         @functools.wraps(fn)
         def wrapper(*args, **kwargs):
             self._seq += 1
-            seq = self._seq
             depth = self._depth
+            self.entries.append({
+                'event': 'call', 'seq': self._seq, 'depth': depth,
+                'module': mod_name, 'function': fn.__name__, 'args': args, 'kwargs': dict(kwargs),
+            })
             self._depth += 1
             try:
                 result = fn(*args, **kwargs)
                 return result
             finally:
                 self._depth -= 1
+                self._seq += 1
                 first = args[0] if args else None
                 result_val = locals().get('result')
                 changed = isinstance(first, str) and isinstance(result_val, str) and result_val != first
                 self.entries.append({
-                    'seq': seq, 'depth': depth, 'module': mod_name, 'function': fn.__name__,
-                    'args': args, 'kwargs': dict(kwargs), 'result': result_val, 'changed': changed,
+                    'event': 'return', 'seq': self._seq, 'depth': depth,
+                    'module': mod_name, 'function': fn.__name__, 'result': result_val, 'changed': changed,
                 })
         return wrapper
 

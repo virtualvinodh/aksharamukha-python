@@ -706,11 +706,15 @@ def convert(src, tgt, txt, nativize, preoptions, postoptions):
 
 def process(src, tgt, txt, nativize = True, post_options = [], pre_options = [], param="default", trace=False):
     """trace=True returns (result, trace_entries) instead of just result -
-    trace_entries is the ordered list of every PreProcess/PostProcess/
-    ConvertFix/Convert/transliterate/ScriptProcessing function called
-    along the way, each a dict with seq/depth/module/function/args/
-    kwargs/result/changed. See _trace.py for how (dev tool:
-    test/regression/workbench/trace_conversion.py prints it nicely)."""
+    trace_entries is every PreProcess/PostProcess/ConvertFix/Convert/
+    transliterate/ScriptProcessing function call along the way, as two
+    events per call (in true chronological order, sort by 'seq'): a
+    'call' event (seq/depth/module/function/args/kwargs) logged when
+    invoked, and a 'return' event (seq/depth/module/function/result/
+    changed) logged when it returns - separate because the result isn't
+    known until later, often much later. See _trace.py for how (dev
+    tool: test/regression/workbench/trace_conversion.py prints it
+    nicely)."""
     if not trace:
         return _process_dispatch(src, tgt, txt, nativize, post_options, pre_options, param)
 

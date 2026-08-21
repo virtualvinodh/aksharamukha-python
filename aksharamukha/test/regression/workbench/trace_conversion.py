@@ -40,21 +40,43 @@ def format_args(args, kwargs, max_len):
 
 
 def print_trace(entries, changes_only, max_depth, max_len):
-    # Tracer appends each entry when the call RETURNS (its finally block),
-    # so list order is completion order - a function with many nested
-    # children ends up listed after all of them, despite being invoked
-    # first. seq is assigned at call time, so sorting by it recovers true
-    # invocation (processing) order.
-    for e in sorted(entries, key=lambda e: e['seq']):
-        if max_depth is not None and e['depth'] > max_depth:
-            continue
-        if changes_only and not e['changed'] and e['depth'] > 0:
-            continue
-        mark = '*' if e['changed'] else ' '
-        mod = e['module'].replace('aksharamukha.', '')
-        args_str = format_args(e['args'], e['kwargs'], max_len)
-        print('%s%s[%d] %s.%s(%s) -> %s' % (
-            '  ' * e['depth'], mark, e['seq'], mod, e['function'], args_str, short(e['result'], max_len)))
+    # Each call produces a 'call' event (args, known when invoked) and a
+    # separate later 'return' event (result, only known once every
+    # nested call it makes has already run) - sorting by seq and printing
+    # both, in place, is what actually matches processing order. A call
+    # and its matching return are always properly nested (the wrapper
+    # pushes 'call' right before running the function and appends
+    # 'return' right after it comes back), so a simple stack pairs them
+    # regardless of depth: --changes-only uses the pairing to fold a
+    # changed call back into one "args -> result" summary line, printed
+    # at the RETURN's seq (the only point where both halves are true).
+    entries = sorted(entries, key=lambda e: e['seq'])
+    call_stack = []
+    mod_of = lambda e: e['module'].replace('aksharamukha.', '')
+
+    for e in entries:
+        if e['event'] == 'call':
+            call_stack.append(e)
+            if changes_only:
+                continue
+            if max_depth is not None and e['depth'] > max_depth:
+                continue
+            args_str = format_args(e['args'], e['kwargs'], max_len)
+            print('%s> [%d] %s.%s(%s)' % ('  ' * e['depth'], e['seq'], mod_of(e), e['function'], args_str))
+        else:
+            call_e = call_stack.pop()
+            if max_depth is not None and e['depth'] > max_depth:
+                continue
+            if changes_only and not e['changed'] and e['depth'] > 0:
+                continue
+            mark = '*' if e['changed'] else ' '
+            if changes_only:
+                args_str = format_args(call_e['args'], call_e['kwargs'], max_len)
+                print('%s%s[%d] %s.%s(%s) -> %s' % (
+                    '  ' * e['depth'], mark, e['seq'], mod_of(e), e['function'], args_str, short(e['result'], max_len)))
+            else:
+                print('%s< %s[%d] %s.%s() -> %s' % (
+                    '  ' * e['depth'], mark, e['seq'], mod_of(e), e['function'], short(e['result'], max_len)))
 
 
 def main():
