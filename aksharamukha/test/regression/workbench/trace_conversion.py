@@ -43,7 +43,11 @@ STATE_FIELDS = ('src', 'tgt', 'pre_options', 'post_options', 'nativize', 'ctx')
 # function, read directly from transliterate.py, not inferred - if any
 # of these functions' return statement changes, this goes stale and the
 # label just won't apply (falls back to the plain repr below), it won't
-# silently mislabel anything.
+# silently mislabel anything. The text-carrying field (txt, or
+# transliteration for _run_core_conversion) is pulled out of the tuple
+# and shown on its own output = line, same spot/label as every other
+# function's text result - the rest becomes output_params:, mirroring
+# input_params: on the call side.
 RETURN_SHAPES = {
     '_apply_indic_dandas_preoption': ('txt', 'pre_options', 'post_options'),
     '_resolve_loc_when_source_is_loc_script': ('src', 'tgt', 'txt', 'pre_options', 'post_options', 'nativize'),
@@ -55,6 +59,7 @@ RETURN_SHAPES = {
     '_prepare_for_core_conversion': ('src', 'tgt', 'txt', 'srcOld'),
     '_run_core_conversion': ('tgt', 'transliteration'),
 }
+TEXT_FIELD_NAMES = ('txt', 'transliteration')
 
 
 def truncate(s, max_len):
@@ -65,30 +70,45 @@ def format_params(state, max_len):
     return ', '.join('%s=%s' % (f, truncate(state[f], max_len)) for f in STATE_FIELDS if f in state)
 
 
-def format_return_tuple(function, result, max_len):
+def decode_return_tuple(function, result):
+    """(state_fields, text_value) for a known RETURN_SHAPES function
+    whose result actually matches that shape - state_fields is an
+    ordered dict of everything except the text field; (None, None) if
+    this function/result isn't a recognized shape (caller falls back to
+    treating result as the text value directly)."""
     shape = RETURN_SHAPES.get(function)
     if not shape or not isinstance(result, tuple) or len(result) != len(shape):
-        return None
-    return ', '.join('%s=%s' % (name, truncate(repr(value), max_len)) for name, value in zip(shape, result))
+        return None, None
+    fields = dict(zip(shape, result))
+    text_value = None
+    for name in TEXT_FIELD_NAMES:
+        if name in fields:
+            text_value = fields.pop(name)
+            break
+    return fields, text_value
 
 
 def print_open(indent, step_no, mod, e, max_len):
     print('%s-> step %d: %s.%s' % (indent, step_no, mod, e['function']))
     params = format_params(e['state'], max_len)
     if params:
-        print('%s     params: %s' % (indent, params))
+        print('%s     input_params: %s' % (indent, params))
     print('%s     input  = %s' % (indent, truncate(repr(e['text_in']), max_len)))
 
 
 def print_close(indent, step_no, mod, e, max_len, arrow='<-'):
     if arrow == '<-':
         print('%s<- step %d: %s.%s' % (indent, step_no, mod, e['function']))
-    mark = '  *changed*' if e['changed'] else ''
-    labeled = format_return_tuple(e['function'], e['result'], max_len)
-    if labeled:
-        print('%s     output: %s%s' % (indent, labeled, mark))
+    state_fields, text_value = decode_return_tuple(e['function'], e['result'])
+    if state_fields is not None:
+        state_str = ', '.join('%s=%s' % (name, truncate(repr(value), max_len)) for name, value in state_fields.items())
+        if state_str:
+            print('%s     output_params: %s' % (indent, state_str))
+        output_value = text_value
     else:
-        print('%s     output = %s%s' % (indent, truncate(repr(e['result']), max_len), mark))
+        output_value = e['result']
+    mark = '  *changed*' if e['changed'] else ''
+    print('%s     output = %s%s' % (indent, truncate(repr(output_value), max_len), mark))
     print()
 
 
