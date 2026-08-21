@@ -52,6 +52,23 @@ _SECTION_KIND = {
     '# ---- Post-processing options ----': 'post',
 }
 
+# A function named X_pre (under a Pre-processing options header) or
+# X_post (under Post-processing options) is the codebase's established
+# convention for "this needs the bare public name X, but can't literally
+# be called that in its own file" - either a name collision with the
+# opposite direction's function in the SAME file (Python doesn't allow
+# two top-level `def X` in one module; the second silently shadows the
+# first), or, since the semiticISO rename, a dispatch-required name
+# (ISO233Target/ISO233Source/...) that bears no textual relation to the
+# function's own descriptive name. Registering the STRIPPED name too
+# (alongside the raw one, never instead of it - existing callers using
+# the raw suffixed name directly still work) means the established
+# suffix convention is itself enough to make a name auto-discoverable
+# under its true public form, without also needing a
+# `from .ScriptProcessing.X import name_pre as name` re-export just to
+# perform that same stripping via an import alias.
+_KIND_SUFFIX = {'pre': '_pre', 'post': '_post'}
+
 
 def _scriptprocessing_option_funcs():
     """{name: fn} for every function found under a Pre-processing/Post-
@@ -60,13 +77,24 @@ def _scriptprocessing_option_funcs():
     option", now read directly instead of inferred from what happens to
     be re-exported. Raises ImportError at import time (not silently,
     not just when someone happens to use the colliding name) if the
-    same name is defined under the same kind's header in two different
-    scripts' files - previously this ambiguity was implicitly resolved
-    by whichever `from .ScriptProcessing.X import name` re-export line
-    happened to run last, silently overwriting the other in PreProcess.
-    py's/PostProcess.py's namespace."""
+    same name - raw OR suffix-stripped - is defined under the same
+    kind's header in two different scripts' files - previously this
+    ambiguity was implicitly resolved by whichever `from
+    .ScriptProcessing.X import name` re-export line happened to run
+    last, silently overwriting the other in PreProcess.py's/
+    PostProcess.py's namespace."""
     funcs = {'pre': {}, 'post': {}}
     owner = {'pre': {}, 'post': {}}
+
+    def register(kind, name, mod_name, fn):
+        if name in owner[kind] and owner[kind][name] != mod_name:
+            raise ImportError(
+                "%s-option '%s' is defined in both ScriptProcessing/%s.py and "
+                "ScriptProcessing/%s.py - option names must be unique across "
+                "scripts; rename one of them." % (kind, name, owner[kind][name], mod_name)
+            )
+        funcs[kind][name] = fn
+        owner[kind][name] = mod_name
 
     for _finder, mod_name, _ispkg in pkgutil.iter_modules(_SP.__path__):
         module = importlib.import_module('aksharamukha.ScriptProcessing.' + mod_name)
@@ -98,14 +126,11 @@ def _scriptprocessing_option_funcs():
             if kind is None:
                 continue
             name = node.name
-            if name in owner[kind] and owner[kind][name] != mod_name:
-                raise ImportError(
-                    "%s-option '%s' is defined in both ScriptProcessing/%s.py and "
-                    "ScriptProcessing/%s.py - option names must be unique across "
-                    "scripts; rename one of them." % (kind, name, owner[kind][name], mod_name)
-                )
-            funcs[kind][name] = getattr(module, name)
-            owner[kind][name] = mod_name
+            fn = getattr(module, name)
+            register(kind, name, mod_name, fn)
+            suffix = _KIND_SUFFIX[kind]
+            if name.endswith(suffix) and len(name) > len(suffix):
+                register(kind, name[:-len(suffix)], mod_name, fn)
 
     return funcs['pre'], funcs['post']
 
