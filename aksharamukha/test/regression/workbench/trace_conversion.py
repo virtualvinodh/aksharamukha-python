@@ -35,6 +35,27 @@ if REPO not in sys.path:
 
 STATE_FIELDS = ('src', 'tgt', 'pre_options', 'post_options', 'nativize', 'ctx')
 
+# transliterate.py's _resolve_*/_apply_*/_prepare_*/_run_* stage
+# functions each return a tuple - but NOT in their own declared
+# parameter order or even a consistent subset of it (see _trace.py's
+# TEXT_PARAM_NAMES comment for the bug that came from assuming
+# otherwise). These shapes are the ACTUAL return statement of each
+# function, read directly from transliterate.py, not inferred - if any
+# of these functions' return statement changes, this goes stale and the
+# label just won't apply (falls back to the plain repr below), it won't
+# silently mislabel anything.
+RETURN_SHAPES = {
+    '_apply_indic_dandas_preoption': ('txt', 'pre_options', 'post_options'),
+    '_resolve_loc_when_source_is_loc_script': ('src', 'tgt', 'txt', 'pre_options', 'post_options', 'nativize'),
+    '_resolve_loc_when_target_is_loc_script': ('src', 'tgt', 'txt', 'pre_options', 'post_options', 'nativize'),
+    '_resolve_loc_dispatch': ('src', 'tgt', 'txt', 'pre_options', 'post_options', 'nativize'),
+    '_resolve_semitic_iso_pivot': ('src', 'tgt', 'txt', 'pre_options', 'post_options', 'nativize'),
+    '_resolve_semitic_indic_naming': ('src', 'tgt', 'txt', 'pre_options', 'post_options', 'nativize', 'tgtOld'),
+    '_apply_target_renaming_postoptions': ('src', 'tgt', 'txt', 'pre_options', 'post_options', 'nativize'),
+    '_prepare_for_core_conversion': ('src', 'tgt', 'txt', 'srcOld'),
+    '_run_core_conversion': ('tgt', 'transliteration'),
+}
+
 
 def truncate(s, max_len):
     return s if len(s) <= max_len else s[:max_len] + '...'
@@ -42,6 +63,13 @@ def truncate(s, max_len):
 
 def format_params(state, max_len):
     return ', '.join('%s=%s' % (f, truncate(state[f], max_len)) for f in STATE_FIELDS if f in state)
+
+
+def format_return_tuple(function, result, max_len):
+    shape = RETURN_SHAPES.get(function)
+    if not shape or not isinstance(result, tuple) or len(result) != len(shape):
+        return None
+    return ', '.join('%s=%s' % (name, truncate(repr(value), max_len)) for name, value in zip(shape, result))
 
 
 def print_open(indent, step_no, mod, e, max_len):
@@ -56,7 +84,11 @@ def print_close(indent, step_no, mod, e, max_len, arrow='<-'):
     if arrow == '<-':
         print('%s<- step %d: %s.%s' % (indent, step_no, mod, e['function']))
     mark = '  *changed*' if e['changed'] else ''
-    print('%s     output = %s%s' % (indent, truncate(repr(e['result']), max_len), mark))
+    labeled = format_return_tuple(e['function'], e['result'], max_len)
+    if labeled:
+        print('%s     output: %s%s' % (indent, labeled, mark))
+    else:
+        print('%s     output = %s%s' % (indent, truncate(repr(e['result']), max_len), mark))
     print()
 
 
