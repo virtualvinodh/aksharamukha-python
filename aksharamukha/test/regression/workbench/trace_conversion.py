@@ -115,8 +115,27 @@ def params_diff(call_e, return_e, max_len):
     return ', '.join('%s=%s' % (name, truncate(value, max_len)) for name, value in diffs)
 
 
+def text_changed(return_e):
+    """True if the text this step is actually about differs between
+    input and output. _trace.py's own 'changed' flag can never be True
+    for any of the 9 RETURN_SHAPES functions - they always return a
+    tuple, never a bare string, and _trace.py deliberately doesn't
+    guess a tuple's contents (see its TEXT_PARAM_NAMES comment). Decode
+    the tuple here, where RETURN_SHAPES' hand-verified knowledge
+    actually lives, and compare the extracted text field instead.
+    Caught by the user noticing _run_core_conversion - which really
+    does turn Burmese into Latin - was silently missing from
+    --changes-only entirely."""
+    if return_e['changed']:
+        return True
+    _, text_value = decode_return_tuple(return_e['function'], return_e['result'])
+    if isinstance(text_value, str) and isinstance(return_e['text_in'], str):
+        return text_value != return_e['text_in']
+    return False
+
+
 def step_changed(call_e, return_e, max_len):
-    return return_e['changed'] or bool(params_diff(call_e, return_e, max_len))
+    return text_changed(return_e) or bool(params_diff(call_e, return_e, max_len))
 
 
 def print_open(indent, step_no, mod, e, max_len):
@@ -135,7 +154,7 @@ def print_close(indent, step_no, mod, call_e, return_e, max_len, arrow='<-'):
         print('%s     *output_params: %s' % (indent, diff))
     _, text_value = decode_return_tuple(return_e['function'], return_e['result'])
     output_value = text_value if text_value is not None else return_e['result']
-    star = '*' if return_e['changed'] else ' '
+    star = '*' if text_changed(return_e) else ' '
     print('%s     %soutput = %s' % (indent, star, truncate(repr(output_value), max_len)))
     print()
 
