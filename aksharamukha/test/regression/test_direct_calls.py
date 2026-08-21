@@ -34,10 +34,7 @@ def _params():
 
 @pytest.mark.parametrize("key,case_index", list(_params()))
 def test_direct_call_option(key, case_index):
-    from aksharamukha import PreProcess, PostProcess
-
     entry = DIRECT[key]
-    module = PostProcess if entry['kind'] == 'post' else PreProcess
     inp, expected = entry['cases'][case_index]
 
     if entry.get('custom_call'):
@@ -48,7 +45,17 @@ def test_direct_call_option(key, case_index):
         fn = pdc.CUSTOM_CALLS[(entry['kind'], entry['name'])]
         actual = fn(inp)
     else:
-        fn = getattr(module, entry['name'])
-        actual = fn(inp, *entry['args'])
+        # Options.call_pre_option/call_post_option resolve through
+        # Options.py's own PRE_OPTION_FUNCS/POST_OPTION_FUNCS dicts (which
+        # include every auto-discovered ScriptProcessing option, not just
+        # ones re-exported into PreProcess.py/PostProcess.py) instead of
+        # getattr(PreProcess/PostProcess, name) against the raw module -
+        # same *args shape this already needed, so a straight swap. Was
+        # the getattr version, which broke this whole test file (578
+        # failures) the moment a re-export it depended on got removed in
+        # an earlier attempt at this cleanup.
+        from aksharamukha import Options
+        call = Options.call_post_option if entry['kind'] == 'post' else Options.call_pre_option
+        actual = call(entry['name'], inp, *entry['args'])
 
     assert actual == expected
