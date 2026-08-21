@@ -272,9 +272,20 @@ def _loc_option_names(script, to_roman, direction):
     for name in names:
         yield (name + 'ToRomanLoc' + direction) if to_roman else ('RomanLocTo' + name + direction)
 
-def _apply_loc_option(module, script, to_roman, direction, options_list, prepend):
+def _apply_loc_option(script, to_roman, direction, options_list, prepend):
+    # Checked against Options.PRE_OPTIONS/POST_OPTIONS (which already
+    # include every ScriptProcessing-defined option, not just ones
+    # re-exported into PreProcess.py/PostProcess.py) rather than
+    # hasattr(module, fname) on the module object directly - a name
+    # that only auto-discovery finds used to be silently skipped here,
+    # even though Options.call_pre_option/call_post_option (used to
+    # actually RUN the option, once it's in options_list) already
+    # resolved it correctly either way. Caught by a real Burmese ->
+    # RomanLoC conversion silently losing its 'ʻ' marks when a re-
+    # export this depended on was removed without fixing this check.
+    known = Options.PRE_OPTIONS if direction == 'Pre' else Options.POST_OPTIONS
     for fname in _loc_option_names(script, to_roman, direction):
-        if hasattr(module, fname):
+        if fname in known:
             if prepend:
                 options_list.insert(0, fname)
             else:
@@ -307,8 +318,8 @@ def _resolve_loc_when_source_is_loc_script(src, tgt, txt, preoptions, postoption
     # order matters: pre-options APPEND (run after any user-supplied
     # preoptions), post-options PREPEND (run before any user-supplied
     # postoptions) - applied uniformly for every LoC script now.
-    _apply_loc_option(PreProcess, src, True, 'Pre', preoptions, prepend=False)
-    _apply_loc_option(PostProcess, src, True, 'Post', postoptions, prepend=True)
+    _apply_loc_option(src, True, 'Pre', preoptions, prepend=False)
+    _apply_loc_option(src, True, 'Post', postoptions, prepend=True)
     if pivot in _LOC_NATIVIZE_FALSE_PIVOTS:
         nativize = False
 
@@ -322,8 +333,8 @@ def _resolve_loc_when_target_is_loc_script(src, tgt, txt, preoptions, postoption
     elif SR.get(pivot).loc_tgt_iso:
         src = 'ISO'
 
-    _apply_loc_option(PreProcess, tgt, False, 'Pre', preoptions, prepend=False)
-    _apply_loc_option(PostProcess, tgt, False, 'Post', postoptions, prepend=True)
+    _apply_loc_option(tgt, False, 'Pre', preoptions, prepend=False)
+    _apply_loc_option(tgt, False, 'Post', postoptions, prepend=True)
     if pivot in _LOC_NATIVIZE_FALSE_PIVOTS:
         nativize = False
 
