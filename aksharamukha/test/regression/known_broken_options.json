@@ -6,13 +6,5 @@
   "target": "Devanagari",
   "error_type": "ModuleNotFoundError",
   "error": "No module named 'khmernltk'"
- },
- "pre::OriyaSubojinedVa": {
-  "kind": "pre",
-  "name": "OriyaSubojinedVa",
-  "source": "Oriya",
-  "target": "Devanagari",
-  "error_type": "error",
-  "error": "unknown extension ?? at position 1"
  }
 }

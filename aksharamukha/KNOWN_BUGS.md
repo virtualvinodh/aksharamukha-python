@@ -11,10 +11,6 @@ verification noise.
 
 ## Real correctness bugs
 
-- **`ScriptProcessing/Oriya.py:39` `OriyaSubojinedVa`** - the regex
-  contains a stray double `??` (`'(??<![ମବ])'`), likely a typo for a
-  single `?` negative lookbehind marker.
-
 - **`Urdu` -> `Arab` maps Peh (پ) to Feh (ف) instead of Beh (ب)** -
   found while checking whether `transliterate.py`'s commented-out
   Urdu/Shahmukhi/Arab/Arab-Fa normalization block (see
@@ -48,6 +44,18 @@ verification noise.
   `removeZW` above (`in_frontend: false`, no internal callers) - fixed to
   `return Strng`, moved out of `known_broken_options.json`, given a real
   case in `test_preoptions.json`.
+
+- **`ScriptProcessing/Oriya.py:44` `OriyaSubojinedVa`** - the regex
+  contained a stray double `??` (`'(??<![ମବ])'`), a typo for a single `?`
+  negative lookbehind marker; raised `re.error: unknown extension ?? at
+  position 1` on any use. Unlike `removeZW`/`IPAIndic`, this one is
+  `in_frontend: true` with a real user-facing label ("ସ୍ବ ଦ୍ବ → sva dva")
+  - any real site visitor selecting it hit a hard crash. Fixed to
+  `'(?<![ମବ])(୍ବ)'`; verified end-to-end against the docstring's own
+  example (`sva dva` exactly) and that the negative lookbehind's intended
+  exclusions (`ମ୍ବ`/`ବ୍ବ`, genuine /mb/ and /bb/ clusters) still don't
+  convert. Moved out of `known_broken_options.json`, given a real case in
+  `test_preoptions.json` covering both the fix and the exclusion.
 
 ## Stale entries removed (not real bugs in current code)
 

@@ -41,7 +41,7 @@ def FixOriya(Strng, reverse=False):
 def OriyaSubojinedVa(Strng):
 
     """Renders subjoined /va/ using ୱ instead of plain ba, e.g. ସ୍ବ ଦ୍ବ → sva dva."""
-    Strng = re.sub('(??<![ମବ])(୍ବ)', '୍ୱ', Strng)
+    Strng = re.sub('(?<![ମବ])(୍ବ)', '୍ୱ', Strng)
 
     return Strng
 
