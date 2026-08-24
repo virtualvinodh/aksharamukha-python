@@ -15,6 +15,14 @@ class ConversionContext:
     # preoptions/postoptions/nativize, it is not threaded through the
     # stage functions' return tuples, since it's passed by identity, not
     # by value.
+    # Set by ScriptProcessing/KhuenTham.py's RomanLocToKhuenTham_pre (the
+    # only place this is ever set to True); read by ConvertFix.
+    # _FixTaiThamFamily (via ScriptProcessing/ThamLoC.py's FixThamLoC,
+    # the only one of the three ThamLoC-family Fix wrappers that passes
+    # marker_cleanup=True) to decide whether Khuen-specific cleanup is
+    # needed. Replaced a literal 'ʾ' (U+02BE) appended to the text and
+    # grepped for later - first marker retired into ctx this way (see
+    # MARKERS.md).
     is_khuen_target: bool = False
     # Thai/Lao "short vowels not shown" transcription mode - previously a
     # parameter threaded separately alongside ctx through convertScript and

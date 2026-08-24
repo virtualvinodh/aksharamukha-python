@@ -6,8 +6,11 @@
 # for the naming convention this follows and how to add a new script.
 # FixThamLoC delegates to the shared ConvertFix._FixTaiThamFamily.
 # KhuenTham additionally overrides RomanLocToKhuenTham_pre in its own
-# file (ScriptProcessing/KhuenTham.py) to inject its extra text marker
-# before delegating to RomanLocToThamLoC_pre here.
+# file (ScriptProcessing/KhuenTham.py) to set ctx.is_khuen_target
+# before delegating to RomanLocToThamLoC_pre here - _FixTaiThamFamily
+# reads that flag back (only relevant on this ThamLoC path, since only
+# FixThamLoC passes marker_cleanup=True) to decide whether the text
+# needs the Khuen-specific cleanup.
 #
 # PostProcess/ConvertFix are imported LOCALLY inside each function that
 # needs them (not at module level) - required to avoid a load-order-
@@ -21,11 +24,11 @@ from .. import GeneralMap as GM
 # ---- Fix (encode/decode conversion logic) ----
 
 # internal
-def FixThamLoC(Strng, reverse=False):
+def FixThamLoC(Strng, reverse=False, ctx=None):
 
     """Core Tai Tham (LoC variant) encode/decode logic: delegate to the shared Tai Tham family fixer with marker cleanup enabled and ra-haam swapping disabled."""
     from .. import ConvertFix as CF
-    return CF._FixTaiThamFamily(Strng, reverse, ['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ', 'ᨷ'], marker_cleanup=True, ra_haam_swap=False)
+    return CF._FixTaiThamFamily(Strng, reverse, ['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ', 'ᨷ'], marker_cleanup=True, ra_haam_swap=False, ctx=ctx)
 
 # ---- Pre-processing options ----
 

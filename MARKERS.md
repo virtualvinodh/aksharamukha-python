@@ -18,10 +18,11 @@ implicit contract on the codepoint - higher risk, easy to break silently).
 ## `ʾ` (MODIFIER LETTER RIGHT HALF RING)
 
 The single most overloaded sentinel in the codebase - reused independently
-for at least 8 unrelated purposes, apparently just because it's a rare
-character unlikely to appear in real input, not because of any shared
-meaning. A future addition reusing it a 9th time would have no way to know
-about the other 8 without reading this file or grepping first.
+for at least 7 remaining unrelated purposes (one retired, #5 below),
+apparently just because it's a rare character unlikely to appear in real
+input, not because of any shared meaning. A future addition reusing it
+again would have no way to know about the others without reading this
+file or grepping first.
 
 1. **`ConvertFix.FixHanifiRohingya`** (~line 630-683) - diphthong+nukta
    marker for the y/w diphthong-to-consonant swap. Self-contained (one
@@ -42,10 +43,21 @@ about the other 8 without reading this file or grepping first.
    leak, but a non-functional feature. Whether it's supposed to interact
    with #3's mechanism, or was meant to be a separate control, is unresolved
    and needs a real look at Soyombo finals semantics, not a rename.
-5. **`transliterate.convert()` line ~271** - appended to Khuen Tham text as
-   an "indicator for Khuen text", consumed somewhere in the
-   `FixThamLoC`/`FixKhuenTham` family (ConvertFix.py ~3295-3330, since
-   merged into one parameterized `_FixTaiThamFamily` function).
+5. **Retired 2026-08-24.** Was: appended to Khuen Tham text by
+   `ScriptProcessing/KhuenTham.py`'s `RomanLocToKhuenTham_pre`, consumed
+   by `ConvertFix._FixTaiThamFamily` (via `ScriptProcessing/ThamLoC.py`'s
+   `FixThamLoC` - the only one of the three ThamLoC-family Fix wrappers
+   that passes `marker_cleanup=True`; `FixKhuenTham`/`FixLueTham` never
+   checked it, since Khuen conversions pivot through the shared
+   `'ThamLoC'` target before the Fix dispatch runs). Now:
+   `RomanLocToKhuenTham_pre` sets `ctx.is_khuen_target = True` instead of
+   appending the marker; `_FixTaiThamFamily` (now `ctx=None`-aware, with
+   `ctx` threaded through all three wrappers) checks
+   `ctx.is_khuen_target` instead of scanning the string. Same pattern as
+   the already-retired Thai/Lao `transcription_mode` below - see
+   `Context.py`'s `is_khuen_target` field. Verified via a clean
+   16,126-sample corpus regen plus the dedicated
+   `test/loc_tham_test_cases.py` TaiTham↔RomanLoC round-trip suite.
 6. **`ConvertFix.FixWarangCiti`** (~line 2483-2533) - internal staging
    marker, self-contained.
 7. **`ConvertFix.FixChakma`** (~line 2807-2841) + **`PreProcess.ChakmaPali`**

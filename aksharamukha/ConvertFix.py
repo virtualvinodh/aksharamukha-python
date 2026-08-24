@@ -906,11 +906,13 @@ def _FixRomanReadableColloquial(Strng, reverse, colloquial):
 # FixThamLoC/FixLueTham/FixKhuenTham share the same "Tall A" regex logic;
 # they differ in the TaiTham consonant list used for the Tall A match
 # (ThamLoC alone includes one extra consonant), and in one extra step
-# each: ThamLoC does a marker cleanup (forward, only when the Khuen-text
-# u02BE marker is present) plus a reverse-direction subconsonant fix;
+# each: ThamLoC does a marker cleanup (forward, only when ctx says this
+# text is Khuen - see ScriptProcessing/KhuenTham.py's
+# RomanLocToKhuenTham_pre, which is the only place ctx.is_khuen_target
+# ever gets set to True) plus a reverse-direction subconsonant fix;
 # KhuenTham does an unconditional ra-haam/lue-karan swap in both
 # directions; LueTham has neither extra step.
-def _FixTaiThamFamily(Strng, reverse, tall_a_cons, marker_cleanup, ra_haam_swap):
+def _FixTaiThamFamily(Strng, reverse, tall_a_cons, marker_cleanup, ra_haam_swap, ctx=None):
     """Shared Tai Tham-family orthography logic (tall-A vowel placement, ra-haam/lue-karan marker handling), parametrized per dialect (ThamLoC/LueTham/etc)."""
     from . import Options
     Strng = Options.call_fix('FixTaiTham', Strng, reverse)
@@ -923,8 +925,8 @@ def _FixTaiThamFamily(Strng, reverse, tall_a_cons, marker_cleanup, ra_haam_swap)
         Strng = re.sub('('+TallACons+')(᩠)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4'+'ᩤ',Strng)
         Strng = re.sub('('+TallACons+')(᩠)('+ListC +')'+'(᩠)('+ListC +')'+'('+E+'?)'+AA,r'\1\2\3\4\5\6'+'ᩤ',Strng)
 
-        if marker_cleanup and '\u02BE' in Strng:
-            Strng = Strng.replace('᩺', '᩼').replace('\u02BE', '')
+        if marker_cleanup and ctx is not None and ctx.is_khuen_target:
+            Strng = Strng.replace('᩺', '᩼')
         elif ra_haam_swap:
             # ra-haam with lue-karan
             Strng = Strng.replace('᩺', '᩼')

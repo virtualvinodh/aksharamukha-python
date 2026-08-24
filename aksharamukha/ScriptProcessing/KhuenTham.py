@@ -13,11 +13,11 @@ import re
 # ---- Fix (encode/decode conversion logic) ----
 
 # internal
-def FixKhuenTham(Strng, reverse=False):
+def FixKhuenTham(Strng, reverse=False, ctx=None):
 
     """Applies the shared Tai Tham family fix-up, with ra-haam swap enabled, for Khuen Tham script conversion."""
     from .. import ConvertFix as CF
-    return CF._FixTaiThamFamily(Strng, reverse, ['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ'], marker_cleanup=False, ra_haam_swap=True)
+    return CF._FixTaiThamFamily(Strng, reverse, ['ᩅ', 'ᨴ', 'ᨵ', 'ᨣ'], marker_cleanup=False, ra_haam_swap=True, ctx=ctx)
 
 # ---- Pre-processing options ----
 
@@ -34,14 +34,17 @@ def KhuenRaHaamKaren(Strng):
     return Strng
 
 # KhuenTham overrides the shared ThamLoC RomanLocToPre with its own
-# extra text-marker injection before delegating - see
+# ctx.is_khuen_target flag before delegating - see
 # ScriptProcessing/HOW_TO_ADD_LOC.md and ScriptProcessing/ThamLoC.py.
+# (Formerly a literal '\u02BE' marker appended to the text itself and
+# grepped for later in ConvertFix._FixTaiThamFamily - see MARKERS.md.)
 
 # internal
-def RomanLocToKhuenTham_pre(Strng):
-    """Injects the Khuen text marker, then applies the shared Tai Tham LoC pre-conversion fix, before converting LoC Roman text to Khuen Tham."""
+def RomanLocToKhuenTham_pre(Strng, ctx=None):
+    """Marks this text as Khuen (via ctx), then applies the shared Tai Tham LoC pre-conversion fix, before converting LoC Roman text to Khuen Tham."""
     from .ThamLoC import RomanLocToThamLoC_pre
-    Strng = Strng + '\u02BE'  # indicator for Khuen text
+    if ctx is not None:
+        ctx.is_khuen_target = True
     Strng = RomanLocToThamLoC_pre(Strng)
 
     return Strng
