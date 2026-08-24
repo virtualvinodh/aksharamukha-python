@@ -613,9 +613,11 @@ def _FixUrduShahmukhiEncode(Target, Strng):
 
     return Strng
 
-def _FixUrduShahmukhiDecode(Target, Strng):
+def _FixUrduShahmukhiDecode(Target, Strng, ctx=None):
     """Decodes Urdu/Shahmukhi text back toward the internal representation: normalizes Arabic-borrowed letters to their closest Indic-Perso-Arabic counterparts, chaschmee-ha and retroflex handling."""
     Strng = Strng.replace('\u02BD','')
+
+    transcription_mode = ctx.transcription_mode if ctx is not None else False
 
     vir = GM.CrunchSymbols(GM.VowelSigns,Target)[0]
 
@@ -700,7 +702,7 @@ def _FixUrduShahmukhiDecode(Target, Strng):
 
         #print(Strng)
         #print(Target)
-        if "\u02BB\u02BB" in Strng: ## Short Vowels not showm. INnsert /a/ to all consonats and approximate
+        if transcription_mode: ## Short Vowels not showm. INnsert /a/ to all consonats and approximate
             Strng = Strng.replace('ا', 'اَ')
             #retroflex la
 
@@ -723,8 +725,6 @@ def _FixUrduShahmukhiDecode(Target, Strng):
 
             Strng = Strng.replace('اَے', 'اے')
             Strng= Strng.replace(yaBig, ya)
-
-            Strng = Strng.replace('\u02BB\u02BB', '')
 
         else:
             ShortVowelsR = '|'.join(['\u0652','\u0650','\u064F'])
@@ -767,9 +767,9 @@ def _FixUrduShahmukhiDecode(Target, Strng):
 
     return Strng
 
-def FixUrduShahmukhi(Target, Strng,reverse=False):
+def FixUrduShahmukhi(Target, Strng,reverse=False, ctx=None):
     """Dispatches to the Urdu/Shahmukhi encode or decode function depending on the reverse flag."""
-    return _FixUrduShahmukhiDecode(Target, Strng) if reverse else _FixUrduShahmukhiEncode(Target, Strng)
+    return _FixUrduShahmukhiDecode(Target, Strng, ctx=ctx) if reverse else _FixUrduShahmukhiEncode(Target, Strng)
 
 
 def PersoArabicPuntuation(Strng, reverse=False):

@@ -12,19 +12,17 @@ import re
 # ---- Fix (encode/decode conversion logic) ----
 
 # internal
-def FixUrdu(Strng, reverse=False):
+def FixUrdu(Strng, reverse=False, ctx=None):
 
     """Core Urdu encode/decode logic: delegate to the shared Shahmukhi orthography fixer."""
     from .. import ConvertFix as CF
-    return CF.FixUrduShahmukhi("Urdu", Strng, reverse)
+    return CF.FixUrduShahmukhi("Urdu", Strng, reverse, ctx=ctx)
 
 # ---- Pre-processing options ----
 
 # frontend
 def UrduShortNotShown(Strng):
-    """Mark that Urdu short vowels are not written, appending a flag consumed by later processing to suppress short-vowel signs."""
-    Strng += "\u02BB\u02BB"
-
+    """Selects Urdu 'short vowels not shown' mode - a no-op here; transliterate.py sets ctx.transcription_mode directly from this name's presence in preoptions (same mechanism as ThaiPhonetic/LaoPhonetic/ThaiOrthography/LaoTranscription), read by ConvertFix._FixUrduShahmukhiDecode."""
     return Strng
 
 # ---- Post-processing options ----

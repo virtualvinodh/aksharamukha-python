@@ -24,14 +24,14 @@ class ConversionContext:
     # grepped for later - first marker retired into ctx this way (see
     # MARKERS.md).
     is_khuen_target: bool = False
-    # Thai/Lao "short vowels not shown" transcription mode - previously a
-    # parameter threaded separately alongside ctx through convertScript and
-    # gated by hardcoded `Source/Target in ('Thai', 'LaoPali')` checks at
-    # every dispatch site. Folded in here so consumers (FixThai, FixLaoPali,
-    # FixIndicOutput) just declare ctx and read ctx.transcription_mode -
-    # the existing ctx-aware dispatch (GM.resolve, GM.accepts_ctx) already
-    # only hands ctx to functions that ask for it, making the hardcoded
-    # script-name lists unnecessary.
+    # Thai/Lao/Urdu "short vowels not shown" transcription mode - previously
+    # a parameter threaded separately alongside ctx through convertScript
+    # and gated by hardcoded `Source/Target in ('Thai', 'LaoPali')` checks
+    # at every dispatch site. Folded in here so consumers (FixThai,
+    # FixLaoPali, FixIndicOutput, FixUrduShahmukhi) just declare ctx and
+    # read ctx.transcription_mode - the existing ctx-aware dispatch
+    # (GM.resolve, GM.accepts_ctx) already only hands ctx to functions that
+    # ask for it, making the hardcoded script-name lists unnecessary.
     transcription_mode: bool = False
     # The source/target script names in effect at the point a pre/post-option
     # actually runs - not necessarily the names the caller originally passed

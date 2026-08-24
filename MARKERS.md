@@ -113,38 +113,44 @@ needed here.
 
 ## `"ʻʻ"` (U+02BB doubled) - Thai/Lao/Urdu transcription mode
 
-**Partially retired.** 5 real injection points feed this one marker, not
+**Retired 2026-08-24.** 5 real injection points fed this one marker, not
 the 3 an earlier pass of this file assumed - that undercount caused a real
 regression (`TestPreOptions[ThaiOrthography]`/`TestPreOptions[LaoTranscription]`
 broke when only 3 of the 5 were migrated to the new mechanism below; caught
 by the full suite, fixed same session by an exhaustive grep instead of
-trusting the earlier partial list): `PreProcess.ThaiPhonetic`, `PreProcess.
-LaoPhonetic`, `PreProcess.ThaiOrthography`, `PreProcess.LaoTranscription`
-(all four retired now - see below), and `PreProcess.UrduShortNotShown`
-(still injects the marker, untouched). 3 consumption points:
-`ConvertFix.FixThai`, `ConvertFix.FixLaoPali` (both retired),
-`ConvertFix.FixUrduShahmukhi` (still checks for the marker, untouched -
-deliberately deferred alongside `FixKhamtiShan`/`FixTaiLaing`/`FixShan`,
-since it's a 258-line `reverse=`-fused function and tracing its actual
-control flow required running code, not just reading it - a first manual
-read of where the marker check lived turned out to be wrong).
+trusting the earlier partial list): `ScriptProcessing/Thai.py`'s
+`ThaiPhonetic`/`ThaiOrthography`, `ScriptProcessing/LaoPali.py`'s
+`LaoPhonetic`/`LaoTranscription`, and `ScriptProcessing/Urdu.py`'s
+`UrduShortNotShown` - all five now no-ops. 3 consumption points, all
+retired: `ConvertFix.FixThai`, `ConvertFix.FixLaoPali`, and (this session)
+`ConvertFix._FixUrduShahmukhiDecode` - deliberately deferred past the
+Thai/Lao retirement alongside `FixKhamtiShan`/`FixTaiLaing`/`FixShan`,
+since it's a large `reverse=`-fused function (`FixUrduShahmukhi` dispatches
+to a ~150-line `_FixUrduShahmukhiEncode`/`_FixUrduShahmukhiDecode` pair)
+and tracing its actual control flow required reading both branches in
+full, not just grepping for the marker - the marker check turned out to
+gate a genuine two-branch if/else with different vowel-insertion logic in
+each branch (unlike Khuen Tham's simple optional-cleanup case just above),
+so only the *condition* was swapped, not the branch bodies.
 
-Thai/Lao side: the four `PreProcess` functions no longer inject anything;
-`transliterate.convert()` now computes a real `transcription_mode` boolean
-from `preoptions` membership and threads it as a keyword argument through
-`Convert.convertScript()` -> the `Fix*` dispatch (only added to the call
-when `Source`/`Target` is `Thai`/`LaoPali`, so no other script's `Fix*`
-function signature is affected) -> `ConvertFix.FixThai`/`FixLaoPali`,
-which check `if transcription_mode:` instead of `if "ʻʻ" in Strng:`.
-Verified behavior-identical via a 13-case A/B comparison (git
-stash-based) against the pre-change implementation before committing.
-
-Urdu side: `PreProcess.UrduShortNotShown` still appends `"ʻʻ"` and
-`ConvertFix.FixUrduShahmukhi` still checks for it exactly as before -
-completely untouched, still working. Retiring this one requires the same
-`transcription_mode`-threading treatment, but only after `FixUrduShahmukhi`
-itself gets the same careful extraction+trace treatment given to the
-TaiTham cluster - not attempted this session.
+All three scripts now share one mechanism: `transliterate.py`'s
+`_prepare_for_core_conversion` computes `ctx.transcription_mode` once, up
+front, from `preoptions` membership (`'ThaiPhonetic' in preoptions or
+'LaoPhonetic' in preoptions or 'ThaiOrthography' in preoptions or
+'LaoTranscription' in preoptions or 'UrduShortNotShown' in preoptions`),
+and each consumer (`FixThai`, `FixLaoPali`, `_FixUrduShahmukhiDecode`)
+declares `ctx=None` and reads `ctx.transcription_mode` instead of scanning
+`Strng` for the marker. `ctx` reaches `_FixUrduShahmukhiDecode` via the
+existing `Options.call_fix("Fix"+Source...,reverse=True,optional=True,
+ctx=ctx)` dispatch in `Convert.py` (built this session for the Khuen Tham
+retirement, already ctx-aware everywhere) through `Urdu.FixUrdu`/
+`Shahmukhi.FixShahmukhi` -> `ConvertFix.FixUrduShahmukhi` -> `_FixUrduShahmukhiDecode`,
+each now threading `ctx=None` alongside `reverse`. Verified via a
+same-vs-different-output smoke test: unvoweled Urdu consonant text (the
+real-world case this mode exists for) decodes to garbage without the
+preoption and to correctly-voweled Roman text with it, confirming the
+ctx-based flag reaches the same branch the old marker did - plus a clean
+16,126-sample corpus regen and the full pytest suite matching baseline.
 
 ## `͏` (COMBINING GRAPHEME JOINER)
 

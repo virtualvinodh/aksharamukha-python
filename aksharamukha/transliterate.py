@@ -541,17 +541,18 @@ def _apply_target_renaming_postoptions(src, tgt, txt, preoptions, postoptions, n
     return src, tgt, txt, preoptions, postoptions, nativize
 
 def _prepare_for_core_conversion(src, tgt, txt, preoptions, postoptions, nativize, ctx):
-    # Thai/Lao "short vowels not shown" transcription mode - previously
+    # Thai/Lao/Urdu "short vowels not shown" transcription mode - previously
     # signalled by splicing a private-use marker into txt itself and having
-    # ConvertFix.FixThai/FixLaoPali check for it; now lives on ctx instead,
-    # read by whichever Fix* function declares it wants ctx (no more
-    # separate parameter threaded alongside ctx). Four preoptions feed
-    # this same mode (verified by exhaustive grep, not just the two most
-    # obviously-named ones - ThaiOrthography/LaoTranscription looked like
-    # they might be unrelated but turned out to inject the identical
+    # ConvertFix.FixThai/FixLaoPali/FixUrduShahmukhi check for it; now lives
+    # on ctx instead, read by whichever Fix* function declares it wants ctx
+    # (no more separate parameter threaded alongside ctx). Five preoptions
+    # feed this same mode (verified by exhaustive grep, not just the two
+    # most obviously-named ones - ThaiOrthography/LaoTranscription looked
+    # like they might be unrelated but turned out to inject the identical
     # marker for the identical consumer).
     ctx.transcription_mode = ('ThaiPhonetic' in preoptions or 'LaoPhonetic' in preoptions
-                               or 'ThaiOrthography' in preoptions or 'LaoTranscription' in preoptions)
+                               or 'ThaiOrthography' in preoptions or 'LaoTranscription' in preoptions
+                               or 'UrduShortNotShown' in preoptions)
 
     # src/tgt as they stand right before preoptions run - see Context.py's
     # comment on why this is set fresh here rather than once for the whole
