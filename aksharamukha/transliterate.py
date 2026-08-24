@@ -192,7 +192,7 @@ def auto_detect(text, plugin = False):
         pass
     else:
         from . import gimeltra
-        tr = gimeltra.Transliterator()
+        tr = gimeltra.get_transliterator()
         inputScript = tr.auto_script(text)
 
     return inputScript

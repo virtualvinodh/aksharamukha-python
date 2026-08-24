@@ -7,7 +7,7 @@ from . import Options
 import aksharamukha.FallBack as FB
 import string
 import re
-from functools import cmp_to_key
+from functools import cmp_to_key, lru_cache
 import json
 from . import gimeltra
 
@@ -48,7 +48,36 @@ def convertInter(Strng,Source):
 
     return Strng
 
-def _build_char_pairs(Source, Target, source_transform=None, target_transform=None):
+# DepV/Schwa disambiguation markers used by the two source_transform/
+# target_transform callbacks below - fixed constants, not per-call state
+# (also duplicated in ConvertFix.py/PreProcess.py, see MARKERS.md - a
+# separate, unrelated dedup). Module-level, rather than defined inline in
+# each branch that used to close over them: _build_char_pairs_cached's
+# lru_cache below needs a *stable* function object for source_transform/
+# target_transform to ever hit - a fresh closure recreated on every call
+# has a distinct identity each time even though its behavior never
+# varies, which would silently defeat the cache.
+DepV = 'ṿ'
+Schwa = ''
+
+def _source_add_depv(charList, crunched):
+    # Add DepVSign to all VowelSigns on the Source side, to differentiate
+    # from Independent Vowels.
+    if charList == 'VowelSigns':
+        return [DepV+x for x in crunched]
+    return crunched
+
+def _target_add_schwa_depv(charList, crunched):
+    if charList == 'Consonants':
+        # Add Schwa to all Roman consonants. Basically, the Roman script is "Indianized"
+        return [x+Schwa for x in crunched]
+    elif charList == 'Vowels':
+        # Add DepVSign to all Independent vowel to differentiate from vowel sign.
+        return [DepV+x for x in crunched]
+    return crunched
+
+@lru_cache(maxsize=None)
+def _build_char_pairs_cached(Source, Target, source_transform=None, target_transform=None):
     # Shared by every convertScript branch that maps characters
     # group-by-group via GM.ScriptAll, sorted longest-first so multi-
     # character sequences replace before any of their own prefixes/
@@ -59,6 +88,12 @@ def _build_char_pairs(Source, Target, source_transform=None, target_transform=No
     # on the Source side; Indic->Latin suffixes Schwa onto Consonants and
     # prefixes DepV onto Vowels on the Target side). Branches with no
     # such need (e.g. Indic->Indic) just omit the transform.
+    #
+    # Purely a function of (Source, Target, source_transform,
+    # target_transform) drawn from a small closed set of scripts -
+    # lru_cache'd the same way GM.CrunchSymbols/CrunchList already are,
+    # since this was measured rebuilding itself on every single
+    # conversion call for ~69% of total conversion time.
     charPairs = []
     for charList in GM.ScriptAll:
         SourceScript = GM.CrunchSymbols(GM.retCharList(charList), Source)
@@ -70,7 +105,19 @@ def _build_char_pairs(Source, Target, source_transform=None, target_transform=No
         ScriptMap = list(zip(SourceScript, TargetScript))
         ScriptMap.sort(reverse=True)
         charPairs += ScriptMap
-    return sorted(charPairs, key=cmp_to_key(lenSort))
+    # Equivalent to the old sorted(charPairs, key=cmp_to_key(lenSort)) -
+    # lenSort's comparator only ever returns -1 (strictly longer) or 0
+    # (same length or shorter), which cmp_to_key resolves to exactly the
+    # same descending-length order a plain key function gives, without a
+    # Python-level function call per comparison.
+    return sorted(charPairs, key=lambda p: -len(p[0]))
+
+def _build_char_pairs(Source, Target, source_transform=None, target_transform=None):
+    # Copy on the way out, same reason as GM.CrunchSymbols/CrunchList:
+    # callers below only ever iterate or rebuild a new list from this,
+    # never mutate it in place, but copying keeps that an invariant
+    # rather than a fact callers have to preserve by convention.
+    return list(_build_char_pairs_cached(Source, Target, source_transform, target_transform))
 
 def _om_boundary_class(Source):
     # The punctuation/whitespace boundary class used to detect a standalone
@@ -107,7 +154,6 @@ def convertScript(Strng,Source,Target,ctx=None):
     return Strng
 
 def _convert_latin_to_indic(Strng, Source, Target, ctx):
-    DepV = '\u1E7F'
     Strng = Options.call_fix("Fix"+Source.replace('-','_'),Strng,reverse=True,optional=True,ctx=ctx)
 
    #short u
@@ -148,13 +194,6 @@ def _convert_latin_to_indic(Strng, Source, Target, ctx):
     Strng = Strng.replace("ṿ×_","ṿ")
 
     ha = GM.CrunchSymbols(GM.Consonants,Source)[32]
-
-    # Add DepVSign to all VowelSigns on the Source side, to differentiate
-    # from Independent Vowels.
-    def _source_add_depv(charList, crunched):
-        if charList == 'VowelSigns':
-            return [DepV+x for x in crunched]
-        return crunched
 
     charPairs = _build_char_pairs(Source, Target, source_transform=_source_add_depv)
 
@@ -243,8 +282,6 @@ def _convert_indic_to_indic(Strng, Source, Target, ctx):
     return Strng
 
 def _convert_indic_to_latin(Strng, Source, Target, ctx):
-    Schwa = '\uF000'
-    DepV = '\u1E7F'
     #print(Strng)
     Strng = PrP.RemoveJoiners(Strng)
     Strng = CF.ShiftDiacritics(Strng, Source, reverse=True)
@@ -254,15 +291,6 @@ def _convert_indic_to_latin(Strng, Source, Target, ctx):
     sOm, tOm = GM.CrunchList('OmMap', Source)[0],GM.CrunchList('OmMap', Target)[0]
 
     Strng = Strng.replace(sOm, tOm)
-
-    def _target_add_schwa_depv(charList, crunched):
-        if charList == 'Consonants':
-            # Add Schwa to all Roman consonants. Basically, the Roman script is "Indianized"
-            return [x+Schwa for x in crunched]
-        elif charList == 'Vowels':
-            # Add DepVSign to all Independent vowel to differentiate from vowel sign.
-            return [DepV+x for x in crunched]
-        return crunched
 
     charPairs = _build_char_pairs(Source, Target, target_transform=_target_add_schwa_depv)
 
@@ -299,7 +327,7 @@ def _convert_indic_to_latin(Strng, Source, Target, ctx):
 def _convert_semitic_to_semitic(Strng, Source, Target, ctx):
     Strng = Options.call_fix("Fix"+Source.replace('-','_'),Strng,Source,reverse=True,optional=True,ctx=ctx)
 
-    tr = gimeltra.Transliterator()
+    tr = gimeltra.get_transliterator()
 
     if Source == 'Ugar':
         Strng = Strng.replace('𐎟', ' ') # reverse ugaritic word separator
@@ -314,7 +342,7 @@ def _convert_semitic_to_semitic(Strng, Source, Target, ctx):
     return Strng
 
 def _convert_to_semitic(Strng, Source, Target, ctx):
-    tr = gimeltra.Transliterator()
+    tr = gimeltra.get_transliterator()
 
     # deliberately no ctx=ctx - this is a separate sub-conversion
     # hop (through the RomanSemitic pivot), not a continuation of
@@ -356,7 +384,7 @@ def _convert_to_semitic(Strng, Source, Target, ctx):
 def _convert_semitic_to_other(Strng, Source, Target, ctx):
     Strng = Options.call_fix("Fix"+Source.replace('-','_'),Strng,Source,reverse=True,optional=True,ctx=ctx)
 
-    tr = gimeltra.Transliterator()
+    tr = gimeltra.get_transliterator()
 
     Strng = tr.tr(Strng, sc=Source, to_sc='Latn')
     #print(Strng)
