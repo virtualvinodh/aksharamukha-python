@@ -167,8 +167,7 @@ Frontend-sourced docstrings (211 functions, higher confidence) are not listed he
 - **RetainDevangariDanda**: Temporarily substitute Devanagari danda/double danda with placeholder box-drawing characters to protect them from further processing.
 - **RetainPipeDanda**: Convert pipe-notated danda/double-danda and periods into placeholder characters to protect them during processing.
 - **RomanLoCChandrabindu**: Normalize candrabindu written as n̐ to m̐ for Library of Congress romanization.
-- **RomanLoCLaUnderscoreDoubleDot**: Convert ḻ to l̤ (or back to ḻ) for Library of Congress romanization depending on direction; note: the forward variant (line 37) is missing its return statement, a likely bug.
-- **RomanLoCLaUnderscoreDoubleDot**: Convert ḻ to l̤ (or back to ḻ) for Library of Congress romanization depending on direction; note: the forward variant (line 37) is missing its return statement, a likely bug.
+- **RomanLoCLaUnderscoreDoubleDot**: Convert ḻ to l̤ (or back to ḻ) for Library of Congress romanization depending on direction.
 - **RomanLoCSasha**: Replace sh with ṣ for Library of Congress romanization.
 - **RomanLoCVaWa**: Replace w with v for Library of Congress romanization, reflecting the va/wa merger.
 - **RomanPreFix**: Insert explicit dependent-vowel and virama markers after bare consonants in romanized source text so it matches the internal consonant-vowel representation, handling nukta placement.

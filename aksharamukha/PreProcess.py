@@ -870,10 +870,10 @@ def removeZW(Strng):
     return Strng
 
 def IPAIndic(Strng):
-    """Simplify IPA vowels ʊ and ɛ to u and e respectively (note: the function returns None instead of the string, a likely bug)."""
+    """Simplify IPA vowels ʊ and ɛ to u and e respectively. Not exposed in the frontend and not called internally by any other option - reachable only via a direct pre_options=['IPAIndic'] API call."""
     Strng = Strng.replace("ʊ","u")
     Strng = Strng.replace("ɛ","e")
 
-    return
+    return Strng
 
 

@@ -1,12 +1,4 @@
 {
- "pre::IPAIndic": {
-  "kind": "pre",
-  "name": "IPAIndic",
-  "source": "IAST",
-  "target": "Devanagari",
-  "error_type": "AttributeError",
-  "error": "'NoneType' object has no attribute 'replace'"
- },
  "pre::KhmerWordSplit": {
   "kind": "pre",
   "name": "KhmerWordSplit",

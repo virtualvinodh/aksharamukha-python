@@ -32,7 +32,7 @@ def KhandaTaRomanLoC_pre(Strng):
 
 # internal
 def RomanLoCLaUnderscoreDoubleDot_pre(Strng):
-    """Convert ḻ to l̤ (or back to ḻ) for Library of Congress romanization depending on direction; note: the forward variant (line 37) is missing its return statement, a likely bug."""
+    """Converts l-double-underdot back to l-line-below, per Library of Congress romanization convention."""
     Strng = Strng.replace('l̤', 'ḻ')
 
     return Strng

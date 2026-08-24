@@ -11,16 +11,6 @@ verification noise.
 
 ## Real correctness bugs
 
-- **`PreProcess.py:1403` `IPAIndic`** - ends with a bare `return`
-  (implicitly returns `None`) instead of `return Strng`. Any caller
-  expecting the transformed string gets `None` instead.
-
-- **`PreProcess.py:41` and `:61` `RomanLoCLaUnderscoreDoubleDot`** -
-  defined twice under the identical name. The first definition (line 41,
-  `Strng.replace('ḻ', 'l̤')`, no `return` statement) is dead - silently
-  shadowed by the second definition (line 61, the reverse mapping
-  `l̤ → ḻ`, which does return). Only the second is ever reachable.
-
 - **`ScriptProcessing/Oriya.py:39` `OriyaSubojinedVa`** - the regex
   contains a stray double `??` (`'(??<![ମବ])'`), likely a typo for a
   single `?` negative lookbehind marker.
@@ -52,6 +42,28 @@ verification noise.
   ("‍", "")`; moved out of `known_broken_options.json` and given a
   real case in `test_preoptions.json` (`test_known_broken.py`'s own
   docstring asks for exactly this once a tracked bug starts working).
+
+- **`PreProcess.py:872` `IPAIndic`** - ended with a bare `return`
+  (implicitly `None`) instead of `return Strng`. Same exposure profile as
+  `removeZW` above (`in_frontend: false`, no internal callers) - fixed to
+  `return Strng`, moved out of `known_broken_options.json`, given a real
+  case in `test_preoptions.json`.
+
+## Stale entries removed (not real bugs in current code)
+
+- **`RomanLoCLaUnderscoreDoubleDot`** - this file used to describe a
+  duplicate-definition bug in `PreProcess.py:41`/`:61` (a dead first
+  definition missing `return`, shadowed by a working second definition).
+  That code no longer exists - the LoC redesign (predates this entry
+  being written) split it into two properly-defined functions in
+  `ScriptProcessing/RomanLoC.py`: `RomanLoCLaUnderscoreDoubleDot_pre`
+  (line 34, `l̤ → ḻ`) and `_post` (line 84, `ḻ → l̤`), both of which
+  correctly `return Strng`. The bug description was carried over into
+  this file without re-verifying it against the migrated code. The
+  `_pre` function's own docstring repeated the identical stale claim
+  ("missing its return statement") about itself, and
+  `DOCS_NEEDING_REVIEW.md` had the same claim duplicated as two
+  identical bullets in a row - both corrected.
 
 - **`PersianDMG` -> `Arab-Fa` (reverse direction) used to crash** -
   `transliterate.py`'s `_resolve_semitic_iso_pivot()` looks up
