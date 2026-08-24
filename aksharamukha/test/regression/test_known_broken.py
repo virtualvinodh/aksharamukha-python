@@ -4,9 +4,12 @@ The 36 PreProcess/PostProcess functions that are NOT safely callable as a
 bare pre_options=[name] / post_options=[name] value - either they're
 internal multi-argument pipeline helpers that happen to live in the same
 module namespace the by-name option dispatch reflects over (see the
-refactor audit, pattern 01), or they're independently confirmed bugs
-(removeZW, IPAIndic, the OriyaSubojinedVa regex typo), or a missing
-optional dependency (khmernltk).
+refactor audit, pattern 01), or they're independently confirmed bugs, or
+a missing optional dependency. known_broken_options.json is currently
+empty - removeZW, IPAIndic, and OriyaSubojinedVa were all real bugs, since
+fixed; khmernltk (the dependency KhmerWordSplit needs) is now installed.
+Kept as infrastructure for whenever the next one turns up, rather than
+deleted.
 
 These tests assert the CURRENT failure mode, on purpose: if one of these
 ever starts working (a fix lands) or starts failing differently (a
