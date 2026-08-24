@@ -22,13 +22,5 @@
   "target": "Devanagari",
   "error_type": "error",
   "error": "unknown extension ?? at position 1"
- },
- "pre::removeZW": {
-  "kind": "pre",
-  "name": "removeZW",
-  "source": "IAST",
-  "target": "Devanagari",
-  "error_type": "TypeError",
-  "error": "replace expected at least 2 arguments, got 1"
  }
 }

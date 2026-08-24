@@ -11,12 +11,6 @@ verification noise.
 
 ## Real correctness bugs
 
-- **`PreProcess.py:1392` `removeZW`** - both `.replace()` calls are
-  missing their replacement argument (`Strng.replace("‌").replace("‍")`).
-  `str.replace()` requires two arguments; this raises `TypeError` if the
-  option is ever invoked. Registered as a live pre-option
-  (`Options.PRE_OPTIONS`), so it's reachable, just broken.
-
 - **`PreProcess.py:1403` `IPAIndic`** - ends with a bare `return`
   (implicitly returns `None`) instead of `return Strng`. Any caller
   expecting the transformed string gets `None` instead.
@@ -47,6 +41,17 @@ verification noise.
   directly.
 
 ## Fixed since this file was written
+
+- **`PreProcess.py:868` `removeZW`** - both `.replace()` calls were
+  missing their replacement argument, raising `TypeError` on any use.
+  Not exposed in the frontend (`in_frontend: false` in
+  `frontend_backend_manifest.json`) and not called internally by
+  anything else, so only reachable via a direct
+  `pre_options=['removeZW']` API call - fixed anyway rather than left
+  broken-by-convenience. Fixed to `Strng.replace("‌", "").replace
+  ("‍", "")`; moved out of `known_broken_options.json` and given a
+  real case in `test_preoptions.json` (`test_known_broken.py`'s own
+  docstring asks for exactly this once a tracked bug starts working).
 
 - **`PersianDMG` -> `Arab-Fa` (reverse direction) used to crash** -
   `transliterate.py`'s `_resolve_semitic_iso_pivot()` looks up

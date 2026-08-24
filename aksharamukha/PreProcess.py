@@ -864,8 +864,8 @@ def UnSupThaana(Strng):
 
 # Remove ZWJ/ZWNJ characters
 def removeZW(Strng):
-    """Remove zero-width non-joiner and zero-width joiner characters (note: the .replace() calls here are missing their replacement argument and will raise a TypeError, a likely bug)."""
-    Strng = Strng.replace("\u200C").replace("\u200D")
+    """Remove zero-width non-joiner and zero-width joiner characters. Not exposed in the frontend and not called internally by any other option - reachable only via a direct pre_options=['removeZW'] API call."""
+    Strng = Strng.replace("\u200C", "").replace("\u200D", "")
 
     return Strng
 
