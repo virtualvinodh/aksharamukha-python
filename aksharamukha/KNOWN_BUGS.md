@@ -9,23 +9,6 @@ a stable one-to-one-parity baseline, so any behavior change is easy to
 attribute to the fix itself rather than getting mixed into migration
 verification noise.
 
-## Real correctness bugs
-
-- **`Urdu` -> `Arab` maps Peh (پ) to Feh (ف) instead of Beh (ب)** -
-  found while checking whether `transliterate.py`'s commented-out
-  Urdu/Shahmukhi/Arab/Arab-Fa normalization block (see
-  `_resolve_semitic_indic_naming`) was still needed. Reproduction:
-  `transliterate.process('Urdu', 'Arab', 'پانی')` ("paani", water)
-  comes out as `فاني` ("faani") - the Urdu/Persian-only letter پ
-  (Peh, has no standard Arabic equivalent) becomes ف (Feh) rather
-  than the linguistically expected ب (Beh), the nearest standard
-  Arabic letter. Root cause not traced - Arab/Urdu aren't handled by
-  the usual `ScriptMap/{MainIndic,EastIndic,NonIndic,Roman}`
-  character-list files (no literal `ك`/`پ`/`ف` found anywhere under
-  `ScriptMap/`), so this likely routes through the Semitic-specific
-  dispatch path rather than a per-script map worth grep-ing for
-  directly.
-
 ## Fixed since this file was written
 
 - **`PreProcess.py:868` `removeZW`** - both `.replace()` calls were
@@ -56,6 +39,39 @@ verification noise.
   exclusions (`ମ୍ବ`/`ବ୍ବ`, genuine /mb/ and /bb/ clusters) still don't
   convert. Moved out of `known_broken_options.json`, given a real case in
   `test_preoptions.json` covering both the fix and the exclusion.
+
+- **`ScriptProcessing/Arab.py:72` `ArabRemoveAdditions` maps Peh (پ) to
+  Feh (ف) instead of Beh (ب)** - `transliterate.process('Urdu', 'Arab',
+  'پانی')` ("paani", water) came out as `فاني` ("faani") instead of
+  `باني` ("baani"). Traced to `ArabRemoveAdditions`, an `# internal`
+  postoption applied unconditionally whenever `nativize=True` (the
+  default) and the target is plain `Arab`, via
+  `PostOptions._TARGET_DEFAULT_OPTIONS['Arab']`. Its own docstring
+  claimed `پ→ف` as the "standard base form" - wrong on both phonetic
+  grounds (/b/ is the cross-linguistic standard substitute for missing
+  /p/, preserving place+manner and differing only in voicing; /f/ is a
+  bigger jump - different place *and* manner) and shape-derivation
+  grounds (پ's base letter-shape is ب's tooth-shape family, not ف's).
+  Confirmed broader than just Urdu: the same corruption hit
+  Shahmukhi->Arab, Arab-Fa->Arab, and even Arab->Arab with literal Peh
+  in the input - every path where nativize defaults kick in for an Arab
+  target, regardless of source. A sibling function,
+  `arabicRemoveAdditionsPhonetic`, already had the correct `پ→ب` mapping
+  and a docstring explicitly contrasting itself against this exact wrong
+  behavior ("`/g j p b/ → /غ ج ب ب/` not `/ج ج ف ب/`") - but its guard in
+  `transliterate.py:648` checks `src` *after*
+  `_resolve_semitic_indic_naming` has already renamed `'Urdu'`/
+  `'Shahmukhi'` to `'Arab-Ur'`/`'Arab-Pa'` (both genuinely
+  `is_semitic`), so it never actually fires for the two sources most
+  likely to carry native Peh - leaving `ArabRemoveAdditions`'s wrong
+  mapping to run unopposed on every path. Fixed the one character in
+  `ArabRemoveAdditions` (`پ→ب` instead of `پ→ف`) rather than touching the
+  guard, since that's what actually runs unconditionally and fixes every
+  observed case uniformly; the `ڨ→ج`/`ڤ→ف` mappings on the same line are
+  untouched and still correct. Updated two test fixtures that had
+  hardcoded the old wrong expectation (`test_postoptions.json`'s
+  `ArabRemoveAdditions` case, `test_direct_options.json`'s
+  `post::ArabRemoveAdditions` case).
 
 ## Stale entries removed (not real bugs in current code)
 

@@ -68,8 +68,8 @@ def ArabizePersian(Strng):
 # internal
 def ArabRemoveAdditions(Strng):
 
-    """Reverts extended Arabic letters back to their standard base forms: ڨ→ج, ڤ→ف, پ→ف."""
-    Strng = Strng.replace('ڨ', 'ج').replace('ڤ', 'ف').replace('پ', 'ف')
+    """Reverts extended Arabic letters back to their standard base forms: ڨ→ج, ڤ→ف, پ→ب."""
+    Strng = Strng.replace('ڨ', 'ج').replace('ڤ', 'ف').replace('پ', 'ب')
 
     return Strng
 
