@@ -11,7 +11,6 @@ import regex as re
 from pathlib import Path
 import logging
 import json
-import langcodes
 from fontTools import unicodedata as ucd
 from collections import Counter
 from functools import lru_cache

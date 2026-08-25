@@ -14,7 +14,6 @@ import unicodedata
 import collections
 import yaml
 import warnings
-import langcodes
 import os
 
 #import sys
@@ -1067,6 +1066,8 @@ def process_lang_tag(src_tag, tgt_tag, txt, nativize, post_options, pre_options)
     return process_default(src_pop, tgt_pop, txt, nativize, post_options, pre_options)
 
 def process_lang_name(src_name, tgt_name, txt, nativize, post_options, pre_options):
+    import langcodes
+
     if src_name == 'autodetect':
         src = auto_detect(txt)
         pre_options = detect_preoptions(txt, src)
