@@ -16,9 +16,10 @@ locally in this folder; nothing is fetched from a CDN.
   `pyodide-lock.json`) plus the package wheels aksharamukha's core engine
   needs: `pyyaml`, `regex`, `fonttools`, `requests` (+ its own deps -
   `charset-normalizer`, `idna`, `urllib3`, `certifi`), `micropip` (+ its dep
-  `packaging`). All of these must sit flat in this folder, alongside
-  `pyodide-lock.json` - that's where Pyodide's own package resolution
-  (`pyodide.loadPackage`) expects to find them, not a subfolder.
+  `packaging`), and `pykakasi` (+ its deps `jaconv`, `Deprecated`, `wrapt`)
+  for Japanese kanji/kana romanization. All of these must sit flat in this
+  folder, alongside `pyodide-lock.json` - that's where Pyodide's own package
+  resolution (`pyodide.loadPackage`) expects to find them, not a subfolder.
 - `wheel/aksharamukha-2.3-py3-none-any.whl` - the actual aksharamukha
   package, built from this repo's source and installed into the Pyodide
   environment with `deps=False` (the deps above are loaded separately via
@@ -42,17 +43,13 @@ every conversion after that is local and fast.
 
 ## What doesn't work here
 
-The page itself warns about these three inline if you select them (a
+The page itself warns about these inline if you select them (a
 `knownLimitation()` check in `index.html`, before attempting the conversion) -
 this section is just the fuller explanation:
 
 - **Khmer word-split** (`khmer-nltk`) - needs `python-crfsuite`, a C
   extension with no WASM build available anywhere. A hard blocker, not a
   packaging gap.
-- **Japanese kanji/kana readings** (`pykakasi`) - not vendored in this
-  folder, but confirmed to install and work fine via `micropip.install`
-  from PyPI if you want to add it (unlike `python-crfsuite`, it has no WASM
-  compatibility issue - it just wasn't included in this minimal build).
 - **Tamil -> IPA** (calls a third-party pronunciation API via `requests`) -
   works from a real backend, but that specific API has no CORS headers, so
   it can't be called from browser JS at all, Pyodide or not. Would need a

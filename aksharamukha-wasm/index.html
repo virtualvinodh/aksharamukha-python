@@ -150,13 +150,12 @@
   <div id="status">Loading Pyodide runtime…</div>
 
   <div class="limits">
-    <p><strong>Three things don't work in this WASM build</strong> - found and verified while building it, not guessed:</p>
+    <p><strong>Two things don't work in this WASM build</strong> - found and verified while building it, not guessed:</p>
     <ul>
       <li><strong>Pre-option <code>KhmerWordSplit</code></strong> - hard blocker. It needs <code>python-crfsuite</code>, a C extension with no WebAssembly build anywhere, WASM or not.</li>
-      <li><strong>Input script <code>Hiragana</code> or <code>Katakana</code></strong> - needs <code>pykakasi</code>, which isn't vendored in this minimal build (unlike Khmer's dependency, it installs and works fine in Pyodide - <code>await micropip.install(['pykakasi'])</code> - just wasn't included here to keep the download smaller).</li>
       <li><strong><code>Tamil &rarr; IPA</code></strong> - calls a third-party pronunciation API that has no CORS headers, so no browser JS can reach it at all, Pyodide or not. Not fixable from this page.</li>
     </ul>
-    <p style="margin-top: 8px;">Every other script and option - all ~180 scripts, everything else in the dropdowns below - runs correctly client-side.</p>
+    <p style="margin-top: 8px;">Everything else - all ~180 scripts including Japanese (Hiragana/Katakana, via a vendored <code>pykakasi</code>), and every other option - runs correctly client-side.</p>
   </div>
 
   <fieldset>
@@ -231,9 +230,6 @@
     if (preOption === 'KhmerWordSplit') {
       return 'KhmerWordSplit needs python-crfsuite, which has no WASM build - not supported here.';
     }
-    if (src === 'Hiragana' || src === 'Katakana') {
-      return 'Converting from ' + src + ' needs pykakasi, which isn\'t vendored in this build (see the note above).';
-    }
     if (src === 'Tamil' && tgt === 'IPA') {
       return 'Tamil → IPA calls a third-party API with no CORS headers - unreachable from browser JS entirely, not a WASM issue.';
     }
@@ -290,23 +286,47 @@
     line('+' + secs(t1, t2) + '  core deps loaded (pyyaml, regex, fonttools, requests, micropip)');
 
     const micropip = pyodide.pyimport('micropip');
-    const wheelResp = await fetch('./wheel/aksharamukha-2.3-py3-none-any.whl');
-    const wheelBytes = new Uint8Array(await wheelResp.arrayBuffer());
-    const wheelPath = '/tmp/aksharamukha-2.3-py3-none-any.whl';
-    pyodide.FS.writeFile(wheelPath, wheelBytes);
-    // deps:false - already loaded everything aksharamukha needs above,
-    // via loadPackage rather than letting micropip re-resolve them.
-    // .callKwargs is required for a JS object to land as a Python kwarg
-    // rather than a second positional argument.
-    await micropip.install.callKwargs('emfs:' + wheelPath, { deps: false });
+
+    // pykakasi and its dependency chain (wrapt <- Deprecated, jaconv) are
+    // NOT in Pyodide's own curated package set (unlike the five above),
+    // so loadPackage can't resolve them - installed the same way as the
+    // aksharamukha wheel itself: fetch locally, write into the Pyodide
+    // FS, micropip.install from that local emfs: path. Installed in
+    // dependency order (wrapt before Deprecated, both before pykakasi),
+    // each with deps:false, so nothing ever reaches out to PyPI - every
+    // dependency is already satisfied locally by the time it's needed.
+    const localWheels = [
+      'wrapt-2.4.0-py3-none-any.whl',
+      'deprecated-1.3.1-py2.py3-none-any.whl',
+      'jaconv-0.5.0-py3-none-any.whl',
+      'pykakasi-2.3.0-py3-none-any.whl',
+      'aksharamukha-2.3-py3-none-any.whl',
+    ];
+    for (const name of localWheels) {
+      const isAksharamukha = name.startsWith('aksharamukha');
+      const url = isAksharamukha ? './wheel/' + name : './pyodide/' + name;
+      const resp = await fetch(url);
+      const bytes = new Uint8Array(await resp.arrayBuffer());
+      const path = '/tmp/' + name;
+      pyodide.FS.writeFile(path, bytes);
+      // .callKwargs is required for a JS object to land as a Python
+      // kwarg rather than a second positional argument.
+      await micropip.install.callKwargs('emfs:' + path, { deps: false });
+      line('  installed ' + name + ' from local wheel');
+    }
     const t3 = performance.now();
-    line('+' + secs(t2, t3) + '  aksharamukha installed from local wheel');
+    line('+' + secs(t2, t3) + '  aksharamukha + pykakasi (and deps) installed from local wheels');
 
     transliterateModule = pyodide.pyimport('aksharamukha.transliterate');
     const scriptRegistry = pyodide.pyimport('aksharamukha.ScriptRegistry');
     const optionsModule = pyodide.pyimport('aksharamukha.Options');
 
-    const scripts = Array.from(scriptRegistry.SCRIPTS.keys()).sort();
+    // Hiragana/Katakana are valid script names (see transliterate.py's
+    // special-cased handling of them) but aren't in ScriptRegistry.SCRIPTS -
+    // that registry is built from GeneralMap's Indic/Latin/Semitic lists
+    // only, and Kana never made it into any of the three. Not a WASM gap;
+    // added here so the dropdown matches what the engine actually accepts.
+    const scripts = Array.from(new Set([...scriptRegistry.SCRIPTS.keys(), 'Hiragana', 'Katakana'])).sort();
     const preOptions = Array.from(optionsModule.PRE_OPTIONS).sort();
     const postOptions = Array.from(optionsModule.POST_OPTIONS).sort();
     const t4 = performance.now();

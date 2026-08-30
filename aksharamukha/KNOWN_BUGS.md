@@ -9,6 +9,31 @@ a stable one-to-one-parity baseline, so any behavior change is easy to
 attribute to the fix itself rather than getting mixed into migration
 verification noise.
 
+## Open
+
+- **Hiragana/Katakana source text with embedded Latin letters loses the
+  Latin letters** - e.g. `process('Hiragana', 'IAST', 'こんにちは ABC 世界')`
+  gives `' kŏnniciha   a  a  a   sĕkaï'`: `ABC` becomes three separate
+  `a`s instead of surviving as `ABC`. Two compounding bugs:
+  1. `PreProcess.retainLatin()` is meant to shield plain Latin letters
+     from conversion by mapping each to a private-use codepoint before
+     any script conversion runs, then mapping back afterward. Its table
+     is built as `latn_basic_lower + latn_basic_upper` with no
+     separating space between the two halves, so the last lowercase
+     token (`ō`) and the first uppercase token (`A`) fuse into one
+     unmatched entry, `'ōA'`, after the `.split(' ')`. Neither `ō` nor
+     `A` ever gets shielded as a result - only `B` onward do.
+  2. Even the letters that *do* get shielded don't survive: for a
+     Hiragana/Katakana source, `PreProcess._japanese_kakasi_romanize()`
+     runs `Convert.convertScript(txt.lower(), "ISO", "Devanagari")` on
+     the *entire* string - private-use shield codepoints included -
+     before handing it to `pykakasi`. That ISO->Devanagari pass doesn't
+     know about the shield codepoints and turns each one into a bare
+     inherent-vowel `अ`, which `pykakasi`/the later pipeline stages then
+     render as a stray `a`. `retainLatin`'s shielding assumption (safe
+     until explicitly reversed) doesn't hold across this particular
+     pivot step. Not fixed yet - reported, not touched.
+
 ## Fixed since this file was written
 
 - **`PreProcess.py:868` `removeZW`** - both `.replace()` calls were
