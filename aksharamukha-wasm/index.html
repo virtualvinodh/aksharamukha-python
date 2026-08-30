@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aksharamukha WASM demo</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #faf9f5;
+    --surface: #ffffff;
+    --ink: #1f1c18;
+    --ink-soft: #5b554c;
+    --ink-faint: #857d70;
+    --rule: #e2dace;
+    --accent: #a8352a;
+    --accent-soft: #f1ddd5;
+    --ok: #3f6650;
+    --ok-soft: #dfe9e0;
+    --code-bg: #efe9dc;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .page { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+  h1 { font-size: 22px; margin: 0 0 8px; }
+  .dek { color: var(--ink-soft); font-size: 14.5px; max-width: 60ch; margin: 0 0 28px; }
+  .dek code { background: var(--code-bg); padding: 0.1em 0.4em; border-radius: 3px; }
+
+  #status {
+    font-weight: 600;
+    font-size: 13.5px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    background: var(--code-bg);
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+  #status.ready { background: var(--ok-soft); color: var(--ok); }
+  #status.error { background: var(--accent-soft); color: var(--accent); }
+
+  fieldset {
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 18px 20px 20px;
+    margin: 0 0 20px;
+    background: var(--surface);
+  }
+  legend { font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); padding: 0 6px; }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .row.single { grid-template-columns: 1fr; }
+  label { display: block; font-size: 12.5px; color: var(--ink-soft); margin-bottom: 4px; }
+
+  select, textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 8px 10px;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  textarea { min-height: 90px; resize: vertical; font-family: 'IBM Plex Mono', 'Courier New', monospace; }
+
+  .checkbox-row { display: flex; align-items: center; gap: 8px; margin: 4px 0 0; }
+  .checkbox-row label { margin: 0; font-size: 14px; color: var(--ink); }
+
+  button {
+    font-size: 14.5px;
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+  }
+  button:disabled { opacity: 0.5; cursor: default; }
+  button:hover:not(:disabled) { filter: brightness(1.08); }
+
+  #outputBox {
+    margin-top: 18px;
+    padding: 16px 18px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    font-size: 20px;
+    min-height: 28px;
+    word-break: break-word;
+  }
+  #timing { font-size: 12.5px; color: var(--ink-faint); margin-top: 8px; }
+
+  pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 12px 14px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 12px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 220px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Aksharamukha, running entirely in your browser</h1>
+  <p class="dek">
+    No backend, no network calls after this page loads - the whole transliteration engine runs
+    client-side via <a href="https://pyodide.org" target="_blank" rel="noopener">Pyodide</a>
+    (CPython compiled to WebAssembly). Everything under <code>./pyodide/</code> and
+    <code>./wheel/</code> is vendored locally; nothing is fetched from a CDN. Script names and
+    pre/post-option names below are queried live from the loaded package, not hardcoded.
+  </p>
+
+  <div id="status">Loading Pyodide runtime…</div>
+
+  <fieldset>
+    <legend>Conversion</legend>
+    <div class="row">
+      <div>
+        <label for="srcScript">Input script</label>
+        <select id="srcScript" disabled></select>
+      </div>
+      <div>
+        <label for="tgtScript">Output script</label>
+        <select id="tgtScript" disabled></select>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="preOption">Pre-option (optional)</label>
+        <select id="preOption" disabled><option value="">(none)</option></select>
+      </div>
+      <div>
+        <label for="postOption">Post-option (optional)</label>
+        <select id="postOption" disabled><option value="">(none)</option></select>
+      </div>
+    </div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="nativize" checked disabled>
+      <label for="nativize">Nativize (apply target script's default orthographic conventions)</label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Text</legend>
+    <div class="row single">
+      <div>
+        <label for="inputText">Input text</label>
+        <textarea id="inputText" disabled>dharma</textarea>
+      </div>
+    </div>
+    <button id="convertBtn" disabled>Convert</button>
+  </fieldset>
+
+  <div id="outputBox">&nbsp;</div>
+  <div id="timing"></div>
+
+  <details style="margin-top: 24px;">
+    <summary style="cursor: pointer; color: var(--ink-faint); font-size: 13px;">Load log</summary>
+    <pre id="log"></pre>
+  </details>
+</div>
+
+<script src="./pyodide/pyodide.js"></script>
+<script>
+  const log = document.getElementById('log');
+  const status = document.getElementById('status');
+  const srcSelect = document.getElementById('srcScript');
+  const tgtSelect = document.getElementById('tgtScript');
+  const preSelect = document.getElementById('preOption');
+  const postSelect = document.getElementById('postOption');
+  const nativizeBox = document.getElementById('nativize');
+  const inputText = document.getElementById('inputText');
+  const convertBtn = document.getElementById('convertBtn');
+  const outputBox = document.getElementById('outputBox');
+  const timingEl = document.getElementById('timing');
+
+  function line(msg) {
+    log.textContent += msg + '\n';
+    console.log(msg);
+  }
+  function secs(a, b) {
+    return ((b - a) / 1000).toFixed(2) + 's';
+  }
+  function populateSelect(select, names, placeholder) {
+    if (placeholder !== undefined) {
+      const opt = document.createElement('option');
+      opt.value = '';
+      opt.textContent = placeholder;
+      select.appendChild(opt);
+    }
+    for (const name of names) {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      select.appendChild(opt);
+    }
+  }
+
+  let transliterateModule;
+
+  async function main() {
+    const t0 = performance.now();
+
+    // indexURL keeps ALL of Pyodide's own fetches (core runtime, stdlib,
+    // and anything loaded via pyodide.loadPackage) local to this folder -
+    // no CDN calls once this page and ./pyodide/ are served together.
+    const pyodide = await loadPyodide({ indexURL: './pyodide/' });
+    const t1 = performance.now();
+    line('+' + secs(t0, t1) + '  Pyodide runtime ready');
+
+    // These are all in the standard Pyodide package set (see
+    // ./pyodide/pyodide-lock.json), so loadPackage resolves them - and
+    // their transitive deps (requests -> charset-normalizer/idna/
+    // urllib3/certifi, micropip -> packaging) - from ./pyodide/ (flat,
+    // alongside pyodide-lock.json - that's where loadPackage's own
+    // resolution expects wheel files, not a subfolder) automatically, no
+    // PyPI/CDN lookup needed. messageCallback/errorCallback surface any
+    // per-package fetch problems in the log instead of failing silently.
+    await pyodide.loadPackage(['pyyaml', 'regex', 'fonttools', 'requests', 'micropip'], {
+      messageCallback: line,
+      errorCallback: function (pkg, err) { line('  loadPackage error for ' + pkg + ': ' + err); },
+    });
+    const t2 = performance.now();
+    line('+' + secs(t1, t2) + '  core deps loaded (pyyaml, regex, fonttools, requests, micropip)');
+
+    const micropip = pyodide.pyimport('micropip');
+    const wheelResp = await fetch('./wheel/aksharamukha-2.3-py3-none-any.whl');
+    const wheelBytes = new Uint8Array(await wheelResp.arrayBuffer());
+    const wheelPath = '/tmp/aksharamukha-2.3-py3-none-any.whl';
+    pyodide.FS.writeFile(wheelPath, wheelBytes);
+    // deps:false - already loaded everything aksharamukha needs above,
+    // via loadPackage rather than letting micropip re-resolve them.
+    // .callKwargs is required for a JS object to land as a Python kwarg
+    // rather than a second positional argument.
+    await micropip.install.callKwargs('emfs:' + wheelPath, { deps: false });
+    const t3 = performance.now();
+    line('+' + secs(t2, t3) + '  aksharamukha installed from local wheel');
+
+    transliterateModule = pyodide.pyimport('aksharamukha.transliterate');
+    const scriptRegistry = pyodide.pyimport('aksharamukha.ScriptRegistry');
+    const optionsModule = pyodide.pyimport('aksharamukha.Options');
+
+    const scripts = Array.from(scriptRegistry.SCRIPTS.keys()).sort();
+    const preOptions = Array.from(optionsModule.PRE_OPTIONS).sort();
+    const postOptions = Array.from(optionsModule.POST_OPTIONS).sort();
+    const t4 = performance.now();
+    line('+' + secs(t3, t4) + '  queried ' + scripts.length + ' scripts, ' + preOptions.length + ' pre-options, ' + postOptions.length + ' post-options live from the loaded package');
+
+    populateSelect(srcSelect, scripts);
+    populateSelect(tgtSelect, scripts);
+    populateSelect(preSelect, preOptions, '(none)');
+    populateSelect(postSelect, postOptions, '(none)');
+    srcSelect.value = 'IAST';
+    tgtSelect.value = 'Devanagari';
+
+    for (const el of [srcSelect, tgtSelect, preSelect, postSelect, nativizeBox, inputText, convertBtn]) {
+      el.disabled = false;
+    }
+
+    const tEnd = performance.now();
+    line('');
+    line('TOTAL cold start: ' + secs(t0, tEnd));
+    status.textContent = 'Ready (' + secs(t0, tEnd) + ' cold start). Convert away.';
+    status.className = 'ready';
+
+    runConversion();
+  }
+
+  function runConversion() {
+    if (!transliterateModule) return;
+    const src = srcSelect.value;
+    const tgt = tgtSelect.value;
+    const preOption = preSelect.value;
+    const postOption = postSelect.value;
+    const nativize = nativizeBox.checked;
+    const txt = inputText.value;
+
+    if (!src || !tgt || !txt) {
+      outputBox.textContent = ' ';
+      return;
+    }
+
+    const kwargs = {
+      nativize: nativize,
+      pre_options: preOption ? [preOption] : [],
+      post_options: postOption ? [postOption] : [],
+    };
+
+    const a = performance.now();
+    try {
+      const result = transliterateModule.process.callKwargs(src, tgt, txt, kwargs);
+      const b = performance.now();
+      outputBox.textContent = result;
+      timingEl.textContent = src + ' → ' + tgt +
+        (preOption ? '  · pre: ' + preOption : '') +
+        (postOption ? '  · post: ' + postOption : '') +
+        '  · nativize: ' + nativize +
+        '  · ' + secs(a, b);
+    } catch (e) {
+      const msgLines = String(e).split('\n').map(function (l) { return l.trim(); }).filter(Boolean);
+      outputBox.textContent = 'Error: ' + (msgLines[msgLines.length - 1] || String(e));
+      timingEl.textContent = '';
+    }
+  }
+
+  for (const el of [srcSelect, tgtSelect, preSelect, postSelect, nativizeBox]) {
+    el.addEventListener('change', runConversion);
+  }
+  inputText.addEventListener('input', runConversion);
+  convertBtn.addEventListener('click', runConversion);
+
+  main().catch(function (e) {
+    status.textContent = 'Failed to load - see log below.';
+    status.className = 'error';
+    line('FATAL: ' + e);
+  });
+</script>
+</body>
+</html>
