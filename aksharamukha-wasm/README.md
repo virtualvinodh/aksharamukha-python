@@ -40,10 +40,11 @@ Then open `http://localhost:8000/`. Cold start (fetching + instantiating the
 WASM runtime, loading the core deps, installing the wheel) is a few seconds;
 every conversion after that is local and fast.
 
-## What's deliberately not included
+## What doesn't work here
 
-Two options exist in the full library that don't work in this WASM setup and
-aren't included here:
+The page itself warns about these three inline if you select them (a
+`knownLimitation()` check in `index.html`, before attempting the conversion) -
+this section is just the fuller explanation:
 
 - **Khmer word-split** (`khmer-nltk`) - needs `python-crfsuite`, a C
   extension with no WASM build available anywhere. A hard blocker, not a

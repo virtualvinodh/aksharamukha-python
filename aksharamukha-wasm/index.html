@@ -98,6 +98,30 @@
   }
   #timing { font-size: 12.5px; color: var(--ink-faint); margin-top: 8px; }
 
+  .limits {
+    background: var(--code-bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 0 0 24px;
+  }
+  .limits p { margin: 0 0 6px; }
+  .limits ul { margin: 6px 0 0; padding-left: 20px; }
+  .limits li { margin-bottom: 4px; }
+  .limits code { background: var(--surface); padding: 0.05em 0.35em; border-radius: 3px; }
+
+  #warningBox {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 6px;
+    font-size: 13px;
+  }
+
   pre {
     background: #1e1e1e;
     color: #d4d4d4;
@@ -124,6 +148,16 @@
   </p>
 
   <div id="status">Loading Pyodide runtime…</div>
+
+  <div class="limits">
+    <p><strong>Three things don't work in this WASM build</strong> - found and verified while building it, not guessed:</p>
+    <ul>
+      <li><strong>Pre-option <code>KhmerWordSplit</code></strong> - hard blocker. It needs <code>python-crfsuite</code>, a C extension with no WebAssembly build anywhere, WASM or not.</li>
+      <li><strong>Input script <code>Hiragana</code> or <code>Katakana</code></strong> - needs <code>pykakasi</code>, which isn't vendored in this minimal build (unlike Khmer's dependency, it installs and works fine in Pyodide - <code>await micropip.install(['pykakasi'])</code> - just wasn't included here to keep the download smaller).</li>
+      <li><strong><code>Tamil &rarr; IPA</code></strong> - calls a third-party pronunciation API that has no CORS headers, so no browser JS can reach it at all, Pyodide or not. Not fixable from this page.</li>
+    </ul>
+    <p style="margin-top: 8px;">Every other script and option - all ~180 scripts, everything else in the dropdowns below - runs correctly client-side.</p>
+  </div>
 
   <fieldset>
     <legend>Conversion</legend>
@@ -162,6 +196,7 @@
       </div>
     </div>
     <button id="convertBtn" disabled>Convert</button>
+    <div id="warningBox"></div>
   </fieldset>
 
   <div id="outputBox">&nbsp;</div>
@@ -186,6 +221,24 @@
   const convertBtn = document.getElementById('convertBtn');
   const outputBox = document.getElementById('outputBox');
   const timingEl = document.getElementById('timing');
+  const warningBox = document.getElementById('warningBox');
+
+  // The three known-unsupported cases from the callout above, checked
+  // proactively so a selection that can't work shows a clear explanation
+  // instead of a raw Python traceback from a failed import or a hung
+  // network call.
+  function knownLimitation(src, tgt, preOption) {
+    if (preOption === 'KhmerWordSplit') {
+      return 'KhmerWordSplit needs python-crfsuite, which has no WASM build - not supported here.';
+    }
+    if (src === 'Hiragana' || src === 'Katakana') {
+      return 'Converting from ' + src + ' needs pykakasi, which isn\'t vendored in this build (see the note above).';
+    }
+    if (src === 'Tamil' && tgt === 'IPA') {
+      return 'Tamil → IPA calls a third-party API with no CORS headers - unreachable from browser JS entirely, not a WASM issue.';
+    }
+    return null;
+  }
 
   function line(msg) {
     log.textContent += msg + '\n';
@@ -290,8 +343,19 @@
 
     if (!src || !tgt || !txt) {
       outputBox.textContent = ' ';
+      warningBox.style.display = 'none';
       return;
     }
+
+    const limitation = knownLimitation(src, tgt, preOption);
+    if (limitation) {
+      warningBox.textContent = limitation;
+      warningBox.style.display = 'block';
+      outputBox.textContent = ' ';
+      timingEl.textContent = '';
+      return;
+    }
+    warningBox.style.display = 'none';
 
     const kwargs = {
       nativize: nativize,
