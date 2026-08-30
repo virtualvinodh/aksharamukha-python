@@ -278,24 +278,41 @@
     // resolution expects wheel files, not a subfolder) automatically, no
     // PyPI/CDN lookup needed. messageCallback/errorCallback surface any
     // per-package fetch problems in the log instead of failing silently.
-    await pyodide.loadPackage(['pyyaml', 'regex', 'fonttools', 'requests', 'micropip'], {
+    // fonttools is NOT loaded here even though it's in Pyodide's set -
+    // see the localWheels comment below, it's a hand-trimmed substitute.
+    await pyodide.loadPackage(['pyyaml', 'regex', 'requests', 'micropip'], {
       messageCallback: line,
       errorCallback: function (pkg, err) { line('  loadPackage error for ' + pkg + ': ' + err); },
     });
     const t2 = performance.now();
-    line('+' + secs(t1, t2) + '  core deps loaded (pyyaml, regex, fonttools, requests, micropip)');
+    line('+' + secs(t1, t2) + '  core deps loaded (pyyaml, regex, requests, micropip)');
 
     const micropip = pyodide.pyimport('micropip');
 
     // pykakasi and its dependency chain (wrapt <- Deprecated, jaconv) are
-    // NOT in Pyodide's own curated package set (unlike the five above),
-    // so loadPackage can't resolve them - installed the same way as the
-    // aksharamukha wheel itself: fetch locally, write into the Pyodide
-    // FS, micropip.install from that local emfs: path. Installed in
-    // dependency order (wrapt before Deprecated, both before pykakasi),
-    // each with deps:false, so nothing ever reaches out to PyPI - every
-    // dependency is already satisfied locally by the time it's needed.
+    // NOT in Pyodide's own curated package set (unlike the packages
+    // above), so loadPackage can't resolve them - installed the same way
+    // as the aksharamukha wheel itself: fetch locally, write into the
+    // Pyodide FS, micropip.install from that local emfs: path. Installed
+    // in dependency order (wrapt before Deprecated, both before
+    // pykakasi), each with deps:false, so nothing ever reaches out to
+    // PyPI - every dependency is already satisfied locally by the time
+    // it's needed.
+    //
+    // fonttools-4.51.0-py3-none-any.whl here is NOT the real PyPI
+    // fonttools wheel (that's 4.1MB) - it's a hand-trimmed substitute
+    // containing only fontTools/__init__.py, fontTools/misc/__init__.py,
+    // fontTools/misc/loggingTools.py, fontTools/misc/textTools.py, and
+    // fontTools/unicodedata/* (~108KB total). That's the entire transitive
+    // closure gimeltra.py's `from fontTools import unicodedata as ucd`
+    // actually touches - none of fontTools' font-file-parsing machinery
+    // (ttLib, varLib, feaLib, subset, ...) is ever imported by this
+    // project. Verified byte-identical output for the same conversions
+    // against the full wheel before swapping it in. If gimeltra.py's
+    // fontTools usage ever changes, rebuild this wheel (see the trimming
+    // script referenced in README.md) or fall back to loadPackage(['fonttools']).
     const localWheels = [
+      'fonttools-4.51.0-py3-none-any.whl',
       'wrapt-2.4.0-py3-none-any.whl',
       'deprecated-1.3.1-py2.py3-none-any.whl',
       'jaconv-0.5.0-py3-none-any.whl',

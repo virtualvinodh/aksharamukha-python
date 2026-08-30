@@ -14,12 +14,15 @@ locally in this folder; nothing is fetched from a CDN.
 - `pyodide/` - the Pyodide v0.26.1 core runtime (`pyodide.js`,
   `pyodide.asm.js`, `pyodide.asm.wasm`, `python_stdlib.zip`,
   `pyodide-lock.json`) plus the package wheels aksharamukha's core engine
-  needs: `pyyaml`, `regex`, `fonttools`, `requests` (+ its own deps -
-  `charset-normalizer`, `idna`, `urllib3`, `certifi`), `micropip` (+ its dep
-  `packaging`), and `pykakasi` (+ its deps `jaconv`, `Deprecated`, `wrapt`)
-  for Japanese kanji/kana romanization. All of these must sit flat in this
-  folder, alongside `pyodide-lock.json` - that's where Pyodide's own package
-  resolution (`pyodide.loadPackage`) expects to find them, not a subfolder.
+  needs: `pyyaml`, `regex`, `fonttools` (**trimmed - see below**),
+  `requests` (+ its own deps - `charset-normalizer`, `idna`, `urllib3`,
+  `certifi`), `micropip` (+ its dep `packaging`), and `pykakasi` (+ its
+  deps `jaconv`, `Deprecated`, `wrapt`) for Japanese kanji/kana
+  romanization. All of these must sit flat in this folder, alongside
+  `pyodide-lock.json` - that's where Pyodide's own package resolution
+  (`pyodide.loadPackage`) expects to find them, not a subfolder.
+  `fonttools` specifically is installed via the manual local-wheel loop in
+  `index.html`, not `loadPackage` - see below for why.
 - `wheel/aksharamukha-2.3-py3-none-any.whl` - the actual aksharamukha
   package, built from this repo's source and installed into the Pyodide
   environment with `deps=False` (the deps above are loaded separately via
@@ -59,6 +62,31 @@ Everything else - all ~180 scripts, all other pre/post-options - runs
 correctly client-side. Verified against a 303-sample set covering every
 distinct script in the project's regression corpus, both as source and
 target, with zero mismatches against the native-Python reference output.
+
+## Size optimizations
+
+- **`pyodide/fonttools-4.51.0-py3-none-any.whl` is a hand-trimmed
+  substitute, not the real PyPI wheel** - shrunk from 4.1MB to ~108KB.
+  aksharamukha only ever does `from fontTools import unicodedata as ucd`
+  (in `aksharamukha/gimeltra.py`, for Semitic-script handling); none of
+  fontTools' font-file-parsing machinery (`ttLib`, `varLib`, `feaLib`,
+  `subset`, `pens`, ...) is imported anywhere in this project. The trimmed
+  wheel keeps only that submodule's real transitive closure -
+  `fontTools/__init__.py`, `fontTools/misc/__init__.py`,
+  `fontTools/misc/loggingTools.py`, `fontTools/misc/textTools.py`, and
+  `fontTools/unicodedata/*`. Verified byte-identical conversion output
+  against the full wheel (Hebrew/Arabic/Devanagari round trips) before
+  swapping it in. Because of this, `fonttools` is installed via
+  `index.html`'s manual local-wheel loop rather than
+  `pyodide.loadPackage(['fonttools'])`, which would fetch Pyodide's own
+  full-size wheel instead.
+  - **If you ever regenerate this folder from scratch, or bump the
+    fonttools/aksharamukha version, remember to rebuild the trimmed wheel** -
+    run `python build_trimmed_fonttools.py` (from this folder) to
+    re-download the real wheel from PyPI and re-trim it. If
+    `gimeltra.py`'s fontTools usage ever grows past `unicodedata`, extend
+    the `KEEP` list in that script to match, or just drop back to
+    `loadPackage(['fonttools'])` for the untrimmed original.
 
 ## Rebuilding
 
